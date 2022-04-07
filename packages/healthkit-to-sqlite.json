@@ -1,0 +1,326 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# healthkit-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/healthkit-to-sqlite.svg)](https://pypi.org/project/healthkit-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/healthkit-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/healthkit-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/healthkit-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/healthkit-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/healthkit-to-sqlite/blob/main/LICENSE)\n\nConvert an Apple Healthkit export zip to a SQLite database\n\n## How to install\n\n    $ pip install healthkit-to-sqlite\n\n## How to use\n\nFirst you need to export your Apple HealthKit data.\n\n1. On your iPhone, open the \"Health\" app\n2. Click the profile icon in the top right\n3. Click \"Export Health Data\" at the bottom of that page\n4. Save the resulting file somewhere you can access it, or AirDrop it directly to your laptop.\n\nNow you can convert the resulting `export.zip` file to SQLite like so:\n\n    $ healthkit-to-sqlite export.zip healthkit.db\n\nA progress bar will be displayed. You can disable this using `--silent`.\n\n```\nImporting from HealthKit  [#-------------]    5%  00:01:33\n```\n\nYou can explore the resulting data using [Datasette](https://datasette.readthedocs.io/) like this:\n\n    $ datasette healthkit.db\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://datasette.io/tools/healthkit-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "healthkit-to-sqlite",
+    "package_url": "https://pypi.org/project/healthkit-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/healthkit-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/dogsheep/healthkit-to-sqlite/actions",
+      "Changelog": "https://github.com/dogsheep/healthkit-to-sqlite/releases",
+      "Homepage": "https://datasette.io/tools/healthkit-to-sqlite",
+      "Issues": "https://github.com/dogsheep/healthkit-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/healthkit-to-sqlite/1.0.1/",
+    "requires_dist": [
+      "sqlite-utils (>=2.4.4)",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Convert an Apple Healthkit export zip to a SQLite database",
+    "version": "1.0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11227753,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "886249cb2197864907001c8f842cfb6b",
+          "sha256": "3cb6f69825a017f8f42b09c88f6fea11b2f1a6d8637cdf385d2203946793fede"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "886249cb2197864907001c8f842cfb6b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7757,
+        "upload_time": "2019-07-20T06:24:28",
+        "upload_time_iso_8601": "2019-07-20T06:24:28.870881Z",
+        "url": "https://files.pythonhosted.org/packages/0d/44/0ed2dea03a1ac3e7e16f847e3648f175ece1652dc962039edcbfb0daf692/healthkit_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2ea42ec85e653f7332e5dfadc6ba7df3",
+          "sha256": "2821acf1b6bdd06a62edf5104a703666df569e8bb8fa31bb9108033357e30c37"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2ea42ec85e653f7332e5dfadc6ba7df3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7749,
+        "upload_time": "2019-07-20T16:45:13",
+        "upload_time_iso_8601": "2019-07-20T16:45:13.891251Z",
+        "url": "https://files.pythonhosted.org/packages/64/0d/b5f9ba75638b315b0061b21af664052674e1c07a9b779eab5ed854dbabc4/healthkit_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ff26be0f8aa8d4b9f2c5f9e39505b6fe",
+          "sha256": "3ccde98c95f0567bd365114350df52e3f757c30c4e297a9f4b7f098d239c5dca"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ff26be0f8aa8d4b9f2c5f9e39505b6fe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8386,
+        "upload_time": "2019-07-22T03:32:57",
+        "upload_time_iso_8601": "2019-07-22T03:32:57.127512Z",
+        "url": "https://files.pythonhosted.org/packages/06/91/ee77bc7f28ba2b042aa01015b451c6c6ce05bddfe6174e467c71fa34101a/healthkit_to_sqlite-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c763db6303d25fee0bdaaa818a2c50fe",
+          "sha256": "669b7bd6d0e642e3f64cd4dd612c71644224d77d8030e42c55789f43c7499e3a"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c763db6303d25fee0bdaaa818a2c50fe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8454,
+        "upload_time": "2019-07-24T06:37:07",
+        "upload_time_iso_8601": "2019-07-24T06:37:07.060718Z",
+        "url": "https://files.pythonhosted.org/packages/21/2b/0cfaf765541b2f2658e6de3097f44dd2231fda6bb46cd099a60e16239e7e/healthkit_to_sqlite-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5108bb1504aa1dfe8a5b151c53038a8d",
+          "sha256": "de1435a0153fc962cc4b81e34c0ecb9ca185ea02580767b31af5ce80be4c8e0a"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5108bb1504aa1dfe8a5b151c53038a8d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8480,
+        "upload_time": "2019-07-26T06:07:39",
+        "upload_time_iso_8601": "2019-07-26T06:07:39.918646Z",
+        "url": "https://files.pythonhosted.org/packages/4d/56/e0ec0cfd0b89c3edb63fddc937b3a15d06127c54d80a7359f134d76e9cfd/healthkit_to_sqlite-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cbb26469e6b7a3218a191ebe68d445f6",
+          "sha256": "0b3795e8b6245eb1e954f045085cfc3cf32147272f6060886505b3eaa3302969"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cbb26469e6b7a3218a191ebe68d445f6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9339,
+        "upload_time": "2019-11-08T01:20:32",
+        "upload_time_iso_8601": "2019-11-08T01:20:32.338594Z",
+        "url": "https://files.pythonhosted.org/packages/da/12/1f5c9e439bd2d16c06d456ed19f9dc3bd594a90002ea03dfe30195af06a6/healthkit_to_sqlite-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2459a47d42fb5cf8bb0e5bfe443cd35b",
+          "sha256": "bf511a224d90fa3b6e50c1b11a6b439871ffd1a43e72274f20b678dfe445e0fb"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2459a47d42fb5cf8bb0e5bfe443cd35b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9338,
+        "upload_time": "2020-03-28T01:56:09",
+        "upload_time_iso_8601": "2020-03-28T01:56:09.769777Z",
+        "url": "https://files.pythonhosted.org/packages/cb/b6/1b1ae4782c8207b313ec6ab3320f5bfaa99ff179f28af07774c7cd47c9a6/healthkit_to_sqlite-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9594296e9a2c80e62dbc9ad45ed12568",
+          "sha256": "c7be8e33b2974d259b75315abd21fd9b12b4027f066615c7542897b1f5740420"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9594296e9a2c80e62dbc9ad45ed12568",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9533,
+        "upload_time": "2020-10-17T21:18:24",
+        "upload_time_iso_8601": "2020-10-17T21:18:24.121555Z",
+        "url": "https://files.pythonhosted.org/packages/8a/79/5ccbfd044b1c6360fc551dbea5dc27cd83c804fd62006dbcfd0e0f8df861/healthkit_to_sqlite-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "aa1489a41bc8523ade946e58c15a4895",
+          "sha256": "39bff86a51729afb5256fefe53fddc8bb74f4f0cccb43bfc259608a819dc0734"
+        },
+        "downloads": -1,
+        "filename": "healthkit-to-sqlite-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "aa1489a41bc8523ade946e58c15a4895",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4774,
+        "upload_time": "2020-10-17T21:18:25",
+        "upload_time_iso_8601": "2020-10-17T21:18:25.107057Z",
+        "url": "https://files.pythonhosted.org/packages/17/b4/7c55d914283b565eeb55e5441e487267d79edb1b082b83deec96e9cc40f4/healthkit-to-sqlite-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "14f6e8377be9109314fe221b2e038fcd",
+          "sha256": "d5dc91c1347d3139124b1a47abecaad30c1618932c083444021f85b98d679f91"
+        },
+        "downloads": -1,
+        "filename": "healthkit_to_sqlite-1.0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "14f6e8377be9109314fe221b2e038fcd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9576,
+        "upload_time": "2021-08-20T00:57:16",
+        "upload_time_iso_8601": "2021-08-20T00:57:16.854551Z",
+        "url": "https://files.pythonhosted.org/packages/6b/1d/b8421aa1c363cb84466c595afadd9975bebc0f48ebb3c868aa4398d9c553/healthkit_to_sqlite-1.0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f1e5b92b0ff1f7c91bb2b74dbd809601",
+          "sha256": "7c83741de71b2f2962358a3ce07fc12dd64cdf6fd2779f9b29a6414fc1e64c06"
+        },
+        "downloads": -1,
+        "filename": "healthkit-to-sqlite-1.0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f1e5b92b0ff1f7c91bb2b74dbd809601",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8695,
+        "upload_time": "2021-08-20T00:57:18",
+        "upload_time_iso_8601": "2021-08-20T00:57:18.040478Z",
+        "url": "https://files.pythonhosted.org/packages/59/7c/78679140ffa8e17d2ad874764153cfc7ba942870967738dda9e16e6f3b8a/healthkit-to-sqlite-1.0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "14f6e8377be9109314fe221b2e038fcd",
+        "sha256": "d5dc91c1347d3139124b1a47abecaad30c1618932c083444021f85b98d679f91"
+      },
+      "downloads": -1,
+      "filename": "healthkit_to_sqlite-1.0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "14f6e8377be9109314fe221b2e038fcd",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9576,
+      "upload_time": "2021-08-20T00:57:16",
+      "upload_time_iso_8601": "2021-08-20T00:57:16.854551Z",
+      "url": "https://files.pythonhosted.org/packages/6b/1d/b8421aa1c363cb84466c595afadd9975bebc0f48ebb3c868aa4398d9c553/healthkit_to_sqlite-1.0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "f1e5b92b0ff1f7c91bb2b74dbd809601",
+        "sha256": "7c83741de71b2f2962358a3ce07fc12dd64cdf6fd2779f9b29a6414fc1e64c06"
+      },
+      "downloads": -1,
+      "filename": "healthkit-to-sqlite-1.0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "f1e5b92b0ff1f7c91bb2b74dbd809601",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 8695,
+      "upload_time": "2021-08-20T00:57:18",
+      "upload_time_iso_8601": "2021-08-20T00:57:18.040478Z",
+      "url": "https://files.pythonhosted.org/packages/59/7c/78679140ffa8e17d2ad874764153cfc7ba942870967738dda9e16e6f3b8a/healthkit-to-sqlite-1.0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

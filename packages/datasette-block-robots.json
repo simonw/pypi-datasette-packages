@@ -1,0 +1,300 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-block-robots\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-block-robots.svg)](https://pypi.org/project/datasette-block-robots/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-block-robots?label=changelog)](https://github.com/simonw/datasette-block-robots/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-block-robots/blob/master/LICENSE)\n\nDatasette plugin that blocks robots and crawlers using robots.txt\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-block-robots\n\n## Usage\n\nHaving installed the plugin, `/robots.txt` on your Datasette instance will return the following:\n\n    User-agent: *\n    Disallow: /\n\nThis will request all robots and crawlers not to visit any of the pages on your site.\n\nHere's a demo of the plugin in action: https://sqlite-generate-demo.datasette.io/robots.txt\n\n## Configuration\n\nBy default the plugin will block all access to the site, using `Disallow: /`.\n\nIf you want the index page to be indexed by search engines without crawling the database, table or row pages themselves, you can use the following:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-block-robots\": {\n            \"allow_only_index\": true\n        }\n    }\n}\n```\nThis will return a `/robots.txt` like so:\n\n    User-agent: *\n    Disallow: /db1\n    Disallow: /db2\n\nWith a `Disallow` line for every attached database.\n\nTo block access to specific areas of the site using custom paths, add this to your `metadata.json` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-block-robots\": {\n            \"disallow\": [\"/mydatabase/mytable\"]\n        }\n    }\n}\n```\nThis will result in a `/robots.txt` that looks like this:\n\n    User-agent: *\n    Disallow: /mydatabase/mytable\n\nAlternatively you can set the full contents of the `robots.txt` file using the `literal` configuration option. Here's how to do that if you are using YAML rather than JSON and have a `metadata.yml` file:\n\n```yaml\nplugins:\n    datasette-block-robots:\n        literal: |-\n            User-agent: *\n            Disallow: /\n            User-agent: Bingbot\n            User-agent: Googlebot\n            Disallow:\n```\nThis example would block all crawlers with the exception of Googlebot and Bingbot, which are allowed to crawl the entire site.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-block-robots\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-block-robots",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-block-robots",
+    "package_url": "https://pypi.org/project/datasette-block-robots/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-block-robots/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-block-robots/actions",
+      "Changelog": "https://github.com/simonw/datasette-block-robots/releases",
+      "Homepage": "https://github.com/simonw/datasette-block-robots",
+      "Issues": "https://github.com/simonw/datasette-block-robots/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-block-robots/1.0/",
+    "requires_dist": [
+      "datasette (>=0.50)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin that blocks all robots using robots.txt",
+    "version": "1.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11225130,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e528143762d13a972f19844220ba7f06",
+          "sha256": "434fc2e565b2b469c0e816d945e5520152a34e19d6dca468ec677fdbf1ac2a1f"
+        },
+        "downloads": -1,
+        "filename": "datasette_block_robots-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e528143762d13a972f19844220ba7f06",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2386,
+        "upload_time": "2020-06-23T02:54:20",
+        "upload_time_iso_8601": "2020-06-23T02:54:20.482713Z",
+        "url": "https://files.pythonhosted.org/packages/43/16/341dfa9aa782ff06a605d0f755d8af8bf2ee501b7c8d816a639d158bd55f/datasette_block_robots-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7edc937ae152dba617176f8299b82f4d",
+          "sha256": "b74ffa2cfdac757593e9cb100141582ec6b258ccd345b2a2c8eb48cfdc7877bc"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-robots-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7edc937ae152dba617176f8299b82f4d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2150,
+        "upload_time": "2020-06-23T02:54:22",
+        "upload_time_iso_8601": "2020-06-23T02:54:22.551551Z",
+        "url": "https://files.pythonhosted.org/packages/2d/c7/f77e57379aab9dddb5727ed25d82e5088dc2ee0af1bb8c1efbc1f521574d/datasette-block-robots-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f907da7ce7f07235258cfe9da1a8c263",
+          "sha256": "0d278bcccfedb0160a0b6b68b9d325cf1d58582f15202a6bafb85f8f0b1cdc0a"
+        },
+        "downloads": -1,
+        "filename": "datasette_block_robots-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f907da7ce7f07235258cfe9da1a8c263",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2446,
+        "upload_time": "2020-06-23T03:37:55",
+        "upload_time_iso_8601": "2020-06-23T03:37:55.021246Z",
+        "url": "https://files.pythonhosted.org/packages/5f/66/f443fb9fb1904fcb31ff52d196ea05f3d3efb0cd7d97f32919c976bfa22d/datasette_block_robots-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "148397c06fdb77d574235de8ac8a7b08",
+          "sha256": "ba58f2fe600568ab24cd789e078adb90e9d2682533cbd9ca7bdc70f281d953e5"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-robots-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "148397c06fdb77d574235de8ac8a7b08",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2212,
+        "upload_time": "2020-06-23T03:37:55",
+        "upload_time_iso_8601": "2020-06-23T03:37:55.903712Z",
+        "url": "https://files.pythonhosted.org/packages/d9/52/5107fa8d77249ff91cbed8f2e858b492b68b10bc7ba01bb80785f311a321/datasette-block-robots-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8cb6fe58f67ce87b3ecc67262eb8bf2a",
+          "sha256": "b4d85cb668a39f6357fba1e2cb53b2c5892c1a16cd239095c4e8bae1c23a47b8"
+        },
+        "downloads": -1,
+        "filename": "datasette_block_robots-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8cb6fe58f67ce87b3ecc67262eb8bf2a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2727,
+        "upload_time": "2020-09-05T17:15:30",
+        "upload_time_iso_8601": "2020-09-05T17:15:30.004952Z",
+        "url": "https://files.pythonhosted.org/packages/0e/a9/763047c5b2dea6b9c1ad0958fa2972e083d29fc3561b64d5e434a7d14859/datasette_block_robots-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8965fe2c9f2606e50bd9c638085c4dd5",
+          "sha256": "206fe3727ffb2712d0a8ccd99e094f1bc281a05680f31d96014e4e07ec732475"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-robots-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8965fe2c9f2606e50bd9c638085c4dd5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2542,
+        "upload_time": "2020-09-05T17:15:30",
+        "upload_time_iso_8601": "2020-09-05T17:15:30.885742Z",
+        "url": "https://files.pythonhosted.org/packages/fc/91/bf373a025db914e987f3b74b83f3f110b520e9ea5442ceb6a55d6788d89f/datasette-block-robots-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "336731d8c5903995ad90e41d649a36fc",
+          "sha256": "bdfd9e5001413481ad27f3ca6f9844fa91665ed304cbe2c089430430e35ea79c"
+        },
+        "downloads": -1,
+        "filename": "datasette_block_robots-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "336731d8c5903995ad90e41d649a36fc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2988,
+        "upload_time": "2020-09-06T01:44:44",
+        "upload_time_iso_8601": "2020-09-06T01:44:44.793650Z",
+        "url": "https://files.pythonhosted.org/packages/85/b0/daebc70841de5106f28184db9b0ee7314f4572d21a001614d49d86b0f063/datasette_block_robots-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3a0e6a0bd12bb29b18970e40741b1164",
+          "sha256": "6a2857bd2246ed4902a72860a1e03c8f9f00d92e80ab80f0396aaa7c69570458"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-robots-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3a0e6a0bd12bb29b18970e40741b1164",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2845,
+        "upload_time": "2020-09-06T01:44:45",
+        "upload_time_iso_8601": "2020-09-06T01:44:45.637513Z",
+        "url": "https://files.pythonhosted.org/packages/09/e9/f134f4eaf0cbd9fa2bcdfcaf4d54b083e1d0845be6e581da180a6c879485/datasette-block-robots-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3e527d88838b24188eb54eca2c1bc2f9",
+          "sha256": "3556381c5d61230927cc3e21c1a831b7afb0194d7a90f22c6777d0f8dc13d8f5"
+        },
+        "downloads": -1,
+        "filename": "datasette_block_robots-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3e527d88838b24188eb54eca2c1bc2f9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3252,
+        "upload_time": "2021-08-19T20:10:56",
+        "upload_time_iso_8601": "2021-08-19T20:10:56.934639Z",
+        "url": "https://files.pythonhosted.org/packages/c8/c3/705f5da8d7d6fac43936a9bc2a026a5ebe94cfb18a50a08a091df50d7f92/datasette_block_robots-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7534660d5866459777e526073859054b",
+          "sha256": "a47299e4c8142439ba1532039cee6f8fdb76fad786cc445f9f4b0229dce359df"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-robots-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7534660d5866459777e526073859054b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3142,
+        "upload_time": "2021-08-19T20:10:58",
+        "upload_time_iso_8601": "2021-08-19T20:10:58.766786Z",
+        "url": "https://files.pythonhosted.org/packages/05/8c/44ab0d679a2de225d384686e584e2bf92be88bead6e1963628ed938975aa/datasette-block-robots-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "3e527d88838b24188eb54eca2c1bc2f9",
+        "sha256": "3556381c5d61230927cc3e21c1a831b7afb0194d7a90f22c6777d0f8dc13d8f5"
+      },
+      "downloads": -1,
+      "filename": "datasette_block_robots-1.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "3e527d88838b24188eb54eca2c1bc2f9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 3252,
+      "upload_time": "2021-08-19T20:10:56",
+      "upload_time_iso_8601": "2021-08-19T20:10:56.934639Z",
+      "url": "https://files.pythonhosted.org/packages/c8/c3/705f5da8d7d6fac43936a9bc2a026a5ebe94cfb18a50a08a091df50d7f92/datasette_block_robots-1.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "7534660d5866459777e526073859054b",
+        "sha256": "a47299e4c8142439ba1532039cee6f8fdb76fad786cc445f9f4b0229dce359df"
+      },
+      "downloads": -1,
+      "filename": "datasette-block-robots-1.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "7534660d5866459777e526073859054b",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 3142,
+      "upload_time": "2021-08-19T20:10:58",
+      "upload_time_iso_8601": "2021-08-19T20:10:58.766786Z",
+      "url": "https://files.pythonhosted.org/packages/05/8c/44ab0d679a2de225d384686e584e2bf92be88bead6e1963628ed938975aa/datasette-block-robots-1.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

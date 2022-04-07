@@ -1,0 +1,217 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-debug-asgi\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-debug-asgi.svg)](https://pypi.org/project/datasette-debug-asgi/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-debug-asgi?include_prereleases&label=changelog)](https://github.com/simonw/datasette-debug-asgi/releases)\n[![Tests](https://github.com/simonw/datasette-debug-asgi/workflows/Test/badge.svg)](https://github.com/simonw/datasette-debug-asgi/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-debug-asgi/blob/main/LICENSE)\n\nDatasette plugin for dumping out the ASGI scope.\n\nAdds a new URL at `/-/asgi-scope` which shows the current ASGI scope. Demo here: https://datasette.io/-/asgi-scope\n\n## Installation\n\n    pip install datasette-debug-asgi\n\n## Usage\n\nVisit `/-/asgi-scope` to see debug output showing the ASGI scope.\n\nYou can add query string parameters such as `/-/asgi-scope?q=hello`.\n\nYou can also add extra path components such as `/-/asgi-scope/more/path/here`.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-debug-asgi",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-debug-asgi",
+    "package_url": "https://pypi.org/project/datasette-debug-asgi/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-debug-asgi/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-debug-asgi/actions",
+      "Changelog": "https://github.com/simonw/datasette-debug-asgi/releases",
+      "Homepage": "https://github.com/simonw/datasette-debug-asgi",
+      "Issues": "https://github.com/simonw/datasette-debug-asgi/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-debug-asgi/1.1/",
+    "requires_dist": [
+      "datasette (>=0.50)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Datasette plugin for dumping out the ASGI scope",
+    "version": "1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11206132,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6e142b832045bf93a758e7972012a368",
+          "sha256": "24004467412eee19d5a2d67917ec7db9103a9f9744bdf276693986c0014fc80e"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_asgi-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6e142b832045bf93a758e7972012a368",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6391,
+        "upload_time": "2020-02-05T01:01:32",
+        "upload_time_iso_8601": "2020-02-05T01:01:32.531880Z",
+        "url": "https://files.pythonhosted.org/packages/ea/14/fb61c9b429170e154efc9b1f332a02e76a5fe0d359cde0772c4f19efdce3/datasette_debug_asgi-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5c63a77ef8e4a1927ddc17c0fac6a2bc",
+          "sha256": "749a7f78baa5f708cab05e8f49cbc77f938bb94ba9b4da06bfcabaf4b859cbe6"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_asgi-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5c63a77ef8e4a1927ddc17c0fac6a2bc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6444,
+        "upload_time": "2020-06-29T16:24:40",
+        "upload_time_iso_8601": "2020-06-29T16:24:40.040158Z",
+        "url": "https://files.pythonhosted.org/packages/6e/f2/6fe1736151f9f09e2d00637f6ac417bfe3127995f93ca3200f3d9b33bb29/datasette_debug_asgi-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5290d8f0dc2024204a75f7ab52177fb0",
+          "sha256": "8443db0b82915e54089aa9910766d15e8515588c2bad3c7ce1fbd4be3e660542"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_asgi-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5290d8f0dc2024204a75f7ab52177fb0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 6329,
+        "upload_time": "2021-01-29T15:33:58",
+        "upload_time_iso_8601": "2021-01-29T15:33:58.364446Z",
+        "url": "https://files.pythonhosted.org/packages/86/a2/55d90c8d2ea357abb05162f0ef2d122a32fb23be920287c4ddc3c5182c4d/datasette_debug_asgi-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e6d0b2ba5fae1ea167eabce29c3d550d",
+          "sha256": "77eeffa2289dd6ed6f90ff3d195025cb065ec3df631ffff77987c7e997c29406"
+        },
+        "downloads": -1,
+        "filename": "datasette-debug-asgi-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e6d0b2ba5fae1ea167eabce29c3d550d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 1907,
+        "upload_time": "2021-01-29T15:33:59",
+        "upload_time_iso_8601": "2021-01-29T15:33:59.296949Z",
+        "url": "https://files.pythonhosted.org/packages/96/78/f283a41157ea78979760304bbd11053c87c39898cf326395a00c0a52db0f/datasette-debug-asgi-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1f52010bc6197367f0086156f2f949d4",
+          "sha256": "44d76b03ad019cfa553e4df62160d643133d716ad7a8c4937c470b3059d467a5"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_asgi-1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1f52010bc6197367f0086156f2f949d4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 6425,
+        "upload_time": "2021-08-17T23:41:52",
+        "upload_time_iso_8601": "2021-08-17T23:41:52.605911Z",
+        "url": "https://files.pythonhosted.org/packages/11/23/d6482cf65a86fc7c8f4f80aad3cd67366052acf9eaa1509a576adfe08b45/datasette_debug_asgi-1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8c66905a88ebc7eb175c1918356de685",
+          "sha256": "39ea9da23418ff58aba54a7316b5e80ff54f4fb9b2ad48bcb85e2326eeace5cd"
+        },
+        "downloads": -1,
+        "filename": "datasette-debug-asgi-1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8c66905a88ebc7eb175c1918356de685",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 6011,
+        "upload_time": "2021-08-17T23:41:53",
+        "upload_time_iso_8601": "2021-08-17T23:41:53.338965Z",
+        "url": "https://files.pythonhosted.org/packages/77/c1/07818914709617c34aff68fd40bcd887e3c13dbd7d6cd26ebc19d34255bf/datasette-debug-asgi-1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "1f52010bc6197367f0086156f2f949d4",
+        "sha256": "44d76b03ad019cfa553e4df62160d643133d716ad7a8c4937c470b3059d467a5"
+      },
+      "downloads": -1,
+      "filename": "datasette_debug_asgi-1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "1f52010bc6197367f0086156f2f949d4",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 6425,
+      "upload_time": "2021-08-17T23:41:52",
+      "upload_time_iso_8601": "2021-08-17T23:41:52.605911Z",
+      "url": "https://files.pythonhosted.org/packages/11/23/d6482cf65a86fc7c8f4f80aad3cd67366052acf9eaa1509a576adfe08b45/datasette_debug_asgi-1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8c66905a88ebc7eb175c1918356de685",
+        "sha256": "39ea9da23418ff58aba54a7316b5e80ff54f4fb9b2ad48bcb85e2326eeace5cd"
+      },
+      "downloads": -1,
+      "filename": "datasette-debug-asgi-1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "8c66905a88ebc7eb175c1918356de685",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 6011,
+      "upload_time": "2021-08-17T23:41:53",
+      "upload_time_iso_8601": "2021-08-17T23:41:53.338965Z",
+      "url": "https://files.pythonhosted.org/packages/77/c1/07818914709617c34aff68fd40bcd887e3c13dbd7d6cd26ebc19d34255bf/datasette-debug-asgi-1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

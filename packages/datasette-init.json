@@ -1,0 +1,259 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-init\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-init.svg)](https://pypi.org/project/datasette-init/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-init?label=changelog)](https://github.com/simonw/datasette-init/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-init/blob/master/LICENSE)\n\nEnsure specific tables and views exist on startup\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-init\n\n## Usage\n\nThis plugin is configured using `metadata.json` (or `metadata.yaml`). \n\n### Creating tables\n\nAdd a block like this that specifies the tables you would like to ensure exist:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-init\": {\n      \"my_database\": {\n        \"tables\": {\n          \"dogs\": {\n            \"columns\": {\n              \"id\": \"integer\",\n              \"name\": \"text\",\n              \"age\": \"integer\",\n              \"weight\": \"float\"\n            },\n            \"pk\": \"id\"\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nAny tables that do not yet exist will be created when Datasette first starts.\n\nValid column types are `\"integer\"`, `\"text\"`, `\"float\"` and `\"blob\"`.\n\nThe `\"pk\"` is optional, and is used to define the primary key. To define a compound primary key (across more than one column) use a list of column names here:\n```json\n    \"pk\": [\"id1\", \"id2\"]\n```\n\n### Creating views\n\nThe plugin can also be used to create views:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-init\": {\n      \"my_database\": {\n        \"views\": {\n          \"my_view\": \"select 1 + 1\"\n        }\n      }\n    }\n  }\n}\n```\n\nEach view in the ``\"views\"`` block will be created when the Database first starts. If a view with the same name already exists it will be replaced with the new definition.\n\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-init\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-init",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-init",
+    "package_url": "https://pypi.org/project/datasette-init/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-init/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-init/actions",
+      "Changelog": "https://github.com/simonw/datasette-init/releases",
+      "Homepage": "https://github.com/simonw/datasette-init",
+      "Issues": "https://github.com/simonw/datasette-init/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-init/0.2/",
+    "requires_dist": [
+      "datasette (>=0.45)",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Ensure specific tables and views exist on startup",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7610699,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a42cc470246f0661ce5dc5689834e10d",
+          "sha256": "0527cfb73877c15f5d47218a6903c18af27211ec7df5819974f56945e3f88e0b"
+        },
+        "downloads": -1,
+        "filename": "datasette_init-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a42cc470246f0661ce5dc5689834e10d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2662,
+        "upload_time": "2020-06-28T16:28:26",
+        "upload_time_iso_8601": "2020-06-28T16:28:26.735001Z",
+        "url": "https://files.pythonhosted.org/packages/bc/64/f408c7c5678d06a1af289826a8768c08f5c76f0773299e76f60d5b39585c/datasette_init-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5eff8be44f93385450b3e861decd9e45",
+          "sha256": "c377f77138e3def6b1a162db58d3d28dac85921ef9d42cdb01487983a4a3fff4"
+        },
+        "downloads": -1,
+        "filename": "datasette-init-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5eff8be44f93385450b3e861decd9e45",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2590,
+        "upload_time": "2020-06-28T16:28:28",
+        "upload_time_iso_8601": "2020-06-28T16:28:28.420323Z",
+        "url": "https://files.pythonhosted.org/packages/9c/4f/3edbc6db519a93873cc127625c70f75d5643d3cb95334749407c3c253e58/datasette-init-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "11919f78ae922796d0d5a8fbb4716312",
+          "sha256": "4e6a91d2c0f6f9b8721428bb049b328b9f5b54854fc9eef9562f3781884c2e92"
+        },
+        "downloads": -1,
+        "filename": "datasette_init-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "11919f78ae922796d0d5a8fbb4716312",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2923,
+        "upload_time": "2020-06-28T18:52:36",
+        "upload_time_iso_8601": "2020-06-28T18:52:36.564124Z",
+        "url": "https://files.pythonhosted.org/packages/08/f9/fc18062430816ca24524ccec8ca223cada18ffcc14ed40b02f385aae69cd/datasette_init-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "26836b3fbb040f162cc6e940b1faf754",
+          "sha256": "8c525f38240915e28e453a4e80b9b2fc9b618e482585611ad6effd34bb8504df"
+        },
+        "downloads": -1,
+        "filename": "datasette-init-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "26836b3fbb040f162cc6e940b1faf754",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2910,
+        "upload_time": "2020-06-28T18:52:37",
+        "upload_time_iso_8601": "2020-06-28T18:52:37.267120Z",
+        "url": "https://files.pythonhosted.org/packages/8e/2c/1f31fc15e674e23cdd87aa59f14fc952899f82be0cd7dc94609645c08c0d/datasette-init-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c2b8c67d08b06eba6a598e7753c323f4",
+          "sha256": "3ba7f6ed24928d02ece0932d9469f88047447020e3b9c97ded79d89e15a02ed8"
+        },
+        "downloads": -1,
+        "filename": "datasette_init-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c2b8c67d08b06eba6a598e7753c323f4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2934,
+        "upload_time": "2020-06-29T21:17:39",
+        "upload_time_iso_8601": "2020-06-29T21:17:39.402230Z",
+        "url": "https://files.pythonhosted.org/packages/3b/0b/45900e049d27e682b63b743d69278f7ea4975ccf2244b9ea2a7c093f89f1/datasette_init-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "15c5303c29b63c64b9437f6be14c428d",
+          "sha256": "6dc8b07e221625e631a8f6d6e6a66ff97fce754b1e29869ee25322f164bcb8d3"
+        },
+        "downloads": -1,
+        "filename": "datasette-init-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "15c5303c29b63c64b9437f6be14c428d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2910,
+        "upload_time": "2020-06-29T21:17:40",
+        "upload_time_iso_8601": "2020-06-29T21:17:40.318520Z",
+        "url": "https://files.pythonhosted.org/packages/f4/a4/d8166d17ed110c4969cfe7c2a87723a5f0810db1e11857cac1a3919ba99f/datasette-init-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "93780c4db8fd5b8cee72098d24062768",
+          "sha256": "230b5570f247d5483a93cacf1f220a7b45d336a564dc6e6e60afc3a5957040b7"
+        },
+        "downloads": -1,
+        "filename": "datasette_init-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "93780c4db8fd5b8cee72098d24062768",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2912,
+        "upload_time": "2020-07-01T22:47:38",
+        "upload_time_iso_8601": "2020-07-01T22:47:38.353905Z",
+        "url": "https://files.pythonhosted.org/packages/4f/76/4b3651e82457182ec21bd55ea18bdca9fa3b85d3c3b1e0075df14100e3ff/datasette_init-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "847ce8795a5616ac91b0ccaea2ad5e3d",
+          "sha256": "6b92a3cb396fbf777d2891d385da6238e9c7c4b7a1cf02c7966d2206123be398"
+        },
+        "downloads": -1,
+        "filename": "datasette-init-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "847ce8795a5616ac91b0ccaea2ad5e3d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2907,
+        "upload_time": "2020-07-01T22:47:39",
+        "upload_time_iso_8601": "2020-07-01T22:47:39.258625Z",
+        "url": "https://files.pythonhosted.org/packages/0b/a9/35870161d1db6c303cc5f7b060ea92c3f3401b194bd5f7458e46c6afd331/datasette-init-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "93780c4db8fd5b8cee72098d24062768",
+        "sha256": "230b5570f247d5483a93cacf1f220a7b45d336a564dc6e6e60afc3a5957040b7"
+      },
+      "downloads": -1,
+      "filename": "datasette_init-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "93780c4db8fd5b8cee72098d24062768",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2912,
+      "upload_time": "2020-07-01T22:47:38",
+      "upload_time_iso_8601": "2020-07-01T22:47:38.353905Z",
+      "url": "https://files.pythonhosted.org/packages/4f/76/4b3651e82457182ec21bd55ea18bdca9fa3b85d3c3b1e0075df14100e3ff/datasette_init-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "847ce8795a5616ac91b0ccaea2ad5e3d",
+        "sha256": "6b92a3cb396fbf777d2891d385da6238e9c7c4b7a1cf02c7966d2206123be398"
+      },
+      "downloads": -1,
+      "filename": "datasette-init-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "847ce8795a5616ac91b0ccaea2ad5e3d",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2907,
+      "upload_time": "2020-07-01T22:47:39",
+      "upload_time_iso_8601": "2020-07-01T22:47:39.258625Z",
+      "url": "https://files.pythonhosted.org/packages/0b/a9/35870161d1db6c303cc5f7b060ea92c3f3401b194bd5f7458e46c6afd331/datasette-init-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

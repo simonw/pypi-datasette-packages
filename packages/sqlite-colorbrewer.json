@@ -1,0 +1,176 @@
+{
+  "info": {
+    "author": "Chris Amico",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# sqlite-colorbrewer\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-colorbrewer.svg)](https://pypi.org/project/sqlite-colorbrewer/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/sqlite-colorbrewer?include_prereleases&label=changelog)](https://github.com/eyeseast/sqlite-colorbrewer/releases)\n[![Tests](https://github.com/eyeseast/sqlite-colorbrewer/workflows/Test/badge.svg)](https://github.com/eyeseast/sqlite-colorbrewer/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/sqlite-colorbrewer/blob/main/LICENSE)\n\nA custom function to use [ColorBrewer](https://colorbrewer2.org/) scales in SQLite queries.\n\nColors are exported from [here](https://colorbrewer2.org/export/colorbrewer.json).\n\n## Installation\n\nTo install as a Python library and use with the [standard SQLite3 module](https://docs.python.org/3/library/sqlite3.html):\n\n    pip install sqlite-colorbrewer\n\nTo install this plugin in the same environment as Datasette.\n\n    datasette install sqlite-colorbrewer\n\n## Usage\n\nIf you're using this library with Datasette, it will be automatically registered as a plugin and available for use in SQL queries, like so:\n\n```sql\nSELECT colorbrewer('Blues', 9, 0);\n```\n\nThat will return a single value: `\"rgb(247,251,255)\"`\n\nTo use with a SQLite connection outside of Datasette, use the `register` function:\n\n```python\n>>> import sqlite3\n>>> import sqlite_colorbrewer\n\n>>> conn = sqlite3.connect(':memory')\n>>> sqlite_colorbrewer.register(conn)\n\n>>> cursor = conn.execute(\"SELECT colorbrewer('Blues', 9, 0);\")\n>>> result = next(cursor)\n>>> print(result)\nrgb(247,251,255)\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd sqlite-colorbrewer\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nTo build `sqlite_colorbrewer/colorbrewer.py`:\n\n    ./json_to_python.py\n    black . # to format the resulting file\n\n## ColorBrewer\n\nCopyright (c) 2002 Cynthia Brewer, Mark Harrower, and The Pennsylvania State University.\n\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\nSee the [ColorBrewer updates](http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_updates.html) for updates to copyright information.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/eyeseast/sqlite-colorbrewer",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "sqlite-colorbrewer",
+    "package_url": "https://pypi.org/project/sqlite-colorbrewer/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/sqlite-colorbrewer/",
+    "project_urls": {
+      "CI": "https://github.com/eyeseast/sqlite-colorbrewer/actions",
+      "Changelog": "https://github.com/eyeseast/sqlite-colorbrewer/releases",
+      "Homepage": "https://github.com/eyeseast/sqlite-colorbrewer",
+      "Issues": "https://github.com/eyeseast/sqlite-colorbrewer/issues"
+    },
+    "release_url": "https://pypi.org/project/sqlite-colorbrewer/0.2/",
+    "requires_dist": [
+      "datasette ; extra == 'test'",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "A custom function to use ColorBrewer scales in SQLite queries",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13053405,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "324120b258f2560822107d9cfa038961",
+          "sha256": "6b4f1c44d0d49dce14a1554a76e353440dafcca04c0f1c9eb08ab35336f29f3b"
+        },
+        "downloads": -1,
+        "filename": "sqlite_colorbrewer-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "324120b258f2560822107d9cfa038961",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12571,
+        "upload_time": "2022-02-19T21:55:40",
+        "upload_time_iso_8601": "2022-02-19T21:55:40.495467Z",
+        "url": "https://files.pythonhosted.org/packages/67/8a/11058ccc1abec0bdc53cddaf0cd5f19614264966bead6c78deca30eb8cc3/sqlite_colorbrewer-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f76e81c4875deac86b69dbe548a9ae60",
+          "sha256": "65cba7fc21b65e17cb359ba348f8777d3300998c5178abc72bdaecbcdf1a37d9"
+        },
+        "downloads": -1,
+        "filename": "sqlite-colorbrewer-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f76e81c4875deac86b69dbe548a9ae60",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 13546,
+        "upload_time": "2022-02-19T21:55:42",
+        "upload_time_iso_8601": "2022-02-19T21:55:42.227899Z",
+        "url": "https://files.pythonhosted.org/packages/03/73/7f9b495583e6669327dfcd3b285c7bcea7a2ec99818ac3e46fa40aace43e/sqlite-colorbrewer-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "332b733ae7be71cc8416f3d467422215",
+          "sha256": "08b81d4288fcf29b03cd8c1c84b4a4425220a59d5cbd32b71818ab2eac945eaf"
+        },
+        "downloads": -1,
+        "filename": "sqlite_colorbrewer-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "332b733ae7be71cc8416f3d467422215",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12619,
+        "upload_time": "2022-03-02T03:11:32",
+        "upload_time_iso_8601": "2022-03-02T03:11:32.718225Z",
+        "url": "https://files.pythonhosted.org/packages/90/53/c587cc6a96f98b3d433a76896823213551ce212acc7bb4a0418e42448fc0/sqlite_colorbrewer-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ac3c03831c4b9aff2e65d3a83cbb0585",
+          "sha256": "80049cd65e94a3fd128284218baa3d71f76df70ffe41d38f3daacf0f857548ea"
+        },
+        "downloads": -1,
+        "filename": "sqlite-colorbrewer-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ac3c03831c4b9aff2e65d3a83cbb0585",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 13601,
+        "upload_time": "2022-03-02T03:11:36",
+        "upload_time_iso_8601": "2022-03-02T03:11:36.067456Z",
+        "url": "https://files.pythonhosted.org/packages/e1/34/c481ad706f79b5460ad334f72c3a260bd4a4b14b422e6b6ba98e580ad5bc/sqlite-colorbrewer-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "332b733ae7be71cc8416f3d467422215",
+        "sha256": "08b81d4288fcf29b03cd8c1c84b4a4425220a59d5cbd32b71818ab2eac945eaf"
+      },
+      "downloads": -1,
+      "filename": "sqlite_colorbrewer-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "332b733ae7be71cc8416f3d467422215",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 12619,
+      "upload_time": "2022-03-02T03:11:32",
+      "upload_time_iso_8601": "2022-03-02T03:11:32.718225Z",
+      "url": "https://files.pythonhosted.org/packages/90/53/c587cc6a96f98b3d433a76896823213551ce212acc7bb4a0418e42448fc0/sqlite_colorbrewer-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ac3c03831c4b9aff2e65d3a83cbb0585",
+        "sha256": "80049cd65e94a3fd128284218baa3d71f76df70ffe41d38f3daacf0f857548ea"
+      },
+      "downloads": -1,
+      "filename": "sqlite-colorbrewer-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ac3c03831c4b9aff2e65d3a83cbb0585",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 13601,
+      "upload_time": "2022-03-02T03:11:36",
+      "upload_time_iso_8601": "2022-03-02T03:11:36.067456Z",
+      "url": "https://files.pythonhosted.org/packages/e1/34/c481ad706f79b5460ad334f72c3a260bd4a4b14b422e6b6ba98e580ad5bc/sqlite-colorbrewer-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,176 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-backup\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-backup.svg)](https://pypi.org/project/datasette-backup/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-backup?include_prereleases&label=changelog)](https://github.com/simonw/datasette-backup/releases)\n[![Tests](https://github.com/simonw/datasette-backup/workflows/Test/badge.svg)](https://github.com/simonw/datasette-backup/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-backup/blob/main/LICENSE)\n\nPlugin adding backup options to Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-backup\n\n## Usage\n\nOnce installed, you can download a SQL backup of any of your databases from:\n\n    /-/backup/dbname.sql\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-backup\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-backup",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-backup",
+    "package_url": "https://pypi.org/project/datasette-backup/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-backup/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-backup/actions",
+      "Changelog": "https://github.com/simonw/datasette-backup/releases",
+      "Homepage": "https://github.com/simonw/datasette-backup",
+      "Issues": "https://github.com/simonw/datasette-backup/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-backup/0.1/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-dump (>=0.1.1)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Plugin adding backup options to Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8127132,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9e564118e26ac15414bb2006ceb3e520",
+          "sha256": "b8108d0896f5c394f0b6b8828e0ba948a3370c053eb58c3e01856341dfa5b33e"
+        },
+        "downloads": -1,
+        "filename": "datasette_backup-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9e564118e26ac15414bb2006ceb3e520",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2795,
+        "upload_time": "2020-09-07T02:28:28",
+        "upload_time_iso_8601": "2020-09-07T02:28:28.712755Z",
+        "url": "https://files.pythonhosted.org/packages/a4/be/5e982dc4251e44ee6c78e786d4958650bc0ae470112338c5c8fe6243e5e5/datasette_backup-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "aefb0e90cdba8fc3810566bb938ba1e1",
+          "sha256": "e9dde717e66b061769fb325475be30352d405c53cdcc44114c2664be876907bf"
+        },
+        "downloads": -1,
+        "filename": "datasette-backup-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "aefb0e90cdba8fc3810566bb938ba1e1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2643,
+        "upload_time": "2020-09-07T02:28:29",
+        "upload_time_iso_8601": "2020-09-07T02:28:29.451381Z",
+        "url": "https://files.pythonhosted.org/packages/11/26/c2d817284cad97f600e9bff12abafb07dc0c35e02724f9a92eb496b3bf58/datasette-backup-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8ff1662be8d2d48fb99edc39eb3ba615",
+          "sha256": "1342b866e92bd66b1ec6b6bb5fdadc8829f84c9625852c26ba5f4299969522a5"
+        },
+        "downloads": -1,
+        "filename": "datasette_backup-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8ff1662be8d2d48fb99edc39eb3ba615",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2762,
+        "upload_time": "2020-09-06T07:23:54",
+        "upload_time_iso_8601": "2020-09-06T07:23:54.590623Z",
+        "url": "https://files.pythonhosted.org/packages/9e/08/b4954eb1810f76b4e750d57efcaaf8d1cfe1f3043eb97a04214ccdd28349/datasette_backup-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7d99daf4fe2b714ffb847b3019b24a75",
+          "sha256": "0869b357763096071f24196363419a85aff5e701fa0fd338fed20eecc87dd9ff"
+        },
+        "downloads": -1,
+        "filename": "datasette-backup-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7d99daf4fe2b714ffb847b3019b24a75",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2591,
+        "upload_time": "2020-09-06T07:23:56",
+        "upload_time_iso_8601": "2020-09-06T07:23:56.516038Z",
+        "url": "https://files.pythonhosted.org/packages/81/f0/c6d58f9c4354d8a54be17b5280e5f19a17a2a7a6e6bd2b45fe7ad992b557/datasette-backup-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "9e564118e26ac15414bb2006ceb3e520",
+        "sha256": "b8108d0896f5c394f0b6b8828e0ba948a3370c053eb58c3e01856341dfa5b33e"
+      },
+      "downloads": -1,
+      "filename": "datasette_backup-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "9e564118e26ac15414bb2006ceb3e520",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2795,
+      "upload_time": "2020-09-07T02:28:28",
+      "upload_time_iso_8601": "2020-09-07T02:28:28.712755Z",
+      "url": "https://files.pythonhosted.org/packages/a4/be/5e982dc4251e44ee6c78e786d4958650bc0ae470112338c5c8fe6243e5e5/datasette_backup-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "aefb0e90cdba8fc3810566bb938ba1e1",
+        "sha256": "e9dde717e66b061769fb325475be30352d405c53cdcc44114c2664be876907bf"
+      },
+      "downloads": -1,
+      "filename": "datasette-backup-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "aefb0e90cdba8fc3810566bb938ba1e1",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2643,
+      "upload_time": "2020-09-07T02:28:29",
+      "upload_time_iso_8601": "2020-09-07T02:28:29.451381Z",
+      "url": "https://files.pythonhosted.org/packages/11/26/c2d817284cad97f600e9bff12abafb07dc0c35e02724f9a92eb496b3bf58/datasette-backup-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

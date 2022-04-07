@@ -1,0 +1,595 @@
+{
+  "info": {
+    "author": "Chris Amico",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# geocode-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/geocode-sqlite.svg)](https://pypi.org/project/geocode-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/geocode-sqlite?include_prereleases&label=changelog)](https://github.com/eyeseast/geocode-sqlite/releases)\n[![Tests](https://github.com/eyeseast/geocode-sqlite/workflows/Test/badge.svg)](https://github.com/eyeseast/geocode-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/geocode-sqlite/blob/master/LICENSE)\n\nGeocode rows from a SQLite table\n\n## Installation\n\nInstall this tool using `pip` or `pipx`:\n\n```sh\n# install inside a virtualenv\npip install geocode-sqlite\n\n# install globally\npipx install geocode-sqlite\n```\n\n## Usage\n\nLet's say you have a spreadsheet with addresses in it, and you'd like to map those locations.\nFirst, create a SQLite database and insert rows from that spreadsheet using `sqlite-utils`.\n\n```sh\nsqlite-utils insert data.db data data.csv --csv\n```\n\nNow, geocode it using OpenStreetMap's Nominatim geocoder.\n\n```sh\ngeocode-sqlite nominatim data.db data \\\n --location=\"{address}, {city}, {state} {zip}\" \\\n --delay=1 \\\n --user-agent=\"this-is-me\"\n```\n\nIn the command above, you're using Nominatim, which is free and only asks for a unique user agent (`--user-agent`).\n\nThis will connect to a database (`data.db`) and read all rows from the table `data` (skipping any that already\nhave both a `latitude` and `longitude` column filled).\n\nYou're also telling the geocoder how to extract a location query (`--location`) from a row of data, using Python's\nbuilt-in string formatting, and setting a rate limit (`--delay`) of one request per second.\n\nFor each row where geocoding succeeds, `latitude` and `longitude` will be populated. If you hit an error, or a rate limit,\nrun the same query and pick up where you left off.\n\nThe resulting table layout can be visualized with [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map).\n\nUnder the hood, this package uses the excellent [geopy](https://geopy.readthedocs.io/en/latest/) library, which is stable and thoroughly road-tested. If you need help understanding a particular geocoder's options, consult [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders).\n\n### Supported Geocoders\n\nThe CLI currently supports these geocoders:\n\n- `bing`\n- `googlev3`\n- `mapquest` (and `open-mapquest`)\n- `nominatim`\n- `mapbox`\n\nMore will be added soon.\n\n### Common arguments and options\n\nEach geocoder needs to know where to find the data it's working with. These are the first two arguments:\n\n- database: a path to a SQLite file, which must already exist\n- table: the name of a table, in that database, which exists and has data to geocode\n\nFrom there, we have a set of options passed to every geocoder:\n\n- `location`: a [string format](https://docs.python.org/3/library/stdtypes.html#str.format) that will be expanded with each row to build a full query, to be geocoded\n- `delay`: a delay between each call (some services require this)\n- `latitude`: latitude column name\n- `longitude`: longitude column name\n- `geojson`: store results as GeoJSON, instead of in latitude and longitude columns\n- `spatialite`: store results in a SpatiaLite geometry column, instead of in latitude and longitude columns\n\nEach geocoder takes additional, specific arguments beyond these, such as API keys. Again, [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) is an excellent resource.\n\n## Python API\n\nThe command line interface aims to support the most common options for each geocoder. For more find-grained control, use the Python API.\n\nAs with the CLI, this assumes you already have a SQLite database and a table of location data.\n\n```python\nfrom geocode_sqlite import geocode_table\nfrom geopy.geocoders import Nominatim\n\n# create a geocoder instance, with some extra options\nnominatim = Nominatim(user_agent=\"this-is-me\", domain=\"nominatim.local.dev\", scheme=\"http\")\n\n# assuming our database is in the same directory\ncount = geocode_table(\"data.db\", \"data\", query_template=\"{address}, {city}, {state} {zip}\")\n\n# when it's done\nprint(f\"Geocoded {count} rows\")\n```\n\nAny [geopy geocoder](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) can be used with the Python API.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n```sh\ncd geocode-sqlite\npython -m venv .venv\nsource .venv/bin/activate\n```\n\nOr if you are using `pipenv`:\n\n```sh\npipenv shell\n```\n\nNow install the dependencies and tests:\n\n```sh\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```sh\npytest\n\n```\n\nPlease remember that this library is mainly glue code between other well-tested projects, specifically: click, geopy and sqlite-utils. Tests should focus on making sure those parts fit together correctly. We can assume the parts themselves already work.\n\nTo that end, there is a test geocoder included: `geocode_sqlite.testing.DummyGeocoder`. That geocoder works with an included dataset of In-N-Out Burger locations provided by [AllThePlaces](https://www.alltheplaces.xyz/). It works like a normal GeoPy geocoder, except it will only return results for In-N-Out locations using the included database.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/eyeseast/geocode-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "geocode-sqlite",
+    "package_url": "https://pypi.org/project/geocode-sqlite/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/geocode-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/eyeseast/geocode-sqlite/actions",
+      "Changelog": "https://github.com/eyeseast/geocode-sqlite/releases",
+      "Homepage": "https://github.com/eyeseast/geocode-sqlite",
+      "Issues": "https://github.com/eyeseast/geocode-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/geocode-sqlite/0.6.1/",
+    "requires_dist": [
+      "click (>=7.0)",
+      "sqlite-utils",
+      "geopy",
+      "pytest ; extra == 'test'",
+      "geojson-to-sqlite ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Geocode rows from a SQLite table",
+    "version": "0.6.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13189293,
+  "releases": {
+    "0.1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9524d139427c26cfe9ccb476a766b82a",
+          "sha256": "62fccc201d089459f4d77227f08370c7e92a3c577485ed66b11c4008ab3a1a0f"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9524d139427c26cfe9ccb476a766b82a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10006,
+        "upload_time": "2020-09-08T01:26:34",
+        "upload_time_iso_8601": "2020-09-08T01:26:34.361291Z",
+        "url": "https://files.pythonhosted.org/packages/24/2b/37d316cc7e4063e1ab75832430fefcdf7a4b1714fa98fb238e3390cd59ba/geocode_sqlite-0.1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "dc283af1d0257bf6a5936c7b06b18fc7",
+          "sha256": "a3613b84f8f360a12df730bb534431870e6317ae08beb5dc68f3619949bf9088"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dc283af1d0257bf6a5936c7b06b18fc7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5023,
+        "upload_time": "2020-09-08T01:26:37",
+        "upload_time_iso_8601": "2020-09-08T01:26:37.105564Z",
+        "url": "https://files.pythonhosted.org/packages/de/3a/d97ee20361736695e55f4936161da09ecd7c46fede73dd581c1b315485ac/geocode-sqlite-0.1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7abc6ac9d5adfc9461d5c206e490fea9",
+          "sha256": "f7c3ab8a627b130ac7ef1beb2907a12f625e273ad6aa7467f49f87c06b000e5a"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7abc6ac9d5adfc9461d5c206e490fea9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10363,
+        "upload_time": "2020-09-08T14:39:06",
+        "upload_time_iso_8601": "2020-09-08T14:39:06.425098Z",
+        "url": "https://files.pythonhosted.org/packages/c7/a4/0fd68d3cef0cbc0a8e03916c6352e83594ea602de94e249d81c3e00eee94/geocode_sqlite-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f0551741db5840fd880c364378503415",
+          "sha256": "d8dd32eb63b8af45e9a7ee3d4ee09e075d529b487ee8f5f980787075d6e5b79a"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f0551741db5840fd880c364378503415",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5375,
+        "upload_time": "2020-09-08T14:39:08",
+        "upload_time_iso_8601": "2020-09-08T14:39:08.668756Z",
+        "url": "https://files.pythonhosted.org/packages/81/78/1fba5cd2781b079ebd581221c1f417d81ecd1d9b645d70f75c744b4c3d85/geocode-sqlite-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7310abcbd80e887fe196a2ea03a94eda",
+          "sha256": "4287316f97f292ee88fee58efa99d91bccc3fa2863c04fb82fe5efd7949bc895"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7310abcbd80e887fe196a2ea03a94eda",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10560,
+        "upload_time": "2020-09-08T18:09:58",
+        "upload_time_iso_8601": "2020-09-08T18:09:58.170810Z",
+        "url": "https://files.pythonhosted.org/packages/af/18/35eeba290b68d8ac1edd8496e82b7dc9deb909566fa166a097653912097e/geocode_sqlite-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4fb8b0031b79c7774b3d7fa42d073166",
+          "sha256": "0fdde5aca7a8bd056fd3f026ff8a72b32f226bdd10924bd06b674c108405b20f"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4fb8b0031b79c7774b3d7fa42d073166",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5564,
+        "upload_time": "2020-09-08T18:10:01",
+        "upload_time_iso_8601": "2020-09-08T18:10:01.410778Z",
+        "url": "https://files.pythonhosted.org/packages/40/ee/7bd583beac8712825eec00080b919840afbfc619a331e540df5c5a43c6bc/geocode-sqlite-0.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "aa6bbc06aac727b56a8e1c3c03dca843",
+          "sha256": "4629cd5575ba227f3c169dc94e64eab71f80fc4ceabf538b5d727107bd82a48b"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.1.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "aa6bbc06aac727b56a8e1c3c03dca843",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10845,
+        "upload_time": "2020-09-09T19:35:35",
+        "upload_time_iso_8601": "2020-09-09T19:35:35.450776Z",
+        "url": "https://files.pythonhosted.org/packages/9e/5c/1ebd03ecda1e53edeba9bb58959d849fc33dcd62924942d19b69c24e5a83/geocode_sqlite-0.1.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8d55b628d2dc8e6ab1e0a00282c2a0e6",
+          "sha256": "2988442391bcac1d46ed04d63960757481da3c96a962ac6b9b895b72a4bbeb5f"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.1.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8d55b628d2dc8e6ab1e0a00282c2a0e6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6115,
+        "upload_time": "2020-09-09T19:35:36",
+        "upload_time_iso_8601": "2020-09-09T19:35:36.519660Z",
+        "url": "https://files.pythonhosted.org/packages/88/e6/616e6a715b433a5a737fb6dd210272f2d6b81734693dda7f0a98fa480222/geocode-sqlite-0.1.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "99eefa6a3d689073e4027013cc18630c",
+          "sha256": "04b96b64daf21ab450c0ac3c748641a9092a48de4d0f7715288fee68bc8d44e2"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.2.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "99eefa6a3d689073e4027013cc18630c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 11124,
+        "upload_time": "2021-04-03T14:45:20",
+        "upload_time_iso_8601": "2021-04-03T14:45:20.327637Z",
+        "url": "https://files.pythonhosted.org/packages/22/85/a79bd5e8bb0e954f1f011225433cc67361b5381c4a733d664485c9b217e5/geocode_sqlite-0.2.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cfbc61098f195e7cfc730bde6a5ba01f",
+          "sha256": "dbf6151923b1e44a20c4d3f6fdb5a1d1c0bf9229d74d5e0cc120363fbe304177"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.2.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cfbc61098f195e7cfc730bde6a5ba01f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6945,
+        "upload_time": "2021-04-03T14:45:21",
+        "upload_time_iso_8601": "2021-04-03T14:45:21.423190Z",
+        "url": "https://files.pythonhosted.org/packages/dc/47/1e958d52fe63b33ff0dc39077c19ae9dffd48a3ef680bba702a3a7fa8909/geocode-sqlite-0.2.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "96f148a299d4dd39b042bf15f8228c6f",
+          "sha256": "7af7194cd8669d84d27c484210bd153f0029c7fc744a8bce66fe54ec9223595c"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.3.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "96f148a299d4dd39b042bf15f8228c6f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 11747,
+        "upload_time": "2021-04-04T16:07:51",
+        "upload_time_iso_8601": "2021-04-04T16:07:51.258931Z",
+        "url": "https://files.pythonhosted.org/packages/8b/78/defcaab8526dcd91bc088795d5b0520286b9deb89b21279195506e25bd7a/geocode_sqlite-0.3.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1612d0a69d5c47b042c72a6a21eee575",
+          "sha256": "a6f14ff860d87b09ff4018efe4a654c3f6edebf439a9acbd4efde3ef56b2f501"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.3.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1612d0a69d5c47b042c72a6a21eee575",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7518,
+        "upload_time": "2021-04-04T16:07:52",
+        "upload_time_iso_8601": "2021-04-04T16:07:52.271379Z",
+        "url": "https://files.pythonhosted.org/packages/49/20/6c5110ee4054ae8b19241b09022dd22e880e21136e8cd30ea3983ba9b4d5/geocode-sqlite-0.3.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "35d13455fbdc5710cc08b2f881fb2f33",
+          "sha256": "fdd4bf3666d9fe8922e755ac49255c67a3557ff67cb4dea62d70fc6c8e3b7af3"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.4.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "35d13455fbdc5710cc08b2f881fb2f33",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 12032,
+        "upload_time": "2021-04-15T01:15:43",
+        "upload_time_iso_8601": "2021-04-15T01:15:43.762343Z",
+        "url": "https://files.pythonhosted.org/packages/1c/0a/ee0945c0dc5e2fcfa2454aee480f608d55a8d23df63189f7c389726013e2/geocode_sqlite-0.4.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f362e8b3be627b228a8fd2171a14fed3",
+          "sha256": "8e31ae9247c2e1c962a0b6642bf036b4d9318667df5a53457527e6b92ce1f4a3"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.4.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f362e8b3be627b228a8fd2171a14fed3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7729,
+        "upload_time": "2021-04-15T01:15:44",
+        "upload_time_iso_8601": "2021-04-15T01:15:44.836403Z",
+        "url": "https://files.pythonhosted.org/packages/79/2e/8298b645964e9480ed6269119a283d4abdf6f904ebf13b60af31998d3d72/geocode-sqlite-0.4.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2ff11ff939f28f98b7af8cbef5205151",
+          "sha256": "287c271be4d1e45b0710475aafcf3eaadf1d9eb060038fcc5adf861091c9bea2"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.5.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2ff11ff939f28f98b7af8cbef5205151",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 12064,
+        "upload_time": "2021-04-20T01:40:53",
+        "upload_time_iso_8601": "2021-04-20T01:40:53.542796Z",
+        "url": "https://files.pythonhosted.org/packages/66/99/68a468e24fa1aba741a807a59150a1f72b6b4b8d3e85929c79d61e694d02/geocode_sqlite-0.5.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4ca6a8ccde23bf2ed3782caea8de1e6d",
+          "sha256": "1f93ec7b6ec3782d303792f8d9c01261f27e894c0efcbee9bf54e0e9da028f69"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.5.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4ca6a8ccde23bf2ed3782caea8de1e6d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7753,
+        "upload_time": "2021-04-20T01:40:54",
+        "upload_time_iso_8601": "2021-04-20T01:40:54.377370Z",
+        "url": "https://files.pythonhosted.org/packages/06/46/f4744b734246b7465ed0745e393c4780aa0ce08dae331238acc42d3796f2/geocode-sqlite-0.5.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a8c565d5e426d684ebf59d15835197f8",
+          "sha256": "f5249fd1ce6acd25452e4387060a7058eb9e65e41cc15e4bd30f7b71a238679e"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.5.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a8c565d5e426d684ebf59d15835197f8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 12766,
+        "upload_time": "2021-05-18T01:34:30",
+        "upload_time_iso_8601": "2021-05-18T01:34:30.720269Z",
+        "url": "https://files.pythonhosted.org/packages/ea/2f/a52a18c99dcef5153fcbb674bf948e91e8281758cd983d91d32331c21412/geocode_sqlite-0.5.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3ca22900534d7b88e39f39c66fd005a0",
+          "sha256": "a5a6cca2ea86f9627d84d2c709b5279d6d818ae3187da424f5a96ac110a41eb9"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.5.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3ca22900534d7b88e39f39c66fd005a0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 13408,
+        "upload_time": "2021-05-18T01:34:31",
+        "upload_time_iso_8601": "2021-05-18T01:34:31.762497Z",
+        "url": "https://files.pythonhosted.org/packages/07/0e/e1df2d1631dc36da1357f4962802aa349a89358c68a41f1c51dc81da5f72/geocode-sqlite-0.5.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ca287f65c805ebd40a537be6fc6195c6",
+          "sha256": "7135c10357daffce24d92b7d61cb018a877358e908018bed834b23a77f6a04dc"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.5.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ca287f65c805ebd40a537be6fc6195c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 12818,
+        "upload_time": "2022-03-01T19:50:29",
+        "upload_time_iso_8601": "2022-03-01T19:50:29.920293Z",
+        "url": "https://files.pythonhosted.org/packages/3a/25/aa1101842e802453c2a746d83e4073a602fc8498d1034926cf1a28d74414/geocode_sqlite-0.5.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "05054c9ac0d8d3aad85bdc537dabacdb",
+          "sha256": "3addb30ae11e80b4e2c88bb15bc8dbb6b9b69255c27b66a77d6ed8d113758497"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.5.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "05054c9ac0d8d3aad85bdc537dabacdb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 13449,
+        "upload_time": "2022-03-01T19:50:31",
+        "upload_time_iso_8601": "2022-03-01T19:50:31.435412Z",
+        "url": "https://files.pythonhosted.org/packages/2a/a1/6813ba604ccf9bcbc450c2453051c5ac9ca6980a93015048ce8d41b5ad15/geocode-sqlite-0.5.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a89fceec1f5ca5b9c369f99aa2a75f86",
+          "sha256": "89512180037d47ab5f2ab394354c3509ec70b94cd3748a4666340cd785aeb55f"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.6.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a89fceec1f5ca5b9c369f99aa2a75f86",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13637,
+        "upload_time": "2022-03-11T17:00:13",
+        "upload_time_iso_8601": "2022-03-11T17:00:13.117326Z",
+        "url": "https://files.pythonhosted.org/packages/bf/46/fcd1c75ed2ff4acaa5157424cf22fdb20e6c432247dbcf80c4c91f92dd01/geocode_sqlite-0.6.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8d78facac0a0f90dc79e0d0df66e0edf",
+          "sha256": "0ac9fb09691f3fb334907f74637070f51c50712b16eca82c45ee2309e657e5cc"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.6.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8d78facac0a0f90dc79e0d0df66e0edf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 14702,
+        "upload_time": "2022-03-11T17:00:14",
+        "upload_time_iso_8601": "2022-03-11T17:00:14.685341Z",
+        "url": "https://files.pythonhosted.org/packages/86/3e/bc69829cd1014d57b42fb7e12ec1636ecd4e7c0f5e77ccf466cf665045be/geocode-sqlite-0.6.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "41d7a219ea19855ead2a6f3aaab58bf9",
+          "sha256": "daf138a160ee31a08657b81470037547e004090f5f764fb23f7db0b2353891fb"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.6.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "41d7a219ea19855ead2a6f3aaab58bf9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13639,
+        "upload_time": "2022-03-16T01:41:40",
+        "upload_time_iso_8601": "2022-03-16T01:41:40.120039Z",
+        "url": "https://files.pythonhosted.org/packages/ac/bc/1efde67a132a488ccae85324aff445536c97a2b381e97147b021eef4911c/geocode_sqlite-0.6.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "83787f9a5c853c56236687b5420e5114",
+          "sha256": "a3c16716a9b76e63858c690c67f560421c81f97fd979de6106a00c7c9733a879"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.6.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "83787f9a5c853c56236687b5420e5114",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 14721,
+        "upload_time": "2022-03-16T01:41:41",
+        "upload_time_iso_8601": "2022-03-16T01:41:41.126379Z",
+        "url": "https://files.pythonhosted.org/packages/3e/b0/b1d0ea586e268cda8345a3b9e0032dd21285709ba5bbc47d68d4f35eff11/geocode-sqlite-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "41d7a219ea19855ead2a6f3aaab58bf9",
+        "sha256": "daf138a160ee31a08657b81470037547e004090f5f764fb23f7db0b2353891fb"
+      },
+      "downloads": -1,
+      "filename": "geocode_sqlite-0.6.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "41d7a219ea19855ead2a6f3aaab58bf9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 13639,
+      "upload_time": "2022-03-16T01:41:40",
+      "upload_time_iso_8601": "2022-03-16T01:41:40.120039Z",
+      "url": "https://files.pythonhosted.org/packages/ac/bc/1efde67a132a488ccae85324aff445536c97a2b381e97147b021eef4911c/geocode_sqlite-0.6.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "83787f9a5c853c56236687b5420e5114",
+        "sha256": "a3c16716a9b76e63858c690c67f560421c81f97fd979de6106a00c7c9733a879"
+      },
+      "downloads": -1,
+      "filename": "geocode-sqlite-0.6.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "83787f9a5c853c56236687b5420e5114",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 14721,
+      "upload_time": "2022-03-16T01:41:41",
+      "upload_time_iso_8601": "2022-03-16T01:41:41.126379Z",
+      "url": "https://files.pythonhosted.org/packages/3e/b0/b1d0ea586e268cda8345a3b9e0032dd21285709ba5bbc47d68d4f35eff11/geocode-sqlite-0.6.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

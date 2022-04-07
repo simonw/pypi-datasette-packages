@@ -1,0 +1,219 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# hacker-news-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/hacker-news-to-sqlite.svg)](https://pypi.org/project/hacker-news-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/hacker-news-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/hacker-news-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/hacker-news-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/hacker-news-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/hacker-news-to-sqlite/blob/main/LICENSE)\n\nCreate a SQLite database containing data fetched from [Hacker News](https://news.ycombinator.com/).\n\n## How to install\n\n    $ pip install hacker-news-to-sqlite\n\n## Usage\n\n    $ hacker-news-to-sqlite user hacker-news.db your-username\n    Importing items:  37%|███████████                        | 845/2297 [05:09<11:02,  2.19it/s]\n\nImports all of your Hacker News submissions and comments into a SQLite database called `hacker-news.db`.\n\n    $ hacker-news-to-sqlite trees hacker-news.db 22640038 22643218\n\nFetches the entire comments tree in which any of those content IDs appears.\n\n## Browsing your data with Datasette\n\nYou can use [Datasette](https://datasette.readthedocs.org/) to browse your data. Install Datasette like this:\n\n    $ pip install datasette\n\nNow run it against your `hacker-news.db` file like so:\n\n    $ datasette hacker-news.db\n\nVisit `https://localhost:8001/` to search and explore your data.\n\nYou can improve the display of your data usinng the [datasette-render-timestamps](https://github.com/simonw/datasette-render-timestamps) and [datasette-render-html](https://github.com/simonw/datasette-render-html) plugins. Install them like this:\n\n    $ pip install datasette-render-timestamps datasette-render-html\n\nNow save the following configuration in a file called `metadata.json`:\n\n```json\n{\n    \"databases\": {\n        \"hacker-news\": {\n            \"tables\": {\n                \"items\": {\n                    \"plugins\": {\n                        \"datasette-render-html\": {\n                            \"columns\": [\n                                \"text\"\n                            ]\n                        },\n                        \"datasette-render-timestamps\": {\n                            \"columns\": [\n                                \"time\"\n                            ]\n                        }\n                    }\n                },\n                \"users\": {\n                    \"plugins\": {\n                        \"datasette-render-timestamps\": {\n                            \"columns\": [\n                                \"created\"\n                            ]\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\nRun Datasette like this:\n\n    $ datasette -m metadata.json hacker-news.db\n\nThe timestamp columns will now be rendered as human-readable dates, and any HTML in your posts will be displayed as rendered HTML.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/dogsheep/hacker-news-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "hacker-news-to-sqlite",
+    "package_url": "https://pypi.org/project/hacker-news-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/hacker-news-to-sqlite/",
+    "project_urls": {
+      "Homepage": "https://github.com/dogsheep/hacker-news-to-sqlite"
+    },
+    "release_url": "https://pypi.org/project/hacker-news-to-sqlite/0.4/",
+    "requires_dist": [
+      "sqlite-utils",
+      "click",
+      "requests",
+      "tqdm",
+      "pytest ; extra == 'test'",
+      "requests-mock ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Create a SQLite database containing data pulled from Hacker News",
+    "version": "0.4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9762259,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7616ddb8dafb76b30a8628d67ae59e44",
+          "sha256": "d0e44ae11f4db4a4ea23c48c5461148eeb7cfba5f826004acd4e5a3e3216936f"
+        },
+        "downloads": -1,
+        "filename": "hacker_news_to_sqlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7616ddb8dafb76b30a8628d67ae59e44",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7660,
+        "upload_time": "2020-03-21T04:20:43",
+        "upload_time_iso_8601": "2020-03-21T04:20:43.567607Z",
+        "url": "https://files.pythonhosted.org/packages/0f/75/8dba20dd2eba9fb224e9be066ee436123342f59a22e6cba8e7baadd1f6b3/hacker_news_to_sqlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "041af2dd9ab16da3d763162c59ccc8db",
+          "sha256": "f4a0238295bfd5c94bc635b15cc7a24a0cee90d2e92b402b6c77643aa481274d"
+        },
+        "downloads": -1,
+        "filename": "hacker_news_to_sqlite-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "041af2dd9ab16da3d763162c59ccc8db",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7670,
+        "upload_time": "2020-03-21T15:27:57",
+        "upload_time_iso_8601": "2020-03-21T15:27:57.740574Z",
+        "url": "https://files.pythonhosted.org/packages/6f/24/95a9aa292fa1857508882e1dbd77e1cadae1592e8e745111e6afec2cbe0f/hacker_news_to_sqlite-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f78212552b8ab022d350c3b25ac1e2ae",
+          "sha256": "6fc8cc4d06b9228fac2eddd244f684e62687427c297218f89ed03a392f7b7156"
+        },
+        "downloads": -1,
+        "filename": "hacker_news_to_sqlite-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f78212552b8ab022d350c3b25ac1e2ae",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7906,
+        "upload_time": "2020-03-21T19:47:15",
+        "upload_time_iso_8601": "2020-03-21T19:47:15.613540Z",
+        "url": "https://files.pythonhosted.org/packages/9f/a2/61b03e549a3578446a0f2cc67f1835d8e0b93b9e64e72a3cd322c65cd463/hacker_news_to_sqlite-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3a71064db8388c1032b321a179fc29cd",
+          "sha256": "f40a8775a2c2b77ae1b160584d13064365d9a1bd5f6ff50c27ffbcec3a8a5025"
+        },
+        "downloads": -1,
+        "filename": "hacker_news_to_sqlite-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3a71064db8388c1032b321a179fc29cd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8387,
+        "upload_time": "2020-03-21T22:40:12",
+        "upload_time_iso_8601": "2020-03-21T22:40:12.053845Z",
+        "url": "https://files.pythonhosted.org/packages/3d/f2/eaa377b948fdbdd28bef6917cb4375351b11ac301cfd18b251872a4ecea2/hacker_news_to_sqlite-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8b334ee510dd9e129423416494f2b895",
+          "sha256": "779dce2993c8de7fd5f31a3e2f033807f89b0113b0a018410537c711e3c4ab9c"
+        },
+        "downloads": -1,
+        "filename": "hacker_news_to_sqlite-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8b334ee510dd9e129423416494f2b895",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8438,
+        "upload_time": "2021-03-13T19:15:59",
+        "upload_time_iso_8601": "2021-03-13T19:15:59.618763Z",
+        "url": "https://files.pythonhosted.org/packages/89/d7/7c4aab56f27a0d465442f41b27074814bdd6f7b75f6c47fe3f5cb93b9ba1/hacker_news_to_sqlite-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e2003fc212a477d7c63f8a97c05ba9e6",
+          "sha256": "efcf4290ed2ea216004a2590bebb84954fc667a193301f7eae2eb8d2515769a2"
+        },
+        "downloads": -1,
+        "filename": "hacker-news-to-sqlite-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e2003fc212a477d7c63f8a97c05ba9e6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3923,
+        "upload_time": "2021-03-13T19:16:00",
+        "upload_time_iso_8601": "2021-03-13T19:16:00.537946Z",
+        "url": "https://files.pythonhosted.org/packages/88/58/82302c7d9e7d29fb5860d778b3d50294bf70d9ff109a562b900700ca4f13/hacker-news-to-sqlite-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8b334ee510dd9e129423416494f2b895",
+        "sha256": "779dce2993c8de7fd5f31a3e2f033807f89b0113b0a018410537c711e3c4ab9c"
+      },
+      "downloads": -1,
+      "filename": "hacker_news_to_sqlite-0.4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8b334ee510dd9e129423416494f2b895",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 8438,
+      "upload_time": "2021-03-13T19:15:59",
+      "upload_time_iso_8601": "2021-03-13T19:15:59.618763Z",
+      "url": "https://files.pythonhosted.org/packages/89/d7/7c4aab56f27a0d465442f41b27074814bdd6f7b75f6c47fe3f5cb93b9ba1/hacker_news_to_sqlite-0.4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e2003fc212a477d7c63f8a97c05ba9e6",
+        "sha256": "efcf4290ed2ea216004a2590bebb84954fc667a193301f7eae2eb8d2515769a2"
+      },
+      "downloads": -1,
+      "filename": "hacker-news-to-sqlite-0.4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e2003fc212a477d7c63f8a97c05ba9e6",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 3923,
+      "upload_time": "2021-03-13T19:16:00",
+      "upload_time_iso_8601": "2021-03-13T19:16:00.537946Z",
+      "url": "https://files.pythonhosted.org/packages/88/58/82302c7d9e7d29fb5860d778b3d50294bf70d9ff109a562b900700ca4f13/hacker-news-to-sqlite-0.4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

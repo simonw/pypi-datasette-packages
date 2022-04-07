@@ -1,0 +1,113 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# fec-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/fec-to-sqlite.svg)](https://pypi.org/project/fec-to-sqlite/)\n[![CircleCI](https://circleci.com/gh/simonw/fec-to-sqlite.svg?style=svg)](https://circleci.com/gh/simonw/fec-to-sqlite)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/fec-to-sqlite/blob/master/LICENSE)\n\nCreate a SQLite database using FEC campaign contributions data.\n\nThis tool builds on [fecfile](https://github.com/esonderegger/) by Evan Sonderegger.\n\n## How to install\n\n    $ pip install fec-to-sqlite\n\n## Usage\n\n    $ fec-to-sqlite filings filings.db 1146148\n\nThis fetches the filing with ID `1146148` and stores it in tables in a SQLite database called `filings.db`. It will create any tables it needs.\n\nYou can pass more than one filing ID, separated by spaces.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/dogsheep/fec-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "fec-to-sqlite",
+    "package_url": "https://pypi.org/project/fec-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/fec-to-sqlite/",
+    "project_urls": {
+      "Homepage": "https://github.com/dogsheep/fec-to-sqlite"
+    },
+    "release_url": "https://pypi.org/project/fec-to-sqlite/0.2/",
+    "requires_dist": [
+      "sqlite-utils",
+      "click",
+      "requests",
+      "fecfile",
+      "tqdm",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Save FEC campaign finance data to a SQLite database",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 6768957,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3e91931f4f4be1e1dccc002ce47fea54",
+          "sha256": "48460d9194f53825e8b31c0e1f690dacc9d1ba91fb1703db2a61836cb5693edc"
+        },
+        "downloads": -1,
+        "filename": "fec_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3e91931f4f4be1e1dccc002ce47fea54",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7153,
+        "upload_time": "2020-03-07T16:59:58",
+        "upload_time_iso_8601": "2020-03-07T16:59:58.375266Z",
+        "url": "https://files.pythonhosted.org/packages/22/bc/2da346e28c596a480ef1921df1492633ce42cd8c64a7f738065e7aa7bb87/fec_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fb7f337761a8aa58baf31f06db088248",
+          "sha256": "dfdb74903a2669ba86139cd522c3e1648b8182869cba4fe5f31b863374fdb7a0"
+        },
+        "downloads": -1,
+        "filename": "fec_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fb7f337761a8aa58baf31f06db088248",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7820,
+        "upload_time": "2020-03-07T18:22:40",
+        "upload_time_iso_8601": "2020-03-07T18:22:40.313849Z",
+        "url": "https://files.pythonhosted.org/packages/02/f7/8529930b9df618a214bb4df2be2b33ecbc6b15f6d4d7c5f5443fe1cf2a54/fec_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "fb7f337761a8aa58baf31f06db088248",
+        "sha256": "dfdb74903a2669ba86139cd522c3e1648b8182869cba4fe5f31b863374fdb7a0"
+      },
+      "downloads": -1,
+      "filename": "fec_to_sqlite-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "fb7f337761a8aa58baf31f06db088248",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7820,
+      "upload_time": "2020-03-07T18:22:40",
+      "upload_time_iso_8601": "2020-03-07T18:22:40.313849Z",
+      "url": "https://files.pythonhosted.org/packages/02/f7/8529930b9df618a214bb4df2be2b33ecbc6b15f6d4d7c5f5443fe1cf2a54/fec_to_sqlite-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

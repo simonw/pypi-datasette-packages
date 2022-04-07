@@ -1,0 +1,178 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-ics\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ics.svg)](https://pypi.org/project/datasette-ics/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-ics?include_prereleases&label=changelog)](https://github.com/simonw/datasette-ics/releases)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-ics.svg?style=svg)](https://circleci.com/gh/simonw/datasette-ics)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-ics/blob/main/LICENSE)\n\nDatasette plugin that adds support for generating [iCalendar .ics files](https://tools.ietf.org/html/rfc5545) with the results of a SQL query.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable the `.ics` output extension.\n\n    $ pip install datasette-ics\n\n## Usage\n\nTo create an iCalendar file you need to define a custom SQL query that returns a required set of columns:\n\n* `event_name` - the short name for the event\n* `event_dtstart` - when the event starts\n\nThe following columns are optional:\n\n* `event_dtend` - when the event ends\n* `event_duration` - the duration of the event (use instead of `dtend`)\n* `event_description` - a longer description of the event\n* `event_uid` - a globally unique identifier for this event\n* `event_tzid` - the timezone for the event, e.g. `America/Chicago`\n\nA query that returns these columns can then be returned as an ics feed by adding the `.ics` extension.\n\n## Using a canned query\n\nDatasette's [canned query mechanism](https://datasette.readthedocs.io/en/stable/sql_queries.html#canned-queries) can be used to configure calendars. If a canned query definition has a `title` that will be used as the title of the calendar.\n\nHere's an example, defined using a `metadata.yaml` file:\n\n```yaml\ndatabases:\n  mydatabase:\n    queries:\n      calendar:\n        title: My Calendar\n        sql: |-\n          select\n            title as event_name,\n            start as event_dtstart,\n            description as event_description\n          from\n            events\n          order by\n            start\n          limit\n            100\n```\nThis will result in a calendar feed at `http://localhost:8001/mydatabase/calendar.ics`\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-ics",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-ics",
+    "package_url": "https://pypi.org/project/datasette-ics/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-ics/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-ics"
+    },
+    "release_url": "https://pypi.org/project/datasette-ics/0.5/",
+    "requires_dist": [
+      "datasette (>=0.49)",
+      "ics (==0.7)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for outputting iCalendar files",
+    "version": "0.5",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8185591,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e437f6f9b007ad88645f1839371c3635",
+          "sha256": "748e58ad61deeeef73a2a4cafce6d6b1b759d7aeb5dc834bf5c2e86cd412291b"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e437f6f9b007ad88645f1839371c3635",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7005,
+        "upload_time": "2020-02-28T15:13:36",
+        "upload_time_iso_8601": "2020-02-28T15:13:36.763700Z",
+        "url": "https://files.pythonhosted.org/packages/71/61/579d2fa84af0b5fae29f82e420aed97f453f3b4fbfe456f422bc30055dfa/datasette_ics-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "be83bf75e3496179de8270a4830f5b4e",
+          "sha256": "f2417bf6ecd3a2a996ebdba322efdebb7a02ec5bf9eac7ecca0b58674c59b007"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "be83bf75e3496179de8270a4830f5b4e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7611,
+        "upload_time": "2020-02-28T20:32:51",
+        "upload_time_iso_8601": "2020-02-28T20:32:51.650321Z",
+        "url": "https://files.pythonhosted.org/packages/f6/a0/f2df8049e4a6dbd89f716a60d9e46ca95a09cf617bd1ad37262e277f7059/datasette_ics-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "758bf9d4331b6367daf5309cf7c6b77d",
+          "sha256": "4a7b7d2afc8494339f722e5a04ff733989c7552dbe158a95f0b889ea6aaefb64"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.3a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "758bf9d4331b6367daf5309cf7c6b77d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7642,
+        "upload_time": "2020-02-28T22:52:44",
+        "upload_time_iso_8601": "2020-02-28T22:52:44.655167Z",
+        "url": "https://files.pythonhosted.org/packages/86/2d/a16380c361f90bf9ca580c1e5c1abc97052c022280e338d1d348ba76ddc6/datasette_ics-0.3a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9c5b461971d860f04500977ef762a80e",
+          "sha256": "8ff22810e167404fd14ccbe979556c4a73602bd6b0f4e3a6c8b83936a3febd74"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c5b461971d860f04500977ef762a80e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8118,
+        "upload_time": "2020-05-29T04:08:04",
+        "upload_time_iso_8601": "2020-05-29T04:08:04.226913Z",
+        "url": "https://files.pythonhosted.org/packages/9d/78/8beb9825bf3b6ffd572949c311fb0ea294f2867bbeecc9f7de50b0de79ef/datasette_ics-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1836fd0394bfe034d8b7b8cb27ee7666",
+          "sha256": "4b8b3852dcc8fd84bf0043cf31e7bdb32f96999ce5b52cdba119651257b57739"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1836fd0394bfe034d8b7b8cb27ee7666",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8177,
+        "upload_time": "2020-09-14T22:20:53",
+        "upload_time_iso_8601": "2020-09-14T22:20:53.979466Z",
+        "url": "https://files.pythonhosted.org/packages/ec/02/77b11a0ca1158fd64238cdbad4f58f4d8bbe9389b6d5fe54c39be0dfdcc6/datasette_ics-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "1836fd0394bfe034d8b7b8cb27ee7666",
+        "sha256": "4b8b3852dcc8fd84bf0043cf31e7bdb32f96999ce5b52cdba119651257b57739"
+      },
+      "downloads": -1,
+      "filename": "datasette_ics-0.5-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "1836fd0394bfe034d8b7b8cb27ee7666",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 8177,
+      "upload_time": "2020-09-14T22:20:53",
+      "upload_time_iso_8601": "2020-09-14T22:20:53.979466Z",
+      "url": "https://files.pythonhosted.org/packages/ec/02/77b11a0ca1158fd64238cdbad4f58f4d8bbe9389b6d5fe54c39be0dfdcc6/datasette_ics-0.5-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

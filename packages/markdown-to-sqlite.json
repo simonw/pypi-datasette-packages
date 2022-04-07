@@ -1,0 +1,205 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Intended Audience :: Developers",
+      "Intended Audience :: End Users/Desktop",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: Apache Software License",
+      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.7",
+      "Topic :: Database"
+    ],
+    "description": "# markdown-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/markdown-to-sqlite.svg)](https://pypi.python.org/pypi/markdown-to-sqlite)\n[![Changelog](https://img.shields.io/github/v/release/simonw/markdown-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/markdown-to-sqlite/releases)\n[![Tests](https://github.com/simonw/markdown-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/markdown-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/markdown-to-sqlite/blob/main/LICENSE)\n\nCLI tool for loading markdown files into a SQLite database.\n\nYAML embedded in the markdown files will be used to populate additional columns.\n\n    Usage: markdown-to-sqlite [OPTIONS] DBNAME TABLE PATHS...\n\nFor example:\n\n    $ markdown-to-sqlite docs.db documents file1.md file2.md\n\n## Breaking change\n\nPrior to version 1.0 this argument order was different - markdown files were listed before the database and table.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/markdown-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "markdown-to-sqlite",
+    "package_url": "https://pypi.org/project/markdown-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/markdown-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/markdown-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/markdown-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/markdown-to-sqlite",
+      "Issues": "https://github.com/simonw/markdown-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/markdown-to-sqlite/1.0/",
+    "requires_dist": [
+      "yamldown",
+      "markdown",
+      "sqlite-utils",
+      "click",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "CLI tool for loading markdown files into a SQLite database",
+    "version": "1.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 10634007,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7539972ecd6d3469e8d82c5fafc3e8c8",
+          "sha256": "ddc30f9762791da0096b9c90851a407e82d96318db6917c4150a3ba50e3a5dba"
+        },
+        "downloads": -1,
+        "filename": "markdown_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7539972ecd6d3469e8d82c5fafc3e8c8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6939,
+        "upload_time": "2019-01-27T02:41:56",
+        "upload_time_iso_8601": "2019-01-27T02:41:56.439056Z",
+        "url": "https://files.pythonhosted.org/packages/7a/69/2a905b7a0cbef5d0b06bd266854c40c04fa2f807d2eb804cb5d26cebe52b/markdown_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "aeaa5f668c4a00214eb7741abeb721f7",
+          "sha256": "f840f042750130f2368c8efe1356267471621332b6735973d8de17e6744443c3"
+        },
+        "downloads": -1,
+        "filename": "markdown_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "aeaa5f668c4a00214eb7741abeb721f7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 6934,
+        "upload_time": "2021-01-14T20:23:39",
+        "upload_time_iso_8601": "2021-01-14T20:23:39.769629Z",
+        "url": "https://files.pythonhosted.org/packages/32/e1/601634499f46e4c9d67f508595b033b0ae109e65c2bab71762dbb6ca8796/markdown_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "01034a3ce04cfa80da074680d265ac00",
+          "sha256": "4424f4be0ad1d730f4706190335fde732710bfd4e1236a93b9034d70c23f48ce"
+        },
+        "downloads": -1,
+        "filename": "markdown-to-sqlite-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "01034a3ce04cfa80da074680d265ac00",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2456,
+        "upload_time": "2021-01-14T20:23:40",
+        "upload_time_iso_8601": "2021-01-14T20:23:40.660433Z",
+        "url": "https://files.pythonhosted.org/packages/cd/2c/a4ba92f42a7a5ef02935947e469806e79e143d05dde6ba32513f7d104be6/markdown-to-sqlite-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "246c5f829b0510953af1e743dac66d03",
+          "sha256": "2b4e4c57ab3ed5ec70efaff3e30bd24a8181e4262a0fe4239d1b7106b4eca1d8"
+        },
+        "downloads": -1,
+        "filename": "markdown_to_sqlite-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "246c5f829b0510953af1e743dac66d03",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7044,
+        "upload_time": "2021-06-13T04:18:06",
+        "upload_time_iso_8601": "2021-06-13T04:18:06.258776Z",
+        "url": "https://files.pythonhosted.org/packages/e9/e4/7396bd17355be69156acb15ef102c5c8b7ac6d99186afb1ea7cda25ba49d/markdown_to_sqlite-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "818fdf2165702e7ce00cd3f8a98ac3d6",
+          "sha256": "d062e9a229d73ed631678324812363783a361dada4633c0aeb374560e90d3214"
+        },
+        "downloads": -1,
+        "filename": "markdown-to-sqlite-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "818fdf2165702e7ce00cd3f8a98ac3d6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 6561,
+        "upload_time": "2021-06-13T04:18:07",
+        "upload_time_iso_8601": "2021-06-13T04:18:07.437339Z",
+        "url": "https://files.pythonhosted.org/packages/8e/1a/99a91dd4b153fa12ab45eacf22177ca58f83f87d6eeaab9cce157ab46fda/markdown-to-sqlite-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "246c5f829b0510953af1e743dac66d03",
+        "sha256": "2b4e4c57ab3ed5ec70efaff3e30bd24a8181e4262a0fe4239d1b7106b4eca1d8"
+      },
+      "downloads": -1,
+      "filename": "markdown_to_sqlite-1.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "246c5f829b0510953af1e743dac66d03",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 7044,
+      "upload_time": "2021-06-13T04:18:06",
+      "upload_time_iso_8601": "2021-06-13T04:18:06.258776Z",
+      "url": "https://files.pythonhosted.org/packages/e9/e4/7396bd17355be69156acb15ef102c5c8b7ac6d99186afb1ea7cda25ba49d/markdown_to_sqlite-1.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "818fdf2165702e7ce00cd3f8a98ac3d6",
+        "sha256": "d062e9a229d73ed631678324812363783a361dada4633c0aeb374560e90d3214"
+      },
+      "downloads": -1,
+      "filename": "markdown-to-sqlite-1.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "818fdf2165702e7ce00cd3f8a98ac3d6",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 6561,
+      "upload_time": "2021-06-13T04:18:07",
+      "upload_time_iso_8601": "2021-06-13T04:18:07.437339Z",
+      "url": "https://files.pythonhosted.org/packages/8e/1a/99a91dd4b153fa12ab45eacf22177ca58f83f87d6eeaab9cce157ab46fda/markdown-to-sqlite-1.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

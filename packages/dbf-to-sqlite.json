@@ -1,0 +1,97 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Development Status :: 3 - Alpha",
+      "Intended Audience :: Developers",
+      "Intended Audience :: End Users/Desktop",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: Apache Software License",
+      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.7",
+      "Topic :: Database"
+    ],
+    "description": "# dbf-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/dbf-to-sqlite.svg)](https://pypi.python.org/pypi/dbf-to-sqlite)\n[![Travis CI](https://travis-ci.com/simonw/dbf-to-sqlite.svg?branch=master)](https://travis-ci.com/simonw/dbf-to-sqlite)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/dbf-to-sqlite/blob/master/LICENSE)\n\n\nCLI tool for converting DBF files (dBase, FoxPro etc) to SQLite.\n\n    $ dbf-to-sqlite --help\n    Usage: dbf-to-sqlite [OPTIONS] DBF_PATHS... SQLITE_DB\n\n      Convert DBF files (dBase, FoxPro etc) to SQLite\n\n      https://github.com/simonw/dbf-to-sqlite\n\n    Options:\n      --version      Show the version and exit.\n      --table TEXT   Table name to use (only valid for single files)\n      -v, --verbose  Show what's going on\n      --help         Show this message and exit.\n\nExample usage:\n\n    $ dbf-to-sqlite *.DBF database.db\n\nThis will create a new SQLite database called `database.db` containing one table for each of the `DBF` files in the current directory.\n\nLooking for DBF files to try this out on? Try downloading the [Himalayan Database](http://himalayandatabase.com/) of all expeditions that have climbed in the Nepal Himalaya.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/dbf-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "dbf-to-sqlite",
+    "package_url": "https://pypi.org/project/dbf-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/dbf-to-sqlite/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/dbf-to-sqlite"
+    },
+    "release_url": "https://pypi.org/project/dbf-to-sqlite/0.1/",
+    "requires_dist": [
+      "dbf (==0.97.11)",
+      "click",
+      "sqlite-utils"
+    ],
+    "requires_python": "",
+    "summary": "CLCLI tool for converting DBF files (dBase, FoxPro etc) to SQLite",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 4762670,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "283d752eba513e69c75ce735948a5c6c",
+          "sha256": "555b7e21c2314a43554050587e482ed0baa36b8ec9f94f7891bf94f26c1662fb"
+        },
+        "downloads": -1,
+        "filename": "dbf_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "283d752eba513e69c75ce735948a5c6c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7119,
+        "upload_time": "2019-01-31T06:39:56",
+        "upload_time_iso_8601": "2019-01-31T06:39:56.636662Z",
+        "url": "https://files.pythonhosted.org/packages/08/72/dd3b3f8a55c49d29bc0a209aaf1bff7e1caac5e59be7ecba2dd9d2ddea37/dbf_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "283d752eba513e69c75ce735948a5c6c",
+        "sha256": "555b7e21c2314a43554050587e482ed0baa36b8ec9f94f7891bf94f26c1662fb"
+      },
+      "downloads": -1,
+      "filename": "dbf_to_sqlite-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "283d752eba513e69c75ce735948a5c6c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7119,
+      "upload_time": "2019-01-31T06:39:56",
+      "upload_time_iso_8601": "2019-01-31T06:39:56.636662Z",
+      "url": "https://files.pythonhosted.org/packages/08/72/dd3b3f8a55c49d29bc0a209aaf1bff7e1caac5e59be7ecba2dd9d2ddea37/dbf_to_sqlite-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

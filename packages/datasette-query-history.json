@@ -1,0 +1,257 @@
+{
+  "info": {
+    "author": "Bret Walker",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-query-history\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-query-history.svg)](https://pypi.org/project/datasette-query-history/)\n[![Changelog](https://img.shields.io/github/v/release/bretwalker/datasette-query-history?include_prereleases&label=changelog)](https://github.com/bretwalker/datasette-query-history/releases)\n[![Tests](https://github.com/bretwalker/datasette-query-history/workflows/Test/badge.svg)](https://github.com/bretwalker/datasette-query-history/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/bretwalker/datasette-query-history/blob/main/LICENSE)\n\nDatasette plugin that keeps a list of the queries you've run and lets you rerun them.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-query-history\n\n## Usage\n\nClick the `Query History` button on the SQL editor page to see previous queries.  \nClick the ⬆︎ button to replace the current query with a previous query.  \nClick the `Clear Query History` button to clear the list previous queries.\n\n<img src=\"https://raw.githubusercontent.com/bretwalker/datasette-query-history/main/docs/datasette-query-history-example1.png\" width=\"350px\" alt=\"Screenshot of plugin\">\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-query-history\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/bretwalker/datasette-query-history",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-query-history",
+    "package_url": "https://pypi.org/project/datasette-query-history/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-query-history/",
+    "project_urls": {
+      "CI": "https://github.com/bretwalker/datasette-query-history/actions",
+      "Changelog": "https://github.com/bretwalker/datasette-query-history/releases",
+      "Homepage": "https://github.com/bretwalker/datasette-query-history",
+      "Issues": "https://github.com/bretwalker/datasette-query-history/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-query-history/0.2.3/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Datasette plugin that keeps a list of the queries you've run and lets you rerun them.",
+    "version": "0.2.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9159110,
+  "releases": {
+    "0.1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "82f846751ef7b86a9a6422ff9700f1bd",
+          "sha256": "99f0bf0a3e6b166ec08da82f6a3f72eb6b6a7b425cddc562e5d14cf5ad75c9a5"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_history-0.1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "82f846751ef7b86a9a6422ff9700f1bd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4145,
+        "upload_time": "2021-01-17T03:20:00",
+        "upload_time_iso_8601": "2021-01-17T03:20:00.749592Z",
+        "url": "https://files.pythonhosted.org/packages/0f/75/40fd5ea4684f7f6b11da252d486d77c6a3a524221a45506b4bf683549b5e/datasette_query_history-0.1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ccd137ac01b0579d86d22791241422af",
+          "sha256": "e3eb3e79d47d631c6a1f470de39a6f1b44b335582cc5f29b37cf2145d58dd316"
+        },
+        "downloads": -1,
+        "filename": "datasette-query-history-0.1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ccd137ac01b0579d86d22791241422af",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3688,
+        "upload_time": "2021-01-17T03:20:01",
+        "upload_time_iso_8601": "2021-01-17T03:20:01.829104Z",
+        "url": "https://files.pythonhosted.org/packages/e9/fa/d996fc83b40b0c2a0bcb3da503babe28a49ac261bfa9580293bb5ac1ece0/datasette-query-history-0.1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "63c8b5679c01a49754b0a6d0e4137c67",
+          "sha256": "8c9fa439ed67fea4057e4731a614b0cbe1331263c7c96dfaa0dd1bbf4afa2b2e"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_history-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "63c8b5679c01a49754b0a6d0e4137c67",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8348,
+        "upload_time": "2021-01-17T17:17:32",
+        "upload_time_iso_8601": "2021-01-17T17:17:32.509676Z",
+        "url": "https://files.pythonhosted.org/packages/7d/4b/df422d4d6fda74cfeb519ea3ee7ee32b38ca0207b0bd145e6cbc61e5e5ae/datasette_query_history-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "28ef490e599dbde83c99f9e0a8e3a3c9",
+          "sha256": "6b7c48b22b4eb0e79642242d0c3e6f6bc4b380b1de8fbc33986a796270292879"
+        },
+        "downloads": -1,
+        "filename": "datasette-query-history-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "28ef490e599dbde83c99f9e0a8e3a3c9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3722,
+        "upload_time": "2021-01-17T17:17:33",
+        "upload_time_iso_8601": "2021-01-17T17:17:33.477986Z",
+        "url": "https://files.pythonhosted.org/packages/2b/22/14384b4684a98c6d5cdc5ec3b83dcde7ce1823123946cf9423e65782e618/datasette-query-history-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0d4a79f8a0b10925ee675e3622c88e0f",
+          "sha256": "9f36d51edb19ef897c39a58ebdbbf00bb67d71a40733bb25588f125acb096c15"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_history-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0d4a79f8a0b10925ee675e3622c88e0f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8839,
+        "upload_time": "2021-01-17T17:27:34",
+        "upload_time_iso_8601": "2021-01-17T17:27:34.310102Z",
+        "url": "https://files.pythonhosted.org/packages/12/19/84d95b0a3cc8060f5cc85d15609f8ff2d2b412549dea499be87de8595465/datasette_query_history-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f28fc3e3b91cb59140cd93de824ce353",
+          "sha256": "cac1a21083b59e08e4f1b32a918848d65b88e11d887c2a50bbb0d7b993e615a6"
+        },
+        "downloads": -1,
+        "filename": "datasette-query-history-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f28fc3e3b91cb59140cd93de824ce353",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3980,
+        "upload_time": "2021-01-17T17:27:35",
+        "upload_time_iso_8601": "2021-01-17T17:27:35.227192Z",
+        "url": "https://files.pythonhosted.org/packages/d3/6a/daa1340828fd44e36d803d584095a983bb9c246e71c77868ee0a1e54db6b/datasette-query-history-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ba1b415875e97d3d0c4b799f96746aa0",
+          "sha256": "ad19ba4df4408c30dc918647f81f4147c943a533891e2b345ad0953a2399c71d"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_history-0.2.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ba1b415875e97d3d0c4b799f96746aa0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8856,
+        "upload_time": "2021-01-17T23:12:54",
+        "upload_time_iso_8601": "2021-01-17T23:12:54.404947Z",
+        "url": "https://files.pythonhosted.org/packages/29/38/558dd2fde0cd4462e5c884560fa7f0b747f8e566a9728bfbf63ebdb5560f/datasette_query_history-0.2.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3c6d9daa9e237b224d2cf8f66322b585",
+          "sha256": "2b41de92dfdbc2939554d4ec684e3f29f9116b3766189fabaf44ae0c5bbc2f50"
+        },
+        "downloads": -1,
+        "filename": "datasette-query-history-0.2.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3c6d9daa9e237b224d2cf8f66322b585",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4007,
+        "upload_time": "2021-01-17T23:12:55",
+        "upload_time_iso_8601": "2021-01-17T23:12:55.127022Z",
+        "url": "https://files.pythonhosted.org/packages/5b/dd/011cce21f85850eb94f3f07d6332635c4b529369076f57da1ffaf0454330/datasette-query-history-0.2.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ba1b415875e97d3d0c4b799f96746aa0",
+        "sha256": "ad19ba4df4408c30dc918647f81f4147c943a533891e2b345ad0953a2399c71d"
+      },
+      "downloads": -1,
+      "filename": "datasette_query_history-0.2.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ba1b415875e97d3d0c4b799f96746aa0",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 8856,
+      "upload_time": "2021-01-17T23:12:54",
+      "upload_time_iso_8601": "2021-01-17T23:12:54.404947Z",
+      "url": "https://files.pythonhosted.org/packages/29/38/558dd2fde0cd4462e5c884560fa7f0b747f8e566a9728bfbf63ebdb5560f/datasette_query_history-0.2.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "3c6d9daa9e237b224d2cf8f66322b585",
+        "sha256": "2b41de92dfdbc2939554d4ec684e3f29f9116b3766189fabaf44ae0c5bbc2f50"
+      },
+      "downloads": -1,
+      "filename": "datasette-query-history-0.2.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "3c6d9daa9e237b224d2cf8f66322b585",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 4007,
+      "upload_time": "2021-01-17T23:12:55",
+      "upload_time_iso_8601": "2021-01-17T23:12:55.127022Z",
+      "url": "https://files.pythonhosted.org/packages/5b/dd/011cce21f85850eb94f3f07d6332635c4b529369076f57da1ffaf0454330/datasette-query-history-0.2.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

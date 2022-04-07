@@ -1,0 +1,182 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Development Status :: 3 - Alpha",
+      "Intended Audience :: Developers",
+      "Intended Audience :: End Users/Desktop",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: Apache Software License",
+      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.7",
+      "Topic :: Database"
+    ],
+    "description": "# sqlite-diffable\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-diffable.svg)](https://pypi.org/project/sqlite-diffable/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-diffable?include_prereleases&label=changelog)](https://github.com/simonw/sqlite-diffable/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-diffable/blob/main/LICENSE)\n\nTools for dumping/loading a SQLite database to diffable directory structure\n\n## Installation\n\n    pip install sqlite-diffable\n\n## Usage\n\nGiven a SQLite database called `fixtures.db` containing a table `facetable`, the following will dump out that table to the `out/` directory:\n\n    sqlite-diffable dump fixtures.db out/ facetable\n\nTo dump out every table in that database, use `--all`:\n\n    sqlite-diffable dump fixtures.db out/ --all\n\n## Demo\n\nThe repository at [simonw/simonwillisonblog-backup](https://github.com/simonw/simonwillisonblog-backup) contains a backup of the database on my blog, https://simonwillison.net/ - created using this tool.\n\n## Format\n\nEach table is represented as two files. The first, `table_name.metadata.json`, contains metadata describing the structure of the table. For a table called `redirects_redirect` that file might look like this:\n\n```json\n{\n    \"name\": \"redirects_redirect\",\n    \"columns\": [\n        \"id\",\n        \"domain\",\n        \"path\",\n        \"target\",\n        \"created\"\n    ],\n    \"schema\": \"CREATE TABLE [redirects_redirect] (\\n   [id] INTEGER PRIMARY KEY,\\n   [domain] TEXT,\\n   [path] TEXT,\\n   [target] TEXT,\\n   [created] TEXT\\n)\"\n}\n```\n\nIt is an object with three keys: `name` is the name of the table, `columns` is an array of column strings and `schema` is the SQL schema text used for tha table.\n\nThe second file, `table_name.ndjson`, contains [newline-delimeted JSON] for every row in the table. Each row is represented as a JSON array with items corresponding to each of the columns defined in the metadata.\n\nThat file for the `redirects_redirect.ndjson` table might look like this:\n\n```\n[1, \"feeds.simonwillison.net\", \"swn-everything\", \"https://simonwillison.net/atom/everything/\", \"2017-10-01T21:11:36.440537+00:00\"]\n[2, \"feeds.simonwillison.net\", \"swn-entries\", \"https://simonwillison.net/atom/entries/\", \"2017-10-01T21:12:32.478849+00:00\"]\n[3, \"feeds.simonwillison.net\", \"swn-links\", \"https://simonwillison.net/atom/links/\", \"2017-10-01T21:12:54.820729+00:00\"]\n```\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/sqlite-diffable",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "sqlite-diffable",
+    "package_url": "https://pypi.org/project/sqlite-diffable/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/sqlite-diffable/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/sqlite-diffable"
+    },
+    "release_url": "https://pypi.org/project/sqlite-diffable/0.2.1/",
+    "requires_dist": [
+      "click",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "black ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Tools for dumping/loading a SQLite database to diffable directory structure",
+    "version": "0.2.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12955540,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "25b9fdf7aadd12b0c335722f62263844",
+          "sha256": "1c9dc15dcf4a54af4a153ef91b201e315a8a86bad45f7228c1898df9ea0b0e97"
+        },
+        "downloads": -1,
+        "filename": "sqlite_diffable-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "25b9fdf7aadd12b0c335722f62263844",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6865,
+        "upload_time": "2019-07-04T01:27:03",
+        "upload_time_iso_8601": "2019-07-04T01:27:03.166643Z",
+        "url": "https://files.pythonhosted.org/packages/b4/21/c5155cb64fefcaa36b97182bfa86d7a6b07f5d8e6fc787555ec87b7ad2a2/sqlite_diffable-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1105db544c99bdb02108e1159c762f2a",
+          "sha256": "e10f7cb51bdc71233bf4083b2d5913a91211aede3e05909d3eab965bed0c98a0"
+        },
+        "downloads": -1,
+        "filename": "sqlite_diffable-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1105db544c99bdb02108e1159c762f2a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7019,
+        "upload_time": "2019-07-04T02:06:24",
+        "upload_time_iso_8601": "2019-07-04T02:06:24.396829Z",
+        "url": "https://files.pythonhosted.org/packages/82/64/0c410316d356a3efa07fc4bab242928842696518976b81eee3bd1b9d7078/sqlite_diffable-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bf6ffa5fa4e34691e8017802535334c4",
+          "sha256": "a9cf2b5990799d7fbfe14b1206a03a4351207f2b8b3ce18f6ba3a42f001a8b1b"
+        },
+        "downloads": -1,
+        "filename": "sqlite_diffable-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bf6ffa5fa4e34691e8017802535334c4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7734,
+        "upload_time": "2022-02-21T02:30:14",
+        "upload_time_iso_8601": "2022-02-21T02:30:14.202416Z",
+        "url": "https://files.pythonhosted.org/packages/19/e0/2823dd029bea3965b1b463151c863c4675504fdc868bf8058c42b04e6b90/sqlite_diffable-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b31ece0fd12194b155b3d6c6d690bb2f",
+          "sha256": "3559d7c8193db89a05bc9131a01435779dad8c187f5a41910e1926972efc4da1"
+        },
+        "downloads": -1,
+        "filename": "sqlite-diffable-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b31ece0fd12194b155b3d6c6d690bb2f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7259,
+        "upload_time": "2022-02-21T02:30:15",
+        "upload_time_iso_8601": "2022-02-21T02:30:15.464151Z",
+        "url": "https://files.pythonhosted.org/packages/ea/f3/e6a3a4a8ae9019f6bfc82ea39a49873e8a65a7a286a19c00138e7cb9dcf0/sqlite-diffable-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "bf6ffa5fa4e34691e8017802535334c4",
+        "sha256": "a9cf2b5990799d7fbfe14b1206a03a4351207f2b8b3ce18f6ba3a42f001a8b1b"
+      },
+      "downloads": -1,
+      "filename": "sqlite_diffable-0.2.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "bf6ffa5fa4e34691e8017802535334c4",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7734,
+      "upload_time": "2022-02-21T02:30:14",
+      "upload_time_iso_8601": "2022-02-21T02:30:14.202416Z",
+      "url": "https://files.pythonhosted.org/packages/19/e0/2823dd029bea3965b1b463151c863c4675504fdc868bf8058c42b04e6b90/sqlite_diffable-0.2.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "b31ece0fd12194b155b3d6c6d690bb2f",
+        "sha256": "3559d7c8193db89a05bc9131a01435779dad8c187f5a41910e1926972efc4da1"
+      },
+      "downloads": -1,
+      "filename": "sqlite-diffable-0.2.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b31ece0fd12194b155b3d6c6d690bb2f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 7259,
+      "upload_time": "2022-02-21T02:30:15",
+      "upload_time_iso_8601": "2022-02-21T02:30:15.464151Z",
+      "url": "https://files.pythonhosted.org/packages/ea/f3/e6a3a4a8ae9019f6bfc82ea39a49873e8a65a7a286a19c00138e7cb9dcf0/sqlite-diffable-0.2.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

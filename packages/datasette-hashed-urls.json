@@ -1,0 +1,303 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-hashed-urls\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-hashed-urls.svg)](https://pypi.org/project/datasette-hashed-urls/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-hashed-urls?include_prereleases&label=changelog)](https://github.com/simonw/datasette-hashed-urls/releases)\n[![Tests](https://github.com/simonw/datasette-hashed-urls/workflows/Test/badge.svg)](https://github.com/simonw/datasette-hashed-urls/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-hashed-urls/blob/main/LICENSE)\n\nOptimize Datasette performance behind a caching proxy\n\nWhen you open a database file in immutable mode using the `-i` option, Datasette calculates a SHA-256 hash of the contents of that file on startup.\n\nThis content hash can then optionally be used to create URLs that are guaranteed to change if the contents of the file changes in the future.\n\nThe result is pages  that can be cached indefinitely by both browsers and caching proxies - providing a significant performance boost.\n\n## Demo\n\nA demo of this plugin is running at https://datasette-hashed-urls.vercel.app/\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-hashed-urls\n\n## Usage\n\nOnce installed, this plugin will act on any immutable database files that are loaded into Datasette:\n\n    datasette -i fixtures.db\n\nThe database will automatically be renamed to incorporate a hash of the contents of the SQLite file - so the above database would be served as:\n\n    http://127.0.0.1:8001/fixtures-aa7318b\n\nEvery page that accesss that database, including JSON endpoints, will be served with the following far-future cache expiry header:\n\n    cache-control: max-age=31536000, public\n\nHere `max-age=31536000` is the number of seconds in a year.\n\nA caching proxy such as Cloudflare can then be used to cache and accelerate content served by Datasette.\n\nWhen the database file is updated and the server is restarted, the hash will change and content will be served from a new URL. Any hits to the previous hashed URLs will be automatically redirected.\n\nIf you run Datasette using the `--crossdb` option to enable [cross-database queries](https://docs.datasette.io/en/stable/sql_queries.html#cross-database-queries) the `_memory` database will also have a hash added to its URL - in this case, the hash will be a combination of the hashes of the other attached databases.\n\n## Configuration\n\nYou can use the `max_age` plugin configuration setting to change the cache duration specified in the `cache-control` HTTP header.\n\nTo set the cache expiry time to one hour you would add this to your Datasette `metadata.json` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-hashed-urls\": {\n            \"max_age\": 3600\n        }\n    }\n}\n```\n\n## History\n\nThis functionality used to ship as part of Datasette itself, as a feature called [Hashed URL mode](https://docs.datasette.io/en/0.60.2/performance.html#hashed-url-mode).\n\nThat feature has been deprecated and will be removed in Datasette 1.0. This plugin should be used as an alternative.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-hashed-urls\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-hashed-urls",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-hashed-urls",
+    "package_url": "https://pypi.org/project/datasette-hashed-urls/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-hashed-urls/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-hashed-urls/actions",
+      "Changelog": "https://github.com/simonw/datasette-hashed-urls/releases",
+      "Homepage": "https://github.com/simonw/datasette-hashed-urls",
+      "Issues": "https://github.com/simonw/datasette-hashed-urls/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-hashed-urls/0.4/",
+    "requires_dist": [
+      "datasette (>=0.61.1)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Optimize Datasette performance behind a caching proxy",
+    "version": "0.4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13286844,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f8c7fd271db99f97e15e68cd5c987756",
+          "sha256": "4d8c29e8e0bd66d53e48640425877cf5a3d2e4a5a18a7f8c5a9ec2cdda352b08"
+        },
+        "downloads": -1,
+        "filename": "datasette_hashed_urls-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f8c7fd271db99f97e15e68cd5c987756",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7927,
+        "upload_time": "2022-03-15T22:47:08",
+        "upload_time_iso_8601": "2022-03-15T22:47:08.207748Z",
+        "url": "https://files.pythonhosted.org/packages/2f/be/740ee11d87081ba90b304ab2f078a687780e8409704fe982b4d542dec500/datasette_hashed_urls-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a77441856be6ee602b18646c477cb22e",
+          "sha256": "10cc9a31ea28664a19fe2667a0b5aa2636cb72ed6800174e3b885021c3ad42dc"
+        },
+        "downloads": -1,
+        "filename": "datasette-hashed-urls-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a77441856be6ee602b18646c477cb22e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7399,
+        "upload_time": "2022-03-15T22:47:09",
+        "upload_time_iso_8601": "2022-03-15T22:47:09.513607Z",
+        "url": "https://files.pythonhosted.org/packages/c6/a9/23582aca7cc52b8c8609fbe7fff46991abf727bf7ab4854d78b5bcff477d/datasette-hashed-urls-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2608e7b4d6aea0a7ea25f30e06d29f3e",
+          "sha256": "816de5c9be3916a5d0923acb01d024368a87b29e45e129c68ff960546a56d95a"
+        },
+        "downloads": -1,
+        "filename": "datasette_hashed_urls-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2608e7b4d6aea0a7ea25f30e06d29f3e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8434,
+        "upload_time": "2022-03-16T04:36:34",
+        "upload_time_iso_8601": "2022-03-16T04:36:34.525540Z",
+        "url": "https://files.pythonhosted.org/packages/6e/49/712990649f3141789e943cd2010c54e2b9a6767368b9494292c11019c2a5/datasette_hashed_urls-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c82afca8df42a5e27cb5b37682dde0c7",
+          "sha256": "561d67ed83018a9b715855848ea7a4034ba32b464ce75b8b88142d2bc1acebff"
+        },
+        "downloads": -1,
+        "filename": "datasette-hashed-urls-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c82afca8df42a5e27cb5b37682dde0c7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7921,
+        "upload_time": "2022-03-16T04:36:35",
+        "upload_time_iso_8601": "2022-03-16T04:36:35.645563Z",
+        "url": "https://files.pythonhosted.org/packages/a2/fc/b2656b370b457fadab4e21d8904dde5bc14698e9d12e456863ee9455b765/datasette-hashed-urls-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1cbfe09be96ed6cbfe2c9ec90852ed67",
+          "sha256": "2e29f06e9344968eda743c88e36058cb263219dec59e6a4438fbd9ed8c806fca"
+        },
+        "downloads": -1,
+        "filename": "datasette_hashed_urls-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1cbfe09be96ed6cbfe2c9ec90852ed67",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8510,
+        "upload_time": "2022-03-23T20:44:04",
+        "upload_time_iso_8601": "2022-03-23T20:44:04.921971Z",
+        "url": "https://files.pythonhosted.org/packages/6f/17/dcdd41a641b30a75c76db21be8595d2b30afef9bf6befb88a731bf3ad9d3/datasette_hashed_urls-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fed1783609045aec3a385afc90341965",
+          "sha256": "d2342c6168484d065bc7c8acd1fbce82e9ff401990663b5e7c8008fc7da1e155"
+        },
+        "downloads": -1,
+        "filename": "datasette-hashed-urls-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fed1783609045aec3a385afc90341965",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7969,
+        "upload_time": "2022-03-23T20:44:05",
+        "upload_time_iso_8601": "2022-03-23T20:44:05.943877Z",
+        "url": "https://files.pythonhosted.org/packages/cc/f7/3078523f49e53ad972d6056b22c4153d4bc95c6455a28c37db58453444ee/datasette-hashed-urls-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6d55354657df46a125619ee671e0b409",
+          "sha256": "818e70ab4f2105d5c42d92e452ea03cb4d26e126cc74a7c925320ef07d4b0c55"
+        },
+        "downloads": -1,
+        "filename": "datasette_hashed_urls-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6d55354657df46a125619ee671e0b409",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8616,
+        "upload_time": "2022-03-24T03:25:08",
+        "upload_time_iso_8601": "2022-03-24T03:25:08.804925Z",
+        "url": "https://files.pythonhosted.org/packages/cc/e5/b4aab8d79a3ec5c236bd8add1eaa1468ff62b9f2a7d0fadf816863947d7c/datasette_hashed_urls-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8a17d72278c7bdbcdbc1b5420c5b12f8",
+          "sha256": "f7a22b280434ca2efd4676273e28bb689815ffe46c22e2d474a8882cf69a3668"
+        },
+        "downloads": -1,
+        "filename": "datasette-hashed-urls-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8a17d72278c7bdbcdbc1b5420c5b12f8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8063,
+        "upload_time": "2022-03-24T03:25:09",
+        "upload_time_iso_8601": "2022-03-24T03:25:09.821628Z",
+        "url": "https://files.pythonhosted.org/packages/d8/4a/bd89da15a7f2f5c148241a5dcf675efb7f05eedb829866eaab0ee31485e2/datasette-hashed-urls-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d7a10da8da85fcf2c5d0440e0fdac4bd",
+          "sha256": "b719001a4c8a5c39cf654dd595df2d1ee93ede52253dbec7098c5a4631b80588"
+        },
+        "downloads": -1,
+        "filename": "datasette_hashed_urls-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d7a10da8da85fcf2c5d0440e0fdac4bd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8863,
+        "upload_time": "2022-03-24T20:53:16",
+        "upload_time_iso_8601": "2022-03-24T20:53:16.297979Z",
+        "url": "https://files.pythonhosted.org/packages/bf/51/80b6de42f85ffdcde2474977fc3ab4987e24379d8d2aa658897aed2589a1/datasette_hashed_urls-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d22209c01fff57a0e716a69248dea7bb",
+          "sha256": "f6f9d69f9a4bd65947489b9a10f8143882abee444e24013bbc1cd430932c1358"
+        },
+        "downloads": -1,
+        "filename": "datasette-hashed-urls-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d22209c01fff57a0e716a69248dea7bb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8295,
+        "upload_time": "2022-03-24T20:53:17",
+        "upload_time_iso_8601": "2022-03-24T20:53:17.419669Z",
+        "url": "https://files.pythonhosted.org/packages/be/ac/f991e3c41f6e935968c0ba5def91571ed69c97273568b77dadc488141ec3/datasette-hashed-urls-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d7a10da8da85fcf2c5d0440e0fdac4bd",
+        "sha256": "b719001a4c8a5c39cf654dd595df2d1ee93ede52253dbec7098c5a4631b80588"
+      },
+      "downloads": -1,
+      "filename": "datasette_hashed_urls-0.4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d7a10da8da85fcf2c5d0440e0fdac4bd",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8863,
+      "upload_time": "2022-03-24T20:53:16",
+      "upload_time_iso_8601": "2022-03-24T20:53:16.297979Z",
+      "url": "https://files.pythonhosted.org/packages/bf/51/80b6de42f85ffdcde2474977fc3ab4987e24379d8d2aa658897aed2589a1/datasette_hashed_urls-0.4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d22209c01fff57a0e716a69248dea7bb",
+        "sha256": "f6f9d69f9a4bd65947489b9a10f8143882abee444e24013bbc1cd430932c1358"
+      },
+      "downloads": -1,
+      "filename": "datasette-hashed-urls-0.4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d22209c01fff57a0e716a69248dea7bb",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 8295,
+      "upload_time": "2022-03-24T20:53:17",
+      "upload_time_iso_8601": "2022-03-24T20:53:17.419669Z",
+      "url": "https://files.pythonhosted.org/packages/be/ac/f991e3c41f6e935968c0ba5def91571ed69c97273568b77dadc488141ec3/datasette-hashed-urls-0.4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

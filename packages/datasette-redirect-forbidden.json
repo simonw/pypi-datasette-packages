@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-redirect-forbidden\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-redirect-forbidden.svg)](https://pypi.org/project/datasette-redirect-forbidden/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-redirect-forbidden?include_prereleases&label=changelog)](https://github.com/simonw/datasette-redirect-forbidden/releases)\n[![Tests](https://github.com/simonw/datasette-redirect-forbidden/workflows/Test/badge.svg)](https://github.com/simonw/datasette-redirect-forbidden/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-redirect-forbidden/blob/main/LICENSE)\n\nRedirect forbidden requests to a login page\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-redirect-forbidden\n\n## Usage\n\nAdd the following to your `metadata.yml` (or `metadata.json`) file to configure the plugin:\n\n```yaml\nplugins:\n  datasette-redirect-forbidden:\n    redirect_to: /-/login\n```\nAny 403 forbidden pages will redirect to the specified page.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-redirect-forbidden\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-redirect-forbidden",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-redirect-forbidden",
+    "package_url": "https://pypi.org/project/datasette-redirect-forbidden/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-redirect-forbidden/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-redirect-forbidden/actions",
+      "Changelog": "https://github.com/simonw/datasette-redirect-forbidden/releases",
+      "Homepage": "https://github.com/simonw/datasette-redirect-forbidden",
+      "Issues": "https://github.com/simonw/datasette-redirect-forbidden/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-redirect-forbidden/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Redirect forbidden requests to a login page",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12988600,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8b25809f7d6d08ce7e7d63867246b9a6",
+          "sha256": "9c3579e76c94fdf9b39c57ac62e314081f6d6f69a7beae38c7cbb37934f6bfc7"
+        },
+        "downloads": -1,
+        "filename": "datasette_redirect_forbidden-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8b25809f7d6d08ce7e7d63867246b9a6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 6788,
+        "upload_time": "2022-02-23T22:04:07",
+        "upload_time_iso_8601": "2022-02-23T22:04:07.394363Z",
+        "url": "https://files.pythonhosted.org/packages/cf/22/a437fc6fb97a39056ededbfaf02c17d3fd5e8c33fb4546bc03344b2567c0/datasette_redirect_forbidden-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "522dfee1f98ffb2096670bde8ec8872c",
+          "sha256": "b981018e27dd227554d55b664559249667243dc20b0d596be1a02c748f1cf144"
+        },
+        "downloads": -1,
+        "filename": "datasette-redirect-forbidden-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "522dfee1f98ffb2096670bde8ec8872c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 6199,
+        "upload_time": "2022-02-23T22:04:08",
+        "upload_time_iso_8601": "2022-02-23T22:04:08.865149Z",
+        "url": "https://files.pythonhosted.org/packages/22/f1/6e757423da2563206abd6445a5bc8b6ab38edd7dbf7b1500380175eda3fa/datasette-redirect-forbidden-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8b25809f7d6d08ce7e7d63867246b9a6",
+        "sha256": "9c3579e76c94fdf9b39c57ac62e314081f6d6f69a7beae38c7cbb37934f6bfc7"
+      },
+      "downloads": -1,
+      "filename": "datasette_redirect_forbidden-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8b25809f7d6d08ce7e7d63867246b9a6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 6788,
+      "upload_time": "2022-02-23T22:04:07",
+      "upload_time_iso_8601": "2022-02-23T22:04:07.394363Z",
+      "url": "https://files.pythonhosted.org/packages/cf/22/a437fc6fb97a39056ededbfaf02c17d3fd5e8c33fb4546bc03344b2567c0/datasette_redirect_forbidden-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "522dfee1f98ffb2096670bde8ec8872c",
+        "sha256": "b981018e27dd227554d55b664559249667243dc20b0d596be1a02c748f1cf144"
+      },
+      "downloads": -1,
+      "filename": "datasette-redirect-forbidden-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "522dfee1f98ffb2096670bde8ec8872c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 6199,
+      "upload_time": "2022-02-23T22:04:08",
+      "upload_time_iso_8601": "2022-02-23T22:04:08.865149Z",
+      "url": "https://files.pythonhosted.org/packages/22/f1/6e757423da2563206abd6445a5bc8b6ab38edd7dbf7b1500380175eda3fa/datasette-redirect-forbidden-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

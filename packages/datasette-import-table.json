@@ -1,0 +1,345 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-import-table\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-import-table.svg)](https://pypi.org/project/datasette-import-table/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-import-table?include_prereleases&label=changelog)](https://github.com/simonw/datasette-import-table/releases)\n[![Tests](https://github.com/simonw/datasette-import-table/workflows/Test/badge.svg)](https://github.com/simonw/datasette-import-table/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-import-table/blob/main/LICENSE)\n\nDatasette plugin for importing tables from other Datasette instances\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-import-table\n\n## Usage\n\nVisit `/-/import-table` for the interface. Paste in the URL to a table page on another Datasette instance and click the button to import that table.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `import-table` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-import-table\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-import-table",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-import-table",
+    "package_url": "https://pypi.org/project/datasette-import-table/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-import-table/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-import-table/actions",
+      "Changelog": "https://github.com/simonw/datasette-import-table/releases",
+      "Homepage": "https://github.com/simonw/datasette-import-table",
+      "Issues": "https://github.com/simonw/datasette-import-table/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-import-table/0.3/",
+    "requires_dist": [
+      "datasette",
+      "httpx",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for importing tables from other Datasette instances",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11392650,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a17e2648903df5f828ee879c698d4696",
+          "sha256": "65c11c7ae87cb6d31f1c8a22fe64dff64b6f501fc8653604e192c86138572228"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a17e2648903df5f828ee879c698d4696",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 4704,
+        "upload_time": "2020-09-28T14:33:09",
+        "upload_time_iso_8601": "2020-09-28T14:33:09.591762Z",
+        "url": "https://files.pythonhosted.org/packages/79/e0/22c0a08afa7d11ee088a590d742204efaf5843028d822a8a98ca3da5a887/datasette_import_table-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1ef525d968abda9cba122928ee012100",
+          "sha256": "b6c800ca8a2cd220dd9526289edba40508fc6dad515b88d4e6a5c6ee8306bde2"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1ef525d968abda9cba122928ee012100",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4307,
+        "upload_time": "2020-09-28T14:33:10",
+        "upload_time_iso_8601": "2020-09-28T14:33:10.630887Z",
+        "url": "https://files.pythonhosted.org/packages/47/49/2b8ab5667204655bcfbef7039fb915945c7cf56b364dd8d98c1c8be4b025/datasette-import-table-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0d085aa82c71f880f47b3f8d55587d9c",
+          "sha256": "23dbddf28ef4735efd0b35e3532d1d7dfeca360c978d9b3c9652634c0f27f229"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0d085aa82c71f880f47b3f8d55587d9c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3739,
+        "upload_time": "2020-09-28T05:32:46",
+        "upload_time_iso_8601": "2020-09-28T05:32:46.180578Z",
+        "url": "https://files.pythonhosted.org/packages/2b/d0/1abc619f5567f693de3170548224d17ad1f2e8fd7db1ac308d85c2dceaca/datasette_import_table-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "de8cfe0332576212a9a89618f869f5d0",
+          "sha256": "7b34c0c1f860a562d32bf1b9db92fd9879df06d179e2890ed5b69495cae91460"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "de8cfe0332576212a9a89618f869f5d0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3537,
+        "upload_time": "2020-09-28T05:32:48",
+        "upload_time_iso_8601": "2020-09-28T05:32:48.164056Z",
+        "url": "https://files.pythonhosted.org/packages/56/e2/af55a0fd7fff10e8d73e22f78a3f8ef505391c1d9262e4ab342a618f1c57/datasette-import-table-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f7a5296634a9d62f8a35019011926a13",
+          "sha256": "99ba402cf789a5bb43b6ddc3a3625952ca31fbe4b699b7092af0aebba48c9236"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f7a5296634a9d62f8a35019011926a13",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3739,
+        "upload_time": "2020-09-28T05:42:55",
+        "upload_time_iso_8601": "2020-09-28T05:42:55.858783Z",
+        "url": "https://files.pythonhosted.org/packages/30/7c/ba9f65422ef72909a2efce7e41ca964af076e736fb9ae468c4537530b457/datasette_import_table-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d96f742c6d332e0c1e7289189e23250b",
+          "sha256": "1796bb77635c7434015665f777e02ed9dfb145147399bbbc5476583d54ecf255"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d96f742c6d332e0c1e7289189e23250b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3529,
+        "upload_time": "2020-09-28T05:42:56",
+        "upload_time_iso_8601": "2020-09-28T05:42:56.763042Z",
+        "url": "https://files.pythonhosted.org/packages/57/9b/4a84919bc36a1be0284169c4606f9bd6faf957a558f4f1218264749f5944/datasette-import-table-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c694ea79c70842823182191913e1e643",
+          "sha256": "c1ac773799577e95e8146956baee36236d5d76504d4b1f775cda7ce94fd36c0f"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c694ea79c70842823182191913e1e643",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 4443,
+        "upload_time": "2020-09-28T05:49:30",
+        "upload_time_iso_8601": "2020-09-28T05:49:30.234304Z",
+        "url": "https://files.pythonhosted.org/packages/21/05/31820706a9ce4341e3096ba30f55186e628c552c63e9ca509a58b879bf10/datasette_import_table-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4dd8fd646fee597ca5d5ce18512f8fd4",
+          "sha256": "d52de484839d96c2ee362489910b3765a3d12acec0b70ceaaa1bda51d944565c"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4dd8fd646fee597ca5d5ce18512f8fd4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4033,
+        "upload_time": "2020-09-28T05:49:31",
+        "upload_time_iso_8601": "2020-09-28T05:49:31.126568Z",
+        "url": "https://files.pythonhosted.org/packages/e3/50/6724d5ce3c10ee88917b9bc3af5aa30b3a6cba7f1ae9470c5b279825904b/datasette-import-table-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "77bb8dfd5af900c7aa80aabac9641f5c",
+          "sha256": "39ea329086ff3625b6700a33f05c52baf509b3b2079e497a4c96dc0bb8be0fdc"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "77bb8dfd5af900c7aa80aabac9641f5c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 5274,
+        "upload_time": "2020-09-28T15:28:52",
+        "upload_time_iso_8601": "2020-09-28T15:28:52.506746Z",
+        "url": "https://files.pythonhosted.org/packages/f9/85/25ba5504a11471fec4ad0c8bdc24a8af5a7df8839b13cfed0dabbe0826de/datasette_import_table-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1c9c6e79e78de18a572a2f4916921dc1",
+          "sha256": "2ab492626f4f9191b8109edc767fe83cf05a3d1074237563d796b0d8b5f68ec7"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1c9c6e79e78de18a572a2f4916921dc1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4848,
+        "upload_time": "2020-09-28T15:28:53",
+        "upload_time_iso_8601": "2020-09-28T15:28:53.402378Z",
+        "url": "https://files.pythonhosted.org/packages/35/a7/850472c4d31aadad28cafad940f0cb4e3c74dfcee08b7b3290911966e7f4/datasette-import-table-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "199b2a5551ddf1f05a38c2f66565d0a4",
+          "sha256": "2cb90378dc88548cca8e3feb49c3e48f7204e83ade6a04f0f7989873e460eb83"
+        },
+        "downloads": -1,
+        "filename": "datasette_import_table-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "199b2a5551ddf1f05a38c2f66565d0a4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 5486,
+        "upload_time": "2021-09-08T04:50:54",
+        "upload_time_iso_8601": "2021-09-08T04:50:54.689455Z",
+        "url": "https://files.pythonhosted.org/packages/ba/d9/cbb35aaae3e85a4d6b60bfe2b3a14de07155d3daa075ebaa0f29a6002015/datasette_import_table-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f85c973ea9d50501125d51544945319e",
+          "sha256": "7e342cd1b1ccd1ff6205963b56e13dbdf151acf2554ecc82c991b0616a6b31db"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-table-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f85c973ea9d50501125d51544945319e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5047,
+        "upload_time": "2021-09-08T04:50:55",
+        "upload_time_iso_8601": "2021-09-08T04:50:55.901749Z",
+        "url": "https://files.pythonhosted.org/packages/bb/59/8a9357885a5972682369160b25cd7c930dbc7311ed67d71bf7b93e88d7f2/datasette-import-table-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "199b2a5551ddf1f05a38c2f66565d0a4",
+        "sha256": "2cb90378dc88548cca8e3feb49c3e48f7204e83ade6a04f0f7989873e460eb83"
+      },
+      "downloads": -1,
+      "filename": "datasette_import_table-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "199b2a5551ddf1f05a38c2f66565d0a4",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 5486,
+      "upload_time": "2021-09-08T04:50:54",
+      "upload_time_iso_8601": "2021-09-08T04:50:54.689455Z",
+      "url": "https://files.pythonhosted.org/packages/ba/d9/cbb35aaae3e85a4d6b60bfe2b3a14de07155d3daa075ebaa0f29a6002015/datasette_import_table-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "f85c973ea9d50501125d51544945319e",
+        "sha256": "7e342cd1b1ccd1ff6205963b56e13dbdf151acf2554ecc82c991b0616a6b31db"
+      },
+      "downloads": -1,
+      "filename": "datasette-import-table-0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "f85c973ea9d50501125d51544945319e",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 5047,
+      "upload_time": "2021-09-08T04:50:55",
+      "upload_time_iso_8601": "2021-09-08T04:50:55.901749Z",
+      "url": "https://files.pythonhosted.org/packages/bb/59/8a9357885a5972682369160b25cd7c930dbc7311ed67d71bf7b93e88d7f2/datasette-import-table-0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

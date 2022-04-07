@@ -1,0 +1,130 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-verify\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-verify.svg)](https://pypi.org/project/datasette-verify/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-verify?include_prereleases&label=changelog)](https://github.com/simonw/datasette-verify/releases)\n[![Tests](https://github.com/simonw/datasette-verify/workflows/Test/badge.svg)](https://github.com/simonw/datasette-verify/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-verify/blob/main/LICENSE)\n\nVerify that SQLite files can be opened using Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-verify\n\nThis plugin depends on [Datasette 0.59a2](https://github.com/simonw/datasette/releases/tag/0.59a2) or higher, as it uses the [register_commands()](https://docs.datasette.io/en/latest/plugin_hooks.html#plugin-hook-register-commands) plugin hook.\n\n## Usage\n\nTo confirm that files can be opened by Datasette, run the following:\n\n    datasette verify file1.db file2.db\n\nYou can pass one or more file paths.\n\nThe command will exit silently with a 0 exit code if the files are all valid SQLite databases that Datasette can open.\n\nIt will exit with a 1 exit code and display an error for the first file it finds that is not valid.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-verify\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-verify",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-verify",
+    "package_url": "https://pypi.org/project/datasette-verify/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-verify/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-verify/actions",
+      "Changelog": "https://github.com/simonw/datasette-verify/releases",
+      "Homepage": "https://github.com/simonw/datasette-verify",
+      "Issues": "https://github.com/simonw/datasette-verify/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-verify/0.1/",
+    "requires_dist": [
+      "datasette (>=0.59a2)",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Verify that SQLite files can be opened using Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11299919,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f79b1a00b12da55e1a51604e35d922bc",
+          "sha256": "ee4202e0a71d698d9eed48f9009a1473033a29ee4ea10fa859de34066ab8cfb9"
+        },
+        "downloads": -1,
+        "filename": "datasette_verify-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f79b1a00b12da55e1a51604e35d922bc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2681,
+        "upload_time": "2021-08-28T02:32:25",
+        "upload_time_iso_8601": "2021-08-28T02:32:25.071515Z",
+        "url": "https://files.pythonhosted.org/packages/55/e0/327dc4b2841d0714e4262cea412952787cd90e0b3d8e574ca01a319639c5/datasette_verify-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c4cae6a969c52062fc293da28ad3b6ec",
+          "sha256": "8496c3b9cda158a19788f5bad446b310a20e5d9cfddd90f9e2452450ee0f4530"
+        },
+        "downloads": -1,
+        "filename": "datasette-verify-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c4cae6a969c52062fc293da28ad3b6ec",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2519,
+        "upload_time": "2021-08-28T02:32:26",
+        "upload_time_iso_8601": "2021-08-28T02:32:26.278827Z",
+        "url": "https://files.pythonhosted.org/packages/39/42/2bd0bd3816c3f55f4602f4e064b93d7796a977fe3855cdbfdc63dc190f2f/datasette-verify-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "f79b1a00b12da55e1a51604e35d922bc",
+        "sha256": "ee4202e0a71d698d9eed48f9009a1473033a29ee4ea10fa859de34066ab8cfb9"
+      },
+      "downloads": -1,
+      "filename": "datasette_verify-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f79b1a00b12da55e1a51604e35d922bc",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2681,
+      "upload_time": "2021-08-28T02:32:25",
+      "upload_time_iso_8601": "2021-08-28T02:32:25.071515Z",
+      "url": "https://files.pythonhosted.org/packages/55/e0/327dc4b2841d0714e4262cea412952787cd90e0b3d8e574ca01a319639c5/datasette_verify-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "c4cae6a969c52062fc293da28ad3b6ec",
+        "sha256": "8496c3b9cda158a19788f5bad446b310a20e5d9cfddd90f9e2452450ee0f4530"
+      },
+      "downloads": -1,
+      "filename": "datasette-verify-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "c4cae6a969c52062fc293da28ad3b6ec",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2519,
+      "upload_time": "2021-08-28T02:32:26",
+      "upload_time_iso_8601": "2021-08-28T02:32:26.278827Z",
+      "url": "https://files.pythonhosted.org/packages/39/42/2bd0bd3816c3f55f4602f4e064b93d7796a977fe3855cdbfdc63dc190f2f/datasette-verify-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

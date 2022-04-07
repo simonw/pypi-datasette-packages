@@ -1,0 +1,428 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# airtable-export\n\n[![PyPI](https://img.shields.io/pypi/v/airtable-export.svg)](https://pypi.org/project/airtable-export/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/airtable-export?include_prereleases&label=changelog)](https://github.com/simonw/airtable-export/releases)\n[![Tests](https://github.com/simonw/airtable-export/workflows/Test/badge.svg)](https://github.com/simonw/airtable-export/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/airtable-export/blob/master/LICENSE)\n\nExport Airtable data to files on disk\n\n## Installation\n\nInstall this tool using `pip`:\n\n    $ pip install airtable-export\n\n## Usage\n\nYou will need to know the following information:\n\n- Your Airtable base ID - this is a string starting with `app...`\n- Your Airtable API key - this is a string starting with `key...`\n- The names of each of the tables that you wish to export\n\nYou can export all of your data to a folder called `export/` by running the following:\n\n    airtable-export export base_id table1 table2 --key=key\n\nThis example would create two files: `export/table1.yml` and `export/table2.yml`.\n\nRather than passing the API key using the `--key` option you can set it as an environment variable called `AIRTABLE_KEY`.\n\n## Export options\n\nBy default the tool exports your data as YAML.\n\nYou can also export as JSON or as [newline delimited JSON](http://ndjson.org/) using the `--json` or `--ndjson` options:\n\n    airtable-export export base_id table1 table2 --key=key --ndjson\n\nYou can pass multiple format options at once. This command will create a `.json`, `.yml` and `.ndjson` file for each exported table:\n\n    airtable-export export base_id table1 table2 \\\n        --key=key --ndjson --yaml --json\n\n### SQLite database export\n\nYou can export tables to a SQLite database file using the `--sqlite database.db` option:\n\n    airtable-export export base_id table1 table2 \\\n        --key=key --sqlite database.db\n\nThis can be combined with other format options. If you only specify `--sqlite` the export directory argument will be ignored.\n\nThe SQLite database will have a table created for each table you export. Those tables will have a primary key column called `airtable_id`.\n\nIf you run this command against an existing SQLite database records with matching primary keys will be over-written by new records from the export.\n\n## Request options\n\nBy default the tool uses [python-httpx](https://www.python-httpx.org)'s default configurations.\n\nYou can override the `user-agent` using the `--user-agent` option:\n\n    airtable-export export base_id table1 table2 --key=key --user-agent \"Airtable Export Robot\"\n\nYou can override the [timeout during a network read operation](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) using the `--http-read-timeout` option. If not set, this defaults to 5s.\n\n    airtable-export export base_id table1 table2 --key=key --http-read-timeout 60\n\n## Running this using GitHub Actions\n\n[GitHub Actions](https://github.com/features/actions) is GitHub's workflow automation product. You can use it to run `airtable-export` in order to back up your Airtable data to a GitHub repository. Doing this gives you a visible commit history of changes you make to your Airtable data - like [this one](https://github.com/natbat/rockybeaches/commits/main/airtable).\n\nTo run this for your own Airtable database you'll first need to add the following secrets to your GitHub repository:\n\n<dl>\n  <dt>AIRTABLE_BASE_ID</dt>\n  <dd>The base ID, a string beginning `app...`</dd>\n  <dt>AIRTABLE_KEY</dt>\n  <dd>Your Airtable API key</dd>\n  <dt>AIRTABLE_TABLES</dt>\n  <dd>A space separated list of the Airtable tables that you want to backup. If any of these contain spaces you will need to enclose them in single quotes, e.g. <samp>'My table with spaces in the name' OtherTableWithNoSpaces</samp></dd>\n</dl>\n\nOnce you have set those secrets, add the following as a file called `.github/workflows/backup-airtable.yml`:\n```yaml\nname: Backup Airtable\n\non:\n  workflow_dispatch:\n  schedule:\n  - cron: '32 0 * * *'\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Check out repo\n      uses: actions/checkout@v2\n    - name: Set up Python\n      uses: actions/setup-python@v2\n      with:\n        python-version: 3.8\n    - uses: actions/cache@v2\n      name: Configure pip caching\n      with:\n        path: ~/.cache/pip\n        key: ${{ runner.os }}-pip-\n        restore-keys: |\n          ${{ runner.os }}-pip-\n    - name: Install airtable-export\n      run: |\n        pip install airtable-export\n    - name: Backup Airtable to backups/\n      env:\n        AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}\n        AIRTABLE_KEY: ${{ secrets.AIRTABLE_KEY }}\n        AIRTABLE_TABLES: ${{ secrets.AIRTABLE_TABLES }}\n      run: |-\n        airtable-export backups $AIRTABLE_BASE_ID $AIRTABLE_TABLES -v\n    - name: Commit and push if it changed\n      run: |-\n        git config user.name \"Automated\"\n        git config user.email \"actions@users.noreply.github.com\"\n        git add -A\n        timestamp=$(date -u)\n        git commit -m \"Latest data: ${timestamp}\" || exit 0\n        git push\n```\nThis will run once a day (at 32 minutes past midnight UTC) and will also run if you manually click the \"Run workflow\" button, see [GitHub Actions: Manual triggers with workflow_dispatch](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/).\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd airtable-export\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/airtable-export",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "airtable-export",
+    "package_url": "https://pypi.org/project/airtable-export/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/airtable-export/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/airtable-export/actions",
+      "Changelog": "https://github.com/simonw/airtable-export/releases",
+      "Homepage": "https://github.com/simonw/airtable-export",
+      "Issues": "https://github.com/simonw/airtable-export/issues"
+    },
+    "release_url": "https://pypi.org/project/airtable-export/0.7.1/",
+    "requires_dist": [
+      "click",
+      "PyYAML",
+      "httpx",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-mock ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Export Airtable data to files on disk",
+    "version": "0.7.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 10023003,
+  "releases": {
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ce8041cf5ac783bfd658b1fe5d388233",
+          "sha256": "69432302c0a30247d22e8a4e2d1be33a06912f7c5cb6344d9478cbec5fb0e2e6"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ce8041cf5ac783bfd658b1fe5d388233",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7665,
+        "upload_time": "2020-08-29T21:15:17",
+        "upload_time_iso_8601": "2020-08-29T21:15:17.806787Z",
+        "url": "https://files.pythonhosted.org/packages/b2/e2/f3baba8f5a431857e4a12b0d87b8eb99292fcd30a76e094416694dbc4ea6/airtable_export-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4da234eed1bcf49d69a250cf0b5ea36f",
+          "sha256": "480ae9ffc00a74920ca2f337103465b933b2cdb95c6a2d18da5ea5a6d5f51b70"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4da234eed1bcf49d69a250cf0b5ea36f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3261,
+        "upload_time": "2020-08-29T21:15:19",
+        "upload_time_iso_8601": "2020-08-29T21:15:19.974223Z",
+        "url": "https://files.pythonhosted.org/packages/64/fb/f49db9fec6a72ede6b8a24a2da755acaebf3c093106fcbd29a92d38717ab/airtable-export-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "db9c2799377b700c82d7755aaefcaa99",
+          "sha256": "b521caf273b34f7592668bb140469d671fc47986469499555d9a9af05b15110f"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "db9c2799377b700c82d7755aaefcaa99",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7896,
+        "upload_time": "2020-08-29T21:47:28",
+        "upload_time_iso_8601": "2020-08-29T21:47:28.114274Z",
+        "url": "https://files.pythonhosted.org/packages/a0/fc/f48b73e2141b8db9925734d275ae51c0ada3411ac7d62946fece183deb1e/airtable_export-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "550a0527ac5a67897091f00082959265",
+          "sha256": "e6d86ace609c53f397be5e5cb9c87154ae514bd16e7e22057d9d4d865a3dc098"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "550a0527ac5a67897091f00082959265",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3495,
+        "upload_time": "2020-08-29T21:47:29",
+        "upload_time_iso_8601": "2020-08-29T21:47:29.065416Z",
+        "url": "https://files.pythonhosted.org/packages/97/89/060ee52cbb055d043d9a89a559fd04c82edc34e6f67d0e2f5d01e9b628e7/airtable-export-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5b420cf23bcc5bafe8dccf2c64e4cb70",
+          "sha256": "69ab0ab8fcc68c685056813396886be568a474cda34bc90ffa0e53ea56bc6a8c"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5b420cf23bcc5bafe8dccf2c64e4cb70",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8879,
+        "upload_time": "2020-08-29T22:16:55",
+        "upload_time_iso_8601": "2020-08-29T22:16:55.573352Z",
+        "url": "https://files.pythonhosted.org/packages/3f/9b/81840ab97d66c37a33e8ab4be2cb7fa98d66ca25a986566131619e167578/airtable_export-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "19cbbd442f930296748080365a573539",
+          "sha256": "ba9dc66fd8deb999c875660f4d632376b7b08dafb53a910ba38123619d42227e"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "19cbbd442f930296748080365a573539",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4700,
+        "upload_time": "2020-08-29T22:16:56",
+        "upload_time_iso_8601": "2020-08-29T22:16:56.518778Z",
+        "url": "https://files.pythonhosted.org/packages/33/87/9bf6e977511f03e2191aaca4098482db952232a93f2aa546663f7af5a04c/airtable-export-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "061fb1e4f62c202850d96e0ec4c6fc65",
+          "sha256": "0087adfdd982c5fb03878a1f9c545fee311e6588049d687143bc0f4d6f1aef51"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "061fb1e4f62c202850d96e0ec4c6fc65",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8984,
+        "upload_time": "2020-08-30T03:15:52",
+        "upload_time_iso_8601": "2020-08-30T03:15:52.413750Z",
+        "url": "https://files.pythonhosted.org/packages/7a/09/7dc8d8dc8fda33f3653e85895cf958c2aaa045601ebe32806872bec96648/airtable_export-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4be758006845bf2a16efd099cb6dc154",
+          "sha256": "0e9b3933ec4d747fa8d362b4db6b19310e36dd8dfa82ff7b41a5c561df537ea2"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4be758006845bf2a16efd099cb6dc154",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4838,
+        "upload_time": "2020-08-30T03:15:53",
+        "upload_time_iso_8601": "2020-08-30T03:15:53.256711Z",
+        "url": "https://files.pythonhosted.org/packages/5d/1e/d0a8b26f027416ab9fc45916540e74d6673eb230e0528d07501dbbc3230a/airtable-export-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fc63b99eaf1a2bde6f8455bf6844fed5",
+          "sha256": "0cadce83fe6ceb1710a15a82105bf44e3c29bbd8c345edb83fe02ea2f0a1c9f6"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fc63b99eaf1a2bde6f8455bf6844fed5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9384,
+        "upload_time": "2021-02-22T06:03:03",
+        "upload_time_iso_8601": "2021-02-22T06:03:03.291461Z",
+        "url": "https://files.pythonhosted.org/packages/0b/3e/f1de90e63f10a1214de1b13c607728e12d5687a8fd688adce7483c6b7ef9/airtable_export-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0e79c89a78a2ed002311ee836281882a",
+          "sha256": "8e3519452a9e0a3452d0e05f3236f96192ebc44df95e67d7ef7a646d91fecec5"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0e79c89a78a2ed002311ee836281882a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5312,
+        "upload_time": "2021-02-22T06:03:04",
+        "upload_time_iso_8601": "2021-02-22T06:03:04.120431Z",
+        "url": "https://files.pythonhosted.org/packages/65/92/201f40b86b529704fc87ad6e686b753d938e3017a0318bda680bb6fec043/airtable-export-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "734107ad170f499b102dcb54e2bfd8ff",
+          "sha256": "678fd439089776930352887d6305144b09749cfbc5ca32f99718fba8b52b2a7e"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "734107ad170f499b102dcb54e2bfd8ff",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9534,
+        "upload_time": "2021-04-02T05:43:43",
+        "upload_time_iso_8601": "2021-04-02T05:43:43.798512Z",
+        "url": "https://files.pythonhosted.org/packages/21/02/7d5064c6faaa2bbefd47358be8a466bcc7ae426ea95728ad9486cfebf6ef/airtable_export-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f897d6c423e57000f3ae0f0dc237008e",
+          "sha256": "2f15564364320f16a5c70463195a3f473a58c38092036a00cb344b29fd0841d6"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f897d6c423e57000f3ae0f0dc237008e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5478,
+        "upload_time": "2021-04-02T05:43:44",
+        "upload_time_iso_8601": "2021-04-02T05:43:44.591650Z",
+        "url": "https://files.pythonhosted.org/packages/de/90/8d2141f697cedc4f2b9c231f3c07d49f88a8e4b9c0c89ae9d918659b1f11/airtable-export-0.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9573d65b107c45d55677d12ad3da9a7b",
+          "sha256": "ba75f5b1cf18ae6279c85674accec0ac9069447982c9f3cd737cdcb95a73ba11"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9573d65b107c45d55677d12ad3da9a7b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9735,
+        "upload_time": "2021-04-08T22:19:20",
+        "upload_time_iso_8601": "2021-04-08T22:19:20.598857Z",
+        "url": "https://files.pythonhosted.org/packages/95/64/5ca65716c0b1e5808bbedb381db8260a33e6157e5c14a2f153a867e70a32/airtable_export-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0dec8e7b1e2a55433342cf95ccdacf50",
+          "sha256": "cdcfd4de53e07a883e6781216f5790dd6719d5acc73d2d1d044278e5a86894ed"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0dec8e7b1e2a55433342cf95ccdacf50",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5689,
+        "upload_time": "2021-04-08T22:19:21",
+        "upload_time_iso_8601": "2021-04-08T22:19:21.826078Z",
+        "url": "https://files.pythonhosted.org/packages/5d/32/8982931deb0d6c165c3106a810c2ab4d7fc0def34a6138d943e34e8255cb/airtable-export-0.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5bc5e1cb712e9c1c6aa364cf4d689711",
+          "sha256": "803f2578c6c689ab07c758d7d4599f77e28630037bc7318471ba688565c347db"
+        },
+        "downloads": -1,
+        "filename": "airtable_export-0.7.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5bc5e1cb712e9c1c6aa364cf4d689711",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9769,
+        "upload_time": "2021-04-09T23:14:09",
+        "upload_time_iso_8601": "2021-04-09T23:14:09.028375Z",
+        "url": "https://files.pythonhosted.org/packages/94/5e/014144e1f70bd7e6d72c179b3fadb3f5e2bda10393eb175bc3e54b036e5d/airtable_export-0.7.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3d692601e7abc046231eee107de6b562",
+          "sha256": "1dd3e6434d97c86eac9bd1c95b33ee8c29b1f58c1f1684a4f9ca541533b9c4c1"
+        },
+        "downloads": -1,
+        "filename": "airtable-export-0.7.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3d692601e7abc046231eee107de6b562",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5682,
+        "upload_time": "2021-04-09T23:14:09",
+        "upload_time_iso_8601": "2021-04-09T23:14:09.923292Z",
+        "url": "https://files.pythonhosted.org/packages/d4/4f/897f00a5cc50baccd793027554b5e5b094109e8e69167da22a13316fa34a/airtable-export-0.7.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "5bc5e1cb712e9c1c6aa364cf4d689711",
+        "sha256": "803f2578c6c689ab07c758d7d4599f77e28630037bc7318471ba688565c347db"
+      },
+      "downloads": -1,
+      "filename": "airtable_export-0.7.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "5bc5e1cb712e9c1c6aa364cf4d689711",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9769,
+      "upload_time": "2021-04-09T23:14:09",
+      "upload_time_iso_8601": "2021-04-09T23:14:09.028375Z",
+      "url": "https://files.pythonhosted.org/packages/94/5e/014144e1f70bd7e6d72c179b3fadb3f5e2bda10393eb175bc3e54b036e5d/airtable_export-0.7.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "3d692601e7abc046231eee107de6b562",
+        "sha256": "1dd3e6434d97c86eac9bd1c95b33ee8c29b1f58c1f1684a4f9ca541533b9c4c1"
+      },
+      "downloads": -1,
+      "filename": "airtable-export-0.7.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "3d692601e7abc046231eee107de6b562",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 5682,
+      "upload_time": "2021-04-09T23:14:09",
+      "upload_time_iso_8601": "2021-04-09T23:14:09.923292Z",
+      "url": "https://files.pythonhosted.org/packages/d4/4f/897f00a5cc50baccd793027554b5e5b094109e8e69167da22a13316fa34a/airtable-export-0.7.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

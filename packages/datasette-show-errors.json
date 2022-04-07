@@ -1,0 +1,88 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-show-errors\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-show-errors.svg)](https://pypi.org/project/datasette-show-errors/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-show-errors.svg?style=svg)](https://circleci.com/gh/simonw/datasette-show-errors)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-show-errors/blob/master/LICENSE)\n\nDatasette plugin for displaying error tracebacks.\n\n## Installation\n\n    pip install datasette-show-errors\n\n## Usage\n\nInstalling the plugin will cause any internal error to be displayed with a full traceback, rather than just a generic 500 page.\n\nBe careful not to use this in a context that might expose sensitive information.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-show-errors",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-show-errors",
+    "package_url": "https://pypi.org/project/datasette-show-errors/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-show-errors/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-show-errors"
+    },
+    "release_url": "https://pypi.org/project/datasette-show-errors/0.2/",
+    "requires_dist": [
+      "starlette",
+      "datasette",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for displaying error tracebacks",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 6856003,
+  "releases": {
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bbdd92670d26d68b5622b183bb233bbc",
+          "sha256": "cbc9dda3970e01e4b0ac00bb976fe285f4cb649cfe76955bf4d3e3915cf06993"
+        },
+        "downloads": -1,
+        "filename": "datasette_show_errors-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bbdd92670d26d68b5622b183bb233bbc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6294,
+        "upload_time": "2020-03-21T15:42:44",
+        "upload_time_iso_8601": "2020-03-21T15:42:44.670250Z",
+        "url": "https://files.pythonhosted.org/packages/fb/6c/59c5cd375392c0780e46ddbfd81798051d8117170defe0e2087166316f46/datasette_show_errors-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "bbdd92670d26d68b5622b183bb233bbc",
+        "sha256": "cbc9dda3970e01e4b0ac00bb976fe285f4cb649cfe76955bf4d3e3915cf06993"
+      },
+      "downloads": -1,
+      "filename": "datasette_show_errors-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "bbdd92670d26d68b5622b183bb233bbc",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 6294,
+      "upload_time": "2020-03-21T15:42:44",
+      "upload_time_iso_8601": "2020-03-21T15:42:44.670250Z",
+      "url": "https://files.pythonhosted.org/packages/fb/6c/59c5cd375392c0780e46ddbfd81798051d8117170defe0e2087166316f46/datasette_show_errors-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

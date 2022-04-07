@@ -1,0 +1,469 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# git-history\n\n[![PyPI](https://img.shields.io/pypi/v/git-history.svg)](https://pypi.org/project/git-history/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/git-history?include_prereleases&label=changelog)](https://github.com/simonw/git-history/releases)\n[![Tests](https://github.com/simonw/git-history/workflows/Test/badge.svg)](https://github.com/simonw/git-history/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/git-history/blob/master/LICENSE)\n\nTools for analyzing Git history using SQLite\n\nFor background on this project see [git-history: a tool for analyzing scraped data collected using Git and SQLite](https://simonwillison.net/2021/Dec/7/git-history/)\n\n## Installation\n\nInstall this tool using `pip`:\n\n    $ pip install git-history\n\n## Demos\n\n[git-history-demos.datasette.io](http://git-history-demos.datasette.io/) hosts three example databases created using this tool:\n\n- [pge-outages](https://git-history-demos.datasette.io/pge-outages) shows a history of PG&E (the electricity supplier) [outages](https://pgealerts.alerts.pge.com/outagecenter/), using data collected in [simonw/pge-outages](https://github.com/simonw/pge-outages) converted using [pge-outages.sh](https://github.com/simonw/git-history/blob/main/demos/pge-outages.sh)\n- [ca-fires](https://git-history-demos.datasette.io/ca-fires) shows a history of fires in California reported on [fire.ca.gov/incidents](https://www.fire.ca.gov/incidents/), from data in [simonw/ca-fires-history](https://github.com/simonw/ca-fires-history) converted using [ca-fires.sh](https://github.com/simonw/git-history/blob/main/demos/ca-fires.sh)\n- [sf-bay-511](https://git-history-demos.datasette.io/sf-bay-511) has records of San Francisco Bay Area traffic and transit incident data from [511.org](https://511.org/), collected in [dbreunig/511-events-history](https://github.com/dbreunig/511-events-history) converted using [sf-bay-511.sh](https://github.com/simonw/git-history/blob/main/demos/sf-bay-511.sh)\n\nThe demos are deployed using [Datasette](https://datasette.io/) on [Google Cloud Run](https://cloud.google.com/run/) by [this GitHub Actions workflow](https://github.com/simonw/git-history/blob/main/.github/workflows/deploy-demos.yml).\n\n## Usage\n\nThis tool can be run against a Git repository that holds a file that contains JSON, CSV/TSV or some other format and which has multiple versions tracked in the Git history. Read [Git scraping: track changes over time by scraping to a Git repository](https://simonwillison.net/2020/Oct/9/git-scraping/) to understand how you might create such a repository.\n\nThe `file` command analyzes the history of an individual file within the repository, and generates a SQLite database table that represents the different versions of that file over time.\n\nThe file is assumed to contain multiple objects - for example, the results of scraping an electricity outage map or a CSV file full of records.\n\nAssuming you have a file called `incidents.json` that is a JSON array of objects, with multiple versions of that file recorded in a repository. Each version of that file might look something like this:\n\n```json\n[\n    {\n        \"IncidentID\": \"abc123\",\n        \"Location\": \"Corner of 4th and Vermont\",\n        \"Type\": \"fire\"\n    },\n    {\n        \"IncidentID\": \"cde448\",\n        \"Location\": \"555 West Example Drive\",\n        \"Type\": \"medical\"\n    }\n]\n```\n\nChange directory into the GitHub repository in question and run the following:\n\n    git-history file incidents.db incidents.json\n\nThis will create a new SQLite database in the `incidents.db` file with three tables:\n\n- `commits` containing a row for every commit, with a `hash` column, the `commit_at` date and a foreign key to a `namespace`.\n- `item` containing a row for every item in every version of the `filename.json` file - with an extra `_commit` column that is a foreign key back to the `commit` table.\n- `namespaces` containing a single row. This allows you to build multiple tables for different files, using the `--namespace` option described below.\n\nThe database schema for this example will look like this:\n\n<!-- [[[cog\nimport cog, json\nfrom git_history import cli\nfrom click.testing import CliRunner\nfrom tests.test_git_history import make_repo\nimport sqlite_utils\nimport tempfile, pathlib\ntmpdir = pathlib.Path(tempfile.mkdtemp())\ndb_path = str(tmpdir / \"data.db\")\nmake_repo(tmpdir)\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\n    \"file\", db_path, str(tmpdir / \"repo\" / \"incidents.json\"), \"--repo\", str(tmpdir / \"repo\")\n])\ncog.out(\"```sql\\n\")\ncog.out(sqlite_utils.Database(db_path).schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [namespaces] (\n   [id] INTEGER PRIMARY KEY,\n   [name] TEXT\n);\nCREATE UNIQUE INDEX [idx_namespaces_name]\n    ON [namespaces] ([name]);\nCREATE TABLE [commits] (\n   [id] INTEGER PRIMARY KEY,\n   [namespace] INTEGER REFERENCES [namespaces]([id]),\n   [hash] TEXT,\n   [commit_at] TEXT\n);\nCREATE UNIQUE INDEX [idx_commits_namespace_hash]\n    ON [commits] ([namespace], [hash]);\nCREATE TABLE [item] (\n   [IncidentID] TEXT,\n   [Location] TEXT,\n   [Type] TEXT\n);\n```\n<!-- [[[end]]] -->\n\nIf you have 10 historic versions of the `incidents.json` file and each one contains 30 incidents, you will end up with 10 * 30 = 300 rows in your `item` table.\n\n### Track the history of individual items using IDs\n\nIf your objects have a unique identifier - or multiple columns that together form a unique identifier - you can use the `--id` option to de-duplicate and track changes to each of those items over time.\n\nThis provides a much more interesting way to apply this tool.\n\nIf there is a unique identifier column called `IncidentID` you could run the following:\n\n    git-history file incidents.db incidents.json --id IncidentID\n\nThe database schema used here is very different from the one used without the `--id` option.\n\nIf you have already imported history, the command will skip any commits that it has seen already and just process new ones. This means that even though an initial import could be slow subsequent imports should run a lot faster.\n\nThis command will create six tables - `commits`, `item`, `item_version`, `columns`, `item_changed` and `namespaces`.\n\nHere's the full schema:\n\n<!-- [[[cog\ndb_path2 = str(tmpdir / \"data2.db\")\nresult = runner.invoke(cli.cli, [\n    \"file\", db_path2, str(tmpdir / \"repo\" / \"incidents.json\"),\n    \"--repo\", str(tmpdir / \"repo\"),\n    \"--id\", \"IncidentID\"\n])\ncog.out(\"```sql\\n\")\ncog.out(sqlite_utils.Database(db_path2).schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [namespaces] (\n   [id] INTEGER PRIMARY KEY,\n   [name] TEXT\n);\nCREATE UNIQUE INDEX [idx_namespaces_name]\n    ON [namespaces] ([name]);\nCREATE TABLE [commits] (\n   [id] INTEGER PRIMARY KEY,\n   [namespace] INTEGER REFERENCES [namespaces]([id]),\n   [hash] TEXT,\n   [commit_at] TEXT\n);\nCREATE UNIQUE INDEX [idx_commits_namespace_hash]\n    ON [commits] ([namespace], [hash]);\nCREATE TABLE [item] (\n   [_id] INTEGER PRIMARY KEY,\n   [_item_id] TEXT\n, [IncidentID] TEXT, [Location] TEXT, [Type] TEXT, [_commit] INTEGER);\nCREATE UNIQUE INDEX [idx_item__item_id]\n    ON [item] ([_item_id]);\nCREATE TABLE [item_version] (\n   [_id] INTEGER PRIMARY KEY,\n   [_item] INTEGER REFERENCES [item]([_id]),\n   [_version] INTEGER,\n   [_commit] INTEGER REFERENCES [commits]([id]),\n   [IncidentID] TEXT,\n   [Location] TEXT,\n   [Type] TEXT,\n   [_item_full_hash] TEXT\n);\nCREATE TABLE [columns] (\n   [id] INTEGER PRIMARY KEY,\n   [namespace] INTEGER REFERENCES [namespaces]([id]),\n   [name] TEXT\n);\nCREATE UNIQUE INDEX [idx_columns_namespace_name]\n    ON [columns] ([namespace], [name]);\nCREATE TABLE [item_changed] (\n   [item_version] INTEGER REFERENCES [item_version]([_id]),\n   [column] INTEGER REFERENCES [columns]([id]),\n   PRIMARY KEY ([item_version], [column])\n);\nCREATE VIEW item_version_detail AS select\n  commits.commit_at as _commit_at,\n  commits.hash as _commit_hash,\n  item_version.*,\n  (\n    select json_group_array(name) from columns\n    where id in (\n      select column from item_changed\n      where item_version = item_version._id\n    )\n) as _changed_columns\nfrom item_version\n  join commits on commits.id = item_version._commit;\nCREATE INDEX [idx_item_version__item]\n    ON [item_version] ([_item]);\n```\n<!-- [[[end]]] -->\n\n#### item table\n\nThe `item` table will contain the most recent version of each row, de-duplicated by ID, plus the following additional columns:\n\n- `_id` - a numeric integer primary key, used as a foreign key from the `item_version` table.\n- `_item_id` - a hash of the values of the columns specified using the `--id` option to the command. This is used for de-duplication when processing new versions.\n- `_commit` - a foreign key to the `commit` table, representing the most recent commit to modify this item.\n\n#### item_version table\n\nThe `item_version` table will contain a row for each captured differing version of that item, plus the following columns:\n\n- `_id` - a numeric ID for the item version record.\n- `_item` - a foreign key to the `item` table.\n- `_version` - the numeric version number, starting at 1 and incrementing for each captured version.\n- `_commit` - a foreign key to the `commit` table.\n- `_item_full_hash` - a hash of this version of the item. This is used internally by the tool to identify items that have changed between commits.\n\nThe other columns in this table represent columns in the original data that have changed since the previous version. If the value has not changed, it will be represented by a `null`.\n\nIf a value was previously set but has been changed back to `null` it will still be represented as `null` in the `item_version` row. You can identify these using the `item_changed` many-to-many table described below.\n\nYou can use the `--full-versions` option to store full copies of the item at each version, rather than just storing the columns that have changed.\n\n#### item_version_detail view\n\nThis SQL view joins `item_version` against `commits` to add three further columns: `_commit_at` with the date of the commit, and `_commit_hash` with the Git commit hash.\n\n#### item_changed\n\nThis many-to-many table indicates exactly which columns were changed in an `item_version`.\n\n- `item_version` is a foreign key to a row in the `item_version` table.\n- `column` is a foreign key to a row in the `columns` table.\n\nThis table with have the largest number of rows, which is why it stores just two integers in order to save space.\n\n#### columns\n\nThe `columns` table stores column names. It is referenced by `item_changed`.\n\n- `id` - an integer ID.\n- `name` - the name of the column.\n- `namespace` - a foreign key to `namespaces`, for if multiple file histories are sharing the same database.\n\n#### Reserved column names\n\n<!-- [[[cog\nfrom git_history.utils import RESERVED\ncog.out(\"Note that \")\ncog.out(\", \".join(\"`{}`\".format(r) for r in RESERVED))\ncog.out(\" are considered reserved column names for the purposes of this tool.\")\n]]] -->\nNote that `_id`, `_item_full_hash`, `_item`, `_item_id`, `_version`, `_commit`, `_item_id`, `_commit_at`, `_commit_hash`, `_changed_columns`, `rowid` are considered reserved column names for the purposes of this tool.\n<!-- [[[end]]] -->\n\nIf your data contains any of these they will be renamed to add a trailing underscore, for example `_id_`, `_item_`, `_version_`, to avoid clashing with the reserved columns.\n\nIf you have a column with a name such as `_commit_` it will be renamed too, adding an additional trailing underscore, so `_commit_` becomes `_commit__` and `_commit__` becomes `_commit___`.\n\n### Additional options\n\n- `--repo DIRECTORY` - the path to the Git repository, if it is not the current working directory.\n- `--branch TEXT` - the Git branch to analyze - defaults to `main`.\n- `--id TEXT` - as described above: pass one or more columns that uniquely identify a record, so that changes to that record can be calculated over time.\n- `--full-versions` - instead of recording just the columns that have changed in the `item_version` table record a full copy of each version of theh item.\n- `--ignore TEXT` - one or more columns to ignore - they will not be included in the resulting database.\n- `--csv` - treat the data is CSV or TSV rather than JSON, and attempt to guess the correct dialect\n- `--dialect` - use a spcific CSV dialect. Options are `excel`, `excel-tab` and `unix` - see [the Python CSV documentation](https://docs.python.org/3/library/csv.html#csv.excel) for details.\n- `--skip TEXT` - one or more full Git commit hashes that should be skipped. You can use this if some of the data in your revision history is corrupted in a way that prevents this tool from working.\n- `--start-at TEXT` - skip commits prior to the specified commit hash.\n- `--start-after TEXT` - skip commits up to and including the specified commit hash, then start processing from the following commit.\n- `--convert TEXT` - custom Python code for a conversion, described below.\n- `--import TEXT` - additional Python modules to import for `--convert`.\n- `--ignore-duplicate-ids` - if a single version of a file has the same ID in it more than once, the tool will exit with an error. Use this option to ignore this and instead pick just the first of the two duplicates.\n- `--namespace TEXT` - use this if you wish to include the history of multiple different files in the same database. The default is `item` but you can set it to something else, which will produce tables with names like `yournamespace` and `yournamespace_version`.\n- `--wal` - Enable WAL mode on the created database file. Use this if you plan to run queries against the database while `git-history` is creating it.\n- `--silent` - don't show the progress bar.\n\n### CSV and TSV data\n\nIf the data in your repository is a CSV or TSV file you can process it by adding the `--csv` option. This will attempt to detect which delimiter is used by the file, so the same option works for both comma- and tab-separated values.\n\n    git-history file trees.db trees.csv --id TreeID\n\nYou can also specify the CSV dialect using the `--dialect` option.\n\n### Custom conversions using --convert\n\nIf your data is not already either CSV/TSV or a flat JSON array, you can reshape it using the `--convert` option.\n\nThe format needed by this tool is an array of dictionaries, as demonstrated by the `incidents.json` example above.\n\nIf your data does not fit this shape, you can provide a snippet of Python code to converts the on-disk content of each stored file into a Python list of dictionaries.\n\nFor example, if your stored files each look like this:\n\n```json\n{\n    \"incidents\": [\n        {\n            \"id\": \"552\",\n            \"name\": \"Hawthorne Fire\",\n            \"engines\": 3\n        },\n        {\n            \"id\": \"556\",\n            \"name\": \"Merlin Fire\",\n            \"engines\": 1\n        }\n    ]\n}\n```\nYou could use the following Python snippet to convert them to the required format:\n\n```python\njson.loads(content)[\"incidents\"]\n```\n(The `json` module is exposed to your custom function by default.)\n\nYou would then run the tool like this:\n\n    git-history file database.db incidents.json \\\n      --id id \\\n      --convert 'json.loads(content)[\"incidents\"]'\n\nThe `content` variable is always a `bytes` object representing the content of the file at a specific moment in the repository's history.\n\nYou can import additional modules using `--import`. This example shows how you could read a CSV file that uses `;` as the delimiter:\n\n    git-history file trees.db ../sf-tree-history/Street_Tree_List.csv \\\n      --repo ../sf-tree-history \\\n      --import csv \\\n      --import io \\\n      --convert '\n        fp = io.StringIO(content.decode(\"utf-8\"))\n        return list(csv.DictReader(fp, delimiter=\";\"))\n        ' \\\n      --id TreeID\n\nYou can import nested modules such as [ElementTree](https://docs.python.org/3/library/xml.etree.elementtree.html)  using `--import xml.etree.ElementTree`, then refer to them in your function body as `xml.etree.ElementTree`. For example, if your tracked data was in an `items.xml` file that looked like this:\n\n```xml\n<items>\n  <item id=\"1\" name=\"One\" />\n  <item id=\"2\" name=\"Two\" />\n  <item id=\"3\" name=\"Three\" />\n</item>\n```\nYou could load it using the following `--convert` script:\n```\ngit-history file items.xml --convert '\ntree = xml.etree.ElementTree.fromstring(content)\nreturn [el.attrib for el in tree.iter(\"item\")]\n' --import xml.etree.ElementTree --id id\n```\n\nIf your Python code spans more than one line it needs to include a `return` statement.\n\nYou can also use Python generators in your `--convert` code, for example:\n\n    git-history file stats.db package-stats/stats.json \\\n        --repo package-stats \\\n        --convert '\n        data = json.loads(content)\n        for key, counts in data.items():\n            for date, count in counts.items():\n                yield {\n                    \"package\": key,\n                    \"date\": date,\n                    \"count\": count\n                }\n        ' --id package --id date\n\nThis conversion function expects data that looks like this:\n\n```json\n{\n    \"airtable-export\": {\n        \"2021-05-18\": 66,\n        \"2021-05-19\": 60,\n        \"2021-05-20\": 87\n    }\n}\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd git-history\n    python -m venv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nTo update the schema examples in this README file:\n\n    cog -r README.md\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/git-history",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "git-history",
+    "package_url": "https://pypi.org/project/git-history/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/git-history/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/git-history/actions",
+      "Changelog": "https://github.com/simonw/git-history/releases",
+      "Homepage": "https://github.com/simonw/git-history",
+      "Issues": "https://github.com/simonw/git-history/issues"
+    },
+    "release_url": "https://pypi.org/project/git-history/0.6.1/",
+    "requires_dist": [
+      "click",
+      "GitPython",
+      "sqlite-utils (>=3.19)",
+      "pytest ; extra == 'test'",
+      "cogapp ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Tools for analyzing Git history using SQLite",
+    "version": "0.6.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12248703,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "95d7d9ca936778a6a10f0328eb0dda25",
+          "sha256": "a607fba3056c4b300b994101dfdabc93be5f7f071eb75f0c099938fb635882b6"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "95d7d9ca936778a6a10f0328eb0dda25",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 10416,
+        "upload_time": "2021-11-12T00:57:52",
+        "upload_time_iso_8601": "2021-11-12T00:57:52.740463Z",
+        "url": "https://files.pythonhosted.org/packages/fd/f0/bef5bc0b4f2864a5311a7f45ff02044828111d96ec843d802c5195a834fd/git_history-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6ea74c0ca4564eb2aeff07d12c92262d",
+          "sha256": "8d51d6e98576b1508617a417d8c278558e53420c14e4de5b5d14b5fd128366a0"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6ea74c0ca4564eb2aeff07d12c92262d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 9815,
+        "upload_time": "2021-11-12T00:57:54",
+        "upload_time_iso_8601": "2021-11-12T00:57:54.066584Z",
+        "url": "https://files.pythonhosted.org/packages/8d/c6/b6d74e74681936a5bfe0e028db3e93c0b497a2a6db5703f56c6973203b49/git-history-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5c168599c831087f6784a13b65ee24d6",
+          "sha256": "f76c69f69d24f5395e127bef989cc2684c60b699fe3831bd1d74a4d29ad87b64"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5c168599c831087f6784a13b65ee24d6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 11486,
+        "upload_time": "2021-11-12T02:41:42",
+        "upload_time_iso_8601": "2021-11-12T02:41:42.467499Z",
+        "url": "https://files.pythonhosted.org/packages/7a/7f/55c148e29f82c060d8283b6ea72a52f0840a5f31c163c4cbcd0e139ef620/git_history-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1c9db998b3ee8e4e0a88efcf46e8200f",
+          "sha256": "4144dc737afc0b0985fd4f90af59de24d49907ffdf9ad1657393caa175d61a29"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1c9db998b3ee8e4e0a88efcf46e8200f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11092,
+        "upload_time": "2021-11-12T02:41:43",
+        "upload_time_iso_8601": "2021-11-12T02:41:43.757113Z",
+        "url": "https://files.pythonhosted.org/packages/5e/2f/9233121ef50f91417dfe09860dc38dcbb8b12af7f856a50e2ac740835cca/git-history-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1758bb57d25876d05f14395946f78639",
+          "sha256": "c8cc420054fa97ca349f217ce2bd164f2b0feb02be30e423265cc5a1a8173c4a"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1758bb57d25876d05f14395946f78639",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 11775,
+        "upload_time": "2021-11-12T02:51:52",
+        "upload_time_iso_8601": "2021-11-12T02:51:52.458133Z",
+        "url": "https://files.pythonhosted.org/packages/9f/51/99254ce878a86ea7e36d9279a1607237a9af20b8d9248ca0198ed6a4e609/git_history-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a5915237ab4a83897bfa49ad3cee626c",
+          "sha256": "e5e7cdfb8a1d79582a56ce347af63cc2892673ebdd8c2a4eb3f86d4b0931b04a"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a5915237ab4a83897bfa49ad3cee626c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11356,
+        "upload_time": "2021-11-12T02:51:53",
+        "upload_time_iso_8601": "2021-11-12T02:51:53.612210Z",
+        "url": "https://files.pythonhosted.org/packages/49/40/614acdd30a6ca4bd6cd7f8c5b39fa91767ee8259cbeafa40ef8e24347a8c/git-history-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "49aed3205235188c2c934a0c747387c9",
+          "sha256": "d2e8f4f15e47c76edcba14506d869bed80319fa5c6328e8cca8687da5ae4e8d3"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "49aed3205235188c2c934a0c747387c9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 11924,
+        "upload_time": "2021-11-12T03:40:38",
+        "upload_time_iso_8601": "2021-11-12T03:40:38.768560Z",
+        "url": "https://files.pythonhosted.org/packages/7e/6e/554b3bd1be405c2d53a523dddc2056a8a15fa7311a9b38a9537f5b996041/git_history-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f183db37da3cb3a7584520f1129a7675",
+          "sha256": "7114f3b66d901a1b49eb284779dc64cdaeed50cc41043facf23e00e97ee137a2"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f183db37da3cb3a7584520f1129a7675",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11511,
+        "upload_time": "2021-11-12T03:40:39",
+        "upload_time_iso_8601": "2021-11-12T03:40:39.781686Z",
+        "url": "https://files.pythonhosted.org/packages/be/f4/66a9933ca017dd2c41907f99603d2925a6ac99009098f38e927e88f10b28/git-history-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "01a613811dfe15a1076401943580668d",
+          "sha256": "4230d4d1ae8ac0a3b8cd2a37e8f809ef2eaeb2169548aaa7d28863ad9eae6a5e"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "01a613811dfe15a1076401943580668d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 11965,
+        "upload_time": "2021-11-12T07:31:30",
+        "upload_time_iso_8601": "2021-11-12T07:31:30.150116Z",
+        "url": "https://files.pythonhosted.org/packages/ff/34/61521b1110852cb4c8cd4b68c9e9e309fb118e49af13744c868c655c4c41/git_history-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "00b0c11b4fc6538ff5629d9c1b421497",
+          "sha256": "9cd8fe6378bdcd491c85acf4427a9b1737f8ad3537332797b274692e3243b6e7"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "00b0c11b4fc6538ff5629d9c1b421497",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11538,
+        "upload_time": "2021-11-12T07:31:31",
+        "upload_time_iso_8601": "2021-11-12T07:31:31.383182Z",
+        "url": "https://files.pythonhosted.org/packages/77/29/c44303531aca4bf2bbe5c1355a43f6af7452c32502ee9da6488f9ba91039/git-history-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "441ff5a84629241b930827a7d5c7cf27",
+          "sha256": "6a36b139da38cc16675ce169312a361a63a3625290c4786b4e27b38615ff68b4"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "441ff5a84629241b930827a7d5c7cf27",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12720,
+        "upload_time": "2021-11-21T05:09:55",
+        "upload_time_iso_8601": "2021-11-21T05:09:55.079097Z",
+        "url": "https://files.pythonhosted.org/packages/ef/c8/efac5c2240d7281e7ca61c62a444c548a8b1a09e73ec8aabfbbc7e1ddb73/git_history-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c41dc29a309d69124d80de32a3c468b8",
+          "sha256": "ba7f21db009e2c9991000fd26ad2b3101e317add974b04ecddd648dae3703856"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c41dc29a309d69124d80de32a3c468b8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 12134,
+        "upload_time": "2021-11-21T05:09:56",
+        "upload_time_iso_8601": "2021-11-21T05:09:56.515251Z",
+        "url": "https://files.pythonhosted.org/packages/da/bb/867d0c8a8d621af5e77d9c7499bddd86f7d2842d0d06c3ccab8df464e52f/git-history-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "293852284001a625c191f3111015ecf9",
+          "sha256": "939e67462845ac57ab472168157515b95ba7e5434212dc9bc01eb15dad964dc2"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "293852284001a625c191f3111015ecf9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 15767,
+        "upload_time": "2021-12-03T04:06:19",
+        "upload_time_iso_8601": "2021-12-03T04:06:19.475560Z",
+        "url": "https://files.pythonhosted.org/packages/ca/80/cff8ee97b5af617a064003aa0eb4b16a8af5a4bb8573fd9454cfa0305e37/git_history-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "743aa3cf868756e6bdb4c62aa4ef6a5e",
+          "sha256": "1e88ce393396235a39a75b8f047fab7d4301fcf8857222ebd1aff0b82373372b"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "743aa3cf868756e6bdb4c62aa4ef6a5e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 19599,
+        "upload_time": "2021-12-03T04:06:20",
+        "upload_time_iso_8601": "2021-12-03T04:06:20.995480Z",
+        "url": "https://files.pythonhosted.org/packages/6c/f7/2e3479b70ab3b8864777dd16619385b46e7fe613449922997bd1231354b6/git-history-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8e54816cb71a824587d33d72f3bda5f9",
+          "sha256": "bc56b89594de458138ea2f288890b111812e691d01593f0a9f28f08d08f65d03"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8e54816cb71a824587d33d72f3bda5f9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 17369,
+        "upload_time": "2021-12-07T17:16:27",
+        "upload_time_iso_8601": "2021-12-07T17:16:27.256077Z",
+        "url": "https://files.pythonhosted.org/packages/fd/72/ce8b4926c0e9a81fa101876b1752c0eafc833e5764ed0e3b212137f823ae/git_history-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8f68496ecc89f366df165938fc80b235",
+          "sha256": "1a33079b6e34ec28b99953be6cff737cd608e5153586e19577f99868ff8600cc"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8f68496ecc89f366df165938fc80b235",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 21832,
+        "upload_time": "2021-12-07T17:16:28",
+        "upload_time_iso_8601": "2021-12-07T17:16:28.715928Z",
+        "url": "https://files.pythonhosted.org/packages/d1/7d/f5c7fd01157500b7c033f2e53cbdfa6e61845c42743781ad1e62b5102eac/git-history-0.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "01af6dba34a055cd8812dcb439a6f3ad",
+          "sha256": "050061b3ac06a7889aa6eb072443d4930cb784d77161e87dfa9526f60d8493e7"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.6.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "01af6dba34a055cd8812dcb439a6f3ad",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 17612,
+        "upload_time": "2021-12-08T20:30:34",
+        "upload_time_iso_8601": "2021-12-08T20:30:34.799879Z",
+        "url": "https://files.pythonhosted.org/packages/a9/56/e8c303c9a34346f7b871e4a123b1f81b07181aa8647178206c47bf15c9e0/git_history-0.6.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bd128a4103341088f05d4f5d282a9214",
+          "sha256": "e423a96916ef8b7d5504efc9e378e54aa86ccbb0136dc7846ac9c04593f0caca"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.6.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bd128a4103341088f05d4f5d282a9214",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 22251,
+        "upload_time": "2021-12-08T20:30:36",
+        "upload_time_iso_8601": "2021-12-08T20:30:36.065292Z",
+        "url": "https://files.pythonhosted.org/packages/d8/24/ad8bcddc30e1bc9aa1242e242a28ddf836265d099eba5e23c0625ca48928/git-history-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "01af6dba34a055cd8812dcb439a6f3ad",
+        "sha256": "050061b3ac06a7889aa6eb072443d4930cb784d77161e87dfa9526f60d8493e7"
+      },
+      "downloads": -1,
+      "filename": "git_history-0.6.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "01af6dba34a055cd8812dcb439a6f3ad",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 17612,
+      "upload_time": "2021-12-08T20:30:34",
+      "upload_time_iso_8601": "2021-12-08T20:30:34.799879Z",
+      "url": "https://files.pythonhosted.org/packages/a9/56/e8c303c9a34346f7b871e4a123b1f81b07181aa8647178206c47bf15c9e0/git_history-0.6.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "bd128a4103341088f05d4f5d282a9214",
+        "sha256": "e423a96916ef8b7d5504efc9e378e54aa86ccbb0136dc7846ac9c04593f0caca"
+      },
+      "downloads": -1,
+      "filename": "git-history-0.6.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "bd128a4103341088f05d4f5d282a9214",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 22251,
+      "upload_time": "2021-12-08T20:30:36",
+      "upload_time_iso_8601": "2021-12-08T20:30:36.065292Z",
+      "url": "https://files.pythonhosted.org/packages/d8/24/ad8bcddc30e1bc9aa1242e242a28ddf836265d099eba5e23c0625ca48928/git-history-0.6.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

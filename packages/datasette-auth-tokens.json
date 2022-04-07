@@ -1,0 +1,265 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-auth-tokens\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-auth-tokens.svg)](https://pypi.org/project/datasette-auth-tokens/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-auth-tokens?include_prereleases&label=changelog)](https://github.com/simonw/datasette-auth-tokens/releases)\n[![Tests](https://github.com/simonw/datasette-auth-tokens/workflows/Test/badge.svg)](https://github.com/simonw/datasette-auth-tokens/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-auth-tokens/blob/main/LICENSE)\n\nDatasette plugin for authenticating access using API tokens\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-auth-tokens\n\n## Hard-coded tokens\n\nRead about Datasette's [authentication and permissions system](https://datasette.readthedocs.io/en/latest/authentication.html).\n\nThis plugin lets you configure secret API tokens which can be used to make authenticated requests to Datasette.\n\nFirst, create a random API token. A useful recipe for doing that is the following:\n\n    $ python -c 'import secrets; print(secrets.token_hex(32))'\n    5f9a486dd807de632200b17508c75002bb66ca6fde1993db1de6cbd446362589\n\nDecide on the actor that this token should represent, for example:\n\n```json\n{\n    \"bot_id\": \"my-bot\"\n}\n```\n\nYou can then use `\"allow\"` blocks to provide that token with permission to access specific actions. To enable access to a configured writable SQL query you could use this in your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-tokens\": {\n            \"tokens\": [\n                {\n                    \"token\": {\n                        \"$env\": \"BOT_TOKEN\"\n                    },\n                    \"actor\": {\n                        \"bot_id\": \"my-bot\"\n                    }\n                }\n            ]\n        }\n    },\n    \"databases\": {\n        \":memory:\": {\n            \"queries\": {\n                \"show_version\": {\n                    \"sql\": \"select sqlite_version()\",\n                    \"allow\": {\n                        \"bot_id\": \"my-bot\"\n                    }\n                }\n            }\n        }\n    }\n}\n```\nThis uses Datasette's [secret configuration values mechanism](https://datasette.readthedocs.io/en/stable/plugins.html#secret-configuration-values) to allow the secret token to be passed as an environment variable.\n\nRun Datasette like this:\n\n    BOT_TOKEN=\"this-is-the-secret-token\" \\\n        datasette -m metadata.json\n\nYou can now run authenticated API queries like this:\n\n    $ curl -H 'Authorization: Bearer this-is-the-secret-token' \\\n      'http://127.0.0.1:8001/:memory:/show_version.json?_shape=array'\n    [{\"sqlite_version()\": \"3.31.1\"}]\n\nAdditionally you can allow passing the token as a query string parameter, although that's disabled by default given the security implications of URLs with secret tokens included. This may be useful to easily allow embedding data between different services.\n\nSimply enable it using the `param` config value:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-tokens\": {\n            \"tokens\": [\n                {\n                    \"token\": {\n                        \"$env\": \"BOT_TOKEN\"\n                    },\n                    \"actor\": {\n                        \"bot_id\": \"my-bot\"\n                    },\n                }\n            ],\n            \"param\": \"_auth_token\"\n        }\n    },\n    \"databases\": {\n        \":memory:\": {\n            \"queries\": {\n                \"show_version\": {\n                    \"sql\": \"select sqlite_version()\",\n                    \"allow\": {\n                        \"bot_id\": \"my-bot\"\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nYou can now run authenticated API queries like this:\n\n    $ curl http://127.0.0.1:8001/:memory:/show_version.json?_shape=array&_auth_token=this-is-the-secret-token\n    [{\"sqlite_version()\": \"3.31.1\"}]\n\n## Tokens from your database\n\nAs an alternative (or in addition) to the hard-coded list of tokens you can store tokens in a database table and configure the plugin to access them using a SQL query.\n\nYour query needs to take a `:token_id` parameter and return at least two columns: one called `token_secret` and one called `actor_*` - usually `actor_id`. Further `actor_` prefixed columns can be returned to provide more details for the authenticated actor.\n\nHere's a simple example of a configuration query:\n\n```sql\nselect actor_id, actor_name, token_secret from tokens where token_id = :token_id\n```\n\nThis can run against a table like this one:\n\n| token_id | token_secret | actor_id | actor_name |\n| -------- | ------------ | -------- | ---------- |\n| 1        | bd3c94f51fcd | 78       | Cleopaws   |\n| 2        | 86681b4d6f66 | 32       | Pancakes   |\n\nThe tokens are formed as the token ID, then a hyphen, then the token secret. For example:\n\n- `1-bd3c94f51fcd`\n- `2-86681b4d6f66`\n\nThe SQL query will be executed with the portion before the hyphen as the `:token_id` parameter.\n\nThe `token_secret` value returned by the query will be compared to the portion of the token after the hyphen to check if the token is valid.\n\nColumns with a prefix of `actor_` will be used to populate the actor dictionary. In the above example, a token of `2-86681b4d6f66` will become an actor dictionary of `{\"id\": 32, \"name\": \"Pancakes\"}`.\n\nTo configure this, use a `\"query\"` block in your plugin configuration like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-tokens\": {\n            \"query\": {\n                \"sql\": \"select actor_id, actor_name, token_secret from tokens where token_id = :token_id\",\n                \"database\": \"tokens\"\n            }\n        }\n    },\n    \"databases\": {\n        \"tokens\": {\n            \"allow\": {}\n        }\n    }\n}\n```\nThe `\"sql\"` key here contains the SQL query. The `\"database\"` key has the name of the attached database file that the query should be executed against - in this case it would execute against `tokens.db`.\n\n### Securing your tokens\n\nAnyone with access to your Datasette instance can use it to read the `token_secret` column in your tokens table. This probably isn't what you want!\n\nTo avoid this, you should lock down access to that table. The configuration example above shows how to do this using an `\"allow\": {}` block. Consult Datasette's [Permissions documentation](https://datasette.readthedocs.io/en/stable/authentication.html#permissions) for more information about how to lock down this kind of access.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-auth-tokens",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-auth-tokens",
+    "package_url": "https://pypi.org/project/datasette-auth-tokens/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-auth-tokens/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-auth-tokens/actions",
+      "Changelog": "https://github.com/simonw/datasette-auth-tokens/releases",
+      "Homepage": "https://github.com/simonw/datasette-auth-tokens",
+      "Issues": "https://github.com/simonw/datasette-auth-tokens/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-auth-tokens/0.3/",
+    "requires_dist": [
+      "datasette (>=0.44)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for authenticating access using API tokens",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11730658,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "82b77c0911b757ac51f9d06d0fcab5b3",
+          "sha256": "46f3bd5b8913c72126f473efd2c8bfb000c32ae326a22334e4bcf7a29a11c525"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "82b77c0911b757ac51f9d06d0fcab5b3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7173,
+        "upload_time": "2020-06-11T23:35:09",
+        "upload_time_iso_8601": "2020-06-11T23:35:09.860693Z",
+        "url": "https://files.pythonhosted.org/packages/f5/0f/ac405138866ff6e87edb6cfe3a379d278d8a0486b10ab2e9728f1a7d7d64/datasette_auth_tokens-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d608aa733e22e2792493b990c0c4ac0f",
+          "sha256": "a519b1c51ba3c6a8501aa6e5a04fb284d7d678cb56621cb6d3b563c5e7f12f52"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d608aa733e22e2792493b990c0c4ac0f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7172,
+        "upload_time": "2020-06-12T07:12:34",
+        "upload_time_iso_8601": "2020-06-12T07:12:34.310407Z",
+        "url": "https://files.pythonhosted.org/packages/bc/46/feb27f03d6a17e045f07c977e313d7aa47b4e8df0362fddbc20d3a470769/datasette_auth_tokens-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "374ae71a9e7f89d99be88b4877652384",
+          "sha256": "1670c69d46dc257c28ba6fe45c15bfaf46630b8784535f7fe81a079bdcb34170"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "374ae71a9e7f89d99be88b4877652384",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7157,
+        "upload_time": "2020-06-18T17:38:21",
+        "upload_time_iso_8601": "2020-06-18T17:38:21.482023Z",
+        "url": "https://files.pythonhosted.org/packages/c5/cf/478fd63bfb7260349b5a995a45f06f726382e075511869c10b8d968a119e/datasette_auth_tokens-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8e10f9e63feb4503e888d44b2e0e9b32",
+          "sha256": "2a0ad6d88e469082a800d5dc7b61630f1cb0b04aede4785d32c22f3ea9089af4"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8e10f9e63feb4503e888d44b2e0e9b32",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8083,
+        "upload_time": "2020-07-01T19:11:00",
+        "upload_time_iso_8601": "2020-07-01T19:11:00.621829Z",
+        "url": "https://files.pythonhosted.org/packages/29/c2/e70a13ee9efc7d75f0d384e7e5bdd32dbcbe6cc92fcbed915e33ffe72a54/datasette_auth_tokens-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9c26142d263b803d44169875ab90f9b6",
+          "sha256": "b9ffbf76b8eae58397bf74c7e6a80207f4a2a744d7994cbca9b411bb0df38b32"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c26142d263b803d44169875ab90f9b6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8438,
+        "upload_time": "2020-07-01T19:22:42",
+        "upload_time_iso_8601": "2020-07-01T19:22:42.910640Z",
+        "url": "https://files.pythonhosted.org/packages/97/e1/7faa004e35843e3d9314be7317163e47fd8e5cda5365ed24fea888a0dd74/datasette_auth_tokens-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bf3302170a3c7898ee1b50eaeff98b47",
+          "sha256": "a89bb11ef9dde93423c0a3fc5740ec2c5c3a04558abdaeaa45fe6a53e09a82e0"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bf3302170a3c7898ee1b50eaeff98b47",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8437,
+        "upload_time": "2020-07-20T00:35:35",
+        "upload_time_iso_8601": "2020-07-20T00:35:35.692831Z",
+        "url": "https://files.pythonhosted.org/packages/08/8d/8a88805bde87c8e59cf993d07adf7f478354db43b5b787f70d052a105b56/datasette_auth_tokens-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0830043168b610337f51dcb0a02fe902",
+          "sha256": "6318fa366e3c7d98f0e1f09f1918fab45b51d46087585642aa369627a612bd42"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0830043168b610337f51dcb0a02fe902",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8752,
+        "upload_time": "2021-10-15T00:58:49",
+        "upload_time_iso_8601": "2021-10-15T00:58:49.076881Z",
+        "url": "https://files.pythonhosted.org/packages/b5/20/7da7b8970560a98a7b604cddeb4ec834681f5778de5f8ec893d71b991a8a/datasette_auth_tokens-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "87944b4542f9d72b856da1cd1f9c270e",
+          "sha256": "526ce6f150e729e51c6df283238c58885a437eeb90d80a12357d4a454ba6f36e"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth-tokens-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "87944b4542f9d72b856da1cd1f9c270e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8254,
+        "upload_time": "2021-10-15T00:58:50",
+        "upload_time_iso_8601": "2021-10-15T00:58:50.885052Z",
+        "url": "https://files.pythonhosted.org/packages/37/e8/9232738f0a0e825be9dec92244b1fb48ec897b04dbd599237cf1e3239319/datasette-auth-tokens-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "0830043168b610337f51dcb0a02fe902",
+        "sha256": "6318fa366e3c7d98f0e1f09f1918fab45b51d46087585642aa369627a612bd42"
+      },
+      "downloads": -1,
+      "filename": "datasette_auth_tokens-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "0830043168b610337f51dcb0a02fe902",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 8752,
+      "upload_time": "2021-10-15T00:58:49",
+      "upload_time_iso_8601": "2021-10-15T00:58:49.076881Z",
+      "url": "https://files.pythonhosted.org/packages/b5/20/7da7b8970560a98a7b604cddeb4ec834681f5778de5f8ec893d71b991a8a/datasette_auth_tokens-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "87944b4542f9d72b856da1cd1f9c270e",
+        "sha256": "526ce6f150e729e51c6df283238c58885a437eeb90d80a12357d4a454ba6f36e"
+      },
+      "downloads": -1,
+      "filename": "datasette-auth-tokens-0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "87944b4542f9d72b856da1cd1f9c270e",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 8254,
+      "upload_time": "2021-10-15T00:58:50",
+      "upload_time_iso_8601": "2021-10-15T00:58:50.885052Z",
+      "url": "https://files.pythonhosted.org/packages/37/e8/9232738f0a0e825be9dec92244b1fb48ec897b04dbd599237cf1e3239319/datasette-auth-tokens-0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

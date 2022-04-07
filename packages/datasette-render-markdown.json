@@ -1,0 +1,388 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-render-markdown\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-markdown.svg)](https://pypi.org/project/datasette-render-markdown/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-markdown?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-markdown/releases)\n[![Tests](https://github.com/simonw/datasette-render-markdown/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-markdown/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-markdown/blob/main/LICENSE)\n\nDatasette plugin for rendering Markdown.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable this new functionality:\n\n    $ pip install datasette-render-markdown\n\n## Usage\n\nYou can explicitly list the columns you would like to treat as Markdown using [plugin configuration](https://datasette.readthedocs.io/en/stable/plugins.html#plugin-configuration) in a `metadata.json` file.\n\nAdd a `\"datasette-render-markdown\"` configuration block and use a `\"columns\"` key to list the columns you would like to treat as Markdown values:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"columns\": [\"body\"]\n        }\n    }\n}\n```\n\nThis will cause any `body` column in any table to be treated as markdown and safely rendered using [Python-Markdown](https://python-markdown.github.io/). The resulting HTML is then run through [Bleach](https://bleach.readthedocs.io/) to avoid the risk of XSS security problems.\n\nSave this to `metadata.json` and run Datasette with the `--metadata` flag to load this configuration:\n\n    $ datasette serve mydata.db --metadata metadata.json\n\nThe configuration block can be used at the top level, or it can be applied just to specific databases or tables. Here's how to apply it to just the `entries` table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"tables\": {\n                \"entries\": {\n                    \"plugins\": {\n                        \"datasette-render-markdown\": {\n                            \"columns\": [\"body\"]\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nAnd here's how to apply it to every `body` column in every table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"plugins\": {\n                \"datasette-render-markdown\": {\n                    \"columns\": [\"body\"]\n                }\n            }\n        }\n    }\n}\n```\n\n## Columns that match a naming convention\n\nThis plugin can also render markdown in any columns that match a specific naming convention.\n\nBy default, columns that have a name ending in `_markdown` will be rendered.\n\nYou can try this out using the following query:\n\n```sql\nselect '# Hello there\n\n* This is a list\n* of items\n\n[And a link](https://github.com/simonw/datasette-render-markdown).'\nas demo_markdown\n```\n\nYou can configure a different list of wildcard patterns using the `\"patterns\"` configuration key. Here's how to render columns that end in either `_markdown` or `_md`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"patterns\": [\"*_markdown\", \"*_md\"]\n        }\n    }\n}\n```\n\nTo disable wildcard column matching entirely, set `\"patterns\": []` in your plugin metadata configuration.\n\n## Markdown extensions\n\nThe [Python-Markdown library](https://python-markdown.github.io/) that powers this plugin supports extensions, both [bundled](https://python-markdown.github.io/extensions/) and [third-party](https://github.com/Python-Markdown/markdown/wiki/Third-Party-Extensions). These can be used to enable additional Markdown features such as [table support](https://python-markdown.github.io/extensions/tables/).\n\nYou can configure support for extensions using the `\"extensions\"` key in your plugin metadata configuration.\n\nSince extensions may introduce new HTML tags, you will also need to add those tags to the list of tags that are allowed by the [Bleach](https://bleach.readthedocs.io/) sanitizer. You can do that using the `\"extra_tags\"` key, and you can whitelist additional HTML attributes using `\"extra_attrs\"`. See [the Bleach documentation](https://bleach.readthedocs.io/en/latest/clean.html#allowed-tags-tags) for more information on this.\n\nHere's how to enable support for [Markdown tables](https://python-markdown.github.io/extensions/tables/):\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extensions\": [\"tables\"],\n            \"extra_tags\": [\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"]\n        }\n    }\n}\n```\n\n### GitHub-Flavored Markdown\n\nEnabling [GitHub-Flavored Markdown](https://help.github.com/en/github/writing-on-github) (useful for if you are working with data imported from GitHub using [github-to-sqlite](https://github.com/dogsheep/github-to-sqlite)) is a little more complicated.\n\nFirst, you will need to install the [py-gfm](https://py-gfm.readthedocs.io) package:\n\n    $ pip install py-gfm\n\nNote that `py-gfm` has [a bug](https://github.com/Zopieux/py-gfm/issues/13) that causes it to pin to `Markdown<3.0` - so if you are using it you should install it _before_ installing `datasette-render-markdown` to ensure you get a compatibly version of that dependency.\n\nNow you can configure it like this. Note that the extension name is `mdx_gfm:GithubFlavoredMarkdownExtension` and you need to whitelist several extra HTML tags and attributes:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extra_tags\": [\n                \"hr\",\n                \"br\",\n                \"details\",\n                \"summary\",\n                \"input\"\n            ],\n            \"extra_attrs\": {\n                \"input\": [\n                    \"type\",\n                    \"disabled\",\n                    \"checked\"\n                ],\n            },\n            \"extensions\": [\n                \"mdx_gfm:GithubFlavoredMarkdownExtension\"\n            ]\n        }\n    }\n}\n```\n\nThe `<input type=\"\" checked disabled>` attributes are needed to support rendering checkboxes in issue descriptions.\n\n## Markdown in templates\n\nThe plugin also adds a new template function: `render_markdown(value)`. You can use this in your templates like so:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n# This is markdown\n\n* One\n* Two\n* Three\n\"\"\") }}\n```\n\nYou can load additional extensions and whitelist tags by passing extra arguments to the function like this:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n## Markdown table\n\nFirst Header  | Second Header\n------------- | -------------\nContent Cell  | Content Cell\nContent Cell  | Content Cell\n\"\"\", extensions=[\"tables\"],\n    extra_tags=[\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"])) }}\n```\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-render-markdown",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-render-markdown",
+    "package_url": "https://pypi.org/project/datasette-render-markdown/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-render-markdown/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-render-markdown"
+    },
+    "release_url": "https://pypi.org/project/datasette-render-markdown/2.1/",
+    "requires_dist": [
+      "datasette",
+      "markdown",
+      "bleach",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for rendering Markdown",
+    "version": "2.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13019906,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0cd2b4305e410de8dcc2f280c92d8bd2",
+          "sha256": "d08cf0abfb35c771af121b444a32f81cead8158a0fb256e2c44b9cc3382306c6"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0cd2b4305e410de8dcc2f280c92d8bd2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6750,
+        "upload_time": "2019-11-09T23:44:26",
+        "upload_time_iso_8601": "2019-11-09T23:44:26.624951Z",
+        "url": "https://files.pythonhosted.org/packages/be/29/3514dda7862dc9dc165dd750f393d1e0479046ccd26b8ab42ba7bef6a6f3/datasette_render_markdown-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e86e1aada70a51a25c8cc6c807b5465b",
+          "sha256": "31bb7b7f26d0236ba77bbebee2856cc0a3ed04118927c94e0d903ca886ed162e"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e86e1aada70a51a25c8cc6c807b5465b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6884,
+        "upload_time": "2019-11-15T05:35:50",
+        "upload_time_iso_8601": "2019-11-15T05:35:50.663234Z",
+        "url": "https://files.pythonhosted.org/packages/ff/5d/9209006e83119a0aca51f2ced3943151b2ffb7118511bee2196388f7963b/datasette_render_markdown-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8711316ae4677781b71d91b28d7a175f",
+          "sha256": "fbaa15a9537a75b7d71c49edafc9e6e640b1d82de6aacb963c21ba5d150f2f72"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8711316ae4677781b71d91b28d7a175f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7632,
+        "upload_time": "2020-03-22T23:17:09",
+        "upload_time_iso_8601": "2020-03-22T23:17:09.438755Z",
+        "url": "https://files.pythonhosted.org/packages/2a/62/cf71f3c28f1424a5cedcc570841482e6025e0126cca7cb9c895422e7302a/datasette_render_markdown-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2aac2a547086734d841103feb8a25887",
+          "sha256": "5dd0e83c76a68923a733d59c5d9b5a87a8d50043ea79fa2f51b4b9fc11340ca6"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2aac2a547086734d841103feb8a25887",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8557,
+        "upload_time": "2020-03-24T19:49:11",
+        "upload_time_iso_8601": "2020-03-24T19:49:11.397771Z",
+        "url": "https://files.pythonhosted.org/packages/ec/2f/df8b53775e9ab4df0a479de0ca73916a8811567a3dc3fe0c490955f7a6db/datasette_render_markdown-1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d7841f3befe363e8f5389c659b3c86b4",
+          "sha256": "ed95b6b21cbdce7e139a5332d160cab7a4f0b934a315f510c03fc485cd001222"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d7841f3befe363e8f5389c659b3c86b4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8603,
+        "upload_time": "2020-03-24T20:02:38",
+        "upload_time_iso_8601": "2020-03-24T20:02:38.354304Z",
+        "url": "https://files.pythonhosted.org/packages/0d/8e/c9ca5225ad83680cd672aeb3e620b2adf56383c86d0cb9487654904c5df0/datasette_render_markdown-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "593fc36bd7fc60b56ccc7a5d0a6f28f0",
+          "sha256": "d48e9a60074555e9ce0f8944af733a52a9837d60dee7c026820e83ef89c6db17"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "593fc36bd7fc60b56ccc7a5d0a6f28f0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8747,
+        "upload_time": "2020-05-02T08:34:07",
+        "upload_time_iso_8601": "2020-05-02T08:34:07.053628Z",
+        "url": "https://files.pythonhosted.org/packages/35/a1/a415df0f311db5beb8af851215663de2122ef2f97988a934aa02aeb2d75f/datasette_render_markdown-1.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "34ae9f58f0fc8733d5d732dcbc7e38ba",
+          "sha256": "e83ac64bdd19aecb730fec0fb5f61113fb1af4e99ce079a59c9e9d3ff742414a"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "34ae9f58f0fc8733d5d732dcbc7e38ba",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8815,
+        "upload_time": "2020-10-28T22:57:00",
+        "upload_time_iso_8601": "2020-10-28T22:57:00.862784Z",
+        "url": "https://files.pythonhosted.org/packages/d7/ab/464fb9438566cdaecd0c1cfc10f211e7495844f3fce466605fe460c13691/datasette_render_markdown-1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b8fabf5a10afebbf93e162bc2bdf21e5",
+          "sha256": "f6d4e5533681f6bfb55d725d07feaea23a313a4266e28bf56f24c1092b9a3537"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-markdown-1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b8fabf5a10afebbf93e162bc2bdf21e5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4751,
+        "upload_time": "2020-10-28T22:57:01",
+        "upload_time_iso_8601": "2020-10-28T22:57:01.952329Z",
+        "url": "https://files.pythonhosted.org/packages/0d/de/cae1fed4080182af711f370b4acb5e8db73dbf1639c6dd18913684e3bd3d/datasette-render-markdown-1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "35d808d97f0b586172e368b6ea3ce812",
+          "sha256": "3c154310db4bc5a5ca8d37f5ecf5564bf4034f969cb74dd5ef91bdc90a5d5c79"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-1.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "35d808d97f0b586172e368b6ea3ce812",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9024,
+        "upload_time": "2021-09-22T21:42:27",
+        "upload_time_iso_8601": "2021-09-22T21:42:27.540588Z",
+        "url": "https://files.pythonhosted.org/packages/56/ef/c9bd33ff382f790302f29ae7317d0558bff7d978640d2c9157afdafa1238/datasette_render_markdown-1.3-py3-none-any.whl",
+        "yanked": true,
+        "yanked_reason": "This should be considered a breaking change, upgrade to 2.0 instead"
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c18e0c22aea6a1728cdd0fe2eedbacb0",
+          "sha256": "955ca2fb805d8fe931b6779c3fff7cb0ab2084d2da1064da5f2e4f24ccc8f510"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-markdown-1.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c18e0c22aea6a1728cdd0fe2eedbacb0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8409,
+        "upload_time": "2021-09-22T21:42:28",
+        "upload_time_iso_8601": "2021-09-22T21:42:28.699213Z",
+        "url": "https://files.pythonhosted.org/packages/7d/fd/f2c4fc3e02b09fce5795182f479142fa43cc07f377820f8c21378ae8d070/datasette-render-markdown-1.3.tar.gz",
+        "yanked": true,
+        "yanked_reason": "This should be considered a breaking change, upgrade to 2.0 instead"
+      }
+    ],
+    "2.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "07cade9ec4a6241a4a7e1a86ed2d9bc8",
+          "sha256": "9f91b876a8c5eea23926964be6e3d0e73362600e16705910b1c292f90c06901b"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-2.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "07cade9ec4a6241a4a7e1a86ed2d9bc8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9023,
+        "upload_time": "2021-09-22T22:19:17",
+        "upload_time_iso_8601": "2021-09-22T22:19:17.948510Z",
+        "url": "https://files.pythonhosted.org/packages/d1/4a/42632732512560f21c0fa3e6564193bb06a92fde0ab08777f2658d84fb07/datasette_render_markdown-2.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1d5eed53f5ec499a37d78302eb152491",
+          "sha256": "94a07828fdfd575276309822accdcae0da2b8d2285e75a117f3c75f08c01914c"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-markdown-2.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1d5eed53f5ec499a37d78302eb152491",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8409,
+        "upload_time": "2021-09-22T22:19:19",
+        "upload_time_iso_8601": "2021-09-22T22:19:19.211448Z",
+        "url": "https://files.pythonhosted.org/packages/da/7c/4914bdb2e34e4d8744609d1ea952b84171600868664f7e5734269e6d6529/datasette-render-markdown-2.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9c08990f9fdaad47863481bfa400b78c",
+          "sha256": "0f3173e1576c16c8ab2d9e6b6f2cd3d4591eaa567f670bf6a636182b4035deb5"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c08990f9fdaad47863481bfa400b78c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9032,
+        "upload_time": "2022-02-26T18:23:53",
+        "upload_time_iso_8601": "2022-02-26T18:23:53.966706Z",
+        "url": "https://files.pythonhosted.org/packages/5e/27/73047ebe2b455f07ee1ff0a448a49f3fc006ca87bac88ef64e2e34822661/datasette_render_markdown-2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "17728408a4d9ec886ee0cd2e2215ac54",
+          "sha256": "b4c18db6ffebab6f7e21cd7f8a3fad40f7f0d36b9cc6356c1bb83e76d648eeaa"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-markdown-2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "17728408a4d9ec886ee0cd2e2215ac54",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8431,
+        "upload_time": "2022-02-26T18:23:55",
+        "upload_time_iso_8601": "2022-02-26T18:23:55.611378Z",
+        "url": "https://files.pythonhosted.org/packages/95/93/b99de00d41495961f9c2df626be647cd6275dcdec0a71c6d523da52f3705/datasette-render-markdown-2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "9c08990f9fdaad47863481bfa400b78c",
+        "sha256": "0f3173e1576c16c8ab2d9e6b6f2cd3d4591eaa567f670bf6a636182b4035deb5"
+      },
+      "downloads": -1,
+      "filename": "datasette_render_markdown-2.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "9c08990f9fdaad47863481bfa400b78c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9032,
+      "upload_time": "2022-02-26T18:23:53",
+      "upload_time_iso_8601": "2022-02-26T18:23:53.966706Z",
+      "url": "https://files.pythonhosted.org/packages/5e/27/73047ebe2b455f07ee1ff0a448a49f3fc006ca87bac88ef64e2e34822661/datasette_render_markdown-2.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "17728408a4d9ec886ee0cd2e2215ac54",
+        "sha256": "b4c18db6ffebab6f7e21cd7f8a3fad40f7f0d36b9cc6356c1bb83e76d648eeaa"
+      },
+      "downloads": -1,
+      "filename": "datasette-render-markdown-2.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "17728408a4d9ec886ee0cd2e2215ac54",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 8431,
+      "upload_time": "2022-02-26T18:23:55",
+      "upload_time_iso_8601": "2022-02-26T18:23:55.611378Z",
+      "url": "https://files.pythonhosted.org/packages/95/93/b99de00d41495961f9c2df626be647cd6275dcdec0a71c6d523da52f3705/datasette-render-markdown-2.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,216 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-seaborn\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-seaborn.svg)](https://pypi.org/project/datasette-seaborn/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-seaborn?include_prereleases&label=changelog)](https://github.com/simonw/datasette-seaborn/releases)\n[![Tests](https://github.com/simonw/datasette-seaborn/workflows/Test/badge.svg)](https://github.com/simonw/datasette-seaborn/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-seaborn/blob/main/LICENSE)\n\nStatistical visualizations for Datasette using Seaborn\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-seaborn\n\n## Usage\n\nNavigate to the new `.seaborn` extension for any Datasette table.\n\nThe `_seaborn` argument specifies a method on `sns` to execute, e.g. `?_seaborn=relplot`.\n\nExtra arguments to those methods can be specified using e.g. `&_seaborn_x=column_name`.\n\n## Configuration\n\nThe plugin implements a default rendering time limit of five seconds. You can customize this limit using the `render_time_limit` setting, which accepts a floating point number of seconds. Add this to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-seaborn\": {\n            \"render_time_limit\": 1.0\n        }\n    }\n}\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-seaborn\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-seaborn",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-seaborn",
+    "package_url": "https://pypi.org/project/datasette-seaborn/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-seaborn/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-seaborn/actions",
+      "Changelog": "https://github.com/simonw/datasette-seaborn/releases",
+      "Homepage": "https://github.com/simonw/datasette-seaborn",
+      "Issues": "https://github.com/simonw/datasette-seaborn/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-seaborn/0.2a0/",
+    "requires_dist": [
+      "datasette (>=0.50)",
+      "seaborn (>=0.11.0)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Statistical visualizations for Datasette using Seaborn",
+    "version": "0.2a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8835517,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a0dd80721bb114e874dbea2c9dbc2fa9",
+          "sha256": "6405f2791a6f007ad44e343bc84723bbb17aa3d74cceeca64224701adbb8523a"
+        },
+        "downloads": -1,
+        "filename": "datasette_seaborn-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a0dd80721bb114e874dbea2c9dbc2fa9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2890,
+        "upload_time": "2020-09-11T15:04:41",
+        "upload_time_iso_8601": "2020-09-11T15:04:41.694866Z",
+        "url": "https://files.pythonhosted.org/packages/6a/4b/5175001045adf7053307e29bc3a5c3843d8c5a4f35d32f2061c718aebeab/datasette_seaborn-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4f2e5587fbd02580990f016512467d2e",
+          "sha256": "2cf729bc000c65d02033ed707699c146e697644c8cdabc3b1ece3b20f69a64ad"
+        },
+        "downloads": -1,
+        "filename": "datasette-seaborn-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4f2e5587fbd02580990f016512467d2e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2708,
+        "upload_time": "2020-09-11T15:04:53",
+        "upload_time_iso_8601": "2020-09-11T15:04:53.377814Z",
+        "url": "https://files.pythonhosted.org/packages/2a/27/de005a9e24661f82368acdc59a882cd1ac8452733e7747bf71dc97143885/datasette-seaborn-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "92880602bbe1f12f9f8bf2c1e4be273b",
+          "sha256": "b787861b34cb8bcd1ba28bc749d848970c074ca8755ac4a7692abb7d43d67cff"
+        },
+        "downloads": -1,
+        "filename": "datasette_seaborn-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "92880602bbe1f12f9f8bf2c1e4be273b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2958,
+        "upload_time": "2020-09-11T17:03:53",
+        "upload_time_iso_8601": "2020-09-11T17:03:53.434575Z",
+        "url": "https://files.pythonhosted.org/packages/46/77/6c34ae16c6cc81da252e9f575be2aa3dbf6e1bb3f60c4b222042263787e3/datasette_seaborn-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "86a7915706b4b22e7159e514be3cba6e",
+          "sha256": "eb8be70972e13d740db973fe8203ae93a1f03474a62e7f0b73a6052ebec4b078"
+        },
+        "downloads": -1,
+        "filename": "datasette-seaborn-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "86a7915706b4b22e7159e514be3cba6e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2774,
+        "upload_time": "2020-09-11T17:03:55",
+        "upload_time_iso_8601": "2020-09-11T17:03:55.110808Z",
+        "url": "https://files.pythonhosted.org/packages/7c/c1/40398e23becaf3602a611f80ffd1292e7b883be24733f9b63d0739235686/datasette-seaborn-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c235b6467453f2cec693aed96f924bae",
+          "sha256": "c4194ce39bb9015d96f8d87ddf688443cb87855e2d7d86a9d248f892eff2585e"
+        },
+        "downloads": -1,
+        "filename": "datasette_seaborn-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c235b6467453f2cec693aed96f924bae",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3956,
+        "upload_time": "2020-12-07T01:40:42",
+        "upload_time_iso_8601": "2020-12-07T01:40:42.246888Z",
+        "url": "https://files.pythonhosted.org/packages/1f/a2/d497dcc557ddd8a03373c3631d198b86a44ee9c51983edd376c1a6186bf3/datasette_seaborn-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5b74dbb05e999fe30d790aa8bf88cf9c",
+          "sha256": "9e064545badabae1148145a195f19929f53c97a614f17f89534a2ec714d34074"
+        },
+        "downloads": -1,
+        "filename": "datasette-seaborn-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5b74dbb05e999fe30d790aa8bf88cf9c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3573,
+        "upload_time": "2020-12-07T01:40:42",
+        "upload_time_iso_8601": "2020-12-07T01:40:42.996531Z",
+        "url": "https://files.pythonhosted.org/packages/0d/ed/c7b6e2a477511d5564022f2ea8399c3b0a96b8dc0a6c0bf56f1e46523f67/datasette-seaborn-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "c235b6467453f2cec693aed96f924bae",
+        "sha256": "c4194ce39bb9015d96f8d87ddf688443cb87855e2d7d86a9d248f892eff2585e"
+      },
+      "downloads": -1,
+      "filename": "datasette_seaborn-0.2a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c235b6467453f2cec693aed96f924bae",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 3956,
+      "upload_time": "2020-12-07T01:40:42",
+      "upload_time_iso_8601": "2020-12-07T01:40:42.246888Z",
+      "url": "https://files.pythonhosted.org/packages/1f/a2/d497dcc557ddd8a03373c3631d198b86a44ee9c51983edd376c1a6186bf3/datasette_seaborn-0.2a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "5b74dbb05e999fe30d790aa8bf88cf9c",
+        "sha256": "9e064545badabae1148145a195f19929f53c97a614f17f89534a2ec714d34074"
+      },
+      "downloads": -1,
+      "filename": "datasette-seaborn-0.2a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5b74dbb05e999fe30d790aa8bf88cf9c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 3573,
+      "upload_time": "2020-12-07T01:40:42",
+      "upload_time_iso_8601": "2020-12-07T01:40:42.996531Z",
+      "url": "https://files.pythonhosted.org/packages/0d/ed/c7b6e2a477511d5564022f2ea8399c3b0a96b8dc0a6c0bf56f1e46523f67/datasette-seaborn-0.2a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

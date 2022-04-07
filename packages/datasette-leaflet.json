@@ -1,0 +1,257 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-leaflet\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-leaflet.svg)](https://pypi.org/project/datasette-leaflet/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-leaflet?include_prereleases&label=changelog)](https://github.com/simonw/datasette-leaflet/releases)\n[![Tests](https://github.com/simonw/datasette-leaflet/workflows/Test/badge.svg)](https://github.com/simonw/datasette-leaflet/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-leaflet/blob/main/LICENSE)\n\nDatasette plugin adding the [Leaflet](https://leafletjs.com/) JavaScript library.\n\nA growing number of Datasette plugins depend on the Leaflet JavaScript mapping library. They each have their own way of loading Leaflet, which could result in loading it multiple times (with multiple versions) if more than one plugin is installed.\n\nThis library is intended to solve this problem, by providing a single plugin they can all depend on that loads Leaflet in a reusable way.\n\nPlugins that use this:\n\n- [datasette-leaflet-freedraw](https://datasette.io/plugins/datasette-leaflet-freedraw)\n- [datasette-leaflet-geojson](https://datasette.io/plugins/datasette-leaflet-geojson)\n- [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map)\n\n## Installation\n\nYou can install this plugin like so:\n\n    datasette install datasette-leaflet\n\nUsually this plugin will be a dependency of other plugins, so it should be installed automatically when you install them.\n\n## Usage\n\nThe plugin makes `leaflet.js` and `leaflet.css` available as static files. It provides two custom template variables with the URLs of those two files.\n\n- `{{ datasette_leaflet_url }}` is the URL to the JavaScript\n- `{{ datasette_leaflet_css_url }}` is the URL to the CSS\n\nThese URLs are also made available as global JavaScript constants:\n\n- `datasette.leaflet.JAVASCRIPT_URL`\n- `datasette.leaflet.CSS_URL`\n\nThe JavaScript is packaed as a [JavaScript module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). You can dynamically import the JavaScript from a custom template like this:\n\n```html+jinja\n<script type=\"module\">\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    /* Use leaflet here */\n  });\n</script>\n```\n\nYou can load the CSS like this:\n\n```html+jinja\n<link rel=\"stylesheet\" href=\"{{ datasette_leaflet_css_url }}\">\n```\n\nOr dynamically like this:\n\n```html+jinja\n<script>\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\n</script>\n```\n\nHere's a full example that loads the JavaScript and CSS and renders a map:\n\n```html+jinja\n<script type=\"module\">\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER = \"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\";\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS = {\"maxZoom\": 19, \"detectRetina\": true, \"attribution\": \"&copy; <a href=\\\"https://www.openstreetmap.org/copyright\\\">OpenStreetMap</a> contributors\"};\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    let div = document.createElement('div');\n    div.style.height = '400px';\n    document.querySelector('.content').appendChild(div);\n    let tiles = leaflet.tileLayer(\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER,\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS\n    );\n    let map = leaflet.map(div, {\n        center: leaflet.latLng(0, 0),\n        zoom: 2,\n        layers: [tiles]\n    });\n  });\n</script>\n```\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-leaflet",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-leaflet",
+    "package_url": "https://pypi.org/project/datasette-leaflet/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-leaflet/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-leaflet/actions",
+      "Changelog": "https://github.com/simonw/datasette-leaflet/releases",
+      "Homepage": "https://github.com/simonw/datasette-leaflet",
+      "Issues": "https://github.com/simonw/datasette-leaflet/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-leaflet/0.2.2/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "A plugin that bundles Leaflet.js for Datasette",
+    "version": "0.2.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9290021,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "361a05283127bf14b467c2763ea29d71",
+          "sha256": "1545e98713f34f9bffded298d6db1b08e444356cd35b8b545e2f301e8b4575ab"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "361a05283127bf14b467c2763ea29d71",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 104704,
+        "upload_time": "2021-01-24T18:20:28",
+        "upload_time_iso_8601": "2021-01-24T18:20:28.428144Z",
+        "url": "https://files.pythonhosted.org/packages/fe/56/c7895dbbb53407b78e871a369fb83e15ce8576f23d07676807152ce50b43/datasette_leaflet-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "49ca02facabf8f78b074cac3d06de548",
+          "sha256": "e27d3594c60fa9b2c89de5ac914f203f21f75299ccac8f763efb9d1e18e2a31c"
+        },
+        "downloads": -1,
+        "filename": "datasette-leaflet-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "49ca02facabf8f78b074cac3d06de548",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 105197,
+        "upload_time": "2021-01-24T18:20:29",
+        "upload_time_iso_8601": "2021-01-24T18:20:29.931542Z",
+        "url": "https://files.pythonhosted.org/packages/4f/29/2c9d3a4504a5c1156688d6de8ac08a085766885937081944dfbee0a7dad3/datasette-leaflet-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "17566120e175d8dbf143f6bba3928276",
+          "sha256": "71b1909400e5c8112575f51ca4d3defa00f602e50b7bae4a970ea96401374130"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "17566120e175d8dbf143f6bba3928276",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 104903,
+        "upload_time": "2021-01-25T19:04:06",
+        "upload_time_iso_8601": "2021-01-25T19:04:06.584507Z",
+        "url": "https://files.pythonhosted.org/packages/99/56/9cc67eb74167dcc512d1834eea6c0a8a7d50c8b3d2270a4b3b35e2a9929a/datasette_leaflet-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b57e05a6e47663b2b1ec762f5212e695",
+          "sha256": "b528fa3a25b8bd7cb44c5d4984c8e16bef41434ee1049ce1afee6cad386f93d1"
+        },
+        "downloads": -1,
+        "filename": "datasette-leaflet-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b57e05a6e47663b2b1ec762f5212e695",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 105453,
+        "upload_time": "2021-01-25T19:04:07",
+        "upload_time_iso_8601": "2021-01-25T19:04:07.616971Z",
+        "url": "https://files.pythonhosted.org/packages/8f/11/f7771bb0ee0c9210ae42049d1c1cb7a293136f6a80cec0388381fb6c252b/datasette-leaflet-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "805196fb36d130cfbad888fead50c465",
+          "sha256": "e4c204e145ffb5c96be78eb891c5692ce6f18772bf3e9da4ebd5eec5f0790cbb"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "805196fb36d130cfbad888fead50c465",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 104920,
+        "upload_time": "2021-01-31T07:24:02",
+        "upload_time_iso_8601": "2021-01-31T07:24:02.719600Z",
+        "url": "https://files.pythonhosted.org/packages/98/27/d3468a3c4c1ce4189544a97f51fcd7d62078ce291676255b63cf9d38b142/datasette_leaflet-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9e568bde941c5fb0881207609dbfe3b8",
+          "sha256": "c77c51c070f68b88cf9718eb3fb621b2916f7870b735db4ced2c433f3ec21600"
+        },
+        "downloads": -1,
+        "filename": "datasette-leaflet-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9e568bde941c5fb0881207609dbfe3b8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 105424,
+        "upload_time": "2021-01-31T07:24:03",
+        "upload_time_iso_8601": "2021-01-31T07:24:03.866264Z",
+        "url": "https://files.pythonhosted.org/packages/31/16/2d641bbc141c0bfdba2ec34af4b0190845025f0355f34c175d8f7136b624/datasette-leaflet-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a94352bb9f9cf2cea7a49bbb99d0e41f",
+          "sha256": "fd88c25666e7680b25b4c6e5546bd02c9f5836bbc0fee61042dbb6b93d4139f0"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a94352bb9f9cf2cea7a49bbb99d0e41f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 112532,
+        "upload_time": "2021-02-01T22:21:20",
+        "upload_time_iso_8601": "2021-02-01T22:21:20.787792Z",
+        "url": "https://files.pythonhosted.org/packages/d0/df/61e8a7d601a2c4992f7e9f38a6b983a9f9b873fbeebe4248090eea4b5d87/datasette_leaflet-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e442179a8137242282f7c102a0ed0380",
+          "sha256": "8fd4e634304be392ae6f7de770d4f22b95a37caecd676a35faeb6200da9423bc"
+        },
+        "downloads": -1,
+        "filename": "datasette-leaflet-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e442179a8137242282f7c102a0ed0380",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 113285,
+        "upload_time": "2021-02-01T22:21:21",
+        "upload_time_iso_8601": "2021-02-01T22:21:21.930324Z",
+        "url": "https://files.pythonhosted.org/packages/88/6e/444b1ded1cd8f71cd86f4461c06ee88be2bb0682b0d54aa942c323f91411/datasette-leaflet-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a94352bb9f9cf2cea7a49bbb99d0e41f",
+        "sha256": "fd88c25666e7680b25b4c6e5546bd02c9f5836bbc0fee61042dbb6b93d4139f0"
+      },
+      "downloads": -1,
+      "filename": "datasette_leaflet-0.2.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a94352bb9f9cf2cea7a49bbb99d0e41f",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 112532,
+      "upload_time": "2021-02-01T22:21:20",
+      "upload_time_iso_8601": "2021-02-01T22:21:20.787792Z",
+      "url": "https://files.pythonhosted.org/packages/d0/df/61e8a7d601a2c4992f7e9f38a6b983a9f9b873fbeebe4248090eea4b5d87/datasette_leaflet-0.2.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e442179a8137242282f7c102a0ed0380",
+        "sha256": "8fd4e634304be392ae6f7de770d4f22b95a37caecd676a35faeb6200da9423bc"
+      },
+      "downloads": -1,
+      "filename": "datasette-leaflet-0.2.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e442179a8137242282f7c102a0ed0380",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 113285,
+      "upload_time": "2021-02-01T22:21:21",
+      "upload_time_iso_8601": "2021-02-01T22:21:21.930324Z",
+      "url": "https://files.pythonhosted.org/packages/88/6e/444b1ded1cd8f71cd86f4461c06ee88be2bb0682b0d54aa942c323f91411/datasette-leaflet-0.2.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

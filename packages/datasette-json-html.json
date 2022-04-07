@@ -1,0 +1,436 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-json-html\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-json-html.svg)](https://pypi.org/project/datasette-json-html/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-json-html?include_prereleases&label=changelog)](https://github.com/simonw/datasette-json-html/releases)\n[![Tests](https://github.com/simonw/datasette-json-html/workflows/Test/badge.svg)](https://github.com/simonw/datasette-remote-metadata/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-json-html/blob/main/LICENSE)\n\nDatasette plugin for rendering HTML based on JSON values, using the [render_cell plugin hook](https://docs.datasette.io/en/stable/plugin_hooks.html#render-cell-value-column-table-database-datasette).\n\nThis plugin looks for cell values that match a very specific JSON format and converts them into HTML when they are rendered by the Datasette interface.\n\n## Links\n\n    {\n        \"href\": \"https://simonwillison.net/\",\n        \"label\": \"Simon Willison\"\n    }\n\nWill be rendered as an `<a href=\"\">` link:\n\n    <a href=\"https://simonwillison.net/\">Simon Willison</a>\n\nYou can set a tooltip on the link using a `\"title\"` key:\n\n\n    {\n        \"href\": \"https://simonwillison.net/\",\n        \"label\": \"Simon Willison\",\n        \"title\": \"My blog\"\n    }\n\nProduces:\n\n    <a href=\"https://simonwillison.net/\" title=\"My blog\">Simon Willison</a>\n\nYou can also include a description, which will be displayed below the link. If descriptions include newlines they will be converted to `<br>` elements:\n\n    select json_object(\n        \"href\", \"https://simonwillison.net/\",\n        \"label\", \"Simon Willison\",\n        \"description\", \"This can contain\" || x'0a' || \"newlines\"\n    )\n\nProduces:\n\n    <strong><a href=\"https://simonwillison.net/\">Simon Willison</a></strong><br>This can contain<br>newlines\n\n* [Literal JSON link demo](https://datasette-json-html.datasette.io/demo?sql=select+%27%7B%0D%0A++++%22href%22%3A+%22https%3A%2F%2Fsimonwillison.net%2F%22%2C%0D%0A++++%22label%22%3A+%22Simon+Willison%22%2C%0D%0A++++%22title%22%3A+%22My+blog%22%0D%0A%7D%27)\n\n## List of links\n\n    [\n        {\n            \"href\": \"https://simonwillison.net/\",\n            \"label\": \"Simon Willison\"\n        },\n        {\n            \"href\": \"https://github.com/simonw/datasette\",\n            \"label\": \"Datasette\"\n        }\n    ]\n\nWill be rendered as a comma-separated list of `<a href=\"\">` links:\n\n    <a href=\"https://simonwillison.net/\">Simon Willison</a>,\n    <a href=\"https://github.com/simonw/datasette\">Datasette</a>\n\nThe `href` property must begin with `https://` or `http://` or `/`, to avoid potential XSS injection attacks (for example URLs that begin with `javascript:`).\n\nLists of links cannot include `\"description\"` keys.\n\n* [Literal list of links demo](https://datasette-json-html.datasette.io/demo?sql=select+%27%5B%0D%0A++++%7B%0D%0A++++++++%22href%22%3A+%22https%3A%2F%2Fsimonwillison.net%2F%22%2C%0D%0A++++++++%22label%22%3A+%22Simon+Willison%22%0D%0A++++%7D%2C%0D%0A++++%7B%0D%0A++++++++%22href%22%3A+%22https%3A%2F%2Fgithub.com%2Fsimonw%2Fdatasette%22%2C%0D%0A++++++++%22label%22%3A+%22Datasette%22%0D%0A++++%7D%0D%0A%5D%27)\n\n## Images\n\nThe image tag is more complex. The most basic version looks like this:\n\n    {\n        \"img_src\": \"https://placekitten.com/200/300\"\n    }\n\nThis will render as:\n\n    <img src=\"https://placekitten.com/200/300\">\n\nBut you can also include one or more of `alt`, `caption`, `width` and `href`.\n\nIf you include width or alt, they will be added as attributes:\n\n    {\n        \"img_src\": \"https://placekitten.com/200/300\",\n        \"alt\": \"Kitten\",\n        \"width\": 200\n    }\n\nProduces:\n\n    <img src=\"https://placekitten.com/200/300\"\n        alt=\"Kitten\" width=\"200\">\n\n* [Literal image demo](https://datasette-json-html.datasette.io/demo?sql=select+%27%7B%0D%0A++++%22img_src%22%3A+%22https%3A%2F%2Fplacekitten.com%2F200%2F300%22%2C%0D%0A++++%22alt%22%3A+%22Kitten%22%2C%0D%0A++++%22width%22%3A+200%0D%0A%7D%27)\n\nThe `href` key will cause the image to be wrapped in a link:\n\n    {\n        \"img_src\": \"https://placekitten.com/200/300\",\n        \"href\": \"http://www.example.com\"\n    }\n\nProduces:\n\n    <a href=\"http://www.example.com\">\n        <img src=\"https://placekitten.com/200/300\">\n    </a>\n\nThe `caption` key wraps everything in a fancy figure/figcaption block:\n\n    {\n        \"img_src\": \"https://placekitten.com/200/300\",\n        \"caption\": \"Kitten caption\"\n    }\n\nProduces:\n\n    <figure>\n        <img src=\"https://placekitten.com/200/300\"></a>\n        <figcaption>Kitten caption</figcaption>\n    </figure>\n\n## Preformatted text\n\nYou can use `{\"pre\": \"text\"}` to render text in a `<pre>` HTML tag:\n\n    {\n        \"pre\": \"This\\nhas\\nnewlines\"\n    }\n\nProduces:\n\n    <pre>This\n    has\n    newlines</pre>\n\nIf the value attached to the `\"pre\"` key is itself a JSON object, that JSON will be pretty-printed:\n\n    {\n        \"pre\": {\n            \"this\": {\n                \"object\": [\"is\", \"nested\"]\n            }\n        }\n    }\n\nProduces:\n\n    <pre>{\n      &#34;this&#34;: {\n        &#34;object&#34;: [\n          &#34;is&#34;,\n          &#34;nested&#34;\n        ]\n      }\n    }</pre>\n\n* [Preformatted text with JSON demo](https://datasette-json-html.datasette.io/demo?sql=select+%27%7B%0D%0A++++%22pre%22%3A+%7B%0D%0A++++++++%22this%22%3A+%7B%0D%0A++++++++++++%22object%22%3A+%5B%22is%22%2C+%22nested%22%5D%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A%7D%27)\n* [Preformatted text demo showing the Mandelbrot Set](https://datasette-json-html.datasette.io/demo?sql=WITH+RECURSIVE%0D%0A++xaxis%28x%29+AS+%28VALUES%28-2.0%29+UNION+ALL+SELECT+x%2B0.05+FROM+xaxis+WHERE+x%3C1.2%29%2C%0D%0A++yaxis%28y%29+AS+%28VALUES%28-1.0%29+UNION+ALL+SELECT+y%2B0.1+FROM+yaxis+WHERE+y%3C1.0%29%2C%0D%0A++m%28iter%2C+cx%2C+cy%2C+x%2C+y%29+AS+%28%0D%0A++++SELECT+0%2C+x%2C+y%2C+0.0%2C+0.0+FROM+xaxis%2C+yaxis%0D%0A++++UNION+ALL%0D%0A++++SELECT+iter%2B1%2C+cx%2C+cy%2C+x*x-y*y+%2B+cx%2C+2.0*x*y+%2B+cy+FROM+m+%0D%0A+++++WHERE+%28x*x+%2B+y*y%29+%3C+4.0+AND+iter%3C28%0D%0A++%29%2C%0D%0A++m2%28iter%2C+cx%2C+cy%29+AS+%28%0D%0A++++SELECT+max%28iter%29%2C+cx%2C+cy+FROM+m+GROUP+BY+cx%2C+cy%0D%0A++%29%2C%0D%0A++a%28t%29+AS+%28%0D%0A++++SELECT+group_concat%28+substr%28%27+.%2B*%23%27%2C+1%2Bmin%28iter%2F7%2C4%29%2C+1%29%2C+%27%27%29+%0D%0A++++FROM+m2+GROUP+BY+cy%0D%0A++%29%0D%0ASELECT+json_object%28%27pre%27%2C+group_concat%28rtrim%28t%29%2Cx%270a%27%29%29+FROM+a%3B) using [this example](https://www.sqlite.org/lang_with.html#outlandish_recursive_query_examples) from the SQLite documentation\n\n## Using these with SQLite JSON functions\n\nThe most powerful way to make use of this plugin is in conjunction with SQLite's [JSON functions](https://www.sqlite.org/json1.html). For example:\n\n    select json_object(\n        \"href\", \"https://simonwillison.net/\",\n        \"label\", \"Simon Willison\"\n    );\n\n* [json_object() link demo](https://datasette-json-html.datasette.io/demo?sql=select+json_object%28%0D%0A++++%22href%22%2C+%22https%3A%2F%2Fsimonwillison.net%2F%22%2C%0D%0A++++%22label%22%2C+%22Simon+Willison%22%0D%0A%29%3B)\n\nYou can use these functions to construct JSON objects that work with the plugin from data in a table:\n\n    select id, json_object(\n        \"href\", url, \"label\", text\n    ) from mytable;\n\n* [Demo that builds links against a table](https://datasette-json-html.datasette.io/demo?sql=select+json_object%28%22href%22%2C+url%2C+%22label%22%2C+package%2C+%22title%22%2C+package+%7C%7C+%22+%22+%7C%7C+url%29+as+package+from+packages)\n\nThe `json_group_array()` function is an aggregate function similar to `group_concat()` - it allows you to construct lists of JSON objects in conjunction with a `GROUP BY` clause.\n\nThis means you can use it to construct dynamic lists of links, for example:\n\n    select\n        substr(package, 0, 12) as prefix,\n        json_group_array(\n            json_object(\n                \"href\", url,\n                \"label\", package\n            )\n        ) as package_links\n    from packages\n    group by prefix\n\n* [Demo of json_group_array()](https://datasette-json-html.datasette.io/demo?sql=select%0D%0A++++substr%28package%2C+0%2C+12%29+as+prefix%2C%0D%0A++++json_group_array%28%0D%0A++++++++json_object%28%0D%0A++++++++++++%22href%22%2C+url%2C%0D%0A++++++++++++%22label%22%2C+package%0D%0A++++++++%29%0D%0A++++%29+as+package_links%0D%0Afrom+packages%0D%0Agroup+by+prefix)\n\n## The `urllib_quote_plus()` SQL function\n\nSince this plugin is designed to be used with SQL that constructs the underlying JSON structure, it is likely you will need to construct dynamic URLs from results returned by a SQL query.\n\nThis plugin registers a custom SQLite function called `urllib_quote_plus()` to help you do that. It lets you use Python's [urllib.parse.quote\\_plus() function](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.quote_plus) from within a SQL query.\n\nHere's an example of how you might use it:\n\n    select id, json_object(\n        \"href\",\n        \"/mydatabase/other_table?_search=\" || urllib_quote_plus(text),\n        \"label\", text\n    ) from mytable;\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://datasette.io/plugins/datasette-json-html",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-json-html",
+    "package_url": "https://pypi.org/project/datasette-json-html/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-json-html/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-json-html/actions",
+      "Changelog": "https://github.com/simonw/datasette-json-html/releases",
+      "Homepage": "https://datasette.io/plugins/datasette-json-html",
+      "Issues": "https://github.com/simonw/datasette-json-html/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-json-html/1.0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for rendering HTML based on JSON values",
+    "version": "1.0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11059354,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0cdcb09f9c81a90f0d820fdc173b45bd",
+          "sha256": "275fde7c263584104c7ac080ed0f8e84258b17051d6837119e3cf2b0766064e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0cdcb09f9c81a90f0d820fdc173b45bd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3132,
+        "upload_time": "2018-07-31T05:51:44",
+        "upload_time_iso_8601": "2018-07-31T05:51:44.634876Z",
+        "url": "https://files.pythonhosted.org/packages/95/07/b3be843a04a44fa93419aca9556022be234340d0c8aa50e3652eadcf5dcd/datasette_json_html-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d158ef70e9826fa1743a5d8f727779b4",
+          "sha256": "e8a5aee9acbab87fdbf4a4b06ea42ed16d832a788fcdd233fca28eb2c555a3ae"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d158ef70e9826fa1743a5d8f727779b4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3356,
+        "upload_time": "2018-07-31T06:09:32",
+        "upload_time_iso_8601": "2018-07-31T06:09:32.947689Z",
+        "url": "https://files.pythonhosted.org/packages/57/dc/0830bc397d506818ee5fd712e7238fa1427eb42784d8aa18673cf98239ad/datasette_json_html-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e34f8f78362eb385959383b79df1e1c6",
+          "sha256": "9963101e0986f314b0f9a58a1799411231b6a505b3faca89595466fe8881aa68"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e34f8f78362eb385959383b79df1e1c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3789,
+        "upload_time": "2018-07-31T15:23:17",
+        "upload_time_iso_8601": "2018-07-31T15:23:17.122612Z",
+        "url": "https://files.pythonhosted.org/packages/6e/3d/5b27d000fd0654f580e20d1487d5f0de9b2fcdc6ed8e6a2708a8e9a214c4/datasette_json_html-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "050b6623807ea067468425522a8a32d3",
+          "sha256": "2bef3c6cdefd89abc2de5cc07e3276c88897ab691b695e67ebfc9c2dfba9e506"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "050b6623807ea067468425522a8a32d3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3818,
+        "upload_time": "2018-08-06T03:47:32",
+        "upload_time_iso_8601": "2018-08-06T03:47:32.279142Z",
+        "url": "https://files.pythonhosted.org/packages/f8/e7/d11d7980e8220a1603880a3b5b11fc438bf8f0a2dbd384c8d4169f561d4d/datasette_json_html-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "56f59add34097e91e78c5dbf8a99998a",
+          "sha256": "8aa135005e2f3995b6adbcd897a53fe357f68f307035481089fb3f489209468d"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "56f59add34097e91e78c5dbf8a99998a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3946,
+        "upload_time": "2018-08-06T03:49:52",
+        "upload_time_iso_8601": "2018-08-06T03:49:52.689447Z",
+        "url": "https://files.pythonhosted.org/packages/8a/e4/728da78ddebbd65d65127b220cb1cd0f54be428a25fed610b63a888cd34e/datasette_json_html-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "13322a3d41dc6cfb6f3b80a2218b5b76",
+          "sha256": "e59cc93f3925620018e5537f227c78735e8d92580e08460d99257dde55c92bc6"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.3.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "13322a3d41dc6cfb6f3b80a2218b5b76",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3948,
+        "upload_time": "2018-08-06T04:00:55",
+        "upload_time_iso_8601": "2018-08-06T04:00:55.250342Z",
+        "url": "https://files.pythonhosted.org/packages/e7/6b/849633456eac98eb5e4d61327e4994692300f0c292c98d3744af631b96d7/datasette_json_html-0.3.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "67b8b60a95c75cf330cc5254301a67b9",
+          "sha256": "31e110862086048f1014da7fd6ad777d432612b51d47ed44599c2aa82c567af2"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.4.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "67b8b60a95c75cf330cc5254301a67b9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8359,
+        "upload_time": "2019-01-02T04:18:07",
+        "upload_time_iso_8601": "2019-01-02T04:18:07.222314Z",
+        "url": "https://files.pythonhosted.org/packages/d7/85/12c208c01e4354089ca8e96be5d0213e79a5d05c44b4b9a63176b66ad59c/datasette_json_html-0.4.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f8c652208e59765d8aa64829dce2e24c",
+          "sha256": "d69683d32dc47d3e83b86c04e52e182bffb328a0fc3582cd444bbba453b39f7b"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f8c652208e59765d8aa64829dce2e24c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8333,
+        "upload_time": "2019-01-26T23:08:12",
+        "upload_time_iso_8601": "2019-01-26T23:08:12.468150Z",
+        "url": "https://files.pythonhosted.org/packages/5f/b9/d437c2c728a7f14858d55780fac09c7ef3b01f4856fd93ab22bf93787588/datasette_json_html-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b0ba4fdd40ddf3a129db29d124e6c9b2",
+          "sha256": "e604037de645490f08bc0fa4870ed9f7ca86e6a5f59ea87d9dba9968ce9c1ffd"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b0ba4fdd40ddf3a129db29d124e6c9b2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8995,
+        "upload_time": "2019-06-14T01:33:32",
+        "upload_time_iso_8601": "2019-06-14T01:33:32.225900Z",
+        "url": "https://files.pythonhosted.org/packages/e8/04/9d23f5f665b9540d36c85b17a0cada1901ee2b3e81ac5e34237ad176c288/datasette_json_html-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9f392f7251e4c1a2fcebc8c749b17abe",
+          "sha256": "d07cb961dd3269331905cebc491eda168e76b35e1f029a4dd5f990693906fc32"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9f392f7251e4c1a2fcebc8c749b17abe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9230,
+        "upload_time": "2020-01-22T20:20:34",
+        "upload_time_iso_8601": "2020-01-22T20:20:34.705580Z",
+        "url": "https://files.pythonhosted.org/packages/8b/f2/534460849581ebc3dbdf2b0f93ca5a62b14872fd9629d945c6ed31aa35e6/datasette_json_html-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ed7dda60dda7cc95c7d6921811f737e0",
+          "sha256": "6909cee52e6fde80ae672861ba9e8c6abfee43bd9355b4f1dd60ecac173df472"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-0.6.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ed7dda60dda7cc95c7d6921811f737e0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9344,
+        "upload_time": "2020-08-09T22:49:15",
+        "upload_time_iso_8601": "2020-08-09T22:49:15.537483Z",
+        "url": "https://files.pythonhosted.org/packages/1a/17/7eb2d19e59d411ceed69f4e884576938a498617915e900a9322dc242fe42/datasette_json_html-0.6.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8986e186d91b18ecc22305d0b8360ed5",
+          "sha256": "adbd0f5d041a6748d08e055b422e7a3dd3490e266fdda61842edb2d4129defdd"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-html-0.6.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8986e186d91b18ecc22305d0b8360ed5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5428,
+        "upload_time": "2020-08-09T22:49:16",
+        "upload_time_iso_8601": "2020-08-09T22:49:16.560654Z",
+        "url": "https://files.pythonhosted.org/packages/f1/76/3859b386a0d3fe900399f8f03592a49ba0cba1264fbbdd2a07d1ab871de7/datasette-json-html-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "663c8416fca9da5a76b671fd35a32860",
+          "sha256": "6a6ec75d0a4c195fd2d8b60565d0894ae1b4634e2de60205063c8ac11c63fa1d"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "663c8416fca9da5a76b671fd35a32860",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9737,
+        "upload_time": "2021-07-31T19:10:47",
+        "upload_time_iso_8601": "2021-07-31T19:10:47.050709Z",
+        "url": "https://files.pythonhosted.org/packages/66/45/2976df15c87c1e2b8b4bd3a5d4b969e0e3d1c43963b5c33be4e74a8f7e12/datasette_json_html-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "801c0cc75fd26d43b4ea2cb012966c05",
+          "sha256": "71355232e64d4454c9dceeb6c1df804d1eb9e7eb3364e07ddbe08242a796c9a3"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-html-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "801c0cc75fd26d43b4ea2cb012966c05",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9785,
+        "upload_time": "2021-07-31T19:10:48",
+        "upload_time_iso_8601": "2021-07-31T19:10:48.296103Z",
+        "url": "https://files.pythonhosted.org/packages/af/5e/f71719a06ea0579c1624a8f592ba4dd9965504c4c536257ecdae789282c3/datasette-json-html-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "13146bc70fa9085c3c4cb89501c56afc",
+          "sha256": "a95291cfa4c6e80f363156408ecf87d8bfcf432f42c3f440f1128e6f55a4e066"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_html-1.0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "13146bc70fa9085c3c4cb89501c56afc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9809,
+        "upload_time": "2021-07-31T19:23:19",
+        "upload_time_iso_8601": "2021-07-31T19:23:19.746347Z",
+        "url": "https://files.pythonhosted.org/packages/4a/67/7f502c77f3459946b08a1f856d220b81c5066a5dcdf4e7094741579ce463/datasette_json_html-1.0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0ad60513e6f788c3ddd25a4c251d78f4",
+          "sha256": "9b23bd0eb685df0c5a72fabda8e3be6695e4f23019f340cc4f5ddf57ba837480"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-html-1.0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0ad60513e6f788c3ddd25a4c251d78f4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 10497,
+        "upload_time": "2021-07-31T19:23:20",
+        "upload_time_iso_8601": "2021-07-31T19:23:20.733650Z",
+        "url": "https://files.pythonhosted.org/packages/95/45/a7f5e828dd6b249e9d0214d11d789350fd8a24f12b08b878c05416c5e08b/datasette-json-html-1.0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "13146bc70fa9085c3c4cb89501c56afc",
+        "sha256": "a95291cfa4c6e80f363156408ecf87d8bfcf432f42c3f440f1128e6f55a4e066"
+      },
+      "downloads": -1,
+      "filename": "datasette_json_html-1.0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "13146bc70fa9085c3c4cb89501c56afc",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9809,
+      "upload_time": "2021-07-31T19:23:19",
+      "upload_time_iso_8601": "2021-07-31T19:23:19.746347Z",
+      "url": "https://files.pythonhosted.org/packages/4a/67/7f502c77f3459946b08a1f856d220b81c5066a5dcdf4e7094741579ce463/datasette_json_html-1.0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "0ad60513e6f788c3ddd25a4c251d78f4",
+        "sha256": "9b23bd0eb685df0c5a72fabda8e3be6695e4f23019f340cc4f5ddf57ba837480"
+      },
+      "downloads": -1,
+      "filename": "datasette-json-html-1.0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "0ad60513e6f788c3ddd25a4c251d78f4",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 10497,
+      "upload_time": "2021-07-31T19:23:20",
+      "upload_time_iso_8601": "2021-07-31T19:23:20.733650Z",
+      "url": "https://files.pythonhosted.org/packages/95/45/a7f5e828dd6b249e9d0214d11d789350fd8a24f12b08b878c05416c5e08b/datasette-json-html-1.0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

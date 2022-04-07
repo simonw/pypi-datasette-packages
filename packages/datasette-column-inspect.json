@@ -1,0 +1,152 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-column-inspect\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-column-inspect.svg)](https://pypi.org/project/datasette-column-inspect/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-column-inspect?include_prereleases&label=changelog)](https://github.com/simonw/datasette-column-inspect/releases)\n[![Tests](https://github.com/simonw/datasette-column-inspect/workflows/Test/badge.svg)](https://github.com/simonw/datasette-column-inspect/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-column-inspect/blob/main/LICENSE)\n\nHighly experimental Datasette plugin for inspecting columns.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-column-inspect\n\n## Usage\n\nThis plugin adds an icon to each column on the table page which opens an inspection side panel.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-column-inspect",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-column-inspect",
+    "package_url": "https://pypi.org/project/datasette-column-inspect/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-column-inspect/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-column-inspect"
+    },
+    "release_url": "https://pypi.org/project/datasette-column-inspect/0.2a0/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Experimental Datasette plugin for inspecting columns",
+    "version": "0.2a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8863228,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a94ab7daa96019280772c2da36c16a1a",
+          "sha256": "04810700b70d6c56d2b459fdefd2839f5179e458014585ded082942f165f8b07"
+        },
+        "downloads": -1,
+        "filename": "datasette_column_inspect-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a94ab7daa96019280772c2da36c16a1a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9058,
+        "upload_time": "2020-03-09T18:35:47",
+        "upload_time_iso_8601": "2020-03-09T18:35:47.087018Z",
+        "url": "https://files.pythonhosted.org/packages/7f/3e/4ea608f74b1c3448eae5324e3833b52173cee532fe3db55422021b91425a/datasette_column_inspect-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "001dd3f8985c264ed739fdc7645cb461",
+          "sha256": "9dff8d819b45142691a9478c69cb0cedc00575ffc4fac40d0c8fb09d19036c85"
+        },
+        "downloads": -1,
+        "filename": "datasette_column_inspect-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "001dd3f8985c264ed739fdc7645cb461",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9247,
+        "upload_time": "2020-12-09T21:48:58",
+        "upload_time_iso_8601": "2020-12-09T21:48:58.714814Z",
+        "url": "https://files.pythonhosted.org/packages/85/58/be1aa213636a4c3749e3e8380dfeb90bce71a48535993ccec7e973f0f304/datasette_column_inspect-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "125ecb84b3f7655239daf214ddaad201",
+          "sha256": "9263f3dde05543e7598bfcfd1971d9725196949c880f8e0780884caa48836279"
+        },
+        "downloads": -1,
+        "filename": "datasette-column-inspect-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "125ecb84b3f7655239daf214ddaad201",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4544,
+        "upload_time": "2020-12-09T21:48:59",
+        "upload_time_iso_8601": "2020-12-09T21:48:59.427822Z",
+        "url": "https://files.pythonhosted.org/packages/9d/6d/ae3bd9b67d7ae6115c05d143da1fd9d5870e05790336e955d76e195e9aae/datasette-column-inspect-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "001dd3f8985c264ed739fdc7645cb461",
+        "sha256": "9dff8d819b45142691a9478c69cb0cedc00575ffc4fac40d0c8fb09d19036c85"
+      },
+      "downloads": -1,
+      "filename": "datasette_column_inspect-0.2a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "001dd3f8985c264ed739fdc7645cb461",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9247,
+      "upload_time": "2020-12-09T21:48:58",
+      "upload_time_iso_8601": "2020-12-09T21:48:58.714814Z",
+      "url": "https://files.pythonhosted.org/packages/85/58/be1aa213636a4c3749e3e8380dfeb90bce71a48535993ccec7e973f0f304/datasette_column_inspect-0.2a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "125ecb84b3f7655239daf214ddaad201",
+        "sha256": "9263f3dde05543e7598bfcfd1971d9725196949c880f8e0780884caa48836279"
+      },
+      "downloads": -1,
+      "filename": "datasette-column-inspect-0.2a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "125ecb84b3f7655239daf214ddaad201",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 4544,
+      "upload_time": "2020-12-09T21:48:59",
+      "upload_time_iso_8601": "2020-12-09T21:48:59.427822Z",
+      "url": "https://files.pythonhosted.org/packages/9d/6d/ae3bd9b67d7ae6115c05d143da1fd9d5870e05790336e955d76e195e9aae/datasette-column-inspect-0.2a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

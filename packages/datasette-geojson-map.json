@@ -1,0 +1,344 @@
+{
+  "info": {
+    "author": "Chris Amico",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-geojson-map\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-geojson-map.svg)](https://pypi.org/project/datasette-geojson-map/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/datasette-geojson-map?include_prereleases&label=changelog)](https://github.com/eyeseast/datasette-geojson-map/releases)\n[![Tests](https://github.com/eyeseast/datasette-geojson-map/workflows/Test/badge.svg)](https://github.com/eyeseast/datasette-geojson-map/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/datasette-geojson-map/blob/main/LICENSE)\n\nRender a map for any query with a geometry column\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-geojson-map\n\n## Usage\n\nStart by loading a GIS file.\n\nFor example, you might use [geojson-to-sqlite](https://pypi.org/project/geojson-to-sqlite/) or [shapefile-to-sqlite](https://pypi.org/project/shapefile-to-sqlite/) to load [neighborhood boundaries](https://bostonopendata-boston.opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0/explore) into a SQLite database.\n\n```sh\nwget -O neighborhoods.geojson https://opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0.geojson\ngeojson-to-sqlite boston.db neighborhoods neighborhoods.geojson\n```\n\n(The command above uses Spatialite, but that's not required.)\n\nStart up `datasette` and navigate to the `neighborhoods` table.\n\n```sh\ndatasette serve boston.db\n\n# in another terminal tab\nopen http://localhost:8001/boston/neighborhoods\n```\n\nYou should see a map centered on Boston with each neighborhood outlined. Clicking a boundary will bring up a popup with details on that feature.\n\n![Boston neighbhorhoods map](img/boston-neighborhoods-map.png)\n\nThis plugin relies on (and will install) [datasette-geojson](https://github.com/eyeseast/datasette-geojson). Any query that includes a `geometry` column will produce a map of the results. This also includes single row views.\n\nRun the included `demo` project to see it live.\n\n## Configuration\n\nThis project uses the same map configuration as [datasette-cluster-map](https://github.com/simonw/datasette-cluster-map). Here's how you would use [Stamen's terrain tiles](http://maps.stamen.com/terrain/#12/37.7706/-122.3782):\n\n```yaml\nplugins:\n  datasette-geojson-map:\n    tile_layer: https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}\n    tile_layer_options:\n      attribution: >-\n        Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, \n        under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. \n        Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, \n        under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>.\n      subdomains: abcd\n      minZoom: 1\n      maxZoom: 16\n      ext: jpg\n```\n\nOptions:\n\n- `tile_layer`: Use a URL template that can be passed to a [Leaflet Tilelayer](https://leafletjs.com/reference-1.7.1.html#tilelayer)\n- `tile_layer_options`: All options will be passed to the tile layer. See [Leaflet documentation](https://leafletjs.com/reference-1.7.1.html#tilelayer) for more on possible values here.\n\n## Styling map features\n\nMap features can be styled using the [simplestyle-spec](https://github.com/mapbox/simplestyle-spec). This requires setting specific fields on returned rows. Here's an example:\n\n```sql\nSELECT Name, geometry, \"#ff0000\" as fill, \"#0000ff\" as stroke, 0.2 as stroke-width,  from neighborhoods\n```\n\nThat will render a neighborhood map where each polygon is filled in red, outlined in blue and lines are 0.2 pixels wide.\n\nA more useful approach would use the `CASE` statement to color features based on data:\n\n```sql\nSELECT\n  Name,\n  geometry,\n  CASE\n    Name\n    WHEN \"Roslindale\" THEN \"#ff0000\"\n    WHEN \"Dorchester\" THEN \"#0000ff\"\n    ELSE \"#dddddd\"\n  END fill\nFROM\n  neighborhoods\n```\n\nThis will fill Roslindale in red, Dorchester in blue and all other neighborhoods in gray.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-geojson-map\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/eyeseast/datasette-geojson-map",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-geojson-map",
+    "package_url": "https://pypi.org/project/datasette-geojson-map/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-geojson-map/",
+    "project_urls": {
+      "CI": "https://github.com/eyeseast/datasette-geojson-map/actions",
+      "Changelog": "https://github.com/eyeseast/datasette-geojson-map/releases",
+      "Homepage": "https://github.com/eyeseast/datasette-geojson-map",
+      "Issues": "https://github.com/eyeseast/datasette-geojson-map/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-geojson-map/0.4.0/",
+    "requires_dist": [
+      "datasette",
+      "datasette-geojson",
+      "datasette-leaflet",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "geojson-to-sqlite ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Render a map for any query with a geometry column",
+    "version": "0.4.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12926585,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8e7afbffc7a5f04e0159019977f136a2",
+          "sha256": "518beaa5d64fe6ea9620145fff4f5b97e300d4c607040f497361fd0dd145ff38"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8e7afbffc7a5f04e0159019977f136a2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3508,
+        "upload_time": "2021-07-05T01:56:30",
+        "upload_time_iso_8601": "2021-07-05T01:56:30.694371Z",
+        "url": "https://files.pythonhosted.org/packages/3c/12/9f92f9602ee2d26f60ba49ea9d8478688b2be189458af0431af9c13874fb/datasette_geojson_map-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "157a9939fc8423721d83e1d8ba3531ce",
+          "sha256": "61d8b2389aef06dbcae1ac1a1ebc04f48737974a40ed0b786ed095b08e5b1cdb"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "157a9939fc8423721d83e1d8ba3531ce",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3081,
+        "upload_time": "2021-07-05T01:56:31",
+        "upload_time_iso_8601": "2021-07-05T01:56:31.958223Z",
+        "url": "https://files.pythonhosted.org/packages/05/35/67403134bc1301de9f8b58b058d176bd76513559602b69550fc217501ba2/datasette-geojson-map-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2b7f9c670f9d25c22eb6f8c6574f7489",
+          "sha256": "0723dbf9fe017e71c90532f88a2c1a92465cadad4d9bd9051bf6c4de7fa03f8e"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2b7f9c670f9d25c22eb6f8c6574f7489",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3833,
+        "upload_time": "2021-07-05T19:06:45",
+        "upload_time_iso_8601": "2021-07-05T19:06:45.875488Z",
+        "url": "https://files.pythonhosted.org/packages/44/9f/8f0bbaab65063cd3c281858a5d262348144e40025af16eeed3775bdc25a5/datasette_geojson_map-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fa5c2ec19f73a8be00d11302b1861d15",
+          "sha256": "a4546b2df057e22ac4e05ff4087c6d8a59ec75d1fc8ec39dec0c6bff2631253f"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fa5c2ec19f73a8be00d11302b1861d15",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3316,
+        "upload_time": "2021-07-05T19:06:47",
+        "upload_time_iso_8601": "2021-07-05T19:06:47.044974Z",
+        "url": "https://files.pythonhosted.org/packages/2e/5b/a49795c4675d1e5a343246d832afa8d381caad444d1ac1cbdcf155d78f8d/datasette-geojson-map-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8981ff81d35ec750046694fb9062ee21",
+          "sha256": "81d2f1958c5eef993c59109871610316fb39972b8c9f6a5de282c6986777f7dd"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8981ff81d35ec750046694fb9062ee21",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4385,
+        "upload_time": "2021-07-06T00:53:33",
+        "upload_time_iso_8601": "2021-07-06T00:53:33.727354Z",
+        "url": "https://files.pythonhosted.org/packages/87/07/e6644e6d33fd0ec6809a10e49cba99f9e6d83d8cdd9f80d248cb725ca4d4/datasette_geojson_map-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ce4e0dbdf7f342da317e85ff623c9655",
+          "sha256": "948147c3ad1868e317efd79c91574bb3db22c076c8a7c776e82a0e2f0956a665"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ce4e0dbdf7f342da317e85ff623c9655",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3927,
+        "upload_time": "2021-07-06T00:53:34",
+        "upload_time_iso_8601": "2021-07-06T00:53:34.986291Z",
+        "url": "https://files.pythonhosted.org/packages/67/cb/4aa736cb1c4f1d0b71bbe88597a9f4a730b9ab85371aa3a5f99c7ad29c13/datasette-geojson-map-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b0ea8ff4a155df70e9b1ffc8d373b10e",
+          "sha256": "cb733c11ae7badcb6474af487b74540824917b057618d4680edb4096bd7e234f"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.3.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b0ea8ff4a155df70e9b1ffc8d373b10e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5137,
+        "upload_time": "2021-07-07T18:20:55",
+        "upload_time_iso_8601": "2021-07-07T18:20:55.120611Z",
+        "url": "https://files.pythonhosted.org/packages/45/cf/39d095f84ab13e50e527691af61f71b0a9ee3ce12d766e5cd5a760e48c60/datasette_geojson_map-0.3.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "031b8435d1c0aad63d224921a692af9e",
+          "sha256": "b57b05b716916211946eaf58cec2d03517b0af27e7abb939640c26b2daf8a102"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.3.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "031b8435d1c0aad63d224921a692af9e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4789,
+        "upload_time": "2021-07-07T18:20:56",
+        "upload_time_iso_8601": "2021-07-07T18:20:56.264450Z",
+        "url": "https://files.pythonhosted.org/packages/b0/57/27349a39fc781b56e564274fba16d35c66202938f50130d24c78e1b8c44a/datasette-geojson-map-0.3.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5565e9f869d49427e218d501ba421411",
+          "sha256": "69f0f23eccc66ef0b2f2dbe0686eddee079a2b4ef0dd59d29fe4a73e6b97e395"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5565e9f869d49427e218d501ba421411",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5173,
+        "upload_time": "2021-07-08T14:43:37",
+        "upload_time_iso_8601": "2021-07-08T14:43:37.619523Z",
+        "url": "https://files.pythonhosted.org/packages/43/9b/1df8d78fb2e274aa328659972e06ea8ce7b1bd60b1db4c7a632f3d04ccc8/datasette_geojson_map-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c6da13d133f53fd4a5d067439f821ef4",
+          "sha256": "c30515b6bf4c3111ce4ed026f2417401c094878fb78f85d0fc1a64c78dd78b11"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c6da13d133f53fd4a5d067439f821ef4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4822,
+        "upload_time": "2021-07-08T14:43:38",
+        "upload_time_iso_8601": "2021-07-08T14:43:38.864247Z",
+        "url": "https://files.pythonhosted.org/packages/ac/d1/c820249f0335f9e8f969218eade46145bdf8e21b5474562e3531059da7eb/datasette-geojson-map-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "208185ca5d5de963d7d5723b3dfd3cb9",
+          "sha256": "4035a5ae8e5d8caaad31c2ad68e388bbb14b34e3aa94e556fd34491a599c2c40"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.4.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "208185ca5d5de963d7d5723b3dfd3cb9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 10895,
+        "upload_time": "2022-02-17T21:14:45",
+        "upload_time_iso_8601": "2022-02-17T21:14:45.253423Z",
+        "url": "https://files.pythonhosted.org/packages/32/4b/ef8061ee1eb16a3d5aaf9ea84af8728616363c2e471b7998fcadef66576f/datasette_geojson_map-0.4.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "058b0016d2b4b6dc380312fb2720d461",
+          "sha256": "858701f2bbd60363052b3683d2bbfe73b05ed575c51d3bee3e57690089cb663c"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.4.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "058b0016d2b4b6dc380312fb2720d461",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 9990,
+        "upload_time": "2022-02-17T21:14:46",
+        "upload_time_iso_8601": "2022-02-17T21:14:46.491520Z",
+        "url": "https://files.pythonhosted.org/packages/3a/c7/e1b086c503c106300092f4d3ae9863074705c472d0ae107df689a6798cee/datasette-geojson-map-0.4.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "208185ca5d5de963d7d5723b3dfd3cb9",
+        "sha256": "4035a5ae8e5d8caaad31c2ad68e388bbb14b34e3aa94e556fd34491a599c2c40"
+      },
+      "downloads": -1,
+      "filename": "datasette_geojson_map-0.4.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "208185ca5d5de963d7d5723b3dfd3cb9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 10895,
+      "upload_time": "2022-02-17T21:14:45",
+      "upload_time_iso_8601": "2022-02-17T21:14:45.253423Z",
+      "url": "https://files.pythonhosted.org/packages/32/4b/ef8061ee1eb16a3d5aaf9ea84af8728616363c2e471b7998fcadef66576f/datasette_geojson_map-0.4.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "058b0016d2b4b6dc380312fb2720d461",
+        "sha256": "858701f2bbd60363052b3683d2bbfe73b05ed575c51d3bee3e57690089cb663c"
+      },
+      "downloads": -1,
+      "filename": "datasette-geojson-map-0.4.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "058b0016d2b4b6dc380312fb2720d461",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 9990,
+      "upload_time": "2022-02-17T21:14:46",
+      "upload_time_iso_8601": "2022-02-17T21:14:46.491520Z",
+      "url": "https://files.pythonhosted.org/packages/3a/c7/e1b086c503c106300092f4d3ae9863074705c472d0ae107df689a6798cee/datasette-geojson-map-0.4.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

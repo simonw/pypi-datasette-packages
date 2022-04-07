@@ -1,0 +1,258 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# tableau-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/tableau-to-sqlite.svg)](https://pypi.org/project/tableau-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/tableau-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/tableau-to-sqlite/releases)\n[![Tests](https://github.com/simonw/tableau-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/tableau-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/tableau-to-sqlite/blob/master/LICENSE)\n\nFetch data from Tableau into a SQLite database. A wrapper around [TableauScraper](https://github.com/bertrandmartel/tableau-scraping/).\n\n## Installation\n\nInstall this tool using `pip`:\n\n    $ pip install tableau-to-sqlite\n\n## Usage\n\nIf you have the URL to a Tableau dashboard like this:\n\nhttps://results.mo.gov/t/COVID19/views/VaccinationsDashboard/Vaccinations\n\nYou can pass that directly to the tool:\n\n    tableau-to-sqlite tableau.db \\\n      https://results.mo.gov/t/COVID19/views/VaccinationsDashboard/Vaccinations\n\nThis will create a SQLite database called `tableau.db` containing one table for each of the worksheets in that dashboard.\n\nIf the dashboard is hosted on https://public.tableau.com/ you can instead provide the view name. This will be two strings separated by a `/` symbol - something like this:\n\n    OregonCOVID-19VaccineProviderEnrollment/COVID-19VaccineProviderEnrollment\n\nNow run the tool like this:\n\n    tableau-to-sqlite tableau.db \\\n        OregonCOVID-19VaccineProviderEnrollment/COVID-19VaccineProviderEnrollment\n\n## Get the data as JSON or CSV\n\nIf you're building a [git scraper](https://simonwillison.net/2020/Oct/9/git-scraping/) you may want to convert the data gathered by this tool to CSV or JSON to check into your repository.\n\nYou can do that using [sqlite-utils](https://sqlite-utils.datasette.io/). Install it using `pip`:\n\n    pip install sqlite-utils\n\nYou can dump out a table as JSON like so:\n\n    sqlite-utils rows tableau.db \\\n       'Admin Site and County Map Site No Info' > tableau.json\n\nOr as CSV like this:\n\n    sqlite-utils rows tableau.db --csv \\\n       'Admin Site and County Map Site No Info' > tableau.csv\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd tableau-to-sqlite\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/tableau-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "tableau-to-sqlite",
+    "package_url": "https://pypi.org/project/tableau-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/tableau-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/tableau-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/tableau-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/tableau-to-sqlite",
+      "Issues": "https://github.com/simonw/tableau-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/tableau-to-sqlite/0.2.1/",
+    "requires_dist": [
+      "click",
+      "TableauScraper (==0.1.2)",
+      "pytest ; extra == 'test'",
+      "vcrpy ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Fetch data from Tableau into a SQLite database",
+    "version": "0.2.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9840204,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "df46159005cb6f7a6c117270e8fb6f35",
+          "sha256": "7f418d0feaba939fc1b20cf1143e3d8bec2464bceaa1212376c9171000119a12"
+        },
+        "downloads": -1,
+        "filename": "tableau_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "df46159005cb6f7a6c117270e8fb6f35",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7177,
+        "upload_time": "2021-03-11T06:14:19",
+        "upload_time_iso_8601": "2021-03-11T06:14:19.162295Z",
+        "url": "https://files.pythonhosted.org/packages/55/5d/0762165c139532687700c17e30d7ca7b88937182faf014059838e06d1a2a/tableau_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "20d292918d1d1da645b4e713eb1277cc",
+          "sha256": "2924b84a40ecef7b1236d054e0324eb6dfa341f7f4574e2134e95b3a6f4009df"
+        },
+        "downloads": -1,
+        "filename": "tableau-to-sqlite-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "20d292918d1d1da645b4e713eb1277cc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2653,
+        "upload_time": "2021-03-11T06:14:20",
+        "upload_time_iso_8601": "2021-03-11T06:14:20.780148Z",
+        "url": "https://files.pythonhosted.org/packages/91/07/58d962fc6d8cae5cb18f7ff1dad7e3cf4ad2821b94ff86700505c1078f7a/tableau-to-sqlite-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0e4b8f214aa6524ab258c0e8b8b5dba9",
+          "sha256": "119f7c02b7dcd2342ab609b64f8486fb3b39cb6ae1bb8192937f965b1459c346"
+        },
+        "downloads": -1,
+        "filename": "tableau_to_sqlite-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0e4b8f214aa6524ab258c0e8b8b5dba9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7244,
+        "upload_time": "2021-03-11T06:38:41",
+        "upload_time_iso_8601": "2021-03-11T06:38:41.224956Z",
+        "url": "https://files.pythonhosted.org/packages/14/75/a0225a18067dcf4d2ee271c48169b6013549dcee80473aa30e66b684a76a/tableau_to_sqlite-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a5a7b4e5d1ba19f14924b9a6a66ef51f",
+          "sha256": "f4b25d959ed675b628575d334de23e39966416f1d527ff80f8cf1d193acacfb3"
+        },
+        "downloads": -1,
+        "filename": "tableau-to-sqlite-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a5a7b4e5d1ba19f14924b9a6a66ef51f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2696,
+        "upload_time": "2021-03-11T06:38:41",
+        "upload_time_iso_8601": "2021-03-11T06:38:41.929179Z",
+        "url": "https://files.pythonhosted.org/packages/36/78/590f2093df514c3d72adab91e56eca46ba107f68968d49759303f8023a17/tableau-to-sqlite-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1ff84d4309d878823858939a68b83810",
+          "sha256": "af078d7c71e1fc9e42fbf34a833b802d1a226739b1f783d77394b2a18495090b"
+        },
+        "downloads": -1,
+        "filename": "tableau_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1ff84d4309d878823858939a68b83810",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7417,
+        "upload_time": "2021-03-11T06:53:51",
+        "upload_time_iso_8601": "2021-03-11T06:53:51.240202Z",
+        "url": "https://files.pythonhosted.org/packages/b0/cb/0d29155acbf2e7aef9444d5c66f9ef8e27014fb82b925db6efe64a340df5/tableau_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "031144bc52658fa1974c5dadee29d3b2",
+          "sha256": "149b69faf04d9b0c79f5915832c35007bb23113fd0a19340c27630985c1d2526"
+        },
+        "downloads": -1,
+        "filename": "tableau-to-sqlite-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "031144bc52658fa1974c5dadee29d3b2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2868,
+        "upload_time": "2021-03-11T06:53:52",
+        "upload_time_iso_8601": "2021-03-11T06:53:52.077658Z",
+        "url": "https://files.pythonhosted.org/packages/ee/e1/824f86dc470a1b8ee3fba55c89d8a51b74bf354540e12633da2aedc4c845/tableau-to-sqlite-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ee8218260817034c346809f3dafc2fe1",
+          "sha256": "81f8f0a7801a652f6f6011a9cf89a5cd3a07c23d30d458c5c4f1726ec16fee40"
+        },
+        "downloads": -1,
+        "filename": "tableau_to_sqlite-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ee8218260817034c346809f3dafc2fe1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7689,
+        "upload_time": "2021-03-22T03:57:02",
+        "upload_time_iso_8601": "2021-03-22T03:57:02.727900Z",
+        "url": "https://files.pythonhosted.org/packages/b2/3d/75a510291f77e20cbfafdd44b5e2bc03963382ba13b4650ce0a3520c42fc/tableau_to_sqlite-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cf933f9ea1c064b20e85906f65d11d1f",
+          "sha256": "ae5ff89ed0c5a645f3a17e5eb795f68d84a4df77ecb9c7b31f9663bad4bb3c8c"
+        },
+        "downloads": -1,
+        "filename": "tableau-to-sqlite-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cf933f9ea1c064b20e85906f65d11d1f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3194,
+        "upload_time": "2021-03-22T03:57:03",
+        "upload_time_iso_8601": "2021-03-22T03:57:03.462413Z",
+        "url": "https://files.pythonhosted.org/packages/da/64/e01df51e353f4bc5e931da968ee084a7eb1fe83ec5c1906e2ef802ffc09a/tableau-to-sqlite-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ee8218260817034c346809f3dafc2fe1",
+        "sha256": "81f8f0a7801a652f6f6011a9cf89a5cd3a07c23d30d458c5c4f1726ec16fee40"
+      },
+      "downloads": -1,
+      "filename": "tableau_to_sqlite-0.2.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ee8218260817034c346809f3dafc2fe1",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 7689,
+      "upload_time": "2021-03-22T03:57:02",
+      "upload_time_iso_8601": "2021-03-22T03:57:02.727900Z",
+      "url": "https://files.pythonhosted.org/packages/b2/3d/75a510291f77e20cbfafdd44b5e2bc03963382ba13b4650ce0a3520c42fc/tableau_to_sqlite-0.2.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "cf933f9ea1c064b20e85906f65d11d1f",
+        "sha256": "ae5ff89ed0c5a645f3a17e5eb795f68d84a4df77ecb9c7b31f9663bad4bb3c8c"
+      },
+      "downloads": -1,
+      "filename": "tableau-to-sqlite-0.2.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "cf933f9ea1c064b20e85906f65d11d1f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 3194,
+      "upload_time": "2021-03-22T03:57:03",
+      "upload_time_iso_8601": "2021-03-22T03:57:03.462413Z",
+      "url": "https://files.pythonhosted.org/packages/da/64/e01df51e353f4bc5e931da968ee084a7eb1fe83ec5c1906e2ef802ffc09a/tableau-to-sqlite-0.2.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

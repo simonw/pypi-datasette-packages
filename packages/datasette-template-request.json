@@ -1,0 +1,131 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-template-request\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-template-request.svg)](https://pypi.org/project/datasette-template-request/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-template-request?include_prereleases&label=changelog)](https://github.com/simonw/datasette-template-request/releases)\n[![Tests](https://github.com/simonw/datasette-template-request/workflows/Test/badge.svg)](https://github.com/simonw/datasette-template-request/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-template-request/blob/main/LICENSE)\n\nExpose the Datasette request object to custom templates\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-template-request\n\n## Usage\n\nOnce this plugin is installed, Datasette [custom templates](https://docs.datasette.io/en/stable/custom_templates.html) can use `{{ request }}` to access the current [request object](https://docs.datasette.io/en/stable/internals.html#request-object). For example, to access `?name=Cleo` in the query string a template could use this:\n\n    Name: {{ request.args.name }}\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-template-request\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-template-request",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-template-request",
+    "package_url": "https://pypi.org/project/datasette-template-request/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-template-request/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-template-request/actions",
+      "Changelog": "https://github.com/simonw/datasette-template-request/releases",
+      "Homepage": "https://github.com/simonw/datasette-template-request",
+      "Issues": "https://github.com/simonw/datasette-template-request/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-template-request/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Expose the Datasette request object to custom templates",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11530794,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "80ced62425378b24a0ee1778118740ab",
+          "sha256": "edce93be789ea7bbf37d97a3121cb69048dd9f3bfff341226043f02ad9a9a9d3"
+        },
+        "downloads": -1,
+        "filename": "datasette_template_request-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "80ced62425378b24a0ee1778118740ab",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2505,
+        "upload_time": "2021-09-23T17:30:34",
+        "upload_time_iso_8601": "2021-09-23T17:30:34.145473Z",
+        "url": "https://files.pythonhosted.org/packages/db/72/b685ec634172c79e5ab4d04ee4f1369f47af40932aa3c74402708cd272e5/datasette_template_request-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "de29b7262f524bdda5570a73cbad41bd",
+          "sha256": "37e1ce795d635ca8c9df72ccd1abb8704b062bcf39f3d8f5aa5edb9e1b136f66"
+        },
+        "downloads": -1,
+        "filename": "datasette-template-request-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "de29b7262f524bdda5570a73cbad41bd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2151,
+        "upload_time": "2021-09-23T17:30:35",
+        "upload_time_iso_8601": "2021-09-23T17:30:35.460146Z",
+        "url": "https://files.pythonhosted.org/packages/b8/6e/6f35e338e6278c796c83eada47fd97c8c9b7cb3dced07029f091c82aff94/datasette-template-request-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "80ced62425378b24a0ee1778118740ab",
+        "sha256": "edce93be789ea7bbf37d97a3121cb69048dd9f3bfff341226043f02ad9a9a9d3"
+      },
+      "downloads": -1,
+      "filename": "datasette_template_request-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "80ced62425378b24a0ee1778118740ab",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2505,
+      "upload_time": "2021-09-23T17:30:34",
+      "upload_time_iso_8601": "2021-09-23T17:30:34.145473Z",
+      "url": "https://files.pythonhosted.org/packages/db/72/b685ec634172c79e5ab4d04ee4f1369f47af40932aa3c74402708cd272e5/datasette_template_request-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "de29b7262f524bdda5570a73cbad41bd",
+        "sha256": "37e1ce795d635ca8c9df72ccd1abb8704b062bcf39f3d8f5aa5edb9e1b136f66"
+      },
+      "downloads": -1,
+      "filename": "datasette-template-request-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "de29b7262f524bdda5570a73cbad41bd",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2151,
+      "upload_time": "2021-09-23T17:30:35",
+      "upload_time_iso_8601": "2021-09-23T17:30:35.460146Z",
+      "url": "https://files.pythonhosted.org/packages/b8/6e/6f35e338e6278c796c83eada47fd97c8c9b7cb3dced07029f091c82aff94/datasette-template-request-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

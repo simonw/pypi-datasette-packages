@@ -1,0 +1,111 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# dogsheep-photos\n\n[![PyPI](https://img.shields.io/pypi/v/dogsheep-photos.svg)](https://pypi.org/project/dogsheep-photos/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/dogsheep-photos?include_prereleases&label=changelog)](https://github.com/dogsheep/dogsheep-photos/releases)\n[![CircleCI](https://circleci.com/gh/dogsheep/dogsheep-photos.svg?style=svg)](https://circleci.com/gh/dogsheep/dogsheep-photos)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/dogsheep-photos/blob/master/LICENSE)\n\nSave details of your photos to a SQLite database and upload them to S3.\n\nSee [Using SQL to find my best photo of a pelican according to Apple Photos](https://simonwillison.net/2020/May/21/apple-photos-sqlite/) for background information on this project.\n\n## What these tools do\n\nThese tools are a work-in-progress mechanism for taking full ownership of your photos. The core idea is to help implement the following:\n\n* Every photo you have taken lives in a single, private Amazon S3 bucket\n* You have a single SQLite database file which stores metadata about those photos - potentially pulled from multiple different places. This may include EXIF data, Apple Photos, the results of running machine learning APIs against photos and much more besides.\n* You can then use [Datasette](https://github.com/simonw/datasette) to explore your own photos.\n\nI'm a heavy user of Apple Photos so the initial releases of this tool will have a bias towards that, but ideally I would like a subset of these tools to be useful to people no matter which core photo solution they are using.\n\n## Installation\n\n    $ pip install dogsheep-photos\n\n## Authentication (if using S3)\n\nIf you want to use S3 to store your photos, you will need to first create S3 credentials for a new, dedicated bucket.\n\nThis is a big pain. Here's [how I did it](https://github.com/dogsheep/dogsheep-photos/issues/4).\n\nRun this command and paste in your credentials. You will need three values: the name of your S3 bucket, your Access key ID and your Secret access key.\n\n    $ dogsheep-photos s3-auth\n\nThis will create a file called `auth.json` in your current directory containing the required values. To save the file at a different path or filename, use the `--auth=myauth.json` option.\n\n## Uploading photos\n\nRun this command to upload every photo in a specific directory to your S3 bucket:\n\n    $ dogsheep-photos upload photos.db \\\n        ~/Pictures/Photos\\ Library.photoslibrary/original\n\nThe command will only upload photos that have not yet been uploaded, based on their sha256 hash.\n\n`photos.db` will be created with an `uploads` table containing details of which files were uploaded.\n\nTo see what the command would do without uploading any files, use the `--dry-run` option.\n\nThe sha256 hash of the photo contents will be used as the name of the file in the bucket, with an extension matching the type of file. This is an implementation of the [Content addressable storage](https://en.wikipedia.org/wiki/Content-addressable_storage) pattern.\n\n## Importing Apple Photos metadata\n\nThe `apple-photos` command imports metadata from your Apple Photos library.\n\n    $ photo-to-sqlite apple-photos photos.db\n\nImported metadata includes places, people, albums, quality scores and machine learning labels for the photo contents.\n\n## Creating a subset database\n\nYou can create a new, subset database of photos using the `create-subset` command.\n\nThis is useful for creating a shareable SQLite database that only contains metadata for a selected set of photos.\n\nSince photo metadata contains latitude and longitude you may not want to share a database that includes photos taken at your home address.\n\n`create-subset` takes three arguments: an existing database file created using the `apple-photos` command, the name of the new, shareable database file you would like to create and a SQL query that returns the `sha256` hash values of the photos you would like to include in that database.\n\nFor example, here's how to create a shareable database of just the photos that have been added to albums containing the word \"Public\":\n\n    $ dogsheep-photos create-subset \\\n        photos.db \\\n        public.db \\\n        \"select sha256 from apple_photos where albums like '%Public%'\"\n\n## Serving photos locally with datasette-media\n\nIf you don't want to upload your photos to S3 but you still want to browse them using Datasette you can do so using the [datasette-media](https://github.com/simonw/datasette-media) plugin. This plugin adds the ability to serve images and other static files directly from disk, configured using a SQL query.\n\nTo use it, first install Datasette and the plugin:\n\n    $ pip install datasette datasette-media\n\nIf any of your photos are `.HEIC` images taken by an iPhone you should also install the optional `pyheif` dependency:\n\n    $ pip install pyheif\n\nNow create a `metadata.yaml` file configuring the plugin:\n\n```yaml\nplugins:\n  datasette-media:\n    thumbnail:\n      sql: |-\n        select path as filepath, 200 as resize_height from apple_photos where uuid = :key\n    large:\n      sql: |-\n        select path as filepath, 1024 as resize_height from apple_photos where uuid = :key\n```\nThis will configure two URL endpoins - one for 200 pixel high thumbnails and one for 1024 pixel hight larger images.\n\nCreate your `photos.db` database using the `apple-photos` command, then run Datasette like this:\n\n    $ datasette -m metadata.yaml\n\nYour photos will be served on URLs that look like this:\n\n    http://127.0.0.1:8001/-/media/thumbnail/F4469918-13F3-43D8-9EC1-734C0E6B60AD\n    http://127.0.0.1:8001/-/media/large/F4469918-13F3-43D8-9EC1-734C0E6B60AD\n\nYou can find the UUIDs for use in these URLs by running `select uuid from photos_with_apple_metadata`.\n\n### Displaying images using datasette-json-html\n\nIf you are using `datasette-media` to serve photos you can include images directly in Datasette query results using the [datasette-json-html](https://github.com/simonw/datasette-json-html) plugin.\n\nRun `pip install datasette-json-html` to install the plugin, then use queries like this to view your images:\n\n```sql\nselect\n    json_object(\n        'img_src',\n        '/-/media/thumbnail/' || uuid\n    ) as photo,\n    uuid,\n    date\nfrom\n    apple_photos\norder by\n    date desc\nlimit 10;\n```\nThe `photo` column returned by this query should render as image tags that display the correct images.\n\n### Displaying images using custom template pages\n\nDatasette's [custom pages](https://datasette.readthedocs.io/en/stable/custom_templates.html#custom-pages) feature lets you create custom pages for a Datasette instance by dropping HTML templates into a `templates/pages` directory and then running Datasette using `datasette --template-dir=templates/`.\n\nYou can combine that ability with the [datasette-template-sql](https://github.com/simonw/datasette-template-sql) plugin to create custom template pages that directly display photos served by `datasette-media`.\n\nInstall the plugin using `pip install datasette-template-sql`.\n\nCreate a `templates/pages` folder and add the following files:\n\n`recent-photos.html`\n```html+jinja\n<h1>Recent photos</h1>\n\n<div>\n{% for photo in sql(\"select * from apple_photos order by date desc limit 20\") %}\n    <img src=\"/-/media/photo/{{ photo['uuid'] }}\">\n{% endfor %}\n</div>\n```\n`random-photos.html`\n```html+jinja\n<h1>Random photos</h1>\n\n<div>\n{% for photo in sql(\"with foo as (select * from apple_photos order by date desc limit 5000) select * from foo order by random() limit 20\") %}\n    <img src=\"/-/media/photo/{{ photo['uuid'] }}\">\n{% endfor %}\n</div>\n```\nNow run Datasette like this:\n\n    $ datasette photos.db -m metadata.yaml --template-dir=templates/\n\nVisiting `http://localhost:8001/recent-photos` will display 20 recent photos. Visiting `http://localhost:8001/random-photos` will display 20 photos randomly selected from your 5,000 most recent.\n\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/dogsheep/dogsheep-photos",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "dogsheep-photos",
+    "package_url": "https://pypi.org/project/dogsheep-photos/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/dogsheep-photos/",
+    "project_urls": {
+      "Homepage": "https://github.com/dogsheep/dogsheep-photos"
+    },
+    "release_url": "https://pypi.org/project/dogsheep-photos/0.4.1/",
+    "requires_dist": [
+      "sqlite-utils (>=2.7)",
+      "boto3 (>=1.12.41)",
+      "osxphotos (>=0.28.13) ; sys_platform == \"darwin\"",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Save details of your photos to a SQLite database and upload them to S3",
+    "version": "0.4.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7321865,
+  "releases": {
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8e82df144c53c19500dfaff9b378ccf9",
+          "sha256": "d7dea08a45df43029fd534a115c1cd8a3ffed930f45a433c57bd183964a808fd"
+        },
+        "downloads": -1,
+        "filename": "dogsheep_photos-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8e82df144c53c19500dfaff9b378ccf9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13281,
+        "upload_time": "2020-05-20T04:25:57",
+        "upload_time_iso_8601": "2020-05-20T04:25:57.493437Z",
+        "url": "https://files.pythonhosted.org/packages/a7/6e/391f80f624a9149382db4be7ec78573868ef2ff921e18ad26aeabcbfc7b3/dogsheep_photos-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c4cdae89905220bd4a5510917fa0ac81",
+          "sha256": "fa7de08bfce7e0453d19319262933064b49131fc3748372dd236932cb0fe8898"
+        },
+        "downloads": -1,
+        "filename": "dogsheep_photos-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c4cdae89905220bd4a5510917fa0ac81",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14596,
+        "upload_time": "2020-05-25T20:14:14",
+        "upload_time_iso_8601": "2020-05-25T20:14:14.862701Z",
+        "url": "https://files.pythonhosted.org/packages/63/e0/9608013836935915f3f74f546f6ad6b2d22fbff4769a75d154d812b9c82d/dogsheep_photos-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "c4cdae89905220bd4a5510917fa0ac81",
+        "sha256": "fa7de08bfce7e0453d19319262933064b49131fc3748372dd236932cb0fe8898"
+      },
+      "downloads": -1,
+      "filename": "dogsheep_photos-0.4.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c4cdae89905220bd4a5510917fa0ac81",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 14596,
+      "upload_time": "2020-05-25T20:14:14",
+      "upload_time_iso_8601": "2020-05-25T20:14:14.862701Z",
+      "url": "https://files.pythonhosted.org/packages/63/e0/9608013836935915f3f74f546f6ad6b2d22fbff4769a75d154d812b9c82d/dogsheep_photos-0.4.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

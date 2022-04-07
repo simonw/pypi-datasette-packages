@@ -1,0 +1,301 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# download-tiles\n\n[![PyPI](https://img.shields.io/pypi/v/download-tiles.svg)](https://pypi.org/project/download-tiles/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/download-tiles?include_prereleases&label=changelog)](https://github.com/simonw/download-tiles/releases)\n[![Tests](https://github.com/simonw/download-tiles/workflows/Test/badge.svg)](https://github.com/simonw/download-tiles/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/download-tiles/blob/master/LICENSE)\n\nDownload map tiles and store them in an MBTiles database\n\n## Installation\n\nInstall this tool using `pip`:\n\n    $ pip install download-tiles\n\n## Usage\n\nThis tool downloads tiles from a specified [TMS (Tile Map Server)](https://wiki.openstreetmap.org/wiki/TMS) server for a specified bounding box and range of zoom levels and stores those tiles in a MBTiles SQLite database. It is a command-line wrapper around the [Landez](https://github.com/makinacorpus/landez) Python libary.\n\n**Please use this tool responsibly**. Consult the usage policies of the tile servers you are interacting with, for example the [OpenStreetMap Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/).\n\nRunning the following will download zoom levels 0-3 of OpenStreetMap, 85 tiles total, and store them in a SQLite database called `world.mbtiles`:\n\n    download-tiles world.mbtiles\n\nYou can customize which tile and zoom levels are downloaded using command options:\n\n`--zoom-levels=0-3` or `-z=0-3`\n\nThe different zoom levels to download. Specify a single number, e.g. `15`, or a range of numbers e.g. `0-4`. Be careful with this setting as you can easily go over the limits requested by the underlying tile server.\n\n`--bbox=3.9,-6.3,14.5,10.2` or `-b=3.9,-6.3,14.5,10.2`\n\nThe bounding box to fetch. Should be specified as `min-lon,min-lat,max-lon,max-lat`. You can use [bboxfinder.com](http://bboxfinder.com/) to find these for different areas.\n\n`--city=london` or `--country=madagascar`\n\nThese options can be used instead of `--bbox`. The city or country specified will be looked up using the [Nominatum API](https://nominatim.org/release-docs/latest/api/Search/) and used to derive a bounding box.\n\n`--show-bbox`\n\nUse this option to output the bounding box that was retrieved for the `--city` or `--country` without downloading any tiles.\n\n`--name=Name`\n\nA name for this tile collection, used for the `name` field in the `metadata` table. If not specified a UUID will be used, or if you used `--city` or `--country` the name will be set to the full name of that place.\n\n`--attribution=\"Attribution string\"`\n\nAttribution string to bake into the `metadata` table. This will default to `© OpenStreetMap contributors` unless you use `--tiles-url` to specify an alternative tile server, in which case you should specify a custom attribution string.\n\nYou can use the `--attribution=osm` shortcut to specify the `© OpenStreetMap contributors` value without having to type it out in full.\n\n`--tiles-url=https://...`\n\nThe tile server URL to use. This should include `{z}` and `{x}` and `{y}` specifiers, and can optionally include `{s}` for subdomains.\n\nThe default URL used here is for OpenStreetMap, `http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`\n\n`--tiles-subdomains=a,b,c`\n\nA comma-separated list of subdomains to use for the `{s}` parameter.\n\n`--verbose`\n\nUse this option to turn on verbose logging.\n\n`--cache-dir=/tmp/tiles`\n\nProvide a directory to cache downloaded tiles between runs. This can be useful if you are worried you might not have used the correct options for the bounding box or zoom levels.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd download-tiles\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/download-tiles",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "download-tiles",
+    "package_url": "https://pypi.org/project/download-tiles/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/download-tiles/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/download-tiles/actions",
+      "Changelog": "https://github.com/simonw/download-tiles/releases",
+      "Homepage": "https://github.com/simonw/download-tiles",
+      "Issues": "https://github.com/simonw/download-tiles/issues"
+    },
+    "release_url": "https://pypi.org/project/download-tiles/0.4.1/",
+    "requires_dist": [
+      "click",
+      "requests",
+      "landez (==2.5.0)",
+      "pytest ; extra == 'test'",
+      "requests-mock ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Download map tiles and store them in an MBTiles database",
+    "version": "0.4.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9428258,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e631b3f66e6af03afc453a24237e4b67",
+          "sha256": "cf49fc16d7d4fafbad2e6f3bb79eaf6a3fd1896bc10d09eb7e2f85ab35b34e21"
+        },
+        "downloads": -1,
+        "filename": "download_tiles-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e631b3f66e6af03afc453a24237e4b67",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8533,
+        "upload_time": "2021-02-02T17:40:27",
+        "upload_time_iso_8601": "2021-02-02T17:40:27.728918Z",
+        "url": "https://files.pythonhosted.org/packages/75/1e/934dd5f44823bc64ad7341804f408745259aa5137b50b555fae7c1fae1a4/download_tiles-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "34f5c2f4841f3cef7c75cd9cc93a2751",
+          "sha256": "f6ddf3edcc4cd89cc0074e158ded50637be5b0f8d3fe1f7474e7e71a186a6c51"
+        },
+        "downloads": -1,
+        "filename": "download-tiles-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "34f5c2f4841f3cef7c75cd9cc93a2751",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4086,
+        "upload_time": "2021-02-02T17:40:28",
+        "upload_time_iso_8601": "2021-02-02T17:40:28.756380Z",
+        "url": "https://files.pythonhosted.org/packages/89/25/5627650dd783e6645f7e09742fe7cca00f6053e93077bce2722af63e1eb1/download-tiles-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "020303d594d752b2e03d37240aae8849",
+          "sha256": "f8b52c064ffce6f6e890baf69ae7ed6abe927389b026b16774069c132156940c"
+        },
+        "downloads": -1,
+        "filename": "download_tiles-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "020303d594d752b2e03d37240aae8849",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9050,
+        "upload_time": "2021-02-02T18:25:25",
+        "upload_time_iso_8601": "2021-02-02T18:25:25.372514Z",
+        "url": "https://files.pythonhosted.org/packages/b3/59/28725dfe9ac54caea830da736a8a93cd1f8e01d0f21c8bb2fb5c3ffdf6b9/download_tiles-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4634ab97882e6ce8d477e772ce06aa5e",
+          "sha256": "62cdcd55c49f3baff72e9883e9a2ca93f64fd87698b89907ba340abba09cc5d7"
+        },
+        "downloads": -1,
+        "filename": "download-tiles-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4634ab97882e6ce8d477e772ce06aa5e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4614,
+        "upload_time": "2021-02-02T18:25:26",
+        "upload_time_iso_8601": "2021-02-02T18:25:26.083543Z",
+        "url": "https://files.pythonhosted.org/packages/68/8b/79caba76acafadbbc2e3384d276fb88e74a094f5a43980ed773c151dc157/download-tiles-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2bf37d99a1b72ae594104abd92ac4323",
+          "sha256": "57ac24383a24b9c47afdea9e69911ccfe3a11026eee59122fcd6199680bcb207"
+        },
+        "downloads": -1,
+        "filename": "download_tiles-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2bf37d99a1b72ae594104abd92ac4323",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9388,
+        "upload_time": "2021-02-03T00:36:54",
+        "upload_time_iso_8601": "2021-02-03T00:36:54.722783Z",
+        "url": "https://files.pythonhosted.org/packages/c0/7e/948be6db97809ef04e427ab08827192fec5e9302e09074efebbf8932e2d4/download_tiles-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "31084db7f0795cff7667f79653a26771",
+          "sha256": "19ec29f9638c51b75834fd5885991ef5f20aba55ed0dd49b14e1bca8487311a9"
+        },
+        "downloads": -1,
+        "filename": "download-tiles-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "31084db7f0795cff7667f79653a26771",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4942,
+        "upload_time": "2021-02-03T00:36:55",
+        "upload_time_iso_8601": "2021-02-03T00:36:55.695505Z",
+        "url": "https://files.pythonhosted.org/packages/47/9f/728eb7f6dcb5fa484e1714d9491161466c2d4f8da9534e5e747bdc880c72/download-tiles-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e03f93aa6b75dea256cab29a272d16e2",
+          "sha256": "7230126529a1067a3ef859567395592f00fc126ba6fcda2f66e0f8a80647d5ea"
+        },
+        "downloads": -1,
+        "filename": "download_tiles-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e03f93aa6b75dea256cab29a272d16e2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9650,
+        "upload_time": "2021-02-03T03:33:11",
+        "upload_time_iso_8601": "2021-02-03T03:33:11.912385Z",
+        "url": "https://files.pythonhosted.org/packages/d1/3d/f54d6709249dddd7ec897d181137a03171b4b96ac9ab9465d9b65dd20864/download_tiles-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "746b6254f20431cfa4e6458227b36fde",
+          "sha256": "fd6273294b559d4704f589c498bf0383c405edfd0d462a8a6c2a03387bcd5295"
+        },
+        "downloads": -1,
+        "filename": "download-tiles-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "746b6254f20431cfa4e6458227b36fde",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 5221,
+        "upload_time": "2021-02-03T03:33:12",
+        "upload_time_iso_8601": "2021-02-03T03:33:12.778785Z",
+        "url": "https://files.pythonhosted.org/packages/69/67/8ae9debe5ce864b90981b86ed9c1a892ea5d2287c3d662ac4fa5a9b5b910/download-tiles-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "60c83763c0dada5d4a51ddd2a24c2fbd",
+          "sha256": "3e8aa888c6df8a2bd1d940e55b460fae33b3122afb0380db4e3af8b3cc181bdd"
+        },
+        "downloads": -1,
+        "filename": "download_tiles-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "60c83763c0dada5d4a51ddd2a24c2fbd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9736,
+        "upload_time": "2021-02-16T04:20:50",
+        "upload_time_iso_8601": "2021-02-16T04:20:50.197146Z",
+        "url": "https://files.pythonhosted.org/packages/63/76/81f3ae45a37f370b3883ab596c54262f3c6c7028560d3a89485c7ecb5a33/download_tiles-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e5b16af3e8989610809778f0110e37dd",
+          "sha256": "eccd170e24bc12bb3f8ff201a986f0c8fa78c3f3fe6385b70b1de2c07ce2b380"
+        },
+        "downloads": -1,
+        "filename": "download-tiles-0.4.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e5b16af3e8989610809778f0110e37dd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 5263,
+        "upload_time": "2021-02-16T04:20:51",
+        "upload_time_iso_8601": "2021-02-16T04:20:51.144974Z",
+        "url": "https://files.pythonhosted.org/packages/e4/7f/bda25d0d77940d33a94b6b97c814bbc94cd9bfe476f2bdafa52adc6cda89/download-tiles-0.4.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "60c83763c0dada5d4a51ddd2a24c2fbd",
+        "sha256": "3e8aa888c6df8a2bd1d940e55b460fae33b3122afb0380db4e3af8b3cc181bdd"
+      },
+      "downloads": -1,
+      "filename": "download_tiles-0.4.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "60c83763c0dada5d4a51ddd2a24c2fbd",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 9736,
+      "upload_time": "2021-02-16T04:20:50",
+      "upload_time_iso_8601": "2021-02-16T04:20:50.197146Z",
+      "url": "https://files.pythonhosted.org/packages/63/76/81f3ae45a37f370b3883ab596c54262f3c6c7028560d3a89485c7ecb5a33/download_tiles-0.4.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e5b16af3e8989610809778f0110e37dd",
+        "sha256": "eccd170e24bc12bb3f8ff201a986f0c8fa78c3f3fe6385b70b1de2c07ce2b380"
+      },
+      "downloads": -1,
+      "filename": "download-tiles-0.4.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e5b16af3e8989610809778f0110e37dd",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 5263,
+      "upload_time": "2021-02-16T04:20:51",
+      "upload_time_iso_8601": "2021-02-16T04:20:51.144974Z",
+      "url": "https://files.pythonhosted.org/packages/e4/7f/bda25d0d77940d33a94b6b97c814bbc94cd9bfe476f2bdafa52adc6cda89/download-tiles-0.4.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

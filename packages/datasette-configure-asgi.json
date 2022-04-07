@@ -1,0 +1,89 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-configure-asgi\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-configure-asgi.svg)](https://pypi.org/project/datasette-configure-asgi/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-configure-asgi.svg?style=svg)](https://circleci.com/gh/simonw/datasette-configure-asgi)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-configure-asgi/blob/master/LICENSE)\n\nDatasette plugin for configuring arbitrary ASGI middleware\n\n## Installation\n\n    pip install datasette-configure-asgi\n\n## Usage\n\nThis plugin only takes effect if your `metadata.json` file contains relevant top-level plugin configuration in a `\"datasette-configure-asgi\"` configuration key.\n\nFor example, to wrap your Datasette instance in the `asgi-log-to-sqlite` middleware configured to write logs to `/tmp/log.db` you would use the following:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-configure-asgi\": [\n            {\n                \"class\": \"asgi_log_to_sqlite.AsgiLogToSqlite\",\n                \"args\": {\n                    \"file\": \"/tmp/log.db\"\n                }\n            }\n        ]\n    }\n}\n```\n\nThe `\"datasette-configure-asgi\"` key should be a list of JSON objects. Each object should have a `\"class\"` key indicating the class to be used, and an optional `\"args\"` key providing any necessary arguments to be passed to that class constructor.\n\n## Plugin structure\n\nThis plugin can be used to wrap your Datasette instance in any ASGI middleware that conforms to the following structure:\n\n```python\nclass SomeAsgiMiddleware:\n    def __init__(self, app, arg1, arg2):\n        self.app = app\n        self.arg1 = arg1\n        self.arg2 = arg2\n\n    async def __call__(self, scope, receive, send):\n        start = time.time()\n        await self.app(scope, receive, send)\n        end = time.time()\n        print(\"Time taken: {}\".format(end - start))\n```\n\nSo the middleware is a class with a constructor which takes the wrapped application as a first argument, `app`, followed by further named arguments to configure the middleware. It provides an `async def __call__(self, scope, receive, send)` method to implement the middleware's behavior.\n\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-configure-asgi",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-configure-asgi",
+    "package_url": "https://pypi.org/project/datasette-configure-asgi/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-configure-asgi/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-configure-asgi"
+    },
+    "release_url": "https://pypi.org/project/datasette-configure-asgi/0.1/",
+    "requires_dist": [
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "asgiref (==3.1.2) ; extra == 'test'",
+      "datasette ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for configuring arbitrary ASGI middleware",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 6314159,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "79b55380adfb541b4c33cf952eb9264e",
+          "sha256": "2061cf5184f5d9aaa7909f6fef54702c2595fcc731bdd4472518c07ce3fa8cb2"
+        },
+        "downloads": -1,
+        "filename": "datasette_configure_asgi-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "79b55380adfb541b4c33cf952eb9264e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7012,
+        "upload_time": "2019-12-16T22:20:35",
+        "upload_time_iso_8601": "2019-12-16T22:20:35.354777Z",
+        "url": "https://files.pythonhosted.org/packages/f7/76/c2ae1907ff0c5e8f3366c2041c1d73019b7825d6948ce880eb3ddf60be20/datasette_configure_asgi-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "79b55380adfb541b4c33cf952eb9264e",
+        "sha256": "2061cf5184f5d9aaa7909f6fef54702c2595fcc731bdd4472518c07ce3fa8cb2"
+      },
+      "downloads": -1,
+      "filename": "datasette_configure_asgi-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "79b55380adfb541b4c33cf952eb9264e",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7012,
+      "upload_time": "2019-12-16T22:20:35",
+      "upload_time_iso_8601": "2019-12-16T22:20:35.354777Z",
+      "url": "https://files.pythonhosted.org/packages/f7/76/c2ae1907ff0c5e8f3366c2041c1d73019b7825d6948ce880eb3ddf60be20/datasette_configure_asgi-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

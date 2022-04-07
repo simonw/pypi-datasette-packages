@@ -1,0 +1,177 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-auth0\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-auth0.svg)](https://pypi.org/project/datasette-auth0/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-auth0?include_prereleases&label=changelog)](https://github.com/simonw/datasette-auth0/releases)\n[![Tests](https://github.com/simonw/datasette-auth0/workflows/Test/badge.svg)](https://github.com/simonw/datasette-auth0/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-auth0/blob/main/LICENSE)\n\nDatasette plugin that authenticates users using [Auth0](https://auth0.com/)\n\nSee [Simplest possible OAuth authentication with Auth0](https://til.simonwillison.net/auth0/oauth-with-auth0) for more about how this plugin works.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-auth0\n\n## Demo\n\nYou can try this out at [datasette-auth0-demo.datasette.io](https://datasette-auth0-demo.datasette.io/) - click on the top right menu icon and select \"Sign in with Auth0\".\n\n## Initial configuration\n\nFirst, create a new application in Auth0. You will need the domain, client ID and client secret for that application.\n\nThe domain should be something like `mysite.us.auth0.com`.\n\nAdd `http://127.0.0.1:8001/-/auth0-callback` to the list of Allowed Callback URLs.\n\nThen configure these plugin secrets using `metadata.yml`:\n\n```yaml\nplugins:\n  datasette-auth0:\n    domain:\n      \"$env\": AUTH0_DOMAIN\n    client_id:\n      \"$env\": AUTH0_CLIENT_ID\n    client_secret:\n      \"$env\": AUTH0_CLIENT_SECRET\n```\nOnly the `client_secret` needs to be kept secret, but for consistency I recommend using the `$env` mechanism for all three.\n\nIn development, you can run Datasette and pass in environment variables like this:\n```\nAUTH0_DOMAIN=\"your-domain.us.auth0.com\" \\\nAUTH0_CLIENT_ID=\"...client-id-goes-here...\" \\\nAUTH0_CLIENT_SECRET=\"...secret-goes-here...\" \\\ndatasette -m metadata.yml\n```\n\nIf you are deploying using `datasette publish` you can pass these using `--plugin-secret`. For example, to deploy using Cloud Run you might run the following:\n```\ndatasette publish cloudrun mydatabase.db \\\n--install datasette-auth0 \\\n--plugin-secret datasette-auth0 domain \"your-domain.us.auth0.com\" \\\n--plugin-secret datasette-auth0 client_id \"your-client-id\" \\\n--plugin-secret datasette-auth0 client_secret \"your-client-secret\" \\\n--service datasette-auth0-demo\n```\nOnce your Datasette instance is deployed, you will need to add its callback URL to the \"Allowed Callback URLs\" list in Auth0.\n\nThe callback URL should be something like:\n\n    https://url-to-your-datasette/-/auth0-callback\n\n## Usage\n\nOnce installed, a \"Sign in with Auth0\" menu item will appear in the Datasette main menu.\n\nYou can sign in and then visit the `/-/actor` page to see full details of the `auth0` profile that has been authenticated.\n\nYou can then use [Datasette permissions](https://docs.datasette.io/en/stable/authentication.html#configuring-permissions-in-metadata-json) to grant or deny access to different parts of Datasette based on the authenticated user.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-auth0\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-auth0",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-auth0",
+    "package_url": "https://pypi.org/project/datasette-auth0/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-auth0/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-auth0/actions",
+      "Changelog": "https://github.com/simonw/datasette-auth0/releases",
+      "Homepage": "https://github.com/simonw/datasette-auth0",
+      "Issues": "https://github.com/simonw/datasette-auth0/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-auth0/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Datasette plugin that authenticates users using Auth0",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13317202,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e43b054211e99997f878f62b642f98a9",
+          "sha256": "371d1f36f636907f26389a5e1e2ebf7d792cc6be1ee31c75e6b6521bd7a8375e"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth0-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e43b054211e99997f878f62b642f98a9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8462,
+        "upload_time": "2022-03-28T03:06:01",
+        "upload_time_iso_8601": "2022-03-28T03:06:01.371137Z",
+        "url": "https://files.pythonhosted.org/packages/e8/9a/efbbf636371f05bacbd6800deea2eb81f889887baa8765a822aa465d518e/datasette_auth0-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8de771bfed1723d16f07504f79305363",
+          "sha256": "e85e7dd2a23534b5a8b8578d8389576c67e6cc6195dbdab517a6da2a2a9a12c5"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth0-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8de771bfed1723d16f07504f79305363",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8008,
+        "upload_time": "2022-03-28T03:06:02",
+        "upload_time_iso_8601": "2022-03-28T03:06:02.500572Z",
+        "url": "https://files.pythonhosted.org/packages/31/f5/ad9f4cc2f940b72992020cfc9e656cc0c1393fbd42e32dee677a84af2711/datasette-auth0-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "be1e349cf7a7bacc4ed7c29823691fa0",
+          "sha256": "6d48d5252d6b2446db4bfd9eab61ded7776ed616a9595acab1613b627ad4ba3a"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth0-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "be1e349cf7a7bacc4ed7c29823691fa0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8388,
+        "upload_time": "2022-03-26T21:22:12",
+        "upload_time_iso_8601": "2022-03-26T21:22:12.271648Z",
+        "url": "https://files.pythonhosted.org/packages/2d/09/311ba725556a80b52d53f13c6ee1f40e58a9944ee8d34f9d5bb91c852550/datasette_auth0-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1987c8860c90594ba8fffad82f3e383d",
+          "sha256": "b20f176b69e965ff793022021ded5b86c0944e0a18c240c9194089aa5084a0bb"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth0-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1987c8860c90594ba8fffad82f3e383d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7915,
+        "upload_time": "2022-03-26T21:22:13",
+        "upload_time_iso_8601": "2022-03-26T21:22:13.678857Z",
+        "url": "https://files.pythonhosted.org/packages/1f/91/cccb17bef1f37c513aa552b8034626e5c582b2626c2a0abcb15aa6709c69/datasette-auth0-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e43b054211e99997f878f62b642f98a9",
+        "sha256": "371d1f36f636907f26389a5e1e2ebf7d792cc6be1ee31c75e6b6521bd7a8375e"
+      },
+      "downloads": -1,
+      "filename": "datasette_auth0-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "e43b054211e99997f878f62b642f98a9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8462,
+      "upload_time": "2022-03-28T03:06:01",
+      "upload_time_iso_8601": "2022-03-28T03:06:01.371137Z",
+      "url": "https://files.pythonhosted.org/packages/e8/9a/efbbf636371f05bacbd6800deea2eb81f889887baa8765a822aa465d518e/datasette_auth0-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8de771bfed1723d16f07504f79305363",
+        "sha256": "e85e7dd2a23534b5a8b8578d8389576c67e6cc6195dbdab517a6da2a2a9a12c5"
+      },
+      "downloads": -1,
+      "filename": "datasette-auth0-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "8de771bfed1723d16f07504f79305363",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 8008,
+      "upload_time": "2022-03-28T03:06:02",
+      "upload_time_iso_8601": "2022-03-28T03:06:02.500572Z",
+      "url": "https://files.pythonhosted.org/packages/31/f5/ad9f4cc2f940b72992020cfc9e656cc0c1393fbd42e32dee677a84af2711/datasette-auth0-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

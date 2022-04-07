@@ -1,0 +1,131 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-x-forwarded-host\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-x-forwarded-host.svg)](https://pypi.org/project/datasette-x-forwarded-host/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-x-forwarded-host?include_prereleases&label=changelog)](https://github.com/simonw/datasette-x-forwarded-host/releases)\n[![Tests](https://github.com/simonw/datasette-x-forwarded-host/workflows/Test/badge.svg)](https://github.com/simonw/datasette-x-forwarded-host/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-x-forwarded-host/blob/main/LICENSE)\n\nTreat the X-Forwarded-Host header as the Host header\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-x-forwarded-host\n\n## Usage\n\nOnce installed, Datasette will replace the `host` header with the content of the incoming `x-forwarded-host` header.\n\nThis helps Datasette generate links to new pages that work when hosted behind a proxy that rewrites the `host` header.\n\nOnly use this plugin in deployment environmens where you know the `x-forwarded-host` header can be trusted!\n\nThis has been tested on GitHub Codespaces.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-x-forwarded-host\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-x-forwarded-host",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-x-forwarded-host",
+    "package_url": "https://pypi.org/project/datasette-x-forwarded-host/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-x-forwarded-host/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-x-forwarded-host/actions",
+      "Changelog": "https://github.com/simonw/datasette-x-forwarded-host/releases",
+      "Homepage": "https://github.com/simonw/datasette-x-forwarded-host",
+      "Issues": "https://github.com/simonw/datasette-x-forwarded-host/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-x-forwarded-host/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Treat the X-Forwarded-Host header as the Host header",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11165248,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7f582027989888436838ee8aa66fe5bf",
+          "sha256": "81029ec554dcea24bdd74a69e8ce39e2f2dd089b12e5ecb302a709ee25410467"
+        },
+        "downloads": -1,
+        "filename": "datasette_x_forwarded_host-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7f582027989888436838ee8aa66fe5bf",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2735,
+        "upload_time": "2021-08-12T20:41:15",
+        "upload_time_iso_8601": "2021-08-12T20:41:15.499352Z",
+        "url": "https://files.pythonhosted.org/packages/87/01/e7d2b3fb997e2fe537fa8cc33216b3e7f9ccf50d5476fa460fa32915cbe3/datasette_x_forwarded_host-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a948a409d5db5fe5ce85591d68eb816d",
+          "sha256": "66a516c88be7dcf8816a1140272ec234b4fff8825247de0cc3b9c22e2c6404e6"
+        },
+        "downloads": -1,
+        "filename": "datasette-x-forwarded-host-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a948a409d5db5fe5ce85591d68eb816d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2463,
+        "upload_time": "2021-08-12T20:41:16",
+        "upload_time_iso_8601": "2021-08-12T20:41:16.836890Z",
+        "url": "https://files.pythonhosted.org/packages/e9/b7/b3f67732b39e858bfc778498820ca646851410e316ede0c1179df17c53a9/datasette-x-forwarded-host-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "7f582027989888436838ee8aa66fe5bf",
+        "sha256": "81029ec554dcea24bdd74a69e8ce39e2f2dd089b12e5ecb302a709ee25410467"
+      },
+      "downloads": -1,
+      "filename": "datasette_x_forwarded_host-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "7f582027989888436838ee8aa66fe5bf",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2735,
+      "upload_time": "2021-08-12T20:41:15",
+      "upload_time_iso_8601": "2021-08-12T20:41:15.499352Z",
+      "url": "https://files.pythonhosted.org/packages/87/01/e7d2b3fb997e2fe537fa8cc33216b3e7f9ccf50d5476fa460fa32915cbe3/datasette_x_forwarded_host-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a948a409d5db5fe5ce85591d68eb816d",
+        "sha256": "66a516c88be7dcf8816a1140272ec234b4fff8825247de0cc3b9c22e2c6404e6"
+      },
+      "downloads": -1,
+      "filename": "datasette-x-forwarded-host-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "a948a409d5db5fe5ce85591d68eb816d",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2463,
+      "upload_time": "2021-08-12T20:41:16",
+      "upload_time_iso_8601": "2021-08-12T20:41:16.836890Z",
+      "url": "https://files.pythonhosted.org/packages/e9/b7/b3f67732b39e858bfc778498820ca646851410e316ede0c1179df17c53a9/datasette-x-forwarded-host-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

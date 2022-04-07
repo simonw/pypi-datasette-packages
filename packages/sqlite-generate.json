@@ -1,0 +1,468 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# sqlite-generate\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-generate.svg)](https://pypi.org/project/sqlite-generate/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-generate?label=changelog)](https://github.com/simonw/sqlite-generate/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-generate/blob/master/LICENSE)\n\nTool for generating demo SQLite databases\n\n## Installation\n\nInstall this plugin using `pip`:\n\n    $ pip install sqlite-generate\n\n## Demo\n\nYou can see a demo of the database generated using this command running in [Datasette](https://github.com/simonw/datasette) at https://sqlite-generate-demo.datasette.io/\n\nThe demo is generated using the following command:\n\n    sqlite-generate demo.db --seed seed --fts --columns=10 --fks=0,3 --pks=0,2\n\n## Usage\n\nTo generate a SQLite database file called `data.db` with 10 randomly named tables in it, run the following:\n\n    sqlite-generate data.db\n\nYou can use the `--tables` option to generate a different number of tables:\n\n    sqlite-generate data.db --tables 20\n\nYou can run the command against the same database file multiple times to keep adding new tables, using different settings for each batch of generated tables.\n\nBy default each table will contain a random number of rows between 0 and 200. You can customize this with the `--rows` option:\n\n    sqlite-generate data.db --rows 20\n\nThis will insert 20 rows into each table.\n\n    sqlite-generate data.db --rows 500,2000\n\nThis inserts a random number of rows between 500 and 2000 into each table.\n\nEach table will have 5 columns. You can change this using `--columns`:\n\n    sqlite-generate data.db --columns 10\n\n`--columns` can also accept a range:\n\n    sqlite-generate data.db --columns 5,15\n\nYou can control the random number seed used with the `--seed` option. This will result in the exact same database file being created by multiple runs of the tool:\n\n    sqlite-generate data.db --seed=myseed\n\nBy default each table will contain between 0 and 2 foreign key columns to other tables. You can control this using the `--fks` option, with either a single number or a range:\n\n    sqlite-generate data.db --columns=20 --fks=5,15\n\nEach table will have a single primary key column called `id`. You can use the `--pks=` option to change the number of primary key columns on each table. Drop it to 0 to generate [rowid tables](https://www.sqlite.org/rowidtable.html). Increase it above 1 to generate tables with compound primary keys. Or use a range to get a random selection of different primary key layouts:\n\n    sqlite-generate data.db --pks=0,2\n\nTo configure [SQLite full-text search](https://www.sqlite.org/fts5.html) for all columns of type text, use `--fts`:\n\n    sqlite-generate data.db --fts\n\nThis will use FTS5 by default. To use [FTS4](https://www.sqlite.org/fts3.html) instead, use `--fts4`.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd sqlite-generate\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/sqlite-generate",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "sqlite-generate",
+    "package_url": "https://pypi.org/project/sqlite-generate/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/sqlite-generate/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/sqlite-generate/actions",
+      "Changelog": "https://github.com/simonw/sqlite-generate/releases",
+      "Homepage": "https://github.com/simonw/sqlite-generate",
+      "Issues": "https://github.com/simonw/sqlite-generate/issues"
+    },
+    "release_url": "https://pypi.org/project/sqlite-generate/1.1.1/",
+    "requires_dist": [
+      "click",
+      "Faker",
+      "sqlite-utils",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Tool for generating demo SQLite databases",
+    "version": "1.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7546612,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "74e40918511c1b38cc91b49af8a7fe25",
+          "sha256": "2ffcd92c76f3eeb4d4e3ce1d035c5d538a5979dfb553439dc705757154ce2a5f"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "74e40918511c1b38cc91b49af8a7fe25",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6837,
+        "upload_time": "2020-06-22T23:44:37",
+        "upload_time_iso_8601": "2020-06-22T23:44:37.249754Z",
+        "url": "https://files.pythonhosted.org/packages/01/93/d056c31db4164ee2deab9aa4f3f04c17765ed49eb7691b67f4f44da1ee4f/sqlite_generate-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "17fde62e5038742f0e492c8a54e55630",
+          "sha256": "29b8695a4dda0a72cea124830d105ed8f23203c254c2059d27d8a3c58a39a186"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "17fde62e5038742f0e492c8a54e55630",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2378,
+        "upload_time": "2020-06-22T23:44:39",
+        "upload_time_iso_8601": "2020-06-22T23:44:39.178784Z",
+        "url": "https://files.pythonhosted.org/packages/fb/6c/164ea6a47d267d436364daf186cfa19e45b785aadf9586bec4cc060f99fe/sqlite-generate-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "06ea68752d4c49083964abc02854f62c",
+          "sha256": "89042a0fffa48894234b5d3cfe5fbefed341fcc5a97434b41363b1685a193ac4"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "06ea68752d4c49083964abc02854f62c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8008,
+        "upload_time": "2020-06-23T01:09:28",
+        "upload_time_iso_8601": "2020-06-23T01:09:28.239439Z",
+        "url": "https://files.pythonhosted.org/packages/be/b1/d94a3759156d01672800f609637d59dc27fa168871419e0b1098d322547a/sqlite_generate-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a55c5671ee34be37748f6059d9e1addf",
+          "sha256": "a9942334e37a3302d7411eb4237a525f7d9dd00c312589a672df65f1cef6ee9d"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a55c5671ee34be37748f6059d9e1addf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3446,
+        "upload_time": "2020-06-23T01:09:29",
+        "upload_time_iso_8601": "2020-06-23T01:09:29.099186Z",
+        "url": "https://files.pythonhosted.org/packages/67/43/9f2fffbc4c82aebe7df2c83494436abc492502bd61e65e56c63599a5a16b/sqlite-generate-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "dd360f3fe7019174f0fb636fb52edd73",
+          "sha256": "52de4e1e963532e26a248cecaab717f985f2765019c425c2f407cc1ee9ec1831"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dd360f3fe7019174f0fb636fb52edd73",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8149,
+        "upload_time": "2020-06-23T02:18:13",
+        "upload_time_iso_8601": "2020-06-23T02:18:13.458635Z",
+        "url": "https://files.pythonhosted.org/packages/b9/ed/0d0265094efb28a7260a0ba6dbf1cda6a248a215b60798fea60c10e04e10/sqlite_generate-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "76806e4668168b42b82102024cf0eb8f",
+          "sha256": "ef2d8dfb1cfb270c69a3e9a3ac2b6310b0e3b3470ff366273deace69a9bdda41"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "76806e4668168b42b82102024cf0eb8f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3584,
+        "upload_time": "2020-06-23T02:18:14",
+        "upload_time_iso_8601": "2020-06-23T02:18:14.357573Z",
+        "url": "https://files.pythonhosted.org/packages/91/79/4d0219221a9be980226546f9c29194a76f0b731534196c33603722daf521/sqlite-generate-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "39f53af0f7a628c4b53dd0a6b89c54ec",
+          "sha256": "f3a778e4af9f82dea80d927a75211f2a9be0122c860c1f0775207fac9e077845"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "39f53af0f7a628c4b53dd0a6b89c54ec",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8234,
+        "upload_time": "2020-06-23T03:26:59",
+        "upload_time_iso_8601": "2020-06-23T03:26:59.227913Z",
+        "url": "https://files.pythonhosted.org/packages/f3/ac/d903b3606ada238e3aa2cfd6590528f519bd254a34d40fe5132b040f7e01/sqlite_generate-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d8f15903238882f32975f1df91c43344",
+          "sha256": "fd10b43bd6271c2ad49a9c0ef29ec6774aa77d41c52c117b849d06ad277dbf7a"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d8f15903238882f32975f1df91c43344",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3647,
+        "upload_time": "2020-06-23T03:26:59",
+        "upload_time_iso_8601": "2020-06-23T03:26:59.998414Z",
+        "url": "https://files.pythonhosted.org/packages/3f/1d/91e3840fb2b3df7565b642e067e3f17ad0c0c932461ee5f9e4de9ea77b6a/sqlite-generate-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c2a7e62242b115da05452cd2bc737fbe",
+          "sha256": "a30a30b3781d0d4c9643b4dc160de7d3c410faf692f7dae3bdd8284d749913bc"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c2a7e62242b115da05452cd2bc737fbe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9035,
+        "upload_time": "2020-06-23T14:55:52",
+        "upload_time_iso_8601": "2020-06-23T14:55:52.393213Z",
+        "url": "https://files.pythonhosted.org/packages/a4/91/0b7c41ae0299b7cdc865a2a3a24b234b4d3a22d9e17f4975bcd60236ec56/sqlite_generate-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b31f8d1e92a5c329d4cfbbeaa2b78451",
+          "sha256": "4a74a6ab925806649d042c62327164c22ca4521fa56e928f9f91b6c1c55ee226"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b31f8d1e92a5c329d4cfbbeaa2b78451",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4429,
+        "upload_time": "2020-06-23T14:55:53",
+        "upload_time_iso_8601": "2020-06-23T14:55:53.200091Z",
+        "url": "https://files.pythonhosted.org/packages/88/aa/10d7cb3f4f9c192502968e9a746194da285b0141f0681f1bc910a92c9a6b/sqlite-generate-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "595fb14c894dbdc47469b4f3459ab1fa",
+          "sha256": "b9952d66bc6ce82299406acd9af6cc89fafda099e5640f768acbbcae80d5dc50"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "595fb14c894dbdc47469b4f3459ab1fa",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9144,
+        "upload_time": "2020-06-23T18:05:23",
+        "upload_time_iso_8601": "2020-06-23T18:05:23.242091Z",
+        "url": "https://files.pythonhosted.org/packages/87/7a/b7a1835c9181789c23f2050b4194f62edeb1a059434f063a143d3a753d60/sqlite_generate-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "249421e62114d531c3aa68ac6f73fbb8",
+          "sha256": "d567c84b013b4814ea0deb2c7d819b111e9e5425956f53f5fcac72a2ea67b263"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-0.4.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "249421e62114d531c3aa68ac6f73fbb8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4523,
+        "upload_time": "2020-06-23T18:05:24",
+        "upload_time_iso_8601": "2020-06-23T18:05:24.211333Z",
+        "url": "https://files.pythonhosted.org/packages/9a/ac/760ee4a1592f2ef5775eee087bb691e9f445f709bd9f19eaa334e9b61e87/sqlite-generate-0.4.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "affb23d7df1465edd5435d1e38ef1257",
+          "sha256": "0d456e5cb26a110c76546293bebdb11202af301f6aaaee2105725fd29f510bca"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "affb23d7df1465edd5435d1e38ef1257",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9396,
+        "upload_time": "2020-06-23T19:28:01",
+        "upload_time_iso_8601": "2020-06-23T19:28:01.806962Z",
+        "url": "https://files.pythonhosted.org/packages/cd/60/cadac16a494714c28cc3909268b88af79a8634e06a92bf7b36566454c1cb/sqlite_generate-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9e6046d352d0b25bfde1f25343e7f3a5",
+          "sha256": "083bf67ec0821cdab033f60a5fe767337442c1fb7b9e95dd3101f79430fa0a28"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9e6046d352d0b25bfde1f25343e7f3a5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4797,
+        "upload_time": "2020-06-23T19:28:02",
+        "upload_time_iso_8601": "2020-06-23T19:28:02.873945Z",
+        "url": "https://files.pythonhosted.org/packages/00/4e/f46b86b05f4dfc90c28ac766d8f5a8cd25b46fb355871eb693328fc82f68/sqlite-generate-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "55f2600eb71bc67fc6b519700e9a980d",
+          "sha256": "790d0b0bfd9c2f443ba796ae3de56141b87f1b995cec223736c5fdaecfedc11e"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "55f2600eb71bc67fc6b519700e9a980d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9995,
+        "upload_time": "2020-06-23T20:59:09",
+        "upload_time_iso_8601": "2020-06-23T20:59:09.094398Z",
+        "url": "https://files.pythonhosted.org/packages/cc/1a/09332b0efeaa48adf52a2f6495f8c6a205bbdab25b7105b5e36bcfffd0f4/sqlite_generate-1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b2fe78219acec4db6b1d46db0fb5490a",
+          "sha256": "938034c7ce5960a07d3944b8e81da9b48ec15b167504b2e779ddbb46c4e331da"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b2fe78219acec4db6b1d46db0fb5490a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5845,
+        "upload_time": "2020-06-23T20:59:09",
+        "upload_time_iso_8601": "2020-06-23T20:59:09.870246Z",
+        "url": "https://files.pythonhosted.org/packages/f7/73/8cbc32da6bab1fbcb5c3df7307c1c502b990073ca16f4339bfe070993609/sqlite-generate-1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d6b39a7346750b07df753e845650c85c",
+          "sha256": "e6afa89c49813f5453be45290ed6a3a2fa6fbc65d9429826923ead129c7506a3"
+        },
+        "downloads": -1,
+        "filename": "sqlite_generate-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d6b39a7346750b07df753e845650c85c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10024,
+        "upload_time": "2020-06-23T21:26:16",
+        "upload_time_iso_8601": "2020-06-23T21:26:16.154782Z",
+        "url": "https://files.pythonhosted.org/packages/04/72/0a4803e64b22165aa84c18185a18ada46eaa6518022c0357f7a1359a7bd4/sqlite_generate-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "27575570ed4eb8b67947ef30bf128219",
+          "sha256": "f0fcd2f7442147625761fa32895aeca96a4a3e60ec9bc4ae746f6804ad1f03f6"
+        },
+        "downloads": -1,
+        "filename": "sqlite-generate-1.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "27575570ed4eb8b67947ef30bf128219",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5840,
+        "upload_time": "2020-06-23T21:26:16",
+        "upload_time_iso_8601": "2020-06-23T21:26:16.894595Z",
+        "url": "https://files.pythonhosted.org/packages/8d/e6/2c013d6b576547d61381abeaf69f87ef5f14c7e90ee21c1571b02171a302/sqlite-generate-1.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d6b39a7346750b07df753e845650c85c",
+        "sha256": "e6afa89c49813f5453be45290ed6a3a2fa6fbc65d9429826923ead129c7506a3"
+      },
+      "downloads": -1,
+      "filename": "sqlite_generate-1.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d6b39a7346750b07df753e845650c85c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 10024,
+      "upload_time": "2020-06-23T21:26:16",
+      "upload_time_iso_8601": "2020-06-23T21:26:16.154782Z",
+      "url": "https://files.pythonhosted.org/packages/04/72/0a4803e64b22165aa84c18185a18ada46eaa6518022c0357f7a1359a7bd4/sqlite_generate-1.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "27575570ed4eb8b67947ef30bf128219",
+        "sha256": "f0fcd2f7442147625761fa32895aeca96a4a3e60ec9bc4ae746f6804ad1f03f6"
+      },
+      "downloads": -1,
+      "filename": "sqlite-generate-1.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "27575570ed4eb8b67947ef30bf128219",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 5840,
+      "upload_time": "2020-06-23T21:26:16",
+      "upload_time_iso_8601": "2020-06-23T21:26:16.894595Z",
+      "url": "https://files.pythonhosted.org/packages/8d/e6/2c013d6b576547d61381abeaf69f87ef5f14c7e90ee21c1571b02171a302/sqlite-generate-1.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

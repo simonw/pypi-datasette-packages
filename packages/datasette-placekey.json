@@ -1,0 +1,132 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-placekey\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-placekey.svg)](https://pypi.org/project/datasette-placekey/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-placekey?include_prereleases&label=changelog)](https://github.com/simonw/datasette-placekey/releases)\n[![Tests](https://github.com/simonw/datasette-placekey/workflows/Test/badge.svg)](https://github.com/simonw/datasette-placekey/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-placekey/blob/main/LICENSE)\n\nSQL functions for working with [placekeys](https://www.placekey.io/).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-placekey\n\n## Usage\n\nThe following SQL functions are exposed - [documentation here](https://placekey.github.io/placekey-py/placekey.html#module-placekey.placekey).\n\n```sql\nselect\n  geo_to_placekey(33.0896104,129.7900839),\n  placekey_to_geo('@6nh-nhh-kvf'),\n  placekey_to_geo_latitude('@6nh-nhh-kvf'),\n  placekey_to_geo_longitude('@6nh-nhh-kvf'),\n  placekey_to_h3('@6nh-nhh-kvf'),\n  h3_to_placekey('8a30d94e4c87fff'),\n  placekey_to_geojson('@6nh-nhh-kvf'),\n  placekey_to_wkt('@6nh-nhh-kvf'),\n  placekey_format_is_valid('@6nh-nhh-kvf');\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-placekey\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-placekey",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-placekey",
+    "package_url": "https://pypi.org/project/datasette-placekey/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-placekey/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-placekey/actions",
+      "Changelog": "https://github.com/simonw/datasette-placekey/releases",
+      "Homepage": "https://github.com/simonw/datasette-placekey",
+      "Issues": "https://github.com/simonw/datasette-placekey/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-placekey/0.1/",
+    "requires_dist": [
+      "datasette",
+      "placekey",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "SQL functions for working with placekeys",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 10607781,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "65d003a3f9d4b29907aa2eaeac3df584",
+          "sha256": "a50adeb6b6e95b8e290d3273a3b47102d2007b7f18401f263d54ef37c88d4017"
+        },
+        "downloads": -1,
+        "filename": "datasette_placekey-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "65d003a3f9d4b29907aa2eaeac3df584",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2642,
+        "upload_time": "2021-06-10T02:33:42",
+        "upload_time_iso_8601": "2021-06-10T02:33:42.395850Z",
+        "url": "https://files.pythonhosted.org/packages/27/7b/836225c2be3fffcaad3aa4b9cca337817b4373658f9d17969224d55fbb8e/datasette_placekey-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ddfb08cef8ee5addf798402a1dafe9da",
+          "sha256": "d21a846bf99e9ba2cdcf43466722c9963e9a32329f37e95142e2a974fe16649b"
+        },
+        "downloads": -1,
+        "filename": "datasette-placekey-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ddfb08cef8ee5addf798402a1dafe9da",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2497,
+        "upload_time": "2021-06-10T02:33:43",
+        "upload_time_iso_8601": "2021-06-10T02:33:43.759869Z",
+        "url": "https://files.pythonhosted.org/packages/3d/c3/12b594c1dfbe2d07db65d8953347424e9f704a8757b3ae0dbf539cc815d3/datasette-placekey-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "65d003a3f9d4b29907aa2eaeac3df584",
+        "sha256": "a50adeb6b6e95b8e290d3273a3b47102d2007b7f18401f263d54ef37c88d4017"
+      },
+      "downloads": -1,
+      "filename": "datasette_placekey-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "65d003a3f9d4b29907aa2eaeac3df584",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2642,
+      "upload_time": "2021-06-10T02:33:42",
+      "upload_time_iso_8601": "2021-06-10T02:33:42.395850Z",
+      "url": "https://files.pythonhosted.org/packages/27/7b/836225c2be3fffcaad3aa4b9cca337817b4373658f9d17969224d55fbb8e/datasette_placekey-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ddfb08cef8ee5addf798402a1dafe9da",
+        "sha256": "d21a846bf99e9ba2cdcf43466722c9963e9a32329f37e95142e2a974fe16649b"
+      },
+      "downloads": -1,
+      "filename": "datasette-placekey-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ddfb08cef8ee5addf798402a1dafe9da",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2497,
+      "upload_time": "2021-06-10T02:33:43",
+      "upload_time_iso_8601": "2021-06-10T02:33:43.759869Z",
+      "url": "https://files.pythonhosted.org/packages/3d/c3/12b594c1dfbe2d07db65d8953347424e9f704a8757b3ae0dbf539cc815d3/datasette-placekey-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

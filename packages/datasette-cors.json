@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-cors\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cors.svg)](https://pypi.org/project/datasette-cors/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-cors.svg?style=svg)](https://circleci.com/gh/simonw/datasette-cors)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cors/blob/master/LICENSE)\n\nDatasette plugin for configuring CORS headers, based on https://github.com/simonw/asgi-cors\n\nYou can use this plugin to allow JavaScript running on a whitelisted set of domains to make `fetch()` calls to the JSON API provided by your Datasette instance.\n\n## Installation\n\n    pip install datasette-cors\n\n## Configuration\n\nYou need to add some configuration to your Datasette `metadata.json` file for this plugin to take effect.\n\nTo whitelist specific domains, use this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"hosts\": [\"https://www.example.com\"]\n        }\n    }\n}\n```\n\nYou can also whitelist patterns like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"host_wildcards\": [\"https://*.example.com\"]\n        }\n    }\n}\n```\n\n## Testing it\n\nTo test this plugin out, run it locally by saving one of the above examples as `metadata.json` and running this:\n\n    $ datasette --memory -m metadata.json\n\nNow visit https://www.example.com/ in your browser, open the browser developer console and paste in the following:\n\n```javascript\nfetch(\"http://127.0.0.1:8001/:memory:.json?sql=select+sqlite_version%28%29\").then(r => r.json()).then(console.log)\n```\n\nIf the plugin is running correctly, you will see the JSON response output to the console.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-cors",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-cors",
+    "package_url": "https://pypi.org/project/datasette-cors/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-cors/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-cors"
+    },
+    "release_url": "https://pypi.org/project/datasette-cors/0.3/",
+    "requires_dist": [
+      "asgi-cors (~=0.3)",
+      "datasette (~=0.29) ; extra == 'test'",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "asgiref (~=3.1.2) ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for configuring CORS headers",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 5515146,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bf2ec071b2727a72ca7f832cb88ec686",
+          "sha256": "8ec8fdca867dde0538561c62f4ee4c9b16f6c158015cece7241bef5a05bebfcf"
+        },
+        "downloads": -1,
+        "filename": "datasette_cors-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bf2ec071b2727a72ca7f832cb88ec686",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6155,
+        "upload_time": "2019-07-07T21:05:34",
+        "upload_time_iso_8601": "2019-07-07T21:05:34.373688Z",
+        "url": "https://files.pythonhosted.org/packages/19/22/cf1d3adee7c62cb868b86ac849811af498e0cd74a46bbbf89b00f95e5d36/datasette_cors-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bcc8d4fda6d10fe5bbbd6376c5d84806",
+          "sha256": "b503b706eb7824ce24be4876bd978b83b2764f6767c20d1f20fa786dfaf9fcef"
+        },
+        "downloads": -1,
+        "filename": "datasette_cors-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bcc8d4fda6d10fe5bbbd6376c5d84806",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6679,
+        "upload_time": "2019-07-08T02:20:44",
+        "upload_time_iso_8601": "2019-07-08T02:20:44.987733Z",
+        "url": "https://files.pythonhosted.org/packages/8b/09/1698a9f541d0e8a1ee5da465ea0b4d48bc02436eb321ea9946b6d65faae0/datasette_cors-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0c0f962f049abc5187feb658b0038915",
+          "sha256": "f7cb6425d3b2806b3bcde72c23fc84f5b2402517d8655e0cd63cf0d5ef371f9a"
+        },
+        "downloads": -1,
+        "filename": "datasette_cors-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0c0f962f049abc5187feb658b0038915",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6684,
+        "upload_time": "2019-07-11T04:41:49",
+        "upload_time_iso_8601": "2019-07-11T04:41:49.234649Z",
+        "url": "https://files.pythonhosted.org/packages/1e/da/85322a300c5503284c652acb0b067cdf293a1ba9fc90fa656eee987f1987/datasette_cors-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "0c0f962f049abc5187feb658b0038915",
+        "sha256": "f7cb6425d3b2806b3bcde72c23fc84f5b2402517d8655e0cd63cf0d5ef371f9a"
+      },
+      "downloads": -1,
+      "filename": "datasette_cors-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "0c0f962f049abc5187feb658b0038915",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 6684,
+      "upload_time": "2019-07-11T04:41:49",
+      "upload_time_iso_8601": "2019-07-11T04:41:49.234649Z",
+      "url": "https://files.pythonhosted.org/packages/1e/da/85322a300c5503284c652acb0b067cdf293a1ba9fc90fa656eee987f1987/datasette_cors-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

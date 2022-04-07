@@ -1,0 +1,479 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Development Status :: 3 - Alpha",
+      "Intended Audience :: Developers",
+      "Intended Audience :: End Users/Desktop",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: Apache Software License",
+      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.7",
+      "Topic :: Database"
+    ],
+    "description": "# db-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/db-to-sqlite.svg)](https://pypi.python.org/pypi/db-to-sqlite)\n[![Changelog](https://img.shields.io/github/v/release/simonw/db-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/db-to-sqlite/releases)\n[![Tests](https://github.com/simonw/db-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/db-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/db-to-sqlite/blob/main/LICENSE)\n\nCLI tool for exporting tables or queries from any SQL database to a SQLite file.\n\n## Installation\n\nInstall from PyPI like so:\n\n    pip install db-to-sqlite\n\nIf you want to use it with MySQL, you can install the extra dependency like this:\n\n    pip install 'db-to-sqlite[mysql]'\n\nInstalling the `mysqlclient` library on OS X can be tricky - I've found [this recipe](https://gist.github.com/simonw/90ac0afd204cd0d6d9c3135c3888d116) to work (run that before installing `db-to-sqlite`).\n\nFor PostgreSQL, use this:\n\n    pip install 'db-to-sqlite[postgresql]'\n\n## Usage\n\n    Usage: db-to-sqlite [OPTIONS] CONNECTION PATH\n\n      Load data from any database into SQLite.\n\n      PATH is a path to the SQLite file to create, e.c. /tmp/my_database.db\n\n      CONNECTION is a SQLAlchemy connection string, for example:\n\n          postgresql://localhost/my_database\n          postgresql://username:passwd@localhost/my_database\n\n          mysql://root@localhost/my_database\n          mysql://username:passwd@localhost/my_database\n\n      More: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls\n\n    Options:\n      --version                     Show the version and exit.\n      --all                         Detect and copy all tables\n      --table TEXT                  Specific tables to copy\n      --skip TEXT                   When using --all skip these tables\n      --redact TEXT...              (table, column) pairs to redact with ***\n      --sql TEXT                    Optional SQL query to run\n      --output TEXT                 Table in which to save --sql query results\n      --pk TEXT                     Optional column to use as a primary key\n      --index-fks / --no-index-fks  Should foreign keys have indexes? Default on\n      -p, --progress                Show progress bar\n      --postgres-schema TEXT        PostgreSQL schema to use\n      --help                        Show this message and exit.\n\nFor example, to save the content of the `blog_entry` table from a PostgreSQL database to a local file called `blog.db` you could do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --table=blog_entry\n\nYou can specify `--table` more than once.\n\nYou can also save the data from all of your tables, effectively creating a SQLite copy of your entire database. Any foreign key relationships will be detected and added to the SQLite database. For example:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all\n\nWhen running `--all` you can specify tables to skip using `--skip`:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --skip=django_migrations\n\nIf you want to save the results of a custom SQL query, do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" output.db \\\n        --output=query_results \\\n        --sql=\"select id, title, created from blog_entry\" \\\n        --pk=id\n\nThe `--output` option specifies the table that should contain the results of the query.\n\n## Using db-to-sqlite with PostgreSQL schemas\n\nIf the tables you want to copy from your PostgreSQL database aren't in the default schema, you can specify an alternate one with the `--postgres-schema` option:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --postgres-schema my_schema\n\n## Using db-to-sqlite with Heroku Postgres\n\nIf you run an application on [Heroku](https://www.heroku.com/) using their [Postgres database product](https://www.heroku.com/postgres), you can use the `heroku config` command to access a compatible connection string:\n\n    $ heroku config --app myappname | grep HEROKU_POSTG\n    HEROKU_POSTGRESQL_OLIVE_URL: postgres://username:password@ec2-xxx-xxx-xxx-x.compute-1.amazonaws.com:5432/dbname\n\nYou can pass this to `db-to-sqlite` to create a local SQLite database with the data from your Heroku instance.\n\nYou can even do this using a bash one-liner:\n\n    $ db-to-sqlite $(heroku config --app myappname | grep HEROKU_POSTG | cut -d: -f 2-) \\\n        /tmp/heroku.db --all -p\n    1/23: django_migrations\n    ...\n    17/23: blog_blogmark\n    [####################################]  100%\n    ...\n\n## Related projects\n\n* [Datasette](https://github.com/simonw/datasette): A tool for exploring and publishing data. Works great with SQLite files generated using `db-to-sqlite`.\n* [sqlite-utils](https://github.com/simonw/sqlite-utils): Python CLI utility and library for manipulating SQLite databases.\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database.\n\n## Development\n\nTo set up this tool locally, first checkout the code. Then create a new virtual environment:\n\n    cd db-to-sqlite\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nThis will skip tests against MySQL or PostgreSQL if you do not have their additional dependencies installed.\n\nYou can install those extra dependencies like so:\n\n    pip install -e '.[test_mysql,test_postgresql]'\n\nYou can alternative use `pip install psycopg2-binary` if you cannot install the `psycopg2` dependency used by the `test_postgresql` extra.\n\nSee [Running a MySQL server using Homebrew](https://til.simonwillison.net/homebrew/mysql-homebrew) for tips on running the tests against MySQL on macOS, including how to install the `mysqlclient` dependency.\n\nThe PostgreSQL and MySQL tests default to expecting to run against servers on localhost. You can use environment variables to point them at different test database servers:\n\n- `MYSQL_TEST_DB_CONNECTION` - defaults to `mysql://root@localhost/test_db_to_sqlite`\n- `POSTGRESQL_TEST_DB_CONNECTION` - defaults to `postgresql://localhost/test_db_to_sqlite`\n\nThe database you indicate in the environment variable - `test_db_to_sqlite` by default - will be deleted and recreated on every test run.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/db-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "db-to-sqlite",
+    "package_url": "https://pypi.org/project/db-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/db-to-sqlite/",
+    "project_urls": {
+      "CI": "https://travis-ci.com/simonw/db-to-sqlite",
+      "Changelog": "https://github.com/simonw/db-to-sqlite/releases",
+      "Documentation": "https://github.com/simonw/db-to-sqlite/blob/main/README.md",
+      "Homepage": "https://github.com/simonw/db-to-sqlite",
+      "Issues": "https://github.com/simonw/db-to-sqlite/issues",
+      "Source code": "https://github.com/simonw/db-to-sqlite"
+    },
+    "release_url": "https://pypi.org/project/db-to-sqlite/1.4/",
+    "requires_dist": [
+      "sqlalchemy",
+      "sqlite-utils (>=2.9.1)",
+      "click",
+      "mysqlclient ; extra == 'mysql'",
+      "psycopg2 ; extra == 'postgresql'",
+      "pytest ; extra == 'test'",
+      "pytest ; extra == 'test_mysql'",
+      "mysqlclient ; extra == 'test_mysql'",
+      "pytest ; extra == 'test_postgresql'",
+      "psycopg2 ; extra == 'test_postgresql'"
+    ],
+    "requires_python": "",
+    "summary": "CLI tool for exporting tables or queries from any SQL database to a SQLite file",
+    "version": "1.4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 10627951,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1ed03fa64ba1e9329e74025d325bd50f",
+          "sha256": "e1807a0683a3ab7aaac4f0e19e2d99759f51f6f2f6cda1906eacda300ecef90c"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1ed03fa64ba1e9329e74025d325bd50f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2720,
+        "upload_time": "2019-01-17T04:35:19",
+        "upload_time_iso_8601": "2019-01-17T04:35:19.966765Z",
+        "url": "https://files.pythonhosted.org/packages/1c/42/b14789a7b3972931b2dd5652615e3a96b5666c919e7442c406e6ce1eba55/db_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fd7e55eac4ef00ec8c7573c4be2dd705",
+          "sha256": "927b05e85de7ef871e330ee331c32a1349e751e1487181213d007b5d66a6e336"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fd7e55eac4ef00ec8c7573c4be2dd705",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7508,
+        "upload_time": "2019-02-08T06:06:07",
+        "upload_time_iso_8601": "2019-02-08T06:06:07.862412Z",
+        "url": "https://files.pythonhosted.org/packages/67/0c/0021e253c5335c8f1a54e00fdd886b22f275a75d6da3e21e4a1c663339c1/db_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8caa000ff71d7d3717e1eeebfe841347",
+          "sha256": "82dbc4bef6dac976e80d40ab191452b6ca246e4709872716dd14a0d8fb30036b"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8caa000ff71d7d3717e1eeebfe841347",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7515,
+        "upload_time": "2019-02-24T22:03:14",
+        "upload_time_iso_8601": "2019-02-24T22:03:14.710603Z",
+        "url": "https://files.pythonhosted.org/packages/f4/29/f65510601934772fa62503eb44512d1b179a95dc15b69bb3c7484fb39ad7/db_to_sqlite-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "17ffe0879da37e855ae141f75e54ce3d",
+          "sha256": "805103a25d9c9b41b82c58ae686d4fb39665a693e80b22db393abdc6680cc129"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "17ffe0879da37e855ae141f75e54ce3d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7601,
+        "upload_time": "2019-02-24T23:47:20",
+        "upload_time_iso_8601": "2019-02-24T23:47:20.412158Z",
+        "url": "https://files.pythonhosted.org/packages/61/63/038de84847de1e7fad8dcf2eb3782b4082571d313749c2a84e99b0b4ab4c/db_to_sqlite-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cfc5471bace508e199f99ef231897fa9",
+          "sha256": "40f6a1bdaa167edb7b8bdb423f2f0c1eee55229fce0e6405d2871427b635027e"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cfc5471bace508e199f99ef231897fa9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7856,
+        "upload_time": "2019-06-26T15:47:40",
+        "upload_time_iso_8601": "2019-06-26T15:47:40.348797Z",
+        "url": "https://files.pythonhosted.org/packages/2e/08/a2abf9ac852794f17b550d710cab5868f80ed6ded46f6be68b705562a4dc/db_to_sqlite-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "77f24b18e202ab42b43c4e5fbfe11352",
+          "sha256": "d1b87e750c0a5b8a3d94f4149f051ac2b089d7f7cd79c40f298248e941a5abeb"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "77f24b18e202ab42b43c4e5fbfe11352",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7979,
+        "upload_time": "2019-06-29T15:21:37",
+        "upload_time_iso_8601": "2019-06-29T15:21:37.897063Z",
+        "url": "https://files.pythonhosted.org/packages/13/06/30224168652b9feee82da476c3a611db930145246968496128c1afd72c54/db_to_sqlite-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "315c0876aa90304f32d827b85efb4749",
+          "sha256": "7631d8f2e5f308517ff944049409a568a6999d2ca213b2f24db754b093e69c36"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "315c0876aa90304f32d827b85efb4749",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10816,
+        "upload_time": "2019-06-29T21:30:21",
+        "upload_time_iso_8601": "2019-06-29T21:30:21.126361Z",
+        "url": "https://files.pythonhosted.org/packages/e7/29/b038d1d3db17a2820fa543a5e98a152f5643e4e9503632196fc2d6f920ab/db_to_sqlite-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "af481e38eb063c6c6441b3b04191af51",
+          "sha256": "c43a9a2abc2d41d8c1e588a0bd057221ccc4b7303e8098d9193033c7f12534d8"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-0.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "af481e38eb063c6c6441b3b04191af51",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 11069,
+        "upload_time": "2019-06-29T21:56:25",
+        "upload_time_iso_8601": "2019-06-29T21:56:25.786630Z",
+        "url": "https://files.pythonhosted.org/packages/89/f4/dd6344dc3fa4083a0fbb924d21101bea89ecc71e9859c4f890c9edb4e449/db_to_sqlite-0.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c49666d6189ab665ed16e47d22003f38",
+          "sha256": "3bd02021f8e18fff2c853d7d0d953119d5f451f78a53b14253aa14bf52446616"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c49666d6189ab665ed16e47d22003f38",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13953,
+        "upload_time": "2019-07-01T01:26:03",
+        "upload_time_iso_8601": "2019-07-01T01:26:03.634075Z",
+        "url": "https://files.pythonhosted.org/packages/cb/64/707bd352fc6195c60334ceb5d5dbaae594dccbdeb09e36cde355df67e947/db_to_sqlite-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "43ec3bf367d4771f81c0c559fd0c78b9",
+          "sha256": "f4853e7841f97ff04920cd4ff56ad58394b88272abccd83bf7d89b831d80bd58"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "43ec3bf367d4771f81c0c559fd0c78b9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14124,
+        "upload_time": "2019-07-01T04:11:05",
+        "upload_time_iso_8601": "2019-07-01T04:11:05.985030Z",
+        "url": "https://files.pythonhosted.org/packages/36/3a/d758ef2009d6f33499c2ffcf7044d3fa52b03a1c96a7e53320aa0db90951/db_to_sqlite-1.0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "52ec4671230c1245b26a48322c64d9d6",
+          "sha256": "3b7b59663c89e046271c46226b74d141946a755582de5db99c6d69af27295d30"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "52ec4671230c1245b26a48322c64d9d6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14319,
+        "upload_time": "2019-08-03T04:09:18",
+        "upload_time_iso_8601": "2019-08-03T04:09:18.011335Z",
+        "url": "https://files.pythonhosted.org/packages/33/5d/66b7ac81a82f43d0de7210cd7c625a9f71eaf0f4f01e90babbffb3487734/db_to_sqlite-1.0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a7b07a11fd20de6aa06f546110058b5a",
+          "sha256": "fcaaaf3ffc555c932f78785d33276c655ebe7458eea82589670c1588292dccb4"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a7b07a11fd20de6aa06f546110058b5a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14351,
+        "upload_time": "2020-02-11T21:06:47",
+        "upload_time_iso_8601": "2020-02-11T21:06:47.324636Z",
+        "url": "https://files.pythonhosted.org/packages/1e/65/8d59b39ea159151007de10aa0720ecf11f632e688590ccef804c202835c3/db_to_sqlite-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8d0b7d6edf0770f638a9f92a6719c292",
+          "sha256": "bb9c5d856278f8c734e11b6f6e6a1bdcf31ec5a0c9432f3712901acec0c9f7bd"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8d0b7d6edf0770f638a9f92a6719c292",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14217,
+        "upload_time": "2020-05-28T23:19:33",
+        "upload_time_iso_8601": "2020-05-28T23:19:33.905095Z",
+        "url": "https://files.pythonhosted.org/packages/23/7b/8b7049b7d9dc8f355dfcabacb2038bf7e10ad77daf1e555c8aea75d507fc/db_to_sqlite-1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7d601058d691ca391253c2d937d8cf93",
+          "sha256": "b2fcea47446b77c7adf03820d7adcf03633510044a377708d68c2db0d716070b"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7d601058d691ca391253c2d937d8cf93",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14363,
+        "upload_time": "2020-05-28T23:26:08",
+        "upload_time_iso_8601": "2020-05-28T23:26:08.246985Z",
+        "url": "https://files.pythonhosted.org/packages/c7/74/d0c84c4264426bba09fbac0207cca22d2ab40f5822eccebe35592e0d439a/db_to_sqlite-1.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1599546c0357934b3527261dbc10714b",
+          "sha256": "9e815e614ba0fdaa1d549112ebf9e94b00be12d1bbaf828f986e1ac1798dcf65"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1599546c0357934b3527261dbc10714b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 14438,
+        "upload_time": "2020-07-27T23:41:55",
+        "upload_time_iso_8601": "2020-07-27T23:41:55.097196Z",
+        "url": "https://files.pythonhosted.org/packages/66/00/d9840739dea8bcb9a9b2a9634bfd5a4e90477218ed224c54b0a72290a4ca/db_to_sqlite-1.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "219523a0edf9fbed324185caa00c3e41",
+          "sha256": "8c243d0b775e6e3c89dc2e801ce361f9487d230d1a0b0fad230896d5de2e150b"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "219523a0edf9fbed324185caa00c3e41",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 16253,
+        "upload_time": "2021-06-11T22:57:58",
+        "upload_time_iso_8601": "2021-06-11T22:57:58.580834Z",
+        "url": "https://files.pythonhosted.org/packages/7c/10/00b17f07042be98f7f212115cbf9345f5075db2b24db3b0ade9d302cb8fb/db_to_sqlite-1.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "03f4cc10d33c525f2e40bdca906a9c59",
+          "sha256": "0ef7007c10077304416a743b1bef4cd0a10aa3530b00a96e13857bd5d4eee056"
+        },
+        "downloads": -1,
+        "filename": "db-to-sqlite-1.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "03f4cc10d33c525f2e40bdca906a9c59",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 14725,
+        "upload_time": "2021-06-11T22:57:59",
+        "upload_time_iso_8601": "2021-06-11T22:57:59.540295Z",
+        "url": "https://files.pythonhosted.org/packages/f6/31/d2c1cd39f0f0fb3ea7900b4a01fbb7fe00cab4b913009db5658569153ed3/db-to-sqlite-1.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "219523a0edf9fbed324185caa00c3e41",
+        "sha256": "8c243d0b775e6e3c89dc2e801ce361f9487d230d1a0b0fad230896d5de2e150b"
+      },
+      "downloads": -1,
+      "filename": "db_to_sqlite-1.4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "219523a0edf9fbed324185caa00c3e41",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 16253,
+      "upload_time": "2021-06-11T22:57:58",
+      "upload_time_iso_8601": "2021-06-11T22:57:58.580834Z",
+      "url": "https://files.pythonhosted.org/packages/7c/10/00b17f07042be98f7f212115cbf9345f5075db2b24db3b0ade9d302cb8fb/db_to_sqlite-1.4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "03f4cc10d33c525f2e40bdca906a9c59",
+        "sha256": "0ef7007c10077304416a743b1bef4cd0a10aa3530b00a96e13857bd5d4eee056"
+      },
+      "downloads": -1,
+      "filename": "db-to-sqlite-1.4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "03f4cc10d33c525f2e40bdca906a9c59",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 14725,
+      "upload_time": "2021-06-11T22:57:59",
+      "upload_time_iso_8601": "2021-06-11T22:57:59.540295Z",
+      "url": "https://files.pythonhosted.org/packages/f6/31/d2c1cd39f0f0fb3ea7900b4a01fbb7fe00cab4b913009db5658569153ed3/db-to-sqlite-1.4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

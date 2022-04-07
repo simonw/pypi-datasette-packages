@@ -1,0 +1,259 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-dateutil\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-dateutil.svg)](https://pypi.org/project/datasette-dateutil/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-dateutil?include_prereleases&label=changelog)](https://github.com/simonw/datasette-dateutil/releases)\n[![Tests](https://github.com/simonw/datasette-dateutil/workflows/Test/badge.svg)](https://github.com/simonw/datasette-dateutil/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-dateutil/blob/main/LICENSE)\n\ndateutil functions for Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-dateutil\n\n## Usage\n\nThis function adds custom SQL functions that expose functionality from the [dateutil](https://dateutil.readthedocs.io/) Python library.\n\nOnce installed, the following SQL functions become available:\n\n### Parsing date strings\n\n- `dateutil_parse(text)` - returns an ISO8601 date string parsed from the text, or `null` if the input could not be parsed. `dateutil_parse(\"10 october 2020 3pm\")` returns `2020-10-10T15:00:00`.\n- `dateutil_parse_fuzzy(text)` - same as `dateutil_parse()` but this also works against strings that contain a date somewhere within them - that date will be returned, or `null` if no dates could be found. `dateutil_parse_fuzzy(\"This is due 10 september\")` returns `2020-09-10T00:00:00` (but will start returning the 2021 version of that if the year is 2021).\n\nThe `dateutil_parse()` and `dateutil_parse_fuzzy()` functions both follow the American convention of assuming that `1/2/2020` lists the month first, evaluating this example to the 2nd of January.\n\nIf you want to assume that the day comes first, use these two functions instead:\n\n- `dateutil_parse_dayfirst(text)`\n- `dateutil_parse_fuzzy_dayfirst(text)`\n\nHere's a query demonstrating these functions:\n\n```sql\nselect\n  dateutil_parse(\"10 october 2020 3pm\"),\n  dateutil_parse_fuzzy(\"This is due 10 september\"),\n  dateutil_parse(\"1/2/2020\"),\n  dateutil_parse(\"2020-03-04\"),\n  dateutil_parse_dayfirst(\"2020-03-04\");\n```\n\n[Try that query](https://latest-with-plugins.datasette.io/fixtures?sql=select%0D%0A++dateutil_parse%28%2210+october+2020+3pm%22%29%2C%0D%0A++dateutil_parse_fuzzy%28%22This+is+due+10+september%22%29%2C%0D%0A++dateutil_parse%28%221%2F2%2F2020%22%29%2C%0D%0A++dateutil_parse%28%222020-03-04%22%29%2C%0D%0A++dateutil_parse_dayfirst%28%222020-03-04%22%29%3B)\n\n### Optional default dates\n\nThe `dateutil_parse()`, `dateutil_parse_fuzzy()`, `dateutil_parse_dayfirst()` and `dateutil_parse_fuzzy_dayfirst()` functions all accept an optional second argument specifying a \"default\" datetime to consider if some of the details are missing. For example, the following:\n```sql\nselect dateutil_parse('1st october', '1985-01-01')\n```\nWill return `1985-10-01T00:00:00` - the missing year is replaced with the year from the default date.\n\n[Example query demonstrating the default date argument](https://latest-with-plugins.datasette.io/fixtures?sql=with+times+as+%28%0D%0A++select%0D%0A++++datetime%28%27now%27%29+as+t%0D%0A++union%0D%0A++select%0D%0A++++datetime%28%27now%27%2C+%27-1+year%27%29%0D%0A++union%0D%0A++select%0D%0A++++datetime%28%27now%27%2C+%27-3+years%27%29%0D%0A%29%0D%0Aselect+t%2C+dateutil_parse_fuzzy%28%22This+is+due+10+september%22%2C+t%29+from+times)\n\n### Calculating Easter\n\n- `dateutil_easter(year)` - returns the date for Easter in that year, for example `dateutil_easter(\"2020\")` returns `2020-04-12`.\n\n[Example Easter query](https://latest-with-plugins.datasette.io/fixtures?sql=select%0D%0A++dateutil_easter%282019%29%2C%0D%0A++dateutil_easter%282020%29%2C%0D%0A++dateutil_easter%282021%29)\n\n### JSON arrays of dates\n\nSeveral functions return JSON arrays of date strings. These can be used with SQLite's `json_each()` function to perform joins against dates from a specific date range or recurrence rule.\n\nThese functions can return up to 10,000 results. They will return an error if more than 10,000 dates would be returned - this is to protect against denial of service attacks.\n\n- `dateutil_dates_between('1 january 2020', '5 jan 2020')` - given two dates (in any format that can be handled by `dateutil_parse()`) this function returns a JSON string containing the dates between those two days, inclusive. This example returns `[\"2020-01-01\", \"2020-01-02\", \"2020-01-03\", \"2020-01-04\", \"2020-01-05\"]`.\n- `dateutil_dates_between('1 january 2020', '5 jan 2020', 0)` - set the optional third argument to `0` to specify that you would like this to be exclusive of the last day. This example returns `[\"2020-01-01\", \"2020-01-02\", \"2020-01-03\", \"2020-01-04\"]`.\n\n[Try these queries](https://latest-with-plugins.datasette.io/fixtures?sql=select%0D%0A++dateutil_dates_between%28%271+january+2020%27%2C+%275+jan+2020%27%29%2C%0D%0A++dateutil_dates_between%28%271+january+2020%27%2C+%275+jan+2020%27%2C+0%29)\n\nThe `dateutil_rrule()` and `dateutil_rrule_date()` functions accept the iCalendar standard ``rrule` format - see [the dateutil documentation](https://dateutil.readthedocs.io/en/stable/rrule.html#rrulestr-examples) for more examples.\n\nThis format lets you specify recurrence rules such as \"the next four last mondays of the month\".\n\n- `dateutil_rrule(rrule, optional_dtsart)` - given an rrule returns a JSON array of ISO datetimes. The second argument is optional and will be treated as the start date for the rule.\n- `dateutil_rrule_date(rrule, optional_dtsart)` - same as `dateutil_rrule()` but returns ISO dates.\n\nExample query:\n\n```sql\nselect\n  dateutil_rrule('FREQ=HOURLY;COUNT=5'),\n  dateutil_rrule_date(\n    'FREQ=DAILY;COUNT=3',\n    '1st jan 2020'\n  );\n```\n[Try the rrule example query](https://latest-with-plugins.datasette.io/fixtures?sql=select%0D%0A++dateutil_rrule('FREQ%3DHOURLY%3BCOUNT%3D5')%2C%0D%0A++dateutil_rrule_date(%0D%0A++++'FREQ%3DDAILY%3BCOUNT%3D3'%2C%0D%0A++++'1st+jan+2020'%0D%0A++)%3B)\n\n### Joining data using json_each()\n\nSQLite's [json_each() function](https://www.sqlite.org/json1.html#jeach) can be used to turn a JSON array of dates into a table that can be joined against other data. Here's a query that returns a table showing every day in January 2019:\n\n```sql\nselect\n  value as date\nfrom\n  json_each(\n    dateutil_dates_between('1 Jan 2019', '31 Jan 2019')\n  )\n```\n[Try that query](https://latest-with-plugins.datasette.io/fixtures?sql=select%0D%0A++value+as+date%0D%0Afrom%0D%0A++json_each%28%0D%0A++++dateutil_dates_between%28%271+Jan+2019%27%2C+%2731+Jan+2019%27%29%0D%0A++%29)\n\nYou can run joins against this table by assigning it a name using SQLite's [support for Common Table Expressions (CTEs)](https://sqlite.org/lang_with.html).\n\nThis example query uses `substr(created, 0, 11)` to retrieve the date portion of the `created` column in the [facetable demo table](https://latest-with-plugins.datasette.io/fixtures/facetable), then joins that against the table of days in January to calculate the count of rows created on each day. The `LEFT JOIN` against `days_in_january` ensures that days which had no created records are still returned in the results, with a count of 0.\n\n```sql\nwith created_dates as (\n  select\n    substr(created, 0, 11) as date\n  from\n    facetable\n),\ndays_in_january as (\n  select\n    value as date\n  from\n    json_each(\n      dateutil_dates_between('1 Jan 2019', '31 Jan 2019')\n    )\n)\nselect\n  days_in_january.date,\n  count(created_dates.date) as total\nfrom\n  days_in_january\n  left join created_dates on days_in_january.date = created_dates.date\ngroup by\n  days_in_january.date;\n```\n[Try that query](https://latest-with-plugins.datasette.io/fixtures?sql=with+created_dates+as+%28%0D%0A++select%0D%0A++++substr%28created%2C+0%2C+11%29+as+date%0D%0A++from%0D%0A++++facetable%0D%0A%29%2C%0D%0Adays_in_january+as+%28%0D%0A++select%0D%0A++++value+as+date%0D%0A++from%0D%0A++++json_each%28%0D%0A++++++dateutil_dates_between%28%271+Jan+2019%27%2C+%2731+Jan+2019%27%29%0D%0A++++%29%0D%0A%29%0D%0Aselect%0D%0A++days_in_january.date%2C%0D%0A++count%28created_dates.date%29+as+total%0D%0Afrom%0D%0A++days_in_january%0D%0A++left+join+created_dates+on+days_in_january.date+%3D+created_dates.date%0D%0Agroup+by%0D%0A++days_in_january.date%3B#g.mark=bar&g.x_column=date&g.x_type=ordinal&g.y_column=total&g.y_type=quantitative) with a bar chart rendered using the [datasette-vega](https://github.com/simonw/datasette-vega) plugin.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-dateutil\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-dateutil",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-dateutil",
+    "package_url": "https://pypi.org/project/datasette-dateutil/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-dateutil/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-dateutil/actions",
+      "Changelog": "https://github.com/simonw/datasette-dateutil/releases",
+      "Homepage": "https://github.com/simonw/datasette-dateutil",
+      "Issues": "https://github.com/simonw/datasette-dateutil/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-dateutil/0.3/",
+    "requires_dist": [
+      "datasette",
+      "python-dateutil",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "dateutil functions for Datasette",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13039146,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fcae5535eb83e1fa4c4517550e561084",
+          "sha256": "a8c50e8960f0b16b20e4121117204d0c2e3cf2728edef9fb0c588eccf800c2dc"
+        },
+        "downloads": -1,
+        "filename": "datasette_dateutil-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fcae5535eb83e1fa4c4517550e561084",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3030,
+        "upload_time": "2020-09-28T00:17:16",
+        "upload_time_iso_8601": "2020-09-28T00:17:16.897280Z",
+        "url": "https://files.pythonhosted.org/packages/06/62/3b0b8b4fa8819470b8207bffe3f72865ee87e90727fc5afbed37ed98b026/datasette_dateutil-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a6e45b3458fc0e97be5e30600cce856f",
+          "sha256": "5fae7f59f72eae9590c68b91695311f0f9d3e05c8d15cbd7212eb7c10090a108"
+        },
+        "downloads": -1,
+        "filename": "datasette-dateutil-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a6e45b3458fc0e97be5e30600cce856f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2899,
+        "upload_time": "2020-09-28T00:17:18",
+        "upload_time_iso_8601": "2020-09-28T00:17:18.969464Z",
+        "url": "https://files.pythonhosted.org/packages/6b/06/8d67df079c2dcce6fb12a1217a48d82d0447889fc4e466a557c21aee209b/datasette-dateutil-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "34b9114d7bb9f8d07ecbcc11db837350",
+          "sha256": "cafd766236f81a5d0a7de105e35cd491881a594ca873c17f246344770fbe84ab"
+        },
+        "downloads": -1,
+        "filename": "datasette_dateutil-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "34b9114d7bb9f8d07ecbcc11db837350",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 4502,
+        "upload_time": "2020-09-29T06:42:02",
+        "upload_time_iso_8601": "2020-09-29T06:42:02.716593Z",
+        "url": "https://files.pythonhosted.org/packages/b9/1e/0496d287a00ba67be56b5af1a296c7f5b24f3b1f50a6073890b03cece4c1/datasette_dateutil-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b8f5c37b01503f1203f6e66bf00519df",
+          "sha256": "19d23779f6ff3255a98878d29ff0b4738a652ec17af97d40ed5b65af8aeb056e"
+        },
+        "downloads": -1,
+        "filename": "datasette-dateutil-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b8f5c37b01503f1203f6e66bf00519df",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4537,
+        "upload_time": "2020-09-29T06:42:03",
+        "upload_time_iso_8601": "2020-09-29T06:42:03.963321Z",
+        "url": "https://files.pythonhosted.org/packages/2e/4b/095687498b4698132e5813d62ede689a9a8010986a79e0244e6fe113b461/datasette-dateutil-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ce5c7f299401971e746e22740272ed85",
+          "sha256": "8243055e66a498e16b3d7ef541f212f5ada57ea52579ec14822ca357d552aa58"
+        },
+        "downloads": -1,
+        "filename": "datasette_dateutil-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ce5c7f299401971e746e22740272ed85",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 5252,
+        "upload_time": "2020-09-30T01:08:33",
+        "upload_time_iso_8601": "2020-09-30T01:08:33.024250Z",
+        "url": "https://files.pythonhosted.org/packages/c8/ac/471af445837a6c51067c41d42501e9966bb38d845cb93dcb89d50ab4aa7c/datasette_dateutil-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1f00e3203b8bf72e3b7e18dbe450f3aa",
+          "sha256": "32c6e6e383dcba4f64ab3ea981b6fac7ca2010a64bf5d1a8b147cd498f7ed9e3"
+        },
+        "downloads": -1,
+        "filename": "datasette-dateutil-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1f00e3203b8bf72e3b7e18dbe450f3aa",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5456,
+        "upload_time": "2020-09-30T01:08:34",
+        "upload_time_iso_8601": "2020-09-30T01:08:34.048680Z",
+        "url": "https://files.pythonhosted.org/packages/9a/b8/2e1a6aa643de16731140fe26b63f3816570c666916bfd4139defc6a45568/datasette-dateutil-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ca18bf0b936602bf0d89a0900bfed872",
+          "sha256": "06d2059edf841c937c07cbdbfae06df84b36f880f0d389b65eb6da0f0e792bb4"
+        },
+        "downloads": -1,
+        "filename": "datasette_dateutil-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ca18bf0b936602bf0d89a0900bfed872",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 5565,
+        "upload_time": "2022-03-01T00:23:20",
+        "upload_time_iso_8601": "2022-03-01T00:23:20.303213Z",
+        "url": "https://files.pythonhosted.org/packages/b6/58/1a905add597e9ba3d0824978aa8fd4013972b82a37fb9b09337e280105ce/datasette_dateutil-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b50294c04ccde6fd10daabafba83f33a",
+          "sha256": "7005f83aa4774c9d9db892e630dc9adc5d78ed5c59c6e2263da93d8fdac9569e"
+        },
+        "downloads": -1,
+        "filename": "datasette-dateutil-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b50294c04ccde6fd10daabafba83f33a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 5833,
+        "upload_time": "2022-03-01T00:23:21",
+        "upload_time_iso_8601": "2022-03-01T00:23:21.626448Z",
+        "url": "https://files.pythonhosted.org/packages/f8/a7/f8866bd057de94307c2e2eaa7daeb244d01a0d9ee39520e8cbbe071d31ae/datasette-dateutil-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ca18bf0b936602bf0d89a0900bfed872",
+        "sha256": "06d2059edf841c937c07cbdbfae06df84b36f880f0d389b65eb6da0f0e792bb4"
+      },
+      "downloads": -1,
+      "filename": "datasette_dateutil-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ca18bf0b936602bf0d89a0900bfed872",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 5565,
+      "upload_time": "2022-03-01T00:23:20",
+      "upload_time_iso_8601": "2022-03-01T00:23:20.303213Z",
+      "url": "https://files.pythonhosted.org/packages/b6/58/1a905add597e9ba3d0824978aa8fd4013972b82a37fb9b09337e280105ce/datasette_dateutil-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "b50294c04ccde6fd10daabafba83f33a",
+        "sha256": "7005f83aa4774c9d9db892e630dc9adc5d78ed5c59c6e2263da93d8fdac9569e"
+      },
+      "downloads": -1,
+      "filename": "datasette-dateutil-0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b50294c04ccde6fd10daabafba83f33a",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 5833,
+      "upload_time": "2022-03-01T00:23:21",
+      "upload_time_iso_8601": "2022-03-01T00:23:21.626448Z",
+      "url": "https://files.pythonhosted.org/packages/f8/a7/f8866bd057de94307c2e2eaa7daeb244d01a0d9ee39520e8cbbe071d31ae/datasette-dateutil-0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

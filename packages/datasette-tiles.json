@@ -1,0 +1,427 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-tiles\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-tiles.svg)](https://pypi.org/project/datasette-tiles/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-tiles?include_prereleases&label=changelog)](https://github.com/simonw/datasette-tiles/releases)\n[![Tests](https://github.com/simonw/datasette-tiles/workflows/Test/badge.svg)](https://github.com/simonw/datasette-tiles/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-tiles/blob/main/LICENSE)\n\nDatasette plugin for serving MBTiles map tiles\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-tiles\n\n## Demo\n\nYou can try this plugin out at https://datasette-tiles-demo.datasette.io/-/tiles\n\n## Usage\n\nThis plugin scans all database files connected to Datasette to see if any of them are valid MBTiles databases.\n\nIt can then serve tiles from those databases at the following URL:\n\n    /-/tiles/db-name/zoom/x/y.png\n\nAn example map for each database demonstrating the configured minimum and maximum zoom for that database can be found at `/-/tiles/db-name` - this can also be accessed via the table and database action menus for that database.\n\nVisit `/-/tiles` for an index page of attached valid databases.\n\nYou can install the [datasette-basemap](https://datasette.io/plugins/datasette-basemap) plugin to get a `basemap` default set of tiles, handling zoom levels 0 to 6 using OpenStreetMap.\n\n### Tile coordinate systems\n\nThere are two tile coordinate systems in common use for online maps. The first is used by OpenStreetMap and Google Maps, the second is from a specification called [Tile Map Service](https://en.wikipedia.org/wiki/Tile_Map_Service), or TMS.\n\nBoth systems use three components: `z/x/y` - where `z` is the zoom level, `x` is the column and `y` is the row.\n\nThe difference is in the way the `y` value is counted. OpenStreetMap has y=0 at the top. TMS has y=0 at the bottom.\n\nAn illustrative example: at zoom level 2 the map is divided into 16 total tiles. The OpenStreetMap scheme numbers them like so:\n\n    0/0  1/0  2/0  3/0\n    0/1  1/1  2/1  3/1\n    0/2  1/2  2/2  3/2\n    0/3  1/3  2/3  3/3\n\nThe TMS scheme looks like this:\n\n    0/3  1/3  2/3  3/3\n    0/2  1/2  2/2  3/2\n    0/1  1/1  2/1  3/1\n    0/0  1/0  2/0  3/0\n\n`datasette-tiles` can serve tiles using either of these standards. For the OpenStreetMap / Google Maps 0-at-the-top system, use the following URL:\n\n    /-/tiles/database-name/{z}/{x}/{y}.png\n\nFor the TMS 0-at-the-bottom system, use this:\n\n    /-/tiles-tms/database-name/{z}/{x}/{y}.png\n\n### Configuring a Leaflet tile layer\n\nThe following JavaScript will configure a [Leaflet TileLayer](https://leafletjs.com/reference-1.7.1.html#tilelayer) for use with this plugin:\n\n```javascript\nvar tiles = leaflet.tileLayer(\"/-/tiles/basemap/{z}/{x}/{y}.png\", {\n  minZoom: 0,\n  maxZoom: 6,\n  attribution: \"\\u00a9 OpenStreetMap contributors\"\n});\n```\n\n### Tile stacks\n\n`datasette-tiles` can be configured to serve tiles from multiple attached MBTiles files, searching each database in order for a tile and falling back to the next in line if that tile is not found.\n\nFor a demo of this in action, visit https://datasette-tiles-demo.datasette.io/-/tiles-stack and zoom in on Japan. It should start showing [Stamen's Toner map](maps.stamen.com) of Japan once you get to zoom level 6 and 7.\n\nThe `/-/tiles-stack/{z}/{x}/{y}.png` endpoint provides this feature.\n\nIf you start Datasette like this:\n\n    datasette world.mbtiles country.mbtiles city1.mbtiles city2.mbtiles\n\nAny requests for a tile from the `/-/tiles-stack` path will first check the `city2` database, than `city1`, then `country`, then `world`.\n\nIf you have the [datasette-basemap](https://datasette.io/plugins/datasette-basemap) plugin installed it will be given special treatment: the `basemap` database will always be the last database checked for a tile.\n\nRather than rely on the order in which databases were attached, you can instead configure an explicit order using the `tiles-stack-order` plugin setting. Add the following to your `metadata.json` file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-tiles\": {\n            \"tiles-stack-order\": [\"world\", \"country\"]\n        }\n    }\n}\n```\n\nYou can then run Datasette like this:\n\n    datasette -m metadata.json country.mbtiles world.mbtiles\n\nThis endpoint serves tiles using the OpenStreetMap / Google Maps coordinate system. To load tiles using the TMS coordinate system use this endpoint instead:\n\n    /-/tiles-stack-tms/{z}/{x}/{y}.png\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-tiles\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-tiles",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-tiles",
+    "package_url": "https://pypi.org/project/datasette-tiles/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-tiles/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-tiles/actions",
+      "Changelpog": "https://github.com/simonw/datasette-tiles/releases",
+      "Homepage": "https://github.com/simonw/datasette-tiles",
+      "Issues": "https://github.com/simonw/datasette-tiles/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-tiles/0.6.1/",
+    "requires_dist": [
+      "datasette",
+      "datasette-leaflet (>=0.2.2)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "datasette-basemap (>=0.2) ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Mapping tile server for Datasette, serving tiles from MBTiles packages",
+    "version": "0.6.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9380723,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e0755786f37af6dfe98712bc054bc466",
+          "sha256": "6f60614ac6d109ff343dc5405b63c80c1d1e2ab78b5d743c5aef9ff2efc6fb81"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e0755786f37af6dfe98712bc054bc466",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4579,
+        "upload_time": "2021-02-02T06:48:40",
+        "upload_time_iso_8601": "2021-02-02T06:48:40.552835Z",
+        "url": "https://files.pythonhosted.org/packages/d8/fa/ce65e932235fc6c4d16b563e1ad1823a9ab42f33bc908fa29b6359c71043/datasette_tiles-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "01b18c921a086c7dd2974a70cbc12ebe",
+          "sha256": "06d66b27cb5c80f7899bb966a81accc691336b415399bbb6d23b0d19ab0e3ec7"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "01b18c921a086c7dd2974a70cbc12ebe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3745,
+        "upload_time": "2021-02-02T06:48:41",
+        "upload_time_iso_8601": "2021-02-02T06:48:41.657487Z",
+        "url": "https://files.pythonhosted.org/packages/97/70/3d48f263147f027ad99bd632f6a652d50ad8e320fce189f0917d55f46120/datasette-tiles-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e0d076143cf7a4c90228eb04ec3b1d72",
+          "sha256": "0fc23ef5dd0c4b66883add16e4b29007913e3985028b581acc447606a0725d9c"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e0d076143cf7a4c90228eb04ec3b1d72",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4870,
+        "upload_time": "2021-02-02T07:06:03",
+        "upload_time_iso_8601": "2021-02-02T07:06:03.046485Z",
+        "url": "https://files.pythonhosted.org/packages/04/f5/6621a8afe019513c22c252b028542b052635d17e445553982c5c8df5a3ea/datasette_tiles-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9b71868fb44a76703b5a6052682bd580",
+          "sha256": "e4934928dc0be0a187a0450fe98f0e347e184c3c9edc28222dc4ea79136aaff7"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9b71868fb44a76703b5a6052682bd580",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4068,
+        "upload_time": "2021-02-02T07:06:03",
+        "upload_time_iso_8601": "2021-02-02T07:06:03.831056Z",
+        "url": "https://files.pythonhosted.org/packages/d7/9e/aeb7b3bcf50f0e0a59931ba31168e32f81d2465551c068296c5b22882e4a/datasette-tiles-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f05b319f7b77663d6c9f5d2bf7c18a66",
+          "sha256": "f083d16078001ff5ea70614d1e4378854f37d44c34d8f6ff47aa8ef7763e1676"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f05b319f7b77663d6c9f5d2bf7c18a66",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5032,
+        "upload_time": "2021-02-02T19:55:03",
+        "upload_time_iso_8601": "2021-02-02T19:55:03.316701Z",
+        "url": "https://files.pythonhosted.org/packages/55/80/31df256d22f72758087541b3980d5041aef0ed958f3d67f64a2e8c178d51/datasette_tiles-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7e9f705a353bb661aa7c2083754e798d",
+          "sha256": "27b379d5886bc98b3d83760d98f4bfb305fcea442cd740e107faf6c3416452f6"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7e9f705a353bb661aa7c2083754e798d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4234,
+        "upload_time": "2021-02-02T19:55:04",
+        "upload_time_iso_8601": "2021-02-02T19:55:04.249721Z",
+        "url": "https://files.pythonhosted.org/packages/3a/fe/6643894e81f053208fa28222d35a70605b58e9272547af815b4e49ed474c/datasette-tiles-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "974346a458c4f7528ba43c8d69029687",
+          "sha256": "7034230d789c895952ad7f922aed3020bc8178f9fa3ac92bb3bb621b6c1f8374"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "974346a458c4f7528ba43c8d69029687",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5106,
+        "upload_time": "2021-02-02T23:42:32",
+        "upload_time_iso_8601": "2021-02-02T23:42:32.500330Z",
+        "url": "https://files.pythonhosted.org/packages/58/07/aaf2c9f72b968b348cf04772487b7ec621f35768240d880381317056b63f/datasette_tiles-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2867b1bf00fe5a908f73dd2ba7e27b77",
+          "sha256": "b1e40bdc9dffe9c5f7c05cafc4da83283cefe78b4d18109514ecb14fa7126678"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2867b1bf00fe5a908f73dd2ba7e27b77",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4296,
+        "upload_time": "2021-02-02T23:42:33",
+        "upload_time_iso_8601": "2021-02-02T23:42:33.510891Z",
+        "url": "https://files.pythonhosted.org/packages/d8/ee/9aa04ac4c7ed2332a863d9e1e389db9a3109cf2f4ed70fa85f61d7c2f0ca/datasette-tiles-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6e61f354b55474fb2f26a3e61efc0465",
+          "sha256": "17bd711dbd53a211a27770bd3ebb77bf95e22ffca88d0190d9aa3d54daf9dde8"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6e61f354b55474fb2f26a3e61efc0465",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 7521,
+        "upload_time": "2021-02-03T22:25:37",
+        "upload_time_iso_8601": "2021-02-03T22:25:37.169086Z",
+        "url": "https://files.pythonhosted.org/packages/88/c0/6662fd66cb6f1bbe229a02eb1bb4b843622014c19d676453b446021ec2b0/datasette_tiles-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a3e962aabef1ec2f96b28d64103dffb7",
+          "sha256": "5d15e8d3994b01d84bf6061091aef8c9a1bfe8f9ccbbe47e752b10108476868e"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a3e962aabef1ec2f96b28d64103dffb7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 6554,
+        "upload_time": "2021-02-03T22:25:38",
+        "upload_time_iso_8601": "2021-02-03T22:25:38.422714Z",
+        "url": "https://files.pythonhosted.org/packages/6b/ea/e12afba67495fd850c0dbc67a9663d16beb6d2cfc635edacaf53b205aa38/datasette-tiles-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "24118b9fe325783613d0e962ebe56020",
+          "sha256": "702e005b2fe986d5523a23003a1ef2668e4f1c920143660da7169412996e769a"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "24118b9fe325783613d0e962ebe56020",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8567,
+        "upload_time": "2021-02-04T18:17:51",
+        "upload_time_iso_8601": "2021-02-04T18:17:51.993810Z",
+        "url": "https://files.pythonhosted.org/packages/62/1d/03d292c478a4668950ee7b0ea7a07fb12e6830ef6701d9d1bd2693c1e21e/datasette_tiles-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "48fe7090f27e5e0ad0256d7f7c68cd97",
+          "sha256": "cd19825ad623736f62182fbb54c662471bf8ea842394d8c7769b23e78036f864"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "48fe7090f27e5e0ad0256d7f7c68cd97",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 8647,
+        "upload_time": "2021-02-04T18:17:52",
+        "upload_time_iso_8601": "2021-02-04T18:17:52.913564Z",
+        "url": "https://files.pythonhosted.org/packages/21/a0/e0652465939da58f776cab702ecc79f72837fd4790781d1c5dc54617e620/datasette-tiles-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "df9cb8dbe5157004bcee47ea77289673",
+          "sha256": "5687dac8cf904d01c61222e212a59559ebc02fe8457aed8d87bc416e05f7d716"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "df9cb8dbe5157004bcee47ea77289673",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9323,
+        "upload_time": "2021-02-11T00:26:57",
+        "upload_time_iso_8601": "2021-02-11T00:26:57.399636Z",
+        "url": "https://files.pythonhosted.org/packages/40/47/b0eea3757bc2e97dbcf04f90718ffef746c02a08c67d8a8c744e97105b92/datasette_tiles-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "90f98c7fc16fa86643868ee9bfa7cae7",
+          "sha256": "8de9bf661cd7e1eb7bd564a26814cd03d0076668d024a1896a3b35456f3b90e7"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "90f98c7fc16fa86643868ee9bfa7cae7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 10043,
+        "upload_time": "2021-02-11T00:26:58",
+        "upload_time_iso_8601": "2021-02-11T00:26:58.433957Z",
+        "url": "https://files.pythonhosted.org/packages/47/1f/3789d3ea85d63b0c81038dd3ca710dd7da7af9aaa17a73b256f01ba8fb0d/datasette-tiles-0.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "197bccf458a01d98aa6309383874ae0a",
+          "sha256": "48753bb114bfc68219a86109dcedcba26c18a7acd30dd8922cfaa933eef2d9dd"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiles-0.6.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "197bccf458a01d98aa6309383874ae0a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9305,
+        "upload_time": "2021-02-11T00:41:20",
+        "upload_time_iso_8601": "2021-02-11T00:41:20.876249Z",
+        "url": "https://files.pythonhosted.org/packages/08/c1/a1ae55157f8ace54803b68e75f9c6f0164a805a6a1c3341d7befc4835335/datasette_tiles-0.6.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b6147f9eeeee39003243104dfb7b65e1",
+          "sha256": "2f11c57200541c3bd9dd5a165d9c15580b8656fac966af50ba8e45853cf9f7fb"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiles-0.6.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b6147f9eeeee39003243104dfb7b65e1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 9994,
+        "upload_time": "2021-02-11T00:41:21",
+        "upload_time_iso_8601": "2021-02-11T00:41:21.769630Z",
+        "url": "https://files.pythonhosted.org/packages/a8/f4/0ae203f1e2cd29e6d96c5992747615715d2ccfe8d780125a4434b7bd1d28/datasette-tiles-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "197bccf458a01d98aa6309383874ae0a",
+        "sha256": "48753bb114bfc68219a86109dcedcba26c18a7acd30dd8922cfaa933eef2d9dd"
+      },
+      "downloads": -1,
+      "filename": "datasette_tiles-0.6.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "197bccf458a01d98aa6309383874ae0a",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 9305,
+      "upload_time": "2021-02-11T00:41:20",
+      "upload_time_iso_8601": "2021-02-11T00:41:20.876249Z",
+      "url": "https://files.pythonhosted.org/packages/08/c1/a1ae55157f8ace54803b68e75f9c6f0164a805a6a1c3341d7befc4835335/datasette_tiles-0.6.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "b6147f9eeeee39003243104dfb7b65e1",
+        "sha256": "2f11c57200541c3bd9dd5a165d9c15580b8656fac966af50ba8e45853cf9f7fb"
+      },
+      "downloads": -1,
+      "filename": "datasette-tiles-0.6.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b6147f9eeeee39003243104dfb7b65e1",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 9994,
+      "upload_time": "2021-02-11T00:41:21",
+      "upload_time_iso_8601": "2021-02-11T00:41:21.769630Z",
+      "url": "https://files.pythonhosted.org/packages/a8/f4/0ae203f1e2cd29e6d96c5992747615715d2ccfe8d780125a4434b7bd1d28/datasette-tiles-0.6.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

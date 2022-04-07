@@ -1,0 +1,175 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-jupyterlite\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-jupyterlite.svg)](https://pypi.org/project/datasette-jupyterlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-jupyterlite?include_prereleases&label=changelog)](https://github.com/simonw/datasette-jupyterlite/releases)\n[![Tests](https://github.com/simonw/datasette-jupyterlite/workflows/Test/badge.svg)](https://github.com/simonw/datasette-jupyterlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-jupyterlite/blob/main/LICENSE)\n\n[JupyterLite](https://jupyterlite.readthedocs.io/en/latest/) as a Datasette plugin\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-jupyterlite\n\n## Demo\n\nYou can try out a demo of the plugin here: https://latest-with-plugins.datasette.io/jupyterlite/\n\nRun this example code in a Pyolite notebook to pull all of the data from the [github/stars](https://latest-with-plugins.datasette.io/github/stars) table into a Pandas DataFrame:\n\n```python\nimport pandas, pyodide\n\ndf = pandas.read_csv(pyodide.open_url(\n  \"https://latest-with-plugins.datasette.io/github/stars.csv?_labels=on&_stream=on&_size=max\")\n)\n```\n\n## Usage\n\nOnce installed, visit `/jupyterlite/` to access JupyterLite served from your Datasette instance.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-jupyterlite\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-jupyterlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-jupyterlite",
+    "package_url": "https://pypi.org/project/datasette-jupyterlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-jupyterlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-jupyterlite/actions",
+      "Changelog": "https://github.com/simonw/datasette-jupyterlite/releases",
+      "Homepage": "https://github.com/simonw/datasette-jupyterlite",
+      "Issues": "https://github.com/simonw/datasette-jupyterlite/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-jupyterlite/0.1a1/",
+    "requires_dist": [
+      "datasette",
+      "jupyterlite",
+      "importlib-resources",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "JupyterLite as a Datasette plugin",
+    "version": "0.1a1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11933422,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "91173a07bd048f46795e5ee74c07a104",
+          "sha256": "4a4de43af22c425efb57ad3273d6de75ee161d0a7bf3eaed6db48faa4f9b281c"
+        },
+        "downloads": -1,
+        "filename": "datasette_jupyterlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "91173a07bd048f46795e5ee74c07a104",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2769,
+        "upload_time": "2021-11-01T19:47:07",
+        "upload_time_iso_8601": "2021-11-01T19:47:07.034213Z",
+        "url": "https://files.pythonhosted.org/packages/a6/2e/5e9ea7d6f134f93a6ef45cc1ac7ffea5eeced4323b4cd20f9d13147cf44e/datasette_jupyterlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9f9e2df2aaf37171c15c75baafad13b9",
+          "sha256": "6546a334ec0ca28a9efd2535b128b8ef25314666c6230eccbceb2cb0cc7f3877"
+        },
+        "downloads": -1,
+        "filename": "datasette-jupyterlite-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9f9e2df2aaf37171c15c75baafad13b9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 2459,
+        "upload_time": "2021-11-01T19:47:08",
+        "upload_time_iso_8601": "2021-11-01T19:47:08.652036Z",
+        "url": "https://files.pythonhosted.org/packages/0c/c7/4757d29165f7c5cf2a101a4ac907527f7139d7977558303598d2c5059137/datasette-jupyterlite-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ced71c93cfc3538c3ba358993a645950",
+          "sha256": "4779fd02f55be3ea9d9d2223d8883cc14a40da2b0b71c065318cd84d6f3f1814"
+        },
+        "downloads": -1,
+        "filename": "datasette_jupyterlite-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ced71c93cfc3538c3ba358993a645950",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2987,
+        "upload_time": "2021-11-05T05:13:39",
+        "upload_time_iso_8601": "2021-11-05T05:13:39.509869Z",
+        "url": "https://files.pythonhosted.org/packages/8b/f2/432f3d457da9daff42770db648f50406452072d81ea95b10826b9aef00d8/datasette_jupyterlite-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "65d6fbfb42430a1bb35c6f06d54bf1f4",
+          "sha256": "e7ae879d3de7683028d3e28cb238d971b9cd208fd5eff45f081ea478a5f23a18"
+        },
+        "downloads": -1,
+        "filename": "datasette-jupyterlite-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "65d6fbfb42430a1bb35c6f06d54bf1f4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 2681,
+        "upload_time": "2021-11-05T05:13:40",
+        "upload_time_iso_8601": "2021-11-05T05:13:40.711247Z",
+        "url": "https://files.pythonhosted.org/packages/a3/fe/0c7481c4d174c04faf554d75c51999f7715bb259efdb9f8d2c3dfac27f92/datasette-jupyterlite-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ced71c93cfc3538c3ba358993a645950",
+        "sha256": "4779fd02f55be3ea9d9d2223d8883cc14a40da2b0b71c065318cd84d6f3f1814"
+      },
+      "downloads": -1,
+      "filename": "datasette_jupyterlite-0.1a1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ced71c93cfc3538c3ba358993a645950",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 2987,
+      "upload_time": "2021-11-05T05:13:39",
+      "upload_time_iso_8601": "2021-11-05T05:13:39.509869Z",
+      "url": "https://files.pythonhosted.org/packages/8b/f2/432f3d457da9daff42770db648f50406452072d81ea95b10826b9aef00d8/datasette_jupyterlite-0.1a1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "65d6fbfb42430a1bb35c6f06d54bf1f4",
+        "sha256": "e7ae879d3de7683028d3e28cb238d971b9cd208fd5eff45f081ea478a5f23a18"
+      },
+      "downloads": -1,
+      "filename": "datasette-jupyterlite-0.1a1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "65d6fbfb42430a1bb35c6f06d54bf1f4",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 2681,
+      "upload_time": "2021-11-05T05:13:40",
+      "upload_time_iso_8601": "2021-11-05T05:13:40.711247Z",
+      "url": "https://files.pythonhosted.org/packages/a3/fe/0c7481c4d174c04faf554d75c51999f7715bb259efdb9f8d2c3dfac27f92/datasette-jupyterlite-0.1a1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,87 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# genome-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/genome-to-sqlite.svg)](https://pypi.org/project/genome-to-sqlite/)\n[![CircleCI](https://circleci.com/gh/dogsheep/genome-to-sqlite.svg?style=svg)](https://circleci.com/gh/dogsheep/genome-to-sqlite)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/genome-to-sqlite/blob/master/LICENSE)\n\nImport your genome into a SQLite database.\n\n## How to install\n\n    $ pip install genome-to-sqlite\n\n## How to use\n\nFirst, export your genome. This tool has only been tested against 23andMe so far. You can request an export of your genome from https://you.23andme.com/tools/data/download/\n\nNow you can convert the resulting `export.zip` file to SQLite like so:\n\n    $ genome-to-sqlite export.zip genome.db\n\nA progress bar will be displayed. You can disable this using `--silent`.\n\n```\nImporting genome  [#----------------]    5%  00:01:33\n```\n\nYou can explore the resulting data using [Datasette](https://datasette.readthedocs.io/) like this:\n\n    $ datasette genome.db --config facet_time_limit_ms:1000\n\nBumping up the facet time limit is useful in order to enable faceting by chromosome:\n\nhttp://127.0.0.1:8001/genome/genome?_facet=chromosome&_sort=position\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/dogsheep/genome-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "genome-to-sqlite",
+    "package_url": "https://pypi.org/project/genome-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/genome-to-sqlite/",
+    "project_urls": {
+      "Homepage": "https://github.com/dogsheep/genome-to-sqlite"
+    },
+    "release_url": "https://pypi.org/project/genome-to-sqlite/0.1/",
+    "requires_dist": [
+      "sqlite-utils",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Import your genome into a SQLite database",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 5857257,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "60cf0093881887de4e5bee61611460ac",
+          "sha256": "92b309b8dc1d99b71cd626a0e617bd346f7fe40953e422916fc1404908c9cc23"
+        },
+        "downloads": -1,
+        "filename": "genome_to_sqlite-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "60cf0093881887de4e5bee61611460ac",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7720,
+        "upload_time": "2019-09-19T15:41:54",
+        "upload_time_iso_8601": "2019-09-19T15:41:54.814429Z",
+        "url": "https://files.pythonhosted.org/packages/69/e4/65cd5db4012b5beda9f50252d0f6c931483f794d0c8216d4a77fcbd76a99/genome_to_sqlite-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "60cf0093881887de4e5bee61611460ac",
+        "sha256": "92b309b8dc1d99b71cd626a0e617bd346f7fe40953e422916fc1404908c9cc23"
+      },
+      "downloads": -1,
+      "filename": "genome_to_sqlite-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "60cf0093881887de4e5bee61611460ac",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7720,
+      "upload_time": "2019-09-19T15:41:54",
+      "upload_time_iso_8601": "2019-09-19T15:41:54.814429Z",
+      "url": "https://files.pythonhosted.org/packages/69/e4/65cd5db4012b5beda9f50252d0f6c931483f794d0c8216d4a77fcbd76a99/genome_to_sqlite-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

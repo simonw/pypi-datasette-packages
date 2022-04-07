@@ -1,0 +1,215 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-css-properties\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-css-properties.svg)](https://pypi.org/project/datasette-css-properties/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-css-properties?include_prereleases&label=changelog)](https://github.com/simonw/datasette-css-properties/releases)\n[![Tests](https://github.com/simonw/datasette-css-properties/workflows/Test/badge.svg)](https://github.com/simonw/datasette-css-properties/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-css-properties/blob/main/LICENSE)\n\nExtremely experimental Datasette output plugin using CSS properties, inspired by [Custom Properties as State](https://css-tricks.com/custom-properties-as-state/) by Chris Coyier.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-css-properties\n\n## Usage\n\nOnce installed, this plugin adds a `.css` output format to every query result. This will return the first row in the query as a valid CSS file, defining each column as a custom property:\n\nExample: https://latest-with-plugins.datasette.io/fixtures/roadside_attractions.css produces:\n\n```css\n:root {\n  --pk: '1';\n  --name: 'The Mystery Spot';\n  --address: '465 Mystery Spot Road, Santa Cruz, CA 95065';\n  --latitude: '37.0167';\n  --longitude: '-122.0024';\n}\n```\n\nIf you link this stylesheet to your page you can then do things like this;\n\n```html\n<link rel=\"stylesheet\" href=\"https://latest-with-plugins.datasette.io/fixtures/roadside_attractions.css\">\n<style>\n.attraction-name:after { content: var(--name); }\n</style>\n<p class=\"attraction-name\">Attraction name: </p>\n```\n\nValues will be quoted as CSS strings by default. If you want to return a \"raw\" value without the quotes - for example to set a CSS property that is numeric or a color, you can specify that column name using the `?_raw=column-name` parameter. This can be passed multiple times.\n\nConsider [this example query](https://latest-with-plugins.datasette.io/github?sql=select%0D%0A++%27%23%27+||+substr(sha%2C+0%2C+6)+as+[custom-bg]%0D%0Afrom%0D%0A++commits%0D%0Aorder+by%0D%0A++author_date+desc%0D%0Alimit%0D%0A++1%3B):\n\n```sql\nselect\n  '#' || substr(sha, 0, 6) as [custom-bg]\nfrom\n  commits\norder by\n  author_date desc\nlimit\n  1;\n```\n\nThis returns the first 6 characters of the most recently authored commit with a `#` prefix. The `.css` [output rendered version](https://latest-with-plugins.datasette.io/github.css?sql=select%0D%0A++%27%23%27+||+substr(sha%2C+0%2C+6)+as+[custom-bg]%0D%0Afrom%0D%0A++commits%0D%0Aorder+by%0D%0A++author_date+desc%0D%0Alimit%0D%0A++1%3B) looks like this:\n\n```css\n:root {\n  --custom-bg: '#97fb1';\n}\n```\n\nAdding `?_raw=custom-bg` to the URL produces [this instead](https://latest-with-plugins.datasette.io/github.css?sql=select%0D%0A++%27%23%27+||+substr(sha%2C+0%2C+6)+as+[custom-bg]%0D%0Afrom%0D%0A++commits%0D%0Aorder+by%0D%0A++author_date+desc%0D%0Alimit%0D%0A++1%3B&_raw=custom-bg):\n\n```css\n:root {\n  --custom-bg: #97fb1;\n}\n```\n\nThis can then be used as a color value like so:\n\n```css\nh1 {\n    background-color: var(--custom-bg);\n}\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-css-properties\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-css-properties",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-css-properties",
+    "package_url": "https://pypi.org/project/datasette-css-properties/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-css-properties/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-css-properties/actions",
+      "Changelog": "https://github.com/simonw/datasette-css-properties/releases",
+      "Homepage": "https://github.com/simonw/datasette-css-properties",
+      "Issues": "https://github.com/simonw/datasette-css-properties/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-css-properties/0.2/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Experimental Datasette output plugin using CSS properties",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9079707,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c9e494308d3dd5f95441784cbb1a6219",
+          "sha256": "7d0134a29d436a7557440c7a1a406bd05bf21e3259b4596449124ac86e2ea6df"
+        },
+        "downloads": -1,
+        "filename": "datasette_css_properties-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c9e494308d3dd5f95441784cbb1a6219",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3465,
+        "upload_time": "2021-01-05T18:40:49",
+        "upload_time_iso_8601": "2021-01-05T18:40:49.883818Z",
+        "url": "https://files.pythonhosted.org/packages/5f/06/d2d8a0f47d7e06cfd9d46a40118cfa490d7303765db4ff1f259f264a23db/datasette_css_properties-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4ea9c8c6c56084272c670c8332800ecb",
+          "sha256": "a483611267b897983ae588a4dc807a336702b94235e6c8e4807af656d5f7c903"
+        },
+        "downloads": -1,
+        "filename": "datasette-css-properties-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4ea9c8c6c56084272c670c8332800ecb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3382,
+        "upload_time": "2021-01-05T18:40:50",
+        "upload_time_iso_8601": "2021-01-05T18:40:50.982340Z",
+        "url": "https://files.pythonhosted.org/packages/b7/ac/730f743b1f9ff936030d7dd1a6a9db64c16fa0a04149dcec871b8d827a80/datasette-css-properties-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "02c49bd1fcef520f47cc49f82451db72",
+          "sha256": "7dbfd98078069f011d1d3efebdfedc9c1bc87ed6d99a5b76a46cc5106fff67d8"
+        },
+        "downloads": -1,
+        "filename": "datasette_css_properties-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "02c49bd1fcef520f47cc49f82451db72",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3606,
+        "upload_time": "2021-01-07T19:49:46",
+        "upload_time_iso_8601": "2021-01-07T19:49:46.134619Z",
+        "url": "https://files.pythonhosted.org/packages/15/85/b62846e24e7d1b4ac5b49554b3b22e5671a87e6b6797b22cc9a6d4f01140/datasette_css_properties-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "13bc8dcc68878fbcaf518827a58b1f76",
+          "sha256": "10fe43464c19f87ec238a0d8e1faa82db3e81b555e586fc1717d190b24943e60"
+        },
+        "downloads": -1,
+        "filename": "datasette-css-properties-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "13bc8dcc68878fbcaf518827a58b1f76",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3530,
+        "upload_time": "2021-01-07T19:49:47",
+        "upload_time_iso_8601": "2021-01-07T19:49:47.211410Z",
+        "url": "https://files.pythonhosted.org/packages/b3/34/488d9ee14d50f03485060e89547bd51bd4158861b7010f985eed572a80ac/datasette-css-properties-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9b0368eccdc166021affbb069edbe063",
+          "sha256": "b8da3521221ced08394607099dc709052c42b96b70f19457b7d87c406d1bc27c"
+        },
+        "downloads": -1,
+        "filename": "datasette_css_properties-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9b0368eccdc166021affbb069edbe063",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3621,
+        "upload_time": "2021-01-07T20:29:35",
+        "upload_time_iso_8601": "2021-01-07T20:29:35.047313Z",
+        "url": "https://files.pythonhosted.org/packages/5f/a4/8a710e32c0e6bb3002cb0c00b672af73885a3b2a50b45713e6320f66eefb/datasette_css_properties-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5c993102beff767b599e2f856a1bb7b5",
+          "sha256": "d40593f149f6b5d0cbde5a159a9393e6ffd22a7fb04464f88f26df92dcea86ec"
+        },
+        "downloads": -1,
+        "filename": "datasette-css-properties-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5c993102beff767b599e2f856a1bb7b5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3579,
+        "upload_time": "2021-01-07T20:29:36",
+        "upload_time_iso_8601": "2021-01-07T20:29:36.075511Z",
+        "url": "https://files.pythonhosted.org/packages/4c/ab/0132b715bf3660def1b256804313595e63c3e6030f4d300ae44aa2f7f2d4/datasette-css-properties-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "9b0368eccdc166021affbb069edbe063",
+        "sha256": "b8da3521221ced08394607099dc709052c42b96b70f19457b7d87c406d1bc27c"
+      },
+      "downloads": -1,
+      "filename": "datasette_css_properties-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "9b0368eccdc166021affbb069edbe063",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 3621,
+      "upload_time": "2021-01-07T20:29:35",
+      "upload_time_iso_8601": "2021-01-07T20:29:35.047313Z",
+      "url": "https://files.pythonhosted.org/packages/5f/a4/8a710e32c0e6bb3002cb0c00b672af73885a3b2a50b45713e6320f66eefb/datasette_css_properties-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "5c993102beff767b599e2f856a1bb7b5",
+        "sha256": "d40593f149f6b5d0cbde5a159a9393e6ffd22a7fb04464f88f26df92dcea86ec"
+      },
+      "downloads": -1,
+      "filename": "datasette-css-properties-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5c993102beff767b599e2f856a1bb7b5",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 3579,
+      "upload_time": "2021-01-07T20:29:36",
+      "upload_time_iso_8601": "2021-01-07T20:29:36.075511Z",
+      "url": "https://files.pythonhosted.org/packages/4c/ab/0132b715bf3660def1b256804313595e63c3e6030f4d300ae44aa2f7f2d4/datasette-css-properties-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,156 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-permissions-sql\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-permissions-sql.svg)](https://pypi.org/project/datasette-permissions-sql/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-permissions-sql.svg?style=svg)](https://circleci.com/gh/simonw/datasette-permissions-sql)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-permissions-sql/blob/master/LICENSE)\n\nDatasette plugin for configuring permission checks using SQL queries\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-permissions-sql\n\n## Usage\n\nFirst, read up on how Datasette's [authentication and permissions system](https://datasette.readthedocs.io/en/latest/authentication.html) works.\n\nThis plugin lets you define rules containing SQL queries that are executed to see if the currently authenticated actor has permission to perform certain actions.\n\nConsider a canned query which authenticated users should only be able to execute if a row in the `users` table says that they are a member of staff.\n\nThat `users` table in the `mydatabase.db` database could look like this:\n\n| id | username | is_staff |\n|--|--------|--------|\n| 1 | cleopaws | 0 |\n| 2 | simon | 1 |\n\nAuthenticated users have an `actor` that looks like this:\n\n```json\n{\n    \"id\": 2,\n    \"username\": \"simon\"\n}\n```\n\nTo configure the canned query to only be executable by staff users, add the following to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-permissions-sql\": [\n            {\n                \"action\": \"view-query\",\n                \"resource\": [\"mydatabase\", \"promote_to_staff\"],\n                \"sql\": \"SELECT * FROM users WHERE is_staff = 1 AND id = :actor_id\"\n            }\n        ]\n    },\n    \"databases\": {\n        \"mydatabase\": {\n            \"queries\": {\n                \"promote_to_staff\": {\n                    \"sql\": \"UPDATE users SET is is_staff=1 WHERE id=:id\",\n                    \"write\": true\n                }\n            }\n        }\n    }\n}\n```\n\nThe `\"datasette-permissions-sql\"` key is a list of rules. Each of those rules has the following shape:\n\n```json\n{\n    \"action\": \"name-of-action\",\n    \"resource\": [\"resource identifier to run this on\"],\n    \"sql\": \"SQL query to execute\",\n    \"database\": \"mydatabase\"\n}\n```\n\nBoth `\"action\"` and `\"resource\"` are optional. If present, the SQL query will only be executed on permission checks that match the action and, if present, the resource indicators.\n\n`\"database\"` is also optional: it specifies the named database that the query should be executed against. If it is not present the first connected database will be used.\n\nThe Datasette documentation includes a [list of built-in permissions](https://datasette.readthedocs.io/en/stable/authentication.html#built-in-permissions) that you might want to use here.\n\n### The SQL query\n\nIf the SQL query returns any rows the action will be allowed. If it returns no rows, the plugin hook will return `False` and deny access to that action.\n\nThe SQL query is called with a number of named parameters. You can use any of these as part of the query.\n\nThe list of parameters is as follows:\n\n* `action` - the action, e.g. `\"view-database\"`\n* `resource_1` - the first component of the resource, if one was passed\n* `resource_2` - the second component of the resource, if available\n* `actor_*` - a parameter for every key on the actor. Usually `actor_id` is present.\n\nIf any rows are returned, the permission check passes. If no rows are returned the check fails.\n\nAnother example table, this time granting explicit access to individual tables. Consider a table called `table_access` that looks like this:\n\n| user_id | database | table |\n| - | - | - |\n| 1 | mydb | dogs |\n| 2 | mydb | dogs |\n| 1 | mydb | cats |\n\nThe following SQL query would grant access to the `dogs` ttable in the `mydb.db` database to users 1 and 2 - but would forbid access for user 2 to the `cats` table:\n\n```sql\nSELECT\n    *\nFROM\n    table_access\nWHERE\n    user_id = :actor_id\n    AND \"database\" = :resource_1\n    AND \"table\" = :resource_2\n```\nIn a `metadata.yaml` configuration file that would look like this:\n\n```yaml\ndatabases:\n  mydb:\n    allow_sql: {}\nplugins:\n  datasette-permissions-sql:\n  - action: view-table\n    sql: |-\n      SELECT\n        *\n      FROM\n        table_access\n      WHERE\n        user_id = :actor_id\n        AND \"database\" = :resource_1\n        AND \"table\" = :resource_2\n```\nWe're using `allow_sql: {}` here to disable arbitrary SQL queries. This prevents users from running `select * from cats` directly to work around the permissions limits.\n\n### Fallback mode\n\nThe default behaviour of this plugin is to take full control of specified permissions. The SQL query will directly control if the user is allowed or denied access to the permission.\n\nThis means that the default policy for each permission (which in Datasette core is \"allow\" for `view-database` and friends) will be ignored. It also means that any other `permission_allowed` plugins will not get their turn once this plugin has executed.\n\nYou can change this on a per-rule basis using ``\"fallback\": true``:\n\n```json\n{\n    \"action\": \"view-table\",\n    \"resource\": [\"mydatabase\", \"mytable\"],\n    \"sql\": \"select * from admins where user_id = :actor_id\",\n    \"fallback\": true\n}\n```\n\nWhen running in fallback mode, a query result returning no rows will cause the plugin hook to return ``None`` - which means \"I have no opinion on this permission, fall back to other plugins or the default\".\n\nIn this mode you can still return `False` (for \"deny access\") by returning a single row with a single value of `-1`. For example:\n\n```json\n{\n    \"action\": \"view-table\",\n    \"resource\": [\"mydatabase\", \"mytable\"],\n    \"sql\": \"select -1 from banned where user_id = :actor_id\",\n    \"fallback\": true\n}\n```\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-permissions-sql",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-permissions-sql",
+    "package_url": "https://pypi.org/project/datasette-permissions-sql/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-permissions-sql/",
+    "project_urls": {
+      "Homepage": "https://github.com/simonw/datasette-permissions-sql"
+    },
+    "release_url": "https://pypi.org/project/datasette-permissions-sql/0.3a0/",
+    "requires_dist": [
+      "datasette (>=0.44)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils (~=2.0) ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for configuring permission checks using SQL queries",
+    "version": "0.3a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7459288,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "602a8c3ce290a488127ed9d1dc6d32f0",
+          "sha256": "60e22c43839dd63ae5fc9b92b853553ec4e6a52036b66ce9f60bd8c1feaf0ee1"
+        },
+        "downloads": -1,
+        "filename": "datasette_permissions_sql-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "602a8c3ce290a488127ed9d1dc6d32f0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8491,
+        "upload_time": "2020-06-11T05:38:26",
+        "upload_time_iso_8601": "2020-06-11T05:38:26.487905Z",
+        "url": "https://files.pythonhosted.org/packages/60/09/b98c2508086c9690a448e2eee2aecb4298a13d7d88013910758efacc41e1/datasette_permissions_sql-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d83fc215a2b84fe4352280734fc27ef5",
+          "sha256": "9c9d5f6634b12d006025e76302f32f76163d9c74fd6aad5cf7bce2b2f5d5319d"
+        },
+        "downloads": -1,
+        "filename": "datasette_permissions_sql-0.2.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d83fc215a2b84fe4352280734fc27ef5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8842,
+        "upload_time": "2020-06-11T18:59:17",
+        "upload_time_iso_8601": "2020-06-11T18:59:17.562514Z",
+        "url": "https://files.pythonhosted.org/packages/1c/cc/e89cde2f72652b1fd0163722ad65772f6123a03b9e90c6c5183ca0dd6d7e/datasette_permissions_sql-0.2.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e6bd28ebc640c264b1481e3e4fccf414",
+          "sha256": "607b0a7d447030ff9a2a7c025a943466cfe248f48103f4de3166d6e36c227387"
+        },
+        "downloads": -1,
+        "filename": "datasette_permissions_sql-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e6bd28ebc640c264b1481e3e4fccf414",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8814,
+        "upload_time": "2020-06-11T18:43:27",
+        "upload_time_iso_8601": "2020-06-11T18:43:27.104176Z",
+        "url": "https://files.pythonhosted.org/packages/80/ba/12bc4048a09c3b7727f6a6541ecf4b89635e8fb7ca767d7ff06d5b03a5fd/datasette_permissions_sql-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a924977b81eb4fa4e1bdf4eaae49b4c3",
+          "sha256": "4742bd1668b459075b14d3a066cd3cd101866049c1628443d2ff306817b6cf4d"
+        },
+        "downloads": -1,
+        "filename": "datasette_permissions_sql-0.3a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a924977b81eb4fa4e1bdf4eaae49b4c3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8791,
+        "upload_time": "2020-06-12T07:08:22",
+        "upload_time_iso_8601": "2020-06-12T07:08:22.633648Z",
+        "url": "https://files.pythonhosted.org/packages/77/35/267c6238fc1fd3b339b69dcd1e9e1b470e7c92945f3b6de818e966eb2b99/datasette_permissions_sql-0.3a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a924977b81eb4fa4e1bdf4eaae49b4c3",
+        "sha256": "4742bd1668b459075b14d3a066cd3cd101866049c1628443d2ff306817b6cf4d"
+      },
+      "downloads": -1,
+      "filename": "datasette_permissions_sql-0.3a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a924977b81eb4fa4e1bdf4eaae49b4c3",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 8791,
+      "upload_time": "2020-06-12T07:08:22",
+      "upload_time_iso_8601": "2020-06-12T07:08:22.633648Z",
+      "url": "https://files.pythonhosted.org/packages/77/35/267c6238fc1fd3b339b69dcd1e9e1b470e7c92945f3b6de818e966eb2b99/datasette_permissions_sql-0.3a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

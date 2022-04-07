@@ -1,0 +1,345 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# google-drive-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/google-drive-to-sqlite.svg)](https://pypi.org/project/google-drive-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/google-drive-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/google-drive-to-sqlite/releases)\n[![Tests](https://github.com/simonw/google-drive-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/google-drive-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/google-drive-to-sqlite/blob/master/LICENSE)\n\nCreate a SQLite database containing metadata from [Google Drive](https://www.google.com/drive)\n\nIf you use Google Drive, and especially if you have shared drives with other people there's a good chance you have hundreds or even thousands of files that you may not be fully aware of.\n\nThis tool can download metadata about those files - their names, sizes, folders, content types, permissions, creation dates and more - and store them in a SQLite database.\n\nThis lets you use SQL to analyze your Google Drive contents, using [Datasette](https://datasette.io/) or the SQLite command-line tool or any other SQLite database browsing software.\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install google-drive-to-sqlite\n\n## Quickstart\n\nAuthenticate with Google Drive by running:\n\n    google-drive-to-sqlite auth\n\nNow create a SQLite database with metadata about all of the files you have starred using:\n\n    google-drive-to-sqlite files starred.db --starred\n\nYou can explore the resulting database using [Datasette](https://datasette.io/):\n\n    $ pip install datasette\n    $ datasette starred.db\n    INFO:     Started server process [24661]\n    INFO:     Uvicorn running on http://127.0.0.1:8001\n\n## Authentication\n\n> :warning: **This application has not yet been verified by Google** - you may find you are unable to authenticate until that verification is complete. [#10](https://github.com/simonw/google-drive-to-sqlite/issues/10)\n>\n> You can work around this issue by [creating your own OAuth client ID key](https://til.simonwillison.net/googlecloud/google-oauth-cli-application) and passing it to the `auth` command using `--google-client-id` and `--google-client-secret`.\n\nFirst, authenticate with Google Drive using the `auth` command:\n\n    $ google-drive-to-sqlite auth\n    Visit the following URL to authenticate with Google Drive\n\n    https://accounts.google.com/o/oauth2/v2/auth?...\n\n    Then return here and paste in the resulting code:\n    Paste code here: \n\nFollow the link, sign in with Google Drive and then copy and paste the resulting code back into the tool.\n\nThis will save an authentication token to the file called `auth.json` in the current directory.\n\nTo specify a different location for that file, use the `--auth` option:\n\n    google-drive-to-sqlite auth --auth ~/google-drive-auth.json\n\nThe `auth` command also provides options for using a different scope, Google client ID and Google client secret. You can use these to create your own custom authentication tokens that can work with other Google APIs, see [issue #5](https://github.com/simonw/google-drive-to-sqlite/issues/5) for details.\n\nFull `--help`:\n\n<!-- [[[cog\nimport cog\nfrom google_drive_to_sqlite import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"auth\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: google-drive-to-sqlite\")\ncog.out(\n    \"```\\n{}\\n```\\n\".format(help)\n)\n]]] -->\n```\nUsage: google-drive-to-sqlite auth [OPTIONS]\n\n  Authenticate user and save credentials\n\nOptions:\n  -a, --auth FILE              Path to save token, defaults to auth.json\n  --google-client-id TEXT      Custom Google client ID\n  --google-client-secret TEXT  Custom Google client secret\n  --scope TEXT                 Custom token scope\n  --help                       Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\nTo revoke the token that is stored in `auth.json`, such that it cannot be used to access Google Drive in the future, run the `revoke` command:\n\n    google-drive-to-sqlite revoke\n\nOr if your token is stored in another location:\n\n    google-drive-to-sqlite revoke -a ~/google-drive-auth.json\n\nYou will need to obtain a fresh token using the `auth` command in order to continue using this tool.\n\n## google-drive-to-sqlite files\n\nTo retrieve metadata about the files in your Google Drive, or a folder or search within it, use the `google-drive-to-sqlite files` command.\n\nThis will default to writing details about every file in your Google Drive to a SQLite database:\n\n    google-drive-to-sqlite files files.db\n\nFiles and folders will be written to databases tables, which will be created if they do not yet exist. The database schema is [shown below](#database-schema).\n\nIf a file or folder already exists, based on a matching `id`, it will be replaced with fresh data.\n\nInstead of writing to SQLite you can use `--json` to output as JSON, or `--nl` to output as newline-delimited JSON:\n\n    google-drive-to-sqlite files --nl\n\nUse `--folder ID` to retrieve everything in a specified folder and its sub-folders:\n\n    google-drive-to-sqlite files files.db --folder 1E6Zg2X2bjjtPzVfX8YqdXZDCoB3AVA7i\n\nUse `--q QUERY` to use a [custom search query](https://developers.google.com/drive/api/v3/reference/query-ref):\n\n    google-drive-to-sqlite files files.db -q \"viewedByMeTime > '2022-01-01'\"\n\nThe following shortcut options help build queries:\n\n- `--full-text TEXT` to search for files where the full text matches a search term\n- `--starred` for files and folders you have starred\n- `--trashed` for files and folders in the trash\n- `--shared-with-me` for files and folders that have been shared with you\n- `--apps` for Google Apps documents, spreadsheets, presentations and drawings (equivalent to setting all  of the next four options)\n- `--docs` for Google Apps documents\n- `--sheets` for Google Apps spreadsheets\n- `--presentations` for Google Apps presentations\n- `--drawings` for Google Apps drawings\n\nYou can combine these - for example, this returns all files that you have starred and that were shared with you:\n\n    google-drive-to-sqlite files highlights.db \\\n      --starred --shared-with-me\n\nMultiple options are treated as AND, with the exception of the Google Apps options which are treated as OR - so the following would retrieve all spreadsheets and presentations that have also been starred:\n\n    google-drive-to-sqlite files highlights.db \\\n      --starred --sheets --presentations\n\nYou can use `--stop-after X` to stop after retrieving X files, useful for trying out a new search pattern and seeing results straight away.\n\nThe `--import-json` and `--import-nl` options are mainly useful for testing and developing this tool. They allow you to replay the JSON or newline-delimited JSON that was previously fetched using `--json` or `--nl` and use it to create a fresh SQLite database, without needing to make any outbound API calls:\n\n    # Fetch all starred files from the API, write to starred.json\n    google-drive-to-sqlite files -q 'starred = true' --json > starred.json\n    # Now import that data into a new SQLite database file\n    google-drive-to-sqlite files starred.db --import-json starred.json\n\nFull `--help`:\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"files\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: google-drive-to-sqlite\")\ncog.out(\n    \"```\\n{}\\n```\\n\".format(help)\n)\n]]] -->\n```\nUsage: google-drive-to-sqlite files [OPTIONS] [DATABASE]\n\n  Retrieve metadata for files in Google Drive, and write to a SQLite database or\n  output as JSON.\n\n      google-drive-to-sqlite files files.db\n\n  Use --json to output JSON, --nl for newline-delimited JSON:\n\n      google-drive-to-sqlite files files.db --json\n\n  Use a folder ID to recursively fetch every file in that folder and its sub-\n  folders:\n\n      google-drive-to-sqlite files files.db --folder\n      1E6Zg2X2bjjtPzVfX8YqdXZDCoB3AVA7i\n\n  Fetch files you have starred:\n\n      google-drive-to-sqlite files starred.db --starred\n\nOptions:\n  -a, --auth FILE       Path to auth.json token file\n  --folder TEXT         Files in this folder ID and its sub-folders\n  -q TEXT               Files matching this query\n  --full-text TEXT      Search for files with text match\n  --starred             Files you have starred\n  --trashed             Files in the trash\n  --shared-with-me      Files that have been shared with you\n  --apps                Google Apps docs, spreadsheets, presentations and\n                        drawings\n  --docs                Google Apps docs\n  --sheets              Google Apps spreadsheets\n  --presentations       Google Apps presentations\n  --drawings            Google Apps drawings\n  --json                Output JSON rather than write to DB\n  --nl                  Output newline-delimited JSON rather than write to DB\n  --stop-after INTEGER  Stop paginating after X results\n  --import-json FILE    Import from this JSON file instead of the API\n  --import-nl FILE      Import from this newline-delimited JSON file\n  -v, --verbose         Send verbose output to stderr\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## google-drive-to-sqlite download FILE_ID\n\nThe `download` command can be used to download files from Google Drive.\n\nYou'll need one or more file IDs, which look something like `0B32uDVNZfiEKLUtIT1gzYWN2NDI4SzVQYTFWWWxCWUtvVGNB`.\n\nTo download the file, run this:\n\n    google-drive-to-sqlite download 0B32uDVNZfiEKLUtIT1gzYWN2NDI4SzVQYTFWWWxCWUtvVGNB\n\nThis will detect the content type of the file and use that as the extension - so if this file is a JPEG the file would be downloaded as:\n\n    0B32uDVNZfiEKLUtIT1gzYWN2NDI4SzVQYTFWWWxCWUtvVGNB.jpeg\n\nYou can pass multiple file IDs to the command at once.\n\nTo hide the progress bar and filename output, use `-s` or `--silent`.\n\nIf you are downloading a single file you can use the `-o` output to specify a filename and location:\n\n    google-drive-to-sqlite download 0B32uDVNZfiEKLUtIT1gzYWN2NDI4SzVQYTFWWWxCWUtvVGNB \\\n      -o my-image.jpeg\n\nUse `-o -` to write the file contents to standard output:\n\n    google-drive-to-sqlite download 0B32uDVNZfiEKLUtIT1gzYWN2NDI4SzVQYTFWWWxCWUtvVGNB \\\n      -o - > my-image.jpeg\n\nFull `--help`:\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"download\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: google-drive-to-sqlite\")\ncog.out(\n    \"```\\n{}\\n```\\n\".format(help)\n)\n]]] -->\n```\nUsage: google-drive-to-sqlite download [OPTIONS] FILE_IDS...\n\n  Download one or more files to disk, based on their file IDs.\n\n  The file content will be saved to a file with the name:\n\n      FILE_ID.ext\n\n  Where the extension is automatically picked based on the type of file.\n\n  If you are downloading a single file you can specify a filename with -o:\n\n      google-drive-to-sqlite download MY_FILE_ID -o myfile.txt\n\nOptions:\n  -a, --auth FILE    Path to auth.json token file\n  -o, --output FILE  File to write to, or - for standard output\n  -s, --silent       Hide progress bar and filename\n  --help             Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## google-drive-to-sqlite export FORMAT FILE_ID\n\nThe `export` command can be used to export Google Docs documents, spreadsheets and presentations in a number of different formats.\n\nYou'll need one or more document IDs, which look something like `10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU`. You can find these by looking at the URL of your document on the Google Docs site.\n\nTo export that document as PDF, run this:\n\n    google-drive-to-sqlite export pdf 10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU\n\nThe file will be exported as:\n\n    10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU-export.pdf\n\nYou can pass multiple file IDs to the command at once.\n\nFor the `FORMAT` option you can use any of the mime type options listed [on this page](https://developers.google.com/drive/api/v3/ref-export-formats) - for example, to export as an Open Office document you could use:\n\n    google-drive-to-sqlite export \\\n     application/vnd.oasis.opendocument.text \\\n     10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU\n\nFor convenience the following shortcuts for common file formats are provided:\n\n- Google Docs: `html`, `txt`, `rtf`, `pdf`, `doc`, `zip`, `epub`\n- Google Sheets: `xls`, `pdf`, `csv`, `tsv`, `zip`\n- Presentations: `ppt`, `pdf`, `txt`\n- Drawings: `jpeg`, `png`, `svg`\n\nThe `zip` option returns a zip file of HTML. `txt` returns plain text. The others should be self-evident.\n\nTo hide the filename output, use `-s` or `--silent`.\n\nIf you are exporting a single file you can use the `-o` output to specify a filename and location:\n\n    google-drive-to-sqlite export pdf 10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU \\\n      -o my-document.pdf\n\nUse `-o -` to write the file contents to standard output:\n\n    google-drive-to-sqlite export pdf 10BOHGDUYa7lBjUSo26YFCHTpgEmtXabdVFaopCTh1vU \\\n      -o - > my-document.pdf\n\nFull `--help`:\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"export\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: google-drive-to-sqlite\")\ncog.out(\n    \"```\\n{}\\n```\\n\".format(help)\n)\n]]] -->\n```\nUsage: google-drive-to-sqlite export [OPTIONS] FORMAT FILE_IDS...\n\n  Export one or more files to the specified format.\n\n  Usage:\n\n      google-drive-to-sqlite export pdf FILE_ID_1 FILE_ID_2\n\n  The file content will be saved to a file with the name:\n\n      FILE_ID-export.ext\n\n  Where the extension is based on the format you specified.\n\n  Available export formats can be seen here:\n  https://developers.google.com/drive/api/v3/ref-export-formats\n\n  Or you can use one of the following shortcuts:\n\n  - Google Docs: html, txt, rtf, pdf, doc, zip, epub\n  - Google Sheets: xls, pdf, csv, tsv, zip\n  - Presentations: ppt, pdf, txt\n  - Drawings: jpeg, png, svg\n\n  \"zip\" returns a zip file of HTML.\n\n  If you are exporting a single file you can specify a filename with -o:\n\n      google-drive-to-sqlite export zip MY_FILE_ID -o myfile.zip\n\nOptions:\n  -a, --auth FILE    Path to auth.json token file\n  -o, --output FILE  File to write to, or - for standard output\n  -s, --silent       Hide progress bar and filename\n  --help             Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## google-drive-to-sqlite get URL\n\nThe `get` command makes authenticated requests to the specified URL, using credentials derived from the `auth.json` file.\n\nFor example:\n\n    $ google-drive-to-sqlite get 'https://www.googleapis.com/drive/v3/about?fields=*'\n    {\n        \"kind\": \"drive#about\",\n        \"user\": {\n            \"kind\": \"drive#user\",\n            \"displayName\": \"Simon Willison\",\n    # ...\n\nIf the resource you are fetching supports pagination you can use `--paginate key` to paginate through all of the rows in a specified key. For example, the following API has a `nextPageToken` key and a `files` list, suggesting it supports pagination:\n\n    $ google-drive-to-sqlite get https://www.googleapis.com/drive/v3/files\n    {\n        \"kind\": \"drive#fileList\",\n        \"nextPageToken\": \"~!!~AI9...wogHHYlc=\",\n        \"incompleteSearch\": false,\n        \"files\": [\n            {\n                \"kind\": \"drive#file\",\n                \"id\": \"1YEsITp_X8PtDUJWHGM0osT-TXAU1nr0e7RSWRM2Jpyg\",\n                \"name\": \"Title of a spreadsheet\",\n                \"mimeType\": \"application/vnd.google-apps.spreadsheet\"\n            },\n\nTo paginate through everything in the `files` list you would use `--paginate files` like this:\n\n    $ google-drive-to-sqlite get https://www.googleapis.com/drive/v3/files --paginate files\n    [\n      {\n        \"kind\": \"drive#file\",\n        \"id\": \"1YEsITp_X8PtDUJWHGM0osT-TXAU1nr0e7RSWRM2Jpyg\",\n        \"name\": \"Title of a spreadsheet\",\n        \"mimeType\": \"application/vnd.google-apps.spreadsheet\"\n      },\n      # ...\n\nAdd `--nl` to stream paginated data as newline-delimited JSON:\n\n    $ google-drive-to-sqlite get https://www.googleapis.com/drive/v3/files --paginate files --nl\n    {\"kind\": \"drive#file\", \"id\": \"1YEsITp_X8PtDUJWHGM0osT-TXAU1nr0e7RSWRM2Jpyg\", \"name\": \"Title of a spreadsheet\", \"mimeType\": \"application/vnd.google-apps.spreadsheet\"}\n    {\"kind\": \"drive#file\", \"id\": \"1E6Zg2X2bjjtPzVfX8YqdXZDCoB3AVA7i\", \"name\": \"Subfolder\", \"mimeType\": \"application/vnd.google-apps.folder\"}\n\nAdd `--stop-after 5` to stop after 5 records - useful for testing.\n\nFull `--help`:\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"get\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: google-drive-to-sqlite\")\ncog.out(\n    \"```\\n{}\\n```\\n\".format(help)\n)\n]]] -->\n```\nUsage: google-drive-to-sqlite get [OPTIONS] URL\n\n  Make an authenticated HTTP GET to the specified URL\n\nOptions:\n  -a, --auth FILE       Path to auth.json token file\n  --paginate TEXT       Paginate through all results in this key\n  --nl                  Output paginated data as newline-delimited JSON\n  --stop-after INTEGER  Stop paginating after X results\n  -v, --verbose         Send verbose output to stderr\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n\n## Database schema\n\nThe database created by this tool has the following schema:\n\n<!-- [[[cog\nimport tempfile, pathlib, sqlite_utils\ntmpdir = pathlib.Path(tempfile.mkdtemp())\ndb_path = str(tmpdir / \"docs.db\")\nresult = runner.invoke(cli.cli, [\n    \"files\", db_path, \"--import-json\", \"tests/folder-and-children.json\"\n])\ncog.out(\"```sql\\n\")\nschema = sqlite_utils.Database(db_path).schema\n# Tidy up some formatting\nschema = schema.replace(\", [\", \",\\n   [\")\nschema = schema.replace(\"\\n,\\n\", \",\\n\")\nschema = schema.replace(\"TEXT);\", \"TEXT\\n);\")\ncog.out(schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [drive_users] (\n   [permissionId] TEXT PRIMARY KEY,\n   [kind] TEXT,\n   [displayName] TEXT,\n   [photoLink] TEXT,\n   [me] INTEGER,\n   [emailAddress] TEXT\n);\nCREATE TABLE [drive_folders] (\n   [id] TEXT PRIMARY KEY,\n   [_parent] TEXT,\n   [_owner] TEXT,\n   [lastModifyingUser] TEXT,\n   [kind] TEXT,\n   [name] TEXT,\n   [mimeType] TEXT,\n   [starred] INTEGER,\n   [trashed] INTEGER,\n   [explicitlyTrashed] INTEGER,\n   [parents] TEXT,\n   [spaces] TEXT,\n   [version] TEXT,\n   [webViewLink] TEXT,\n   [iconLink] TEXT,\n   [hasThumbnail] INTEGER,\n   [thumbnailVersion] TEXT,\n   [viewedByMe] INTEGER,\n   [createdTime] TEXT,\n   [modifiedTime] TEXT,\n   [modifiedByMe] INTEGER,\n   [shared] INTEGER,\n   [ownedByMe] INTEGER,\n   [viewersCanCopyContent] INTEGER,\n   [copyRequiresWriterPermission] INTEGER,\n   [writersCanShare] INTEGER,\n   [folderColorRgb] TEXT,\n   [quotaBytesUsed] TEXT,\n   [isAppAuthorized] INTEGER,\n   [linkShareMetadata] TEXT,\n   FOREIGN KEY([_parent]) REFERENCES [drive_folders]([id]),\n   FOREIGN KEY([_owner]) REFERENCES [drive_users]([permissionId]),\n   FOREIGN KEY([lastModifyingUser]) REFERENCES [drive_users]([permissionId])\n);\nCREATE TABLE [drive_files] (\n   [id] TEXT PRIMARY KEY,\n   [_parent] TEXT,\n   [_owner] TEXT,\n   [lastModifyingUser] TEXT,\n   [kind] TEXT,\n   [name] TEXT,\n   [mimeType] TEXT,\n   [starred] INTEGER,\n   [trashed] INTEGER,\n   [explicitlyTrashed] INTEGER,\n   [parents] TEXT,\n   [spaces] TEXT,\n   [version] TEXT,\n   [webViewLink] TEXT,\n   [iconLink] TEXT,\n   [hasThumbnail] INTEGER,\n   [thumbnailVersion] TEXT,\n   [viewedByMe] INTEGER,\n   [createdTime] TEXT,\n   [modifiedTime] TEXT,\n   [modifiedByMe] INTEGER,\n   [shared] INTEGER,\n   [ownedByMe] INTEGER,\n   [viewersCanCopyContent] INTEGER,\n   [copyRequiresWriterPermission] INTEGER,\n   [writersCanShare] INTEGER,\n   [quotaBytesUsed] TEXT,\n   [isAppAuthorized] INTEGER,\n   [linkShareMetadata] TEXT,\n   FOREIGN KEY([_parent]) REFERENCES [drive_folders]([id]),\n   FOREIGN KEY([_owner]) REFERENCES [drive_users]([permissionId]),\n   FOREIGN KEY([lastModifyingUser]) REFERENCES [drive_users]([permissionId])\n);\n```\n<!-- [[[end]]] -->\n\n## Thumbnails\n\nYou can construct a thumbnail image for a known file ID using the following URL:\n\n    https://drive.google.com/thumbnail?sz=w800-h800&id=FILE_ID\n\nUsers who are signed into Google Drive and have permission to view a file will be redirected to a thumbnail version of that file. You can tweak the `w800` and `h800` parameters to request different thumbnail sizes.\n\n## Privacy policy\n\nThis tool requests access to your Google Drive account in order to retrieve metadata about your files there. It also offers a feature that can download the content of those files.\n\nThe credentials used to access your account are stored in the auth.json file on your computer. The metadata and content retrieved from Google Drive is also stored only on your own personal computer.\n\nAt no point to the developers of this tool gain access to any of your data.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd google-drive-to-sqlite\n    python -m venv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/google-drive-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "google-drive-to-sqlite",
+    "package_url": "https://pypi.org/project/google-drive-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/google-drive-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/google-drive-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/google-drive-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/google-drive-to-sqlite",
+      "Issues": "https://github.com/simonw/google-drive-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/google-drive-to-sqlite/0.4/",
+    "requires_dist": [
+      "click",
+      "httpx",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'",
+      "pytest-mock ; extra == 'test'",
+      "cogapp ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Create a SQLite database containing metadata from Google Drive",
+    "version": "0.4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12953074,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "86e6d6428c75fd3793c6eb987c59c87f",
+          "sha256": "0921360ab05a32882ce436d60edfcdc8dce946d48be08ce23de52aad72770a42"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "86e6d6428c75fd3793c6eb987c59c87f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12725,
+        "upload_time": "2022-02-16T22:20:39",
+        "upload_time_iso_8601": "2022-02-16T22:20:39.394879Z",
+        "url": "https://files.pythonhosted.org/packages/e0/54/75fe9fb66752e7bcee096aa3a20633164783c3d2f1f762d8b52b54c9f2e7/google_drive_to_sqlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a6a09a55165f0273220fb581f56222ac",
+          "sha256": "307968db8aba92cc11899a26b324681570a33468c242cda00fda82480935b2f2"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a6a09a55165f0273220fb581f56222ac",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11414,
+        "upload_time": "2022-02-16T22:20:40",
+        "upload_time_iso_8601": "2022-02-16T22:20:40.648769Z",
+        "url": "https://files.pythonhosted.org/packages/9e/1f/4db28aa931241d0f42ffa12c8f6e5f272067fda09e7c6553d3a10d6967a3/google-drive-to-sqlite-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ed83e5acbb1cc44bc3ca18263824856c",
+          "sha256": "810b068c58b3c9f4be6c94f743c11a5d8fa52850f168426dc7206791cd1ef5e8"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ed83e5acbb1cc44bc3ca18263824856c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 13964,
+        "upload_time": "2022-02-17T06:55:11",
+        "upload_time_iso_8601": "2022-02-17T06:55:11.482611Z",
+        "url": "https://files.pythonhosted.org/packages/7c/89/549f7eb3593a04c7d48dae38b55821960168ec818e70c4805e20c1745f1f/google_drive_to_sqlite-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "66267210503b4905d64e39a38908c406",
+          "sha256": "2b5a9a2d6cceeddeb5cff7bef921e85c0ba43daba6f9fde94af1075f3a373833"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "66267210503b4905d64e39a38908c406",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 14829,
+        "upload_time": "2022-02-17T06:55:12",
+        "upload_time_iso_8601": "2022-02-17T06:55:12.673050Z",
+        "url": "https://files.pythonhosted.org/packages/4f/f6/0a5d1b6e31bdc031947285793d723ebbd9b618bfbdcd7a38c94056335345/google-drive-to-sqlite-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "614ae10312a1d2e024de9f6bb2d43f2e",
+          "sha256": "9d8cc6361282dbf96f0338842cdd97377a3a8a80e29be6853313ce3dee560eed"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "614ae10312a1d2e024de9f6bb2d43f2e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 14261,
+        "upload_time": "2022-02-17T19:22:15",
+        "upload_time_iso_8601": "2022-02-17T19:22:15.549596Z",
+        "url": "https://files.pythonhosted.org/packages/07/c9/9ada3bcdf999145e782d5ed92beb7d8a9552af14bbb24fa507f2ca687ba8/google_drive_to_sqlite-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f523fd92f654021c51f1fbd35497a0ed",
+          "sha256": "d63bad2ecbc048c96d3568b102a62b3afa1d05c1ee652be4b255b3d72a1d141d"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f523fd92f654021c51f1fbd35497a0ed",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 15462,
+        "upload_time": "2022-02-17T19:22:16",
+        "upload_time_iso_8601": "2022-02-17T19:22:16.607942Z",
+        "url": "https://files.pythonhosted.org/packages/4d/e3/c0660282da8838ac9027a6206103124bd8ec82daa90182f07d072ca86df4/google-drive-to-sqlite-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f5e19ab8f3872f60db16faed5a878ae3",
+          "sha256": "ac0014353682dcea78903dd759289dc80a564c9e14a078ebe9c4c6fa787c058c"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f5e19ab8f3872f60db16faed5a878ae3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 14768,
+        "upload_time": "2022-02-18T06:37:25",
+        "upload_time_iso_8601": "2022-02-18T06:37:25.055147Z",
+        "url": "https://files.pythonhosted.org/packages/8c/13/97c5f52362eebbe6d602c2cfaf21d578edaf80fb189cc086714d055e58bb/google_drive_to_sqlite-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "545d5cceb8afe8a395e45bdff32dd4cd",
+          "sha256": "92bee55485e83e3107a6a4cf08b35647a03a0d3e7c01ec6f7eb03643a651e8d7"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "545d5cceb8afe8a395e45bdff32dd4cd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 16010,
+        "upload_time": "2022-02-18T06:37:26",
+        "upload_time_iso_8601": "2022-02-18T06:37:26.313239Z",
+        "url": "https://files.pythonhosted.org/packages/bf/c8/0e8581af0172be1b303d725a6e3003429a0ab7d688768f3bfd3fb65318c0/google-drive-to-sqlite-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "162e4b094a740edb7a394caf8ad17f34",
+          "sha256": "f22c416ad56bf6291adaf1c6d107f4f47e588d8243b0ad63ed5b802b247883c8"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "162e4b094a740edb7a394caf8ad17f34",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 17346,
+        "upload_time": "2022-02-19T21:38:22",
+        "upload_time_iso_8601": "2022-02-19T21:38:22.164200Z",
+        "url": "https://files.pythonhosted.org/packages/4f/f1/fc2c3221b5f1b1ef6c970538cb7a68ccf733b1bcea75eeafdffc13b0b5fc/google_drive_to_sqlite-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e67699bfd85de7c138d3f1d1785a20b9",
+          "sha256": "502ea6c4148684e1ad49e6454bbeae10b404714c5ac15b415d912e4024a89060"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e67699bfd85de7c138d3f1d1785a20b9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 19866,
+        "upload_time": "2022-02-19T21:38:23",
+        "upload_time_iso_8601": "2022-02-19T21:38:23.616572Z",
+        "url": "https://files.pythonhosted.org/packages/f0/93/95acb4b16e3849d295c6875caae6276cbb9d4844b64fc3f32de2e68cbd13/google-drive-to-sqlite-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2441ae1d70a95aa62f2a6a97ff93a994",
+          "sha256": "c0269efd18dd3653fbdd96b0ec631734d758e296119c3c0dd176c3eb8290d04f"
+        },
+        "downloads": -1,
+        "filename": "google_drive_to_sqlite-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2441ae1d70a95aa62f2a6a97ff93a994",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 20045,
+        "upload_time": "2022-02-20T20:13:49",
+        "upload_time_iso_8601": "2022-02-20T20:13:49.151945Z",
+        "url": "https://files.pythonhosted.org/packages/e9/8c/a6cc5372980efdb39da57f186e9424f316eaa1cb7fd176d252b52d3bfad6/google_drive_to_sqlite-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8c688d8c7ba2cda2eae4a434dd0d7070",
+          "sha256": "84b0c058f8bf78e82a45020478ecc807c694302dd72766e5d38b79490400248c"
+        },
+        "downloads": -1,
+        "filename": "google-drive-to-sqlite-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8c688d8c7ba2cda2eae4a434dd0d7070",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 23402,
+        "upload_time": "2022-02-20T20:13:50",
+        "upload_time_iso_8601": "2022-02-20T20:13:50.677978Z",
+        "url": "https://files.pythonhosted.org/packages/79/d0/361f9d6d5812d89fd141185ce38e9e56f6ab657b476f72293354cfaa8752/google-drive-to-sqlite-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "2441ae1d70a95aa62f2a6a97ff93a994",
+        "sha256": "c0269efd18dd3653fbdd96b0ec631734d758e296119c3c0dd176c3eb8290d04f"
+      },
+      "downloads": -1,
+      "filename": "google_drive_to_sqlite-0.4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "2441ae1d70a95aa62f2a6a97ff93a994",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 20045,
+      "upload_time": "2022-02-20T20:13:49",
+      "upload_time_iso_8601": "2022-02-20T20:13:49.151945Z",
+      "url": "https://files.pythonhosted.org/packages/e9/8c/a6cc5372980efdb39da57f186e9424f316eaa1cb7fd176d252b52d3bfad6/google_drive_to_sqlite-0.4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8c688d8c7ba2cda2eae4a434dd0d7070",
+        "sha256": "84b0c058f8bf78e82a45020478ecc807c694302dd72766e5d38b79490400248c"
+      },
+      "downloads": -1,
+      "filename": "google-drive-to-sqlite-0.4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "8c688d8c7ba2cda2eae4a434dd0d7070",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 23402,
+      "upload_time": "2022-02-20T20:13:50",
+      "upload_time_iso_8601": "2022-02-20T20:13:50.677978Z",
+      "url": "https://files.pythonhosted.org/packages/79/d0/361f9d6d5812d89fd141185ce38e9e56f6ab657b476f72293354cfaa8752/google-drive-to-sqlite-0.4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

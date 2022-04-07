@@ -1,0 +1,176 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-tiddlywiki\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-tiddlywiki.svg)](https://pypi.org/project/datasette-tiddlywiki/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-tiddlywiki?include_prereleases&label=changelog)](https://github.com/simonw/datasette-tiddlywiki/releases)\n[![Tests](https://github.com/simonw/datasette-tiddlywiki/workflows/Test/badge.svg)](https://github.com/simonw/datasette-tiddlywiki/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-tiddlywiki/blob/main/LICENSE)\n\nRun [TiddlyWiki](https://tiddlywiki.com/) in Datasette and save Tiddlers to a SQLite database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-tiddlywiki\n\n## Usage\n\nStart Datasette with a `tiddlywiki.db` database. You can create it if it does not yet exist using `--create`.\n\nYou need to be signed in as the `root` user to write to the wiki, so use the `--root` option and click on the link it provides:\n\n    % datasette tiddlywiki.db --create --root\n    http://127.0.0.1:8001/-/auth-token?token=456670f1e8d01a8a33b71e17653130de17387336e29afcdfb4ab3d18261e6630\n    # ...\n\nNavigate to `/-/tiddlywiki` on your instance to interact with TiddlyWiki.\n\n## Authentication and permissions\n\nBy default, the wiki can be read by anyone who has permission to read the `tiddlywiki.db` database. Only the signed in `root` user can write to it.\n\nYou can sign in using the `--root` option described above, or you can set a password for that user using the [datasette-auth-passwords](https://datasette.io/plugins/datasette-auth-passwords) plugin and sign in using the `/-/login` page.\n\nYou can use the `edit-tiddlywiki` permission to grant edit permisions to other users, using another plugin such as [datasette-permissions-sql](https://datasette.io/plugins/datasette-permissions-sql).\n\nYou can use the `view-database` permission against the `tiddlywiki` database to control who can view the wiki.\n\nDatasette's permissions mechanism is described in full in [the Datasette documentation](https://docs.datasette.io/en/stable/authentication.html).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-tiddlywiki\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-tiddlywiki",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-tiddlywiki",
+    "package_url": "https://pypi.org/project/datasette-tiddlywiki/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-tiddlywiki/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-tiddlywiki/actions",
+      "Changelog": "https://github.com/simonw/datasette-tiddlywiki/releases",
+      "Homepage": "https://github.com/simonw/datasette-tiddlywiki",
+      "Issues": "https://github.com/simonw/datasette-tiddlywiki/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-tiddlywiki/0.2/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Run TiddlyWiki in Datasette and save Tiddlers to a SQLite database",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12881614,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "de5b43b2e5c1102423036293ace127e7",
+          "sha256": "917aabeb5df9a6b11f1470bb22ec0a7d96872d28661e4bc31fa1cf06b9a02d7e"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiddlywiki-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "de5b43b2e5c1102423036293ace127e7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 419388,
+        "upload_time": "2021-12-23T01:12:21",
+        "upload_time_iso_8601": "2021-12-23T01:12:21.220680Z",
+        "url": "https://files.pythonhosted.org/packages/58/b4/d0313e170b862b2e81020954455dda8773e3dbec5fc4e8da8f58c6fbe200/datasette_tiddlywiki-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ca0fb587da8496999bb36529f5d63228",
+          "sha256": "dbfad2f3b7b0a81d52fa0f4cca69286637ae7738d38cafadb3a6c2b25530f2a2"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiddlywiki-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ca0fb587da8496999bb36529f5d63228",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 414636,
+        "upload_time": "2021-12-23T01:12:22",
+        "upload_time_iso_8601": "2021-12-23T01:12:22.344483Z",
+        "url": "https://files.pythonhosted.org/packages/e4/f9/8400d5a7e594b0f07fae10b0832d85ab4cf48f1f87e1f6009f682970162e/datasette-tiddlywiki-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5882d3af752606af6d027fe366735685",
+          "sha256": "12ffe3a1db713f19bebb3831c785420f5ea566ef618eeeb3af845d610db072b0"
+        },
+        "downloads": -1,
+        "filename": "datasette_tiddlywiki-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5882d3af752606af6d027fe366735685",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 420487,
+        "upload_time": "2022-02-14T05:53:07",
+        "upload_time_iso_8601": "2022-02-14T05:53:07.966127Z",
+        "url": "https://files.pythonhosted.org/packages/29/04/e40fcbb39d946a7210b792c498ba50f64a65033b0ffa07612179a6931d6a/datasette_tiddlywiki-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d4997e8931904db76fa1337c80e8c2ab",
+          "sha256": "d2e94bfb562697d71fcc074883ecd8ce611cec26c05f4f2593f0c04d60181c8b"
+        },
+        "downloads": -1,
+        "filename": "datasette-tiddlywiki-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d4997e8931904db76fa1337c80e8c2ab",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 416098,
+        "upload_time": "2022-02-14T05:53:09",
+        "upload_time_iso_8601": "2022-02-14T05:53:09.259237Z",
+        "url": "https://files.pythonhosted.org/packages/f3/69/4995333650fb8e6a8eaf904ef645e7853aa4c687e5b8275c414203fd7001/datasette-tiddlywiki-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "5882d3af752606af6d027fe366735685",
+        "sha256": "12ffe3a1db713f19bebb3831c785420f5ea566ef618eeeb3af845d610db072b0"
+      },
+      "downloads": -1,
+      "filename": "datasette_tiddlywiki-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "5882d3af752606af6d027fe366735685",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 420487,
+      "upload_time": "2022-02-14T05:53:07",
+      "upload_time_iso_8601": "2022-02-14T05:53:07.966127Z",
+      "url": "https://files.pythonhosted.org/packages/29/04/e40fcbb39d946a7210b792c498ba50f64a65033b0ffa07612179a6931d6a/datasette_tiddlywiki-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d4997e8931904db76fa1337c80e8c2ab",
+        "sha256": "d2e94bfb562697d71fcc074883ecd8ce611cec26c05f4f2593f0c04d60181c8b"
+      },
+      "downloads": -1,
+      "filename": "datasette-tiddlywiki-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d4997e8931904db76fa1337c80e8c2ab",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 416098,
+      "upload_time": "2022-02-14T05:53:09",
+      "upload_time_iso_8601": "2022-02-14T05:53:09.259237Z",
+      "url": "https://files.pythonhosted.org/packages/f3/69/4995333650fb8e6a8eaf904ef645e7853aa4c687e5b8275c414203fd7001/datasette-tiddlywiki-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

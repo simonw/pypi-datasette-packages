@@ -1,0 +1,173 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# sphinx-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/sphinx-to-sqlite.svg)](https://pypi.org/project/sphinx-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sphinx-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/sphinx-to-sqlite/releases)\n[![Tests](https://github.com/simonw/sphinx-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/sphinx-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sphinx-to-sqlite/blob/master/LICENSE)\n\nCreate a SQLite database from Sphinx documentation.\n\n## Demo\n\nYou can see the results of running this tool against the [Datasette documentation](https://docs.datasette.io/) at https://latest-docs.datasette.io/docs/sections\n\n## Installation\n\nInstall this tool using `pip`:\n\n    $ pip install sphinx-to-sqlite\n\n## Usage\n\nFirst run `sphinx-build` with the `-b xml` option to create XML files in your `_build/` directory.\n\nThen run:\n\n    $ sphinx-to-sqlite docs.db path/to/_build\n\nTo build the SQLite database.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd sphinx-to-sqlite\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/sphinx-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "sphinx-to-sqlite",
+    "package_url": "https://pypi.org/project/sphinx-to-sqlite/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/sphinx-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/sphinx-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/sphinx-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/sphinx-to-sqlite",
+      "Issues": "https://github.com/simonw/sphinx-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/sphinx-to-sqlite/0.1a1/",
+    "requires_dist": [
+      "click",
+      "sqlite-utils",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Create a SQLite database from Sphinx documentation",
+    "version": "0.1a1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8471795,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "401b1aad8d11eaa3fe54567b032376b7",
+          "sha256": "03f0c47ac11a8b7fdf39976284196f4d0e836b3694f68a087a135eead2436442"
+        },
+        "downloads": -1,
+        "filename": "sphinx_to_sqlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "401b1aad8d11eaa3fe54567b032376b7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7339,
+        "upload_time": "2020-10-18T21:29:35",
+        "upload_time_iso_8601": "2020-10-18T21:29:35.215257Z",
+        "url": "https://files.pythonhosted.org/packages/07/ad/a45e00bfc9b7bf9bb865f41af9e836d91d6ba10731ae647eff83f3c0a601/sphinx_to_sqlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7dd04a3ad5a518654a3e0931823e8ee2",
+          "sha256": "a7031904f8fec1201b282a9f94b7a6a1ea8318fd089687076a22434b94c7f13c"
+        },
+        "downloads": -1,
+        "filename": "sphinx-to-sqlite-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7dd04a3ad5a518654a3e0931823e8ee2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2881,
+        "upload_time": "2020-10-18T21:29:37",
+        "upload_time_iso_8601": "2020-10-18T21:29:37.137551Z",
+        "url": "https://files.pythonhosted.org/packages/e1/3b/eec7faf97335c5d16278a749a96c4b45bd3452f4c86eeb9a6a0ed45b8032/sphinx-to-sqlite-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c1e7ed41927f1955fa7b1f3828b2a52d",
+          "sha256": "8e38eeeb52bcdee5dd39b4b4b4ef2fb68cdda38e451dc3bf4d52e1f324484fce"
+        },
+        "downloads": -1,
+        "filename": "sphinx_to_sqlite-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c1e7ed41927f1955fa7b1f3828b2a52d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7411,
+        "upload_time": "2020-10-22T04:56:31",
+        "upload_time_iso_8601": "2020-10-22T04:56:31.166666Z",
+        "url": "https://files.pythonhosted.org/packages/9b/44/d9310472d3d13f0f248c5d77f15235cb119cab553929f9e13253643774ca/sphinx_to_sqlite-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0e062d36064b2e5545e5def4b535a370",
+          "sha256": "9430dd4712a1d9c1e3b356743fe5f99165032de92d2f22bef82171faacb2c8e9"
+        },
+        "downloads": -1,
+        "filename": "sphinx-to-sqlite-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0e062d36064b2e5545e5def4b535a370",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2972,
+        "upload_time": "2020-10-22T04:56:32",
+        "upload_time_iso_8601": "2020-10-22T04:56:32.318506Z",
+        "url": "https://files.pythonhosted.org/packages/46/46/87716620aa03b78fdba9390cc99189cdf62aee2415d6032dedb5eaca3b4e/sphinx-to-sqlite-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "c1e7ed41927f1955fa7b1f3828b2a52d",
+        "sha256": "8e38eeeb52bcdee5dd39b4b4b4ef2fb68cdda38e451dc3bf4d52e1f324484fce"
+      },
+      "downloads": -1,
+      "filename": "sphinx_to_sqlite-0.1a1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c1e7ed41927f1955fa7b1f3828b2a52d",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7411,
+      "upload_time": "2020-10-22T04:56:31",
+      "upload_time_iso_8601": "2020-10-22T04:56:31.166666Z",
+      "url": "https://files.pythonhosted.org/packages/9b/44/d9310472d3d13f0f248c5d77f15235cb119cab553929f9e13253643774ca/sphinx_to_sqlite-0.1a1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "0e062d36064b2e5545e5def4b535a370",
+        "sha256": "9430dd4712a1d9c1e3b356743fe5f99165032de92d2f22bef82171faacb2c8e9"
+      },
+      "downloads": -1,
+      "filename": "sphinx-to-sqlite-0.1a1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "0e062d36064b2e5545e5def4b535a370",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2972,
+      "upload_time": "2020-10-22T04:56:32",
+      "upload_time_iso_8601": "2020-10-22T04:56:32.318506Z",
+      "url": "https://files.pythonhosted.org/packages/46/46/87716620aa03b78fdba9390cc99189cdf62aee2415d6032dedb5eaca3b4e/sphinx-to-sqlite-0.1a1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

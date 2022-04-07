@@ -1,0 +1,132 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-pyinstrument\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-pyinstrument.svg)](https://pypi.org/project/datasette-pyinstrument/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-pyinstrument?include_prereleases&label=changelog)](https://github.com/simonw/datasette-pyinstrument/releases)\n[![Tests](https://github.com/simonw/datasette-pyinstrument/workflows/Test/badge.svg)](https://github.com/simonw/datasette-pyinstrument/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-pyinstrument/blob/main/LICENSE)\n\nUse pyinstrument to analyze Datasette page performance\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-pyinstrument\n\n## Usage\n\nOnce installed, adding `?_pyinstrument=1` to any URL within Datasette will replace the output of that page with the pyinstrument profiler results for it.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-pyinstrument\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-pyinstrument",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-pyinstrument",
+    "package_url": "https://pypi.org/project/datasette-pyinstrument/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-pyinstrument/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-pyinstrument/actions",
+      "Changelog": "https://github.com/simonw/datasette-pyinstrument/releases",
+      "Homepage": "https://github.com/simonw/datasette-pyinstrument",
+      "Issues": "https://github.com/simonw/datasette-pyinstrument/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-pyinstrument/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pyinstrument",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Use pyinstrument to analyze Datasette page performance",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11123227,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7bd257e5a8e64b7ee5c2d7cda00095da",
+          "sha256": "59830489617ed5ae2b89f343a8ddf2fe4f66123f6044d383af666e7b3589c967"
+        },
+        "downloads": -1,
+        "filename": "datasette_pyinstrument-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7bd257e5a8e64b7ee5c2d7cda00095da",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2746,
+        "upload_time": "2021-08-08T15:44:36",
+        "upload_time_iso_8601": "2021-08-08T15:44:36.925293Z",
+        "url": "https://files.pythonhosted.org/packages/f9/4b/fa2f99ecc523433230633affa15223ad3d87686cc752232b44edf4117d9b/datasette_pyinstrument-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9ea73ab1d5315a7f181e31a24d57630f",
+          "sha256": "d3068afc5888529d0d8fcb952adacd28a9defc782b076f07e8d411ca6c2cf148"
+        },
+        "downloads": -1,
+        "filename": "datasette-pyinstrument-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9ea73ab1d5315a7f181e31a24d57630f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 2511,
+        "upload_time": "2021-08-08T15:44:38",
+        "upload_time_iso_8601": "2021-08-08T15:44:38.345519Z",
+        "url": "https://files.pythonhosted.org/packages/70/52/8e68e873803bdd89527d9eecc3ed5289129f66e89b6c635da2fcda7b254e/datasette-pyinstrument-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "7bd257e5a8e64b7ee5c2d7cda00095da",
+        "sha256": "59830489617ed5ae2b89f343a8ddf2fe4f66123f6044d383af666e7b3589c967"
+      },
+      "downloads": -1,
+      "filename": "datasette_pyinstrument-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "7bd257e5a8e64b7ee5c2d7cda00095da",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 2746,
+      "upload_time": "2021-08-08T15:44:36",
+      "upload_time_iso_8601": "2021-08-08T15:44:36.925293Z",
+      "url": "https://files.pythonhosted.org/packages/f9/4b/fa2f99ecc523433230633affa15223ad3d87686cc752232b44edf4117d9b/datasette_pyinstrument-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "9ea73ab1d5315a7f181e31a24d57630f",
+        "sha256": "d3068afc5888529d0d8fcb952adacd28a9defc782b076f07e8d411ca6c2cf148"
+      },
+      "downloads": -1,
+      "filename": "datasette-pyinstrument-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "9ea73ab1d5315a7f181e31a24d57630f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 2511,
+      "upload_time": "2021-08-08T15:44:38",
+      "upload_time_iso_8601": "2021-08-08T15:44:38.345519Z",
+      "url": "https://files.pythonhosted.org/packages/70/52/8e68e873803bdd89527d9eecc3ed5289129f66e89b6c635da2fcda7b254e/datasette-pyinstrument-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

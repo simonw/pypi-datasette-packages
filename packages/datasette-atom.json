@@ -1,0 +1,394 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-atom\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-atom.svg)](https://pypi.org/project/datasette-atom/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-atom?include_prereleases&label=changelog)](https://github.com/simonw/datasette-atom/releases)\n[![Tests](https://github.com/simonw/datasette-atom/workflows/Test/badge.svg)](https://github.com/simonw/datasette-atom/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-atom/blob/main/LICENSE)\n\nDatasette plugin that adds support for generating [Atom feeds](https://validator.w3.org/feed/docs/atom.html) with the results of a SQL query.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable the `.atom` output extension.\n\n    $ pip install datasette-atom\n\n## Usage\n\nTo create an Atom feed you need to define a custom SQL query that returns a required set of columns:\n\n* `atom_id` - a unique ID for each row. [This article](https://web.archive.org/web/20080211143232/http://diveintomark.org/archives/2004/05/28/howto-atom-id) has suggestions about ways to create these IDs.\n* `atom_title` - a title for that row.\n* `atom_updated` - an [RFC 3339](http://www.faqs.org/rfcs/rfc3339.html) timestamp representing the last time the entry was modified in a significant way. This can usually be the time that the row was created.\n\nThe following columns are optional:\n\n* `atom_content` - content that should be shown in the feed. This will be treated as a regular string, so any embedded HTML tags will be escaped when they are displayed.\n* `atom_content_html` - content that should be shown in the feed. This will be treated as an HTML string, and will be sanitized using [Bleach](https://github.com/mozilla/bleach) to ensure it does not have any malicious code in it before being returned as part of a `<content type=\"html\">` Atom element. If both are provided, this will be used in place of `atom_content`.\n* `atom_link` - a URL that should be used as the link that the feed entry points to.\n* `atom_author_name` - the name of the author of the entry. If you provide this you can also provide `atom_author_uri` and `atom_author_email` with a URL and e-mail address for that author.\n\nA query that returns these columns can then be returned as an Atom feed by adding the `.atom` extension.\n\n## Example\n\nHere is an example SQL query which generates an Atom feed for new entries on [www.niche-museums.com](https://www.niche-museums.com/):\n\n```sql\nselect\n  'tag:niche-museums.com,' || substr(created, 0, 11) || ':' || id as atom_id,\n  name as atom_title,\n  created as atom_updated,\n  'https://www.niche-museums.com/browse/museums/' || id as atom_link,\n  coalesce(\n    '<img src=\"' || photo_url || '?w=800&amp;h=400&amp;fit=crop&amp;auto=compress\">',\n    ''\n  ) || '<p>' || description || '</p>' as atom_content_html\nfrom\n  museums\norder by\n  created desc\nlimit\n  15\n```\n\nYou can try this query by [pasting it in here](https://www.niche-museums.com/browse) - then click the `.atom` link to see it as an Atom feed.\n\n## Using a canned query\n\nDatasette's [canned query mechanism](https://datasette.readthedocs.io/en/stable/sql_queries.html#canned-queries) is a useful way to configure feeds. If a canned query definition has a `title` that will be used as the title of the Atom feed.\n\nHere's an example, defined using a `metadata.yaml` file:\n\n```yaml\ndatabases:\n  browse:\n    queries:\n      feed:\n        title: Niche Museums\n        sql: |-\n          select\n            'tag:niche-museums.com,' || substr(created, 0, 11) || ':' || id as atom_id,\n            name as atom_title,\n            created as atom_updated,\n            'https://www.niche-museums.com/browse/museums/' || id as atom_link,\n            coalesce(\n              '<img src=\"' || photo_url || '?w=800&amp;h=400&amp;fit=crop&amp;auto=compress\">',\n              ''\n            ) || '<p>' || description || '</p>' as atom_content_html\n          from\n            museums\n          order by\n            created desc\n          limit\n            15\n```\n## Disabling HTML filtering\n\nThe HTML allow-list used by Bleach for the `atom_content_html` column can be found in the `clean(html)` function at the bottom of [datasette_atom/__init__.py](https://github.com/simonw/datasette-atom/blob/main/datasette_atom/__init__.py).\n\nYou can disable Bleach entirely for Atom feeds generated using a canned query. You should only do this if you are certain that no user-provided HTML could be included in that value.\n\nHere's how to do that in `metadata.json`:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-atom\": {\n      \"allow_unsafe_html_in_canned_queries\": true\n    }\n  }\n}\n```\nSetting this to `true` will disable Bleach filtering for all canned queries across all databases.\n\nYou can disable Bleach filtering just for a specific list of canned queries like so:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-atom\": {\n      \"allow_unsafe_html_in_canned_queries\": {\n        \"museums\": [\"latest\", \"moderation\"]\n      }\n    }\n  }\n}\n```\nThis will disable Bleach just for the canned queries called `latest` and `moderation` in the `museums.db` database.\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-atom",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-atom",
+    "package_url": "https://pypi.org/project/datasette-atom/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-atom/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-atom/actions",
+      "Changelog": "https://github.com/simonw/datasette-atom/releases",
+      "Homepage": "https://github.com/simonw/datasette-atom",
+      "Issues": "https://github.com/simonw/datasette-atom/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-atom/0.8.1/",
+    "requires_dist": [
+      "datasette (>=0.49)",
+      "feedgen",
+      "bleach",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin that adds a .atom output format",
+    "version": "0.8.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8749177,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "46f2b1e8cff89a7a03dc3b7ffc155a9f",
+          "sha256": "ebf4001ac8501b19845ad685f2ba57a93f75082d1d93195ce1f67b7a659d8076"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "46f2b1e8cff89a7a03dc3b7ffc155a9f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6849,
+        "upload_time": "2019-09-17T15:42:29",
+        "upload_time_iso_8601": "2019-09-17T15:42:29.997477Z",
+        "url": "https://files.pythonhosted.org/packages/b1/2e/1b143ad52bd92d2babaf6c3acc7002ad84127c18745bd8f4a72f974b056d/datasette_atom-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "dee12357da984c5bc751bc46c5b0ae73",
+          "sha256": "7877b0271f70978ceeb57dbed13957542be40982e86557bfd80a495d7f79a87d"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dee12357da984c5bc751bc46c5b0ae73",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7623,
+        "upload_time": "2019-11-30T06:26:04",
+        "upload_time_iso_8601": "2019-11-30T06:26:04.841160Z",
+        "url": "https://files.pythonhosted.org/packages/76/15/47a9661b0648075045a13183b7c12458466a7d6459ca137cef9b05ce9dc7/datasette_atom-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b028cf0f70e67642143bc53a71c34c08",
+          "sha256": "c4fff0754a8ee5c543b38a1722af8879034e0b122a71b196537a4687d5b83a71"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b028cf0f70e67642143bc53a71c34c08",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7654,
+        "upload_time": "2019-11-30T06:45:41",
+        "upload_time_iso_8601": "2019-11-30T06:45:41.558763Z",
+        "url": "https://files.pythonhosted.org/packages/ab/1c/46aed59d17b6d1a565ecc40fc8e285beef83f73178aae11c04239b421864/datasette_atom-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b78284f5d05d769124a1915c155adabc",
+          "sha256": "bc123556748ca9d16d47369d493c92cf1fab0b1ae54aacaf6f8e236bce8118f6"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b78284f5d05d769124a1915c155adabc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7925,
+        "upload_time": "2019-11-30T23:26:37",
+        "upload_time_iso_8601": "2019-11-30T23:26:37.034527Z",
+        "url": "https://files.pythonhosted.org/packages/cf/9f/4d0633b36d3bf7989b2ffa451a4f6f8f849af464e13b43e44a2c2d2bbb26/datasette_atom-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1b0587760c42263e2047bc2c834e237c",
+          "sha256": "1bb7a5a3900e2587377fac6ca8de97d3c9c74b0cba120bf3b6fb023b5e690771"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1b0587760c42263e2047bc2c834e237c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7931,
+        "upload_time": "2019-12-03T00:34:46",
+        "upload_time_iso_8601": "2019-12-03T00:34:46.394267Z",
+        "url": "https://files.pythonhosted.org/packages/f3/77/2df2013cd988cb1521c60093d68187bbf94b8fb8d2166affa0fc65f7ad88/datasette_atom-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c922dd12ff3d7716e7de5fe9d337a92d",
+          "sha256": "ca2e9dab90bb6364f941d59c8ca53476570da5b8fef7f1427e56a383aa73a33d"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c922dd12ff3d7716e7de5fe9d337a92d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7931,
+        "upload_time": "2020-02-28T07:47:30",
+        "upload_time_iso_8601": "2020-02-28T07:47:30.226146Z",
+        "url": "https://files.pythonhosted.org/packages/33/77/6781193a978552e6424f5a18b5ce05b9a0e99dea7f35698ea319056890c1/datasette_atom-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b378b9505827ce1a4160f9de2ab984ae",
+          "sha256": "2299def3ea211795b4ef13bd72cfc7f491fba52ccaa96e18a10df4430ac68850"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b378b9505827ce1a4160f9de2ab984ae",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8084,
+        "upload_time": "2020-04-30T16:12:54",
+        "upload_time_iso_8601": "2020-04-30T16:12:54.131123Z",
+        "url": "https://files.pythonhosted.org/packages/53/80/613cab327150940f00f549dac1730acd8e663ff0d2247c27eb1534e34dd5/datasette_atom-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f3311c907a9448da076c4dfdef15eb97",
+          "sha256": "4856adfa4c9a41bb88da7a6a3199c17747aca5da571f08030a530a190cbfd63a"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f3311c907a9448da076c4dfdef15eb97",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8497,
+        "upload_time": "2020-05-28T16:30:58",
+        "upload_time_iso_8601": "2020-05-28T16:30:58.141943Z",
+        "url": "https://files.pythonhosted.org/packages/25/f7/0be7927c4213887e699f1c93018a849af6a2bb01c57f2f79aecb001bd09f/datasette_atom-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "aecf7fcf52115260b113ee3dc6a6c180",
+          "sha256": "004b6a028017a0e2fd1b476336c7bf9a4579b0832adfd70b67c10587643c4279"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "aecf7fcf52115260b113ee3dc6a6c180",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9056,
+        "upload_time": "2020-08-23T16:57:52",
+        "upload_time_iso_8601": "2020-08-23T16:57:52.875695Z",
+        "url": "https://files.pythonhosted.org/packages/d8/83/bb54a2328e45e17de1f583e38bf556e3af240ec4a4b345866a34bed9390b/datasette_atom-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8ded0b4a8c554cdb5e3b68b24fc343cb",
+          "sha256": "be517f9a305e992ee7646dab3d04a0aaba68183a80f0b72403f0a23990fefc94"
+        },
+        "downloads": -1,
+        "filename": "datasette-atom-0.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8ded0b4a8c554cdb5e3b68b24fc343cb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4902,
+        "upload_time": "2020-08-23T16:57:54",
+        "upload_time_iso_8601": "2020-08-23T16:57:54.073630Z",
+        "url": "https://files.pythonhosted.org/packages/45/fe/a284fb796acb85110c5ba4050b7c00b39308c3f489417d10e4a4f6e01638/datasette-atom-0.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "86542b22b44c766bfe2b6b12308596ca",
+          "sha256": "f6c254037f1411573d901cba018e7e07b76174cafce50960d305193a777d2298"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "86542b22b44c766bfe2b6b12308596ca",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9064,
+        "upload_time": "2020-09-14T22:16:39",
+        "upload_time_iso_8601": "2020-09-14T22:16:39.910783Z",
+        "url": "https://files.pythonhosted.org/packages/43/d8/2005409c640051391e52ef84d1ae305daa74673620c603b35bd26a9f5fd5/datasette_atom-0.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ceb8ec65171d83b388b96198cc233108",
+          "sha256": "64c8233ccd6bed5cdef06bb416120a86f70454e7dd5e030d6582c85629f9c445"
+        },
+        "downloads": -1,
+        "filename": "datasette-atom-0.8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ceb8ec65171d83b388b96198cc233108",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4910,
+        "upload_time": "2020-09-14T22:16:40",
+        "upload_time_iso_8601": "2020-09-14T22:16:40.818781Z",
+        "url": "https://files.pythonhosted.org/packages/b8/cc/4926fe70256874bbfc15d5e01c272655a2874f1c0c3a0bf3f9b82b2b28d4/datasette-atom-0.8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.8.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "66f010485c12c997f0b3510ce62014ee",
+          "sha256": "2712b91ccbd02e18cc3808b179e517fa8732c43ff768b226ee114986b7f2f56d"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.8.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "66f010485c12c997f0b3510ce62014ee",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9106,
+        "upload_time": "2020-11-25T19:41:04",
+        "upload_time_iso_8601": "2020-11-25T19:41:04.646045Z",
+        "url": "https://files.pythonhosted.org/packages/fd/1a/e0f9cbc0a8769e2739200ecc83a7f6c9fc7b0854242a3ba9260ab5864837/datasette_atom-0.8.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1f684ae72a985a14aadee132efc43006",
+          "sha256": "380aadcdfa16fd87ee886659b870732edef7ef98c573df49636349db83968d06"
+        },
+        "downloads": -1,
+        "filename": "datasette-atom-0.8.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1f684ae72a985a14aadee132efc43006",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4983,
+        "upload_time": "2020-11-25T19:41:05",
+        "upload_time_iso_8601": "2020-11-25T19:41:05.685381Z",
+        "url": "https://files.pythonhosted.org/packages/36/eb/47edc2b134ca1c26d8af34c2585b34dce5c17221e8750d0db47f343f4287/datasette-atom-0.8.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "66f010485c12c997f0b3510ce62014ee",
+        "sha256": "2712b91ccbd02e18cc3808b179e517fa8732c43ff768b226ee114986b7f2f56d"
+      },
+      "downloads": -1,
+      "filename": "datasette_atom-0.8.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "66f010485c12c997f0b3510ce62014ee",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9106,
+      "upload_time": "2020-11-25T19:41:04",
+      "upload_time_iso_8601": "2020-11-25T19:41:04.646045Z",
+      "url": "https://files.pythonhosted.org/packages/fd/1a/e0f9cbc0a8769e2739200ecc83a7f6c9fc7b0854242a3ba9260ab5864837/datasette_atom-0.8.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "1f684ae72a985a14aadee132efc43006",
+        "sha256": "380aadcdfa16fd87ee886659b870732edef7ef98c573df49636349db83968d06"
+      },
+      "downloads": -1,
+      "filename": "datasette-atom-0.8.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "1f684ae72a985a14aadee132efc43006",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 4983,
+      "upload_time": "2020-11-25T19:41:05",
+      "upload_time_iso_8601": "2020-11-25T19:41:05.685381Z",
+      "url": "https://files.pythonhosted.org/packages/36/eb/47edc2b134ca1c26d8af34c2585b34dce5c17221e8750d0db47f343f4287/datasette-atom-0.8.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

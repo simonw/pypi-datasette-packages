@@ -1,0 +1,259 @@
+{
+  "info": {
+    "author": "Chris Amico",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-geojson\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-geojson.svg)](https://pypi.org/project/datasette-geojson/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/datasette-geojson?include_prereleases&label=changelog)](https://github.com/eyeseast/datasette-geojson/releases)\n[![Tests](https://github.com/eyeseast/datasette-geojson/workflows/Test/badge.svg)](https://github.com/eyeseast/datasette-geojson/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/datasette-geojson/blob/main/LICENSE)\n\nAdd GeoJSON as an output option for datasette queries.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-geojson\n\n## Usage\n\nTo render GeoJSON, add a `.geojson` extension to any query URL that includes a `geometry` column. That column should be a valid [GeoJSON geometry](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1).\n\nFor example, you might use [geojson-to-sqlite](https://pypi.org/project/geojson-to-sqlite/) or [shapefile-to-sqlite](https://pypi.org/project/shapefile-to-sqlite/) to load [neighborhood boundaries](https://bostonopendata-boston.opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0/explore) into a SQLite database.\n\n```sh\nwget -O neighborhoods.geojson https://opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0.geojson\ngeojson-to-sqlite boston.db neighborhoods neighborhoods.geojson --spatial-index # create a spatial index\ndatasette serve boston.db --load-extension spatialite\n```\n\nIf you're using Spatialite, the geometry column will be in a binary format. If not, make sure the `geometry` column is a well-formed [GeoJSON geometry](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1). If you used `geojson-to-sqlite` or `shapefile-to-sqlite`, you should be all set.\n\nRun this query in Datasette and you'll see a link to download GeoJSON:\n\n```sql\nselect\n  rowid,\n  OBJECTID,\n  Name,\n  Acres,\n  Neighborhood_ID,\n  SqMiles,\n  ShapeSTArea,\n  ShapeSTLength,\n  geometry\nfrom\n  neighborhoods\norder by\n  rowid\nlimit\n  101\n```\n\nNote that the geometry column needs to be explicitly _named_ `geometry` or you won't get the option to export GeoJSON. If you want to use a different column, rename it with `AS`: `SELECT other AS geometry FROM my_table`.\n\n![export geojson](img/export-options.png)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-geojson\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/eyeseast/datasette-geojson",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-geojson",
+    "package_url": "https://pypi.org/project/datasette-geojson/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-geojson/",
+    "project_urls": {
+      "CI": "https://github.com/eyeseast/datasette-geojson/actions",
+      "Changelog": "https://github.com/eyeseast/datasette-geojson/releases",
+      "Homepage": "https://github.com/eyeseast/datasette-geojson",
+      "Issues": "https://github.com/eyeseast/datasette-geojson/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-geojson/0.3.1/",
+    "requires_dist": [
+      "datasette",
+      "geojson",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "geojson-to-sqlite ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Add GeoJSON as an output option",
+    "version": "0.3.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12912916,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "263239b952e801a02912e41ce74d230b",
+          "sha256": "a6592149af34e408f75d27ba7c40737e14e5a6d5ead7bff96c96386670454533"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "263239b952e801a02912e41ce74d230b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2691,
+        "upload_time": "2021-06-08T01:38:52",
+        "upload_time_iso_8601": "2021-06-08T01:38:52.312615Z",
+        "url": "https://files.pythonhosted.org/packages/67/c0/f78e2848fbf842f9e4a44cc194996bf0b0af34f27fa54d8cd3a5e1a7edb0/datasette_geojson-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "28a8a48463b5ee63760deb63e825d5e1",
+          "sha256": "f33919ac704609f6c32b1aba1ac643981041a0903220096f4af55a727a685804"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "28a8a48463b5ee63760deb63e825d5e1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2590,
+        "upload_time": "2021-06-08T01:38:53",
+        "upload_time_iso_8601": "2021-06-08T01:38:53.926786Z",
+        "url": "https://files.pythonhosted.org/packages/6e/27/46dae38e8a9727a637c5311a91abe5230651d3fb41bc6b3d6eaeb44c2467/datasette-geojson-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "284ff6a2e4319d6ed8d06630b84e178e",
+          "sha256": "6eed3740c9fb0cbef52ec6ce0860d2d5b3bb0f9d5816a4cae99d15e232294871"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "284ff6a2e4319d6ed8d06630b84e178e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3472,
+        "upload_time": "2021-06-09T19:05:33",
+        "upload_time_iso_8601": "2021-06-09T19:05:33.122370Z",
+        "url": "https://files.pythonhosted.org/packages/10/b1/7b3b0fa6eb1de181327525969a427d938656a5c0d2868bdba6bb87081a0b/datasette_geojson-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c546b0ce0375901433acda4e04da6098",
+          "sha256": "a69a8a1358da6873e2ca3cfb5f41d3b9942481fab64d3e91270923aa7eb014c7"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c546b0ce0375901433acda4e04da6098",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3468,
+        "upload_time": "2021-06-09T19:05:34",
+        "upload_time_iso_8601": "2021-06-09T19:05:34.951547Z",
+        "url": "https://files.pythonhosted.org/packages/5e/38/3fb4577590a9b0eaade782f7e800c85eb9918bb62c3473228bc21c3a1fff/datasette-geojson-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "65975133b707c7dda16757468f4d8ab6",
+          "sha256": "187358c8f3978254dd915b9867dd68daf99445226d475b4d6b50dc951740bf2f"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson-0.3.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "65975133b707c7dda16757468f4d8ab6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3582,
+        "upload_time": "2021-06-13T00:05:33",
+        "upload_time_iso_8601": "2021-06-13T00:05:33.152099Z",
+        "url": "https://files.pythonhosted.org/packages/4e/b0/ff6d404bf57639f00de5f14c7c222c7a16c135d4e17340d47441e80976a6/datasette_geojson-0.3.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3e4cebd7651792061fba1267849d0ee3",
+          "sha256": "c31016a29935df5820d103187292b4552e6d3fbd6cd30ab61e74d576f844907e"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-0.3.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3e4cebd7651792061fba1267849d0ee3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3499,
+        "upload_time": "2021-06-13T00:05:34",
+        "upload_time_iso_8601": "2021-06-13T00:05:34.259750Z",
+        "url": "https://files.pythonhosted.org/packages/f8/da/15dab5d227c92fc0998c0e9a50fb21cdc022a0951fab4560a4fbe799de08/datasette-geojson-0.3.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "43dfd84498bb4a28c24b985a1098ba2c",
+          "sha256": "d2aeb1d2bef78134ba2ae492f14f1b6a3c52bae97cf5a131506faf7a4d36f14e"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "43dfd84498bb4a28c24b985a1098ba2c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3592,
+        "upload_time": "2022-02-16T20:04:04",
+        "upload_time_iso_8601": "2022-02-16T20:04:04.846240Z",
+        "url": "https://files.pythonhosted.org/packages/5c/bd/1d2af37d75310ae9cb7347239993c0eb6b9e1c0de5b90732fca09470a6e1/datasette_geojson-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "60770b757f9b38787333a047252dbc00",
+          "sha256": "b959d14f53d872e7ba1885a358e0dd86b5fed40861057b1224ad80d5bef6e8d4"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "60770b757f9b38787333a047252dbc00",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3356,
+        "upload_time": "2022-02-16T20:04:06",
+        "upload_time_iso_8601": "2022-02-16T20:04:06.080317Z",
+        "url": "https://files.pythonhosted.org/packages/c5/ae/4d15d327236438a78d561389e6d40e9ba632c92c45741171433ea43da5e8/datasette-geojson-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "43dfd84498bb4a28c24b985a1098ba2c",
+        "sha256": "d2aeb1d2bef78134ba2ae492f14f1b6a3c52bae97cf5a131506faf7a4d36f14e"
+      },
+      "downloads": -1,
+      "filename": "datasette_geojson-0.3.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "43dfd84498bb4a28c24b985a1098ba2c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 3592,
+      "upload_time": "2022-02-16T20:04:04",
+      "upload_time_iso_8601": "2022-02-16T20:04:04.846240Z",
+      "url": "https://files.pythonhosted.org/packages/5c/bd/1d2af37d75310ae9cb7347239993c0eb6b9e1c0de5b90732fca09470a6e1/datasette_geojson-0.3.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "60770b757f9b38787333a047252dbc00",
+        "sha256": "b959d14f53d872e7ba1885a358e0dd86b5fed40861057b1224ad80d5bef6e8d4"
+      },
+      "downloads": -1,
+      "filename": "datasette-geojson-0.3.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "60770b757f9b38787333a047252dbc00",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 3356,
+      "upload_time": "2022-02-16T20:04:06",
+      "upload_time_iso_8601": "2022-02-16T20:04:06.080317Z",
+      "url": "https://files.pythonhosted.org/packages/c5/ae/4d15d327236438a78d561389e6d40e9ba632c92c45741171433ea43da5e8/datasette-geojson-0.3.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
