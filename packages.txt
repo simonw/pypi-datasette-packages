@@ -117,3 +117,5 @@ swarm-to-sqlite
 tableau-to-sqlite
 twitter-to-sqlite
 yaml-to-sqlite
+datasette-dashboards
+pypi-to-sqlite
