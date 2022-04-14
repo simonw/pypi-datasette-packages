@@ -25,7 +25,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/geojson-to-sqlite"
     },
-    "release_url": "https://pypi.org/project/geojson-to-sqlite/1.1/",
+    "release_url": "https://pypi.org/project/geojson-to-sqlite/1.1.1/",
     "requires_dist": [
       "sqlite-utils (>=3.23)",
       "shapely",
@@ -34,11 +34,11 @@
     ],
     "requires_python": "",
     "summary": "CLI tool for converting GeoJSON to SQLite (optionally with SpatiaLite)",
-    "version": "1.1",
+    "version": "1.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13498358,
+  "last_serial": 13508292,
   "releases": {
     "0.1": [
       {
@@ -359,46 +359,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "726547f951546a6181715b8a2e108ba7",
+          "sha256": "583e25472bb9d6e5bb8eae4e231578bc2a82c0ddc282ac2c9c1d3055345688be"
+        },
+        "downloads": -1,
+        "filename": "geojson_to_sqlite-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "726547f951546a6181715b8a2e108ba7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10249,
+        "upload_time": "2022-04-13T23:40:40",
+        "upload_time_iso_8601": "2022-04-13T23:40:40.393412Z",
+        "url": "https://files.pythonhosted.org/packages/4d/a3/236ba85d28ce395b2193cba131e275be75ddb3cc35cb35a89e010afb1b3e/geojson_to_sqlite-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e240a45809047960d1f82531e8c04e64",
+          "sha256": "c35611fe30e7dc01bb1823de7039653846a377b56db98313bc51c1b44089aec5"
+        },
+        "downloads": -1,
+        "filename": "geojson-to-sqlite-1.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e240a45809047960d1f82531e8c04e64",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9254,
+        "upload_time": "2022-04-13T23:40:41",
+        "upload_time_iso_8601": "2022-04-13T23:40:41.661828Z",
+        "url": "https://files.pythonhosted.org/packages/64/4d/ecf1eb4b5372341d9a41f2af050f06eefd614d9488789251f1f110e1fcad/geojson-to-sqlite-1.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "7d7e96dca62d023b78b11585eb2b5121",
-        "sha256": "2c80961ccc1cf3e1ed2b3e803fceeeab88caf4b2306f3284df37533f415635e4"
+        "md5": "726547f951546a6181715b8a2e108ba7",
+        "sha256": "583e25472bb9d6e5bb8eae4e231578bc2a82c0ddc282ac2c9c1d3055345688be"
       },
       "downloads": -1,
-      "filename": "geojson_to_sqlite-1.1-py3-none-any.whl",
+      "filename": "geojson_to_sqlite-1.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "7d7e96dca62d023b78b11585eb2b5121",
+      "md5_digest": "726547f951546a6181715b8a2e108ba7",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 10214,
-      "upload_time": "2022-04-13T05:01:22",
-      "upload_time_iso_8601": "2022-04-13T05:01:22.144757Z",
-      "url": "https://files.pythonhosted.org/packages/03/ab/c202072aad65c23a56395008b6d754046e0959b9a250aba305096e08c375/geojson_to_sqlite-1.1-py3-none-any.whl",
+      "size": 10249,
+      "upload_time": "2022-04-13T23:40:40",
+      "upload_time_iso_8601": "2022-04-13T23:40:40.393412Z",
+      "url": "https://files.pythonhosted.org/packages/4d/a3/236ba85d28ce395b2193cba131e275be75ddb3cc35cb35a89e010afb1b3e/geojson_to_sqlite-1.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "839d89c9397f742f2bc54cc51206f02f",
-        "sha256": "90ec24099e173d43375b0cb84dc4ba8cc9fe960d32eaf945c6b58e919ffbd326"
+        "md5": "e240a45809047960d1f82531e8c04e64",
+        "sha256": "c35611fe30e7dc01bb1823de7039653846a377b56db98313bc51c1b44089aec5"
       },
       "downloads": -1,
-      "filename": "geojson-to-sqlite-1.1.tar.gz",
+      "filename": "geojson-to-sqlite-1.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "839d89c9397f742f2bc54cc51206f02f",
+      "md5_digest": "e240a45809047960d1f82531e8c04e64",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 9228,
-      "upload_time": "2022-04-13T05:01:23",
-      "upload_time_iso_8601": "2022-04-13T05:01:23.520511Z",
-      "url": "https://files.pythonhosted.org/packages/93/a4/85cd6a460cf14c40bb6ced9a2c18a1d0019007d4a8b36ef2872d0f82eeee/geojson-to-sqlite-1.1.tar.gz",
+      "size": 9254,
+      "upload_time": "2022-04-13T23:40:41",
+      "upload_time_iso_8601": "2022-04-13T23:40:41.661828Z",
+      "url": "https://files.pythonhosted.org/packages/64/4d/ecf1eb4b5372341d9a41f2af050f06eefd614d9488789251f1f110e1fcad/geojson-to-sqlite-1.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
