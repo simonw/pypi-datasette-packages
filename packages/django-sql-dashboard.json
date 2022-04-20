@@ -29,12 +29,12 @@
       "Homepage": "https://github.com/simonw/django-sql-dashboard",
       "Issues": "https://github.com/simonw/django-sql-dashboard/issues"
     },
-    "release_url": "https://pypi.org/project/django-sql-dashboard/1.0.2/",
+    "release_url": "https://pypi.org/project/django-sql-dashboard/1.1/",
     "requires_dist": [
       "Django (>=3.0)",
       "markdown",
       "bleach",
-      "black (==21.5b2) ; extra == 'test'",
+      "black (>=22.3.0) ; extra == 'test'",
       "psycopg2 ; extra == 'test'",
       "pytest ; extra == 'test'",
       "pytest-django (==4.2.0) ; extra == 'test'",
@@ -46,11 +46,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "Django app for building dashboards using raw SQL queries",
-    "version": "1.0.2",
+    "version": "1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13116867,
+  "last_serial": 13562337,
   "releases": {
     "0.10a0": [
       {
@@ -1479,46 +1479,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7bfe27935a59102e717eaaee0ae48372",
+          "sha256": "33d516dd795bec89b11c88c10ed3dd1da518b59e4caf5292cdc97f1288813337"
+        },
+        "downloads": -1,
+        "filename": "django_sql_dashboard-1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7bfe27935a59102e717eaaee0ae48372",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 35049,
+        "upload_time": "2022-04-20T00:31:35",
+        "upload_time_iso_8601": "2022-04-20T00:31:35.912274Z",
+        "url": "https://files.pythonhosted.org/packages/c5/03/ab11c5b3e03ec6d77489656a16ddd5fffdab2a15b656fc8b37c9d165527a/django_sql_dashboard-1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5ead08e80e20ebda68bf2570aed9b10a",
+          "sha256": "6e8033840f424603505a8f7c2aad53faa936f7bea1c27e76808a7cad93f79ff7"
+        },
+        "downloads": -1,
+        "filename": "django-sql-dashboard-1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5ead08e80e20ebda68bf2570aed9b10a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 26825,
+        "upload_time": "2022-04-20T00:31:37",
+        "upload_time_iso_8601": "2022-04-20T00:31:37.261387Z",
+        "url": "https://files.pythonhosted.org/packages/86/a2/65397ceca8bcceb738d65d1989a1067f29d6373cf4f874b068baa1d7d4ee/django-sql-dashboard-1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "30b02fb4eaf57160851036a5b492e86e",
-        "sha256": "a4bc1193a69025d49aae5d47e3ecb0a5e94edf488b8462aa728b9ad1b120f293"
+        "md5": "7bfe27935a59102e717eaaee0ae48372",
+        "sha256": "33d516dd795bec89b11c88c10ed3dd1da518b59e4caf5292cdc97f1288813337"
       },
       "downloads": -1,
-      "filename": "django_sql_dashboard-1.0.2-py3-none-any.whl",
+      "filename": "django_sql_dashboard-1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "30b02fb4eaf57160851036a5b492e86e",
+      "md5_digest": "7bfe27935a59102e717eaaee0ae48372",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 35080,
-      "upload_time": "2022-03-08T20:03:51",
-      "upload_time_iso_8601": "2022-03-08T20:03:51.778503Z",
-      "url": "https://files.pythonhosted.org/packages/e9/11/a815fa6649ba75fe2cfde0a896d3055ff269d4ca10c7dfcf72093d57cccc/django_sql_dashboard-1.0.2-py3-none-any.whl",
+      "size": 35049,
+      "upload_time": "2022-04-20T00:31:35",
+      "upload_time_iso_8601": "2022-04-20T00:31:35.912274Z",
+      "url": "https://files.pythonhosted.org/packages/c5/03/ab11c5b3e03ec6d77489656a16ddd5fffdab2a15b656fc8b37c9d165527a/django_sql_dashboard-1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "1c75721fa89edc8a065a5106b9ce3b6f",
-        "sha256": "6982af8bc30d1d80a9b0713d075b7a705570366bd50c4c79ee18b08e89a3ba2e"
+        "md5": "5ead08e80e20ebda68bf2570aed9b10a",
+        "sha256": "6e8033840f424603505a8f7c2aad53faa936f7bea1c27e76808a7cad93f79ff7"
       },
       "downloads": -1,
-      "filename": "django-sql-dashboard-1.0.2.tar.gz",
+      "filename": "django-sql-dashboard-1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "1c75721fa89edc8a065a5106b9ce3b6f",
+      "md5_digest": "5ead08e80e20ebda68bf2570aed9b10a",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 26784,
-      "upload_time": "2022-03-08T20:03:52",
-      "upload_time_iso_8601": "2022-03-08T20:03:52.802690Z",
-      "url": "https://files.pythonhosted.org/packages/1c/7a/437c93a4f7443886ff5c7c20f2bfdf1573c0021b03e027e47ae56b290402/django-sql-dashboard-1.0.2.tar.gz",
+      "size": 26825,
+      "upload_time": "2022-04-20T00:31:37",
+      "upload_time_iso_8601": "2022-04-20T00:31:37.261387Z",
+      "url": "https://files.pythonhosted.org/packages/86/a2/65397ceca8bcceb738d65d1989a1067f29d6373cf4f874b068baa1d7d4ee/django-sql-dashboard-1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
