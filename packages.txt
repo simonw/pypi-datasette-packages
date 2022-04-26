@@ -119,3 +119,4 @@ twitter-to-sqlite
 yaml-to-sqlite
 datasette-dashboards
 pypi-to-sqlite
+datasette-total-page-time
