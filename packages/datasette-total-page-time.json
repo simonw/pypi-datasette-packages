@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-total-page-time\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-total-page-time.svg)](https://pypi.org/project/datasette-total-page-time/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-total-page-time?include_prereleases&label=changelog)](https://github.com/simonw/datasette-total-page-time/releases)\n[![Tests](https://github.com/simonw/datasette-total-page-time/workflows/Test/badge.svg)](https://github.com/simonw/datasette-total-page-time/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-total-page-time/blob/main/LICENSE)\n\nAdd a note to the Datasette footer measuring the total page load time\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-total-page-time\n\n## Usage\n\nOnce this plugin is installed, a note will appear in the footer of every page showing how long the page took to generate.\n\n> Queries took 326.74ms · Page took 386.310ms\n\n## How it works\n\nMeasuring how long a page takes to load and then injecting that note into the page is tricky, because you need to finish generating the page before you know how long it took to load it!\n\nThis plugin uses the [asgi_wrapper](https://docs.datasette.io/en/stable/plugin_hooks.html#asgi-wrapper-datasette) plugin hook to measure the time taken by Datasette and then inject the following JavaScript at the bottom of the response, after the closing `</html>` tag but with the correct measured value:\n\n```html\n<script>\nlet footer = document.querySelector(\"footer\");\nif (footer) {\n    let ms = 37.224;\n    let s = ` &middot; Page took ${ms.toFixed(3)}ms`;\n    footer.innerHTML += s;\n}\n</script>\n```\nThis script is injected only on pages with the `text/html` content type - so it should not affect JSON or CSV returned by Datasette.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-total-page-time\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-total-page-time",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-total-page-time",
+    "package_url": "https://pypi.org/project/datasette-total-page-time/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-total-page-time/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-total-page-time/actions",
+      "Changelog": "https://github.com/simonw/datasette-total-page-time/releases",
+      "Homepage": "https://github.com/simonw/datasette-total-page-time",
+      "Issues": "https://github.com/simonw/datasette-total-page-time/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-total-page-time/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Add a note to the Datasette footer measuring the total page load time",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13632487,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e28857e1667c7ab9b154c0217a2ebf07",
+          "sha256": "6b21682605417bbef4da31b81e1af6233e5126488eaba5b747e51d90392c0fa0"
+        },
+        "downloads": -1,
+        "filename": "datasette_total_page_time-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e28857e1667c7ab9b154c0217a2ebf07",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7590,
+        "upload_time": "2022-04-26T22:13:10",
+        "upload_time_iso_8601": "2022-04-26T22:13:10.837183Z",
+        "url": "https://files.pythonhosted.org/packages/aa/20/541417048ac6cd326799a4dd8348e86cd50b2512f26e5333e9195fe579b1/datasette_total_page_time-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fb260b990f65ecac76e3b1ddda5a927c",
+          "sha256": "ca5466fe5d894bdb4cf10b057f2070fdf3789d2af43c7c842ec1c47de344449a"
+        },
+        "downloads": -1,
+        "filename": "datasette-total-page-time-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fb260b990f65ecac76e3b1ddda5a927c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6934,
+        "upload_time": "2022-04-26T22:13:12",
+        "upload_time_iso_8601": "2022-04-26T22:13:12.175609Z",
+        "url": "https://files.pythonhosted.org/packages/25/2d/432099d52fe682ee227a4cfcdff8018b3647e3428d7de9f43af485deff3c/datasette-total-page-time-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e28857e1667c7ab9b154c0217a2ebf07",
+        "sha256": "6b21682605417bbef4da31b81e1af6233e5126488eaba5b747e51d90392c0fa0"
+      },
+      "downloads": -1,
+      "filename": "datasette_total_page_time-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "e28857e1667c7ab9b154c0217a2ebf07",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7590,
+      "upload_time": "2022-04-26T22:13:10",
+      "upload_time_iso_8601": "2022-04-26T22:13:10.837183Z",
+      "url": "https://files.pythonhosted.org/packages/aa/20/541417048ac6cd326799a4dd8348e86cd50b2512f26e5333e9195fe579b1/datasette_total_page_time-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "fb260b990f65ecac76e3b1ddda5a927c",
+        "sha256": "ca5466fe5d894bdb4cf10b057f2070fdf3789d2af43c7c842ec1c47de344449a"
+      },
+      "downloads": -1,
+      "filename": "datasette-total-page-time-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "fb260b990f65ecac76e3b1ddda5a927c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6934,
+      "upload_time": "2022-04-26T22:13:12",
+      "upload_time_iso_8601": "2022-04-26T22:13:12.175609Z",
+      "url": "https://files.pythonhosted.org/packages/25/2d/432099d52fe682ee227a4cfcdff8018b3647e3428d7de9f43af485deff3c/datasette-total-page-time-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
