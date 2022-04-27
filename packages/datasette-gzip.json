@@ -1,0 +1,135 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-gzip\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-gzip.svg)](https://pypi.org/project/datasette-gzip/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-gzip?include_prereleases&label=changelog)](https://github.com/simonw/datasette-gzip/releases)\n[![Tests](https://github.com/simonw/datasette-gzip/workflows/Test/badge.svg)](https://github.com/simonw/datasette-gzip/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-gzip/blob/main/LICENSE)\n\nAdd gzip compression to Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-gzip\n\n## Usage\n\nOnce installed, Datasette will obey the `Accept-Encoding:` header sent by browsers or other user agents and return content compressed in the most appropriate way.\n\nThis plugin is a thin wrapper for the [GzipMiddleware](https://www.starlette.io/middleware/#gzipmiddleware) provided by Starlette.\n\nIf you are already running Datasette behind a proxy such as Nginx or Cloudflare that applies its own compression you will not benefit from installing this plugin.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-gzip\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-gzip",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-gzip",
+    "package_url": "https://pypi.org/project/datasette-gzip/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-gzip/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-gzip/actions",
+      "Changelog": "https://github.com/simonw/datasette-gzip/releases",
+      "Homepage": "https://github.com/simonw/datasette-gzip",
+      "Issues": "https://github.com/simonw/datasette-gzip/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-gzip/0.1/",
+    "requires_dist": [
+      "datasette",
+      "starlette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Add gzip compression to Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13642278,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "08fc40d7739590fbc15db406655e6f11",
+          "sha256": "5860c10150ec4b83558568068036218e1fe1226dc7bfb45cd5f80ef672545c24"
+        },
+        "downloads": -1,
+        "filename": "datasette_gzip-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "08fc40d7739590fbc15db406655e6f11",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6601,
+        "upload_time": "2022-04-27T17:29:09",
+        "upload_time_iso_8601": "2022-04-27T17:29:09.666266Z",
+        "url": "https://files.pythonhosted.org/packages/44/c2/3a9ef7a9c42339be0cbe8f99bbd27c27d14b8db9c3ac0c6c6360bb4816fa/datasette_gzip-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d8de049fccee2a5a91ef7912e49a83ef",
+          "sha256": "7c9408e98b2420058588eb62a5985b95f824300006db917be784bac11dc4252c"
+        },
+        "downloads": -1,
+        "filename": "datasette-gzip-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d8de049fccee2a5a91ef7912e49a83ef",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6222,
+        "upload_time": "2022-04-27T17:29:11",
+        "upload_time_iso_8601": "2022-04-27T17:29:11.189268Z",
+        "url": "https://files.pythonhosted.org/packages/42/ed/0b2e4ff4e90fd4a7bc029d91b53d552e60f18fb9ffe97cb88c72f3e9903d/datasette-gzip-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "08fc40d7739590fbc15db406655e6f11",
+        "sha256": "5860c10150ec4b83558568068036218e1fe1226dc7bfb45cd5f80ef672545c24"
+      },
+      "downloads": -1,
+      "filename": "datasette_gzip-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "08fc40d7739590fbc15db406655e6f11",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6601,
+      "upload_time": "2022-04-27T17:29:09",
+      "upload_time_iso_8601": "2022-04-27T17:29:09.666266Z",
+      "url": "https://files.pythonhosted.org/packages/44/c2/3a9ef7a9c42339be0cbe8f99bbd27c27d14b8db9c3ac0c6c6360bb4816fa/datasette_gzip-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d8de049fccee2a5a91ef7912e49a83ef",
+        "sha256": "7c9408e98b2420058588eb62a5985b95f824300006db917be784bac11dc4252c"
+      },
+      "downloads": -1,
+      "filename": "datasette-gzip-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d8de049fccee2a5a91ef7912e49a83ef",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6222,
+      "upload_time": "2022-04-27T17:29:11",
+      "upload_time_iso_8601": "2022-04-27T17:29:11.189268Z",
+      "url": "https://files.pythonhosted.org/packages/42/ed/0b2e4ff4e90fd4a7bc029d91b53d552e60f18fb9ffe97cb88c72f3e9903d/datasette-gzip-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
