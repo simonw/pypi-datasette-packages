@@ -120,3 +120,4 @@ yaml-to-sqlite
 datasette-dashboards
 pypi-to-sqlite
 datasette-total-page-time
+datasette-nteract-data-explorer
