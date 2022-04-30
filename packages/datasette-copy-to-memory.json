@@ -1,0 +1,303 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-copy-to-memory\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-copy-to-memory.svg)](https://pypi.org/project/datasette-copy-to-memory/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-copy-to-memory?include_prereleases&label=changelog)](https://github.com/simonw/datasette-copy-to-memory/releases)\n[![Tests](https://github.com/simonw/datasette-copy-to-memory/workflows/Test/badge.svg)](https://github.com/simonw/datasette-copy-to-memory/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-copy-to-memory/blob/main/LICENSE)\n\nCopy database files into an in-memory database on startup\n\nThis plugin is **highly experimental**. It currently exists to support Datasette performance research, and is not designed for actual production usage.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-copy-to-memory\n\n## Usage\n\nOn startup, Datasette will create an in-memory named database for each attached database. This database will have the same name but with `_memory` at the end.\n\nSo running this:\n\n    datasette fixtures.db\n\nWill serve two databases: the original at `/fixtures` and the in-memory copy at `/fixtures_memory`.\n\n## Demo\n\nA demo is running on [latest-with-plugins.datasette.io](https://latest-with-plugins.datasette.io/) - the [/fixtures_memory](https://latest-with-plugins.datasette.io/fixtures_memory) table there is provided by this plugin.\n\n## Configuration\n\nBy default every attached database file will be loaded into a `_memory` copy.\n\nYou can use plugin configuration to specify just a subset of the database. For example, to create `github_memory` but not `fixtures_memory` you would use the following `metadata.yml` file:\n\n```yaml\nplugins:\n  datasette-copy-to-memory:\n    databases:\n    - github\n```\nThen start Datasette like this:\n\n    datasette github.db fixtures.db -m metadata.yml\n\nIf you don't want to have a `fixtures` and `fixtures_memory` database, you can use `replace: true` to have the plugin replace the file-backed database with the new in-memory one, reusing the same database name:\n\n```yaml\nplugins:\n  datasette-copy-to-memory:\n    replace: true\n```\nThen:\n\n    datasette github.db fixtures.db -m metadata.yml\n\nThis will result in both `/github` and `/fixtures` but no `/github_memory` or `/fixtures_memory`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-copy-to-memory\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-copy-to-memory",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-copy-to-memory",
+    "package_url": "https://pypi.org/project/datasette-copy-to-memory/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-copy-to-memory/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-copy-to-memory/actions",
+      "Changelog": "https://github.com/simonw/datasette-copy-to-memory/releases",
+      "Homepage": "https://github.com/simonw/datasette-copy-to-memory",
+      "Issues": "https://github.com/simonw/datasette-copy-to-memory/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-copy-to-memory/0.2/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Copy database files into an in-memory database on startup",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13676352,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5efc4d1371030520438809cffe9f63d7",
+          "sha256": "8cce4def4e8b1b43cb64304a5fbdb27b31e5065eb6b4dc313e9021a6b5a80664"
+        },
+        "downloads": -1,
+        "filename": "datasette_copy_to_memory-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5efc4d1371030520438809cffe9f63d7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6995,
+        "upload_time": "2022-04-28T20:07:05",
+        "upload_time_iso_8601": "2022-04-28T20:07:05.085025Z",
+        "url": "https://files.pythonhosted.org/packages/1c/e3/b66e5d666463d8ba1c0d630ee19a3994e0a65f3b4ee23eec4845592543e0/datasette_copy_to_memory-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9542764c22f4b6f8bc747005772e1deb",
+          "sha256": "7f7219a9e1f65b66fb08fec574521a2a04f70db12a049b1437a4481c5b9ee221"
+        },
+        "downloads": -1,
+        "filename": "datasette-copy-to-memory-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9542764c22f4b6f8bc747005772e1deb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6445,
+        "upload_time": "2022-04-28T20:07:06",
+        "upload_time_iso_8601": "2022-04-28T20:07:06.382512Z",
+        "url": "https://files.pythonhosted.org/packages/87/f4/01c6db07e3ea8657d9c1784ba8dbbe36aec4de1df9e867c033f4a109de47/datasette-copy-to-memory-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b17c9e2f945c3ef740f40f1244c6284b",
+          "sha256": "3ac07bb2135678fea243af5df381ae46f1bb0e874ac045cced26a19153bfca8a"
+        },
+        "downloads": -1,
+        "filename": "datasette_copy_to_memory-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b17c9e2f945c3ef740f40f1244c6284b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7244,
+        "upload_time": "2022-04-28T20:50:12",
+        "upload_time_iso_8601": "2022-04-28T20:50:12.833321Z",
+        "url": "https://files.pythonhosted.org/packages/09/d8/07f83561aacc26cd3f7cd92545d48e90229b7bf582fa264d0affeb67bc4e/datasette_copy_to_memory-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1966c5f19f0d78e4edf1c670b2036b16",
+          "sha256": "57f7693f4444e5d2ab8f08ed744ed25e61bf304e32e5a0601cee980cde07d9cd"
+        },
+        "downloads": -1,
+        "filename": "datasette-copy-to-memory-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1966c5f19f0d78e4edf1c670b2036b16",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6718,
+        "upload_time": "2022-04-28T20:50:14",
+        "upload_time_iso_8601": "2022-04-28T20:50:14.466614Z",
+        "url": "https://files.pythonhosted.org/packages/60/16/57b86490d6f5260c717677bc36202d1812b61411c7b89da924273fabd14c/datasette-copy-to-memory-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a722e8c5aa402f03c4f6a81bfcd73755",
+          "sha256": "6b01f9ab48c831533845e61691257f46d70185ba3948b02a06cbc655e5019003"
+        },
+        "downloads": -1,
+        "filename": "datasette_copy_to_memory-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a722e8c5aa402f03c4f6a81bfcd73755",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7313,
+        "upload_time": "2022-04-28T21:08:36",
+        "upload_time_iso_8601": "2022-04-28T21:08:36.277220Z",
+        "url": "https://files.pythonhosted.org/packages/63/8a/8e7ab092ac487ebdcbe6f8ab1db26565ed791b97eb86c1f67a1711704c15/datasette_copy_to_memory-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "81732df570097a48b4aa77ebfc9333eb",
+          "sha256": "9742356abdec21285824efb72e8e7b53dfd405a75a2eeac71513ddb6f75522ab"
+        },
+        "downloads": -1,
+        "filename": "datasette-copy-to-memory-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "81732df570097a48b4aa77ebfc9333eb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6737,
+        "upload_time": "2022-04-28T21:08:37",
+        "upload_time_iso_8601": "2022-04-28T21:08:37.381681Z",
+        "url": "https://files.pythonhosted.org/packages/19/03/ba1eac90197d9488fbaae1a3138084d531d9dcd573d853cb2014d1ad0cb0/datasette-copy-to-memory-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a7531064f1000c839ad855e05144d6cb",
+          "sha256": "d5a831bf84f07f1ad99db23b0b38dbdcf42e3b69b3eea4e7f63725ede071026b"
+        },
+        "downloads": -1,
+        "filename": "datasette_copy_to_memory-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a7531064f1000c839ad855e05144d6cb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7388,
+        "upload_time": "2022-04-28T21:50:17",
+        "upload_time_iso_8601": "2022-04-28T21:50:17.070832Z",
+        "url": "https://files.pythonhosted.org/packages/cd/5d/b0d1d228fddf715f9049fb91563bf1a6b8a830987ddcc1480acf16fc9704/datasette_copy_to_memory-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b9fe26eef2f1e11c4e633067537bb5de",
+          "sha256": "707651bffafe17629988dd592c9052b2ae7a0e36975b24226a5a28a39fec18fa"
+        },
+        "downloads": -1,
+        "filename": "datasette-copy-to-memory-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b9fe26eef2f1e11c4e633067537bb5de",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6810,
+        "upload_time": "2022-04-28T21:50:18",
+        "upload_time_iso_8601": "2022-04-28T21:50:18.327203Z",
+        "url": "https://files.pythonhosted.org/packages/bf/c6/6b8e493eb9612ec3d1ffea6f7babb284cf283597734e3c639ad56359aeb4/datasette-copy-to-memory-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "106e1a0823131b62d489088897318a1e",
+          "sha256": "5caa50b3570436518282b2fcd3914d1d0549815e4ba9881abf74073789b387a3"
+        },
+        "downloads": -1,
+        "filename": "datasette_copy_to_memory-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "106e1a0823131b62d489088897318a1e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7502,
+        "upload_time": "2022-04-30T19:50:46",
+        "upload_time_iso_8601": "2022-04-30T19:50:46.423330Z",
+        "url": "https://files.pythonhosted.org/packages/8c/d0/3060d48ee8b24b4053cae41af13d209315f80270de99561993b1577b5c26/datasette_copy_to_memory-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "668ef4a452d723cd1235ddd5e329790c",
+          "sha256": "f2407e030db46fd6985ebec0557c00811ca0efc4df4fe0a5a235884d6d3c096f"
+        },
+        "downloads": -1,
+        "filename": "datasette-copy-to-memory-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "668ef4a452d723cd1235ddd5e329790c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6989,
+        "upload_time": "2022-04-30T19:50:47",
+        "upload_time_iso_8601": "2022-04-30T19:50:47.693497Z",
+        "url": "https://files.pythonhosted.org/packages/ba/96/b6d695d5af7335652234bbfdcbdd9ee6618e86e23d060ac4ce07df340129/datasette-copy-to-memory-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "106e1a0823131b62d489088897318a1e",
+        "sha256": "5caa50b3570436518282b2fcd3914d1d0549815e4ba9881abf74073789b387a3"
+      },
+      "downloads": -1,
+      "filename": "datasette_copy_to_memory-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "106e1a0823131b62d489088897318a1e",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7502,
+      "upload_time": "2022-04-30T19:50:46",
+      "upload_time_iso_8601": "2022-04-30T19:50:46.423330Z",
+      "url": "https://files.pythonhosted.org/packages/8c/d0/3060d48ee8b24b4053cae41af13d209315f80270de99561993b1577b5c26/datasette_copy_to_memory-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "668ef4a452d723cd1235ddd5e329790c",
+        "sha256": "f2407e030db46fd6985ebec0557c00811ca0efc4df4fe0a5a235884d6d3c096f"
+      },
+      "downloads": -1,
+      "filename": "datasette-copy-to-memory-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "668ef4a452d723cd1235ddd5e329790c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6989,
+      "upload_time": "2022-04-30T19:50:47",
+      "upload_time_iso_8601": "2022-04-30T19:50:47.693497Z",
+      "url": "https://files.pythonhosted.org/packages/ba/96/b6d695d5af7335652234bbfdcbdd9ee6618e86e23d060ac4ce07df340129/datasette-copy-to-memory-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
