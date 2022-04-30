@@ -122,3 +122,4 @@ pypi-to-sqlite
 datasette-total-page-time
 datasette-nteract-data-explorer
 datasette-gzip
+datasette-copy-to-memory
