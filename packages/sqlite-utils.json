@@ -42,11 +42,11 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues",
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
-    "release_url": "https://pypi.org/project/sqlite-utils/3.26/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.26.1/",
     "requires_dist": [
       "sqlite-fts4",
       "click",
-      "click-default-group",
+      "click-default-group-wheel",
       "tabulate",
       "python-dateutil",
       "sphinx-rtd-theme ; extra == 'docs'",
@@ -65,11 +65,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "CLI tool and Python utility functions for manipulating SQLite databases",
-    "version": "3.26",
+    "version": "3.26.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13508155,
+  "last_serial": 13691458,
   "releases": {
     "0.10": [
       {
@@ -3031,6 +3031,48 @@
         "yanked_reason": null
       }
     ],
+    "3.26.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "af90d5ff5de38f806087eaf15bbc4719",
+          "sha256": "5514944924e5608579bdd70bd1ecb4472e6c18e194253baf04c1db120264ed3a"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.26.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "af90d5ff5de38f806087eaf15bbc4719",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 59800,
+        "upload_time": "2022-05-02T18:31:59",
+        "upload_time_iso_8601": "2022-05-02T18:31:59.418434Z",
+        "url": "https://files.pythonhosted.org/packages/93/0c/07ae54c3cc87cf2f42b8fc8c1c828a642865872111ac4adc4572d9ce6ea1/sqlite_utils-3.26.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9a104b1aae41005fcc4b4d3e0f6760cf",
+          "sha256": "18aff4dface28ce4a2f4859948589f5eb7b163c772a3a71fc16c9a174eb1f367"
+        },
+        "downloads": -1,
+        "filename": "sqlite-utils-3.26.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9a104b1aae41005fcc4b4d3e0f6760cf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 182234,
+        "upload_time": "2022-05-02T18:32:00",
+        "upload_time_iso_8601": "2022-05-02T18:32:00.975474Z",
+        "url": "https://files.pythonhosted.org/packages/0f/1d/552a8c712e9c1bf30fbd2a16889202b65c44726176975e6cef6664308912/sqlite-utils-3.26.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.3": [
       {
         "comment_text": "",
@@ -3414,40 +3456,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "177111e3bb25fe54ad3f50e43d91350d",
-        "sha256": "34b5e46ac98866370a4aa762e7db02398359b60b48b42b005a77284608ea2622"
+        "md5": "af90d5ff5de38f806087eaf15bbc4719",
+        "sha256": "5514944924e5608579bdd70bd1ecb4472e6c18e194253baf04c1db120264ed3a"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.26-py3-none-any.whl",
+      "filename": "sqlite_utils-3.26.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "177111e3bb25fe54ad3f50e43d91350d",
+      "md5_digest": "af90d5ff5de38f806087eaf15bbc4719",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 59768,
-      "upload_time": "2022-04-13T22:58:13",
-      "upload_time_iso_8601": "2022-04-13T22:58:13.256360Z",
-      "url": "https://files.pythonhosted.org/packages/79/aa/63b50e8868da1b42d14a2cf4366bbd626b54b8667d10058a68f98a732dcd/sqlite_utils-3.26-py3-none-any.whl",
+      "size": 59800,
+      "upload_time": "2022-05-02T18:31:59",
+      "upload_time_iso_8601": "2022-05-02T18:31:59.418434Z",
+      "url": "https://files.pythonhosted.org/packages/93/0c/07ae54c3cc87cf2f42b8fc8c1c828a642865872111ac4adc4572d9ce6ea1/sqlite_utils-3.26.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "4907bc1c7be3495461c65da96f83ebce",
-        "sha256": "1b6172f4f118b6ad1d21686c815e0765ae72fb02f1708dc26128032fa8a391da"
+        "md5": "9a104b1aae41005fcc4b4d3e0f6760cf",
+        "sha256": "18aff4dface28ce4a2f4859948589f5eb7b163c772a3a71fc16c9a174eb1f367"
       },
       "downloads": -1,
-      "filename": "sqlite-utils-3.26.tar.gz",
+      "filename": "sqlite-utils-3.26.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "4907bc1c7be3495461c65da96f83ebce",
+      "md5_digest": "9a104b1aae41005fcc4b4d3e0f6760cf",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 181946,
-      "upload_time": "2022-04-13T22:58:15",
-      "upload_time_iso_8601": "2022-04-13T22:58:15.092886Z",
-      "url": "https://files.pythonhosted.org/packages/fd/94/aa1faf2c02b3dc62c6d3ea9c994c6591557bdad59d2b9b35975fe364c5a2/sqlite-utils-3.26.tar.gz",
+      "size": 182234,
+      "upload_time": "2022-05-02T18:32:00",
+      "upload_time_iso_8601": "2022-05-02T18:32:00.975474Z",
+      "url": "https://files.pythonhosted.org/packages/0f/1d/552a8c712e9c1bf30fbd2a16889202b65c44726176975e6cef6664308912/sqlite-utils-3.26.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
