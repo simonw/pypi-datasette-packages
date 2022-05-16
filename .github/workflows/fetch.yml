@@ -24,11 +24,9 @@ jobs:
         git add -A
         timestamp=$(date -u)
         git commit -m "${timestamp}" || exit 0
+        echo '### Changed files' >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        git show --name-only --format=tformat: >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
         git pull --rebase
         git push
-    - name: Generate summary
-      run: |-
-        echo '### Changed files' >> $GITHUB_STEP_SUMMARY
-        echo "\n\`\`\`" >> $GITHUB_STEP_SUMMARY
-        git show --name-only --format=tformat: >> $GITHUB_STEP_SUMMARY
-        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
