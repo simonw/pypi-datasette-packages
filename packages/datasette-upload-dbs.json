@@ -1,0 +1,135 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-upload-dbs\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-upload-dbs.svg)](https://pypi.org/project/datasette-upload-dbs/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-upload-dbs?include_prereleases&label=changelog)](https://github.com/simonw/datasette-upload-dbs/releases)\n[![Tests](https://github.com/simonw/datasette-upload-dbs/workflows/Test/badge.svg)](https://github.com/simonw/datasette-upload-dbs/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-upload-dbs/blob/main/LICENSE)\n\nUpload SQLite database files to Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-upload-dbs\n\n## Configuration\n\nThis plugin requires you to configure a directory in which uploaded files will be stored.\n\nOn startup, Datasette will automatically load any SQLite files that it finds in that directory. This means it is safe to restart your server in between file uploads.\n\nTo configure the directory as `/home/datasette/uploads`, add this to a `metadata.yml` configuration file:\n\n```yaml\nplugins:\n  datasette-upload-dbs:\n    directory: /home/datasette/uploads\n```\n\nOr if you are using `metadata.json`:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-upload-dbs\": {\n      \"directory\": \"/home/datasette/uploads\"\n    }\n  }\n}\n```\nYou can use `\".\"` for the current folder when the server starts, or `\"uploads\"` for a folder relative to that folder. The folder will be created on startup if it does not already exist.\n\nThen start Datasette like this:\n\n    datasette -m metadata.yml\n\n## Usage\n\nOnly users with the `upload-dbs` permission will be able to upload files. The `root` user has this permission by default - other users can be granted access using permission plugins, see the [Permissions](https://docs.datasette.io/en/stable/authentication.html#permissions) documentation for details.\n\nTo start Datasette as the root user, run this:\n\n    datasette -m metadata.yml --root\n\nAnd follow the link that is displayd on the console.\n\nIf a user has that permission they will see an \"Upload database\" link in the navigation menu.\n\nThis will take them to `/-/upload-dbs` where they will be able to upload database files, by selecting them or by dragging them onto the drop area.\n\n![Animated demo showing a file being dropped onto a box, then uploading and redirecting to the database page](upload-demo.gif)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-upload-dbs\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-upload-dbs",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-upload-dbs",
+    "package_url": "https://pypi.org/project/datasette-upload-dbs/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-upload-dbs/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-upload-dbs/actions",
+      "Changelog": "https://github.com/simonw/datasette-upload-dbs/releases",
+      "Homepage": "https://github.com/simonw/datasette-upload-dbs",
+      "Issues": "https://github.com/simonw/datasette-upload-dbs/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-upload-dbs/0.1/",
+    "requires_dist": [
+      "datasette",
+      "starlette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Upload SQLite database files to Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13836551,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "72a1c9a8d4615c74fe7eafd4356acbf6",
+          "sha256": "22bbf3075130183c0f374baba216d60869cf937f83d3d0b8f4fd42d3c10e735e"
+        },
+        "downloads": -1,
+        "filename": "datasette_upload_dbs-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "72a1c9a8d4615c74fe7eafd4356acbf6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10269,
+        "upload_time": "2022-05-17T03:08:13",
+        "upload_time_iso_8601": "2022-05-17T03:08:13.738715Z",
+        "url": "https://files.pythonhosted.org/packages/b8/56/0546d49e41b4ed4873a33d7deaf0bf3db5c22ebc39c0742ebc90e436f041/datasette_upload_dbs-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "eec51f82448a3bfd59d283ccadb41aba",
+          "sha256": "553deebeab6d5edeaf7fc7c954f9057e9126d49925f1f955e9f18e273d2f0c76"
+        },
+        "downloads": -1,
+        "filename": "datasette-upload-dbs-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "eec51f82448a3bfd59d283ccadb41aba",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9585,
+        "upload_time": "2022-05-17T03:08:14",
+        "upload_time_iso_8601": "2022-05-17T03:08:14.957409Z",
+        "url": "https://files.pythonhosted.org/packages/c8/16/bbb3ff2490b4f9390e2f1b1511f50a030190f1f3b09758c52ffbeeb8a916/datasette-upload-dbs-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "72a1c9a8d4615c74fe7eafd4356acbf6",
+        "sha256": "22bbf3075130183c0f374baba216d60869cf937f83d3d0b8f4fd42d3c10e735e"
+      },
+      "downloads": -1,
+      "filename": "datasette_upload_dbs-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "72a1c9a8d4615c74fe7eafd4356acbf6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 10269,
+      "upload_time": "2022-05-17T03:08:13",
+      "upload_time_iso_8601": "2022-05-17T03:08:13.738715Z",
+      "url": "https://files.pythonhosted.org/packages/b8/56/0546d49e41b4ed4873a33d7deaf0bf3db5c22ebc39c0742ebc90e436f041/datasette_upload_dbs-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "eec51f82448a3bfd59d283ccadb41aba",
+        "sha256": "553deebeab6d5edeaf7fc7c954f9057e9126d49925f1f955e9f18e273d2f0c76"
+      },
+      "downloads": -1,
+      "filename": "datasette-upload-dbs-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "eec51f82448a3bfd59d283ccadb41aba",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 9585,
+      "upload_time": "2022-05-17T03:08:14",
+      "upload_time_iso_8601": "2022-05-17T03:08:14.957409Z",
+      "url": "https://files.pythonhosted.org/packages/c8/16/bbb3ff2490b4f9390e2f1b1511f50a030190f1f3b09758c52ffbeeb8a916/datasette-upload-dbs-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
