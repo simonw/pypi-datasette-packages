@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-upload-dbs",
       "Issues": "https://github.com/simonw/datasette-upload-dbs/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-upload-dbs/0.1/",
+    "release_url": "https://pypi.org/project/datasette-upload-dbs/0.1.1/",
     "requires_dist": [
       "datasette",
       "starlette",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Upload SQLite database files to Datasette",
-    "version": "0.1",
+    "version": "0.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13836551,
+  "last_serial": 13836807,
   "releases": {
     "0.1": [
       {
@@ -87,46 +87,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6310d38fef95bf2b3f71b696805a9b50",
+          "sha256": "1248612750dfd9d718fd79fe300b39cc6ea370f423aa3afbf0ed9abd61d764fc"
+        },
+        "downloads": -1,
+        "filename": "datasette_upload_dbs-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6310d38fef95bf2b3f71b696805a9b50",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10338,
+        "upload_time": "2022-05-17T03:54:16",
+        "upload_time_iso_8601": "2022-05-17T03:54:16.702469Z",
+        "url": "https://files.pythonhosted.org/packages/f6/8b/7f2c9f1818518f55b7badc003e29a2549d02e1031a21fcc87810f86bb044/datasette_upload_dbs-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1ee1e3da7d0079831157270ff90fa56d",
+          "sha256": "34fcead0fa2b8ceb2b220894e4dc5d48a5799ac6d16a63b57d297e684bec9c46"
+        },
+        "downloads": -1,
+        "filename": "datasette-upload-dbs-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1ee1e3da7d0079831157270ff90fa56d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9602,
+        "upload_time": "2022-05-17T03:54:18",
+        "upload_time_iso_8601": "2022-05-17T03:54:18.279028Z",
+        "url": "https://files.pythonhosted.org/packages/77/e2/3e5d8c3356100085b0df02e23db04a79e5fe6601abc7d4c6b920302473ab/datasette-upload-dbs-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "72a1c9a8d4615c74fe7eafd4356acbf6",
-        "sha256": "22bbf3075130183c0f374baba216d60869cf937f83d3d0b8f4fd42d3c10e735e"
+        "md5": "6310d38fef95bf2b3f71b696805a9b50",
+        "sha256": "1248612750dfd9d718fd79fe300b39cc6ea370f423aa3afbf0ed9abd61d764fc"
       },
       "downloads": -1,
-      "filename": "datasette_upload_dbs-0.1-py3-none-any.whl",
+      "filename": "datasette_upload_dbs-0.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "72a1c9a8d4615c74fe7eafd4356acbf6",
+      "md5_digest": "6310d38fef95bf2b3f71b696805a9b50",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 10269,
-      "upload_time": "2022-05-17T03:08:13",
-      "upload_time_iso_8601": "2022-05-17T03:08:13.738715Z",
-      "url": "https://files.pythonhosted.org/packages/b8/56/0546d49e41b4ed4873a33d7deaf0bf3db5c22ebc39c0742ebc90e436f041/datasette_upload_dbs-0.1-py3-none-any.whl",
+      "size": 10338,
+      "upload_time": "2022-05-17T03:54:16",
+      "upload_time_iso_8601": "2022-05-17T03:54:16.702469Z",
+      "url": "https://files.pythonhosted.org/packages/f6/8b/7f2c9f1818518f55b7badc003e29a2549d02e1031a21fcc87810f86bb044/datasette_upload_dbs-0.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "eec51f82448a3bfd59d283ccadb41aba",
-        "sha256": "553deebeab6d5edeaf7fc7c954f9057e9126d49925f1f955e9f18e273d2f0c76"
+        "md5": "1ee1e3da7d0079831157270ff90fa56d",
+        "sha256": "34fcead0fa2b8ceb2b220894e4dc5d48a5799ac6d16a63b57d297e684bec9c46"
       },
       "downloads": -1,
-      "filename": "datasette-upload-dbs-0.1.tar.gz",
+      "filename": "datasette-upload-dbs-0.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "eec51f82448a3bfd59d283ccadb41aba",
+      "md5_digest": "1ee1e3da7d0079831157270ff90fa56d",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 9585,
-      "upload_time": "2022-05-17T03:08:14",
-      "upload_time_iso_8601": "2022-05-17T03:08:14.957409Z",
-      "url": "https://files.pythonhosted.org/packages/c8/16/bbb3ff2490b4f9390e2f1b1511f50a030190f1f3b09758c52ffbeeb8a916/datasette-upload-dbs-0.1.tar.gz",
+      "size": 9602,
+      "upload_time": "2022-05-17T03:54:18",
+      "upload_time_iso_8601": "2022-05-17T03:54:18.279028Z",
+      "url": "https://files.pythonhosted.org/packages/77/e2/3e5d8c3356100085b0df02e23db04a79e5fe6601abc7d4c6b920302473ab/datasette-upload-dbs-0.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
