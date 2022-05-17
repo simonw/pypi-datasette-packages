@@ -123,3 +123,4 @@ datasette-total-page-time
 datasette-nteract-data-explorer
 datasette-gzip
 datasette-copy-to-memory
+datasette-upload-dbs
