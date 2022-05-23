@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# shot-scraper\n\n[![PyPI](https://img.shields.io/pypi/v/shot-scraper.svg)](https://pypi.org/project/shot-scraper/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/shot-scraper?include_prereleases&label=changelog)](https://github.com/simonw/shot-scraper/releases)\n[![Tests](https://github.com/simonw/shot-scraper/workflows/Test/badge.svg)](https://github.com/simonw/shot-scraper/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/shot-scraper/blob/master/LICENSE)\n\nA comand-line utility for taking automated screenshots of websites\n\nFor background on this project see [shot-scraper: automated screenshots for documentation, built on Playwright](https://simonwillison.net/2022/Mar/10/shot-scraper/).\n\n## Documentation\n\nFull documentation can be found at [shot-scraper.datasette.io](https://shot-scraper.datasette.io)\n\n## Get started with GitHub Actions\n\nTo get started without installing any software, use the [shot-scraper-template](https://github.com/simonw/shot-scraper-template) template to create your own GitHub repository which takes screenshots of a page using `shot-scraper`. See [Instantly create a GitHub repository to take screenshots of a web page](https://simonwillison.net/2022/Mar/14/shot-scraper-template/) for details.\n\n## Quick installation\n\nYou can install the `shot-scraper` CLI tool using [pip](https://pip.pypa.io/):\n\n    pip install shot-scraper\n    # Now install the browser it needs:\n    shot-scraper install\n\n## Taking your first screenshot\n\nYou can take a screenshot of a web page like this:\n\n    shot-scraper https://datasette.io/\n\nThis will create a screenshot in a file called `datasette-io.png`.\n\nMany more options are available, see [Taking a screenshot](https://shot-scraper.datasette.io/en/latest/screenshots.html) for details.\n\n## Examples\n\n- The [shot-scraper-demo](https://github.com/simonw/shot-scraper-demo) repository uses this tool to capture recently spotted owls in El Granada, CA according to [this page](https://www.owlsnearme.com/?place=127871), and to  generate an annotated screenshot illustrating a Datasette feature as described [in my blog](https://simonwillison.net/2022/Mar/10/shot-scraper/#a-complex-example).\n- Ben Welsh built [@newshomepages](https://twitter.com/newshomepages), a Twitter bot that uses `shot-scraper` and GitHub Actions to take screenshots of news website homepages and publish them to Twitter. The code for that lives in [palewire/news-homepages](https://github.com/palewire/news-homepages).\n- [scrape-hacker-news-by-domain](https://github.com/simonw/scrape-hacker-news-by-domain) uses `shot-scraper javascript` to scrape a web page. See [Scraping web pages from the command-line with shot-scraper](https://simonwillison.net/2022/Mar/14/scraping-web-pages-shot-scraper/) for details of how this works.\n",
+    "description": "# shot-scraper\n\n[![PyPI](https://img.shields.io/pypi/v/shot-scraper.svg)](https://pypi.org/project/shot-scraper/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/shot-scraper?include_prereleases&label=changelog)](https://github.com/simonw/shot-scraper/releases)\n[![Tests](https://github.com/simonw/shot-scraper/workflows/Test/badge.svg)](https://github.com/simonw/shot-scraper/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/shot-scraper/blob/master/LICENSE)\n\nA comand-line utility for taking automated screenshots of websites\n\nFor background on this project see [shot-scraper: automated screenshots for documentation, built on Playwright](https://simonwillison.net/2022/Mar/10/shot-scraper/).\n\n## Documentation\n\nFull documentation can be found at [shot-scraper.datasette.io](https://shot-scraper.datasette.io)\n\n## Get started with GitHub Actions\n\nTo get started without installing any software, use the [shot-scraper-template](https://github.com/simonw/shot-scraper-template) template to create your own GitHub repository which takes screenshots of a page using `shot-scraper`. See [Instantly create a GitHub repository to take screenshots of a web page](https://simonwillison.net/2022/Mar/14/shot-scraper-template/) for details.\n\n## Quick installation\n\nYou can install the `shot-scraper` CLI tool using [pip](https://pip.pypa.io/):\n\n    pip install shot-scraper\n    # Now install the browser it needs:\n    shot-scraper install\n\n## Taking your first screenshot\n\nYou can take a screenshot of a web page like this:\n\n    shot-scraper https://datasette.io/\n\nThis will create a screenshot in a file called `datasette-io.png`.\n\nMany more options are available, see [Taking a screenshot](https://shot-scraper.datasette.io/en/stable/screenshots.html) for details.\n\n## Examples\n\n- The [shot-scraper-demo](https://github.com/simonw/shot-scraper-demo) repository uses this tool to capture recently spotted owls in El Granada, CA according to [this page](https://www.owlsnearme.com/?place=127871), and to  generate an annotated screenshot illustrating a Datasette feature as described [in my blog](https://simonwillison.net/2022/Mar/10/shot-scraper/#a-complex-example).\n- Ben Welsh built [@newshomepages](https://twitter.com/newshomepages), a Twitter bot that uses `shot-scraper` and GitHub Actions to take screenshots of news website homepages and publish them to Twitter. The code for that lives in [palewire/news-homepages](https://github.com/palewire/news-homepages).\n- [scrape-hacker-news-by-domain](https://github.com/simonw/scrape-hacker-news-by-domain) uses `shot-scraper javascript` to scrape a web page. See [Scraping web pages from the command-line with shot-scraper](https://simonwillison.net/2022/Mar/14/scraping-web-pages-shot-scraper/) for details of how this works.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/shot-scraper",
       "Issues": "https://github.com/simonw/shot-scraper/issues"
     },
-    "release_url": "https://pypi.org/project/shot-scraper/0.14/",
+    "release_url": "https://pypi.org/project/shot-scraper/0.14.1/",
     "requires_dist": [
       "click",
       "PyYAML",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "A comand-line utility for taking automated screenshots of websites",
-    "version": "0.14",
+    "version": "0.14.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13871420,
+  "last_serial": 13893111,
   "releases": {
     "0.1": [
       {
@@ -294,6 +294,48 @@
         "upload_time": "2022-05-19T23:47:13",
         "upload_time_iso_8601": "2022-05-19T23:47:13.654761Z",
         "url": "https://files.pythonhosted.org/packages/90/1e/9ae8ce411ed32552510fe9f66b7f00fb6e6bdd9d07a9fdfab1feb48b3528/shot-scraper-0.14.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.14.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fefcc8c07ba05658866a425cdde476b3",
+          "sha256": "1912c3f40871331e133b0c4961422376f084ef1cfb17dceea2206aaac355e72d"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-0.14.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fefcc8c07ba05658866a425cdde476b3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 13323,
+        "upload_time": "2022-05-22T14:26:00",
+        "upload_time_iso_8601": "2022-05-22T14:26:00.109569Z",
+        "url": "https://files.pythonhosted.org/packages/51/33/7d34ebb08f03f41cfdaa921674d13660a06e8d3be5c823048aaeb72f6ba4/shot_scraper-0.14.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0e5da54792d5e5890a4fb93bd82bd503",
+          "sha256": "528228610607e743c884bf1e40bec0aec079eb1038f79142618390c800826bc2"
+        },
+        "downloads": -1,
+        "filename": "shot-scraper-0.14.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0e5da54792d5e5890a4fb93bd82bd503",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 13649,
+        "upload_time": "2022-05-22T14:26:01",
+        "upload_time_iso_8601": "2022-05-22T14:26:01.424889Z",
+        "url": "https://files.pythonhosted.org/packages/79/a0/694dfd573c66a4bba02ab1d3bc0c9aaf42b8a83b292acbf1f5f1db7bf639/shot-scraper-0.14.1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
@@ -681,40 +723,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "984ddd0590c666bdde4ed02a624df34d",
-        "sha256": "0c98fe9e73e83e0eeba29ef5a0dbdb49c41dde82249d878b1f086c68a9676abc"
+        "md5": "fefcc8c07ba05658866a425cdde476b3",
+        "sha256": "1912c3f40871331e133b0c4961422376f084ef1cfb17dceea2206aaac355e72d"
       },
       "downloads": -1,
-      "filename": "shot_scraper-0.14-py3-none-any.whl",
+      "filename": "shot_scraper-0.14.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "984ddd0590c666bdde4ed02a624df34d",
+      "md5_digest": "fefcc8c07ba05658866a425cdde476b3",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 13298,
-      "upload_time": "2022-05-19T23:47:12",
-      "upload_time_iso_8601": "2022-05-19T23:47:12.330074Z",
-      "url": "https://files.pythonhosted.org/packages/92/46/8233b5ed46f1611a38b1e72a668f289fd3e1e50dcd7137fbdee33605f505/shot_scraper-0.14-py3-none-any.whl",
+      "size": 13323,
+      "upload_time": "2022-05-22T14:26:00",
+      "upload_time_iso_8601": "2022-05-22T14:26:00.109569Z",
+      "url": "https://files.pythonhosted.org/packages/51/33/7d34ebb08f03f41cfdaa921674d13660a06e8d3be5c823048aaeb72f6ba4/shot_scraper-0.14.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "bfed5e5964e9fc8041f6ad7047a9c83e",
-        "sha256": "84f48452548ba56137762cfe2261d89d3374224edbc4393860024d1d2c381ed1"
+        "md5": "0e5da54792d5e5890a4fb93bd82bd503",
+        "sha256": "528228610607e743c884bf1e40bec0aec079eb1038f79142618390c800826bc2"
       },
       "downloads": -1,
-      "filename": "shot-scraper-0.14.tar.gz",
+      "filename": "shot-scraper-0.14.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "bfed5e5964e9fc8041f6ad7047a9c83e",
+      "md5_digest": "0e5da54792d5e5890a4fb93bd82bd503",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 13645,
-      "upload_time": "2022-05-19T23:47:13",
-      "upload_time_iso_8601": "2022-05-19T23:47:13.654761Z",
-      "url": "https://files.pythonhosted.org/packages/90/1e/9ae8ce411ed32552510fe9f66b7f00fb6e6bdd9d07a9fdfab1feb48b3528/shot-scraper-0.14.tar.gz",
+      "size": 13649,
+      "upload_time": "2022-05-22T14:26:01",
+      "upload_time_iso_8601": "2022-05-22T14:26:01.424889Z",
+      "url": "https://files.pythonhosted.org/packages/79/a0/694dfd573c66a4bba02ab1d3bc0c9aaf42b8a83b292acbf1f5f1db7bf639/shot-scraper-0.14.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
