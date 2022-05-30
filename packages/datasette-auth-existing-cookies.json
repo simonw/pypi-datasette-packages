@@ -41,7 +41,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 7025393,
+  "last_serial": 13970599,
   "releases": {
     "0.2a0": [
       {
@@ -259,6 +259,90 @@
         "upload_time": "2020-04-15T15:25:40",
         "upload_time_iso_8601": "2020-04-15T15:25:40.909901Z",
         "url": "https://files.pythonhosted.org/packages/55/f7/9ef56d150af2d722ca2048f328bf8cc68615d9abe1936cc4f253f69cd55f/datasette_auth_existing_cookies-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "78d8838903cae1d6759fc202feb626b6",
+          "sha256": "cf70e19ef812f2b479972676c9d5dc589984e47804f5d76cbc1ab037f3c84a8a"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_existing_cookies-1.0a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "78d8838903cae1d6759fc202feb626b6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9180,
+        "upload_time": "2022-05-29T15:19:22",
+        "upload_time_iso_8601": "2022-05-29T15:19:22.648900Z",
+        "url": "https://files.pythonhosted.org/packages/33/97/badef951d93458bf3778c0b1a0b0b4dcc726346eeb2fcf2d86c88a9bd27c/datasette_auth_existing_cookies-1.0a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c0d9eeb4bf806afb114798c16b625eee",
+          "sha256": "d8ca936a5d6c35338fda213ebb69f0b34bb1e8b03312a33893b6bdc0e81e74af"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth-existing-cookies-1.0a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c0d9eeb4bf806afb114798c16b625eee",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8223,
+        "upload_time": "2022-05-29T15:19:23",
+        "upload_time_iso_8601": "2022-05-29T15:19:23.941621Z",
+        "url": "https://files.pythonhosted.org/packages/65/ab/e314a8c2ebbf8e62bb61364cce685380f9416d3e0cc64038c5a93747cfb6/datasette-auth-existing-cookies-1.0a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2eb424204bb40b613f90844f5f78b945",
+          "sha256": "72c3198b39d7b936f0190a3fd748da89c3f6c38d30264cfd5f53bb28c759df6d"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_existing_cookies-1.0a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2eb424204bb40b613f90844f5f78b945",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9198,
+        "upload_time": "2022-05-29T17:39:43",
+        "upload_time_iso_8601": "2022-05-29T17:39:43.180215Z",
+        "url": "https://files.pythonhosted.org/packages/4f/7c/324656a417db62c3fb38c0631e324ead816e83db64bd73c6feaca945dac6/datasette_auth_existing_cookies-1.0a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5fd11431ae00af5c92dd877e22ac398f",
+          "sha256": "6d716c369e09023a850654089ed2a6d1123e2e1663ab4df68eafc9e61d2adea3"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth-existing-cookies-1.0a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5fd11431ae00af5c92dd877e22ac398f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8235,
+        "upload_time": "2022-05-29T17:39:44",
+        "upload_time_iso_8601": "2022-05-29T17:39:44.401547Z",
+        "url": "https://files.pythonhosted.org/packages/10/d4/ac9f6d33cb7310bbc6269245976362a53568edc20fc9f71cac77cbca10de/datasette-auth-existing-cookies-1.0a1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
