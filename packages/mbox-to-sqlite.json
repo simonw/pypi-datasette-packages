@@ -1,0 +1,131 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# mbox-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/mbox-to-sqlite.svg)](https://pypi.org/project/mbox-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/mbox-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/mbox-to-sqlite/releases)\n[![Tests](https://github.com/simonw/mbox-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/mbox-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/mbox-to-sqlite/blob/master/LICENSE)\n\nLoad email from .mbox files into SQLite\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install mbox-to-sqlite\n\n## Usage\n\nUse the `mbox` command to import a `.mbox` file into a SQLite database:\n\n    mbox-to-sqlite mbox emails.db path/to/messages.mbox\n\nYou can try this out against an example containing a sample of 3,266 emails from the [Enron corpus](https://en.wikipedia.org/wiki/Enron_Corpus) like this:\n\n    curl -O https://raw.githubusercontent.com/ivanhb/EMA/master/server/data/mbox/enron/mbox-enron-white-s-all.mbox\n    mbox-to-sqlite mbox enron.db mbox-enron-white-s-all.mbox\n\nYou can then explore the resulting database using [Datasette](https://datasette.io/):\n\n    datasette enron.db\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd mbox-to-sqlite\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/mbox-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "mbox-to-sqlite",
+    "package_url": "https://pypi.org/project/mbox-to-sqlite/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/mbox-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/mbox-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/mbox-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/mbox-to-sqlite",
+      "Issues": "https://github.com/simonw/mbox-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/mbox-to-sqlite/0.1a0/",
+    "requires_dist": [
+      "click",
+      "sqlite-utils",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Load email from .mbox files into SQLite",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 13991617,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a88c4039e6bd8e0427a51eeb2bca0ca2",
+          "sha256": "25b8dc743c4084f2f34147cfbb70e43bb76b064a54385d90deeccaaf0ae02688"
+        },
+        "downloads": -1,
+        "filename": "mbox_to_sqlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a88c4039e6bd8e0427a51eeb2bca0ca2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7307,
+        "upload_time": "2022-05-31T18:47:49",
+        "upload_time_iso_8601": "2022-05-31T18:47:49.896892Z",
+        "url": "https://files.pythonhosted.org/packages/40/c1/70f5152f4f4051d5b1c7582766df700bcf0a7e51a39549805135916be502/mbox_to_sqlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "be2e36ade882d4aeda85bc47df15fc00",
+          "sha256": "5fa572fbab78aff500d53c4be189035aa453768351f73f3ea9b9699dfe968d63"
+        },
+        "downloads": -1,
+        "filename": "mbox-to-sqlite-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "be2e36ade882d4aeda85bc47df15fc00",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6627,
+        "upload_time": "2022-05-31T18:47:51",
+        "upload_time_iso_8601": "2022-05-31T18:47:51.373343Z",
+        "url": "https://files.pythonhosted.org/packages/a6/dd/ef379da65bfd526922c52eeceaeb8538d179e005f015d5542e4af1912101/mbox-to-sqlite-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a88c4039e6bd8e0427a51eeb2bca0ca2",
+        "sha256": "25b8dc743c4084f2f34147cfbb70e43bb76b064a54385d90deeccaaf0ae02688"
+      },
+      "downloads": -1,
+      "filename": "mbox_to_sqlite-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a88c4039e6bd8e0427a51eeb2bca0ca2",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7307,
+      "upload_time": "2022-05-31T18:47:49",
+      "upload_time_iso_8601": "2022-05-31T18:47:49.896892Z",
+      "url": "https://files.pythonhosted.org/packages/40/c1/70f5152f4f4051d5b1c7582766df700bcf0a7e51a39549805135916be502/mbox_to_sqlite-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "be2e36ade882d4aeda85bc47df15fc00",
+        "sha256": "5fa572fbab78aff500d53c4be189035aa453768351f73f3ea9b9699dfe968d63"
+      },
+      "downloads": -1,
+      "filename": "mbox-to-sqlite-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "be2e36ade882d4aeda85bc47df15fc00",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6627,
+      "upload_time": "2022-05-31T18:47:51",
+      "upload_time_iso_8601": "2022-05-31T18:47:51.373343Z",
+      "url": "https://files.pythonhosted.org/packages/a6/dd/ef379da65bfd526922c52eeceaeb8538d179e005f015d5542e4af1912101/mbox-to-sqlite-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
