@@ -125,3 +125,4 @@ datasette-gzip
 datasette-copy-to-memory
 datasette-upload-dbs
 mbox-to-sqlite
+datasette-socrata
