@@ -1,0 +1,136 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-socrata\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-socrata.svg)](https://pypi.org/project/datasette-socrata/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-socrata?include_prereleases&label=changelog)](https://github.com/simonw/datasette-socrata/releases)\n[![Tests](https://github.com/simonw/datasette-socrata/workflows/Test/badge.svg)](https://github.com/simonw/datasette-socrata/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-socrata/blob/main/LICENSE)\n\nImport data from Socrata into Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-socrata\n\n## Usage\n\nMake sure you have [enabled WAL mode](https://til.simonwillison.net/sqlite/enabling-wal-mode) on your database files before using this plugin.\n\nOnce installed, an interface for importing data from Socrata will become available at this URL:\n\n    /-/import-socrata\n\nUsers will be able to paste in a URL to a dataset on Socrata in order to initialize an import.\n\nYou can also pre-fill the form by passing a `?url=` parameter, for example:\n\n    /-/import-socrata?url=https://data.sfgov.org/City-Infrastructure/Street-Tree-List/tkzw-k3nq\n\nAny database that is attached to Datasette, is NOT loaded as immutable (with the `-i` option) and that has WAL mode enabled will be available for users to import data into.\n\nThe `import-socrata` permission governs access. By default the `root` actor (accessible using `datasette --root` to start Datasette) is granted that permission.\n\nYou can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to other users.\n\n## Configuration\n\nIf you only want Socrata imports to be allowed to a specific database, you can configure that using plugin configration in `metadata.yml`:\n\n```yaml\nplugins:\n  datasette-socrata:\n    database: socrata\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-socrata\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-socrata",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-socrata",
+    "package_url": "https://pypi.org/project/datasette-socrata/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-socrata/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-socrata/actions",
+      "Changelog": "https://github.com/simonw/datasette-socrata/releases",
+      "Homepage": "https://github.com/simonw/datasette-socrata",
+      "Issues": "https://github.com/simonw/datasette-socrata/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-socrata/0.1/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-utils",
+      "pytest-httpx",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Import data from Socrata into Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14087288,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "303a78a1ed83058a6371ae99326ed4df",
+          "sha256": "8a6bb389bf600524c3ba9a56e40672770ea87fe01ba69a0b19ec0032cbfad114"
+        },
+        "downloads": -1,
+        "filename": "datasette_socrata-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "303a78a1ed83058a6371ae99326ed4df",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11469,
+        "upload_time": "2022-06-09T21:26:08",
+        "upload_time_iso_8601": "2022-06-09T21:26:08.184235Z",
+        "url": "https://files.pythonhosted.org/packages/40/73/5384d6c54ae26e392fecd225ce46681e825e294f82333b22eeae9cb5eb3d/datasette_socrata-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "087aecf73bd184aa530fc53d5c5cabf3",
+          "sha256": "6c68d1491076345b3d58b88b72e33b5d10c934747c8fc9f4410061d42f46ba6c"
+        },
+        "downloads": -1,
+        "filename": "datasette-socrata-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "087aecf73bd184aa530fc53d5c5cabf3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 10740,
+        "upload_time": "2022-06-09T21:26:09",
+        "upload_time_iso_8601": "2022-06-09T21:26:09.910856Z",
+        "url": "https://files.pythonhosted.org/packages/b3/47/52057fdcbf9ff23ceee123d34c767a35e67d6339253efba852c97abe818f/datasette-socrata-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "303a78a1ed83058a6371ae99326ed4df",
+        "sha256": "8a6bb389bf600524c3ba9a56e40672770ea87fe01ba69a0b19ec0032cbfad114"
+      },
+      "downloads": -1,
+      "filename": "datasette_socrata-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "303a78a1ed83058a6371ae99326ed4df",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 11469,
+      "upload_time": "2022-06-09T21:26:08",
+      "upload_time_iso_8601": "2022-06-09T21:26:08.184235Z",
+      "url": "https://files.pythonhosted.org/packages/40/73/5384d6c54ae26e392fecd225ce46681e825e294f82333b22eeae9cb5eb3d/datasette_socrata-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "087aecf73bd184aa530fc53d5c5cabf3",
+        "sha256": "6c68d1491076345b3d58b88b72e33b5d10c934747c8fc9f4410061d42f46ba6c"
+      },
+      "downloads": -1,
+      "filename": "datasette-socrata-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "087aecf73bd184aa530fc53d5c5cabf3",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 10740,
+      "upload_time": "2022-06-09T21:26:09",
+      "upload_time_iso_8601": "2022-06-09T21:26:09.910856Z",
+      "url": "https://files.pythonhosted.org/packages/b3/47/52057fdcbf9ff23ceee123d34c767a35e67d6339253efba852c97abe818f/datasette-socrata-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
