@@ -1,0 +1,175 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# s3-ocr\n\n[![PyPI](https://img.shields.io/pypi/v/s3-ocr.svg)](https://pypi.org/project/s3-ocr/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/s3-ocr?include_prereleases&label=changelog)](https://github.com/simonw/s3-ocr/releases)\n[![Tests](https://github.com/simonw/s3-ocr/workflows/Test/badge.svg)](https://github.com/simonw/s3-ocr/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/s3-ocr/blob/master/LICENSE)\n\nTools for running OCR against files stored in S3\n\n## Project status\n\nThis is an **alpha** tool: it has only been used for a single project, and does not yet have automated tests.\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install s3-ocr\n\n## Starting OCR against every PDF in a bucket\n\nThe `start` command loops through every PDF file in a bucket (every file ending in `.pdf`) and submits it to [Textract](https://aws.amazon.com/textract/) for OCR processing.\n\nYou need to have AWS configured using environment variables or a credentials file in your home directory.\n\nYou can start the process running like this:\n\n    s3-ocr start name-of-your-bucket\n\nOCR can take some time. The results of the OCR will be stored in `textract-output` in your bucket.\n\n<!-- [[[cog\nimport cog\nfrom s3_ocr import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"start\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: s3-ocr start [OPTIONS] BUCKET\n\n  Start OCR tasks for all files in this bucket\n\nOptions:\n  --access-key TEXT     AWS access key ID\n  --secret-key TEXT     AWS secret access key\n  --session-token TEXT  AWS session token\n  --endpoint-url TEXT   Custom endpoint URL\n  -a, --auth FILENAME   Path to JSON/INI file containing credentials\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Changes made to your bucket\n\nTo keep track of which files have been submitted for processing, `s3-ocr` will create a JSON file for every file that it adds to the OCR queue.\n\nThis file will be called:\n\n    path-to-file/name-of-file.pdf.s3-ocr.json\n\nEach of these JSON files contains data that looks like this:\n\n```json\n{\n  \"job_id\": \"a34eb4e8dc7e70aa9668f7272aa403e85997364199a654422340bc5ada43affe\",\n  \"etag\": \"\\\"b0c77472e15500347ebf46032a454e8e\\\"\"\n}\n```\nThe recorded `job_id` can be used later to associate the file with the results of the OCR task in `textract-output/`.\n\nThe `etag` is the ETag of the S3 object at the time it was submitted. This can be used later to determine if a file has changed since it last had OCR run against it.\n\nThis design for the tool, with the `.s3-ocr.json` files tracking jobs that have been submitted, means that it is safe to run `s3-ocr start` against the same bucket multiple times without the risk of starting duplicate OCR jobs.\n\n## Checking status\n\nThe `s3-ocr status <bucket-name>` command shows a rough indication of progress through the tasks:\n\n```\n% s3-ocr status sfms-history\n153 complete out of 532 jobs\n```\nIt compares the jobs that have been submitted, based on `.s3-ocr.json` files, to the jobs that have their results written to the `textract-output/` folder.\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"status\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: s3-ocr status [OPTIONS] BUCKET\n\n  Show status of OCR jobs for a bucket\n\nOptions:\n  --access-key TEXT     AWS access key ID\n  --secret-key TEXT     AWS secret access key\n  --session-token TEXT  AWS session token\n  --endpoint-url TEXT   Custom endpoint URL\n  -a, --auth FILENAME   Path to JSON/INI file containing credentials\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Creating a SQLite index of your OCR results\n\nThe `s3-ocr index <database_file> <bucket>` command creates a SQLite database contaning the results of the OCR, and configure SQLite full-text search for the text:\n\n```\n% s3-ocr index index.db sfms-history\nFetching job details  [####################################]  100%\nPopulating pages table  [####################----------------]   55%  00:03:18\n```\nThe schema of the resulting database looks like this (excluding the FTS tables):\n```sql\nCREATE TABLE [pages] (\n   [path] TEXT,\n   [page] INTEGER,\n   [folder] TEXT,\n   [text] TEXT,\n   PRIMARY KEY ([path], [page])\n);\nCREATE TABLE [ocr_jobs] (\n   [key] TEXT PRIMARY KEY,\n   [job_id] TEXT,\n   [etag] TEXT,\n   [s3_ocr_etag] TEXT\n);\nCREATE TABLE [fetched_jobs] (\n   [job_id] TEXT PRIMARY KEY\n);\n```\nThe database is designed to be used with [Datasette](https://datasette.io).\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"index\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: s3-ocr index [OPTIONS] DATABASE BUCKET\n\n  Show status of OCR jobs for a bucket\n\nOptions:\n  --access-key TEXT     AWS access key ID\n  --secret-key TEXT     AWS secret access key\n  --session-token TEXT  AWS session token\n  --endpoint-url TEXT   Custom endpoint URL\n  -a, --auth FILENAME   Path to JSON/INI file containing credentials\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd s3-ocr\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nTo regenerate the README file with the latest `--help`:\n\n    cog -r README.md\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/s3-ocr",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "s3-ocr",
+    "package_url": "https://pypi.org/project/s3-ocr/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/s3-ocr/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/s3-ocr/actions",
+      "Changelog": "https://github.com/simonw/s3-ocr/releases",
+      "Homepage": "https://github.com/simonw/s3-ocr",
+      "Issues": "https://github.com/simonw/s3-ocr/issues"
+    },
+    "release_url": "https://pypi.org/project/s3-ocr/0.2a0/",
+    "requires_dist": [
+      "click",
+      "boto3",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "cogapp ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Tools for running OCR against files stored in S3",
+    "version": "0.2a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14288189,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f91e88eb8c2a89475539429693e90ae4",
+          "sha256": "f9e43b512b38f75c705cbf78d149ec1fc62b2298a56d459b40ab4ae0d355af6c"
+        },
+        "downloads": -1,
+        "filename": "s3_ocr-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f91e88eb8c2a89475539429693e90ae4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8876,
+        "upload_time": "2022-06-29T02:54:59",
+        "upload_time_iso_8601": "2022-06-29T02:54:59.036748Z",
+        "url": "https://files.pythonhosted.org/packages/f9/d3/3249bc60b97f6c916cf4fffa350c8278a12f8b20ef1104d1dc50330e7506/s3_ocr-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bd12cd239b4e7fefb059c679df1bc68b",
+          "sha256": "18e52bf2223abad1cfec31e5af0e1121ec5b84664118518c52bc188cb29a75b8"
+        },
+        "downloads": -1,
+        "filename": "s3-ocr-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bd12cd239b4e7fefb059c679df1bc68b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8259,
+        "upload_time": "2022-06-29T02:55:00",
+        "upload_time_iso_8601": "2022-06-29T02:55:00.684478Z",
+        "url": "https://files.pythonhosted.org/packages/80/e3/af93ff2d2e8656979ca6d71b9a38126b3b843eb25b597645bd26245b98f3/s3-ocr-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "22d901e00f64e4d16d5508acdbaff790",
+          "sha256": "c6c5ba48a87068ac844ff8f5761be6269809a41cf3f65e7111effe313933e186"
+        },
+        "downloads": -1,
+        "filename": "s3_ocr-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "22d901e00f64e4d16d5508acdbaff790",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10990,
+        "upload_time": "2022-06-29T19:36:32",
+        "upload_time_iso_8601": "2022-06-29T19:36:32.991986Z",
+        "url": "https://files.pythonhosted.org/packages/27/ca/ad426d13b0063d348abdec5f3fd822e47063e530d235119ba7a287d98f3f/s3_ocr-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fc3067c37ff5d77c32bbf2f437b46e4c",
+          "sha256": "ea77b425faee5f3ffb01389969e0dd26c073f8995dea7de613f50583cb76d2a0"
+        },
+        "downloads": -1,
+        "filename": "s3-ocr-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fc3067c37ff5d77c32bbf2f437b46e4c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 10501,
+        "upload_time": "2022-06-29T19:36:34",
+        "upload_time_iso_8601": "2022-06-29T19:36:34.101746Z",
+        "url": "https://files.pythonhosted.org/packages/7f/df/03803749519f85203e410737b46ce9ac359ace4848776c9c7693b4c764ea/s3-ocr-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "22d901e00f64e4d16d5508acdbaff790",
+        "sha256": "c6c5ba48a87068ac844ff8f5761be6269809a41cf3f65e7111effe313933e186"
+      },
+      "downloads": -1,
+      "filename": "s3_ocr-0.2a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "22d901e00f64e4d16d5508acdbaff790",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 10990,
+      "upload_time": "2022-06-29T19:36:32",
+      "upload_time_iso_8601": "2022-06-29T19:36:32.991986Z",
+      "url": "https://files.pythonhosted.org/packages/27/ca/ad426d13b0063d348abdec5f3fd822e47063e530d235119ba7a287d98f3f/s3_ocr-0.2a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "fc3067c37ff5d77c32bbf2f437b46e4c",
+        "sha256": "ea77b425faee5f3ffb01389969e0dd26c073f8995dea7de613f50583cb76d2a0"
+      },
+      "downloads": -1,
+      "filename": "s3-ocr-0.2a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "fc3067c37ff5d77c32bbf2f437b46e4c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 10501,
+      "upload_time": "2022-06-29T19:36:34",
+      "upload_time_iso_8601": "2022-06-29T19:36:34.101746Z",
+      "url": "https://files.pythonhosted.org/packages/7f/df/03803749519f85203e410737b46ce9ac359ace4848776c9c7693b4c764ea/s3-ocr-0.2a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
