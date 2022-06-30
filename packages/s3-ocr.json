@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# s3-ocr\n\n[![PyPI](https://img.shields.io/pypi/v/s3-ocr.svg)](https://pypi.org/project/s3-ocr/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/s3-ocr?include_prereleases&label=changelog)](https://github.com/simonw/s3-ocr/releases)\n[![Tests](https://github.com/simonw/s3-ocr/workflows/Test/badge.svg)](https://github.com/simonw/s3-ocr/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/s3-ocr/blob/master/LICENSE)\n\nTools for running OCR against files stored in S3\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install s3-ocr\n\n## Starting OCR against PDFs in a bucket\n\nThe `start` command takes a list of keys and submits them to [Textract](https://aws.amazon.com/textract/) for OCR processing.\n\nYou need to have AWS configured using environment variables or a credentials file in your home directory.\n\nYou can start the process running like this:\n\n    s3-ocr start name-of-your-bucket my-pdf-file.pdf\n\nThe paths you specify should be paths within the bucket. If you stored your PDF files in folders inside the bucket it should look like this:\n\n    s3-ocr start name-of-your-bucket path/to/one.pdf path/to/two.pdf\n\nOCR can take some time. The results of the OCR will be stored in `textract-output` in your bucket.\n\nTo process every file in the bucket with a `.pdf` extension use `--all`:\n\n    s3-ocr start name-of-bucket --all\n\n### s3-ocr start --help\n\n<!-- [[[cog\nimport cog\nfrom s3_ocr import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"start\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: s3-ocr start [OPTIONS] BUCKET [KEYS]...\n\n  Start OCR tasks for PDF files in an S3 bucket\n\n      s3-ocr start name-of-bucket path/to/one.pdf path/to/two.pdf\n\n  To process every file with a .pdf extension:\n\n      s3-ocr start name-of-bucket --all\n\nOptions:\n  --all                 Process all PDF files in the bucket\n  --access-key TEXT     AWS access key ID\n  --secret-key TEXT     AWS secret access key\n  --session-token TEXT  AWS session token\n  --endpoint-url TEXT   Custom endpoint URL\n  -a, --auth FILENAME   Path to JSON/INI file containing credentials\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Checking status\n\nThe `s3-ocr status <bucket-name>` command shows a rough indication of progress through the tasks:\n\n```\n% s3-ocr status sfms-history\n153 complete out of 532 jobs\n```\nIt compares the jobs that have been submitted, based on `.s3-ocr.json` files, to the jobs that have their results written to the `textract-output/` folder.\n\n### s3-ocr status --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"status\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr status [OPTIONS] BUCKET\n\n  Show status of OCR jobs for a bucket\n\nOptions:\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Fetching the results\n\nOnce an OCR job has completed you can download the resulting JSON using the `fetch` command:\n\n    s3-ocr fetch name-of-bucket path/to/file.pdf\n\nThis will save files in the current directory with names like this:\n\n- `4d9b5cf580e761fdb16fd24edce14737ebc562972526ef6617554adfa11d6038-1.json`\n- `4d9b5cf580e761fdb16fd24edce14737ebc562972526ef6617554adfa11d6038-2.json`\n\nThe number of files will vary depending on the length of the document.\n\nIf you don't want separate files you can combine them together using the `-c/--combine` option:\n\n    s3-ocr fetch name-of-bucket path/to/file.pdf --combine output.json\n\nThe `output.json` file will then contain data that looks something like this:\n\n```\n{\n  \"Blocks\": [\n    {\n      \"BlockType\": \"PAGE\",\n      \"Geometry\": {...}\n      \"Page\": 1,\n      ...\n    },\n    {\n      \"BlockType\": \"LINE\",\n      \"Page\": 1,\n      ...\n      \"Text\": \"Barry\",\n    },\n```\n### s3-ocr fetch --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"fetch\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr fetch [OPTIONS] BUCKET KEY\n\n  Fetch the OCR results for a specified file\n\n      s3-ocr fetch name-of-bucket path/to/key.pdf\n\n  This will save files in the current directory called things like\n\n      a806e67e504fc15f...48314e-1.json     a806e67e504fc15f...48314e-2.json\n\n  To combine these together into a single JSON file with a specified name, use:\n\n      s3-ocr fetch name-of-bucket path/to/key.pdf --combine output.json\n\n  Use \"--output -\" to print the combined JSON to standard output instead.\n\nOptions:\n  -c, --combine FILENAME  Write combined JSON to file\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Fetching just the text of a page\n\nIf you don't want to deal with the JSON directly, you can use the `text` command to retrieve just the text extracted from a PDF:\n\n    s3-ocr text name-of-bucket path/to/file.pdf\n\nThis will output plain text to standard output.\n\nTo save that to a file, use this:\n\n    s3-ocr text name-of-bucket path/to/file.pdf > text.txt\n\nSeparate pages will be separated by three newlines. To separate them using a `----` horizontal divider instead add `--divider`:\n\n    s3-ocr text name-of-bucket path/to/file.pdf --divider\n\n### s3-ocr text --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"text\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr text [OPTIONS] BUCKET KEY\n\n  Retrieve the text from an OCRd PDF file\n\n      s3-ocr text name-of-bucket path/to/key.pdf\n\nOptions:\n  --divider             Add ---- between pages\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n\n## Changes made to your bucket\n\nTo keep track of which files have been submitted for processing, `s3-ocr` will create a JSON file for every file that it adds to the OCR queue.\n\nThis file will be called:\n\n    path-to-file/name-of-file.pdf.s3-ocr.json\n\nEach of these JSON files contains data that looks like this:\n\n```json\n{\n  \"job_id\": \"a34eb4e8dc7e70aa9668f7272aa403e85997364199a654422340bc5ada43affe\",\n  \"etag\": \"\\\"b0c77472e15500347ebf46032a454e8e\\\"\"\n}\n```\nThe recorded `job_id` can be used later to associate the file with the results of the OCR task in `textract-output/`.\n\nThe `etag` is the ETag of the S3 object at the time it was submitted. This can be used later to determine if a file has changed since it last had OCR run against it.\n\nThis design for the tool, with the `.s3-ocr.json` files tracking jobs that have been submitted, means that it is safe to run `s3-ocr start` against the same bucket multiple times without the risk of starting duplicate OCR jobs.\n\n## Creating a SQLite index of your OCR results\n\nThe `s3-ocr index <bucket> <database_file>` command creates a SQLite database contaning the results of the OCR, and configure SQLite full-text search for the text:\n\n```\n% s3-ocr index sfms-history index.db\nFetching job details  [####################################]  100%\nPopulating pages table  [####################----------------]   55%  00:03:18\n```\nThe schema of the resulting database looks like this (excluding the FTS tables):\n```sql\nCREATE TABLE [pages] (\n   [path] TEXT,\n   [page] INTEGER,\n   [folder] TEXT,\n   [text] TEXT,\n   PRIMARY KEY ([path], [page])\n);\nCREATE TABLE [ocr_jobs] (\n   [key] TEXT PRIMARY KEY,\n   [job_id] TEXT,\n   [etag] TEXT,\n   [s3_ocr_etag] TEXT\n);\nCREATE TABLE [fetched_jobs] (\n   [job_id] TEXT PRIMARY KEY\n);\n```\nThe database is designed to be used with [Datasette](https://datasette.io).\n\n### s3-ocr index --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"index\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr index [OPTIONS] BUCKET DATABASE\n\n  Create a SQLite database with OCR results for files in a bucket\n\nOptions:\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd s3-ocr\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nTo regenerate the README file with the latest `--help`:\n\n    cog -r README.md\n",
+    "description": "# s3-ocr\n\n[![PyPI](https://img.shields.io/pypi/v/s3-ocr.svg)](https://pypi.org/project/s3-ocr/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/s3-ocr?include_prereleases&label=changelog)](https://github.com/simonw/s3-ocr/releases)\n[![Tests](https://github.com/simonw/s3-ocr/workflows/Test/badge.svg)](https://github.com/simonw/s3-ocr/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/s3-ocr/blob/master/LICENSE)\n\nTools for running OCR against files stored in S3\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install s3-ocr\n\n## Demo\n\nYou can see the results of running this tool against three PDFs from the Internet Archive ([one](https://archive.org/details/unmaskingrobert00houdgoog), [two](https://archive.org/details/practicalmagicia00harr), [three](https://archive.org/details/latestmagicbeing00hoff)) in [this example table](https://s3-ocr-demo.datasette.io/pages/pages?_facet=path#facet-path) hosted using [Datasette](https://datasette.io/).\n\n## Starting OCR against PDFs in a bucket\n\nThe `start` command takes a list of keys and submits them to [Textract](https://aws.amazon.com/textract/) for OCR processing.\n\nYou need to have AWS configured using environment variables, credentials file in your home directory or a JSON or INI file generated using [s3-credentials](https://datasette.io/tools/s3-credentials).\n\nYou can start the process running like this:\n\n    s3-ocr start name-of-your-bucket my-pdf-file.pdf\n\nThe paths you specify should be paths within the bucket. If you stored your PDF files in folders inside the bucket it should look like this:\n\n    s3-ocr start name-of-your-bucket path/to/one.pdf path/to/two.pdf\n\nOCR can take some time. The results of the OCR will be stored in `textract-output` in your bucket.\n\nTo process every file in the bucket with a `.pdf` extension use `--all`:\n\n    s3-ocr start name-of-bucket --all\n\n### s3-ocr start --help\n\n<!-- [[[cog\nimport cog\nfrom s3_ocr import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"start\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: s3-ocr start [OPTIONS] BUCKET [KEYS]...\n\n  Start OCR tasks for PDF files in an S3 bucket\n\n      s3-ocr start name-of-bucket path/to/one.pdf path/to/two.pdf\n\n  To process every file with a .pdf extension:\n\n      s3-ocr start name-of-bucket --all\n\nOptions:\n  --all                 Process all PDF files in the bucket\n  --access-key TEXT     AWS access key ID\n  --secret-key TEXT     AWS secret access key\n  --session-token TEXT  AWS session token\n  --endpoint-url TEXT   Custom endpoint URL\n  -a, --auth FILENAME   Path to JSON/INI file containing credentials\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Checking status\n\nThe `s3-ocr status <bucket-name>` command shows a rough indication of progress through the tasks:\n\n```\n% s3-ocr status sfms-history\n153 complete out of 532 jobs\n```\nIt compares the jobs that have been submitted, based on `.s3-ocr.json` files, to the jobs that have their results written to the `textract-output/` folder.\n\n### s3-ocr status --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"status\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr status [OPTIONS] BUCKET\n\n  Show status of OCR jobs for a bucket\n\nOptions:\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Inspecting a job\n\nThe `s3-ocr inspect-job <job_id>` command can be used to check the status of a specific job ID:\n```\n% s3-ocr inspect-job b267282745685226339b7e0d4366c4ff6887b7e293ed4b304dc8bb8b991c7864\n{\n  \"DocumentMetadata\": {\n    \"Pages\": 583\n  },\n  \"JobStatus\": \"SUCCEEDED\",\n  \"DetectDocumentTextModelVersion\": \"1.0\"\n}\n```\n\n### s3-ocr inspect-job --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"inspect-job\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr inspect-job [OPTIONS] JOB_ID\n\n  Show the current status of an OCR job\n\n      s3-ocr inspect-job <job_id>\n\nOptions:\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Fetching the results\n\nOnce an OCR job has completed you can download the resulting JSON using the `fetch` command:\n\n    s3-ocr fetch name-of-bucket path/to/file.pdf\n\nThis will save files in the current directory with names like this:\n\n- `4d9b5cf580e761fdb16fd24edce14737ebc562972526ef6617554adfa11d6038-1.json`\n- `4d9b5cf580e761fdb16fd24edce14737ebc562972526ef6617554adfa11d6038-2.json`\n\nThe number of files will vary depending on the length of the document.\n\nIf you don't want separate files you can combine them together using the `-c/--combine` option:\n\n    s3-ocr fetch name-of-bucket path/to/file.pdf --combine output.json\n\nThe `output.json` file will then contain data that looks something like this:\n\n```\n{\n  \"Blocks\": [\n    {\n      \"BlockType\": \"PAGE\",\n      \"Geometry\": {...}\n      \"Page\": 1,\n      ...\n    },\n    {\n      \"BlockType\": \"LINE\",\n      \"Page\": 1,\n      ...\n      \"Text\": \"Barry\",\n    },\n```\n### s3-ocr fetch --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"fetch\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr fetch [OPTIONS] BUCKET KEY\n\n  Fetch the OCR results for a specified file\n\n      s3-ocr fetch name-of-bucket path/to/key.pdf\n\n  This will save files in the current directory called things like\n\n      a806e67e504fc15f...48314e-1.json     a806e67e504fc15f...48314e-2.json\n\n  To combine these together into a single JSON file with a specified name, use:\n\n      s3-ocr fetch name-of-bucket path/to/key.pdf --combine output.json\n\n  Use \"--output -\" to print the combined JSON to standard output instead.\n\nOptions:\n  -c, --combine FILENAME  Write combined JSON to file\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Fetching just the text of a page\n\nIf you don't want to deal with the JSON directly, you can use the `text` command to retrieve just the text extracted from a PDF:\n\n    s3-ocr text name-of-bucket path/to/file.pdf\n\nThis will output plain text to standard output.\n\nTo save that to a file, use this:\n\n    s3-ocr text name-of-bucket path/to/file.pdf > text.txt\n\nSeparate pages will be separated by three newlines. To separate them using a `----` horizontal divider instead add `--divider`:\n\n    s3-ocr text name-of-bucket path/to/file.pdf --divider\n\n### s3-ocr text --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"text\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr text [OPTIONS] BUCKET KEY\n\n  Retrieve the text from an OCRd PDF file\n\n      s3-ocr text name-of-bucket path/to/key.pdf\n\nOptions:\n  --divider             Add ---- between pages\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n\n## Changes made to your bucket\n\nTo keep track of which files have been submitted for processing, `s3-ocr` will create a JSON file for every file that it adds to the OCR queue.\n\nThis file will be called:\n\n    path-to-file/name-of-file.pdf.s3-ocr.json\n\nEach of these JSON files contains data that looks like this:\n\n```json\n{\n  \"job_id\": \"a34eb4e8dc7e70aa9668f7272aa403e85997364199a654422340bc5ada43affe\",\n  \"etag\": \"\\\"b0c77472e15500347ebf46032a454e8e\\\"\"\n}\n```\nThe recorded `job_id` can be used later to associate the file with the results of the OCR task in `textract-output/`.\n\nThe `etag` is the ETag of the S3 object at the time it was submitted. This can be used later to determine if a file has changed since it last had OCR run against it.\n\nThis design for the tool, with the `.s3-ocr.json` files tracking jobs that have been submitted, means that it is safe to run `s3-ocr start` against the same bucket multiple times without the risk of starting duplicate OCR jobs.\n\n## Creating a SQLite index of your OCR results\n\nThe `s3-ocr index <bucket> <database_file>` command creates a SQLite database contaning the results of the OCR, and configure SQLite full-text search for the text:\n\n```\n% s3-ocr index sfms-history index.db\nFetching job details  [####################################]  100%\nPopulating pages table  [####################----------------]   55%  00:03:18\n```\nThe schema of the resulting database looks like this (excluding the FTS tables):\n```sql\nCREATE TABLE [pages] (\n   [path] TEXT,\n   [page] INTEGER,\n   [folder] TEXT,\n   [text] TEXT,\n   PRIMARY KEY ([path], [page])\n);\nCREATE TABLE [ocr_jobs] (\n   [key] TEXT PRIMARY KEY,\n   [job_id] TEXT,\n   [etag] TEXT,\n   [s3_ocr_etag] TEXT\n);\nCREATE TABLE [fetched_jobs] (\n   [job_id] TEXT PRIMARY KEY\n);\n```\nThe database is designed to be used with [Datasette](https://datasette.io).\n\n### s3-ocr index --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"index\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: s3-ocr\")\ncog.out(\n    \"```\\n{}\\n```\".format(help.split(\"--access-key\")[0] + \"--access-key ...\")\n)\n]]] -->\n```\nUsage: s3-ocr index [OPTIONS] BUCKET DATABASE\n\n  Create a SQLite database with OCR results for files in a bucket\n\nOptions:\n  --access-key ...\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd s3-ocr\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nTo regenerate the README file with the latest `--help`:\n\n    cog -r README.md\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/s3-ocr",
       "Issues": "https://github.com/simonw/s3-ocr/issues"
     },
-    "release_url": "https://pypi.org/project/s3-ocr/0.3/",
+    "release_url": "https://pypi.org/project/s3-ocr/0.4/",
     "requires_dist": [
       "click",
       "boto3",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Tools for running OCR against files stored in S3",
-    "version": "0.3",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14290834,
+  "last_serial": 14300340,
   "releases": {
     "0.1a0": [
       {
@@ -170,46 +170,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "08ed3b155102e1c582361ec74eb58bc0",
+          "sha256": "65907ec8607e2740f5b7ea418849120d5d83c4a628dc7df78d49a567f8b550b8"
+        },
+        "downloads": -1,
+        "filename": "s3_ocr-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "08ed3b155102e1c582361ec74eb58bc0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 13460,
+        "upload_time": "2022-06-30T21:05:13",
+        "upload_time_iso_8601": "2022-06-30T21:05:13.625462Z",
+        "url": "https://files.pythonhosted.org/packages/ab/df/96e578040c137ec77a880f156c7a909b6ef0f9c3ff45480be6bd780e79d1/s3_ocr-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b313ec65a7793691b18e644f681031c2",
+          "sha256": "5356ebd31f168b6371e18bed8277be9af2546345c9da6a9a508990687ddc3135"
+        },
+        "downloads": -1,
+        "filename": "s3-ocr-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b313ec65a7793691b18e644f681031c2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 15298,
+        "upload_time": "2022-06-30T21:05:15",
+        "upload_time_iso_8601": "2022-06-30T21:05:15.749593Z",
+        "url": "https://files.pythonhosted.org/packages/36/29/119380d1e54729abc0b7e7ddc08134d71fb69a1a6eb774ce5764f56779bd/s3-ocr-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "80d7e359b16bccdfc2aad751cf946c21",
-        "sha256": "ffe2d137641c7d7feb6d3476519ec637368ed5f24ba4d593e0321a15f5b38b39"
+        "md5": "08ed3b155102e1c582361ec74eb58bc0",
+        "sha256": "65907ec8607e2740f5b7ea418849120d5d83c4a628dc7df78d49a567f8b550b8"
       },
       "downloads": -1,
-      "filename": "s3_ocr-0.3-py3-none-any.whl",
+      "filename": "s3_ocr-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "80d7e359b16bccdfc2aad751cf946c21",
+      "md5_digest": "08ed3b155102e1c582361ec74eb58bc0",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 12900,
-      "upload_time": "2022-06-30T00:45:36",
-      "upload_time_iso_8601": "2022-06-30T00:45:36.528908Z",
-      "url": "https://files.pythonhosted.org/packages/9a/0f/bbd8d55700c8c0a0e0906fc5fc379b9cdf0f8c5be1729d9db4aa0284c3ff/s3_ocr-0.3-py3-none-any.whl",
+      "size": 13460,
+      "upload_time": "2022-06-30T21:05:13",
+      "upload_time_iso_8601": "2022-06-30T21:05:13.625462Z",
+      "url": "https://files.pythonhosted.org/packages/ab/df/96e578040c137ec77a880f156c7a909b6ef0f9c3ff45480be6bd780e79d1/s3_ocr-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "896d890084917b94e134195e399f378c",
-        "sha256": "201daf650c7295ae6b13844332ab5a121d5dac8db6e153c43224f9fdbf8c50a7"
+        "md5": "b313ec65a7793691b18e644f681031c2",
+        "sha256": "5356ebd31f168b6371e18bed8277be9af2546345c9da6a9a508990687ddc3135"
       },
       "downloads": -1,
-      "filename": "s3-ocr-0.3.tar.gz",
+      "filename": "s3-ocr-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "896d890084917b94e134195e399f378c",
+      "md5_digest": "b313ec65a7793691b18e644f681031c2",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 14362,
-      "upload_time": "2022-06-30T00:45:38",
-      "upload_time_iso_8601": "2022-06-30T00:45:38.182756Z",
-      "url": "https://files.pythonhosted.org/packages/34/2c/cb8b0cd8fac52210ddccc204f561299e7e2ce781e1fcc39ff52a8f394bf5/s3-ocr-0.3.tar.gz",
+      "size": 15298,
+      "upload_time": "2022-06-30T21:05:15",
+      "upload_time_iso_8601": "2022-06-30T21:05:15.749593Z",
+      "url": "https://files.pythonhosted.org/packages/36/29/119380d1e54729abc0b7e7ddc08134d71fb69a1a6eb774ce5764f56779bd/s3-ocr-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
