@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-redirect-to-https\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-redirect-to-https.svg)](https://pypi.org/project/datasette-redirect-to-https/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-redirect-to-https?include_prereleases&label=changelog)](https://github.com/simonw/datasette-redirect-to-https/releases)\n[![Tests](https://github.com/simonw/datasette-redirect-to-https/workflows/Test/badge.svg)](https://github.com/simonw/datasette-redirect-to-https/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-redirect-to-https/blob/main/LICENSE)\n\nDatasette plugin that redirects all non-https requests to https\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-redirect-to-https\n\n## Usage\n\nOnce installed, incoming GET requests to the `http://` protocol will be 301 redirected to the `https://` equivalent page.\n\nHTTP verbs other than GET will get a 405 Method Not Allowed HTTP error.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-redirect-to-https\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-redirect-to-https\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-redirect-to-https.svg)](https://pypi.org/project/datasette-redirect-to-https/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-redirect-to-https?include_prereleases&label=changelog)](https://github.com/simonw/datasette-redirect-to-https/releases)\n[![Tests](https://github.com/simonw/datasette-redirect-to-https/workflows/Test/badge.svg)](https://github.com/simonw/datasette-redirect-to-https/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-redirect-to-https/blob/main/LICENSE)\n\nDatasette plugin that redirects all non-https requests to https\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-redirect-to-https\n\n## Usage\n\nOnce installed, incoming GET requests to the `http://` protocol will be 301 redirected to the `https://` equivalent page.\n\nHTTP verbs other than GET will get a 405 Method Not Allowed HTTP error.\n\n## Configuration\n\nSome hosting providers handle HTTPS for you, passing requests back to your application server over HTTP.\n\nFor this plugin to work correctly, you need to detect that they the original incoming request came in over HTTP.\n\nHosting providers like this often set an additional HTTP header such as `x-forwarded-proto: http` to let you know the original protocol.\n\nYou can configure `datasette-redirect-to-https` to respect this header using the following plugin configuration in `metadata.json`:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-redirect-to-https\": {\n      \"if_headers\": {\n        \"x-forwarded-proto\": \"http\"\n      }\n    }\n  }\n}\n```\nThe above example will redirect to `https://` if the incoming request has a `x-forwarded-proto: http` request header.\n\nIf multiple `if_headers` are listed, the redirect will occur if any of them match.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-redirect-to-https\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-redirect-to-https",
     "package_url": "https://pypi.org/project/datasette-redirect-to-https/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-redirect-to-https/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-redirect-to-https/actions",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-redirect-to-https",
       "Issues": "https://github.com/simonw/datasette-redirect-to-https/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-redirect-to-https/0.1/",
+    "release_url": "https://pypi.org/project/datasette-redirect-to-https/0.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -37,11 +37,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "Datasette plugin that redirects all non-https requests to https",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 12080024,
+  "last_serial": 14325770,
   "releases": {
     "0.1": [
       {
@@ -84,46 +84,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8032ba00f856f7ce966ea76d379fc08d",
+          "sha256": "43834db734a1d3aead5fde413a6527ca54f074d4ecc4a837ce52994c75ee10e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_redirect_to_https-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8032ba00f856f7ce966ea76d379fc08d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3473,
+        "upload_time": "2022-07-04T01:03:47",
+        "upload_time_iso_8601": "2022-07-04T01:03:47.820216Z",
+        "url": "https://files.pythonhosted.org/packages/29/4b/ec4511c9533350841bceaf3dbb4d72508c60cdd3bd806ed1893ec430d88b/datasette_redirect_to_https-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4e0af69f034753b694db932c725ac73d",
+          "sha256": "522bbf1b159eacf065d64d2913f91ffe9dcd5adc66ee229dcb5c7dc1509822bc"
+        },
+        "downloads": -1,
+        "filename": "datasette-redirect-to-https-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4e0af69f034753b694db932c725ac73d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3079,
+        "upload_time": "2022-07-04T01:03:49",
+        "upload_time_iso_8601": "2022-07-04T01:03:49.370655Z",
+        "url": "https://files.pythonhosted.org/packages/eb/89/73df25db5bffd367545399ad2a3dfd824f946ba480f277e8564c8536b554/datasette-redirect-to-https-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "be992ffb8987bbe9b062446d8b8c1521",
-        "sha256": "c0fc82433edfa7ca521be42a62c6216af739183d17b00e02c97e1fd80dadc0ff"
+        "md5": "8032ba00f856f7ce966ea76d379fc08d",
+        "sha256": "43834db734a1d3aead5fde413a6527ca54f074d4ecc4a837ce52994c75ee10e2"
       },
       "downloads": -1,
-      "filename": "datasette_redirect_to_https-0.1-py3-none-any.whl",
+      "filename": "datasette_redirect_to_https-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "be992ffb8987bbe9b062446d8b8c1521",
+      "md5_digest": "8032ba00f856f7ce966ea76d379fc08d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 2988,
-      "upload_time": "2021-11-20T23:28:06",
-      "upload_time_iso_8601": "2021-11-20T23:28:06.904245Z",
-      "url": "https://files.pythonhosted.org/packages/54/81/97b0546d126631c96980bd9f468b40dbb637e58d60d02f02b16ce8a46d21/datasette_redirect_to_https-0.1-py3-none-any.whl",
+      "size": 3473,
+      "upload_time": "2022-07-04T01:03:47",
+      "upload_time_iso_8601": "2022-07-04T01:03:47.820216Z",
+      "url": "https://files.pythonhosted.org/packages/29/4b/ec4511c9533350841bceaf3dbb4d72508c60cdd3bd806ed1893ec430d88b/datasette_redirect_to_https-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "80d728542c9433a23ac8eae52affd6a5",
-        "sha256": "d8ac5a5020fac9c901af36e5d49127d316818974fc03d73c00c332229fd73946"
+        "md5": "4e0af69f034753b694db932c725ac73d",
+        "sha256": "522bbf1b159eacf065d64d2913f91ffe9dcd5adc66ee229dcb5c7dc1509822bc"
       },
       "downloads": -1,
-      "filename": "datasette-redirect-to-https-0.1.tar.gz",
+      "filename": "datasette-redirect-to-https-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "80d728542c9433a23ac8eae52affd6a5",
+      "md5_digest": "4e0af69f034753b694db932c725ac73d",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 2607,
-      "upload_time": "2021-11-20T23:28:08",
-      "upload_time_iso_8601": "2021-11-20T23:28:08.014910Z",
-      "url": "https://files.pythonhosted.org/packages/b5/25/f40183342b13c025ecc9da70b9ec6cff06ab2924525499242dcaeda1c5a0/datasette-redirect-to-https-0.1.tar.gz",
+      "size": 3079,
+      "upload_time": "2022-07-04T01:03:49",
+      "upload_time_iso_8601": "2022-07-04T01:03:49.370655Z",
+      "url": "https://files.pythonhosted.org/packages/eb/89/73df25db5bffd367545399ad2a3dfd824f946ba480f277e8564c8536b554/datasette-redirect-to-https-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
