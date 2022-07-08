@@ -130,3 +130,4 @@ datasette-scale-to-zero
 s3-ocr
 datasette-expose-env
 sqlite-comprehend
+datasette-query-files
