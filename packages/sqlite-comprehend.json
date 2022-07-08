@@ -1,0 +1,176 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# sqlite-comprehend\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-comprehend.svg)](https://pypi.org/project/sqlite-comprehend/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-comprehend?include_prereleases&label=changelog)](https://github.com/simonw/sqlite-comprehend/releases)\n[![Tests](https://github.com/simonw/sqlite-comprehend/workflows/Test/badge.svg)](https://github.com/simonw/sqlite-comprehend/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-comprehend/blob/master/LICENSE)\n\nTools for running data in a SQLite database through [AWS Comprehend]()\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install sqlite-comprehend\n\n## Configuration\n\nYou will need AWS credentials with the `comprehend:DetectEntities` [IAM permission](https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html).\n\nYou can configure credentials [using these instructions](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html). You can also save them to a JSON or INI configuration file and pass them to the command using `-a credentials.ini`, or pass them using the `--access-key` and `--secret-key` options.\n\n## Entity extraction\n\nThe `sqlite-comprehend entities` command runs entity extraction against every row in the specified table and saves the results to your database.\n\nSpecify the database, the table and one or more columns containing text in that table. The following runs against the `text` column in the `pages` table of the `sfms.db` SQLite database:\n\n    sqlite-comprehend sfms.db pages text\n\nResults will be written into a `pages_comprehend_entities` table. Change the name of the output table by passing `-o other_table_name`.\n\nYou can run against a subset of rows by adding a `--where` clause:\n\n    sqlite-comprehend sfms.db pages text --where 'id < 10'\n\nYou can also used named parameters in your `--where` clause:\n\n    sqlite-comprehend sfms.db pages text --where 'id < :maxid' -p maxid 10\n\nOnly the first 5,000 characters for each row will be considered. Be sure to review [Comprehend's pricing](https://aws.amazon.com/comprehend/pricing/) - which starts at $0.0001 per hundred characters.\n\nRows that have been processed are recorded in the `pages_comprehend_entities_done` table. If you run the command more than once it will only process rows that have been newly added.\n\nYou can delete records from that `_done` table to run them again.\n\n### sqlite-comprehend entities --help\n\n<!-- [[[cog\nfrom click.testing import CliRunner\nfrom sqlite_comprehend import cli\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"entities\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: sqlite-comprehend\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: sqlite-comprehend entities [OPTIONS] DATABASE TABLE COLUMNS...\n\n  Detect entities in columns in a table\n\n  To extract entities from columns text1 and text2 in mytable:\n\n      sqlite-comprehend entities my.db mytable text1 text2\n\n  To run against just a subset of the rows in the table, add:\n\n      --where \"id < :max_id\" -p max_id 50\n\n  Results will be written to a table called mytable_comprehend_entities\n\n  To specify a different output table, use -o custom_table_name\n\nOptions:\n  --where TEXT                WHERE clause to filter table\n  -p, --param <TEXT TEXT>...  Named :parameters for SQL query\n  -o, --output TEXT           Custom output table\n  -r, --reset                 Start from scratch, deleting previous results\n  --access-key TEXT           AWS access key ID\n  --secret-key TEXT           AWS secret access key\n  --session-token TEXT        AWS session token\n  --endpoint-url TEXT         Custom endpoint URL\n  -a, --auth FILENAME         Path to JSON/INI file containing credentials\n  --help                      Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Schema\n\nAssuming an input table called `pages` the tables created by this tool will have the following schema:\n\n<!-- [[[cog\nimport cog, json\nfrom sqlite_comprehend import cli\nfrom unittest.mock import patch\nfrom click.testing import CliRunner\nimport sqlite_utils\nimport tempfile, pathlib\ntmpdir = pathlib.Path(tempfile.mkdtemp())\ndb_path = str(tmpdir / \"data.db\")\ndb = sqlite_utils.Database(db_path)\ndb[\"pages\"].insert_all(\n    [\n        {\n            \"id\": 1,\n            \"text\": \"John Bob\",\n        },\n        {\n            \"id\": 2,\n            \"text\": \"Sandra X\",\n        },\n    ],\n    pk=\"id\",\n)\nwith patch('boto3.client') as client:\n    client.return_value.batch_detect_entities.return_value = {\n        \"ResultList\": [\n            {\n                \"Index\": 0,\n                \"Entities\": [\n                    {\n                        \"Score\": 0.8,\n                        \"Type\": \"PERSON\",\n                        \"Text\": \"John Bob\",\n                        \"BeginOffset\": 0,\n                        \"EndOffset\": 5,\n                    },\n                ],\n            },\n            {\n                \"Index\": 1,\n                \"Entities\": [\n                    {\n                        \"Score\": 0.8,\n                        \"Type\": \"PERSON\",\n                        \"Text\": \"Sandra X\",\n                        \"BeginOffset\": 0,\n                        \"EndOffset\": 5,\n                    },\n                ],\n            },\n        ],\n        \"ErrorList\": [],\n    }\n    runner = CliRunner()\n    result = runner.invoke(cli.cli, [\n        \"entities\", db_path, \"pages\", \"text\"\n    ])\ncog.out(\"```sql\\n\")\ncog.out(db.schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [pages] (\n   [id] INTEGER PRIMARY KEY,\n   [text] TEXT\n);\nCREATE TABLE [comprehend_entity_types] (\n   [id] INTEGER PRIMARY KEY,\n   [value] TEXT\n);\nCREATE TABLE [comprehend_entities] (\n   [id] INTEGER PRIMARY KEY,\n   [name] TEXT,\n   [type] INTEGER REFERENCES [comprehend_entity_types]([id])\n);\nCREATE TABLE [pages_comprehend_entities] (\n   [id] INTEGER REFERENCES [pages]([id]),\n   [score] FLOAT,\n   [entity] INTEGER REFERENCES [comprehend_entities]([id]),\n   [begin_offset] INTEGER,\n   [end_offset] INTEGER\n);\nCREATE UNIQUE INDEX [idx_comprehend_entity_types_value]\n    ON [comprehend_entity_types] ([value]);\nCREATE UNIQUE INDEX [idx_comprehend_entities_type_name]\n    ON [comprehend_entities] ([type], [name]);\nCREATE TABLE [pages_comprehend_entities_done] (\n   [id] INTEGER PRIMARY KEY REFERENCES [pages]([id])\n);\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd sqlite-comprehend\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/sqlite-comprehend",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "sqlite-comprehend",
+    "package_url": "https://pypi.org/project/sqlite-comprehend/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/sqlite-comprehend/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/sqlite-comprehend/actions",
+      "Changelog": "https://github.com/simonw/sqlite-comprehend/releases",
+      "Homepage": "https://github.com/simonw/sqlite-comprehend",
+      "Issues": "https://github.com/simonw/sqlite-comprehend/issues"
+    },
+    "release_url": "https://pypi.org/project/sqlite-comprehend/0.1/",
+    "requires_dist": [
+      "click",
+      "boto3",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-mock ; extra == 'test'",
+      "cogapp ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Tools for running data in a SQLite database through AWS Comprehend",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14378980,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4a2821b6ac8928cad7da9e700459416f",
+          "sha256": "68ebc90576d01c398a13eda93fea799e9c08a7a7a1529d433fc1b8e986b8fb64"
+        },
+        "downloads": -1,
+        "filename": "sqlite_comprehend-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4a2821b6ac8928cad7da9e700459416f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11920,
+        "upload_time": "2022-07-08T20:02:54",
+        "upload_time_iso_8601": "2022-07-08T20:02:54.537607Z",
+        "url": "https://files.pythonhosted.org/packages/ae/89/dd93d4cd12fc2420281cb34c512258083abdd2abdb8132160f7c7a938573/sqlite_comprehend-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "925c5caa062a257f0f9af8b73fcad6da",
+          "sha256": "34d18bf8904a5aab919c69e7f471e32394ceb10db32dc17058629912910c6323"
+        },
+        "downloads": -1,
+        "filename": "sqlite-comprehend-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "925c5caa062a257f0f9af8b73fcad6da",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 12648,
+        "upload_time": "2022-07-08T20:02:55",
+        "upload_time_iso_8601": "2022-07-08T20:02:55.942504Z",
+        "url": "https://files.pythonhosted.org/packages/6d/46/6750ba948f2085a639f2a233e59c2e5a9179e70822e518afd9a0d90fe108/sqlite-comprehend-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b408d5bf108c115dd43668f26a1b6056",
+          "sha256": "1d767f452ede5f794339b2027113e6d761d73c05e88c6f9df5e6ed88df0d2a1b"
+        },
+        "downloads": -1,
+        "filename": "sqlite_comprehend-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b408d5bf108c115dd43668f26a1b6056",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9371,
+        "upload_time": "2022-07-08T06:31:14",
+        "upload_time_iso_8601": "2022-07-08T06:31:14.338469Z",
+        "url": "https://files.pythonhosted.org/packages/59/c6/8e3960bbc74d8ea5fd80252e1617106b52870afdf4a11e7b3712e245019e/sqlite_comprehend-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b304695a4d26faee132145fab6e0409a",
+          "sha256": "f303c8d5c71659ab753d5e42642cb8c132cb6d467369a8fb94d25b105ce6cebb"
+        },
+        "downloads": -1,
+        "filename": "sqlite-comprehend-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b304695a4d26faee132145fab6e0409a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8295,
+        "upload_time": "2022-07-08T06:31:15",
+        "upload_time_iso_8601": "2022-07-08T06:31:15.445689Z",
+        "url": "https://files.pythonhosted.org/packages/f9/68/b366cd9458e37703583c940bedd63d52edf7a1616d63b70c45df166fa463/sqlite-comprehend-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "4a2821b6ac8928cad7da9e700459416f",
+        "sha256": "68ebc90576d01c398a13eda93fea799e9c08a7a7a1529d433fc1b8e986b8fb64"
+      },
+      "downloads": -1,
+      "filename": "sqlite_comprehend-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "4a2821b6ac8928cad7da9e700459416f",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 11920,
+      "upload_time": "2022-07-08T20:02:54",
+      "upload_time_iso_8601": "2022-07-08T20:02:54.537607Z",
+      "url": "https://files.pythonhosted.org/packages/ae/89/dd93d4cd12fc2420281cb34c512258083abdd2abdb8132160f7c7a938573/sqlite_comprehend-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "925c5caa062a257f0f9af8b73fcad6da",
+        "sha256": "34d18bf8904a5aab919c69e7f471e32394ceb10db32dc17058629912910c6323"
+      },
+      "downloads": -1,
+      "filename": "sqlite-comprehend-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "925c5caa062a257f0f9af8b73fcad6da",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 12648,
+      "upload_time": "2022-07-08T20:02:55",
+      "upload_time_iso_8601": "2022-07-08T20:02:55.942504Z",
+      "url": "https://files.pythonhosted.org/packages/6d/46/6750ba948f2085a639f2a233e59c2e5a9179e70822e518afd9a0d90fe108/sqlite-comprehend-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
