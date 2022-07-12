@@ -3,7 +3,10 @@
     "author": "Simon Willison",
     "author_email": "",
     "bugtrack_url": null,
-    "classifiers": [],
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
     "description": "# datasette-ics\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ics.svg)](https://pypi.org/project/datasette-ics/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-ics?include_prereleases&label=changelog)](https://github.com/simonw/datasette-ics/releases)\n[![Tests](https://github.com/simonw/datasette-ics/workflows/Test/badge.svg)](https://github.com/simonw/datasette-ics/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-ics/blob/main/LICENSE)\n\nDatasette plugin that adds support for generating [iCalendar .ics files](https://tools.ietf.org/html/rfc5545) with the results of a SQL query.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable the `.ics` output extension.\n\n    $ pip install datasette-ics\n\n## Usage\n\nTo create an iCalendar file you need to define a custom SQL query that returns a required set of columns:\n\n* `event_name` - the short name for the event\n* `event_dtstart` - when the event starts\n\nThe following columns are optional:\n\n* `event_dtend` - when the event ends\n* `event_duration` - the duration of the event (use instead of `dtend`)\n* `event_description` - a longer description of the event\n* `event_uid` - a globally unique identifier for this event\n* `event_tzid` - the timezone for the event, e.g. `America/Chicago`\n\nA query that returns these columns can then be returned as an ics feed by adding the `.ics` extension.\n\n## Demo\n\n[This SQL query]([https://www.rockybeaches.com/data?sql=with+inner+as+(%0D%0A++select%0D%0A++++datetime%2C%0D%0A++++substr(datetime%2C+0%2C+11)+as+date%2C%0D%0A++++mllw_feet%2C%0D%0A++++lag(mllw_feet)+over+win+as+previous_mllw_feet%2C%0D%0A++++lead(mllw_feet)+over+win+as+next_mllw_feet%0D%0A++from%0D%0A++++tide_predictions%0D%0A++where%0D%0A++++station_id+%3D+%3Astation_id%0D%0A++++and+datetime+%3E%3D+date()%0D%0A++++window+win+as+(%0D%0A++++++order+by%0D%0A++++++++datetime%0D%0A++++)%0D%0A++order+by%0D%0A++++datetime%0D%0A)%2C%0D%0Alowest_tide_per_day+as+(%0D%0A++select%0D%0A++++date%2C%0D%0A++++datetime%2C%0D%0A++++mllw_feet%0D%0A++from%0D%0A++++inner%0D%0A++where%0D%0A++++mllw_feet+%3C%3D+previous_mllw_feet%0D%0A++++and+mllw_feet+%3C%3D+next_mllw_feet%0D%0A)%0D%0Aselect%0D%0A++min(datetime)+as+event_dtstart%2C%0D%0A++%27Low+tide%3A+%27+||+mllw_feet+||+%27+feet%27+as+event_name%2C%0D%0A++%27America%2FLos_Angeles%27+as+event_tzid%0D%0Afrom%0D%0A++lowest_tide_per_day%0D%0Agroup+by%0D%0A++date%0D%0Aorder+by%0D%0A++date&station_id=9414131) calculates the lowest tide per day at Pillar Point in Half Moon Bay, California.\n\nSince the query returns `event_name`, `event_dtstart` and `event_tzid` columns it produces [this ICS feed](https://www.rockybeaches.com/data.ics?sql=with+inner+as+(%0D%0A++select%0D%0A++++datetime%2C%0D%0A++++substr(datetime%2C+0%2C+11)+as+date%2C%0D%0A++++mllw_feet%2C%0D%0A++++lag(mllw_feet)+over+win+as+previous_mllw_feet%2C%0D%0A++++lead(mllw_feet)+over+win+as+next_mllw_feet%0D%0A++from%0D%0A++++tide_predictions%0D%0A++where%0D%0A++++station_id+%3D+%3Astation_id%0D%0A++++and+datetime+%3E%3D+date()%0D%0A++++window+win+as+(%0D%0A++++++order+by%0D%0A++++++++datetime%0D%0A++++)%0D%0A++order+by%0D%0A++++datetime%0D%0A)%2C%0D%0Alowest_tide_per_day+as+(%0D%0A++select%0D%0A++++date%2C%0D%0A++++datetime%2C%0D%0A++++mllw_feet%0D%0A++from%0D%0A++++inner%0D%0A++where%0D%0A++++mllw_feet+%3C%3D+previous_mllw_feet%0D%0A++++and+mllw_feet+%3C%3D+next_mllw_feet%0D%0A)%0D%0Aselect%0D%0A++min(datetime)+as+event_dtstart%2C%0D%0A++%27Low+tide%3A+%27+||+mllw_feet+||+%27+feet%27+as+event_name%2C%0D%0A++%27America%2FLos_Angeles%27+as+event_tzid%0D%0Afrom%0D%0A++lowest_tide_per_day%0D%0Agroup+by%0D%0A++date%0D%0Aorder+by%0D%0A++date&station_id=9414131). If you subscribe to that in a calendar application such as Apple Calendar you get something that looks like this:\n\n![Apple Calendar showing low tides at Pillar Point during a week](https://user-images.githubusercontent.com/9599/173158984-e5ec6bd0-33fc-4fc0-ba9d-17ae674f310a.jpg)\n\n## Using a canned query\n\nDatasette's [canned query mechanism](https://datasette.readthedocs.io/en/stable/sql_queries.html#canned-queries) can be used to configure calendars. If a canned query definition has a `title` that will be used as the title of the calendar.\n\nHere's an example, defined using a `metadata.yaml` file:\n\n```yaml\ndatabases:\n  mydatabase:\n    queries:\n      calendar:\n        title: My Calendar\n        sql: |-\n          select\n            title as event_name,\n            start as event_dtstart,\n            description as event_description\n          from\n            events\n          order by\n            start\n          limit\n            100\n```\nThis will result in a calendar feed at `http://localhost:8001/mydatabase/calendar.ics`\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
@@ -23,22 +26,25 @@
     "platform": null,
     "project_url": "https://pypi.org/project/datasette-ics/",
     "project_urls": {
-      "Homepage": "https://github.com/simonw/datasette-ics"
+      "CI": "https://github.com/simonw/datasette-ics/actions",
+      "Changelog": "https://github.com/simonw/datasette-ics/releases",
+      "Homepage": "https://github.com/simonw/datasette-ics",
+      "Issues": "https://github.com/simonw/datasette-ics/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-ics/0.5.1/",
+    "release_url": "https://pypi.org/project/datasette-ics/0.5.2/",
     "requires_dist": [
       "datasette (>=0.49)",
-      "ics (==0.7)",
+      "ics (==0.7.2)",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin for outputting iCalendar files",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14098195,
+  "last_serial": 14406152,
   "releases": {
     "0.1a0": [
       {
@@ -191,46 +197,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d2cee0870b235a32e51f98984d6bed94",
+          "sha256": "2ca8f5927adf2255aaa1e750e3b17fe3cf6fc089841c578db42c37f9ae32471f"
+        },
+        "downloads": -1,
+        "filename": "datasette_ics-0.5.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d2cee0870b235a32e51f98984d6bed94",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8917,
+        "upload_time": "2022-07-12T02:09:20",
+        "upload_time_iso_8601": "2022-07-12T02:09:20.123221Z",
+        "url": "https://files.pythonhosted.org/packages/f7/16/34340fa1c33142bbdf6efa106a22cfed863cc93acf480c1377239f9bee2d/datasette_ics-0.5.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "611db8fa1a8e0cebe5fa615f8bb52af8",
+          "sha256": "61ba2c939338526d2ef46add8cb3279748f478d9254981f36f8c7bd50b46f4e0"
+        },
+        "downloads": -1,
+        "filename": "datasette-ics-0.5.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "611db8fa1a8e0cebe5fa615f8bb52af8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8327,
+        "upload_time": "2022-07-12T02:09:21",
+        "upload_time_iso_8601": "2022-07-12T02:09:21.937889Z",
+        "url": "https://files.pythonhosted.org/packages/bf/b1/2f08723d89563604348a12b0f5bc334115cc6d02ac08be541f81e62324df/datasette-ics-0.5.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "2d5938f299d62dbf27c066341962cd80",
-        "sha256": "44efc2dac2fd7d33d7de2eab750791b9e5c98f9eb4cf626dbfb0f31aeecb6dbb"
+        "md5": "d2cee0870b235a32e51f98984d6bed94",
+        "sha256": "2ca8f5927adf2255aaa1e750e3b17fe3cf6fc089841c578db42c37f9ae32471f"
       },
       "downloads": -1,
-      "filename": "datasette_ics-0.5.1-py3-none-any.whl",
+      "filename": "datasette_ics-0.5.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "2d5938f299d62dbf27c066341962cd80",
+      "md5_digest": "d2cee0870b235a32e51f98984d6bed94",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 8826,
-      "upload_time": "2022-06-10T22:56:23",
-      "upload_time_iso_8601": "2022-06-10T22:56:23.450212Z",
-      "url": "https://files.pythonhosted.org/packages/d5/74/5a986e6d9c7afdfadf86152d31cec56b90db7cc711e95526c4033acf0ff2/datasette_ics-0.5.1-py3-none-any.whl",
+      "size": 8917,
+      "upload_time": "2022-07-12T02:09:20",
+      "upload_time_iso_8601": "2022-07-12T02:09:20.123221Z",
+      "url": "https://files.pythonhosted.org/packages/f7/16/34340fa1c33142bbdf6efa106a22cfed863cc93acf480c1377239f9bee2d/datasette_ics-0.5.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "3c3f8824a2af5083b0fe1afb97ca8726",
-        "sha256": "7fffda69f13db7598a3d5201350d35f1d30c35ff9e8807e6f1fc437df58acb30"
+        "md5": "611db8fa1a8e0cebe5fa615f8bb52af8",
+        "sha256": "61ba2c939338526d2ef46add8cb3279748f478d9254981f36f8c7bd50b46f4e0"
       },
       "downloads": -1,
-      "filename": "datasette-ics-0.5.1.tar.gz",
+      "filename": "datasette-ics-0.5.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "3c3f8824a2af5083b0fe1afb97ca8726",
+      "md5_digest": "611db8fa1a8e0cebe5fa615f8bb52af8",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 8197,
-      "upload_time": "2022-06-10T22:56:25",
-      "upload_time_iso_8601": "2022-06-10T22:56:25.002249Z",
-      "url": "https://files.pythonhosted.org/packages/4f/a0/03a68f593b80de0db81da7939c8ad48ca55ab0b2d8b1822427eb35907b3f/datasette-ics-0.5.1.tar.gz",
+      "size": 8327,
+      "upload_time": "2022-07-12T02:09:21",
+      "upload_time_iso_8601": "2022-07-12T02:09:21.937889Z",
+      "url": "https://files.pythonhosted.org/packages/bf/b1/2f08723d89563604348a12b0f5bc334115cc6d02ac08be541f81e62324df/datasette-ics-0.5.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
