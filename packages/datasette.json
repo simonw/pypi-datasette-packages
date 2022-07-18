@@ -80,7 +80,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13693094,
+  "last_serial": 14464452,
   "releases": {
     "0.10": [
       {
@@ -3810,6 +3810,48 @@
         "upload_time": "2022-05-02T21:44:59",
         "upload_time_iso_8601": "2022-05-02T21:44:59.064251Z",
         "url": "https://files.pythonhosted.org/packages/10/9b/d615eeb166d2ea57ef876e73538627c864a3c2377aa21897b0b949cfc822/datasette-0.62a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.62a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e3910786f7ffe5daeaaf972dd827db1c",
+          "sha256": "9420816519432057c10bf726728c5bdc694c02a87fb5a6365b70294094167d29"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.62a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e3910786f7ffe5daeaaf972dd827db1c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 228949,
+        "upload_time": "2022-07-18T01:16:53",
+        "upload_time_iso_8601": "2022-07-18T01:16:53.563043Z",
+        "url": "https://files.pythonhosted.org/packages/6b/24/9cebcf11e54150e73786020de9effd4d30ee9cd6d08bd00ed67e859514d1/datasette-0.62a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "361a0b81c1b1bde839242c14289fe6e4",
+          "sha256": "d921cdd1c308b3bb5cadc1da6481ee51d9d812e1b7fb95c043903695b5c86504"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.62a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "361a0b81c1b1bde839242c14289fe6e4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 207881,
+        "upload_time": "2022-07-18T01:16:55",
+        "upload_time_iso_8601": "2022-07-18T01:16:55.159575Z",
+        "url": "https://files.pythonhosted.org/packages/6f/cc/b517349216a5d791398eeb19abb5221c5ec7821b3ea1db1a166d1da16948/datasette-0.62a1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
