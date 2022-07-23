@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-insert\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-insert.svg)](https://pypi.org/project/datasette-insert/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-insert?include_prereleases&label=changelog)](https://github.com/simonw/datasette-insert/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-insert/blob/master/LICENSE)\n\nDatasette plugin for inserting and updating data\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-insert\n\nThis plugin should always be deployed with additional configuration to prevent unauthenticated access, see notes below.\n\nIf you are trying it out on your own local machine, you can `pip install` the [datasette-insert-unsafe](https://github.com/simonw/datasette-insert-unsafe) plugin to allow access without needing to set up authentication or permissions separately.\n\n## Inserting data and creating tables\n\nStart datasette and make sure it has a writable SQLite database attached to it. If you have not yet created a database file you can use this:\n\n    datasette data.db --create\n\nThe `--create` option will create a new empty `data.db` database file if it does not already exist.\n\nThe plugin adds an endpoint that allows data to be inserted or updated and tables to be created by POSTing JSON data to the following URL:\n\n    /-/insert/name-of-database/name-of-table\n\nThe JSON should look like this:\n\n```json\n[\n    {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 5\n    }\n]\n```\n\nThe first time data is posted to the URL a table of that name will be created if it does not aready exist, with the desired columns.\n\nYou can specify which column should be used as the primary key using the `?pk=` URL argument.\n\nHere's how to POST to a database and create a new table using the Python `requests` library:\n\n```python\nimport requests\n\nrequests.post(\"http://localhost:8001/-/insert/data/dogs?pk=id\", json=[\n    {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 4\n    }\n])\n```\nAnd here's how to do the same thing using `curl`:\n\n```\ncurl --request POST \\\n  --data '[\n      {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n      },\n      {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 4\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs?pk=id'\n```\nOr by piping in JSON like so:\n\n    cat dogs.json | curl --request POST -d @- \\\n        'http://localhost:8001/-/insert/data/dogs?pk=id'\n\n### Inserting a single row\n\nIf you are inserting a single row you can optionally send it as a dictionary rather than a list with a single item:\n\n```\ncurl --request POST \\\n  --data '{\n      \"id\": 1,\n      \"name\": \"Cleopaws\",\n      \"age\": 5\n    }' \\\n    'http://localhost:8001/-/insert/data/dogs?pk=id'\n```\n\n### Automatically adding new columns\n\nIf you send data to an existing table with keys that are not reflected by the existing columns, you will get an HTTP 400 error with a JSON response like this:\n\n```json\n{\n    \"status\": 400,\n    \"error\": \"Unknown keys: 'foo'\",\n    \"error_code\": \"unknown_keys\"\n}\n```\n\nIf you add `?alter=1` to the URL you are posting to any missing columns will be automatically added:\n\n```\ncurl --request POST \\\n  --data '[\n      {\n        \"id\": 3,\n        \"name\": \"Boris\",\n        \"age\": 1,\n        \"breed\": \"Husky\"\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs?alter=1'\n```\n\n## Upserting data\n\nAn \"upsert\" operation can be used to partially update a record. With upserts you can send a subset of the keys and, if the ID matches the specified primary key, they will be used to update an existing record.\n\nUpserts can be sent to the `/-/upsert` API endpoint.\n\nThis example will update the dog with ID=1's age from 5 to 7:\n```\ncurl --request POST \\\n  --data '{\n      \"id\": 1,\n      \"age\": 7\n    }' \\\n    'http://localhost:3322/-/upsert/data/dogs?pk=id'\n```\nLike the `/-/insert` endpoint, the `/-/upsert` endpoint can accept an array of objects too. It also supports the `?alter=1` option.\n\n## Permissions and authentication\n\nThis plugin defaults to denying all access, to help ensure people don't accidentally deploy it on the open internet in an unsafe configuration.\n\nYou can read about [Datasette's approach to authentication](https://datasette.readthedocs.io/en/stable/authentication.html) in the Datasette manual.\n\nYou can install the `datasette-insert-unsafe` plugin to run in unsafe mode, where all access is allowed by default.\n\nI recommend using this plugin in conjunction with [datasette-auth-tokens](https://github.com/simonw/datasette-auth-tokens), which provides a mechanism for making authenticated calls using API tokens.\n\nYou can then use [\"allow\" blocks](https://datasette.readthedocs.io/en/stable/authentication.html#defining-permissions-with-allow-blocks) in the `datasette-insert` plugin configuration to specify which authenticated tokens are allowed to make use of the API.\n\nHere's an example `metadata.json` file which restricts access to the `/-/insert` API to an API token defined in an `INSERT_TOKEN` environment variable:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-insert\": {\n            \"allow\": {\n                \"bot\": \"insert-bot\"\n            }\n        },\n        \"datasette-auth-tokens\": {\n            \"tokens\": [\n                {\n                    \"token\": {\n                        \"$env\": \"INSERT_TOKEN\"\n                    },\n                    \"actor\": {\n                        \"bot\": \"insert-bot\"\n                    }\n                }\n            ]\n        }\n    }\n}\n```\nWith this configuration in place you can start Datasette like this:\n\n    INSERT_TOKEN=abc123 datasette data.db -m metadata.json\n\nYou can now send data to the API using `curl` like this:\n\n```\ncurl --request POST \\\n  -H \"Authorization: Bearer abc123\" \\\n  --data '[\n      {\n        \"id\": 3,\n        \"name\": \"Boris\",\n        \"age\": 1,\n        \"breed\": \"Husky\"\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs'\n```\n\nOr using the Python `requests` library like so:\n\n```python\nrequests.post(\n    \"http://localhost:8001/-/insert/data/dogs\",\n    json={\"id\": 1, \"name\": \"Cleopaws\", \"age\": 5},\n    headers={\"Authorization\": \"bearer abc123\"},\n)\n```\n\n### Finely grained permissions\n\nUsing an `\"allow\"` block as described above grants full permission to the features enabled by the API.\n\nThe API implements several new Datasett permissions, which other plugins can use to make more finely grained decisions.\n\nThe full set of permissions are as follows:\n\n- `insert:all` - all permissions - this is used by the `\"allow\"` block described above. Argument: `database_name`\n- `insert:insert-update` - the ability to insert data into an existing table, or to update data by its primary key. Arguments: `(database_name, table_name)`\n- `insert:create-table` - the ability to create a new table. Argument: `database_name`\n- `insert:alter-table` - the ability to add columns to an existing table (using `?alter=1`). Arguments: `(database_name, table_name)`\n\nYou can use plugins like [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to hook into these more detailed permissions for finely grained control over what actions each authenticated actor can take.\n\nPlugins that implement the [permission_allowed()](https://datasette.readthedocs.io/en/stable/plugin_hooks.html#plugin-hook-permission-allowed) plugin hook can take full control over these permission decisions.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-insert\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-insert\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-insert.svg)](https://pypi.org/project/datasette-insert/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-insert?include_prereleases&label=changelog)](https://github.com/simonw/datasette-insert/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-insert/blob/master/LICENSE)\n\nDatasette plugin for inserting and updating data\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-insert\n\nThis plugin should always be deployed with additional configuration to prevent unauthenticated access, see notes below.\n\nIf you are trying it out on your own local machine, you can `pip install` the [datasette-insert-unsafe](https://github.com/simonw/datasette-insert-unsafe) plugin to allow access without needing to set up authentication or permissions separately.\n\n## Inserting data and creating tables\n\nStart datasette and make sure it has a writable SQLite database attached to it. If you have not yet created a database file you can use this:\n\n    datasette data.db --create\n\nThe `--create` option will create a new empty `data.db` database file if it does not already exist.\n\nThe plugin adds an endpoint that allows data to be inserted or updated and tables to be created by POSTing JSON data to the following URL:\n\n    /-/insert/name-of-database/name-of-table\n\nThe JSON should look like this:\n\n```json\n[\n    {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 5\n    }\n]\n```\n\nThe first time data is posted to the URL a table of that name will be created if it does not aready exist, with the desired columns.\n\nYou can specify which column should be used as the primary key using the `?pk=` URL argument.\n\nHere's how to POST to a database and create a new table using the Python `requests` library:\n\n```python\nimport requests\n\nrequests.post(\"http://localhost:8001/-/insert/data/dogs?pk=id\", json=[\n    {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 4\n    }\n])\n```\nAnd here's how to do the same thing using `curl`:\n\n```\ncurl --request POST \\\n  --data '[\n      {\n        \"id\": 1,\n        \"name\": \"Cleopaws\",\n        \"age\": 5\n      },\n      {\n        \"id\": 2,\n        \"name\": \"Pancakes\",\n        \"age\": 4\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs?pk=id'\n```\nOr by piping in JSON like so:\n\n    cat dogs.json | curl --request POST -d @- \\\n        'http://localhost:8001/-/insert/data/dogs?pk=id'\n\n### Inserting a single row\n\nIf you are inserting a single row you can optionally send it as a dictionary rather than a list with a single item:\n\n```\ncurl --request POST \\\n  --data '{\n      \"id\": 1,\n      \"name\": \"Cleopaws\",\n      \"age\": 5\n    }' \\\n    'http://localhost:8001/-/insert/data/dogs?pk=id'\n```\n\n### Automatically adding new columns\n\nIf you send data to an existing table with keys that are not reflected by the existing columns, you will get an HTTP 400 error with a JSON response like this:\n\n```json\n{\n    \"status\": 400,\n    \"error\": \"Unknown keys: 'foo'\",\n    \"error_code\": \"unknown_keys\"\n}\n```\n\nIf you add `?alter=1` to the URL you are posting to any missing columns will be automatically added:\n\n```\ncurl --request POST \\\n  --data '[\n      {\n        \"id\": 3,\n        \"name\": \"Boris\",\n        \"age\": 1,\n        \"breed\": \"Husky\"\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs?alter=1'\n```\n\n## Upserting data\n\nAn \"upsert\" operation can be used to partially update a record. With upserts you can send a subset of the keys and, if the ID matches the specified primary key, they will be used to update an existing record.\n\nUpserts can be sent to the `/-/upsert` API endpoint.\n\nThis example will update the dog with ID=1's age from 5 to 7:\n```\ncurl --request POST \\\n  --data '{\n      \"id\": 1,\n      \"age\": 7\n    }' \\\n    'http://localhost:3322/-/upsert/data/dogs?pk=id'\n```\nLike the `/-/insert` endpoint, the `/-/upsert` endpoint can accept an array of objects too. It also supports the `?alter=1` option.\n\n## Permissions and authentication\n\nThis plugin defaults to denying all access, to help ensure people don't accidentally deploy it on the open internet in an unsafe configuration.\n\nYou can read about [Datasette's approach to authentication](https://datasette.readthedocs.io/en/stable/authentication.html) in the Datasette manual.\n\nYou can install the `datasette-insert-unsafe` plugin to run in unsafe mode, where all access is allowed by default.\n\nI recommend using this plugin in conjunction with [datasette-auth-tokens](https://github.com/simonw/datasette-auth-tokens), which provides a mechanism for making authenticated calls using API tokens.\n\nYou can then use [\"allow\" blocks](https://datasette.readthedocs.io/en/stable/authentication.html#defining-permissions-with-allow-blocks) in the `datasette-insert` plugin configuration to specify which authenticated tokens are allowed to make use of the API.\n\nHere's an example `metadata.json` file which restricts access to the `/-/insert` API to an API token defined in an `INSERT_TOKEN` environment variable:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-insert\": {\n            \"allow\": {\n                \"bot\": \"insert-bot\"\n            }\n        },\n        \"datasette-auth-tokens\": {\n            \"tokens\": [\n                {\n                    \"token\": {\n                        \"$env\": \"INSERT_TOKEN\"\n                    },\n                    \"actor\": {\n                        \"bot\": \"insert-bot\"\n                    }\n                }\n            ]\n        }\n    }\n}\n```\nWith this configuration in place you can start Datasette like this:\n\n    INSERT_TOKEN=abc123 datasette data.db -m metadata.json\n\nYou can now send data to the API using `curl` like this:\n\n```\ncurl --request POST \\\n  -H \"Authorization: Bearer abc123\" \\\n  --data '[\n      {\n        \"id\": 3,\n        \"name\": \"Boris\",\n        \"age\": 1,\n        \"breed\": \"Husky\"\n      }\n    ]' \\\n    'http://localhost:8001/-/insert/data/dogs'\n```\n\nOr using the Python `requests` library like so:\n\n```python\nrequests.post(\n    \"http://localhost:8001/-/insert/data/dogs\",\n    json={\"id\": 1, \"name\": \"Cleopaws\", \"age\": 5},\n    headers={\"Authorization\": \"bearer abc123\"},\n)\n```\n\n### Finely grained permissions\n\nUsing an `\"allow\"` block as described above grants full permission to the features enabled by the API.\n\nThe API implements several new Datasett permissions, which other plugins can use to make more finely grained decisions.\n\nThe full set of permissions are as follows:\n\n- `insert:all` - all permissions - this is used by the `\"allow\"` block described above. Argument: `database_name`\n- `insert:insert-update` - the ability to insert data into an existing table, or to update data by its primary key. Arguments: `(database_name, table_name)`\n- `insert:create-table` - the ability to create a new table. Argument: `database_name`\n- `insert:alter-table` - the ability to add columns to an existing table (using `?alter=1`). Arguments: `(database_name, table_name)`\n\nYou can use plugins like [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to hook into these more detailed permissions for finely grained control over what actions each authenticated actor can take.\n\nPlugins that implement the [permission_allowed()](https://datasette.readthedocs.io/en/stable/plugin_hooks.html#plugin-hook-permission-allowed) plugin hook can take full control over these permission decisions.\n\n## CORS\n\nIf you start Datasette with the `datasette --cors` option the following HTTP headers will be added to resources served by this plugin:\n\n    Access-Control-Allow-Origin: *\n    Access-Control-Allow-Headers: content-type,authorization\n    Access-Control-Allow-Methods: POST\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-insert\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,22 +28,22 @@
       "Homepage": "https://datasette.io/plugins/datasette-insert",
       "Issues": "https://github.com/simonw/datasette-insert/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-insert/0.7/",
+    "release_url": "https://pypi.org/project/datasette-insert/0.8/",
     "requires_dist": [
-      "datasette (>=0.46)",
-      "sqlite-utils",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
+      "datasette-auth-tokens ; extra == 'test'",
       "httpx ; extra == 'test'",
-      "datasette-auth-tokens ; extra == 'test'"
+      "pytest-asyncio ; extra == 'test'",
+      "datasette (>=0.46)",
+      "pytest ; extra == 'test'",
+      "sqlite-utils"
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for inserting and updating data",
-    "version": "0.7",
+    "version": "0.8",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13833071,
+  "last_serial": 14519061,
   "releases": {
     "0.5": [
       {
@@ -170,46 +170,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "be3f31a08a76588f5a2e6b2f6652eae9",
+          "sha256": "66945451d5671a2e66dc9f27519ce44516dab23a18f944deb6d3ada11710ebe3"
+        },
+        "downloads": -1,
+        "filename": "datasette_insert-0.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "be3f31a08a76588f5a2e6b2f6652eae9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 5699,
+        "upload_time": "2022-07-22T17:56:46",
+        "upload_time_iso_8601": "2022-07-22T17:56:46.247814Z",
+        "url": "https://files.pythonhosted.org/packages/af/15/0253bb3ea69f2e04897e0b02cd96c2ac23cd0be73b61b5a0c41b8f42a633/datasette_insert-0.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "352d67a581df2a0308b9dd6d5f30affd",
+          "sha256": "a6c53304f517f403729454d9673a1b4c30c0eea8a590a04cc3f28e3f7bf2f180"
+        },
+        "downloads": -1,
+        "filename": "datasette-insert-0.8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "352d67a581df2a0308b9dd6d5f30affd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 5516,
+        "upload_time": "2022-07-22T17:58:49",
+        "upload_time_iso_8601": "2022-07-22T17:58:49.288067Z",
+        "url": "https://files.pythonhosted.org/packages/c3/18/36d812ff3cb298c8a081c1b780b6f39b0995cc25ae06430af86adf0aaeb0/datasette-insert-0.8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "0bdadddcef624f71d135dc130a1feee3",
-        "sha256": "85623c85fe90d7b6abce30c69066476eb9852226571e1db1a24bf13f34363842"
+        "md5": "be3f31a08a76588f5a2e6b2f6652eae9",
+        "sha256": "66945451d5671a2e66dc9f27519ce44516dab23a18f944deb6d3ada11710ebe3"
       },
       "downloads": -1,
-      "filename": "datasette_insert-0.7-py3-none-any.whl",
+      "filename": "datasette_insert-0.8-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0bdadddcef624f71d135dc130a1feee3",
+      "md5_digest": "be3f31a08a76588f5a2e6b2f6652eae9",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 5438,
-      "upload_time": "2022-05-16T18:46:36",
-      "upload_time_iso_8601": "2022-05-16T18:46:36.427388Z",
-      "url": "https://files.pythonhosted.org/packages/07/f1/5b345e06c71bafefd52148ea9f440667d064b1d77ed6a4e946f39a1fade0/datasette_insert-0.7-py3-none-any.whl",
+      "size": 5699,
+      "upload_time": "2022-07-22T17:56:46",
+      "upload_time_iso_8601": "2022-07-22T17:56:46.247814Z",
+      "url": "https://files.pythonhosted.org/packages/af/15/0253bb3ea69f2e04897e0b02cd96c2ac23cd0be73b61b5a0c41b8f42a633/datasette_insert-0.8-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "fff93b5e161abca2b2c7904a434b7379",
-        "sha256": "e50720c75d095d65f80e9bb984201f56472cd124b690e5ab57bfcfde5f23be0f"
+        "md5": "352d67a581df2a0308b9dd6d5f30affd",
+        "sha256": "a6c53304f517f403729454d9673a1b4c30c0eea8a590a04cc3f28e3f7bf2f180"
       },
       "downloads": -1,
-      "filename": "datasette-insert-0.7.tar.gz",
+      "filename": "datasette-insert-0.8.tar.gz",
       "has_sig": false,
-      "md5_digest": "fff93b5e161abca2b2c7904a434b7379",
+      "md5_digest": "352d67a581df2a0308b9dd6d5f30affd",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 5288,
-      "upload_time": "2022-05-16T18:46:37",
-      "upload_time_iso_8601": "2022-05-16T18:46:37.944676Z",
-      "url": "https://files.pythonhosted.org/packages/40/84/7347f8e4304e4006f56090516cb1ef429d50c209641c5a86a6cf0316aa47/datasette-insert-0.7.tar.gz",
+      "size": 5516,
+      "upload_time": "2022-07-22T17:58:49",
+      "upload_time_iso_8601": "2022-07-22T17:58:49.288067Z",
+      "url": "https://files.pythonhosted.org/packages/c3/18/36d812ff3cb298c8a081c1b780b6f39b0995cc25ae06430af86adf0aaeb0/datasette-insert-0.8.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

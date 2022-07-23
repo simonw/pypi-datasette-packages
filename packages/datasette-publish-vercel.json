@@ -28,18 +28,18 @@
       "Homepage": "https://github.com/simonw/datasette-publish-vercel",
       "Issues": "https://github.com/simonw/datasette-publish-vercel/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-publish-vercel/0.14/",
+    "release_url": "https://pypi.org/project/datasette-publish-vercel/0.14.1/",
     "requires_dist": [
       "datasette (>=0.59)",
       "pytest ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin for publishing data using Vercel",
-    "version": "0.14",
+    "version": "0.14.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14423598,
+  "last_serial": 14521867,
   "releases": {
     "0.10": [
       {
@@ -293,6 +293,48 @@
         "yanked_reason": null
       }
     ],
+    "0.14.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "447cc9a6bfc78e391219a2c2a3432bc2",
+          "sha256": "ddafcdde4e5b3d46a170ca5ba71c2a51d8330c8839b47450eb1ecf662c56e0be"
+        },
+        "downloads": -1,
+        "filename": "datasette_publish_vercel-0.14.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "447cc9a6bfc78e391219a2c2a3432bc2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 11408,
+        "upload_time": "2022-07-23T02:59:52",
+        "upload_time_iso_8601": "2022-07-23T02:59:52.032435Z",
+        "url": "https://files.pythonhosted.org/packages/e5/97/e67c06b583999fba3404f3ea7c1906013c6a08b5032997474b7fcee561f2/datasette_publish_vercel-0.14.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c4af63be6b560d0ec67ed4bf96ee5639",
+          "sha256": "b6b2652c57cc24cab957ce765e1766a4596718e4103619a6d4a4d63b8f57e2bd"
+        },
+        "downloads": -1,
+        "filename": "datasette-publish-vercel-0.14.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c4af63be6b560d0ec67ed4bf96ee5639",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 10809,
+        "upload_time": "2022-07-23T02:59:53",
+        "upload_time_iso_8601": "2022-07-23T02:59:53.244836Z",
+        "url": "https://files.pythonhosted.org/packages/b2/91/10168f835f8cb1efa7a93fab1d02e85773e24b1ef6e2fd79cfd3e83778ce/datasette-publish-vercel-0.14.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.7": [
       {
         "comment_text": "",
@@ -510,40 +552,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "0f0c5eb932e4e41c5e9ad3ec86fdcf7d",
-        "sha256": "ffaee2a4f3be76d034b2a5f890bf9da564b093d24a9bff310b0fccae517851a8"
+        "md5": "447cc9a6bfc78e391219a2c2a3432bc2",
+        "sha256": "ddafcdde4e5b3d46a170ca5ba71c2a51d8330c8839b47450eb1ecf662c56e0be"
       },
       "downloads": -1,
-      "filename": "datasette_publish_vercel-0.14-py3-none-any.whl",
+      "filename": "datasette_publish_vercel-0.14.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0f0c5eb932e4e41c5e9ad3ec86fdcf7d",
+      "md5_digest": "447cc9a6bfc78e391219a2c2a3432bc2",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 11373,
-      "upload_time": "2022-07-13T15:49:48",
-      "upload_time_iso_8601": "2022-07-13T15:49:48.408948Z",
-      "url": "https://files.pythonhosted.org/packages/1b/0f/f54dcd0c31115ead9a5ceef8126ad070744e66d27c9e3e767c9823a0f3ec/datasette_publish_vercel-0.14-py3-none-any.whl",
+      "size": 11408,
+      "upload_time": "2022-07-23T02:59:52",
+      "upload_time_iso_8601": "2022-07-23T02:59:52.032435Z",
+      "url": "https://files.pythonhosted.org/packages/e5/97/e67c06b583999fba3404f3ea7c1906013c6a08b5032997474b7fcee561f2/datasette_publish_vercel-0.14.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "d3637c6b028f206a9acd675ceb0dfd0f",
-        "sha256": "c932eee8e45812c7567aadbdc1059d8c7daae52a019ab86895719206d95963ac"
+        "md5": "c4af63be6b560d0ec67ed4bf96ee5639",
+        "sha256": "b6b2652c57cc24cab957ce765e1766a4596718e4103619a6d4a4d63b8f57e2bd"
       },
       "downloads": -1,
-      "filename": "datasette-publish-vercel-0.14.tar.gz",
+      "filename": "datasette-publish-vercel-0.14.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "d3637c6b028f206a9acd675ceb0dfd0f",
+      "md5_digest": "c4af63be6b560d0ec67ed4bf96ee5639",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 10801,
-      "upload_time": "2022-07-13T15:49:49",
-      "upload_time_iso_8601": "2022-07-13T15:49:49.811391Z",
-      "url": "https://files.pythonhosted.org/packages/6a/ef/fb48291d80f84ec16e27868a80a23989970b6d10981666648f364d6f7a9b/datasette-publish-vercel-0.14.tar.gz",
+      "size": 10809,
+      "upload_time": "2022-07-23T02:59:53",
+      "upload_time_iso_8601": "2022-07-23T02:59:53.244836Z",
+      "url": "https://files.pythonhosted.org/packages/b2/91/10168f835f8cb1efa7a93fab1d02e85773e24b1ef6e2fd79cfd3e83778ce/datasette-publish-vercel-0.14.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
