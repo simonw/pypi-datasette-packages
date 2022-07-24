@@ -30,12 +30,12 @@
     },
     "release_url": "https://pypi.org/project/datasette-insert/0.8/",
     "requires_dist": [
-      "datasette-auth-tokens ; extra == 'test'",
-      "httpx ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
       "datasette (>=0.46)",
+      "sqlite-utils",
       "pytest ; extra == 'test'",
-      "sqlite-utils"
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "datasette-auth-tokens ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for inserting and updating data",
