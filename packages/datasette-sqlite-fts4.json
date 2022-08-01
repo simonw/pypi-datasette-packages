@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-sqlite-fts4\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sqlite-fts4.svg)](https://pypi.org/project/datasette-sqlite-fts4/)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sqlite-fts4/blob/master/LICENSE)\n\n\nDatasette plugin that exposes the custom SQL functions from [sqlite-fts4](https://github.com/simonw/sqlite-fts4).\n\n[Interactive demo](https://datasette-sqlite-fts4.datasette.io/24ways-fts4?sql=select%0D%0A++++json_object%28%0D%0A++++++++\"label\"%2C+articles.title%2C+\"href\"%2C+articles.url%0D%0A++++%29+as+article%2C%0D%0A++++articles.author%2C%0D%0A++++rank_score%28matchinfo%28articles_fts%2C+\"pcx\"%29%29+as+score%2C%0D%0A++++rank_bm25%28matchinfo%28articles_fts%2C+\"pcnalx\"%29%29+as+bm25%2C%0D%0A++++json_object%28%0D%0A++++++++\"pre\"%2C+annotate_matchinfo%28matchinfo%28articles_fts%2C+\"pcxnalyb\"%29%2C+\"pcxnalyb\"%29%0D%0A++++%29+as+annotated_matchinfo%2C%0D%0A++++matchinfo%28articles_fts%2C+\"pcxnalyb\"%29+as+matchinfo%2C%0D%0A++++decode_matchinfo%28matchinfo%28articles_fts%2C+\"pcxnalyb\"%29%29+as+decoded_matchinfo%0D%0Afrom%0D%0A++++articles_fts+join+articles+on+articles.rowid+%3D+articles_fts.rowid%0D%0Awhere%0D%0A++++articles_fts+match+%3Asearch%0D%0Aorder+by+bm25&search=jquery+maps). Read [Exploring search relevance algorithms with SQLite](https://simonwillison.net/2019/Jan/7/exploring-search-relevance-algorithms-sqlite/) for further details on this project.\n\n## Installation\n\n    pip install datasette-sqlite-fts4\n\nIf you are deploying a database using `datasette publish` you can include this plugin using the `--install` option:\n\n    datasette publish now mydb.db --install=datasette-sqlite-fts4\n",
+    "description": "# datasette-sqlite-fts4\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sqlite-fts4.svg)](https://pypi.org/project/datasette-sqlite-fts4/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sqlite-fts4?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sqlite-fts4/releases)\n[![Tests](https://github.com/simonw/datasette-sqlite-fts4/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sqlite-fts4/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sqlite-fts4/blob/main/LICENSE)\n\nDatasette plugin that exposes the custom SQL functions from [sqlite-fts4](https://github.com/simonw/sqlite-fts4).\n\n[Interactive demo](https://datasette-sqlite-fts4.datasette.io/24ways-fts4?sql=select%0D%0A++++json_object%28%0D%0A++++++++\"label\"%2C+articles.title%2C+\"href\"%2C+articles.url%0D%0A++++%29+as+article%2C%0D%0A++++articles.author%2C%0D%0A++++rank_score%28matchinfo%28articles_fts%2C+\"pcx\"%29%29+as+score%2C%0D%0A++++rank_bm25%28matchinfo%28articles_fts%2C+\"pcnalx\"%29%29+as+bm25%2C%0D%0A++++json_object%28%0D%0A++++++++\"pre\"%2C+annotate_matchinfo%28matchinfo%28articles_fts%2C+\"pcxnalyb\"%29%2C+\"pcxnalyb\"%29%0D%0A++++%29+as+annotated_matchinfo%2C%0D%0A++++matchinfo%28articles_fts%2C+\"pcxnalyb\"%29+as+matchinfo%2C%0D%0A++++decode_matchinfo%28matchinfo%28articles_fts%2C+\"pcxnalyb\"%29%29+as+decoded_matchinfo%0D%0Afrom%0D%0A++++articles_fts+join+articles+on+articles.rowid+%3D+articles_fts.rowid%0D%0Awhere%0D%0A++++articles_fts+match+%3Asearch%0D%0Aorder+by+bm25&search=jquery+maps). Read [Exploring search relevance algorithms with SQLite](https://simonwillison.net/2019/Jan/7/exploring-search-relevance-algorithms-sqlite/) for further details on this project.\n\n## Installation\n\n    pip install datasette-sqlite-fts4\n\nIf you are deploying a database using `datasette publish` you can include this plugin using the `--install` option:\n\n    datasette publish now mydb.db --install=datasette-sqlite-fts4\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,20 +31,20 @@
       "Homepage": "https://github.com/simonw/datasette-sqlite-fts4",
       "Issues": "https://github.com/simonw/datasette-sqlite-fts4/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-sqlite-fts4/0.3.1/",
+    "release_url": "https://pypi.org/project/datasette-sqlite-fts4/0.3.2/",
     "requires_dist": [
       "datasette",
-      "sqlite-fts4 (>=1.0.2)",
+      "sqlite-fts4 (>=1.0.3)",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin exposing SQL functions from sqlite-fts4",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14579550,
+  "last_serial": 14604874,
   "releases": {
     "0.1": [
       {
@@ -153,46 +153,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c1ee6ad40629cddf94bc2b938911575f",
+          "sha256": "de7f9094fc102f77f3ae7ae6eeb2ac8aa00de9384fd069dafee31a2d44da2355"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fts4-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c1ee6ad40629cddf94bc2b938911575f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6794,
+        "upload_time": "2022-07-31T14:47:42",
+        "upload_time_iso_8601": "2022-07-31T14:47:42.155438Z",
+        "url": "https://files.pythonhosted.org/packages/d9/8c/8576b4942bf6fdcd1d4344e5c195256d117e1785838b54f73429c91bf6eb/datasette_sqlite_fts4-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d961a44f68873d409e84d473d9f7f56e",
+          "sha256": "fdc3d07089bde33b4c6af24916f1e0b8b637a945e7013449f9dc104390bb255c"
+        },
+        "downloads": -1,
+        "filename": "datasette-sqlite-fts4-0.3.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d961a44f68873d409e84d473d9f7f56e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6329,
+        "upload_time": "2022-07-31T14:47:43",
+        "upload_time_iso_8601": "2022-07-31T14:47:43.302975Z",
+        "url": "https://files.pythonhosted.org/packages/af/16/244439b829e3b4388a53df831699f909335bedadbab73e15e17302325e0b/datasette-sqlite-fts4-0.3.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "510416e9ebd972db9a3507e0b13ab666",
-        "sha256": "5909e34631ef5f04b95cde6ae66fb06e470edc884b76097556b68ecf02fa13fc"
+        "md5": "c1ee6ad40629cddf94bc2b938911575f",
+        "sha256": "de7f9094fc102f77f3ae7ae6eeb2ac8aa00de9384fd069dafee31a2d44da2355"
       },
       "downloads": -1,
-      "filename": "datasette_sqlite_fts4-0.3.1-py3-none-any.whl",
+      "filename": "datasette_sqlite_fts4-0.3.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "510416e9ebd972db9a3507e0b13ab666",
+      "md5_digest": "c1ee6ad40629cddf94bc2b938911575f",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 6726,
-      "upload_time": "2022-07-28T16:49:02",
-      "upload_time_iso_8601": "2022-07-28T16:49:02.216298Z",
-      "url": "https://files.pythonhosted.org/packages/a0/60/a20da1ec3aaac2adedeae636c8d7db2108ac62025e13dd52b8b65e9e94f4/datasette_sqlite_fts4-0.3.1-py3-none-any.whl",
+      "size": 6794,
+      "upload_time": "2022-07-31T14:47:42",
+      "upload_time_iso_8601": "2022-07-31T14:47:42.155438Z",
+      "url": "https://files.pythonhosted.org/packages/d9/8c/8576b4942bf6fdcd1d4344e5c195256d117e1785838b54f73429c91bf6eb/datasette_sqlite_fts4-0.3.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "69cf8248cd8c7fd0499069078959373b",
-        "sha256": "37f383fcfc4a3663605ff54e303df25bb6bb7b722382d5576b2935e0fbdfcb10"
+        "md5": "d961a44f68873d409e84d473d9f7f56e",
+        "sha256": "fdc3d07089bde33b4c6af24916f1e0b8b637a945e7013449f9dc104390bb255c"
       },
       "downloads": -1,
-      "filename": "datasette-sqlite-fts4-0.3.1.tar.gz",
+      "filename": "datasette-sqlite-fts4-0.3.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "69cf8248cd8c7fd0499069078959373b",
+      "md5_digest": "d961a44f68873d409e84d473d9f7f56e",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 6255,
-      "upload_time": "2022-07-28T16:49:03",
-      "upload_time_iso_8601": "2022-07-28T16:49:03.477072Z",
-      "url": "https://files.pythonhosted.org/packages/0e/f4/ede22775fd39eaee98e0dad016d8c3ab00028210a5dc37944a8598ea31fc/datasette-sqlite-fts4-0.3.1.tar.gz",
+      "size": 6329,
+      "upload_time": "2022-07-31T14:47:43",
+      "upload_time_iso_8601": "2022-07-31T14:47:43.302975Z",
+      "url": "https://files.pythonhosted.org/packages/af/16/244439b829e3b4388a53df831699f909335bedadbab73e15e17302325e0b/datasette-sqlite-fts4-0.3.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
