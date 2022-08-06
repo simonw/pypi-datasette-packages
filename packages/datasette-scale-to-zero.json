@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-scale-to-zero\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-scale-to-zero.svg)](https://pypi.org/project/datasette-scale-to-zero/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-scale-to-zero?include_prereleases&label=changelog)](https://github.com/simonw/datasette-scale-to-zero/releases)\n[![Tests](https://github.com/simonw/datasette-scale-to-zero/workflows/Test/badge.svg)](https://github.com/simonw/datasette-scale-to-zero/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-scale-to-zero/blob/main/LICENSE)\n\nQuit Datasette if it has not recieved traffic for a specified time period\n\nSome hosting providers such as [Fly](https://fly.io/) offer a scale to zero mechanism, where servers can shut down and will be automatically started when new traffic arrives.\n\nThis plugin can be used to configure Datasette to quit X minutes (or seconds, or hours) after the last request it received.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-scale-to-zero\n\n## Configuration\n\nThis plugin will only take effect if it has been configured.\n\nAdd the following to your ``metadata.json`` or ``metadata.yml`` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-scale-to-zero\": {\n            \"duration\": \"10m\"\n        }\n    }\n}\n```\nThis will cause Datasette to quit if it has not received traffic for 10 minutes.\n\nYou can set this value using a suffix of `m` for minutes, `h` for hours or `s` for seconds.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-scale-to-zero\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-scale-to-zero\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-scale-to-zero.svg)](https://pypi.org/project/datasette-scale-to-zero/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-scale-to-zero?include_prereleases&label=changelog)](https://github.com/simonw/datasette-scale-to-zero/releases)\n[![Tests](https://github.com/simonw/datasette-scale-to-zero/workflows/Test/badge.svg)](https://github.com/simonw/datasette-scale-to-zero/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-scale-to-zero/blob/main/LICENSE)\n\nQuit Datasette if it has not received traffic for a specified time period\n\nSome hosting providers such as [Fly](https://fly.io/) offer a scale to zero mechanism, where servers can shut down and will be automatically started when new traffic arrives.\n\nThis plugin can be used to configure Datasette to quit X minutes (or seconds, or hours) after the last request it received. It can also cause the Datasette server to exit after a configured maximum time whether or not it is receiving traffic.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-scale-to-zero\n\n## Configuration\n\nThis plugin will only take effect if it has been configured.\n\nAdd the following to your ``metadata.json`` or ``metadata.yml`` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-scale-to-zero\": {\n            \"duration\": \"10m\"\n        }\n    }\n}\n```\nThis will cause Datasette to quit if it has not received any HTTP traffic for 10 minutes.\n\nYou can set this value using a suffix of `m` for minutes, `h` for hours or `s` for seconds.\n\nTo cause Datasette to exit if the server has been running for longer than a specific time, use `\"max-age\"`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-scale-to-zero\": {\n            \"max-age\": \"10h\"\n        }\n    }\n}\n```\nThis example will exit the Datasette server if it has been running for more than ten hours.\n\nYou can use `\"duration\"` and `\"max-age\"` together in the same configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-scale-to-zero\": {\n            \"max-age\": \"10h\",\n            \"duration\": \"5m\"\n        }\n    }\n}\n```\nThis example will quit if no traffic has been received in five minutes, or if the server has been running for ten hours.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-scale-to-zero\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,19 +31,19 @@
       "Homepage": "https://github.com/simonw/datasette-scale-to-zero",
       "Issues": "https://github.com/simonw/datasette-scale-to-zero/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-scale-to-zero/0.1.2/",
+    "release_url": "https://pypi.org/project/datasette-scale-to-zero/0.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
-    "summary": "Quit Datasette if it has not recieved traffic for a specified time period",
-    "version": "0.1.2",
+    "summary": "Quit Datasette if it has not received traffic for a specified time period",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14218027,
+  "last_serial": 14670621,
   "releases": {
     "0.1": [
       {
@@ -170,46 +170,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "acbf66f6958d9e029017a059ca7c26b0",
+          "sha256": "9e111a36754d5e109be5eaae0565520fb8f98414774213ba557955f4116f98d5"
+        },
+        "downloads": -1,
+        "filename": "datasette_scale_to_zero-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "acbf66f6958d9e029017a059ca7c26b0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7872,
+        "upload_time": "2022-08-05T22:30:29",
+        "upload_time_iso_8601": "2022-08-05T22:30:29.179748Z",
+        "url": "https://files.pythonhosted.org/packages/70/1f/52e45cbd6840f8e28d8b369b114c252d9fe8a37caa2ba21b75d5d13771fb/datasette_scale_to_zero-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a7fd753b1b06a4eff9644f953b43b499",
+          "sha256": "b6b982885612bf3654d87ddcdf123497c90892c8b84ee30a9e7424b7d8c09fd1"
+        },
+        "downloads": -1,
+        "filename": "datasette-scale-to-zero-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a7fd753b1b06a4eff9644f953b43b499",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7305,
+        "upload_time": "2022-08-05T22:30:30",
+        "upload_time_iso_8601": "2022-08-05T22:30:30.393460Z",
+        "url": "https://files.pythonhosted.org/packages/02/fb/b84a86f8cc0a7b3ddf3648e54c3b6fa070c279f27f947e84b9f25f14a4df/datasette-scale-to-zero-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "93fcf03d891dd0a5f320fca52e8c5659",
-        "sha256": "7af991dc7b3dd3bee2340307ebde614f0b7317e2d8034ad6800a6ada4bee7186"
+        "md5": "acbf66f6958d9e029017a059ca7c26b0",
+        "sha256": "9e111a36754d5e109be5eaae0565520fb8f98414774213ba557955f4116f98d5"
       },
       "downloads": -1,
-      "filename": "datasette_scale_to_zero-0.1.2-py3-none-any.whl",
+      "filename": "datasette_scale_to_zero-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "93fcf03d891dd0a5f320fca52e8c5659",
+      "md5_digest": "acbf66f6958d9e029017a059ca7c26b0",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 7516,
-      "upload_time": "2022-06-23T00:08:04",
-      "upload_time_iso_8601": "2022-06-23T00:08:04.884987Z",
-      "url": "https://files.pythonhosted.org/packages/85/60/cab29199300cc485a3faf94e41919e4730f6463b9246e7698ba0b5f4cae2/datasette_scale_to_zero-0.1.2-py3-none-any.whl",
+      "size": 7872,
+      "upload_time": "2022-08-05T22:30:29",
+      "upload_time_iso_8601": "2022-08-05T22:30:29.179748Z",
+      "url": "https://files.pythonhosted.org/packages/70/1f/52e45cbd6840f8e28d8b369b114c252d9fe8a37caa2ba21b75d5d13771fb/datasette_scale_to_zero-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "af87c614d18012104cabac393b51be2a",
-        "sha256": "88ddbfc44593ff10fe4c660eba741573ed4a5025a981d1fa708191d06eb2a335"
+        "md5": "a7fd753b1b06a4eff9644f953b43b499",
+        "sha256": "b6b982885612bf3654d87ddcdf123497c90892c8b84ee30a9e7424b7d8c09fd1"
       },
       "downloads": -1,
-      "filename": "datasette-scale-to-zero-0.1.2.tar.gz",
+      "filename": "datasette-scale-to-zero-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "af87c614d18012104cabac393b51be2a",
+      "md5_digest": "a7fd753b1b06a4eff9644f953b43b499",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 6943,
-      "upload_time": "2022-06-23T00:08:06",
-      "upload_time_iso_8601": "2022-06-23T00:08:06.597877Z",
-      "url": "https://files.pythonhosted.org/packages/42/f8/3c0bf0d5b25d11821b7c4178e788a39faf4f28b5ec44c18743f8d3c1f123/datasette-scale-to-zero-0.1.2.tar.gz",
+      "size": 7305,
+      "upload_time": "2022-08-05T22:30:30",
+      "upload_time_iso_8601": "2022-08-05T22:30:30.393460Z",
+      "url": "https://files.pythonhosted.org/packages/02/fb/b84a86f8cc0a7b3ddf3648e54c3b6fa070c279f27f947e84b9f25f14a4df/datasette-scale-to-zero-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
