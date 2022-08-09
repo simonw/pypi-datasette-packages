@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-nteract-data-explorer\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-nteract-data-explorer.svg)](https://pypi.org/project/datasette-nteract-data-explorer/)\n[![Changelog](https://img.shields.io/github/v/release/hydrosquall/datasette-nteract-data-explorer?include_prereleases&label=changelog)](https://github.com/hydrosquall/datasette-nteract-data-explorer/releases)\n[![Tests](https://github.com/hydrosquall/datasette-nteract-data-explorer/workflows/Test/badge.svg)](https://github.com/hydrosquall/datasette-nteract-data-explorer/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/hydrosquall/datasette-nteract-data-explorer/blob/main/LICENSE)\n\nAn automatic data visualization plugin for the [Datasette](https://datasette.io/) ecosystem. See your dataset from multiple views with an easy-to-use, customizable menu-based interface.\n\n## Demo\n\nTry the [live demo](https://datasette-nteract-data-explorer.vercel.app/happy_planet_index/hpi_cleaned?_size=137)\n\n![screenshot](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/yAuK9LRE/6802f849-315d-4a21-93b4-61c94d066bdc.jpg?v=f1ceee5ed70832d74e745b6508baeffb)\n\n_Running Datasette with the Happy Planet Index dataset_\n\n## Installation\n\nInstall this plugin in the same Python environment as Datasette.\n\n```bash\ndatasette install datasette-nteract-data-explorer\n```\n\n## Usage\n\n- Click \"View in Data Explorer\" to expand the visualization panel\n- Click the icons on the right side to change the visualization type.\n- Use the menus underneath the graphing area to configure your graph (e.g. change which columns to graph, colors to use, etc)\n- Use \"advanced settings\" mode to override the inferred column types. For example, you may want to treat a number as a \"string\" to be able to use it as a category.\n- See a [live demo](https://data-explorer.nteract.io/) of the original Nteract data-explorer component used in isolation.\n\nYou can run the demo locally:\n\n```bash\ndatasette -i demo/happy_planet_index.db\n```\n\n\n## Development\n\nSee [contributing docs](./docs/CONTRIBUTING.md).\n\n## Acknowledgements\n\n- The [Data Explorer](https://github.com/nteract/data-explorer) was designed by Elijah Meeks. I co-maintain this project as part of the [Nteract](https://nteract.io/) open-source team. You can read about the design behind this tool [here](https://blog.nteract.io/designing-the-nteract-data-explorer-f4476d53f897)\n- The data model is based on the [Frictionless Data Spec](https://specs.frictionlessdata.io/).\n- This plugin was bootstrapped by Simon Willison's [Datasette plugin template](https://simonwillison.net/2020/Jun/20/cookiecutter-plugins/)\n- Demo dataset from the [Happy Planet Index](https://happyplanetindex.org/) was cleaned by Doris Lee. This dataset was chosen because of its global appeal, modest size, and variety in column datatypes (numbers, low cardinality and high cardinality strings, booleans).\n- Thank you for reading this far! If you use the Data Explorer in your own website and would like to share, you can [mention it here](https://github.com/hydrosquall/datasette-nteract-data-explorer/discussions/10).\n\n\n",
+    "description": "# datasette-nteract-data-explorer\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-nteract-data-explorer.svg)](https://pypi.org/project/datasette-nteract-data-explorer/)\n[![Changelog](https://img.shields.io/github/v/release/hydrosquall/datasette-nteract-data-explorer?include_prereleases&label=changelog)](https://github.com/hydrosquall/datasette-nteract-data-explorer/releases)\n[![Tests](https://github.com/hydrosquall/datasette-nteract-data-explorer/workflows/Test/badge.svg)](https://github.com/hydrosquall/datasette-nteract-data-explorer/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/hydrosquall/datasette-nteract-data-explorer/blob/main/LICENSE)\n\nAn automatic data visualization plugin for the [Datasette](https://datasette.io/) ecosystem. See your dataset from multiple views with an easy-to-use, customizable menu-based interface.\n\n## Demo\n\nTry the [live demo](https://datasette-nteract-data-explorer.vercel.app/happy_planet_index/hpi_cleaned?_size=137)\n\n![screenshot](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/yAuK9LRE/6802f849-315d-4a21-93b4-61c94d066bdc.jpg?v=f1ceee5ed70832d74e745b6508baeffb)\n\n_Running Datasette with the Happy Planet Index dataset_\n\n## Installation\n\nInstall this plugin in the same Python environment as Datasette.\n\n```bash\ndatasette install datasette-nteract-data-explorer\n```\n\n## Usage\n\n- Click \"View in Data Explorer\" to expand the visualization panel\n- Click the icons on the right side to change the visualization type.\n- Use the menus underneath the graphing area to configure your graph (e.g. change which columns to graph, colors to use, etc)\n- Use \"advanced settings\" mode to override the inferred column types. For example, you may want to treat a number as a \"string\" to be able to use it as a category.\n- See a [live demo](https://data-explorer.nteract.io/) of the original Nteract data-explorer component used in isolation.\n\nYou can run a minimal demo after the installation step\n\n```bash\ndatasette -i demo/happy_planet_index.db\n```\n\nIf you're interested in improving the demo site, you can run a copy of the site the extra metadata/plugins used in the [published demo](https://datasette-nteract-data-explorer.vercel.app).\n\n```bash\nmake run-demo\n```\n\nThank you for reading this far! If you use the Data Explorer in your own site and would like others to find it, you can [mention it here](https://github.com/hydrosquall/datasette-nteract-data-explorer/discussions/10).\n\n## Development\n\nSee [contributing docs](./docs/CONTRIBUTING.md).\n\n## Acknowledgements\n\n- The [Data Explorer](https://github.com/nteract/data-explorer) was designed by Elijah Meeks. I co-maintain this project as part of the [Nteract](https://nteract.io/) open-source team. You can read about the design behind this tool [here](https://blog.nteract.io/designing-the-nteract-data-explorer-f4476d53f897)\n- The data model is based on the [Frictionless Data Spec](https://specs.frictionlessdata.io/).\n- This plugin was bootstrapped by Simon Willison's [Datasette plugin template](https://simonwillison.net/2020/Jun/20/cookiecutter-plugins/)\n- Demo dataset from the [Happy Planet Index](https://happyplanetindex.org/) was cleaned by Doris Lee. This dataset was chosen because of its global appeal, modest size, and variety in column datatypes (numbers, low cardinality and high cardinality strings, booleans).\n- Hosting for the demo site is provided by Vercel.\n\n[![site hosted by vercel](https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg)](https://vercel.com/?utm_source=datasette-visualization-plugin-demos&utm_campaign=oss)\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/hydrosquall/datasette-nteract-data-explorer",
       "Issues": "https://github.com/hydrosquall/datasette-nteract-data-explorer/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-nteract-data-explorer/0.3.1/",
+    "release_url": "https://pypi.org/project/datasette-nteract-data-explorer/0.4.1/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "automatic visual data explorer for datasette",
-    "version": "0.3.1",
+    "version": "0.4.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13534820,
+  "last_serial": 14693427,
   "releases": {
     "0.1.0": [
       {
@@ -170,46 +170,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cbb0587adc60f8ffe0fe53ec76f06895",
+          "sha256": "359a51ef1ab0f67d273c80e76b116380d14e6bdd31a9bd1f6547d71a9628a978"
+        },
+        "downloads": -1,
+        "filename": "datasette_nteract_data_explorer-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cbb0587adc60f8ffe0fe53ec76f06895",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 769890,
+        "upload_time": "2022-08-08T20:04:04",
+        "upload_time_iso_8601": "2022-08-08T20:04:04.485462Z",
+        "url": "https://files.pythonhosted.org/packages/a8/30/20209c4586f11da6470b96147ed083ae246b1383bdf21453148c22ac5717/datasette_nteract_data_explorer-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f87284b8050b9ca9016c3dc767b8f00d",
+          "sha256": "c01598d6e5d63d64b52d0c7f4453542a0e1ec85878f4a55f84d32938131f50e5"
+        },
+        "downloads": -1,
+        "filename": "datasette-nteract-data-explorer-0.4.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f87284b8050b9ca9016c3dc767b8f00d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 764035,
+        "upload_time": "2022-08-08T20:04:07",
+        "upload_time_iso_8601": "2022-08-08T20:04:07.237861Z",
+        "url": "https://files.pythonhosted.org/packages/03/9c/255b7ddd316caab69bb68230915385376855beaea4a0c1c6b059bdaea2d2/datasette-nteract-data-explorer-0.4.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "bfafe1d32de2c40496f0cb03ac63aaf0",
-        "sha256": "c05c0539c5337e9b195009730d674cec5ae3ad5a78e44104225c3e7908e6a684"
+        "md5": "cbb0587adc60f8ffe0fe53ec76f06895",
+        "sha256": "359a51ef1ab0f67d273c80e76b116380d14e6bdd31a9bd1f6547d71a9628a978"
       },
       "downloads": -1,
-      "filename": "datasette_nteract_data_explorer-0.3.1-py3-none-any.whl",
+      "filename": "datasette_nteract_data_explorer-0.4.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "bfafe1d32de2c40496f0cb03ac63aaf0",
+      "md5_digest": "cbb0587adc60f8ffe0fe53ec76f06895",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 753276,
-      "upload_time": "2022-04-16T23:21:08",
-      "upload_time_iso_8601": "2022-04-16T23:21:08.705368Z",
-      "url": "https://files.pythonhosted.org/packages/b2/85/442a84f7de54d5d74fd436e5dba9a43ad9d989430a570e6ae44653e6d242/datasette_nteract_data_explorer-0.3.1-py3-none-any.whl",
+      "size": 769890,
+      "upload_time": "2022-08-08T20:04:04",
+      "upload_time_iso_8601": "2022-08-08T20:04:04.485462Z",
+      "url": "https://files.pythonhosted.org/packages/a8/30/20209c4586f11da6470b96147ed083ae246b1383bdf21453148c22ac5717/datasette_nteract_data_explorer-0.4.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "5a22205a648edde65e3e3d24860fdeee",
-        "sha256": "b23889be2c1c201576f631eb19b73d5e73523caff300c713af435ed0e2b9f307"
+        "md5": "f87284b8050b9ca9016c3dc767b8f00d",
+        "sha256": "c01598d6e5d63d64b52d0c7f4453542a0e1ec85878f4a55f84d32938131f50e5"
       },
       "downloads": -1,
-      "filename": "datasette-nteract-data-explorer-0.3.1.tar.gz",
+      "filename": "datasette-nteract-data-explorer-0.4.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "5a22205a648edde65e3e3d24860fdeee",
+      "md5_digest": "f87284b8050b9ca9016c3dc767b8f00d",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 747782,
-      "upload_time": "2022-04-16T23:21:10",
-      "upload_time_iso_8601": "2022-04-16T23:21:10.197135Z",
-      "url": "https://files.pythonhosted.org/packages/b1/08/ad9f3f93c2c59863faaf27241c9670c55c96f2b5e075e17c29d331a7fa12/datasette-nteract-data-explorer-0.3.1.tar.gz",
+      "size": 764035,
+      "upload_time": "2022-08-08T20:04:07",
+      "upload_time_iso_8601": "2022-08-08T20:04:07.237861Z",
+      "url": "https://files.pythonhosted.org/packages/03/9c/255b7ddd316caab69bb68230915385376855beaea4a0c1c6b059bdaea2d2/datasette-nteract-data-explorer-0.4.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
