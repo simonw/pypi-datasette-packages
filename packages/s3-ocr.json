@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/s3-ocr",
       "Issues": "https://github.com/simonw/s3-ocr/issues"
     },
-    "release_url": "https://pypi.org/project/s3-ocr/0.6.2/",
+    "release_url": "https://pypi.org/project/s3-ocr/0.6.3/",
     "requires_dist": [
       "click (>=8.0)",
       "boto3",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Tools for running OCR against files stored in S3",
-    "version": "0.6.2",
+    "version": "0.6.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14707921,
+  "last_serial": 14712279,
   "releases": {
     "0.1a0": [
       {
@@ -381,46 +381,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.6.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8ffc8f282314c0bcc307bfcfef214276",
+          "sha256": "2a5dd2cdc96e21dd9bf7472e40591a0ef19a9fd6010fdf702b4bf5295a3d836c"
+        },
+        "downloads": -1,
+        "filename": "s3_ocr-0.6.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8ffc8f282314c0bcc307bfcfef214276",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 15205,
+        "upload_time": "2022-08-10T04:44:35",
+        "upload_time_iso_8601": "2022-08-10T04:44:35.212338Z",
+        "url": "https://files.pythonhosted.org/packages/f0/35/4924f82a76458b3dd257bba91089fa928cf892d39ae8457e311b38166249/s3_ocr-0.6.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "423ed5168d3d22eecee7f90a509becfd",
+          "sha256": "e7570f283fd38d2cff4723dff30a2ffc7d3e51ce1d77bca91933ffa6d0b0da4f"
+        },
+        "downloads": -1,
+        "filename": "s3-ocr-0.6.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "423ed5168d3d22eecee7f90a509becfd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 17425,
+        "upload_time": "2022-08-10T04:44:36",
+        "upload_time_iso_8601": "2022-08-10T04:44:36.846602Z",
+        "url": "https://files.pythonhosted.org/packages/a2/58/bf10b1b6acc7194735070b1ae5800700c1b5dd45bf6d7c7a73bdfd5c18f1/s3-ocr-0.6.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "0b2938b26dfa9059fbe7d44d69349ee9",
-        "sha256": "88f5768c5db0232951d04faf60e6e87fab6bc9dcb3760b4e4e7f9638bd1407e4"
+        "md5": "8ffc8f282314c0bcc307bfcfef214276",
+        "sha256": "2a5dd2cdc96e21dd9bf7472e40591a0ef19a9fd6010fdf702b4bf5295a3d836c"
       },
       "downloads": -1,
-      "filename": "s3_ocr-0.6.2-py3-none-any.whl",
+      "filename": "s3_ocr-0.6.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0b2938b26dfa9059fbe7d44d69349ee9",
+      "md5_digest": "8ffc8f282314c0bcc307bfcfef214276",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 15095,
-      "upload_time": "2022-08-09T20:36:53",
-      "upload_time_iso_8601": "2022-08-09T20:36:53.771438Z",
-      "url": "https://files.pythonhosted.org/packages/ad/21/f26a23fbf2ed8c519d23792b8e90f9d6b89e83f5f8fe8d4c8c02a66354b1/s3_ocr-0.6.2-py3-none-any.whl",
+      "size": 15205,
+      "upload_time": "2022-08-10T04:44:35",
+      "upload_time_iso_8601": "2022-08-10T04:44:35.212338Z",
+      "url": "https://files.pythonhosted.org/packages/f0/35/4924f82a76458b3dd257bba91089fa928cf892d39ae8457e311b38166249/s3_ocr-0.6.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "10f436db154b87d79bb258a7221cebb5",
-        "sha256": "ea3d16bd9b7a45734a58d693bbbd85508f94b239b6ac34c5911159b5bc8e3855"
+        "md5": "423ed5168d3d22eecee7f90a509becfd",
+        "sha256": "e7570f283fd38d2cff4723dff30a2ffc7d3e51ce1d77bca91933ffa6d0b0da4f"
       },
       "downloads": -1,
-      "filename": "s3-ocr-0.6.2.tar.gz",
+      "filename": "s3-ocr-0.6.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "10f436db154b87d79bb258a7221cebb5",
+      "md5_digest": "423ed5168d3d22eecee7f90a509becfd",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 17324,
-      "upload_time": "2022-08-09T20:36:55",
-      "upload_time_iso_8601": "2022-08-09T20:36:55.030835Z",
-      "url": "https://files.pythonhosted.org/packages/18/0e/cce6055b5817b7a46ff438f67c820b1f0caea06e1eb808540f2c6b53d584/s3-ocr-0.6.2.tar.gz",
+      "size": 17425,
+      "upload_time": "2022-08-10T04:44:36",
+      "upload_time_iso_8601": "2022-08-10T04:44:36.846602Z",
+      "url": "https://files.pythonhosted.org/packages/a2/58/bf10b1b6acc7194735070b1ae5800700c1b5dd45bf6d7c7a73bdfd5c18f1/s3-ocr-0.6.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
