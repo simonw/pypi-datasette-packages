@@ -16,7 +16,7 @@
       "Programming Language :: Python :: 3.9",
       "Topic :: Database"
     ],
-    "description": "<img src=\"https://datasette.io/static/datasette-logo.svg\" alt=\"Datasette\">\n\n[![PyPI](https://img.shields.io/pypi/v/datasette.svg)](https://pypi.org/project/datasette/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette?label=changelog)](https://docs.datasette.io/en/stable/changelog.html)\n[![Python 3.x](https://img.shields.io/pypi/pyversions/datasette.svg?logo=python&logoColor=white)](https://pypi.org/project/datasette/)\n[![Tests](https://github.com/simonw/datasette/workflows/Test/badge.svg)](https://github.com/simonw/datasette/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/datasette/badge/?version=latest)](https://docs.datasette.io/en/latest/?badge=latest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette/blob/main/LICENSE)\n[![docker: datasette](https://img.shields.io/badge/docker-datasette-blue)](https://hub.docker.com/r/datasetteproject/datasette)\n\n*An open source multi-tool for exploring and publishing data*\n\nDatasette is a tool for exploring and publishing data. It helps people take data of any shape or size and publish that as an interactive, explorable website and accompanying API.\n\nDatasette is aimed at data journalists, museum curators, archivists, local governments, scientists, researchers and anyone else who has data that they wish to share with the world.\n\n[Explore a demo](https://global-power-plants.datasettes.com/global-power-plants/global-power-plants), watch [a video about the project](https://simonwillison.net/2021/Feb/7/video/) or try it out by [uploading and publishing your own CSV data](https://docs.datasette.io/en/stable/getting_started.html#try-datasette-without-installing-anything-using-glitch).\n\n* [datasette.io](https://datasette.io/) is the official project website\n* Latest [Datasette News](https://datasette.io/news)\n* Comprehensive documentation: https://docs.datasette.io/\n* Examples: https://datasette.io/examples\n* Live demo of current main: https://latest.datasette.io/\n* Support questions, feedback? Join our [GitHub Discussions forum](https://github.com/simonw/datasette/discussions)\n\nWant to stay up-to-date with the project? Subscribe to the [Datasette newsletter](https://datasette.substack.com/) for tips, tricks and news on what's new in the Datasette ecosystem.\n\n## Installation\n\nIf you are on a Mac, [Homebrew](https://brew.sh/) is the easiest way to install Datasette:\n\n    brew install datasette\n\nYou can also install it using `pip` or `pipx`:\n\n    pip install datasette\n\nDatasette requires Python 3.7 or higher. We also have [detailed installation instructions](https://docs.datasette.io/en/stable/installation.html) covering other options such as Docker.\n\n## Basic usage\n\n    datasette serve path/to/database.db\n\nThis will start a web server on port 8001 - visit http://localhost:8001/ to access the web interface.\n\n`serve` is the default subcommand, you can omit it if you like.\n\nUse Chrome on OS X? You can run datasette against your browser history like so:\n\n     datasette ~/Library/Application\\ Support/Google/Chrome/Default/History\n\nNow visiting http://localhost:8001/History/downloads will show you a web interface to browse your downloads data:\n\n![Downloads table rendered by datasette](https://static.simonwillison.net/static/2017/datasette-downloads.png)\n\n## metadata.json\n\nIf you want to include licensing and source information in the generated datasette website you can do so using a JSON file that looks something like this:\n\n    {\n        \"title\": \"Five Thirty Eight\",\n        \"license\": \"CC Attribution 4.0 License\",\n        \"license_url\": \"http://creativecommons.org/licenses/by/4.0/\",\n        \"source\": \"fivethirtyeight/data on GitHub\",\n        \"source_url\": \"https://github.com/fivethirtyeight/data\"\n    }\n\nSave this in `metadata.json` and run Datasette like so:\n\n    datasette serve fivethirtyeight.db -m metadata.json\n\nThe license and source information will be displayed on the index page and in the footer. They will also be included in the JSON produced by the API.\n\n## datasette publish\n\nIf you have [Heroku](https://heroku.com/) or [Google Cloud Run](https://cloud.google.com/run/) configured, Datasette can deploy one or more SQLite databases to the internet with a single command:\n\n    datasette publish heroku database.db\n\nOr:\n\n    datasette publish cloudrun database.db\n\nThis will create a docker image containing both the datasette application and the specified SQLite database files. It will then deploy that image to Heroku or Cloud Run and give you a URL to access the resulting website and API.\n\nSee [Publishing data](https://docs.datasette.io/en/stable/publish.html) in the documentation for more details.\n\n\n",
+    "description": "<img src=\"https://datasette.io/static/datasette-logo.svg\" alt=\"Datasette\">\n\n[![PyPI](https://img.shields.io/pypi/v/datasette.svg)](https://pypi.org/project/datasette/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette?label=changelog)](https://docs.datasette.io/en/stable/changelog.html)\n[![Python 3.x](https://img.shields.io/pypi/pyversions/datasette.svg?logo=python&logoColor=white)](https://pypi.org/project/datasette/)\n[![Tests](https://github.com/simonw/datasette/workflows/Test/badge.svg)](https://github.com/simonw/datasette/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/datasette/badge/?version=latest)](https://docs.datasette.io/en/latest/?badge=latest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette/blob/main/LICENSE)\n[![docker: datasette](https://img.shields.io/badge/docker-datasette-blue)](https://hub.docker.com/r/datasetteproject/datasette)\n[![discord](https://img.shields.io/discord/823971286308356157?label=discord)](https://discord.gg/ktd74dm5mw)\n\n*An open source multi-tool for exploring and publishing data*\n\nDatasette is a tool for exploring and publishing data. It helps people take data of any shape or size and publish that as an interactive, explorable website and accompanying API.\n\nDatasette is aimed at data journalists, museum curators, archivists, local governments, scientists, researchers and anyone else who has data that they wish to share with the world.\n\n[Explore a demo](https://global-power-plants.datasettes.com/global-power-plants/global-power-plants), watch [a video about the project](https://simonwillison.net/2021/Feb/7/video/) or try it out by [uploading and publishing your own CSV data](https://docs.datasette.io/en/stable/getting_started.html#try-datasette-without-installing-anything-using-glitch).\n\n* [datasette.io](https://datasette.io/) is the official project website\n* Latest [Datasette News](https://datasette.io/news)\n* Comprehensive documentation: https://docs.datasette.io/\n* Examples: https://datasette.io/examples\n* Live demo of current `main` branch: https://latest.datasette.io/\n* Questions, feedback or want to talk about the project? Join our [Discord](https://discord.gg/ktd74dm5mw)\n\nWant to stay up-to-date with the project? Subscribe to the [Datasette newsletter](https://datasette.substack.com/) for tips, tricks and news on what's new in the Datasette ecosystem.\n\n## Installation\n\nIf you are on a Mac, [Homebrew](https://brew.sh/) is the easiest way to install Datasette:\n\n    brew install datasette\n\nYou can also install it using `pip` or `pipx`:\n\n    pip install datasette\n\nDatasette requires Python 3.7 or higher. We also have [detailed installation instructions](https://docs.datasette.io/en/stable/installation.html) covering other options such as Docker.\n\n## Basic usage\n\n    datasette serve path/to/database.db\n\nThis will start a web server on port 8001 - visit http://localhost:8001/ to access the web interface.\n\n`serve` is the default subcommand, you can omit it if you like.\n\nUse Chrome on OS X? You can run datasette against your browser history like so:\n\n     datasette ~/Library/Application\\ Support/Google/Chrome/Default/History\n\nNow visiting http://localhost:8001/History/downloads will show you a web interface to browse your downloads data:\n\n![Downloads table rendered by datasette](https://static.simonwillison.net/static/2017/datasette-downloads.png)\n\n## metadata.json\n\nIf you want to include licensing and source information in the generated datasette website you can do so using a JSON file that looks something like this:\n\n    {\n        \"title\": \"Five Thirty Eight\",\n        \"license\": \"CC Attribution 4.0 License\",\n        \"license_url\": \"http://creativecommons.org/licenses/by/4.0/\",\n        \"source\": \"fivethirtyeight/data on GitHub\",\n        \"source_url\": \"https://github.com/fivethirtyeight/data\"\n    }\n\nSave this in `metadata.json` and run Datasette like so:\n\n    datasette serve fivethirtyeight.db -m metadata.json\n\nThe license and source information will be displayed on the index page and in the footer. They will also be included in the JSON produced by the API.\n\n## datasette publish\n\nIf you have [Heroku](https://heroku.com/) or [Google Cloud Run](https://cloud.google.com/run/) configured, Datasette can deploy one or more SQLite databases to the internet with a single command:\n\n    datasette publish heroku database.db\n\nOr:\n\n    datasette publish cloudrun database.db\n\nThis will create a docker image containing both the datasette application and the specified SQLite database files. It will then deploy that image to Heroku or Cloud Run and give you a URL to access the resulting website and API.\n\nSee [Publishing data](https://docs.datasette.io/en/stable/publish.html) in the documentation for more details.\n\n## Datasette Lite\n\n[Datasette Lite](https://lite.datasette.io/) is Datasette packaged using WebAssembly so that it runs entirely in your browser, no Python web application server required. Read more about that in the [Datasette Lite documentation](https://github.com/simonw/datasette-lite/blob/main/README.md).\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -43,11 +43,11 @@
       "Live demo": "https://latest.datasette.io/",
       "Source code": "https://github.com/simonw/datasette"
     },
-    "release_url": "https://pypi.org/project/datasette/0.61.1/",
+    "release_url": "https://pypi.org/project/datasette/0.62/",
     "requires_dist": [
       "asgiref (<3.6.0,>=3.2.10)",
-      "click (<8.1.0,>=7.1.1)",
-      "click-default-group (~=1.2.2)",
+      "click (<8.2.0,>=7.1.1)",
+      "click-default-group-wheel (>=1.2.2)",
       "Jinja2 (<3.1.0,>=2.10.3)",
       "hupper (~=1.9)",
       "httpx (>=0.20)",
@@ -60,27 +60,29 @@
       "PyYAML (<7.0,>=5.3)",
       "mergedeep (<1.4.0,>=1.1.1)",
       "itsdangerous (<3.0,>=1.1)",
-      "python-baseconv (==1.2.2)",
-      "sphinx-rtd-theme ; extra == 'docs'",
+      "furo (==2022.6.21) ; extra == 'docs'",
       "sphinx-autobuild ; extra == 'docs'",
       "codespell ; extra == 'docs'",
+      "blacken-docs ; extra == 'docs'",
+      "sphinx-copybutton ; extra == 'docs'",
       "rich ; extra == 'rich'",
       "pytest (<7.2.0,>=5.2.2) ; extra == 'test'",
       "pytest-xdist (<2.6,>=2.2.1) ; extra == 'test'",
-      "pytest-asyncio (<0.19,>=0.17) ; extra == 'test'",
-      "beautifulsoup4 (<4.11.0,>=4.8.1) ; extra == 'test'",
-      "black (==22.1.0) ; extra == 'test'",
+      "pytest-asyncio (<0.20,>=0.17) ; extra == 'test'",
+      "beautifulsoup4 (<4.12.0,>=4.8.1) ; extra == 'test'",
+      "black (==22.6.0) ; extra == 'test'",
+      "blacken-docs (==1.12.1) ; extra == 'test'",
       "pytest-timeout (<2.2,>=1.4.2) ; extra == 'test'",
       "trustme (<0.10,>=0.7) ; extra == 'test'",
       "cogapp (>=3.3.0) ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "An open source multi-tool for exploring and publishing data",
-    "version": "0.61.1",
+    "version": "0.62",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14464452,
+  "last_serial": 14757390,
   "releases": {
     "0.10": [
       {
@@ -3772,6 +3774,48 @@
         "yanked_reason": null
       }
     ],
+    "0.62": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "79d7987ce86116ec74b3e9efe96a0cee",
+          "sha256": "9571faceef182194bde4276c6b420146552ef41dbeeaf43ba66ce54467c77793"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.62-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "79d7987ce86116ec74b3e9efe96a0cee",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 229444,
+        "upload_time": "2022-08-14T17:49:21",
+        "upload_time_iso_8601": "2022-08-14T17:49:21.073273Z",
+        "url": "https://files.pythonhosted.org/packages/50/0e/73f7c45526aebb98d4bf22b91da3e1347b3fd8ae9d338e2999f806d070f6/datasette-0.62-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8f6baa308420706db4e18cf5d8389073",
+          "sha256": "f719c9148970ed20f565b0a3d8461060fc3748674a1556d63afd058a06d136d5"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.62.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8f6baa308420706db4e18cf5d8389073",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 208417,
+        "upload_time": "2022-08-14T17:49:22",
+        "upload_time_iso_8601": "2022-08-14T17:49:22.753878Z",
+        "url": "https://files.pythonhosted.org/packages/28/da/e56ed86fc69aad9be8b6acb7d5a940765ca869a8099858f8b93dfa9abd31/datasette-0.62.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.62a0": [
       {
         "comment_text": "",
@@ -3905,40 +3949,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "13b1c70fd718054f51f2c05edd8e290f",
-        "sha256": "96978386e8e70cf42d09016236ed32b9de742e7861b98661cbb6cab7986dd3dd"
+        "md5": "79d7987ce86116ec74b3e9efe96a0cee",
+        "sha256": "9571faceef182194bde4276c6b420146552ef41dbeeaf43ba66ce54467c77793"
       },
       "downloads": -1,
-      "filename": "datasette-0.61.1-py3-none-any.whl",
+      "filename": "datasette-0.62-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "13b1c70fd718054f51f2c05edd8e290f",
+      "md5_digest": "79d7987ce86116ec74b3e9efe96a0cee",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 224341,
-      "upload_time": "2022-03-23T20:38:02",
-      "upload_time_iso_8601": "2022-03-23T20:38:02.876657Z",
-      "url": "https://files.pythonhosted.org/packages/37/94/3477ed83d122275501c789c60fc380684af8b3e29bc95f77fdb26ddb6605/datasette-0.61.1-py3-none-any.whl",
+      "size": 229444,
+      "upload_time": "2022-08-14T17:49:21",
+      "upload_time_iso_8601": "2022-08-14T17:49:21.073273Z",
+      "url": "https://files.pythonhosted.org/packages/50/0e/73f7c45526aebb98d4bf22b91da3e1347b3fd8ae9d338e2999f806d070f6/datasette-0.62-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "579a3f2d778201cb02574dd83473b8c1",
-        "sha256": "060ed8737c5fc6d83e6ab35b84d91f9c0e39e3caf7d794106e39b4bef9b559eb"
+        "md5": "8f6baa308420706db4e18cf5d8389073",
+        "sha256": "f719c9148970ed20f565b0a3d8461060fc3748674a1556d63afd058a06d136d5"
       },
       "downloads": -1,
-      "filename": "datasette-0.61.1.tar.gz",
+      "filename": "datasette-0.62.tar.gz",
       "has_sig": false,
-      "md5_digest": "579a3f2d778201cb02574dd83473b8c1",
+      "md5_digest": "8f6baa308420706db4e18cf5d8389073",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 205091,
-      "upload_time": "2022-03-23T20:38:05",
-      "upload_time_iso_8601": "2022-03-23T20:38:05.085398Z",
-      "url": "https://files.pythonhosted.org/packages/ea/d1/3949a9f7da6a527565637f5fdb76495aeef0d7dc37b7128c0282ee4921d5/datasette-0.61.1.tar.gz",
+      "size": 208417,
+      "upload_time": "2022-08-14T17:49:22",
+      "upload_time_iso_8601": "2022-08-14T17:49:22.753878Z",
+      "url": "https://files.pythonhosted.org/packages/28/da/e56ed86fc69aad9be8b6acb7d5a940765ca869a8099858f8b93dfa9abd31/datasette-0.62.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
