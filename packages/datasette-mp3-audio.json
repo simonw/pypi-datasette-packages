@@ -1,0 +1,135 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-mp3-audio\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-mp3-audio.svg)](https://pypi.org/project/datasette-mp3-audio/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-mp3-audio?include_prereleases&label=changelog)](https://github.com/simonw/datasette-mp3-audio/releases)\n[![Tests](https://github.com/simonw/datasette-mp3-audio/workflows/Test/badge.svg)](https://github.com/simonw/datasette-mp3-audio/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-mp3-audio/blob/main/LICENSE)\n\nTurn .mp3 URLs into an audio player in the Datasette interface\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-mp3-audio\n\n## Usage\n\nOnce installed, any cells with a value that ends in `.mp3` and starts with either `http://` or `/` or `https://` will be turned into an embedded HTML audio element like this:\n\n```html\n<audio controls src=\"... value ...\">Audio not supported</audio>\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-mp3-audio\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-mp3-audio",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-mp3-audio",
+    "package_url": "https://pypi.org/project/datasette-mp3-audio/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-mp3-audio/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-mp3-audio/actions",
+      "Changelog": "https://github.com/simonw/datasette-mp3-audio/releases",
+      "Homepage": "https://github.com/simonw/datasette-mp3-audio",
+      "Issues": "https://github.com/simonw/datasette-mp3-audio/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-mp3-audio/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Turn .mp3 URLs into an audio player in the Datasette interface",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14822312,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "f4f125c93f827b70f247ac403ef71cad",
+          "sha256": "3fa1d0b223cc226e3f168190ae0ddcfceed421cade4db52bf89365adf47703e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_mp3_audio-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f4f125c93f827b70f247ac403ef71cad",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6706,
+        "upload_time": "2022-08-20T16:46:52",
+        "upload_time_iso_8601": "2022-08-20T16:46:52.201182Z",
+        "url": "https://files.pythonhosted.org/packages/4a/71/22e156ca9fb4f3e255eea1ea78cd0ef55416aa8f1fd7ab7a5431524e15b3/datasette_mp3_audio-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bf9383af318658b6ac18b88fabf0bbf0",
+          "sha256": "2882a9810b05e984ce955d38094073ff09656715376701c9a431024f0d0c403f"
+        },
+        "downloads": -1,
+        "filename": "datasette-mp3-audio-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bf9383af318658b6ac18b88fabf0bbf0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6247,
+        "upload_time": "2022-08-20T16:46:53",
+        "upload_time_iso_8601": "2022-08-20T16:46:53.549526Z",
+        "url": "https://files.pythonhosted.org/packages/e4/e7/01573c36c79c305696cf46e57fab0b38158145dc5801413af96061e51490/datasette-mp3-audio-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "f4f125c93f827b70f247ac403ef71cad",
+        "sha256": "3fa1d0b223cc226e3f168190ae0ddcfceed421cade4db52bf89365adf47703e2"
+      },
+      "downloads": -1,
+      "filename": "datasette_mp3_audio-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f4f125c93f827b70f247ac403ef71cad",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6706,
+      "upload_time": "2022-08-20T16:46:52",
+      "upload_time_iso_8601": "2022-08-20T16:46:52.201182Z",
+      "url": "https://files.pythonhosted.org/packages/4a/71/22e156ca9fb4f3e255eea1ea78cd0ef55416aa8f1fd7ab7a5431524e15b3/datasette_mp3_audio-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "bf9383af318658b6ac18b88fabf0bbf0",
+        "sha256": "2882a9810b05e984ce955d38094073ff09656715376701c9a431024f0d0c403f"
+      },
+      "downloads": -1,
+      "filename": "datasette-mp3-audio-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "bf9383af318658b6ac18b88fabf0bbf0",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6247,
+      "upload_time": "2022-08-20T16:46:53",
+      "upload_time_iso_8601": "2022-08-20T16:46:53.549526Z",
+      "url": "https://files.pythonhosted.org/packages/e4/e7/01573c36c79c305696cf46e57fab0b38158145dc5801413af96061e51490/datasette-mp3-audio-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
