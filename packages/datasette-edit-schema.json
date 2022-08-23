@@ -25,7 +25,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-edit-schema"
     },
-    "release_url": "https://pypi.org/project/datasette-edit-schema/0.5/",
+    "release_url": "https://pypi.org/project/datasette-edit-schema/0.5.1/",
     "requires_dist": [
       "datasette (>=0.59)",
       "sqlite-utils (>=3.10)",
@@ -34,11 +34,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for modifying table schemas",
-    "version": "0.5",
+    "version": "0.5.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14313322,
+  "last_serial": 14841894,
   "releases": {
     "0.3": [
       {
@@ -249,46 +249,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d455fe1983f2cf3c27a606bc2344c51d",
+          "sha256": "f4bd94aebd93d8761d7432f3dd5e208ff3551d78c904f491f249447a777cb03a"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.5.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d455fe1983f2cf3c27a606bc2344c51d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 57934,
+        "upload_time": "2022-08-22T22:47:06",
+        "upload_time_iso_8601": "2022-08-22T22:47:06.949940Z",
+        "url": "https://files.pythonhosted.org/packages/41/ae/19f1c7b030989dbd61c923ef5870b42c57473d029ee33c77f28aeac5367d/datasette_edit_schema-0.5.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "72dd42ae23bfff03582722fca7adacaf",
+          "sha256": "f2fdc76c80f401a41bc659fa0a15d43a63eed654426f2b069d698b113600dac8"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-schema-0.5.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "72dd42ae23bfff03582722fca7adacaf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 56940,
+        "upload_time": "2022-08-22T22:47:08",
+        "upload_time_iso_8601": "2022-08-22T22:47:08.114559Z",
+        "url": "https://files.pythonhosted.org/packages/47/d8/abfc8b56c3fd842756e241804527da13ab72e25b7a181a572799acfb4c0e/datasette-edit-schema-0.5.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "94e1d0840fce020a1c740fadfb77b8a4",
-        "sha256": "bba0b8987a41100d695ab022ac0edbeaa12faa8b716e559f3b194ef48f285d1e"
+        "md5": "d455fe1983f2cf3c27a606bc2344c51d",
+        "sha256": "f4bd94aebd93d8761d7432f3dd5e208ff3551d78c904f491f249447a777cb03a"
       },
       "downloads": -1,
-      "filename": "datasette_edit_schema-0.5-py3-none-any.whl",
+      "filename": "datasette_edit_schema-0.5.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "94e1d0840fce020a1c740fadfb77b8a4",
+      "md5_digest": "d455fe1983f2cf3c27a606bc2344c51d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 57942,
-      "upload_time": "2022-07-01T23:17:20",
-      "upload_time_iso_8601": "2022-07-01T23:17:20.612890Z",
-      "url": "https://files.pythonhosted.org/packages/cb/82/5d3b660754290c6d405e3c4d3bf2608efa7477cde0cdad0cac20d7d49639/datasette_edit_schema-0.5-py3-none-any.whl",
+      "size": 57934,
+      "upload_time": "2022-08-22T22:47:06",
+      "upload_time_iso_8601": "2022-08-22T22:47:06.949940Z",
+      "url": "https://files.pythonhosted.org/packages/41/ae/19f1c7b030989dbd61c923ef5870b42c57473d029ee33c77f28aeac5367d/datasette_edit_schema-0.5.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "3ddc868aafc89d20018110d318397242",
-        "sha256": "17cbb5497f375800d146bdcb4a978fa61ab887130355877be0e77183050ecf76"
+        "md5": "72dd42ae23bfff03582722fca7adacaf",
+        "sha256": "f2fdc76c80f401a41bc659fa0a15d43a63eed654426f2b069d698b113600dac8"
       },
       "downloads": -1,
-      "filename": "datasette-edit-schema-0.5.tar.gz",
+      "filename": "datasette-edit-schema-0.5.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "3ddc868aafc89d20018110d318397242",
+      "md5_digest": "72dd42ae23bfff03582722fca7adacaf",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 56980,
-      "upload_time": "2022-07-01T23:17:21",
-      "upload_time_iso_8601": "2022-07-01T23:17:21.948478Z",
-      "url": "https://files.pythonhosted.org/packages/89/46/f3ed18a9ae6c36b047a898c40c948e3b04fd9d4cc33b44c7308c8278813f/datasette-edit-schema-0.5.tar.gz",
+      "size": 56940,
+      "upload_time": "2022-08-22T22:47:08",
+      "upload_time_iso_8601": "2022-08-22T22:47:08.114559Z",
+      "url": "https://files.pythonhosted.org/packages/47/d8/abfc8b56c3fd842756e241804527da13ab72e25b7a181a572799acfb4c0e/datasette-edit-schema-0.5.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
