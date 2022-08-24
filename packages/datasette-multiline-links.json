@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-multiline-links\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-multiline-links.svg)](https://pypi.org/project/datasette-multiline-links/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-multiline-links?include_prereleases&label=changelog)](https://github.com/simonw/datasette-multiline-links/releases)\n[![Tests](https://github.com/simonw/datasette-multiline-links/workflows/Test/badge.svg)](https://github.com/simonw/datasette-multiline-links/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-multiline-links/blob/main/LICENSE)\n\nMake multiple newline separated URLs clickable in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-multiline-links\n\n## Usage\n\nOnce installed, if a cell has contents like this:\n```\nhttps://example.com\nNot a link\nhttps://google.com\n```\nIt will be rendered as:\n```html\n<a href=\"https://example.com\">https://example.com</a>\nNot a link\n<a href=\"https://google.com\">https://google.com</a>\n```\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-multiline-links\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-multiline-links",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-multiline-links",
+    "package_url": "https://pypi.org/project/datasette-multiline-links/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-multiline-links/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-multiline-links/actions",
+      "Changelog": "https://github.com/simonw/datasette-multiline-links/releases",
+      "Homepage": "https://github.com/simonw/datasette-multiline-links",
+      "Issues": "https://github.com/simonw/datasette-multiline-links/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-multiline-links/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Make multiple newline separated URLs clickable in Datasette",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14871366,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a9ed3b723a1661f3af0da79ea5aa3781",
+          "sha256": "198ea5411ab2d43526d976cf88279960f6847333ce1cd5938e391653417072f9"
+        },
+        "downloads": -1,
+        "filename": "datasette_multiline_links-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a9ed3b723a1661f3af0da79ea5aa3781",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6795,
+        "upload_time": "2022-08-24T22:32:50",
+        "upload_time_iso_8601": "2022-08-24T22:32:50.478118Z",
+        "url": "https://files.pythonhosted.org/packages/90/81/a0f05e1bbe669c45594e37a373e0a7f628f25a8a9899d082f85b6ae66528/datasette_multiline_links-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b51277523ea64e46e08e02cdf43b67a0",
+          "sha256": "33da5e0dff9f4859c58806e9aee4fb9729b56908221a7ae828df8c91ce1f3d8e"
+        },
+        "downloads": -1,
+        "filename": "datasette-multiline-links-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b51277523ea64e46e08e02cdf43b67a0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6264,
+        "upload_time": "2022-08-24T22:32:51",
+        "upload_time_iso_8601": "2022-08-24T22:32:51.950208Z",
+        "url": "https://files.pythonhosted.org/packages/e7/37/332644122d2d699cdd82dd69da0f83ca5b3f73156606fba351e616116f39/datasette-multiline-links-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a9ed3b723a1661f3af0da79ea5aa3781",
+        "sha256": "198ea5411ab2d43526d976cf88279960f6847333ce1cd5938e391653417072f9"
+      },
+      "downloads": -1,
+      "filename": "datasette_multiline_links-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a9ed3b723a1661f3af0da79ea5aa3781",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6795,
+      "upload_time": "2022-08-24T22:32:50",
+      "upload_time_iso_8601": "2022-08-24T22:32:50.478118Z",
+      "url": "https://files.pythonhosted.org/packages/90/81/a0f05e1bbe669c45594e37a373e0a7f628f25a8a9899d082f85b6ae66528/datasette_multiline_links-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "b51277523ea64e46e08e02cdf43b67a0",
+        "sha256": "33da5e0dff9f4859c58806e9aee4fb9729b56908221a7ae828df8c91ce1f3d8e"
+      },
+      "downloads": -1,
+      "filename": "datasette-multiline-links-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b51277523ea64e46e08e02cdf43b67a0",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6264,
+      "upload_time": "2022-08-24T22:32:51",
+      "upload_time_iso_8601": "2022-08-24T22:32:51.950208Z",
+      "url": "https://files.pythonhosted.org/packages/e7/37/332644122d2d699cdd82dd69da0f83ca5b3f73156606fba351e616116f39/datasette-multiline-links-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
