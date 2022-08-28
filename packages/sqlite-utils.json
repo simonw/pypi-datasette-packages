@@ -16,7 +16,7 @@
       "Programming Language :: Python :: 3.9",
       "Topic :: Database"
     ],
-    "description": "# sqlite-utils\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-utils.svg)](https://pypi.org/project/sqlite-utils/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-utils?include_prereleases&label=changelog)](https://sqlite-utils.datasette.io/en/stable/changelog.html)\n[![Python 3.x](https://img.shields.io/pypi/pyversions/sqlite-utils.svg?logo=python&logoColor=white)](https://pypi.org/project/sqlite-utils/)\n[![Tests](https://github.com/simonw/sqlite-utils/workflows/Test/badge.svg)](https://github.com/simonw/sqlite-utils/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/sqlite-utils/badge/?version=stable)](http://sqlite-utils.datasette.io/en/stable/?badge=stable)\n[![codecov](https://codecov.io/gh/simonw/sqlite-utils/branch/main/graph/badge.svg)](https://codecov.io/gh/simonw/sqlite-utils)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-utils/blob/main/LICENSE)\n\nPython CLI utility and library for manipulating SQLite databases.\n\n## Some feature highlights\n\n- [Pipe JSON](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data) (or [CSV or TSV](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-csv-or-tsv-data)) directly into a new SQLite database file, automatically creating a table with the appropriate schema\n- [Run in-memory SQL queries](https://sqlite-utils.datasette.io/en/stable/cli.html#querying-data-directly-using-an-in-memory-database), including joins, directly against data in CSV, TSV or JSON files and view the results\n- [Configure SQLite full-text search](https://sqlite-utils.datasette.io/en/stable/cli.html#configuring-full-text-search) against your database tables and run search queries against them, ordered by relevance\n- Run [transformations against your tables](https://sqlite-utils.datasette.io/en/stable/cli.html#transforming-tables) to make schema changes that SQLite `ALTER TABLE` does not directly support, such as changing the type of a column\n- [Extract columns](https://sqlite-utils.datasette.io/en/stable/cli.html#extracting-columns-into-a-separate-table) into separate tables to better normalize your existing data\n\nRead more on my blog, in this series of posts on [New features in sqlite-utils](https://simonwillison.net/series/sqlite-utils-features/) and other [entries tagged sqliteutils](https://simonwillison.net/tags/sqliteutils/).\n\n## Installation\n\n    pip install sqlite-utils\n\nOr if you use [Homebrew](https://brew.sh/) for macOS:\n\n    brew install sqlite-utils\n\n## Using as a CLI tool\n\nNow you can do things with the CLI utility like this:\n\n    $ sqlite-utils memory dogs.csv \"select * from t\"\n    [{\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n     {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n    [####################################]  100%\n\n    $ sqlite-utils tables dogs.db --counts\n    [{\"table\": \"dogs\", \"count\": 2}]\n\n    $ sqlite-utils dogs.db \"select id, name from dogs\"\n    [{\"id\": 1, \"name\": \"Cleo\"},\n     {\"id\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --csv\n    id,age,name\n    1,4,Cleo\n    2,2,Pancakes\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --table\n      id    age  name\n    ----  -----  --------\n       1      4  Cleo\n       2      2  Pancakes\n\nYou can import JSON data into a new database table like this:\n\n    $ curl https://api.github.com/repos/simonw/sqlite-utils/releases \\\n        | sqlite-utils insert releases.db releases - --pk id\n\nOr for data in a CSV file:\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n\n`sqlite-utils memory` lets you import CSV or JSON data into an in-memory database and run SQL queries against it in a single command:\n\n    $ cat dogs.csv | sqlite-utils memory - \"select name, age from stdin\"\n\nSee the [full CLI documentation](https://sqlite-utils.datasette.io/en/stable/cli.html) for comprehensive coverage of many more commands.\n\n## Using as a library\n\nYou can also `import sqlite_utils` and use it as a Python library like this:\n\n```python\nimport sqlite_utils\ndb = sqlite_utils.Database(\"demo_database.db\")\n# This line creates a \"dogs\" table if one does not already exist:\ndb[\"dogs\"].insert_all([\n    {\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n    {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}\n], pk=\"id\")\n```\n\nCheck out the [full library documentation](https://sqlite-utils.datasette.io/en/stable/python-api.html) for everything else you can do with the Python library.\n\n## Related projects\n\n* [Datasette](https://datasette.io/): A tool for exploring and publishing data\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database\n* [db-to-sqlite](https://github.com/simonw/db-to-sqlite): CLI tool for exporting a MySQL or PostgreSQL database as a SQLite file\n* [dogsheep](https://dogsheep.github.io/): A family of tools for personal analytics, built on top of `sqlite-utils`\n\n\n",
+    "description": "# sqlite-utils\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-utils.svg)](https://pypi.org/project/sqlite-utils/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-utils?include_prereleases&label=changelog)](https://sqlite-utils.datasette.io/en/stable/changelog.html)\n[![Python 3.x](https://img.shields.io/pypi/pyversions/sqlite-utils.svg?logo=python&logoColor=white)](https://pypi.org/project/sqlite-utils/)\n[![Tests](https://github.com/simonw/sqlite-utils/workflows/Test/badge.svg)](https://github.com/simonw/sqlite-utils/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/sqlite-utils/badge/?version=stable)](http://sqlite-utils.datasette.io/en/stable/?badge=stable)\n[![codecov](https://codecov.io/gh/simonw/sqlite-utils/branch/main/graph/badge.svg)](https://codecov.io/gh/simonw/sqlite-utils)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-utils/blob/main/LICENSE)\n[![discord](https://img.shields.io/discord/823971286308356157?label=discord)](https://discord.gg/Ass7bCAMDw)\n\nPython CLI utility and library for manipulating SQLite databases.\n\n## Some feature highlights\n\n- [Pipe JSON](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data) (or [CSV or TSV](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-csv-or-tsv-data)) directly into a new SQLite database file, automatically creating a table with the appropriate schema\n- [Run in-memory SQL queries](https://sqlite-utils.datasette.io/en/stable/cli.html#querying-data-directly-using-an-in-memory-database), including joins, directly against data in CSV, TSV or JSON files and view the results\n- [Configure SQLite full-text search](https://sqlite-utils.datasette.io/en/stable/cli.html#configuring-full-text-search) against your database tables and run search queries against them, ordered by relevance\n- Run [transformations against your tables](https://sqlite-utils.datasette.io/en/stable/cli.html#transforming-tables) to make schema changes that SQLite `ALTER TABLE` does not directly support, such as changing the type of a column\n- [Extract columns](https://sqlite-utils.datasette.io/en/stable/cli.html#extracting-columns-into-a-separate-table) into separate tables to better normalize your existing data\n\nRead more on my blog, in this series of posts on [New features in sqlite-utils](https://simonwillison.net/series/sqlite-utils-features/) and other [entries tagged sqliteutils](https://simonwillison.net/tags/sqliteutils/).\n\n## Installation\n\n    pip install sqlite-utils\n\nOr if you use [Homebrew](https://brew.sh/) for macOS:\n\n    brew install sqlite-utils\n\n## Using as a CLI tool\n\nNow you can do things with the CLI utility like this:\n\n    $ sqlite-utils memory dogs.csv \"select * from t\"\n    [{\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n     {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n    [####################################]  100%\n\n    $ sqlite-utils tables dogs.db --counts\n    [{\"table\": \"dogs\", \"count\": 2}]\n\n    $ sqlite-utils dogs.db \"select id, name from dogs\"\n    [{\"id\": 1, \"name\": \"Cleo\"},\n     {\"id\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --csv\n    id,age,name\n    1,4,Cleo\n    2,2,Pancakes\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --table\n      id    age  name\n    ----  -----  --------\n       1      4  Cleo\n       2      2  Pancakes\n\nYou can import JSON data into a new database table like this:\n\n    $ curl https://api.github.com/repos/simonw/sqlite-utils/releases \\\n        | sqlite-utils insert releases.db releases - --pk id\n\nOr for data in a CSV file:\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n\n`sqlite-utils memory` lets you import CSV or JSON data into an in-memory database and run SQL queries against it in a single command:\n\n    $ cat dogs.csv | sqlite-utils memory - \"select name, age from stdin\"\n\nSee the [full CLI documentation](https://sqlite-utils.datasette.io/en/stable/cli.html) for comprehensive coverage of many more commands.\n\n## Using as a library\n\nYou can also `import sqlite_utils` and use it as a Python library like this:\n\n```python\nimport sqlite_utils\ndb = sqlite_utils.Database(\"demo_database.db\")\n# This line creates a \"dogs\" table if one does not already exist:\ndb[\"dogs\"].insert_all([\n    {\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n    {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}\n], pk=\"id\")\n```\n\nCheck out the [full library documentation](https://sqlite-utils.datasette.io/en/stable/python-api.html) for everything else you can do with the Python library.\n\n## Related projects\n\n* [Datasette](https://datasette.io/): A tool for exploring and publishing data\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database\n* [db-to-sqlite](https://github.com/simonw/db-to-sqlite): CLI tool for exporting a MySQL or PostgreSQL database as a SQLite file\n* [dogsheep](https://dogsheep.github.io/): A family of tools for personal analytics, built on top of `sqlite-utils`\n\n\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -42,7 +42,7 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues",
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
-    "release_url": "https://pypi.org/project/sqlite-utils/3.28/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.29/",
     "requires_dist": [
       "sqlite-fts4",
       "click",
@@ -53,6 +53,7 @@
       "sphinx-autobuild ; extra == 'docs'",
       "codespell ; extra == 'docs'",
       "sphinx-copybutton ; extra == 'docs'",
+      "beanbag-docutils (>=2.0) ; extra == 'docs'",
       "flake8 ; extra == 'flake8'",
       "mypy ; extra == 'mypy'",
       "types-click ; extra == 'mypy'",
@@ -66,11 +67,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "CLI tool and Python utility functions for manipulating SQLite databases",
-    "version": "3.28",
+    "version": "3.29",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14450134,
+  "last_serial": 14912662,
   "releases": {
     "0.10": [
       {
@@ -3158,6 +3159,48 @@
         "yanked_reason": null
       }
     ],
+    "3.29": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d7bc6029b740edca1fdc7778d9ee3e6e",
+          "sha256": "9e6b2bf7ae89e02e107557b0cff1121f1fbb06128a815122743332197693b272"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.29-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d7bc6029b740edca1fdc7778d9ee3e6e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 63271,
+        "upload_time": "2022-08-28T03:57:22",
+        "upload_time_iso_8601": "2022-08-28T03:57:22.433989Z",
+        "url": "https://files.pythonhosted.org/packages/b3/af/00a67eac4c3e385921486c89fe74e2cc095b23e8202eea34cff7092579dc/sqlite_utils-3.29-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "be064f7aaeed7ed3ec5236303759d224",
+          "sha256": "d9ea1026a9c007a895cdd04abdcbe3cd2ac03515c2a2ebbad9233939aa111f5b"
+        },
+        "downloads": -1,
+        "filename": "sqlite-utils-3.29.tar.gz",
+        "has_sig": false,
+        "md5_digest": "be064f7aaeed7ed3ec5236303759d224",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 193437,
+        "upload_time": "2022-08-28T03:57:24",
+        "upload_time_iso_8601": "2022-08-28T03:57:24.734951Z",
+        "url": "https://files.pythonhosted.org/packages/2f/6d/3b874297ef2c65871e714f298ee63d29aa87682ec65e86be30bd9c983baf/sqlite-utils-3.29.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.3": [
       {
         "comment_text": "",
@@ -3541,40 +3584,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "ce3978b3023101d94ede1cfb48dee9c3",
-        "sha256": "e8841bff7fcf29b0789c374a4ccca42107de1592836aa6899a04e3aebd304277"
+        "md5": "d7bc6029b740edca1fdc7778d9ee3e6e",
+        "sha256": "9e6b2bf7ae89e02e107557b0cff1121f1fbb06128a815122743332197693b272"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.28-py3-none-any.whl",
+      "filename": "sqlite_utils-3.29-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "ce3978b3023101d94ede1cfb48dee9c3",
+      "md5_digest": "d7bc6029b740edca1fdc7778d9ee3e6e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 61712,
-      "upload_time": "2022-07-15T23:07:22",
-      "upload_time_iso_8601": "2022-07-15T23:07:22.252170Z",
-      "url": "https://files.pythonhosted.org/packages/29/56/8bafb1d5a17ffdce4bb1d876a4b9617281788d2fedf31961fd3b7a64146f/sqlite_utils-3.28-py3-none-any.whl",
+      "size": 63271,
+      "upload_time": "2022-08-28T03:57:22",
+      "upload_time_iso_8601": "2022-08-28T03:57:22.433989Z",
+      "url": "https://files.pythonhosted.org/packages/b3/af/00a67eac4c3e385921486c89fe74e2cc095b23e8202eea34cff7092579dc/sqlite_utils-3.29-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "d465f0f53c68023d9befbb07ddb5d40e",
-        "sha256": "790b01f4be16c32756b9b5eae07b6b7c905b6613ca538d646877c50b05b0a53a"
+        "md5": "be064f7aaeed7ed3ec5236303759d224",
+        "sha256": "d9ea1026a9c007a895cdd04abdcbe3cd2ac03515c2a2ebbad9233939aa111f5b"
       },
       "downloads": -1,
-      "filename": "sqlite-utils-3.28.tar.gz",
+      "filename": "sqlite-utils-3.29.tar.gz",
       "has_sig": false,
-      "md5_digest": "d465f0f53c68023d9befbb07ddb5d40e",
+      "md5_digest": "be064f7aaeed7ed3ec5236303759d224",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 188238,
-      "upload_time": "2022-07-15T23:07:24",
-      "upload_time_iso_8601": "2022-07-15T23:07:24.265260Z",
-      "url": "https://files.pythonhosted.org/packages/fe/2b/2ed48c411a590a250cb6c06ea7822b2292835d92d7f69e3c86af2b60ba0e/sqlite-utils-3.28.tar.gz",
+      "size": 193437,
+      "upload_time": "2022-08-28T03:57:24",
+      "upload_time_iso_8601": "2022-08-28T03:57:24.734951Z",
+      "url": "https://files.pythonhosted.org/packages/2f/6d/3b874297ef2c65871e714f298ee63d29aa87682ec65e86be30bd9c983baf/sqlite-utils-3.29.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
