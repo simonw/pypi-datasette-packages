@@ -133,3 +133,4 @@ sqlite-comprehend
 datasette-query-files
 datasette-mp3-audio
 datasette-multiline-links
+datasette-sitemap
