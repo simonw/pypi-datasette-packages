@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-sitemap\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sitemap.svg)](https://pypi.org/project/datasette-sitemap/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sitemap?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sitemap/releases)\n[![Tests](https://github.com/simonw/datasette-sitemap/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sitemap/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sitemap/blob/main/LICENSE)\n\nGenerate sitemap.xml for Datasette sites\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-sitemap\n\n## Usage\n\nOnce configured, this plugin adds a sitemap at `/sitemap.xml` with a list of URLs.\n\nThis list is defined using a SQL query in `metadata.json` (or `.yml`) that looks like this:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-sitemap\": {\n      \"query\": \"select '/' || id as path from my_table\"\n    }\n  }\n}\n```\n\nUsing `metadata.yml` allows for multi-line SQL queries which can be easier to maintain:\n\n```yaml\nplugins:\n  datasette-sitemap:\n    query: |\n      select\n        '/' || id as path\n      from\n        my_table\n```\nThe SQL query must return a column called `path`. The values in this column must begin with a `/`. They will be used to generate a sitemap that looks like this:\n\n```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url><loc>https://example.com/1</loc></url>\n  <url><loc>https://example.com/2</loc></url>\n</urlset>\n```\nYou can use ``UNION`` in your SQL query to combine results from multiple tables, or include literal paths that you want to include in the index:\n\n```sql\nselect\n  '/data/table1/' || id as path\n  from table1\nunion\nselect\n  '/data/table2/' || id as path\n  from table2\nunion\nselect\n  '/about' as path\n```\nIf your Datasette instance has multiple databases you can configure the database to query using the `database` configuration property.\n\nBy default the domain name for the genearted URLs in the sitemap will be detected from the incoming request.\n\nYou can set `base_url` instead to override this. This should not include a trailing slash.\n\nThis example shows both of those settings, running the query against the `content` database and setting a custom base URL:\n\n```yaml\nplugins:\n  datasette-sitemap:\n    query: |\n      select '/plugins/' || name as path from plugins\n      union\n      select '/tools/' || name as path from tools\n      union\n      select '/news' as path\n    database: content\n    base_url: https://datasette.io\n```\n[Try that query](https://datasette.io/content?sql=select+%27%2Fplugins%2F%27+||+name+as+path+from+plugins%0D%0Aunion%0D%0Aselect+%27%2Ftools%2F%27+||+name+as+path+from+tools%0D%0Aunion%0D%0Aselect+%27%2Fnews%27+as+path%0D%0A).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-sitemap\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-sitemap\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sitemap.svg)](https://pypi.org/project/datasette-sitemap/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sitemap?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sitemap/releases)\n[![Tests](https://github.com/simonw/datasette-sitemap/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sitemap/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sitemap/blob/main/LICENSE)\n\nGenerate sitemap.xml for Datasette sites\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-sitemap\n\n## Demo\n\nThis plugin is used for the sitemap on [til.simonwillison.net](https://til.simonwillison.net/):\n\n- https://til.simonwillison.net/sitemap.xml\n\nHere's [the configuration](https://github.com/simonw/til/blob/d4f67743a90a67100b46145986b2dec6f8d96583/metadata.yaml#L14-L16) used for that sitemap.\n\n## Usage\n\nOnce configured, this plugin adds a sitemap at `/sitemap.xml` with a list of URLs.\n\nThis list is defined using a SQL query in `metadata.json` (or `.yml`) that looks like this:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-sitemap\": {\n      \"query\": \"select '/' || id as path from my_table\"\n    }\n  }\n}\n```\n\nUsing `metadata.yml` allows for multi-line SQL queries which can be easier to maintain:\n\n```yaml\nplugins:\n  datasette-sitemap:\n    query: |\n      select\n        '/' || id as path\n      from\n        my_table\n```\nThe SQL query must return a column called `path`. The values in this column must begin with a `/`. They will be used to generate a sitemap that looks like this:\n\n```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url><loc>https://example.com/1</loc></url>\n  <url><loc>https://example.com/2</loc></url>\n</urlset>\n```\nYou can use ``UNION`` in your SQL query to combine results from multiple tables, or include literal paths that you want to include in the index:\n\n```sql\nselect\n  '/data/table1/' || id as path\n  from table1\nunion\nselect\n  '/data/table2/' || id as path\n  from table2\nunion\nselect\n  '/about' as path\n```\nIf your Datasette instance has multiple databases you can configure the database to query using the `database` configuration property.\n\nBy default the domain name for the genearted URLs in the sitemap will be detected from the incoming request.\n\nYou can set `base_url` instead to override this. This should not include a trailing slash.\n\nThis example shows both of those settings, running the query against the `content` database and setting a custom base URL:\n\n```yaml\nplugins:\n  datasette-sitemap:\n    query: |\n      select '/plugins/' || name as path from plugins\n      union\n      select '/tools/' || name as path from tools\n      union\n      select '/news' as path\n    database: content\n    base_url: https://datasette.io\n```\n[Try that query](https://datasette.io/content?sql=select+%27%2Fplugins%2F%27+||+name+as+path+from+plugins%0D%0Aunion%0D%0Aselect+%27%2Ftools%2F%27+||+name+as+path+from+tools%0D%0Aunion%0D%0Aselect+%27%2Fnews%27+as+path%0D%0A).\n\n## robots.txt\n\nThis plugin adds a `robots.txt` file pointing to the sitemap:\n\n```\nSitemap: http://example.com/sitemap.xml\n```\n\nYou can take full control of the sitemap by installing and configuring the [datasette-block-robots](https://datasette.io/plugins/datasette-block-robots) plugin.\n\nThis plugin will add the `Sitemap:` line even if you are using `datasette-block-robots` for the rest of your `robots.txt` file.\n\n## Adding paths to the sitemap from other plugins\n\nThis plugin adds a new [plugin hook](https://docs.datasette.io/en/stable/plugin_hooks.html) to Datasete called `sitemap_extra_paths()` which can be used by other plugins to add their own additional lines to the `sitemap.xml` file.\n\nThe hook accepts these optional parameters:\n\n- `datasette`: The current [Datasette instance](https://docs.datasette.io/en/stable/internals.html#datasette-class). You can use this to execute SQL queries or read plugin configuration settings.\n- `request`: The [Request object](https://docs.datasette.io/en/stable/internals.html#request-object) representing the incoming request to `/sitemap.xml`.\n\nThe hook should return a list of strings, each representing a path to be added to the sitemap. Each path must begin with a `/`.\n\nIt can also return an `async def` function, which will be awaited and used to generate a list of lines. Use this option if you need to make `await` calls inside you hook implementation.\n\nThis example uses the hook to add two extra paths, one of which came from a SQL query:\n\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef sitemap_extra_paths(datasette):\n    async def inner():\n        db = datasette.get_database()\n        path_from_db = (await db.execute(\"select '/example'\")).single_value()\n        return [\"/about\", path_from_db]\n    return inner\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-sitemap\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,19 +31,20 @@
       "Homepage": "https://github.com/simonw/datasette-sitemap",
       "Issues": "https://github.com/simonw/datasette-sitemap/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-sitemap/0.1.1/",
+    "release_url": "https://pypi.org/project/datasette-sitemap/1.0/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "pytest-asyncio ; extra == 'test'",
+      "datasette-block-robots ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Generate sitemap.xml for Datasette sites",
-    "version": "0.1.1",
+    "version": "1.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14929206,
+  "last_serial": 14938465,
   "releases": {
     "0.1": [
       {
@@ -128,46 +129,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "29c0bb536f2fe1f812eb6ffacf6a0193",
+          "sha256": "8729433093f8e4536430cc1426a4fe949902b78b2d370f8f05220752dc8a60f7"
+        },
+        "downloads": -1,
+        "filename": "datasette_sitemap-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "29c0bb536f2fe1f812eb6ffacf6a0193",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9280,
+        "upload_time": "2022-08-30T18:01:11",
+        "upload_time_iso_8601": "2022-08-30T18:01:11.008902Z",
+        "url": "https://files.pythonhosted.org/packages/b0/b6/0bfabe5bbd2215c8a734aea5f60c28f8f67adfe3ffb3739d1e610c2c0bb9/datasette_sitemap-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8b44958477d1d289525e0178edcb0b4f",
+          "sha256": "1c8d5d47da63f921d45f71e80cafadf52be11aedf2777f4c5cc65fa23618dd09"
+        },
+        "downloads": -1,
+        "filename": "datasette-sitemap-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8b44958477d1d289525e0178edcb0b4f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8509,
+        "upload_time": "2022-08-30T18:01:12",
+        "upload_time_iso_8601": "2022-08-30T18:01:12.246391Z",
+        "url": "https://files.pythonhosted.org/packages/a0/37/1a11539c93177adfcc59ba7885a07102eacd3cfd7b797f98835e8a894caa/datasette-sitemap-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "b8fefcb01ce7297eb94d694e859f2130",
-        "sha256": "ec0724a0c53d21a94908462e6bfc2beb0d5e6d584c7438c9cea8624de08342fd"
+        "md5": "29c0bb536f2fe1f812eb6ffacf6a0193",
+        "sha256": "8729433093f8e4536430cc1426a4fe949902b78b2d370f8f05220752dc8a60f7"
       },
       "downloads": -1,
-      "filename": "datasette_sitemap-0.1.1-py3-none-any.whl",
+      "filename": "datasette_sitemap-1.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "b8fefcb01ce7297eb94d694e859f2130",
+      "md5_digest": "29c0bb536f2fe1f812eb6ffacf6a0193",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 7991,
-      "upload_time": "2022-08-29T22:37:32",
-      "upload_time_iso_8601": "2022-08-29T22:37:32.159280Z",
-      "url": "https://files.pythonhosted.org/packages/53/9e/f553dfde5249e7740b7897c5408f7f9bade0d372063d0fb4ee661599a468/datasette_sitemap-0.1.1-py3-none-any.whl",
+      "size": 9280,
+      "upload_time": "2022-08-30T18:01:11",
+      "upload_time_iso_8601": "2022-08-30T18:01:11.008902Z",
+      "url": "https://files.pythonhosted.org/packages/b0/b6/0bfabe5bbd2215c8a734aea5f60c28f8f67adfe3ffb3739d1e610c2c0bb9/datasette_sitemap-1.0-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "5065ec6e0c16b8148cf61af9c16a8506",
-        "sha256": "78738449ec3ff98d5a117bd406816a1702d54f7fc842d359230603ac952f0a8a"
+        "md5": "8b44958477d1d289525e0178edcb0b4f",
+        "sha256": "1c8d5d47da63f921d45f71e80cafadf52be11aedf2777f4c5cc65fa23618dd09"
       },
       "downloads": -1,
-      "filename": "datasette-sitemap-0.1.1.tar.gz",
+      "filename": "datasette-sitemap-1.0.tar.gz",
       "has_sig": false,
-      "md5_digest": "5065ec6e0c16b8148cf61af9c16a8506",
+      "md5_digest": "8b44958477d1d289525e0178edcb0b4f",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 7466,
-      "upload_time": "2022-08-29T22:37:33",
-      "upload_time_iso_8601": "2022-08-29T22:37:33.521454Z",
-      "url": "https://files.pythonhosted.org/packages/ca/3b/9dbb14707684e4121ce0def751c7e23c54fed3ae477c8f2924ff19c98895/datasette-sitemap-0.1.1.tar.gz",
+      "size": 8509,
+      "upload_time": "2022-08-30T18:01:12",
+      "upload_time_iso_8601": "2022-08-30T18:01:12.246391Z",
+      "url": "https://files.pythonhosted.org/packages/a0/37/1a11539c93177adfcc59ba7885a07102eacd3cfd7b797f98835e8a894caa/datasette-sitemap-1.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
