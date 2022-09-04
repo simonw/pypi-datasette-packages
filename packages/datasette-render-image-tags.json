@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-render-image-tags\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-image-tags.svg)](https://pypi.org/project/datasette-render-image-tags/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-image-tags?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-image-tags/releases)\n[![Tests](https://github.com/simonw/datasette-render-image-tags/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-image-tags/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-image-tags/blob/main/LICENSE)\n\nTurn any URLs ending in .jpg/.png/.gif into img tags with width 200\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-render-image-tags\n\n## Usage\n\nOnce installed, any cells contaning a URL that ends with `.png` or `.jpg` or `.jpeg` or `.gif` will be rendered using an image tag, with a width of 200px.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-render-image-tags\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-render-image-tags",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-render-image-tags",
+    "package_url": "https://pypi.org/project/datasette-render-image-tags/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-render-image-tags/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-render-image-tags/actions",
+      "Changelog": "https://github.com/simonw/datasette-render-image-tags/releases",
+      "Homepage": "https://github.com/simonw/datasette-render-image-tags",
+      "Issues": "https://github.com/simonw/datasette-render-image-tags/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-render-image-tags/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Turn any URLs ending in .jpg/.png/.gif into img tags with width 200",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14985264,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8c783279faad4cc690d2d3edc63ea552",
+          "sha256": "2c88a7cc77a3681439d7c3b79376c9618f724b63fef9a8e83db1dcc8c83f553e"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_image_tags-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8c783279faad4cc690d2d3edc63ea552",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6832,
+        "upload_time": "2022-09-04T00:49:40",
+        "upload_time_iso_8601": "2022-09-04T00:49:40.401786Z",
+        "url": "https://files.pythonhosted.org/packages/0f/47/ee0865b04b1c73ce6d027e3ab2ce997498be53b40320dcfe53c3f6b35222/datasette_render_image_tags-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "73afb4af7e550e4d3386c6a57e70dc78",
+          "sha256": "54c389e867d3339579cfa72e2fd88497855f815f503fdb42e12137676811c40d"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-image-tags-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "73afb4af7e550e4d3386c6a57e70dc78",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6277,
+        "upload_time": "2022-09-04T00:49:41",
+        "upload_time_iso_8601": "2022-09-04T00:49:41.879553Z",
+        "url": "https://files.pythonhosted.org/packages/a9/4d/5ba009e3a72e6a95a2f3baa70fff10832a101df3767ceba87432f41f7e26/datasette-render-image-tags-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "8c783279faad4cc690d2d3edc63ea552",
+        "sha256": "2c88a7cc77a3681439d7c3b79376c9618f724b63fef9a8e83db1dcc8c83f553e"
+      },
+      "downloads": -1,
+      "filename": "datasette_render_image_tags-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8c783279faad4cc690d2d3edc63ea552",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6832,
+      "upload_time": "2022-09-04T00:49:40",
+      "upload_time_iso_8601": "2022-09-04T00:49:40.401786Z",
+      "url": "https://files.pythonhosted.org/packages/0f/47/ee0865b04b1c73ce6d027e3ab2ce997498be53b40320dcfe53c3f6b35222/datasette_render_image_tags-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "73afb4af7e550e4d3386c6a57e70dc78",
+        "sha256": "54c389e867d3339579cfa72e2fd88497855f815f503fdb42e12137676811c40d"
+      },
+      "downloads": -1,
+      "filename": "datasette-render-image-tags-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "73afb4af7e550e4d3386c6a57e70dc78",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6277,
+      "upload_time": "2022-09-04T00:49:41",
+      "upload_time_iso_8601": "2022-09-04T00:49:41.879553Z",
+      "url": "https://files.pythonhosted.org/packages/a9/4d/5ba009e3a72e6a95a2f3baa70fff10832a101df3767ceba87432f41f7e26/datasette-render-image-tags-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
