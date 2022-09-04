@@ -134,3 +134,4 @@ datasette-query-files
 datasette-mp3-audio
 datasette-multiline-links
 datasette-sitemap
+datasette-render-image-tags
