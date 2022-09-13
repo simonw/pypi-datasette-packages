@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/shot-scraper",
       "Issues": "https://github.com/simonw/shot-scraper/issues"
     },
-    "release_url": "https://pypi.org/project/shot-scraper/0.14.3/",
+    "release_url": "https://pypi.org/project/shot-scraper/0.15/",
     "requires_dist": [
       "click",
       "PyYAML",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "A command-line utility for taking automated screenshots of websites",
-    "version": "0.14.3",
+    "version": "0.15",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14635213,
+  "last_serial": 15071769,
   "releases": {
     "0.1": [
       {
@@ -420,6 +420,48 @@
         "upload_time": "2022-08-02T23:43:51",
         "upload_time_iso_8601": "2022-08-02T23:43:51.785308Z",
         "url": "https://files.pythonhosted.org/packages/8a/fc/73a6b38c4cac7b3f0c1ad81b36b2d3d684174dc15c492a701bc825c73d3f/shot-scraper-0.14.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.15": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "b4e54a8999f0a9e5b8f51f48fe6d171e",
+          "sha256": "017196ef53cd6805db41f36df1e962c5a55df484f82a7e507f547e4568983d21"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-0.15-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b4e54a8999f0a9e5b8f51f48fe6d171e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 13753,
+        "upload_time": "2022-09-12T20:59:14",
+        "upload_time_iso_8601": "2022-09-12T20:59:14.605277Z",
+        "url": "https://files.pythonhosted.org/packages/f8/2f/6a684389f16d776ac5fd778ac4e1d9735eaa2a0c96a93517337bd1616d23/shot_scraper-0.15-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0a00bb28890ce76d6e39b6ee6b3a1fbc",
+          "sha256": "0af995b16b92944bd9331bd617e75e8b2db09df5acb01dd729f61cfc332f90e3"
+        },
+        "downloads": -1,
+        "filename": "shot-scraper-0.15.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0a00bb28890ce76d6e39b6ee6b3a1fbc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 14087,
+        "upload_time": "2022-09-12T20:59:16",
+        "upload_time_iso_8601": "2022-09-12T20:59:16.511601Z",
+        "url": "https://files.pythonhosted.org/packages/4b/81/37a1ae703c9ba35f9e9df72e85cc0a632f2c88820ca05b31c95850417769/shot-scraper-0.15.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
@@ -807,40 +849,40 @@
     {
       "comment_text": "",
       "digests": {
-        "md5": "85e0a671f6b312fd37dfc613825d69db",
-        "sha256": "c352c6cf32731e70ed35da6eeef5d932ecf7b81118516bce3319e4cfca0dc9e4"
+        "md5": "b4e54a8999f0a9e5b8f51f48fe6d171e",
+        "sha256": "017196ef53cd6805db41f36df1e962c5a55df484f82a7e507f547e4568983d21"
       },
       "downloads": -1,
-      "filename": "shot_scraper-0.14.3-py3-none-any.whl",
+      "filename": "shot_scraper-0.15-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "85e0a671f6b312fd37dfc613825d69db",
+      "md5_digest": "b4e54a8999f0a9e5b8f51f48fe6d171e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 13352,
-      "upload_time": "2022-08-02T23:43:50",
-      "upload_time_iso_8601": "2022-08-02T23:43:50.268258Z",
-      "url": "https://files.pythonhosted.org/packages/71/3c/c4c5e851cfe5c0cdbfb2486bc0178b5a77e2ba09a73bc1a5000c11042d49/shot_scraper-0.14.3-py3-none-any.whl",
+      "size": 13753,
+      "upload_time": "2022-09-12T20:59:14",
+      "upload_time_iso_8601": "2022-09-12T20:59:14.605277Z",
+      "url": "https://files.pythonhosted.org/packages/f8/2f/6a684389f16d776ac5fd778ac4e1d9735eaa2a0c96a93517337bd1616d23/shot_scraper-0.15-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "e8766e4738e209963e256ea74fa3070c",
-        "sha256": "34d624de4e0aa65bc6a0400384670b8ef203c91a7e99cdf76e7324e63d1549cf"
+        "md5": "0a00bb28890ce76d6e39b6ee6b3a1fbc",
+        "sha256": "0af995b16b92944bd9331bd617e75e8b2db09df5acb01dd729f61cfc332f90e3"
       },
       "downloads": -1,
-      "filename": "shot-scraper-0.14.3.tar.gz",
+      "filename": "shot-scraper-0.15.tar.gz",
       "has_sig": false,
-      "md5_digest": "e8766e4738e209963e256ea74fa3070c",
+      "md5_digest": "0a00bb28890ce76d6e39b6ee6b3a1fbc",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 13674,
-      "upload_time": "2022-08-02T23:43:51",
-      "upload_time_iso_8601": "2022-08-02T23:43:51.785308Z",
-      "url": "https://files.pythonhosted.org/packages/8a/fc/73a6b38c4cac7b3f0c1ad81b36b2d3d684174dc15c492a701bc825c73d3f/shot-scraper-0.14.3.tar.gz",
+      "size": 14087,
+      "upload_time": "2022-09-12T20:59:16",
+      "upload_time_iso_8601": "2022-09-12T20:59:16.511601Z",
+      "url": "https://files.pythonhosted.org/packages/4b/81/37a1ae703c9ba35f9e9df72e85cc0a632f2c88820ca05b31c95850417769/shot-scraper-0.15.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
