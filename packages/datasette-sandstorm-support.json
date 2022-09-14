@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-sandstorm-support\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sandstorm-support.svg)](https://pypi.org/project/datasette-sandstorm-support/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sandstorm-support?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sandstorm-support/releases)\n[![Tests](https://github.com/simonw/datasette-sandstorm-support/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sandstorm-support/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sandstorm-support/blob/main/LICENSE)\n\nAuthentication and permissions for Datasette on Sandstorm\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-sandstorm-support\n\n## Usage\n\nThis plugin is part of [datasette-sandstorm](https://github.com/ocdtrekkie/datasette-sandstorm).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-sandstorm-support\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-sandstorm-support",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-sandstorm-support",
+    "package_url": "https://pypi.org/project/datasette-sandstorm-support/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-sandstorm-support/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-sandstorm-support/actions",
+      "Changelog": "https://github.com/simonw/datasette-sandstorm-support/releases",
+      "Homepage": "https://github.com/simonw/datasette-sandstorm-support",
+      "Issues": "https://github.com/simonw/datasette-sandstorm-support/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-sandstorm-support/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Authentication and permissions for Datasette on Sandstorm",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15086848,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "44484dcb0bf35773143b8ed08223a554",
+          "sha256": "f41d6ef41fb729641be620a4d9358468b8fe46a89c6aba6808b02fa647407a47"
+        },
+        "downloads": -1,
+        "filename": "datasette_sandstorm_support-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "44484dcb0bf35773143b8ed08223a554",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6998,
+        "upload_time": "2022-09-14T04:11:09",
+        "upload_time_iso_8601": "2022-09-14T04:11:09.149856Z",
+        "url": "https://files.pythonhosted.org/packages/dc/b2/4e4ba8379806642884172e9dd6475f50b24b42f5fd28ea1bd9af1132c5ba/datasette_sandstorm_support-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ab0fe53e5311b9c4d0496a1359d041d5",
+          "sha256": "16bc8ccc106f0dacb98abfeff5803a780a18c163a03ca5fed5aa5fac13dd1dd2"
+        },
+        "downloads": -1,
+        "filename": "datasette-sandstorm-support-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ab0fe53e5311b9c4d0496a1359d041d5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6426,
+        "upload_time": "2022-09-14T04:11:10",
+        "upload_time_iso_8601": "2022-09-14T04:11:10.315346Z",
+        "url": "https://files.pythonhosted.org/packages/8a/c3/2e038aa255c87e81a76751f959a69bbcf82553329759ca08ad2c5fefb687/datasette-sandstorm-support-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "44484dcb0bf35773143b8ed08223a554",
+        "sha256": "f41d6ef41fb729641be620a4d9358468b8fe46a89c6aba6808b02fa647407a47"
+      },
+      "downloads": -1,
+      "filename": "datasette_sandstorm_support-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "44484dcb0bf35773143b8ed08223a554",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6998,
+      "upload_time": "2022-09-14T04:11:09",
+      "upload_time_iso_8601": "2022-09-14T04:11:09.149856Z",
+      "url": "https://files.pythonhosted.org/packages/dc/b2/4e4ba8379806642884172e9dd6475f50b24b42f5fd28ea1bd9af1132c5ba/datasette_sandstorm_support-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "ab0fe53e5311b9c4d0496a1359d041d5",
+        "sha256": "16bc8ccc106f0dacb98abfeff5803a780a18c163a03ca5fed5aa5fac13dd1dd2"
+      },
+      "downloads": -1,
+      "filename": "datasette-sandstorm-support-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ab0fe53e5311b9c4d0496a1359d041d5",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6426,
+      "upload_time": "2022-09-14T04:11:10",
+      "upload_time_iso_8601": "2022-09-14T04:11:10.315346Z",
+      "url": "https://files.pythonhosted.org/packages/8a/c3/2e038aa255c87e81a76751f959a69bbcf82553329759ca08ad2c5fefb687/datasette-sandstorm-support-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
