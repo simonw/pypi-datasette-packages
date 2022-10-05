@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-public\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-public.svg)](https://pypi.org/project/datasette-public/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-public?include_prereleases&label=changelog)](https://github.com/simonw/datasette-public/releases)\n[![Tests](https://github.com/simonw/datasette-public/workflows/Test/badge.svg)](https://github.com/simonw/datasette-public/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-public/blob/main/LICENSE)\n\nMake specific Datasette tables visible to the public\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-public\n\n## Usage\n\nAny tables listed in the `_public_tables` table will be visible to the public, even if the rest of the Datasette instance does not allow anonymous access.\n\nThe root user (and any user with the new `public-tables` permission) will get a new option in the table action menu allowing them to toggle a table between public and private.\n\nInstalling this plugin also causes `allow-sql` permission checks to be denied to all logged-out users. This is to protect against people using the `?_where=` parameter on the table page to join against other private tables.\n\n## Configuration\n\nThis plugin creates a new table in one of your databases called `_public_tables`.\n\nThis table defaults to being created in the first database passed to Datasette.\n\nTo create it in a different named database, use this plugin configuration:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-public\": {\n      \"database\": \"database_to_create_table_in\"\n    }\n  }\n}\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-public\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-public",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-public",
+    "package_url": "https://pypi.org/project/datasette-public/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-public/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-public/actions",
+      "Changelog": "https://github.com/simonw/datasette-public/releases",
+      "Homepage": "https://github.com/simonw/datasette-public",
+      "Issues": "https://github.com/simonw/datasette-public/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-public/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Make specific Datasette tables visible to the public",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15307549,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "68845d0bfa9ea08ed384c1f0c33dc7f4",
+          "sha256": "89b0e4902451d7930f95237eb47f454785b46184d2abca0397c2a11aae9bba74"
+        },
+        "downloads": -1,
+        "filename": "datasette_public-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "68845d0bfa9ea08ed384c1f0c33dc7f4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8640,
+        "upload_time": "2022-10-05T00:07:15",
+        "upload_time_iso_8601": "2022-10-05T00:07:15.628053Z",
+        "url": "https://files.pythonhosted.org/packages/31/38/88c42ac57a580a53c34bcd7058157c7691a7af42f3799afec9255556c58a/datasette_public-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e3ecdf2bb1b2ef20bf1259f88dfd8df9",
+          "sha256": "d7e8fcfa0e0ebaef8a2243fe013f1891dd3315db2d8fd7a4f2b7305d94a0bd5a"
+        },
+        "downloads": -1,
+        "filename": "datasette-public-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e3ecdf2bb1b2ef20bf1259f88dfd8df9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7964,
+        "upload_time": "2022-10-05T00:07:17",
+        "upload_time_iso_8601": "2022-10-05T00:07:17.160251Z",
+        "url": "https://files.pythonhosted.org/packages/c9/3a/8025b1183ee53faeb42f5d3081b5ca252288ba70df2f303e19eeaf8fec97/datasette-public-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "68845d0bfa9ea08ed384c1f0c33dc7f4",
+        "sha256": "89b0e4902451d7930f95237eb47f454785b46184d2abca0397c2a11aae9bba74"
+      },
+      "downloads": -1,
+      "filename": "datasette_public-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "68845d0bfa9ea08ed384c1f0c33dc7f4",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8640,
+      "upload_time": "2022-10-05T00:07:15",
+      "upload_time_iso_8601": "2022-10-05T00:07:15.628053Z",
+      "url": "https://files.pythonhosted.org/packages/31/38/88c42ac57a580a53c34bcd7058157c7691a7af42f3799afec9255556c58a/datasette_public-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "e3ecdf2bb1b2ef20bf1259f88dfd8df9",
+        "sha256": "d7e8fcfa0e0ebaef8a2243fe013f1891dd3315db2d8fd7a4f2b7305d94a0bd5a"
+      },
+      "downloads": -1,
+      "filename": "datasette-public-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e3ecdf2bb1b2ef20bf1259f88dfd8df9",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 7964,
+      "upload_time": "2022-10-05T00:07:17",
+      "upload_time_iso_8601": "2022-10-05T00:07:17.160251Z",
+      "url": "https://files.pythonhosted.org/packages/c9/3a/8025b1183ee53faeb42f5d3081b5ca252288ba70df2f303e19eeaf8fec97/datasette-public-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

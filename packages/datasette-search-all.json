@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-search-all\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-search-all.svg)](https://pypi.org/project/datasette-search-all/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-search-all?include_prereleases&label=changelog)](https://github.com/simonw/datasette-search-all/releases)\n[![Tests](https://github.com/simonw/datasette-search-all/workflows/Test/badge.svg)](https://github.com/simonw/datasette-search-all/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-search-all/blob/main/LICENSE)\n\nDatasette plugin for searching all searchable tables at once.\n\n## Installation\n\nInstall the plugin in the same Python environment as Datasette:\n\n    pip install datasette-search-all\n\n## Background\n\nSee [datasette-search-all: a new plugin for searching multiple Datasette tables at once](https://simonwillison.net/2020/Mar/9/datasette-search-all/) for background on this project. You can try the plugin out at https://fara.datasettes.com/\n\n## Usage\n\nThis plugin only works if at least one of the tables connected to your Datasette instance has been configured for SQLite's full-text search.\n\nThe [Datasette search documentation](https://datasette.readthedocs.io/en/stable/full_text_search.html) includes details on how to enable full-text search for a table.\n\nYou can also use the following tools:\n\n* [sqlite-utils](https://sqlite-utils.readthedocs.io/en/stable/cli.html#configuring-full-text-search) includes a command-line tool for enabling full-text search.\n* [datasette-enable-fts](https://github.com/simonw/datasette-enable-fts) is a Datasette plugin that adds a web interface for enabling search for specific columns.\n\nIf the plugin detects at least one searchable table it will add a search form to the homepage.\n\nYou can also navigate to `/-/search` on your Datasette instance to use the search interface directly.\n\n## Screenshot\n\n![Animated screenshot showing the plugin in action](https://raw.githubusercontent.com/simonw/datasette-search-all/main/animated-screenshot.gif)\n\n\n",
+    "description": "# datasette-search-all\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-search-all.svg)](https://pypi.org/project/datasette-search-all/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-search-all?include_prereleases&label=changelog)](https://github.com/simonw/datasette-search-all/releases)\n[![Tests](https://github.com/simonw/datasette-search-all/workflows/Test/badge.svg)](https://github.com/simonw/datasette-search-all/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-search-all/blob/main/LICENSE)\n\nDatasette plugin for searching all searchable tables at once.\n\n## Installation\n\nInstall the plugin in the same Python environment as Datasette:\n\n    pip install datasette-search-all\n\n## Background\n\nSee [datasette-search-all: a new plugin for searching multiple Datasette tables at once](https://simonwillison.net/2020/Mar/9/datasette-search-all/) for background on this project. You can try the plugin out at https://fara.datasettes.com/\n\n## Usage\n\nThis plugin only works if at least one of the tables connected to your Datasette instance has been configured for SQLite's full-text search.\n\nThe [Datasette search documentation](https://docs.datasette.io/en/stable/full_text_search.html) includes details on how to enable full-text search for a table.\n\nYou can also use the following tools:\n\n* [sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html#configuring-full-text-search) includes a command-line tool for enabling full-text search.\n* [datasette-enable-fts](https://github.com/simonw/datasette-enable-fts) is a Datasette plugin that adds a web interface for enabling search for specific columns.\n\nIf the plugin detects at least one searchable table it will add a search form to the homepage.\n\nYou can also navigate to `/-/search` on your Datasette instance to use the search interface directly.\n\n## Screenshot\n\n![Animated screenshot showing the plugin in action](https://raw.githubusercontent.com/simonw/datasette-search-all/main/animated-screenshot.gif)\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-search-all",
     "package_url": "https://pypi.org/project/datasette-search-all/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-search-all/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-search-all/actions",
@@ -28,20 +28,20 @@
       "Homepage": "https://github.com/simonw/datasette-search-all",
       "Issues": "https://github.com/simonw/datasette-search-all/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-search-all/1.0.1/",
+    "release_url": "https://pypi.org/project/datasette-search-all/1.1/",
     "requires_dist": [
-      "datasette (>=0.51)",
+      "datasette (>=0.61)",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "sqlite-utils ; extra == 'test'"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.7",
     "summary": "Datasette plugin for searching all searchable tables at once",
-    "version": "1.0.1",
+    "version": "1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8824267,
+  "last_serial": 15308332,
   "releases": {
     "0.1": [
       {
@@ -236,46 +236,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3599cc8e515a1d5190e458fe5d0985b7",
+          "sha256": "b2ef9ff5f033587acc80106dd8d7a862b79658bdf580d16d1feb072dded34d15"
+        },
+        "downloads": -1,
+        "filename": "datasette_search_all-1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3599cc8e515a1d5190e458fe5d0985b7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10342,
+        "upload_time": "2022-10-05T01:54:52",
+        "upload_time_iso_8601": "2022-10-05T01:54:52.953109Z",
+        "url": "https://files.pythonhosted.org/packages/ba/1e/96f75643a46fe5a504e6c8113cebda46b5c028fff95b4fe9d2b45f65d9e9/datasette_search_all-1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0a413b805033e5d178029d22c463f44d",
+          "sha256": "aa366f598f8b0ffa8ae3cca536a61e8761e58b055fea42155f779f5eabb98f72"
+        },
+        "downloads": -1,
+        "filename": "datasette-search-all-1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0a413b805033e5d178029d22c463f44d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9134,
+        "upload_time": "2022-10-05T01:54:54",
+        "upload_time_iso_8601": "2022-10-05T01:54:54.184616Z",
+        "url": "https://files.pythonhosted.org/packages/e4/6e/8c787e7bf37472e1172de9a0469e12f16bb875b1f5661fe152fb78b04406/datasette-search-all-1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "a18d45b38f62429604f4f9e5ba79bad4",
-        "sha256": "551f08961edb446566220a1a92bfbac17f3b5ad95a2a3e53c3e516813b3b4c65"
+        "md5": "3599cc8e515a1d5190e458fe5d0985b7",
+        "sha256": "b2ef9ff5f033587acc80106dd8d7a862b79658bdf580d16d1feb072dded34d15"
       },
       "downloads": -1,
-      "filename": "datasette_search_all-1.0.1-py3-none-any.whl",
+      "filename": "datasette_search_all-1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a18d45b38f62429604f4f9e5ba79bad4",
+      "md5_digest": "3599cc8e515a1d5190e458fe5d0985b7",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 10205,
-      "upload_time": "2020-12-04T21:13:18",
-      "upload_time_iso_8601": "2020-12-04T21:13:18.583545Z",
-      "url": "https://files.pythonhosted.org/packages/df/b6/11f543fe790be37c664a960e0ad1715f0ce83f48eaa7d8eaa389212c42cb/datasette_search_all-1.0.1-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 10342,
+      "upload_time": "2022-10-05T01:54:52",
+      "upload_time_iso_8601": "2022-10-05T01:54:52.953109Z",
+      "url": "https://files.pythonhosted.org/packages/ba/1e/96f75643a46fe5a504e6c8113cebda46b5c028fff95b4fe9d2b45f65d9e9/datasette_search_all-1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "5c1fca7d61997049a351b4ca73dd61e3",
-        "sha256": "15eedcc8f802d4b6ae276810ae87b3105df2434d30b3d50d911737e2521261d3"
+        "md5": "0a413b805033e5d178029d22c463f44d",
+        "sha256": "aa366f598f8b0ffa8ae3cca536a61e8761e58b055fea42155f779f5eabb98f72"
       },
       "downloads": -1,
-      "filename": "datasette-search-all-1.0.1.tar.gz",
+      "filename": "datasette-search-all-1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "5c1fca7d61997049a351b4ca73dd61e3",
+      "md5_digest": "0a413b805033e5d178029d22c463f44d",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 5107,
-      "upload_time": "2020-12-04T21:13:19",
-      "upload_time_iso_8601": "2020-12-04T21:13:19.739750Z",
-      "url": "https://files.pythonhosted.org/packages/92/74/7df1c86d1dd590802b26e38417500578ca5cc9d03d4d64778e0fe4e30025/datasette-search-all-1.0.1.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 9134,
+      "upload_time": "2022-10-05T01:54:54",
+      "upload_time_iso_8601": "2022-10-05T01:54:54.184616Z",
+      "url": "https://files.pythonhosted.org/packages/e4/6e/8c787e7bf37472e1172de9a0469e12f16bb875b1f5661fe152fb78b04406/datasette-search-all-1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
