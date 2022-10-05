@@ -137,3 +137,4 @@ datasette-sitemap
 datasette-render-image-tags
 datasette-sandstorm-support
 datasette-edit-templates
+datasette-public
