@@ -1,0 +1,136 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-gunicorn\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-gunicorn.svg)](https://pypi.org/project/datasette-gunicorn/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-gunicorn?include_prereleases&label=changelog)](https://github.com/simonw/datasette-gunicorn/releases)\n[![Tests](https://github.com/simonw/datasette-gunicorn/workflows/Test/badge.svg)](https://github.com/simonw/datasette-gunicorn/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-gunicorn/blob/main/LICENSE)\n\nRun a [Datasette](https://datasette.io/) server using [Gunicorn](https://gunicorn.org/)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-gunicorn\n\n## Usage\n\nThe plugin adds a new `datasette gunicorn` command. This takes most of the same options as `datasette serve`, plus one more option for setting the number of Gunicorn workers to start:\n\n`-w/--workers X` - set the number of workers. Defaults to 1.\n\nTo start serving a database using 4 workers, run the following:\n\n    datasette gunicorn fixtures.db -w 4\n\nIt is advisable to switch your datasette [into WAL mode](https://til.simonwillison.net/sqlite/enabling-wal-mode) to get the best performance out of this configuration:\n\n    sqlite3 fixtures.db 'PRAGMA journal_mode=WAL;'\n\nRun `datasette gunicorn --help` for a full list of options (which are the same as `datasette serve --help`, with the addition of the new `-w` option).\n\n## datasette gunicorn --help\n\nNot all of the options to `datasette serve` are supported. Here's the full list of available options:\n\n<!-- [[[cog\nimport cog\nfrom datasette import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"gunicorn\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: datasette\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: datasette gunicorn [OPTIONS] [FILES]...\n\n  Start a Gunicorn server running to serve Datasette\n\nOptions:\n  -i, --immutable PATH      Database files to open in immutable mode\n  -h, --host TEXT           Host for server. Defaults to 127.0.0.1 which means\n                            only connections from the local machine will be\n                            allowed. Use 0.0.0.0 to listen to all IPs and allow\n                            access from other machines.\n  -p, --port INTEGER RANGE  Port for server, defaults to 8001. Use -p 0 to\n                            automatically assign an available port.\n                            [0<=x<=65535]\n  --cors                    Enable CORS by serving Access-Control-Allow-Origin:\n                            *\n  --load-extension TEXT     Path to a SQLite extension to load\n  --inspect-file TEXT       Path to JSON file created using \"datasette inspect\"\n  -m, --metadata FILENAME   Path to JSON/YAML file containing license/source\n                            metadata\n  --template-dir DIRECTORY  Path to directory containing custom templates\n  --plugins-dir DIRECTORY   Path to directory containing custom plugins\n  --static MOUNT:DIRECTORY  Serve static files from this directory at /MOUNT/...\n  --memory                  Make /_memory database available\n  --config CONFIG           Deprecated: set config option using\n                            configname:value. Use --setting instead.\n  --setting SETTING...      Setting, see\n                            docs.datasette.io/en/stable/settings.html\n  --secret TEXT             Secret used for signing secure values, such as\n                            signed cookies\n  --version-note TEXT       Additional note to show on /-/versions\n  --help-settings           Show available settings\n  --create                  Create database files if they do not exist\n  --crossdb                 Enable cross-database joins using the /_memory\n                            database\n  --nolock                  Ignore locking, open locked files in read-only mode\n  -w, --workers INTEGER     Number of Gunicorn workers  [default: 1]\n  --help                    Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-gunicorn\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-gunicorn",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-gunicorn",
+    "package_url": "https://pypi.org/project/datasette-gunicorn/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-gunicorn/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-gunicorn/actions",
+      "Changelog": "https://github.com/simonw/datasette-gunicorn/releases",
+      "Homepage": "https://github.com/simonw/datasette-gunicorn",
+      "Issues": "https://github.com/simonw/datasette-gunicorn/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-gunicorn/0.1/",
+    "requires_dist": [
+      "datasette",
+      "gunicorn",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "cogapp ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Run a Datasette server using Gunicorn",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15497728,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c07f3e3ef0d4497c7e3624d7df3c49c4",
+          "sha256": "6946c7f3abb0168334440bc91bde15786e056e1cd8083ddd3e4f0c6f6cb8e539"
+        },
+        "downloads": -1,
+        "filename": "datasette_gunicorn-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c07f3e3ef0d4497c7e3624d7df3c49c4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8554,
+        "upload_time": "2022-10-22T20:58:44",
+        "upload_time_iso_8601": "2022-10-22T20:58:44.570149Z",
+        "url": "https://files.pythonhosted.org/packages/da/4b/7ef55037a25f9ab9f944bd9031c974d435797ca61660cc56d24abbb1a29d/datasette_gunicorn-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1dc1abb8d703a34a8a7601a3c1d6881f",
+          "sha256": "10fc28f690f2e4b7e16f2e5af8b70dfda252757459c7f243c8863803c7dfb6c7"
+        },
+        "downloads": -1,
+        "filename": "datasette-gunicorn-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1dc1abb8d703a34a8a7601a3c1d6881f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8095,
+        "upload_time": "2022-10-22T20:58:45",
+        "upload_time_iso_8601": "2022-10-22T20:58:45.825292Z",
+        "url": "https://files.pythonhosted.org/packages/c4/a0/69c0fcf216e61fa49f27f793f7e5f70c05ba2cd26c627603548364102ed1/datasette-gunicorn-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "c07f3e3ef0d4497c7e3624d7df3c49c4",
+        "sha256": "6946c7f3abb0168334440bc91bde15786e056e1cd8083ddd3e4f0c6f6cb8e539"
+      },
+      "downloads": -1,
+      "filename": "datasette_gunicorn-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c07f3e3ef0d4497c7e3624d7df3c49c4",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8554,
+      "upload_time": "2022-10-22T20:58:44",
+      "upload_time_iso_8601": "2022-10-22T20:58:44.570149Z",
+      "url": "https://files.pythonhosted.org/packages/da/4b/7ef55037a25f9ab9f944bd9031c974d435797ca61660cc56d24abbb1a29d/datasette_gunicorn-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "1dc1abb8d703a34a8a7601a3c1d6881f",
+        "sha256": "10fc28f690f2e4b7e16f2e5af8b70dfda252757459c7f243c8863803c7dfb6c7"
+      },
+      "downloads": -1,
+      "filename": "datasette-gunicorn-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "1dc1abb8d703a34a8a7601a3c1d6881f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 8095,
+      "upload_time": "2022-10-22T20:58:45",
+      "upload_time_iso_8601": "2022-10-22T20:58:45.825292Z",
+      "url": "https://files.pythonhosted.org/packages/c4/a0/69c0fcf216e61fa49f27f793f7e5f70c05ba2cd26c627603548364102ed1/datasette-gunicorn-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
