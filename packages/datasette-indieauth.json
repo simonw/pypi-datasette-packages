@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-indieauth\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-indieauth.svg)](https://pypi.org/project/datasette-indieauth/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-indieauth?include_prereleases&label=changelog)](https://github.com/simonw/datasette-indieauth/releases)\n[![codecov](https://codecov.io/gh/simonw/datasette-indieauth/branch/main/graph/badge.svg)](https://codecov.io/gh/simonw/datasette-indieauth)\n[![Tests](https://github.com/simonw/datasette-indieauth/workflows/Test/badge.svg)](https://github.com/simonw/datasette-indieauth/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-indieauth/blob/main/LICENSE)\n\nDatasette authentication using [IndieAuth](https://indieauth.net/).\n\n## Demo\n\nYou can try out the latest version of this plugin at [datasette-indieauth-demo.datasette.io](https://datasette-indieauth-demo.datasette.io/-/indieauth)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-indieauth\n\n## Usage\n\nEnsure you have a website with a domain that supports IndieAuth or RelMeAuth. The easiest way to do that is to add the following HTML to your homepage, linking to your personal GitHub profile:\n\n```html\n<link href=\"https://github.com/simonw\" rel=\"me\">\n<link rel=\"authorization_endpoint\" href=\"https://indieauth.com/auth\">\n```\nYour GitHub profile needs to link back to your website, to prove that your GitHub account should be a valid identifier for that page.\n\nNow visit `/-/indieauth` on your Datasette instance to begin the sign-in progress.\n\n## Actor\n\nWhen a user signs in using IndieAuth they will be recieve a signed `ds_actor` cookie identifying them as an [actor](https://docs.datasette.io/en/stable/authentication.html#actors) that looks like this:\n\n```json\n{\n    \"me\": \"https://simonwillison.net/\",\n    \"display\": \"simonwillison.net\"\n}\n```\n\nIf the IndieAuth server returned additional `\"profile\"` fields those will be merged into the actor. You can visit `/-/actor` on your Datasette instance to see the full actor you are currently signed in as.\n\n## Restricting access with the restrict_access plugin configuration\n\nYou can use [Datasette's permissions system](https://docs.datasette.io/en/stable/authentication.html#permissions) to control permissions of authenticated users - by default, an authenticated user will be able to perform the same actions as an unauthenticated user.\n\nAs a shortcut if you want to lock down access to your instance entirely to just specific users, you can use the `restrict_access` plugin configuration option like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-indieauth\": {\n            \"restrict_access\": \"https://simonwillison.net/\"\n        }\n    }\n}\n```\n\nThis can be a string or a list of user identifiers. It can also be a space separated list, which means you can use it with the [datasette publish](https://docs.datasette.io/en/stable/publish.html#datasette-publish) `--plugin-secret` configuration option to set permissions as part of a deployment, like this:\n```\ndatasette publish vercel mydb.db --project my-secret-db \\\n    --install datasette-indieauth \\\n    --plugin-secret datasette-indieauth restrict_access https://simonwillison.net/\n```\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-indieauth\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-indieauth\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-indieauth.svg)](https://pypi.org/project/datasette-indieauth/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-indieauth?include_prereleases&label=changelog)](https://github.com/simonw/datasette-indieauth/releases)\n[![codecov](https://codecov.io/gh/simonw/datasette-indieauth/branch/main/graph/badge.svg)](https://codecov.io/gh/simonw/datasette-indieauth)\n[![Tests](https://github.com/simonw/datasette-indieauth/workflows/Test/badge.svg)](https://github.com/simonw/datasette-indieauth/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-indieauth/blob/main/LICENSE)\n\nDatasette authentication using [IndieAuth](https://indieauth.net/).\n\n## Demo\n\nYou can try out the latest version of this plugin at [datasette-indieauth-demo.datasette.io](https://datasette-indieauth-demo.datasette.io/-/indieauth)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-indieauth\n\n## Usage\n\nEnsure you have a website with a domain that supports IndieAuth or RelMeAuth. The easiest way to do that is to add the following HTML to your homepage, linking to your personal GitHub profile:\n\n```html\n<link href=\"https://github.com/simonw\" rel=\"me\">\n<link rel=\"authorization_endpoint\" href=\"https://indieauth.com/auth\">\n```\nYour GitHub profile needs to link back to your website, to prove that your GitHub account should be a valid identifier for that page.\n\nNow visit `/-/indieauth` on your Datasette instance to begin the sign-in progress.\n\n## Actor\n\nWhen a user signs in using IndieAuth they will be recieve a signed `ds_actor` cookie identifying them as an [actor](https://docs.datasette.io/en/stable/authentication.html#actors) that looks like this:\n\n```json\n{\n    \"me\": \"https://simonwillison.net/\",\n    \"display\": \"simonwillison.net\"\n}\n```\n\nIf the IndieAuth server returned additional `\"profile\"` fields those will be merged into the actor. You can visit `/-/actor` on your Datasette instance to see the full actor you are currently signed in as.\n\n## Restricting access with the restrict_access plugin configuration\n\nYou can use [Datasette's permissions system](https://docs.datasette.io/en/stable/authentication.html#permissions) to control permissions of authenticated users - by default, an authenticated user will be able to perform the same actions as an unauthenticated user.\n\nAs a shortcut if you want to lock down access to your instance entirely to just specific users, you can use the `restrict_access` plugin configuration option like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-indieauth\": {\n            \"restrict_access\": \"https://simonwillison.net/\"\n        }\n    }\n}\n```\n\nThis can be a string or a list of user identifiers. It can also be a space separated list, which means you can use it with the [datasette publish](https://docs.datasette.io/en/stable/publish.html#datasette-publish) `--plugin-secret` configuration option to set permissions as part of a deployment, like this:\n```\ndatasette publish vercel mydb.db --project my-secret-db \\\n    --install datasette-indieauth \\\n    --plugin-secret datasette-indieauth restrict_access https://simonwillison.net/\n```\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-indieauth\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-indieauth",
     "package_url": "https://pypi.org/project/datasette-indieauth/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-indieauth/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-indieauth/actions",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-indieauth",
       "Issues": "https://github.com/simonw/datasette-indieauth/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-indieauth/1.2/",
+    "release_url": "https://pypi.org/project/datasette-indieauth/1.2.1/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -37,13 +37,13 @@
       "pytest-httpx ; extra == 'test'",
       "mf2py ; extra == 'test'"
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.7",
     "summary": "Datasette authentication using IndieAuth and RelMeAuth",
-    "version": "1.2",
+    "version": "1.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8704393,
+  "last_serial": 15516090,
   "releases": {
     "0.1a0": [
       {
@@ -422,46 +422,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "74fd53a568f53512b6c6f797a0c6bbfd",
+          "sha256": "7eb8c0a4ccc147c2198f507f7130702cdeee263f83a18f05fe3d2e0ca67113c8"
+        },
+        "downloads": -1,
+        "filename": "datasette_indieauth-1.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "74fd53a568f53512b6c6f797a0c6bbfd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8213,
+        "upload_time": "2022-10-25T01:36:03",
+        "upload_time_iso_8601": "2022-10-25T01:36:03.278828Z",
+        "url": "https://files.pythonhosted.org/packages/e8/ae/719c076a88127bb406ce9f9edc14b834d9bcb1a892d1b2457652962a583f/datasette_indieauth-1.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "82c71b44ebf205c5e49209587eb1671a",
+          "sha256": "179857d6c74063019b412e673c44b9ab67c07fe9367a62b42198822a00b10698"
+        },
+        "downloads": -1,
+        "filename": "datasette-indieauth-1.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "82c71b44ebf205c5e49209587eb1671a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7523,
+        "upload_time": "2022-10-25T01:36:04",
+        "upload_time_iso_8601": "2022-10-25T01:36:04.624621Z",
+        "url": "https://files.pythonhosted.org/packages/1c/56/ab2e091bd03cbabfbb748de22e85c62379ddab09279254496912958067ed/datasette-indieauth-1.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "6fb7a4c7452ffc878f76afbf40153b18",
-        "sha256": "dd9d1d9c628189f51d0fcd85dcea68a515db0f074f7ced0a796fb65b86b8f291"
+        "md5": "74fd53a568f53512b6c6f797a0c6bbfd",
+        "sha256": "7eb8c0a4ccc147c2198f507f7130702cdeee263f83a18f05fe3d2e0ca67113c8"
       },
       "downloads": -1,
-      "filename": "datasette_indieauth-1.2-py3-none-any.whl",
+      "filename": "datasette_indieauth-1.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "6fb7a4c7452ffc878f76afbf40153b18",
+      "md5_digest": "74fd53a568f53512b6c6f797a0c6bbfd",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 8207,
-      "upload_time": "2020-11-19T23:14:15",
-      "upload_time_iso_8601": "2020-11-19T23:14:15.673628Z",
-      "url": "https://files.pythonhosted.org/packages/50/ef/a446b0b658046db905bd2ad83216c230a9bdfd53e59d4041c34f09a3b1aa/datasette_indieauth-1.2-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 8213,
+      "upload_time": "2022-10-25T01:36:03",
+      "upload_time_iso_8601": "2022-10-25T01:36:03.278828Z",
+      "url": "https://files.pythonhosted.org/packages/e8/ae/719c076a88127bb406ce9f9edc14b834d9bcb1a892d1b2457652962a583f/datasette_indieauth-1.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "67147718c3fb6ee29667c9bf63465ae5",
-        "sha256": "4d32a7319d48436b46a67a4c3bd02a692861b00c7dbedebad553ff0fa696048b"
+        "md5": "82c71b44ebf205c5e49209587eb1671a",
+        "sha256": "179857d6c74063019b412e673c44b9ab67c07fe9367a62b42198822a00b10698"
       },
       "downloads": -1,
-      "filename": "datasette-indieauth-1.2.tar.gz",
+      "filename": "datasette-indieauth-1.2.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "67147718c3fb6ee29667c9bf63465ae5",
+      "md5_digest": "82c71b44ebf205c5e49209587eb1671a",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 8034,
-      "upload_time": "2020-11-19T23:14:16",
-      "upload_time_iso_8601": "2020-11-19T23:14:16.394708Z",
-      "url": "https://files.pythonhosted.org/packages/61/89/38322657552bb7a4132a45f4c1971715c9939597f2a036edb45b16c0dd8d/datasette-indieauth-1.2.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 7523,
+      "upload_time": "2022-10-25T01:36:04",
+      "upload_time_iso_8601": "2022-10-25T01:36:04.624621Z",
+      "url": "https://files.pythonhosted.org/packages/1c/56/ab2e091bd03cbabfbb748de22e85c62379ddab09279254496912958067ed/datasette-indieauth-1.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
