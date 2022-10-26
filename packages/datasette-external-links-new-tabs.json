@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Jacob Weisz",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-external-links-new-tabs\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-external-links-new-tabs.svg)](https://pypi.org/project/datasette-external-links-new-tabs/)\n[![Changelog](https://img.shields.io/github/v/release/ocdtrekkie/datasette-external-links-new-tabs?include_prereleases&label=changelog)](https://github.com/ocdtrekkie/datasette-external-links-new-tabs/releases)\n[![Tests](https://github.com/ocdtrekkie/datasette-external-links-new-tabs/workflows/Test/badge.svg)](https://github.com/ocdtrekkie/datasette-external-links-new-tabs/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ocdtrekkie/datasette-external-links-new-tabs/blob/main/LICENSE)\n\nDatasette plugin to open external links in new tabs\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-external-links-new-tabs\n\n## Usage\n\nThere are no usage instructions, it simply opens external links in a new tab.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-external-links-new-tabs\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-external-links-new-tabs",
+    "package_url": "https://pypi.org/project/datasette-external-links-new-tabs/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-external-links-new-tabs/",
+    "project_urls": {
+      "CI": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs/actions",
+      "Changelog": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs/releases",
+      "Homepage": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs",
+      "Issues": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-external-links-new-tabs/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Datasette plugin to open external links in new tabs",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15330856,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "cbf8537e5fa4fc3f2f0fe4278cbcf30c",
+          "sha256": "bd76f9e781cdc86e453f68da6c3ea4f86c3608ff65258879c7810540f2f53da7"
+        },
+        "downloads": -1,
+        "filename": "datasette_external_links_new_tabs-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cbf8537e5fa4fc3f2f0fe4278cbcf30c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6818,
+        "upload_time": "2022-10-07T04:43:45",
+        "upload_time_iso_8601": "2022-10-07T04:43:45.560528Z",
+        "url": "https://files.pythonhosted.org/packages/aa/a0/23abd55374b0b59de3aebd16d3215b16b245f18be00476f5392dcbaca69e/datasette_external_links_new_tabs-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fd4944b31cb7b98144addcc8ef13876e",
+          "sha256": "777fb7f6ab41ae4e745d20d388c75698ee3e19d761b76f2c315e137c95057e5a"
+        },
+        "downloads": -1,
+        "filename": "datasette-external-links-new-tabs-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fd4944b31cb7b98144addcc8ef13876e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6208,
+        "upload_time": "2022-10-07T04:43:46",
+        "upload_time_iso_8601": "2022-10-07T04:43:46.908572Z",
+        "url": "https://files.pythonhosted.org/packages/62/0d/c5de5dde0c45486b9c16a826bd6111ff3dd5f4a5da22b760cd024589fcc9/datasette-external-links-new-tabs-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "cbf8537e5fa4fc3f2f0fe4278cbcf30c",
+        "sha256": "bd76f9e781cdc86e453f68da6c3ea4f86c3608ff65258879c7810540f2f53da7"
+      },
+      "downloads": -1,
+      "filename": "datasette_external_links_new_tabs-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "cbf8537e5fa4fc3f2f0fe4278cbcf30c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6818,
+      "upload_time": "2022-10-07T04:43:45",
+      "upload_time_iso_8601": "2022-10-07T04:43:45.560528Z",
+      "url": "https://files.pythonhosted.org/packages/aa/a0/23abd55374b0b59de3aebd16d3215b16b245f18be00476f5392dcbaca69e/datasette_external_links_new_tabs-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "fd4944b31cb7b98144addcc8ef13876e",
+        "sha256": "777fb7f6ab41ae4e745d20d388c75698ee3e19d761b76f2c315e137c95057e5a"
+      },
+      "downloads": -1,
+      "filename": "datasette-external-links-new-tabs-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "fd4944b31cb7b98144addcc8ef13876e",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6208,
+      "upload_time": "2022-10-07T04:43:46",
+      "upload_time_iso_8601": "2022-10-07T04:43:46.908572Z",
+      "url": "https://files.pythonhosted.org/packages/62/0d/c5de5dde0c45486b9c16a826bd6111ff3dd5f4a5da22b760cd024589fcc9/datasette-external-links-new-tabs-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
