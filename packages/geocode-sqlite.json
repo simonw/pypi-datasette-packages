@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# geocode-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/geocode-sqlite.svg)](https://pypi.org/project/geocode-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/geocode-sqlite?include_prereleases&label=changelog)](https://github.com/eyeseast/geocode-sqlite/releases)\n[![Tests](https://github.com/eyeseast/geocode-sqlite/workflows/Test/badge.svg)](https://github.com/eyeseast/geocode-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/geocode-sqlite/blob/master/LICENSE)\n\nGeocode rows from a SQLite table\n\n## Installation\n\nInstall this tool using `pip` or `pipx`:\n\n```sh\n# install inside a virtualenv\npip install geocode-sqlite\n\n# install globally\npipx install geocode-sqlite\n```\n\n## Usage\n\nLet's say you have a spreadsheet with addresses in it, and you'd like to map those locations.\nFirst, create a SQLite database and insert rows from that spreadsheet using `sqlite-utils`.\n\n```sh\nsqlite-utils insert data.db data data.csv --csv\n```\n\nNow, geocode it using OpenStreetMap's Nominatim geocoder.\n\n```sh\ngeocode-sqlite nominatim data.db data \\\n --location=\"{address}, {city}, {state} {zip}\" \\\n --delay=1 \\\n --user-agent=\"this-is-me\"\n```\n\nIn the command above, you're using Nominatim, which is free and only asks for a unique user agent (`--user-agent`).\n\nThis will connect to a database (`data.db`) and read all rows from the table `data` (skipping any that already\nhave both a `latitude` and `longitude` column filled).\n\nYou're also telling the geocoder how to extract a location query (`--location`) from a row of data, using Python's\nbuilt-in string formatting, and setting a rate limit (`--delay`) of one request per second.\n\nFor each row where geocoding succeeds, `latitude` and `longitude` will be populated. If you hit an error, or a rate limit,\nrun the same query and pick up where you left off.\n\nThe resulting table layout can be visualized with [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map).\n\nUnder the hood, this package uses the excellent [geopy](https://geopy.readthedocs.io/en/latest/) library, which is stable and thoroughly road-tested. If you need help understanding a particular geocoder's options, consult [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders).\n\n### Supported Geocoders\n\nThe CLI currently supports these geocoders:\n\n- `bing`\n- `googlev3`\n- `mapquest` (and `open-mapquest`)\n- `nominatim`\n- `mapbox`\n\nMore will be added soon.\n\n### Common arguments and options\n\nEach geocoder needs to know where to find the data it's working with. These are the first two arguments:\n\n- database: a path to a SQLite file, which must already exist\n- table: the name of a table, in that database, which exists and has data to geocode\n\nFrom there, we have a set of options passed to every geocoder:\n\n- `location`: a [string format](https://docs.python.org/3/library/stdtypes.html#str.format) that will be expanded with each row to build a full query, to be geocoded\n- `delay`: a delay between each call (some services require this)\n- `latitude`: latitude column name\n- `longitude`: longitude column name\n- `geojson`: store results as GeoJSON, instead of in latitude and longitude columns\n- `spatialite`: store results in a SpatiaLite geometry column, instead of in latitude and longitude columns\n\nEach geocoder takes additional, specific arguments beyond these, such as API keys. Again, [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) is an excellent resource.\n\n## Python API\n\nThe command line interface aims to support the most common options for each geocoder. For more find-grained control, use the Python API.\n\nAs with the CLI, this assumes you already have a SQLite database and a table of location data.\n\n```python\nfrom geocode_sqlite import geocode_table\nfrom geopy.geocoders import Nominatim\n\n# create a geocoder instance, with some extra options\nnominatim = Nominatim(user_agent=\"this-is-me\", domain=\"nominatim.local.dev\", scheme=\"http\")\n\n# assuming our database is in the same directory\ncount = geocode_table(\"data.db\", \"data\", query_template=\"{address}, {city}, {state} {zip}\")\n\n# when it's done\nprint(f\"Geocoded {count} rows\")\n```\n\nAny [geopy geocoder](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) can be used with the Python API.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n```sh\ncd geocode-sqlite\npython -m venv .venv\nsource .venv/bin/activate\n```\n\nOr if you are using `pipenv`:\n\n```sh\npipenv shell\n```\n\nNow install the dependencies and tests:\n\n```sh\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```sh\npytest\n\n```\n\nPlease remember that this library is mainly glue code between other well-tested projects, specifically: click, geopy and sqlite-utils. Tests should focus on making sure those parts fit together correctly. We can assume the parts themselves already work.\n\nTo that end, there is a test geocoder included: `geocode_sqlite.testing.DummyGeocoder`. That geocoder works with an included dataset of In-N-Out Burger locations provided by [AllThePlaces](https://www.alltheplaces.xyz/). It works like a normal GeoPy geocoder, except it will only return results for In-N-Out locations using the included database.\n\n\n",
+    "description": "# geocode-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/geocode-sqlite.svg)](https://pypi.org/project/geocode-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/geocode-sqlite?include_prereleases&label=changelog)](https://github.com/eyeseast/geocode-sqlite/releases)\n[![Tests](https://github.com/eyeseast/geocode-sqlite/workflows/Test/badge.svg)](https://github.com/eyeseast/geocode-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/geocode-sqlite/blob/master/LICENSE)\n\nGeocode rows from a SQLite table\n\n## Installation\n\nInstall this tool using `pip` or `pipx`:\n\n```sh\n# install inside a virtualenv\npip install geocode-sqlite\n\n# install globally\npipx install geocode-sqlite\n```\n\n## Usage\n\nLet's say you have a spreadsheet with addresses in it, and you'd like to map those locations.\nFirst, create a SQLite database and insert rows from that spreadsheet using `sqlite-utils`.\n\n```sh\nsqlite-utils insert data.db data data.csv --csv\n```\n\nNow, geocode it using OpenStreetMap's Nominatim geocoder.\n\n```sh\ngeocode-sqlite nominatim data.db data \\\n --location=\"{address}, {city}, {state} {zip}\" \\\n --delay=1 \\\n --user-agent=\"this-is-me\"\n```\n\nIn the command above, you're using Nominatim, which is free and only asks for a unique user agent (`--user-agent`).\n\nThis will connect to a database (`data.db`) and read all rows from the table `data` (skipping any that already\nhave both a `latitude` and `longitude` column filled).\n\nYou're also telling the geocoder how to extract a location query (`--location`) from a row of data, using Python's\nbuilt-in string formatting, and setting a rate limit (`--delay`) of one request per second.\n\nFor each row where geocoding succeeds, `latitude` and `longitude` will be populated. If you hit an error, or a rate limit,\nrun the same query and pick up where you left off.\n\nThe resulting table layout can be visualized with [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map).\n\nUnder the hood, this package uses the excellent [geopy](https://geopy.readthedocs.io/en/latest/) library, which is stable and thoroughly road-tested. If you need help understanding a particular geocoder's options, consult [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders).\n\n### Supported Geocoders\n\nThe CLI currently supports these geocoders:\n\n- `bing`\n- `googlev3`\n- `mapquest` (and `open-mapquest`)\n- `mapbox`\n- `nominatim`\n- `opencage`\n\n#### Adding new geocoders\n\n1. Open an issue with the name of the geocoding service as the ticket title ([example](https://github.com/eyeseast/geocode-sqlite/issues/35)). Put any noteworthy implementation details in the ticket body, like where to get an API key if one is required.\n2. Fork the repo and add a geocoder.\n3. Add an example to the `Makefile`. Add tests if there's new shared functionality.\n\n### Common arguments and options\n\nEach geocoder needs to know where to find the data it's working with. These are the first two arguments:\n\n- `database`: a path to a SQLite file, which must already exist\n- `table`: the name of a table, in that database, which exists and has data to geocode\n\nFrom there, we have a set of options passed to every geocoder:\n\n- `location`: a [string format](https://docs.python.org/3/library/stdtypes.html#str.format) that will be expanded with each row to build a full query, to be geocoded\n- `delay`: a delay between each call (some services require this)\n- `latitude`: latitude column name\n- `longitude`: longitude column name\n- `geojson`: store results as GeoJSON, instead of in latitude and longitude columns\n- `spatialite`: store results in a SpatiaLite geometry column, instead of in latitude and longitude columns\n\nEach geocoder takes additional, specific arguments beyond these, such as API keys. Again, [geopy's documentation](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) is an excellent resource.\n\n## Python API\n\nThe command line interface aims to support the most common options for each geocoder. For more find-grained control, use the Python API.\n\nAs with the CLI, this assumes you already have a SQLite database and a table of location data.\n\n```python\nfrom geocode_sqlite import geocode_table\nfrom geopy.geocoders import Nominatim\n\n# create a geocoder instance, with some extra options\nnominatim = Nominatim(user_agent=\"this-is-me\", domain=\"nominatim.local.dev\", scheme=\"http\")\n\n# assuming our database is in the same directory\ncount = geocode_table(\"data.db\", \"data\", query_template=\"{address}, {city}, {state} {zip}\")\n\n# when it's done\nprint(f\"Geocoded {count} rows\")\n```\n\nAny [geopy geocoder](https://geopy.readthedocs.io/en/latest/#module-geopy.geocoders) can be used with the Python API.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n```sh\ncd geocode-sqlite\npython -m venv .venv\nsource .venv/bin/activate\n```\n\nOr if you are using `pipenv`:\n\n```sh\npipenv shell\n```\n\nNow install the dependencies and tests:\n\n```sh\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```sh\npytest\n```\n\nPlease remember that this library is mainly glue code between other well-tested projects, specifically: [click](https://click.palletsprojects.com/), [geopy](https://geopy.readthedocs.io/en/stable/) and [sqlite-utils](https://sqlite-utils.datasette.io/en/stable/). Tests should focus on making sure those parts fit together correctly. We can assume the parts themselves already work.\n\nTo that end, there is a test geocoder included: `geocode_sqlite.testing.DummyGeocoder`. That geocoder works with an included dataset of In-N-Out Burger locations provided by [AllThePlaces](https://www.alltheplaces.xyz/). It works like a normal GeoPy geocoder, except it will only return results for In-N-Out locations using the included database.\n\n\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/eyeseast/geocode-sqlite",
       "Issues": "https://github.com/eyeseast/geocode-sqlite/issues"
     },
-    "release_url": "https://pypi.org/project/geocode-sqlite/0.6.1/",
+    "release_url": "https://pypi.org/project/geocode-sqlite/0.7.0/",
     "requires_dist": [
       "click (>=7.0)",
       "sqlite-utils",
@@ -38,11 +38,11 @@
     ],
     "requires_python": "",
     "summary": "Geocode rows from a SQLite table",
-    "version": "0.6.1",
+    "version": "0.7.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13189293,
+  "last_serial": 15597764,
   "releases": {
     "0.1.0": [
       {
@@ -547,46 +547,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.7.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ca5fcb42e2ab0f3a3471bde0f77f8876",
+          "sha256": "d3048d2f54e18e159050fcc82543523a3bf3dcb3b0e2e7e4b34e60bdba306915"
+        },
+        "downloads": -1,
+        "filename": "geocode_sqlite-0.7.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ca5fcb42e2ab0f3a3471bde0f77f8876",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13890,
+        "upload_time": "2022-10-31T15:09:06",
+        "upload_time_iso_8601": "2022-10-31T15:09:06.918569Z",
+        "url": "https://files.pythonhosted.org/packages/98/f5/4c9611eeb2a0feb4f9f01b5df96bfe2cf992e2f340700d77e5ca551062eb/geocode_sqlite-0.7.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "4732942247918f9a0b0ba194c3456b50",
+          "sha256": "8cf0f9a6f3b0141dd802cb455b7ba23a20c15d83a374fafcc5f06245e7ec0607"
+        },
+        "downloads": -1,
+        "filename": "geocode-sqlite-0.7.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4732942247918f9a0b0ba194c3456b50",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 15133,
+        "upload_time": "2022-10-31T15:09:09",
+        "upload_time_iso_8601": "2022-10-31T15:09:09.061971Z",
+        "url": "https://files.pythonhosted.org/packages/b7/10/912de1a5b86d6da305253250dd2cce131961c60285ef7017c60bcd860c64/geocode-sqlite-0.7.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "41d7a219ea19855ead2a6f3aaab58bf9",
-        "sha256": "daf138a160ee31a08657b81470037547e004090f5f764fb23f7db0b2353891fb"
+        "md5": "ca5fcb42e2ab0f3a3471bde0f77f8876",
+        "sha256": "d3048d2f54e18e159050fcc82543523a3bf3dcb3b0e2e7e4b34e60bdba306915"
       },
       "downloads": -1,
-      "filename": "geocode_sqlite-0.6.1-py3-none-any.whl",
+      "filename": "geocode_sqlite-0.7.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "41d7a219ea19855ead2a6f3aaab58bf9",
+      "md5_digest": "ca5fcb42e2ab0f3a3471bde0f77f8876",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 13639,
-      "upload_time": "2022-03-16T01:41:40",
-      "upload_time_iso_8601": "2022-03-16T01:41:40.120039Z",
-      "url": "https://files.pythonhosted.org/packages/ac/bc/1efde67a132a488ccae85324aff445536c97a2b381e97147b021eef4911c/geocode_sqlite-0.6.1-py3-none-any.whl",
+      "size": 13890,
+      "upload_time": "2022-10-31T15:09:06",
+      "upload_time_iso_8601": "2022-10-31T15:09:06.918569Z",
+      "url": "https://files.pythonhosted.org/packages/98/f5/4c9611eeb2a0feb4f9f01b5df96bfe2cf992e2f340700d77e5ca551062eb/geocode_sqlite-0.7.0-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "83787f9a5c853c56236687b5420e5114",
-        "sha256": "a3c16716a9b76e63858c690c67f560421c81f97fd979de6106a00c7c9733a879"
+        "md5": "4732942247918f9a0b0ba194c3456b50",
+        "sha256": "8cf0f9a6f3b0141dd802cb455b7ba23a20c15d83a374fafcc5f06245e7ec0607"
       },
       "downloads": -1,
-      "filename": "geocode-sqlite-0.6.1.tar.gz",
+      "filename": "geocode-sqlite-0.7.0.tar.gz",
       "has_sig": false,
-      "md5_digest": "83787f9a5c853c56236687b5420e5114",
+      "md5_digest": "4732942247918f9a0b0ba194c3456b50",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 14721,
-      "upload_time": "2022-03-16T01:41:41",
-      "upload_time_iso_8601": "2022-03-16T01:41:41.126379Z",
-      "url": "https://files.pythonhosted.org/packages/3e/b0/b1d0ea586e268cda8345a3b9e0032dd21285709ba5bbc47d68d4f35eff11/geocode-sqlite-0.6.1.tar.gz",
+      "size": 15133,
+      "upload_time": "2022-10-31T15:09:09",
+      "upload_time_iso_8601": "2022-10-31T15:09:09.061971Z",
+      "url": "https://files.pythonhosted.org/packages/b7/10/912de1a5b86d6da305253250dd2cce131961c60285ef7017c60bcd860c64/geocode-sqlite-0.7.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
