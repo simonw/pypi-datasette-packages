@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-configure-fts\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-configure-fts.svg)](https://pypi.org/project/datasette-configure-fts/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-configure-fts?include_prereleases&label=changelog)](https://github.com/simonw/datasette-configure-fts/releases)\n[![Tests](https://github.com/simonw/datasette-configure-fts/workflows/Test/badge.svg)](https://github.com/simonw/datasette-configure-fts/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-configure-fts/blob/main/LICENSE)\n\nDatasette plugin for enabling full-text search against selected table columns\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-configure-fts\n\n## Usage\n\nHaving installed the plugin, visit `/-/configure-fts` on your Datasette instance to configure FTS for tables on attached writable databases.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `configure-fts` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\n\n",
+    "description": "# datasette-configure-fts\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-configure-fts.svg)](https://pypi.org/project/datasette-configure-fts/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-configure-fts?include_prereleases&label=changelog)](https://github.com/simonw/datasette-configure-fts/releases)\n[![Tests](https://github.com/simonw/datasette-configure-fts/workflows/Test/badge.svg)](https://github.com/simonw/datasette-configure-fts/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-configure-fts/blob/main/LICENSE)\n\nDatasette plugin for enabling full-text search against selected table columns\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-configure-fts\n\n## Usage\n\nHaving installed the plugin, visit `/-/configure-fts` on your Datasette instance to configure FTS for tables on attached writable databases.\n\nAny time you have permission to configure FTS for a table a menu item will appear in the table actions menu on the table page.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `configure-fts` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,12 +20,12 @@
     "maintainer_email": "",
     "name": "datasette-configure-fts",
     "package_url": "https://pypi.org/project/datasette-configure-fts/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-configure-fts/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-configure-fts"
     },
-    "release_url": "https://pypi.org/project/datasette-configure-fts/1.1/",
+    "release_url": "https://pypi.org/project/datasette-configure-fts/1.1.1/",
     "requires_dist": [
       "datasette (>=0.51)",
       "sqlite-utils (>=2.10)",
@@ -35,11 +35,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin for enabling full-text search against selected table columns",
-    "version": "1.1",
+    "version": "1.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8551612,
+  "last_serial": 15810219,
   "releases": {
     "0.1.1a0": [
       {
@@ -280,46 +280,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "99e0896ebcb30818c8c431e1500de123",
+          "sha256": "43a2957120d97bfdc49d7b45e03d336a5b2e24f46cc4a537e9ba747ceca41267"
+        },
+        "downloads": -1,
+        "filename": "datasette_configure_fts-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "99e0896ebcb30818c8c431e1500de123",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9030,
+        "upload_time": "2022-11-18T03:51:39",
+        "upload_time_iso_8601": "2022-11-18T03:51:39.997104Z",
+        "url": "https://files.pythonhosted.org/packages/11/64/4b6cfcc1c9db4989950eb8fdaebeb4d03740e1c304d3794016a2d40bf0cf/datasette_configure_fts-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2c0212192b7f9d211d9f2b9f5db71822",
+          "sha256": "7b83ff89a9de2fac5b21f49efab2845973b215ab374fd250ab8f040fb1c1c04b"
+        },
+        "downloads": -1,
+        "filename": "datasette-configure-fts-1.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2c0212192b7f9d211d9f2b9f5db71822",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7799,
+        "upload_time": "2022-11-18T03:51:41",
+        "upload_time_iso_8601": "2022-11-18T03:51:41.285637Z",
+        "url": "https://files.pythonhosted.org/packages/61/ce/e31d4c8d2151c0fb1b21ff5c14e7cf278fe3300e5d0402b26df128d21e4e/datasette-configure-fts-1.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "b38de5490749f0d31ecd5dbb2550896d",
-        "sha256": "993f217f7a48ce3ecbc527009be69916ba50fc993c9c449405c405f090908375"
+        "md5": "99e0896ebcb30818c8c431e1500de123",
+        "sha256": "43a2957120d97bfdc49d7b45e03d336a5b2e24f46cc4a537e9ba747ceca41267"
       },
       "downloads": -1,
-      "filename": "datasette_configure_fts-1.1-py3-none-any.whl",
+      "filename": "datasette_configure_fts-1.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "b38de5490749f0d31ecd5dbb2550896d",
+      "md5_digest": "99e0896ebcb30818c8c431e1500de123",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
       "size": 9030,
-      "upload_time": "2020-11-01T02:31:54",
-      "upload_time_iso_8601": "2020-11-01T02:31:54.767320Z",
-      "url": "https://files.pythonhosted.org/packages/cd/24/1350176bcbd4a71781c54c73b7b63aea0950cee9bfcf71b3719c56db36d9/datasette_configure_fts-1.1-py3-none-any.whl",
+      "upload_time": "2022-11-18T03:51:39",
+      "upload_time_iso_8601": "2022-11-18T03:51:39.997104Z",
+      "url": "https://files.pythonhosted.org/packages/11/64/4b6cfcc1c9db4989950eb8fdaebeb4d03740e1c304d3794016a2d40bf0cf/datasette_configure_fts-1.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "93a4f2313b07807597835fe4505c509c",
-        "sha256": "04ef0d24a1efae0f8a44100880e2d64e46d0f1e8f20cf703b0a0f5ffc5f01ba0"
+        "md5": "2c0212192b7f9d211d9f2b9f5db71822",
+        "sha256": "7b83ff89a9de2fac5b21f49efab2845973b215ab374fd250ab8f040fb1c1c04b"
       },
       "downloads": -1,
-      "filename": "datasette-configure-fts-1.1.tar.gz",
+      "filename": "datasette-configure-fts-1.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "93a4f2313b07807597835fe4505c509c",
+      "md5_digest": "2c0212192b7f9d211d9f2b9f5db71822",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 3896,
-      "upload_time": "2020-11-01T02:31:55",
-      "upload_time_iso_8601": "2020-11-01T02:31:55.561105Z",
-      "url": "https://files.pythonhosted.org/packages/3e/ee/604c23817aaea1a7ecc0b69b29e1209fe50a8e3d91cd89908646fbd7417a/datasette-configure-fts-1.1.tar.gz",
+      "size": 7799,
+      "upload_time": "2022-11-18T03:51:41",
+      "upload_time_iso_8601": "2022-11-18T03:51:41.285637Z",
+      "url": "https://files.pythonhosted.org/packages/61/ce/e31d4c8d2151c0fb1b21ff5c14e7cf278fe3300e5d0402b26df128d21e4e/datasette-configure-fts-1.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

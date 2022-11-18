@@ -28,20 +28,20 @@
       "Homepage": "https://github.com/simonw/datasette-search-all",
       "Issues": "https://github.com/simonw/datasette-search-all/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-search-all/1.1/",
+    "release_url": "https://pypi.org/project/datasette-search-all/1.1.1/",
     "requires_dist": [
-      "datasette (>=0.61)",
+      "datasette (>=0.63.1)",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "sqlite-utils ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for searching all searchable tables at once",
-    "version": "1.1",
+    "version": "1.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15308332,
+  "last_serial": 15809870,
   "releases": {
     "0.1": [
       {
@@ -278,46 +278,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "613272d3b5ef05cd8e00eb119d84fe3b",
+          "sha256": "4b51805f9713f7d17c7fe5a18d4daefcfaf6eae8d292c6ba71db12606732bf12"
+        },
+        "downloads": -1,
+        "filename": "datasette_search_all-1.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "613272d3b5ef05cd8e00eb119d84fe3b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10330,
+        "upload_time": "2022-11-18T03:11:38",
+        "upload_time_iso_8601": "2022-11-18T03:11:38.997978Z",
+        "url": "https://files.pythonhosted.org/packages/61/5c/121095e345afa10c9257279052633235b846ad61e01105e528d161c0c2a3/datasette_search_all-1.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "dd345a87462babf46766d893e57bdaf5",
+          "sha256": "d837c9aa1afad8d2ce518ad1e93edd6ac781570ea1038587e4fcc5c23427a92e"
+        },
+        "downloads": -1,
+        "filename": "datasette-search-all-1.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dd345a87462babf46766d893e57bdaf5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9093,
+        "upload_time": "2022-11-18T03:11:40",
+        "upload_time_iso_8601": "2022-11-18T03:11:40.315449Z",
+        "url": "https://files.pythonhosted.org/packages/48/08/fd01a776a85958adf8dd2aebd0d5938e5fb3ff1958532820666061759ce8/datasette-search-all-1.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "3599cc8e515a1d5190e458fe5d0985b7",
-        "sha256": "b2ef9ff5f033587acc80106dd8d7a862b79658bdf580d16d1feb072dded34d15"
+        "md5": "613272d3b5ef05cd8e00eb119d84fe3b",
+        "sha256": "4b51805f9713f7d17c7fe5a18d4daefcfaf6eae8d292c6ba71db12606732bf12"
       },
       "downloads": -1,
-      "filename": "datasette_search_all-1.1-py3-none-any.whl",
+      "filename": "datasette_search_all-1.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "3599cc8e515a1d5190e458fe5d0985b7",
+      "md5_digest": "613272d3b5ef05cd8e00eb119d84fe3b",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 10342,
-      "upload_time": "2022-10-05T01:54:52",
-      "upload_time_iso_8601": "2022-10-05T01:54:52.953109Z",
-      "url": "https://files.pythonhosted.org/packages/ba/1e/96f75643a46fe5a504e6c8113cebda46b5c028fff95b4fe9d2b45f65d9e9/datasette_search_all-1.1-py3-none-any.whl",
+      "size": 10330,
+      "upload_time": "2022-11-18T03:11:38",
+      "upload_time_iso_8601": "2022-11-18T03:11:38.997978Z",
+      "url": "https://files.pythonhosted.org/packages/61/5c/121095e345afa10c9257279052633235b846ad61e01105e528d161c0c2a3/datasette_search_all-1.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "0a413b805033e5d178029d22c463f44d",
-        "sha256": "aa366f598f8b0ffa8ae3cca536a61e8761e58b055fea42155f779f5eabb98f72"
+        "md5": "dd345a87462babf46766d893e57bdaf5",
+        "sha256": "d837c9aa1afad8d2ce518ad1e93edd6ac781570ea1038587e4fcc5c23427a92e"
       },
       "downloads": -1,
-      "filename": "datasette-search-all-1.1.tar.gz",
+      "filename": "datasette-search-all-1.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "0a413b805033e5d178029d22c463f44d",
+      "md5_digest": "dd345a87462babf46766d893e57bdaf5",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 9134,
-      "upload_time": "2022-10-05T01:54:54",
-      "upload_time_iso_8601": "2022-10-05T01:54:54.184616Z",
-      "url": "https://files.pythonhosted.org/packages/e4/6e/8c787e7bf37472e1172de9a0469e12f16bb875b1f5661fe152fb78b04406/datasette-search-all-1.1.tar.gz",
+      "size": 9093,
+      "upload_time": "2022-11-18T03:11:40",
+      "upload_time_iso_8601": "2022-11-18T03:11:40.315449Z",
+      "url": "https://files.pythonhosted.org/packages/48/08/fd01a776a85958adf8dd2aebd0d5938e5fb3ff1958532820666061759ce8/datasette-search-all-1.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

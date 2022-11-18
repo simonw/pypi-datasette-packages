@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-socrata",
       "Issues": "https://github.com/simonw/datasette-socrata/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-socrata/0.3/",
+    "release_url": "https://pypi.org/project/datasette-socrata/0.3.1/",
     "requires_dist": [
       "datasette",
       "sqlite-utils (>=3.27)",
@@ -42,11 +42,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Import data from Socrata into Datasette",
-    "version": "0.3",
+    "version": "0.3.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14166933,
+  "last_serial": 15809962,
   "releases": {
     "0.1": [
       {
@@ -215,46 +215,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2e655456b09bc2ccace0c13e70632891",
+          "sha256": "840034b4bcb9c26e39130b8797cd095a544480760926366568e8492a0ae27c5d"
+        },
+        "downloads": -1,
+        "filename": "datasette_socrata-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2e655456b09bc2ccace0c13e70632891",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12879,
+        "upload_time": "2022-11-18T03:30:33",
+        "upload_time_iso_8601": "2022-11-18T03:30:33.958545Z",
+        "url": "https://files.pythonhosted.org/packages/a3/48/d62df67df5b01ddd03ed81bb337bebba47e05323f43c98bf247d7cb36e7e/datasette_socrata-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "6415c50614f26c07dd29ba34ab5479ed",
+          "sha256": "63b7ef72a2687972d44b20f82a11168df7bbfaabe44cf21226cfc1c47e21d0dc"
+        },
+        "downloads": -1,
+        "filename": "datasette-socrata-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6415c50614f26c07dd29ba34ab5479ed",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 12938,
+        "upload_time": "2022-11-18T03:30:35",
+        "upload_time_iso_8601": "2022-11-18T03:30:35.370955Z",
+        "url": "https://files.pythonhosted.org/packages/0c/c8/701ce846e94df332f2ddb25925141d80d8fd701c2653e98ad2b70ad60339/datasette-socrata-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "fe217f345395389cfd1d32a03403208e",
-        "sha256": "f0b662485ecfc5230c72d6ef9c2b927f45f20d15b3e4872029ee07d13a54cb55"
+        "md5": "2e655456b09bc2ccace0c13e70632891",
+        "sha256": "840034b4bcb9c26e39130b8797cd095a544480760926366568e8492a0ae27c5d"
       },
       "downloads": -1,
-      "filename": "datasette_socrata-0.3-py3-none-any.whl",
+      "filename": "datasette_socrata-0.3.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "fe217f345395389cfd1d32a03403208e",
+      "md5_digest": "2e655456b09bc2ccace0c13e70632891",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 12932,
-      "upload_time": "2022-06-17T20:31:25",
-      "upload_time_iso_8601": "2022-06-17T20:31:25.448308Z",
-      "url": "https://files.pythonhosted.org/packages/75/89/7b5cfb4c11b44f4b47b1a4117cccf6274b13d7d74af8b028b63c97486baa/datasette_socrata-0.3-py3-none-any.whl",
+      "size": 12879,
+      "upload_time": "2022-11-18T03:30:33",
+      "upload_time_iso_8601": "2022-11-18T03:30:33.958545Z",
+      "url": "https://files.pythonhosted.org/packages/a3/48/d62df67df5b01ddd03ed81bb337bebba47e05323f43c98bf247d7cb36e7e/datasette_socrata-0.3.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "5659287cd6efef7f56a101968372afe7",
-        "sha256": "ff79895a7251a2cf1cff6665e1463434bd5c07085f59041219f52d20aed2f48d"
+        "md5": "6415c50614f26c07dd29ba34ab5479ed",
+        "sha256": "63b7ef72a2687972d44b20f82a11168df7bbfaabe44cf21226cfc1c47e21d0dc"
       },
       "downloads": -1,
-      "filename": "datasette-socrata-0.3.tar.gz",
+      "filename": "datasette-socrata-0.3.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "5659287cd6efef7f56a101968372afe7",
+      "md5_digest": "6415c50614f26c07dd29ba34ab5479ed",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 12982,
-      "upload_time": "2022-06-17T20:31:27",
-      "upload_time_iso_8601": "2022-06-17T20:31:27.016510Z",
-      "url": "https://files.pythonhosted.org/packages/93/d8/cb4f80844eb892713362b5161ebdab5c35261c758ff2ec331d0c9437c3d6/datasette-socrata-0.3.tar.gz",
+      "size": 12938,
+      "upload_time": "2022-11-18T03:30:35",
+      "upload_time_iso_8601": "2022-11-18T03:30:35.370955Z",
+      "url": "https://files.pythonhosted.org/packages/0c/c8/701ce846e94df332f2ddb25925141d80d8fd701c2653e98ad2b70ad60339/datasette-socrata-0.3.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
