@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-indieauth",
       "Issues": "https://github.com/simonw/datasette-indieauth/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-indieauth/1.2.1/",
+    "release_url": "https://pypi.org/project/datasette-indieauth/1.2.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette authentication using IndieAuth and RelMeAuth",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15516090,
+  "last_serial": 15811808,
   "releases": {
     "0.1a0": [
       {
@@ -464,46 +464,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "ecd4d693f6ec71c235269b3d04a38517",
+          "sha256": "7e7ccd1acc2baaff694e1054c44e7f5dea2b5f430de1872f3798e4fce430ab27"
+        },
+        "downloads": -1,
+        "filename": "datasette_indieauth-1.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ecd4d693f6ec71c235269b3d04a38517",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8206,
+        "upload_time": "2022-11-18T06:49:09",
+        "upload_time_iso_8601": "2022-11-18T06:49:09.506343Z",
+        "url": "https://files.pythonhosted.org/packages/f2/84/d3ad936ff94f0d716e71423b23685a63a07617e7c3b0c973aa538d81ad97/datasette_indieauth-1.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a1d0fa45ee5865403ce6cb999b30308b",
+          "sha256": "9e12803cf5ccda49441b59e4e3732221fec2a6ef4f98fb0233ef9ed4a4ec802c"
+        },
+        "downloads": -1,
+        "filename": "datasette-indieauth-1.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a1d0fa45ee5865403ce6cb999b30308b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7522,
+        "upload_time": "2022-11-18T06:49:10",
+        "upload_time_iso_8601": "2022-11-18T06:49:10.991472Z",
+        "url": "https://files.pythonhosted.org/packages/34/41/3106cfe6586f927e1baf803ebf305b902aa92d2b153b30ee5dfa5239531b/datasette-indieauth-1.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "74fd53a568f53512b6c6f797a0c6bbfd",
-        "sha256": "7eb8c0a4ccc147c2198f507f7130702cdeee263f83a18f05fe3d2e0ca67113c8"
+        "md5": "ecd4d693f6ec71c235269b3d04a38517",
+        "sha256": "7e7ccd1acc2baaff694e1054c44e7f5dea2b5f430de1872f3798e4fce430ab27"
       },
       "downloads": -1,
-      "filename": "datasette_indieauth-1.2.1-py3-none-any.whl",
+      "filename": "datasette_indieauth-1.2.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "74fd53a568f53512b6c6f797a0c6bbfd",
+      "md5_digest": "ecd4d693f6ec71c235269b3d04a38517",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8213,
-      "upload_time": "2022-10-25T01:36:03",
-      "upload_time_iso_8601": "2022-10-25T01:36:03.278828Z",
-      "url": "https://files.pythonhosted.org/packages/e8/ae/719c076a88127bb406ce9f9edc14b834d9bcb1a892d1b2457652962a583f/datasette_indieauth-1.2.1-py3-none-any.whl",
+      "size": 8206,
+      "upload_time": "2022-11-18T06:49:09",
+      "upload_time_iso_8601": "2022-11-18T06:49:09.506343Z",
+      "url": "https://files.pythonhosted.org/packages/f2/84/d3ad936ff94f0d716e71423b23685a63a07617e7c3b0c973aa538d81ad97/datasette_indieauth-1.2.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "82c71b44ebf205c5e49209587eb1671a",
-        "sha256": "179857d6c74063019b412e673c44b9ab67c07fe9367a62b42198822a00b10698"
+        "md5": "a1d0fa45ee5865403ce6cb999b30308b",
+        "sha256": "9e12803cf5ccda49441b59e4e3732221fec2a6ef4f98fb0233ef9ed4a4ec802c"
       },
       "downloads": -1,
-      "filename": "datasette-indieauth-1.2.1.tar.gz",
+      "filename": "datasette-indieauth-1.2.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "82c71b44ebf205c5e49209587eb1671a",
+      "md5_digest": "a1d0fa45ee5865403ce6cb999b30308b",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 7523,
-      "upload_time": "2022-10-25T01:36:04",
-      "upload_time_iso_8601": "2022-10-25T01:36:04.624621Z",
-      "url": "https://files.pythonhosted.org/packages/1c/56/ab2e091bd03cbabfbb748de22e85c62379ddab09279254496912958067ed/datasette-indieauth-1.2.1.tar.gz",
+      "size": 7522,
+      "upload_time": "2022-11-18T06:49:10",
+      "upload_time_iso_8601": "2022-11-18T06:49:10.991472Z",
+      "url": "https://files.pythonhosted.org/packages/34/41/3106cfe6586f927e1baf803ebf305b902aa92d2b153b30ee5dfa5239531b/datasette-indieauth-1.2.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

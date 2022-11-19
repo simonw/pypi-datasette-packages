@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-graphql",
       "Issues": "https://github.com/simonw/datasette-graphql/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-graphql/2.1.1/",
+    "release_url": "https://pypi.org/project/datasette-graphql/2.1.2/",
     "requires_dist": [
       "datasette (>=0.58.1)",
       "graphene (<4.0,>=3.1.0)",
@@ -39,11 +39,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin providing an automatic GraphQL API for your SQLite databases",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14473848,
+  "last_serial": 15821957,
   "releases": {
     "0.10": [
       {
@@ -1556,46 +1556,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "2.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "86b4994a38eda84709514445528c5e75",
+          "sha256": "59e82e02acc1b0464578ceac1767a51e83d528a747ea02c625ded60f47f5d3a1"
+        },
+        "downloads": -1,
+        "filename": "datasette_graphql-2.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "86b4994a38eda84709514445528c5e75",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 278184,
+        "upload_time": "2022-11-19T01:32:57",
+        "upload_time_iso_8601": "2022-11-19T01:32:57.376403Z",
+        "url": "https://files.pythonhosted.org/packages/6f/f1/1215775db599513c5c076bccf0145f0c873649c798131ac402fd9c8322ae/datasette_graphql-2.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "7bdb6b59ff807820be2963391700c280",
+          "sha256": "1b171a7c72c316278c974ea3a1c7836cb559421599f54304ca27ef8349f9b963"
+        },
+        "downloads": -1,
+        "filename": "datasette-graphql-2.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7bdb6b59ff807820be2963391700c280",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 280092,
+        "upload_time": "2022-11-19T01:32:59",
+        "upload_time_iso_8601": "2022-11-19T01:32:59.199654Z",
+        "url": "https://files.pythonhosted.org/packages/60/2d/702aca60cbbdff823690a0993e7fc524f5d9d9b358d9b94d6b84311efec4/datasette-graphql-2.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "86a2de598e8115773bb92bda96f89053",
-        "sha256": "94cb60e09919b55c5d9456d4c7ec1fad8fb595e9ca34a42dfb53a182bc232487"
+        "md5": "86b4994a38eda84709514445528c5e75",
+        "sha256": "59e82e02acc1b0464578ceac1767a51e83d528a747ea02c625ded60f47f5d3a1"
       },
       "downloads": -1,
-      "filename": "datasette_graphql-2.1.1-py3-none-any.whl",
+      "filename": "datasette_graphql-2.1.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "86a2de598e8115773bb92bda96f89053",
+      "md5_digest": "86b4994a38eda84709514445528c5e75",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 278173,
-      "upload_time": "2022-07-18T21:15:00",
-      "upload_time_iso_8601": "2022-07-18T21:15:00.465241Z",
-      "url": "https://files.pythonhosted.org/packages/47/b9/1a59152b6a4d9f3a4efad165775d40dff11a942abe6c440c3c7a74d86282/datasette_graphql-2.1.1-py3-none-any.whl",
+      "size": 278184,
+      "upload_time": "2022-11-19T01:32:57",
+      "upload_time_iso_8601": "2022-11-19T01:32:57.376403Z",
+      "url": "https://files.pythonhosted.org/packages/6f/f1/1215775db599513c5c076bccf0145f0c873649c798131ac402fd9c8322ae/datasette_graphql-2.1.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "3a0558bc76731872e5f2670332e0c456",
-        "sha256": "ecfdc5950ee8bf4e0c1efdf0d31cceb26ea35ae38193a6cea1534df8ce3f7a78"
+        "md5": "7bdb6b59ff807820be2963391700c280",
+        "sha256": "1b171a7c72c316278c974ea3a1c7836cb559421599f54304ca27ef8349f9b963"
       },
       "downloads": -1,
-      "filename": "datasette-graphql-2.1.1.tar.gz",
+      "filename": "datasette-graphql-2.1.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "3a0558bc76731872e5f2670332e0c456",
+      "md5_digest": "7bdb6b59ff807820be2963391700c280",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 280074,
-      "upload_time": "2022-07-18T21:15:03",
-      "upload_time_iso_8601": "2022-07-18T21:15:03.133549Z",
-      "url": "https://files.pythonhosted.org/packages/ac/25/c83aed0db77638363f903d0f699696d193e3a8b5f919802d1a556a517c0a/datasette-graphql-2.1.1.tar.gz",
+      "size": 280092,
+      "upload_time": "2022-11-19T01:32:59",
+      "upload_time_iso_8601": "2022-11-19T01:32:59.199654Z",
+      "url": "https://files.pythonhosted.org/packages/60/2d/702aca60cbbdff823690a0993e7fc524f5d9d9b358d9b94d6b84311efec4/datasette-graphql-2.1.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

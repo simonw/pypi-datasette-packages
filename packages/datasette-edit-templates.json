@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-edit-templates\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-edit-templates.svg)](https://pypi.org/project/datasette-edit-templates/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-edit-templates?include_prereleases&label=changelog)](https://github.com/simonw/datasette-edit-templates/releases)\n[![Tests](https://github.com/simonw/datasette-edit-templates/workflows/Test/badge.svg)](https://github.com/simonw/datasette-edit-templates/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-edit-templates/blob/main/LICENSE)\n\nPlugin allowing Datasette templates to be edited within Datasette.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-edit-templates\n\n## Usage\n\nOnce installed, sign in as the root user using `datasette mydb.db --root`.\n\nOn startup. a `_templates_` table will be created in the database you are running Datasette against.\n\nUse the app menu to navigate to the `/-/edit-templates` page, and edit templates there.\n\nChanges should become visible instantly, and will be persisted to your database.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-edit-templates\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-edit-templates\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-edit-templates.svg)](https://pypi.org/project/datasette-edit-templates/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-edit-templates?include_prereleases&label=changelog)](https://github.com/simonw/datasette-edit-templates/releases)\n[![Tests](https://github.com/simonw/datasette-edit-templates/workflows/Test/badge.svg)](https://github.com/simonw/datasette-edit-templates/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-edit-templates/blob/main/LICENSE)\n\nPlugin allowing Datasette templates to be edited within Datasette.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-edit-templates\n\n## Usage\n\nOn startup. a `_templates_` table will be created in the database you are running Datasette against.\n\nUse the app menu to navigate to the `/-/edit-templates` page, and edit templates there.\n\nChanges should become visible instantly, and will be persisted to your database.\n\nThe interface is only available to users with the `edit-templates` permission.\n\nThe `root` user is granted this permission by default. You can sign in as the root user using `datasette mydb.db --root`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-edit-templates\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-edit-templates",
       "Issues": "https://github.com/simonw/datasette-edit-templates/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-edit-templates/0.1/",
+    "release_url": "https://pypi.org/project/datasette-edit-templates/0.2/",
     "requires_dist": [
       "datasette (>=0.63)",
       "pytest ; extra == 'test'",
@@ -37,11 +37,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Plugin allowing Datasette templates to be edited within Datasette",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15559574,
+  "last_serial": 15810350,
   "releases": {
     "0.1": [
       {
@@ -126,46 +126,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "bb0c110c3923be8a3d5d3aee0447a52c",
+          "sha256": "528ab75c907f4021a023956cc19e07bac29853d734175e9fc1959d3557018da6"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_templates-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bb0c110c3923be8a3d5d3aee0447a52c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6801,
+        "upload_time": "2022-11-18T04:07:46",
+        "upload_time_iso_8601": "2022-11-18T04:07:46.372913Z",
+        "url": "https://files.pythonhosted.org/packages/89/34/b8a14073210618b6a3e43277acb1fd7b5e0389f1601b556d0bbe1caaecba/datasette_edit_templates-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "191b10a9b562f1d81e6dae2abe641f77",
+          "sha256": "a7885b18682b5c9dc6465a4a47e0d7accc06523b23cdae063b09a30cdb16b7ba"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-templates-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "191b10a9b562f1d81e6dae2abe641f77",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 5781,
+        "upload_time": "2022-11-18T04:07:48",
+        "upload_time_iso_8601": "2022-11-18T04:07:48.028911Z",
+        "url": "https://files.pythonhosted.org/packages/f5/b7/7703b8d3410027def6ed5e114dd1f3fbc8263a8c5b72bf09c6597e30fb72/datasette-edit-templates-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "a5ba4098c3ee74565c10094bbe8ac99a",
-        "sha256": "993f206c66be5bb06d0b7c623b70c7748d028ab279777d2c726022b8123a9061"
+        "md5": "bb0c110c3923be8a3d5d3aee0447a52c",
+        "sha256": "528ab75c907f4021a023956cc19e07bac29853d734175e9fc1959d3557018da6"
       },
       "downloads": -1,
-      "filename": "datasette_edit_templates-0.1-py3-none-any.whl",
+      "filename": "datasette_edit_templates-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a5ba4098c3ee74565c10094bbe8ac99a",
+      "md5_digest": "bb0c110c3923be8a3d5d3aee0447a52c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 6700,
-      "upload_time": "2022-10-27T22:55:35",
-      "upload_time_iso_8601": "2022-10-27T22:55:35.034067Z",
-      "url": "https://files.pythonhosted.org/packages/6b/dd/57b5e7bfc518734af03638d25190323d81dd87c98a4dddb1ce77de5a08a6/datasette_edit_templates-0.1-py3-none-any.whl",
+      "size": 6801,
+      "upload_time": "2022-11-18T04:07:46",
+      "upload_time_iso_8601": "2022-11-18T04:07:46.372913Z",
+      "url": "https://files.pythonhosted.org/packages/89/34/b8a14073210618b6a3e43277acb1fd7b5e0389f1601b556d0bbe1caaecba/datasette_edit_templates-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "7fce893d1ab5156f9dae81beb946eacf",
-        "sha256": "94982d3f2dea843c9c98419cf49437dbb4f56059685140b8280d828cb4cf9b6d"
+        "md5": "191b10a9b562f1d81e6dae2abe641f77",
+        "sha256": "a7885b18682b5c9dc6465a4a47e0d7accc06523b23cdae063b09a30cdb16b7ba"
       },
       "downloads": -1,
-      "filename": "datasette-edit-templates-0.1.tar.gz",
+      "filename": "datasette-edit-templates-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "7fce893d1ab5156f9dae81beb946eacf",
+      "md5_digest": "191b10a9b562f1d81e6dae2abe641f77",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 5663,
-      "upload_time": "2022-10-27T22:55:36",
-      "upload_time_iso_8601": "2022-10-27T22:55:36.374002Z",
-      "url": "https://files.pythonhosted.org/packages/58/6f/fcefcf57d815ba5d47360c437bcb00b91b7c2e03a71860a56b446408cc3e/datasette-edit-templates-0.1.tar.gz",
+      "size": 5781,
+      "upload_time": "2022-11-18T04:07:48",
+      "upload_time_iso_8601": "2022-11-18T04:07:48.028911Z",
+      "url": "https://files.pythonhosted.org/packages/f5/b7/7703b8d3410027def6ed5e114dd1f3fbc8263a8c5b72bf09c6597e30fb72/datasette-edit-templates-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-copyable\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-copyable.svg)](https://pypi.org/project/datasette-copyable/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-copyable?include_prereleases&label=changelog)](https://github.com/simonw/datasette-copyable/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-copyable/blob/master/LICENSE)\n\nDatasette plugin for outputting tables in formats suitable for copy and paste\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-copyable\n\n## Demo\n\nYou can try this plugin on [fivethirtyeight.datasettes.com](https://fivethirtyeight.datasettes.com/) - browse for tables or queries there and look for the \"copyable\" link. Here's an example for a table of [airline safety data](https://fivethirtyeight.datasettes.com/fivethirtyeight/airline-safety%2Fairline-safety.copyable).\n\n## Usage\n\nThis plugin adds a `.copyable` output extension to every table, view and query.\n\nNavigating to this page will show an interface allowing you to select a format for copying and pasting the demo. The default is TSV, which is suitable for copying into Google Sheets or Excel.\n\nYou can add `?_raw=1` to get back just the raw data.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-copyable\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-copyable\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-copyable.svg)](https://pypi.org/project/datasette-copyable/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-copyable?include_prereleases&label=changelog)](https://github.com/simonw/datasette-copyable/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-copyable/blob/master/LICENSE)\n\nDatasette plugin for outputting tables in formats suitable for copy and paste\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-copyable\n\n## Demo\n\nYou can try this plugin on [fivethirtyeight.datasettes.com](https://fivethirtyeight.datasettes.com/) - browse for tables or queries there and look for the \"copyable\" link. Here's an example for a table of [airline safety data](https://fivethirtyeight.datasettes.com/fivethirtyeight/airline-safety~2Fairline-safety.copyable).\n\n## Usage\n\nThis plugin adds a `.copyable` output extension to every table, view and query.\n\nNavigating to this page will show an interface allowing you to select a format for copying and pasting the demo. The default is TSV, which is suitable for copying into Google Sheets or Excel.\n\nYou can add `?_raw=1` to get back just the raw data.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-copyable\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-copyable",
     "package_url": "https://pypi.org/project/datasette-copyable/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-copyable/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-copyable/actions",
@@ -28,22 +28,22 @@
       "Homepage": "https://github.com/simonw/datasette-copyable",
       "Issues": "https://github.com/simonw/datasette-copyable/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-copyable/0.3.1/",
+    "release_url": "https://pypi.org/project/datasette-copyable/0.3.2/",
     "requires_dist": [
-      "datasette (>=0.49)",
+      "datasette (>=0.63)",
       "tabulate",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "httpx ; extra == 'test'",
       "sqlite-utils ; extra == 'test'"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.7",
     "summary": "Datasette plugin for outputting tables in formats suitable for copy and paste",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8660692,
+  "last_serial": 15811649,
   "releases": {
     "0.1": [
       {
@@ -212,46 +212,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "dd4b6636b922a1ea8379657e8ba7640a",
+          "sha256": "96088f78f0dbc0cacdc1ea0310a9bb4f12522f8ce2e3034ce378d681604e547d"
+        },
+        "downloads": -1,
+        "filename": "datasette_copyable-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dd4b6636b922a1ea8379657e8ba7640a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 4174,
+        "upload_time": "2022-11-18T06:12:28",
+        "upload_time_iso_8601": "2022-11-18T06:12:28.200399Z",
+        "url": "https://files.pythonhosted.org/packages/6d/de/ec952cfe23e9dd52c9a37a94b2ad2eee975177a46211cf80e62a2168373b/datasette_copyable-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "fdffbc51631a02b3e0a411dd803d5798",
+          "sha256": "c0eacfbb14fd255a903f7ee858bea51cae48e7ba9668a38acebeaaecc82db0b4"
+        },
+        "downloads": -1,
+        "filename": "datasette-copyable-0.3.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fdffbc51631a02b3e0a411dd803d5798",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 3737,
+        "upload_time": "2022-11-18T06:12:29",
+        "upload_time_iso_8601": "2022-11-18T06:12:29.417144Z",
+        "url": "https://files.pythonhosted.org/packages/af/89/09f5889f5f37e5638449beaff393065280d47fa53133ad54f287c8fb3a11/datasette-copyable-0.3.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "bd344a050115c2d6dd6ce22e86fb02b2",
-        "sha256": "b3c4cf09dae7b8caa595c851ba352d085dfba41c9621cda5cd048752f42fd10e"
+        "md5": "dd4b6636b922a1ea8379657e8ba7640a",
+        "sha256": "96088f78f0dbc0cacdc1ea0310a9bb4f12522f8ce2e3034ce378d681604e547d"
       },
       "downloads": -1,
-      "filename": "datasette_copyable-0.3.1-py3-none-any.whl",
+      "filename": "datasette_copyable-0.3.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "bd344a050115c2d6dd6ce22e86fb02b2",
+      "md5_digest": "dd4b6636b922a1ea8379657e8ba7640a",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 4229,
-      "upload_time": "2020-11-14T21:45:43",
-      "upload_time_iso_8601": "2020-11-14T21:45:43.381284Z",
-      "url": "https://files.pythonhosted.org/packages/05/69/0e5d610d1385206cc79345a1392fd06f826387f0fc13c3cabce738ee1c88/datasette_copyable-0.3.1-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 4174,
+      "upload_time": "2022-11-18T06:12:28",
+      "upload_time_iso_8601": "2022-11-18T06:12:28.200399Z",
+      "url": "https://files.pythonhosted.org/packages/6d/de/ec952cfe23e9dd52c9a37a94b2ad2eee975177a46211cf80e62a2168373b/datasette_copyable-0.3.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "71df408efc36531f61946980c71c7c6d",
-        "sha256": "95975cf8e9d0c436db7f31d0baf8776afa4f3430c040049bc6fd6462d1591d13"
+        "md5": "fdffbc51631a02b3e0a411dd803d5798",
+        "sha256": "c0eacfbb14fd255a903f7ee858bea51cae48e7ba9668a38acebeaaecc82db0b4"
       },
       "downloads": -1,
-      "filename": "datasette-copyable-0.3.1.tar.gz",
+      "filename": "datasette-copyable-0.3.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "71df408efc36531f61946980c71c7c6d",
+      "md5_digest": "fdffbc51631a02b3e0a411dd803d5798",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 3880,
-      "upload_time": "2020-11-14T21:45:44",
-      "upload_time_iso_8601": "2020-11-14T21:45:44.285077Z",
-      "url": "https://files.pythonhosted.org/packages/bd/e1/9d2b079ab7f0af4cc7e4a19ed8b16c56305f7c3c4806b13b2d8bc35e16f7/datasette-copyable-0.3.1.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 3737,
+      "upload_time": "2022-11-18T06:12:29",
+      "upload_time_iso_8601": "2022-11-18T06:12:29.417144Z",
+      "url": "https://files.pythonhosted.org/packages/af/89/09f5889f5f37e5638449beaff393065280d47fa53133ad54f287c8fb3a11/datasette-copyable-0.3.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
