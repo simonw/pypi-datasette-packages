@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-export\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-export.svg)](https://pypi.org/project/datasette-export/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-export?include_prereleases&label=changelog)](https://github.com/simonw/datasette-export/releases)\n[![Tests](https://github.com/simonw/datasette-export/workflows/Test/badge.svg)](https://github.com/simonw/datasette-export/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-export/blob/main/LICENSE)\n\nExport pages from Datasette to files on disk\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-export\n\n## Usage\n\nThis plugin adds a new `export` command. You can use this to export one or more pages from Datasette to files on disk.\n\nPass the `--path` option one or more times to specify pages:\n\n    datasette export mydata.db --path / --path /mydata.json --path /mydata/table1.csv\n\nThis will create an `export/` directory and save the following files to it:\n\n- `index.html`\n- `mydata.json`\n- `mydata/table1.csv`\n\nUse `--output` to specify an alternative directory for the export:\n\n    datasette export mydata.db --path / --output mywebsite/\n\nIn addition to specifying paths, you can pass one or more SQL queries that can return lists of pages to be exported:\n\n    datasette export mydata.db --sql \"select path from pages\"\n\nFor example, to export JSON for every row in the `fixtures/facetable` table:\n\n    datasette export fixtures.db \\\n      --sql \"select '/fixtures/facetable/' || pk || '.json' from facetable\"\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-export\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-export",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-export",
+    "package_url": "https://pypi.org/project/datasette-export/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-export/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-export/actions",
+      "Changelog": "https://github.com/simonw/datasette-export/releases",
+      "Homepage": "https://github.com/simonw/datasette-export",
+      "Issues": "https://github.com/simonw/datasette-export/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-export/0.1a0/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Export pages from Datasette to files on disk",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15901601,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "066b02f173c09fe1945541cb2699966b",
+          "sha256": "cb287d06dadb8ab7d4e60bc8f877773e4a733bf0cfbcc6ecd5b15756fd4e4899"
+        },
+        "downloads": -1,
+        "filename": "datasette_export-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "066b02f173c09fe1945541cb2699966b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7631,
+        "upload_time": "2022-11-27T04:21:15",
+        "upload_time_iso_8601": "2022-11-27T04:21:15.139183Z",
+        "url": "https://files.pythonhosted.org/packages/de/c7/d486319357f442c817926e238fe98690c44fadc14e61601ab8e0e4bacb35/datasette_export-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d373d842825d8228580123ca97cf661d",
+          "sha256": "3064cc2826bfbca7eb9d9649d64427f7c8b6cee576e2584b5929e1e0daa8832a"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d373d842825d8228580123ca97cf661d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7217,
+        "upload_time": "2022-11-27T04:21:16",
+        "upload_time_iso_8601": "2022-11-27T04:21:16.584902Z",
+        "url": "https://files.pythonhosted.org/packages/c3/ef/c64af64001a4370b9435bdb8c7b8e8f55fae415232b0332a40cf84cad2e8/datasette-export-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "066b02f173c09fe1945541cb2699966b",
+        "sha256": "cb287d06dadb8ab7d4e60bc8f877773e4a733bf0cfbcc6ecd5b15756fd4e4899"
+      },
+      "downloads": -1,
+      "filename": "datasette_export-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "066b02f173c09fe1945541cb2699966b",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7631,
+      "upload_time": "2022-11-27T04:21:15",
+      "upload_time_iso_8601": "2022-11-27T04:21:15.139183Z",
+      "url": "https://files.pythonhosted.org/packages/de/c7/d486319357f442c817926e238fe98690c44fadc14e61601ab8e0e4bacb35/datasette_export-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "d373d842825d8228580123ca97cf661d",
+        "sha256": "3064cc2826bfbca7eb9d9649d64427f7c8b6cee576e2584b5929e1e0daa8832a"
+      },
+      "downloads": -1,
+      "filename": "datasette-export-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d373d842825d8228580123ca97cf661d",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 7217,
+      "upload_time": "2022-11-27T04:21:16",
+      "upload_time_iso_8601": "2022-11-27T04:21:16.584902Z",
+      "url": "https://files.pythonhosted.org/packages/c3/ef/c64af64001a4370b9435bdb8c7b8e8f55fae415232b0332a40cf84cad2e8/datasette-export-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
