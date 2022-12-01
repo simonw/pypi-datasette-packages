@@ -140,3 +140,6 @@ datasette-edit-templates
 datasette-public
 datasette-gunicorn
 datasette-external-links-new-tabs
+datasette-export
+datasette-ephemeral-tables
+dclient
