@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-public",
       "Issues": "https://github.com/simonw/datasette-public/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-public/0.2.1/",
+    "release_url": "https://pypi.org/project/datasette-public/0.2.2/",
     "requires_dist": [
       "datasette (>=0.63)",
       "pytest ; extra == 'test'",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Make specific Datasette tables visible to the public",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15811669,
+  "last_serial": 15974354,
   "releases": {
     "0.1": [
       {
@@ -170,46 +170,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "536bb1b4962d4b3b150e2f576f13137b",
+          "sha256": "2d6f54efea624413d9568a49ef5d20ee5b514621dc49a6cbe91c0095c34cb6f0"
+        },
+        "downloads": -1,
+        "filename": "datasette_public-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "536bb1b4962d4b3b150e2f576f13137b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8818,
+        "upload_time": "2022-12-02T21:10:16",
+        "upload_time_iso_8601": "2022-12-02T21:10:16.910299Z",
+        "url": "https://files.pythonhosted.org/packages/2a/ac/00504371fe7030311878cb7686cb438f84062a5c8f106379a923c179f4b8/datasette_public-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "c020b9c665b6899576c8db0ecef26727",
+          "sha256": "fbac60ed92f93a2d8818c50d73c3914eecf8fac5c03d0b5b5c2f7297d25fe6b2"
+        },
+        "downloads": -1,
+        "filename": "datasette-public-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c020b9c665b6899576c8db0ecef26727",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8126,
+        "upload_time": "2022-12-02T21:10:18",
+        "upload_time_iso_8601": "2022-12-02T21:10:18.859086Z",
+        "url": "https://files.pythonhosted.org/packages/57/6e/0bf3589d5233c7e047e96fa250b7a1d2e600ce2e1fe4efbec906a01afc50/datasette-public-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "a2d1917540020fd0f8cf79bd037e5ef8",
-        "sha256": "31b72ae6a8220a7581c9ac27651c4f34b5e113c10c32581ade0600fcca0cbdb1"
+        "md5": "536bb1b4962d4b3b150e2f576f13137b",
+        "sha256": "2d6f54efea624413d9568a49ef5d20ee5b514621dc49a6cbe91c0095c34cb6f0"
       },
       "downloads": -1,
-      "filename": "datasette_public-0.2.1-py3-none-any.whl",
+      "filename": "datasette_public-0.2.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a2d1917540020fd0f8cf79bd037e5ef8",
+      "md5_digest": "536bb1b4962d4b3b150e2f576f13137b",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8676,
-      "upload_time": "2022-11-18T06:16:47",
-      "upload_time_iso_8601": "2022-11-18T06:16:47.640646Z",
-      "url": "https://files.pythonhosted.org/packages/21/c3/818e203308e6584d686430858b66cf1ce13fc556481551627836b33ba480/datasette_public-0.2.1-py3-none-any.whl",
+      "size": 8818,
+      "upload_time": "2022-12-02T21:10:16",
+      "upload_time_iso_8601": "2022-12-02T21:10:16.910299Z",
+      "url": "https://files.pythonhosted.org/packages/2a/ac/00504371fe7030311878cb7686cb438f84062a5c8f106379a923c179f4b8/datasette_public-0.2.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "1728121e763276299b9249c9e74ab0c4",
-        "sha256": "cfe113149d342c6fdc13028fba1e5cfa86160f182c1c89cb1255ca76147edcba"
+        "md5": "c020b9c665b6899576c8db0ecef26727",
+        "sha256": "fbac60ed92f93a2d8818c50d73c3914eecf8fac5c03d0b5b5c2f7297d25fe6b2"
       },
       "downloads": -1,
-      "filename": "datasette-public-0.2.1.tar.gz",
+      "filename": "datasette-public-0.2.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "1728121e763276299b9249c9e74ab0c4",
+      "md5_digest": "c020b9c665b6899576c8db0ecef26727",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 7990,
-      "upload_time": "2022-11-18T06:16:49",
-      "upload_time_iso_8601": "2022-11-18T06:16:49.307914Z",
-      "url": "https://files.pythonhosted.org/packages/fc/8a/7dfb1ad748f6aec6a9f325f24ae414d693ac519716d52f6da281ff7fc7e0/datasette-public-0.2.1.tar.gz",
+      "size": 8126,
+      "upload_time": "2022-12-02T21:10:18",
+      "upload_time_iso_8601": "2022-12-02T21:10:18.859086Z",
+      "url": "https://files.pythonhosted.org/packages/57/6e/0bf3589d5233c7e047e96fa250b7a1d2e600ce2e1fe4efbec906a01afc50/datasette-public-0.2.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
