@@ -3,8 +3,11 @@
     "author": "Simon Willison",
     "author_email": "",
     "bugtrack_url": null,
-    "classifiers": [],
-    "description": "# datasette-render-binary\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-binary.svg)](https://pypi.org/project/datasette-render-binary/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-render-binary.svg?style=svg)](https://circleci.com/gh/simonw/datasette-render-binary)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-binary/blob/master/LICENSE)\n\nDatasette plugin for rendering binary data.\n\nInstall this plugin in the same environment as Datasette to enable this new functionality:\n\n    pip install datasette-render-binary\n\nBinary data in cells will now be rendered as a mixture of characters and octets.\n\n![Screenshot](https://raw.githubusercontent.com/simonw/datasette-render-binary/master/example.png)\n\n\n",
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-render-binary\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-binary.svg)](https://pypi.org/project/datasette-render-binary/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-binary?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-binary/releases)\n[![Tests](https://github.com/simonw/datasette-render-binary/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-binary/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-binary/blob/main/LICENSE)\n\nDatasette plugin for rendering binary data.\n\nInstall this plugin in the same environment as Datasette to enable this new functionality:\n\n    pip install datasette-render-binary\n\nBinary data in cells will now be rendered as a mixture of characters and octets.\n\n![Screenshot](https://raw.githubusercontent.com/simonw/datasette-render-binary/master/example.png)\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -13,31 +16,34 @@
       "last_month": -1,
       "last_week": -1
     },
-    "home_page": "https://github.com/simonw/datasette-render-binary",
+    "home_page": "https://datasette.io/plugins/datasette-render-binary",
     "keywords": "",
     "license": "Apache License, Version 2.0",
     "maintainer": "",
     "maintainer_email": "",
     "name": "datasette-render-binary",
     "package_url": "https://pypi.org/project/datasette-render-binary/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-render-binary/",
     "project_urls": {
-      "Homepage": "https://github.com/simonw/datasette-render-binary"
+      "CI": "https://github.com/simonw/datasette-render-binary/actions",
+      "Changelog": "https://github.com/simonw/datasette-render-binary/releases",
+      "Homepage": "https://datasette.io/plugins/datasette-render-binary",
+      "Issues": "https://github.com/simonw/datasette-render-binary/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-render-binary/0.3/",
+    "release_url": "https://pypi.org/project/datasette-render-binary/0.3.1/",
     "requires_dist": [
       "datasette",
       "filetype",
       "pytest ; extra == 'test'"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.7",
     "summary": "Datasette plugin for rendering binary data",
-    "version": "0.3",
+    "version": "0.3.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 5396629,
+  "last_serial": 16056174,
   "releases": {
     "0.1": [
       {
@@ -104,26 +110,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "83a024399baad6a5f59c6dd410a84879",
+          "sha256": "bb4f95cf5550e8e2e7f8ce1e9e09f811ba8d6d7902509234d79fcf5d72d9a2c2"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_binary-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "83a024399baad6a5f59c6dd410a84879",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7008,
+        "upload_time": "2022-12-10T06:45:31",
+        "upload_time_iso_8601": "2022-12-10T06:45:31.204182Z",
+        "url": "https://files.pythonhosted.org/packages/66/04/35bfa3a5e9f64c9be4f51adcd326c0144c5ce191616c1cc50189eb7f3ed0/datasette_render_binary-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "103ff6cac7a8c93bf9e425a3126cff56",
+          "sha256": "bbb82d4b4c0004dcf80296317ef6e338cb5129508b798f014ac305d3e3d7a8b5"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-binary-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "103ff6cac7a8c93bf9e425a3126cff56",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6484,
+        "upload_time": "2022-12-10T06:45:32",
+        "upload_time_iso_8601": "2022-12-10T06:45:32.428242Z",
+        "url": "https://files.pythonhosted.org/packages/76/27/c9647be933c44de89611a2a42e40a52976aa77a1f5d3e5e7c9251c904295/datasette-render-binary-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "487afd30b85ace75a9f575e61dca95bc",
-        "sha256": "27b1f87a4eb5f86788fde24fd38efdcee9f1ff89442b0a42a3a6ba5a11960921"
+        "md5": "83a024399baad6a5f59c6dd410a84879",
+        "sha256": "bb4f95cf5550e8e2e7f8ce1e9e09f811ba8d6d7902509234d79fcf5d72d9a2c2"
       },
       "downloads": -1,
-      "filename": "datasette_render_binary-0.3-py3-none-any.whl",
+      "filename": "datasette_render_binary-0.3.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "487afd30b85ace75a9f575e61dca95bc",
+      "md5_digest": "83a024399baad6a5f59c6dd410a84879",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 6822,
-      "upload_time": "2019-06-13T16:15:24",
-      "upload_time_iso_8601": "2019-06-13T16:15:24.289004Z",
-      "url": "https://files.pythonhosted.org/packages/0a/9e/b8eae90592b996202a6b604a7c4ac0a8bf37a9cd1866fe068e4c0ccb8106/datasette_render_binary-0.3-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 7008,
+      "upload_time": "2022-12-10T06:45:31",
+      "upload_time_iso_8601": "2022-12-10T06:45:31.204182Z",
+      "url": "https://files.pythonhosted.org/packages/66/04/35bfa3a5e9f64c9be4f51adcd326c0144c5ce191616c1cc50189eb7f3ed0/datasette_render_binary-0.3.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "103ff6cac7a8c93bf9e425a3126cff56",
+        "sha256": "bbb82d4b4c0004dcf80296317ef6e338cb5129508b798f014ac305d3e3d7a8b5"
+      },
+      "downloads": -1,
+      "filename": "datasette-render-binary-0.3.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "103ff6cac7a8c93bf9e425a3126cff56",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6484,
+      "upload_time": "2022-12-10T06:45:32",
+      "upload_time_iso_8601": "2022-12-10T06:45:32.428242Z",
+      "url": "https://files.pythonhosted.org/packages/76/27/c9647be933c44de89611a2a42e40a52976aa77a1f5d3e5e7c9251c904295/datasette-render-binary-0.3.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
