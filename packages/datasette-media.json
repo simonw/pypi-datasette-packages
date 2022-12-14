@@ -3,8 +3,11 @@
     "author": "Simon Willison",
     "author_email": "",
     "bugtrack_url": null,
-    "classifiers": [],
-    "description": "# datasette-media\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-media.svg)](https://pypi.org/project/datasette-media/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-media?include_prereleases&label=changelog)](https://github.com/simonw/datasette-media/releases)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-media.svg?style=svg)](https://circleci.com/gh/simonw/datasette-media)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-media/blob/master/LICENSE)\n\nDatasette plugin for serving media based on a SQL query.\n\nUse this when you have a database table containing references to files on disk - or binary content stored in BLOB columns - that you would like to be able to serve to your users.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-media\n\n### HEIC image support\n\nModern iPhones save their photos using the [HEIC image format](https://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format). Processing these images requires an additional dependency, [pyheif](https://pypi.org/project/pyheif/). You can include this dependency by running:\n\n    $ pip install datasette-media[heif]\n\n## Usage\n\nYou can use this plugin to configure Datasette to serve static media based on SQL queries to an underlying database table.\n\nMedia will be served from URLs that start with `/-/media/`. The full URL to each media asset will look like this:\n\n    /-/media/type-of-media/media-key\n\n`type-of-media` will correspond to a configured SQL query, and might be something like `photo`. `media-key` will be an identifier that is used as part of the underlying SQL query to find which file should be served.\n\n### Serving static files from disk\n\nThe following ``metadata.json`` configuration will cause this plugin to serve files from disk, based on queries to a database table called `apple_photos`.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\"\n            }\n        }\n    }\n}\n```\n\nA request to `/-/media/photo/CF972D33-5324-44F2-8DAE-22CB3182CD31` will execute the following SQL query:\n\n```sql\nselect filepath from apple_photos where uuid=:key\n```\n\nThe value from the URL -  in this case `CF972D33-5324-44F2-8DAE-22CB3182CD31` - will be passed as the `:key` parameter to the query.\n\nThe query returns a `filepath` value that has been read from the table. The plugin will then read that file from disk and serve it in response to the request.\n\nSQL queries default to running against the first connected database. You can specify a different database to execute the query against using `\"database\": \"name_of_db\"`. To execute against `photos.db`, use this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            }\n        }\n    }\n}\n```\n\nSee [dogsheep-photos](https://github.com/dogsheep/dogsheep-photos) for an example of an application that can benefit from this plugin.\n\n### Serving binary content from BLOB columns\n\nIf your SQL query returns a `content` column, this will be served directly to the user:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select thumbnail as content from photos where uuid=:key\",\n                \"database\": \"thumbs\"\n            }\n        }\n    }\n}\n```\n\nYou can also return a `content_type` column which will be used as the `Content-Type` header served to the user:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select body as content, 'text/html;charset=utf-8' as content_type from documents where id=:key\",\n                \"database\": \"documents\"\n            }\n        }\n    }\n}\n```\n\nIf you do not specify a `content_type` the default of `application/octet-stream` will be used.\n\n### Serving content proxied from a URL\n\nTo serve content that is itself fetched from elsewhere, return a `content_url` column. This can be particularly useful when combined with the ability to resize images (described in the next section).\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photos\": {\n                \"sql\": \"select photo_url as content_url from photos where id=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true\n            }\n        }\n    }\n}\n```\n\nNow you can access resized versions of images from that URL like so:\n\n    /-/media/photos/13?w=200\n\n### Setting a download file name\n\nThe `content_filename` column can be returned to force browsers to download the content using a specific file name.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"hello\": {\n                \"sql\": \"select 'Hello ' || :key as content, 'hello.txt' as content_filename\"\n            }\n        }\n    }\n}\n```\n\nVisiting `/-/media/hello/Groot` will cause your browser to download a file called `hello.txt` containing the text `Hello Groot`.\n\n### Resizing or transforming images\n\nYour SQL query can specify that an image should be resized and/or converted to another format by returning additional columns. All three are optional.\n\n* `resize_width` - the width to resize the image to\n* `resize_width` - the height to resize the image to\n* `output_format` - the output format to use (e.g. `jpeg` or `png`) - any output format [supported by Pillow](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html) is allowed here.\n\nIf you specify one but not the other of `resize_width` or `resize_height` the unspecified one will be calculated automatically to maintain the aspect ratio of the image.\n\nHere's an example configuration that will resize all images to be JPEGs that are 200 pixels in height:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath, 200 as resize_height, 'jpeg' as output_format from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            }\n        }\n    }\n}\n```\n\nIf you enable the `enable_transform` configuration option you can instead specify transform parameters at runtime using querystring parameters. For example:\n\n- `/-/media/photo/CF972D33?w=200` to resize to a fixed width\n- `/-/media/photo/CF972D33?h=200` to resize to a fixed height\n- `/-/media/photo/CF972D33?format=jpeg` to convert to JPEG\n\nThat option is added like so:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true\n            }\n        }\n    }\n}\n```\n\nThe maximum allowed height or width is 4000 pixels. You can change this limit using the `\"max_width_height\"` option:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true,\n                \"max_width_height\": 1000\n            }\n        }\n    }\n}\n```\n\n## Configuration\n\nIn addition to the different named content types, the following special plugin configuration setting is available:\n\n- `transform_threads` - number of threads to use for running transformations (e.g. resizing). Defaults to 4.\n\nThis can be used like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            },\n            \"transform_threads\": 8\n        }\n    }\n}\n```\n\n\n",
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-media\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-media.svg)](https://pypi.org/project/datasette-media/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-media?include_prereleases&label=changelog)](https://github.com/simonw/datasette-media/releases)\n[![Tests](https://github.com/simonw/datasette-media/workflows/Test/badge.svg)](https://github.com/simonw/datasette-media/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-media/blob/main/LICENSE)\n\nDatasette plugin for serving media based on a SQL query.\n\nUse this when you have a database table containing references to files on disk - or binary content stored in BLOB columns - that you would like to be able to serve to your users.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-media\n\n### HEIC image support\n\nModern iPhones save their photos using the [HEIC image format](https://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format). Processing these images requires an additional dependency, [pyheif](https://pypi.org/project/pyheif/). You can include this dependency by running:\n\n    $ pip install datasette-media[heif]\n\n## Usage\n\nYou can use this plugin to configure Datasette to serve static media based on SQL queries to an underlying database table.\n\nMedia will be served from URLs that start with `/-/media/`. The full URL to each media asset will look like this:\n\n    /-/media/type-of-media/media-key\n\n`type-of-media` will correspond to a configured SQL query, and might be something like `photo`. `media-key` will be an identifier that is used as part of the underlying SQL query to find which file should be served.\n\n### Serving static files from disk\n\nThe following ``metadata.json`` configuration will cause this plugin to serve files from disk, based on queries to a database table called `apple_photos`.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\"\n            }\n        }\n    }\n}\n```\n\nA request to `/-/media/photo/CF972D33-5324-44F2-8DAE-22CB3182CD31` will execute the following SQL query:\n\n```sql\nselect filepath from apple_photos where uuid=:key\n```\n\nThe value from the URL -  in this case `CF972D33-5324-44F2-8DAE-22CB3182CD31` - will be passed as the `:key` parameter to the query.\n\nThe query returns a `filepath` value that has been read from the table. The plugin will then read that file from disk and serve it in response to the request.\n\nSQL queries default to running against the first connected database. You can specify a different database to execute the query against using `\"database\": \"name_of_db\"`. To execute against `photos.db`, use this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            }\n        }\n    }\n}\n```\n\nSee [dogsheep-photos](https://github.com/dogsheep/dogsheep-photos) for an example of an application that can benefit from this plugin.\n\n### Serving binary content from BLOB columns\n\nIf your SQL query returns a `content` column, this will be served directly to the user:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select thumbnail as content from photos where uuid=:key\",\n                \"database\": \"thumbs\"\n            }\n        }\n    }\n}\n```\n\nYou can also return a `content_type` column which will be used as the `Content-Type` header served to the user:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select body as content, 'text/html;charset=utf-8' as content_type from documents where id=:key\",\n                \"database\": \"documents\"\n            }\n        }\n    }\n}\n```\n\nIf you do not specify a `content_type` the default of `application/octet-stream` will be used.\n\n### Serving content proxied from a URL\n\nTo serve content that is itself fetched from elsewhere, return a `content_url` column. This can be particularly useful when combined with the ability to resize images (described in the next section).\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photos\": {\n                \"sql\": \"select photo_url as content_url from photos where id=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true\n            }\n        }\n    }\n}\n```\n\nNow you can access resized versions of images from that URL like so:\n\n    /-/media/photos/13?w=200\n\n### Setting a download file name\n\nThe `content_filename` column can be returned to force browsers to download the content using a specific file name.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"hello\": {\n                \"sql\": \"select 'Hello ' || :key as content, 'hello.txt' as content_filename\"\n            }\n        }\n    }\n}\n```\n\nVisiting `/-/media/hello/Groot` will cause your browser to download a file called `hello.txt` containing the text `Hello Groot`.\n\n### Resizing or transforming images\n\nYour SQL query can specify that an image should be resized and/or converted to another format by returning additional columns. All three are optional.\n\n* `resize_width` - the width to resize the image to\n* `resize_width` - the height to resize the image to\n* `output_format` - the output format to use (e.g. `jpeg` or `png`) - any output format [supported by Pillow](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html) is allowed here.\n\nIf you specify one but not the other of `resize_width` or `resize_height` the unspecified one will be calculated automatically to maintain the aspect ratio of the image.\n\nHere's an example configuration that will resize all images to be JPEGs that are 200 pixels in height:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath, 200 as resize_height, 'jpeg' as output_format from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            }\n        }\n    }\n}\n```\n\nIf you enable the `enable_transform` configuration option you can instead specify transform parameters at runtime using querystring parameters. For example:\n\n- `/-/media/photo/CF972D33?w=200` to resize to a fixed width\n- `/-/media/photo/CF972D33?h=200` to resize to a fixed height\n- `/-/media/photo/CF972D33?format=jpeg` to convert to JPEG\n\nThat option is added like so:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true\n            }\n        }\n    }\n}\n```\n\nThe maximum allowed height or width is 4000 pixels. You can change this limit using the `\"max_width_height\"` option:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\",\n                \"enable_transform\": true,\n                \"max_width_height\": 1000\n            }\n        }\n    }\n}\n```\n\n## Configuration\n\nIn addition to the different named content types, the following special plugin configuration setting is available:\n\n- `transform_threads` - number of threads to use for running transformations (e.g. resizing). Defaults to 4.\n\nThis can be used like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-media\": {\n            \"photo\": {\n                \"sql\": \"select filepath from apple_photos where uuid=:key\",\n                \"database\": \"photos\"\n            },\n            \"transform_threads\": 8\n        }\n    }\n}\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,15 +23,15 @@
     "maintainer_email": "",
     "name": "datasette-media",
     "package_url": "https://pypi.org/project/datasette-media/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-media/",
     "project_urls": {
-      "CI": "https://app.circleci.com/pipelines/github/simonw/datasette-media",
+      "CI": "https://github.com/simonw/datasette-media/actions",
       "Changelog": "https://github.com/simonw/datasette-media/releases",
       "Homepage": "https://github.com/simonw/datasette-media",
-      "Issues": "https://gitlab.com/simonw/datasette-media/issues"
+      "Issues": "https://github.com/simonw/datasette-media/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-media/0.5/",
+    "release_url": "https://pypi.org/project/datasette-media/0.5.1/",
     "requires_dist": [
       "datasette (>=0.44)",
       "Pillow (>=7.1.2)",
@@ -42,11 +45,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin for serving media based on a SQL query",
-    "version": "0.5",
+    "version": "0.5.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 7838133,
+  "last_serial": 16091001,
   "releases": {
     "0.1": [
       {
@@ -179,26 +182,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "e18ca506e75433ba937b735e09f3141c",
+          "sha256": "94b2665aac04b72c46f2a25fe79d44727ecdff03b360d8b5b4178304055b16da"
+        },
+        "downloads": -1,
+        "filename": "datasette_media-0.5.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e18ca506e75433ba937b735e09f3141c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 11551,
+        "upload_time": "2022-12-13T20:04:55",
+        "upload_time_iso_8601": "2022-12-13T20:04:55.678659Z",
+        "url": "https://files.pythonhosted.org/packages/44/b1/65f7188c000cda7dd81d7bd5cfc42c553ad5dfb212426843f245694cc514/datasette_media-0.5.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "64c8077c98ca1f0529b73b02d3ce3b6c",
+          "sha256": "fcfea1a6eef9efb0acd02a1ff3f144cf494459c266a94c940497c559547b18cc"
+        },
+        "downloads": -1,
+        "filename": "datasette-media-0.5.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "64c8077c98ca1f0529b73b02d3ce3b6c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 11071,
+        "upload_time": "2022-12-13T20:04:57",
+        "upload_time_iso_8601": "2022-12-13T20:04:57.391940Z",
+        "url": "https://files.pythonhosted.org/packages/4c/dd/02b0e307b8ab862d614a758342d76a9edbf9bc13e65a38b70ba17f867d71/datasette-media-0.5.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "6ea6f1c55f69aad59745973e82d04072",
-        "sha256": "850d821274bae5f5c81e99ecb75bc5576eebdce0650125af9119d667760d4622"
+        "md5": "e18ca506e75433ba937b735e09f3141c",
+        "sha256": "94b2665aac04b72c46f2a25fe79d44727ecdff03b360d8b5b4178304055b16da"
       },
       "downloads": -1,
-      "filename": "datasette_media-0.5-py3-none-any.whl",
+      "filename": "datasette_media-0.5.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "6ea6f1c55f69aad59745973e82d04072",
+      "md5_digest": "e18ca506e75433ba937b735e09f3141c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 11400,
-      "upload_time": "2020-07-29T22:08:15",
-      "upload_time_iso_8601": "2020-07-29T22:08:15.321510Z",
-      "url": "https://files.pythonhosted.org/packages/59/a9/e0190541d3aa24ed212d45f6a678801d1e08340f80049480fd226382fdc3/datasette_media-0.5-py3-none-any.whl",
+      "size": 11551,
+      "upload_time": "2022-12-13T20:04:55",
+      "upload_time_iso_8601": "2022-12-13T20:04:55.678659Z",
+      "url": "https://files.pythonhosted.org/packages/44/b1/65f7188c000cda7dd81d7bd5cfc42c553ad5dfb212426843f245694cc514/datasette_media-0.5.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "64c8077c98ca1f0529b73b02d3ce3b6c",
+        "sha256": "fcfea1a6eef9efb0acd02a1ff3f144cf494459c266a94c940497c559547b18cc"
+      },
+      "downloads": -1,
+      "filename": "datasette-media-0.5.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "64c8077c98ca1f0529b73b02d3ce3b6c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 11071,
+      "upload_time": "2022-12-13T20:04:57",
+      "upload_time_iso_8601": "2022-12-13T20:04:57.391940Z",
+      "url": "https://files.pythonhosted.org/packages/4c/dd/02b0e307b8ab862d614a758342d76a9edbf9bc13e65a38b70ba17f867d71/datasette-media-0.5.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
