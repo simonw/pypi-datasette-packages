@@ -82,7 +82,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15961210,
+  "last_serial": 16108200,
   "releases": {
     "0.10": [
       {
@@ -4234,6 +4234,48 @@
         "upload_time": "2022-12-01T21:52:34",
         "upload_time_iso_8601": "2022-12-01T21:52:34.120052Z",
         "url": "https://files.pythonhosted.org/packages/c0/50/1805229c74197762a6bb73002a673e7906dd1b8672348f4d375797a908b2/datasette-1.0a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "9806806adf4cee988aa318650a07514e",
+          "sha256": "4b53ecce6b86aa04556799ceec17be6dbbee0a51020733dcb31582a2dc19f167"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9806806adf4cee988aa318650a07514e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 282848,
+        "upload_time": "2022-12-15T02:14:47",
+        "upload_time_iso_8601": "2022-12-15T02:14:47.761088Z",
+        "url": "https://files.pythonhosted.org/packages/3c/08/28018288c97b3f578cc591ff84ec8aaf96af06a944a96dc53ca8c449ead7/datasette-1.0a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "47d0882f68fa789429d98177db29e8e2",
+          "sha256": "fabd01ec77155555822efdd291f59a821a74a685bd6a2a2637c02a5663c8c995"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "47d0882f68fa789429d98177db29e8e2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 259469,
+        "upload_time": "2022-12-15T02:14:49",
+        "upload_time_iso_8601": "2022-12-15T02:14:49.401339Z",
+        "url": "https://files.pythonhosted.org/packages/35/e6/236377d29b8dbd669f8702997a113aa3de35395481b9e84930f4efa4f71e/datasette-1.0a2.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

@@ -3,8 +3,11 @@
     "author": "Simon Willison",
     "author_email": "",
     "bugtrack_url": null,
-    "classifiers": [],
-    "description": "# datasette-ripgrep\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ripgrep.svg)](https://pypi.org/project/datasette-ripgrep/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-ripgrep?include_prereleases&label=changelog)](https://github.com/simonw/datasette-ripgrep/releases)\n[![Tests](https://github.com/simonw/datasette-ripgrep/workflows/Test/badge.svg)](https://github.com/simonw/datasette-ripgrep/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-ripgrep/blob/main/LICENSE)\n\nWeb interface for searching your code using [ripgrep](https://github.com/BurntSushi/ripgrep), built as a [Datasette](https://datasette.io/) plugin\n\nFor background on this project see [datasette-ripgrep: deploy a regular expression search engine for your source code](https://simonwillison.net/2020/Nov/28/datasette-ripgrep/).\n\n## Demo\n\nTry this plugin out at https://ripgrep.datasette.io/-/ripgrep - where you can run regular expression searches across the source code of Datasette and all of the `datasette-*` plugins belonging to the [simonw GitHub user](https://github.com/simonw).\n\nSome example searches:\n\n- [with.\\*AsyncClient](https://ripgrep.datasette.io/-/ripgrep?pattern=with.*AsyncClient) - regular expression search for `with.*AsyncClient`\n- [.plugin_config, literal=on](https://ripgrep.datasette.io/-/ripgrep?pattern=.plugin_config\\(&literal=on) - a non-regular expression search for `.plugin_config(`\n- [with.\\*AsyncClient glob=datasette/\\*\\*](https://ripgrep.datasette.io/-/ripgrep?pattern=with.*AsyncClient&glob=datasette%2F%2A%2A) - search for that pattern only within the `datasette/` top folder\n- [\"sqlite-utils\\[\">\\] glob=setup.py](https://ripgrep.datasette.io/-/ripgrep?pattern=%22sqlite-utils%5B%22%3E%5D&glob=setup.py) - a regular expression search for packages that depend on either `sqlite-utils` or `sqlite-utils>=some-version`\n- [test glob=!\\*.html](https://ripgrep.datasette.io/-/ripgrep?pattern=test&glob=%21*.html) - search for the string `test` but exclude results in HTML files\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-ripgrep\n\nThe `rg` executable needs to be [installed](https://github.com/BurntSushi/ripgrep/blob/master/README.md#installation) such that it can be run by this tool.\n\n## Usage\n\nThis plugin requires configuration: it needs to a `path` setting so that it knows where to run searches.\n\nCreate a `metadata.json` file that looks like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-ripgrep\": {\n            \"path\": \"/path/to/your/files\"\n        }\n    }\n}\n```\n\nNow run Datasette using `datasette -m metadata.json`. The plugin will add an interface at `/-/ripgrep` for running searches.\n\n## Plugin configuration\n\nThe `\"path\"` configuration is required. Optional extra configuration options are:\n\n- `time_limit` - floating point number. The `rg` process will be terminated if it takes longer than this limit. The default is one second, `1.0`.\n- `max_lines` - integer. The `rg` process will be terminated if it returns more than this number of lines. The default is `2000`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-ripgrep\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-ripgrep\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ripgrep.svg)](https://pypi.org/project/datasette-ripgrep/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-ripgrep?include_prereleases&label=changelog)](https://github.com/simonw/datasette-ripgrep/releases)\n[![Tests](https://github.com/simonw/datasette-ripgrep/workflows/Test/badge.svg)](https://github.com/simonw/datasette-ripgrep/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-ripgrep/blob/main/LICENSE)\n\nWeb interface for searching your code using [ripgrep](https://github.com/BurntSushi/ripgrep), built as a [Datasette](https://datasette.io/) plugin\n\nFor background on this project see [datasette-ripgrep: deploy a regular expression search engine for your source code](https://simonwillison.net/2020/Nov/28/datasette-ripgrep/).\n\n## Demo\n\nTry this plugin out at https://ripgrep.datasette.io/-/ripgrep - where you can run regular expression searches across the source code of Datasette and all of the `datasette-*` plugins belonging to the [simonw GitHub user](https://github.com/simonw).\n\nSome example searches:\n\n- [with.\\*AsyncClient](https://ripgrep.datasette.io/-/ripgrep?pattern=with.*AsyncClient) - regular expression search for `with.*AsyncClient`\n- [.plugin_config, literal=on](https://ripgrep.datasette.io/-/ripgrep?pattern=.plugin_config\\(&literal=on) - a non-regular expression search for `.plugin_config(`\n- [with.\\*AsyncClient glob=datasette/\\*\\*](https://ripgrep.datasette.io/-/ripgrep?pattern=with.*AsyncClient&glob=datasette%2F%2A%2A) - search for that pattern only within the `datasette/` top folder\n- [\"sqlite-utils\\[\">\\] glob=setup.py](https://ripgrep.datasette.io/-/ripgrep?pattern=%22sqlite-utils%5B%22%3E%5D&glob=setup.py) - a regular expression search for packages that depend on either `sqlite-utils` or `sqlite-utils>=some-version`\n- [test glob=!\\*.html](https://ripgrep.datasette.io/-/ripgrep?pattern=test&glob=%21*.html) - search for the string `test` but exclude results in HTML files\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-ripgrep\n\nThe `rg` executable needs to be [installed](https://github.com/BurntSushi/ripgrep/blob/master/README.md#installation) such that it can be run by this tool.\n\n## Usage\n\nThis plugin requires configuration: it needs to a `path` setting so that it knows where to run searches.\n\nCreate a `metadata.json` file that looks like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-ripgrep\": {\n            \"path\": \"/path/to/your/files\"\n        }\n    }\n}\n```\n\nNow run Datasette using `datasette -m metadata.json`. The plugin will add an interface at `/-/ripgrep` for running searches.\n\n## Plugin configuration\n\nThe `\"path\"` configuration is required. Optional extra configuration options are:\n\n- `time_limit` - floating point number. The `rg` process will be terminated if it takes longer than this limit. The default is one second, `1.0`.\n- `max_lines` - integer. The `rg` process will be terminated if it returns more than this number of lines. The default is `2000`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-ripgrep\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,20 +31,20 @@
       "Homepage": "https://github.com/simonw/datasette-ripgrep",
       "Issues": "https://github.com/simonw/datasette-ripgrep/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-ripgrep/0.7.1/",
+    "release_url": "https://pypi.org/project/datasette-ripgrep/0.8/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "httpx ; extra == 'test'"
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.7",
     "summary": "Web interface for searching your code using ripgrep, built as a Datasette plugin",
-    "version": "0.7.1",
+    "version": "0.8",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15809946,
+  "last_serial": 16107725,
   "releases": {
     "0.1": [
       {
@@ -546,46 +549,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "8f479eeaa17d4b8b632daf6809bcb209",
+          "sha256": "ba5d2c84e85e484ef8076c911bf16d2c6495d890f94b407c47545a4e8afea5be"
+        },
+        "downloads": -1,
+        "filename": "datasette_ripgrep-0.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8f479eeaa17d4b8b632daf6809bcb209",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11122,
+        "upload_time": "2022-12-15T01:19:53",
+        "upload_time_iso_8601": "2022-12-15T01:19:53.863901Z",
+        "url": "https://files.pythonhosted.org/packages/46/93/68a8d6474297112b39f6a62a5404bf14482bde8a50c4952bf586f16e8cdb/datasette_ripgrep-0.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "d0ff364baf68ff6482b896f0e7e3e5aa",
+          "sha256": "e4b29df7c3eb9b68a4ad0f57484b1e0cf66226d2d236fd25bdc38d712f0981a8"
+        },
+        "downloads": -1,
+        "filename": "datasette-ripgrep-0.8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d0ff364baf68ff6482b896f0e7e3e5aa",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 10040,
+        "upload_time": "2022-12-15T01:19:54",
+        "upload_time_iso_8601": "2022-12-15T01:19:54.944187Z",
+        "url": "https://files.pythonhosted.org/packages/00/77/feb558c0e972711cf015263057f5ca598fad16af8ec12edc2fffb4dfa89a/datasette-ripgrep-0.8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "cd5ac8002f17508d689a2bb7170adee8",
-        "sha256": "a0e1ef41fcf0a041f8d23c3de2a2f7a63d60cbaa2f8cf15b85425ed5a9aba6ad"
+        "md5": "8f479eeaa17d4b8b632daf6809bcb209",
+        "sha256": "ba5d2c84e85e484ef8076c911bf16d2c6495d890f94b407c47545a4e8afea5be"
       },
       "downloads": -1,
-      "filename": "datasette_ripgrep-0.7.1-py3-none-any.whl",
+      "filename": "datasette_ripgrep-0.8-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "cd5ac8002f17508d689a2bb7170adee8",
+      "md5_digest": "8f479eeaa17d4b8b632daf6809bcb209",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 11063,
-      "upload_time": "2022-11-18T03:25:21",
-      "upload_time_iso_8601": "2022-11-18T03:25:21.176155Z",
-      "url": "https://files.pythonhosted.org/packages/ec/b7/12cee71a1255baec8f4e11ee4e23e7e6b182b73efaea2d0703a3b04ca252/datasette_ripgrep-0.7.1-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 11122,
+      "upload_time": "2022-12-15T01:19:53",
+      "upload_time_iso_8601": "2022-12-15T01:19:53.863901Z",
+      "url": "https://files.pythonhosted.org/packages/46/93/68a8d6474297112b39f6a62a5404bf14482bde8a50c4952bf586f16e8cdb/datasette_ripgrep-0.8-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "1fc1416c1088a7eaca107141e99dfb33",
-        "sha256": "c97d2cc994608ff508b23a0a06d959800403e1334e3f40530bd180492a8b9754"
+        "md5": "d0ff364baf68ff6482b896f0e7e3e5aa",
+        "sha256": "e4b29df7c3eb9b68a4ad0f57484b1e0cf66226d2d236fd25bdc38d712f0981a8"
       },
       "downloads": -1,
-      "filename": "datasette-ripgrep-0.7.1.tar.gz",
+      "filename": "datasette-ripgrep-0.8.tar.gz",
       "has_sig": false,
-      "md5_digest": "1fc1416c1088a7eaca107141e99dfb33",
+      "md5_digest": "d0ff364baf68ff6482b896f0e7e3e5aa",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 9961,
-      "upload_time": "2022-11-18T03:25:23",
-      "upload_time_iso_8601": "2022-11-18T03:25:23.029029Z",
-      "url": "https://files.pythonhosted.org/packages/b8/41/c937c8fdd6ebffc04b864b7a013d3a65a40f89e7abe52bba50b1687b7738/datasette-ripgrep-0.7.1.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 10040,
+      "upload_time": "2022-12-15T01:19:54",
+      "upload_time_iso_8601": "2022-12-15T01:19:54.944187Z",
+      "url": "https://files.pythonhosted.org/packages/00/77/feb558c0e972711cf015263057f5ca598fad16af8ec12edc2fffb4dfa89a/datasette-ripgrep-0.8.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
