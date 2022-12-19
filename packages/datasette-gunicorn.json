@@ -31,9 +31,9 @@
       "Homepage": "https://github.com/simonw/datasette-gunicorn",
       "Issues": "https://github.com/simonw/datasette-gunicorn/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-gunicorn/0.1/",
+    "release_url": "https://pypi.org/project/datasette-gunicorn/0.1.1/",
     "requires_dist": [
-      "datasette",
+      "datasette (>0.63.2)",
       "gunicorn",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
@@ -41,11 +41,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Run a Datasette server using Gunicorn",
-    "version": "0.1",
+    "version": "0.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15497728,
+  "last_serial": 16138978,
   "releases": {
     "0.1": [
       {
@@ -88,46 +88,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "51f9bbdcaad35acfa57f06e01e791ddb",
+          "sha256": "54a66d345713345be3ed791280f104f31ea7e86f243962cfb76df8aa071ad8d9"
+        },
+        "downloads": -1,
+        "filename": "datasette_gunicorn-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "51f9bbdcaad35acfa57f06e01e791ddb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8590,
+        "upload_time": "2022-12-18T06:45:01",
+        "upload_time_iso_8601": "2022-12-18T06:45:01.862868Z",
+        "url": "https://files.pythonhosted.org/packages/f0/cc/a77137b30be3552b2ebfda711570c648ba6e7f842f1a202420b6747d21f9/datasette_gunicorn-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "3b0428114c4da70c1c56eea6b533041c",
+          "sha256": "3dabced1e00ed60e0cb85133f04836a355e9ce0ced9fc174a229b5deb27de27e"
+        },
+        "downloads": -1,
+        "filename": "datasette-gunicorn-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3b0428114c4da70c1c56eea6b533041c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8105,
+        "upload_time": "2022-12-18T06:45:03",
+        "upload_time_iso_8601": "2022-12-18T06:45:03.249512Z",
+        "url": "https://files.pythonhosted.org/packages/f7/ea/a930415f1c3b4272a8ace361acabb467288d0207b42bd5caf6c5da2fa8d7/datasette-gunicorn-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "c07f3e3ef0d4497c7e3624d7df3c49c4",
-        "sha256": "6946c7f3abb0168334440bc91bde15786e056e1cd8083ddd3e4f0c6f6cb8e539"
+        "md5": "51f9bbdcaad35acfa57f06e01e791ddb",
+        "sha256": "54a66d345713345be3ed791280f104f31ea7e86f243962cfb76df8aa071ad8d9"
       },
       "downloads": -1,
-      "filename": "datasette_gunicorn-0.1-py3-none-any.whl",
+      "filename": "datasette_gunicorn-0.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "c07f3e3ef0d4497c7e3624d7df3c49c4",
+      "md5_digest": "51f9bbdcaad35acfa57f06e01e791ddb",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8554,
-      "upload_time": "2022-10-22T20:58:44",
-      "upload_time_iso_8601": "2022-10-22T20:58:44.570149Z",
-      "url": "https://files.pythonhosted.org/packages/da/4b/7ef55037a25f9ab9f944bd9031c974d435797ca61660cc56d24abbb1a29d/datasette_gunicorn-0.1-py3-none-any.whl",
+      "size": 8590,
+      "upload_time": "2022-12-18T06:45:01",
+      "upload_time_iso_8601": "2022-12-18T06:45:01.862868Z",
+      "url": "https://files.pythonhosted.org/packages/f0/cc/a77137b30be3552b2ebfda711570c648ba6e7f842f1a202420b6747d21f9/datasette_gunicorn-0.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "1dc1abb8d703a34a8a7601a3c1d6881f",
-        "sha256": "10fc28f690f2e4b7e16f2e5af8b70dfda252757459c7f243c8863803c7dfb6c7"
+        "md5": "3b0428114c4da70c1c56eea6b533041c",
+        "sha256": "3dabced1e00ed60e0cb85133f04836a355e9ce0ced9fc174a229b5deb27de27e"
       },
       "downloads": -1,
-      "filename": "datasette-gunicorn-0.1.tar.gz",
+      "filename": "datasette-gunicorn-0.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "1dc1abb8d703a34a8a7601a3c1d6881f",
+      "md5_digest": "3b0428114c4da70c1c56eea6b533041c",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 8095,
-      "upload_time": "2022-10-22T20:58:45",
-      "upload_time_iso_8601": "2022-10-22T20:58:45.825292Z",
-      "url": "https://files.pythonhosted.org/packages/c4/a0/69c0fcf216e61fa49f27f793f7e5f70c05ba2cd26c627603548364102ed1/datasette-gunicorn-0.1.tar.gz",
+      "size": 8105,
+      "upload_time": "2022-12-18T06:45:03",
+      "upload_time_iso_8601": "2022-12-18T06:45:03.249512Z",
+      "url": "https://files.pythonhosted.org/packages/f7/ea/a930415f1c3b4272a8ace361acabb467288d0207b42bd5caf6c5da2fa8d7/datasette-gunicorn-0.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
