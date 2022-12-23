@@ -26,7 +26,7 @@
       "Changelog": "https://github.com/rclement/datasette-dashboards/blob/master/CHANGELOG.md",
       "Homepage": "https://github.com/rclement/datasette-dashboards"
     },
-    "release_url": "https://pypi.org/project/datasette-dashboards/0.2.0/",
+    "release_url": "https://pypi.org/project/datasette-dashboards/0.2.1/",
     "requires_dist": [
       "datasette",
       "datasette-render-markdown",
@@ -37,11 +37,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin providing data dashboards from metadata",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13674595,
+  "last_serial": 16187544,
   "releases": {
     "0.1.0": [
       {
@@ -378,46 +378,88 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "001a0b809385e4457b7a54f132e96656",
+          "sha256": "c2f31bf46eca04352c127f848a0a47fbce2480822c394822176c4d01767151aa"
+        },
+        "downloads": -1,
+        "filename": "datasette_dashboards-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "001a0b809385e4457b7a54f132e96656",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 13825,
+        "upload_time": "2022-12-22T16:12:31",
+        "upload_time_iso_8601": "2022-12-22T16:12:31.290736Z",
+        "url": "https://files.pythonhosted.org/packages/3b/d3/39bd08b3193535bffd2ce63b2ca29144de851328c7e9440f4e504afa4e99/datasette_dashboards-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "5a4d310a47e8ee160c0e902acbbf72b7",
+          "sha256": "c1fbc58ede4885ca134c132c7a71c4cff62c5b3e6080884bf04a491126c10e37"
+        },
+        "downloads": -1,
+        "filename": "datasette-dashboards-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5a4d310a47e8ee160c0e902acbbf72b7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 14192,
+        "upload_time": "2022-12-22T16:12:32",
+        "upload_time_iso_8601": "2022-12-22T16:12:32.964407Z",
+        "url": "https://files.pythonhosted.org/packages/4b/09/d33a6c40a6754f7568f6b45f755be1f393225c750498285422e04600b53f/datasette-dashboards-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "md5": "3c5fec89c2d5eb8d2ee55e33606900c2",
-        "sha256": "39eefcc326395549dd4b9deca82f429055cebeb9e8fd384182621d4fd0f1337b"
+        "md5": "001a0b809385e4457b7a54f132e96656",
+        "sha256": "c2f31bf46eca04352c127f848a0a47fbce2480822c394822176c4d01767151aa"
       },
       "downloads": -1,
-      "filename": "datasette_dashboards-0.2.0-py3-none-any.whl",
+      "filename": "datasette_dashboards-0.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "3c5fec89c2d5eb8d2ee55e33606900c2",
+      "md5_digest": "001a0b809385e4457b7a54f132e96656",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
       "size": 13825,
-      "upload_time": "2022-04-30T13:26:54",
-      "upload_time_iso_8601": "2022-04-30T13:26:54.772111Z",
-      "url": "https://files.pythonhosted.org/packages/e0/09/bf78157a34a7cc9ade68c5d0dcdffa71dbe98ab7eb925b63e1212229510f/datasette_dashboards-0.2.0-py3-none-any.whl",
+      "upload_time": "2022-12-22T16:12:31",
+      "upload_time_iso_8601": "2022-12-22T16:12:31.290736Z",
+      "url": "https://files.pythonhosted.org/packages/3b/d3/39bd08b3193535bffd2ce63b2ca29144de851328c7e9440f4e504afa4e99/datasette_dashboards-0.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "md5": "0332843cdcb5344fd14a1a247e4cd0f1",
-        "sha256": "049e7d9118b8e5825611e6b2bf8120e200e0a00dc2a2ea5a194313a32758299b"
+        "md5": "5a4d310a47e8ee160c0e902acbbf72b7",
+        "sha256": "c1fbc58ede4885ca134c132c7a71c4cff62c5b3e6080884bf04a491126c10e37"
       },
       "downloads": -1,
-      "filename": "datasette-dashboards-0.2.0.tar.gz",
+      "filename": "datasette-dashboards-0.2.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "0332843cdcb5344fd14a1a247e4cd0f1",
+      "md5_digest": "5a4d310a47e8ee160c0e902acbbf72b7",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 14218,
-      "upload_time": "2022-04-30T13:26:56",
-      "upload_time_iso_8601": "2022-04-30T13:26:56.145253Z",
-      "url": "https://files.pythonhosted.org/packages/6f/a9/196c22465fa8d7dbba1e35709d597a91d5efa78feccb435cc8297f5526b7/datasette-dashboards-0.2.0.tar.gz",
+      "size": 14192,
+      "upload_time": "2022-12-22T16:12:32",
+      "upload_time_iso_8601": "2022-12-22T16:12:32.964407Z",
+      "url": "https://files.pythonhosted.org/packages/4b/09/d33a6c40a6754f7568f6b45f755be1f393225c750498285422e04600b53f/datasette-dashboards-0.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
