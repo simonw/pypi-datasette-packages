@@ -43,6 +43,7 @@
       {
         "comment_text": "",
         "digests": {
+          "blake2b_256": "fb6c59c5cd375392c0780e46ddbfd81798051d8117170defe0e2087166316f46",
           "md5": "bbdd92670d26d68b5622b183bb233bbc",
           "sha256": "cbc9dda3970e01e4b0ac00bb976fe285f4cb649cfe76955bf4d3e3915cf06993"
         },
@@ -66,6 +67,7 @@
     {
       "comment_text": "",
       "digests": {
+        "blake2b_256": "fb6c59c5cd375392c0780e46ddbfd81798051d8117170defe0e2087166316f46",
         "md5": "bbdd92670d26d68b5622b183bb233bbc",
         "sha256": "cbc9dda3970e01e4b0ac00bb976fe285f4cb649cfe76955bf4d3e3915cf06993"
       },

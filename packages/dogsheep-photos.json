@@ -44,6 +44,7 @@
       {
         "comment_text": "",
         "digests": {
+          "blake2b_256": "a76e391f80f624a9149382db4be7ec78573868ef2ff921e18ad26aeabcbfc7b3",
           "md5": "8e82df144c53c19500dfaff9b378ccf9",
           "sha256": "d7dea08a45df43029fd534a115c1cd8a3ffed930f45a433c57bd183964a808fd"
         },
@@ -66,6 +67,7 @@
       {
         "comment_text": "",
         "digests": {
+          "blake2b_256": "63e09608013836935915f3f74f546f6ad6b2d22fbff4769a75d154d812b9c82d",
           "md5": "c4cdae89905220bd4a5510917fa0ac81",
           "sha256": "fa7de08bfce7e0453d19319262933064b49131fc3748372dd236932cb0fe8898"
         },
@@ -89,6 +91,7 @@
     {
       "comment_text": "",
       "digests": {
+        "blake2b_256": "63e09608013836935915f3f74f546f6ad6b2d22fbff4769a75d154d812b9c82d",
         "md5": "c4cdae89905220bd4a5510917fa0ac81",
         "sha256": "fa7de08bfce7e0453d19319262933064b49131fc3748372dd236932cb0fe8898"
       },
