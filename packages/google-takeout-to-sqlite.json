@@ -42,6 +42,7 @@
       {
         "comment_text": "",
         "digests": {
+          "blake2b_256": "e9bd44fffffa9eab07f2cf6aff0538d302165e58a87ca18c147aceeab1baae8b",
           "md5": "3cc7ddf6b814936cb10576b12b81707a",
           "sha256": "597764724e5e130b7e46d29445bfb2f64d48abe1461dd8952f35fb09f7f092e9"
         },
@@ -64,6 +65,7 @@
       {
         "comment_text": "",
         "digests": {
+          "blake2b_256": "61bdc76a0fc13144b8ad492ffebe63f9a67226a8d54997d677b524a5165858d6",
           "md5": "2390b8a6342ad6d3458d54f9b23bdf15",
           "sha256": "a0634a68aeee33e839b4c23446ed2954d9e9795364e23c2a61c6e2aff4030f28"
         },
@@ -87,6 +89,7 @@
     {
       "comment_text": "",
       "digests": {
+        "blake2b_256": "61bdc76a0fc13144b8ad492ffebe63f9a67226a8d54997d677b524a5165858d6",
         "md5": "2390b8a6342ad6d3458d54f9b23bdf15",
         "sha256": "a0634a68aeee33e839b4c23446ed2954d9e9795364e23c2a61c6e2aff4030f28"
       },
