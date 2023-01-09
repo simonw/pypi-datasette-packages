@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# shapefile-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/shapefile-to-sqlite.svg)](https://pypi.org/project/shapefile-to-sqlite/)\n[![CircleCI](https://circleci.com/gh/simonw/shapefile-to-sqlite.svg?style=svg)](https://circleci.com/gh/simonw/shapefile-to-sqlite)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/shapefile-to-sqlite/blob/main/LICENSE)\n\nLoad shapefiles into a SQLite (optionally SpatiaLite) database.\n\nProject background: [Things I learned about shapefiles building shapefile-to-sqlite](https://simonwillison.net/2020/Feb/19/shapefile-to-sqlite/)\n\n## How to install\n\n    $ pip install shapefile-to-sqlite\n\n## How to use\n\nYou can run this tool against a shapefile file like so:\n\n    $ shapefile-to-sqlite my.db features.shp\n\nThis will load the geometries as GeoJSON in a text column.\n\n## Using with SpatiaLite\n\nIf you have [SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite/index) available you can load them as SpatiaLite geometries like this:\n\n    $ shapefile-to-sqlite my.db features.shp --spatialite\n\nThe data will be loaded into a table called `features` - based on the name of the shapefile. You can specify an alternative table name using `--table`:\n\n    $ shapefile-to-sqlite my.db features.shp --table=places --spatialite\n\nThe tool will search for the SpatiaLite module in the following locations:\n\n- `/usr/lib/x86_64-linux-gnu/mod_spatialite.so`\n- `/usr/local/lib/mod_spatialite.dylib`\n\nIf you have installed the module in another location, you can use the `--spatialite_mod=xxx` option to specify where:\n\n    $ shapefile-to-sqlite my.db features.shp \\\n        --spatialite_mod=/usr/lib/mod_spatialite.dylib\n\nYou can use the `--spatial-index` option to create a spatial index on the `geometry` column:\n\n    $ shapefile-to-sqlite my.db features.shp --spatial-index\n\nYou can omit `--spatialite` if you use either `--spatialite-mod` or `--spatial-index`.\n\n## Projections\n\nBy default, this tool will attempt to convert geometries in the shapefile to the WGS 84 projection, for best conformance with the [GeoJSON specification](https://tools.ietf.org/html/rfc7946).\n\nIf you want it to leave the data in whatever projection was used by the shapefile, use the `--crs=keep` option.\n\nYou can convert the data to another output projection by passing it to the `--crs` option. For example, to convert to [EPSG:2227](https://epsg.io/2227) (California zone 3) use `--crs=espg:2227`.\n\nThe full list of formats accepted by the `--crs` option is [documented here](https://pyproj4.github.io/pyproj/stable/api/crs.html#pyproj.crs.CRS.__init__).\n\n## Extracting columns\n\nIf your data contains columns with a small number of heavily duplicated values - the names of specific agencies responsible for parcels of land for example - you can extract those columns into separate lookup tables referenced by foreign keys using the `-c` option:\n\n    $ shapefile-to-sqlite my.db features.shp -c agency\n\nThis will create a `agency` table with `id` and `name` columns, and will create the `agency` column in your main table as an integer foreign key reference to that table.\n\nThe `-c` option can be used multiple times.\n\n",
+    "description": "# shapefile-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/shapefile-to-sqlite.svg)](https://pypi.org/project/shapefile-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/shapefile-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/shapefile-to-sqlite/releases)\n[![Tests](https://github.com/simonw/shapefile-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/shapefile-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/shapefile-to-sqlite/blob/main/LICENSE)\n\nLoad shapefiles into a SQLite (optionally SpatiaLite) database.\n\nProject background: [Things I learned about shapefiles building shapefile-to-sqlite](https://simonwillison.net/2020/Feb/19/shapefile-to-sqlite/)\n\n## How to install\n\n    $ pip install shapefile-to-sqlite\n\n## How to use\n\nYou can run this tool against a shapefile file like so:\n\n    $ shapefile-to-sqlite my.db features.shp\n\nThis will load the geometries as GeoJSON in a text column.\n\n## Using with SpatiaLite\n\nIf you have [SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite/index) available you can load them as SpatiaLite geometries like this:\n\n    $ shapefile-to-sqlite my.db features.shp --spatialite\n\nThe data will be loaded into a table called `features` - based on the name of the shapefile. You can specify an alternative table name using `--table`:\n\n    $ shapefile-to-sqlite my.db features.shp --table=places --spatialite\n\nThe tool will search for the SpatiaLite module in the following locations:\n\n- `/usr/lib/x86_64-linux-gnu/mod_spatialite.so`\n- `/usr/local/lib/mod_spatialite.dylib`\n\nIf you have installed the module in another location, you can use the `--spatialite_mod=xxx` option to specify where:\n\n    $ shapefile-to-sqlite my.db features.shp \\\n        --spatialite_mod=/usr/lib/mod_spatialite.dylib\n\nYou can use the `--spatial-index` option to create a spatial index on the `geometry` column:\n\n    $ shapefile-to-sqlite my.db features.shp --spatial-index\n\nYou can omit `--spatialite` if you use either `--spatialite-mod` or `--spatial-index`.\n\n## Projections\n\nBy default, this tool will attempt to convert geometries in the shapefile to the WGS 84 projection, for best conformance with the [GeoJSON specification](https://tools.ietf.org/html/rfc7946).\n\nIf you want it to leave the data in whatever projection was used by the shapefile, use the `--crs=keep` option.\n\nYou can convert the data to another output projection by passing it to the `--crs` option. For example, to convert to [EPSG:2227](https://epsg.io/2227) (California zone 3) use `--crs=espg:2227`.\n\nThe full list of formats accepted by the `--crs` option is [documented here](https://pyproj4.github.io/pyproj/stable/api/crs.html#pyproj.crs.CRS.__init__).\n\n## Extracting columns\n\nIf your data contains columns with a small number of heavily duplicated values - the names of specific agencies responsible for parcels of land for example - you can extract those columns into separate lookup tables referenced by foreign keys using the `-c` option:\n\n    $ shapefile-to-sqlite my.db features.shp -c agency\n\nThis will create a `agency` table with `id` and `name` columns, and will create the `agency` column in your main table as an integer foreign key reference to that table.\n\nThe `-c` option can be used multiple times.\n\n[CPAD_2020a_Units](https://calands.datasettes.com/calands/CPAD_2020a_Units) is an example of a table created using the `-c` option.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,12 +20,15 @@
     "maintainer_email": "",
     "name": "shapefile-to-sqlite",
     "package_url": "https://pypi.org/project/shapefile-to-sqlite/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/shapefile-to-sqlite/",
     "project_urls": {
-      "Homepage": "https://github.com/simonw/shapefile-to-sqlite"
+      "CI": "https://github.com/simonw/shapefile-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/shapefile-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/shapefile-to-sqlite",
+      "Issues": "https://github.com/simonw/shapefile-to-sqlite/issues"
     },
-    "release_url": "https://pypi.org/project/shapefile-to-sqlite/0.4.1/",
+    "release_url": "https://pypi.org/project/shapefile-to-sqlite/0.4.2/",
     "requires_dist": [
       "sqlite-utils (>=2.2)",
       "Shapely",
@@ -35,11 +38,11 @@
     ],
     "requires_python": "",
     "summary": "Load shapefiles into a SQLite (optionally SpatiaLite) database",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8020545,
+  "last_serial": 16351683,
   "releases": {
     "0.1": [
       {
@@ -155,27 +158,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ae4becda285141fe5ae43aeebc6902a7460fc07bf93510cd536a146f0d6e5417",
+          "md5": "1076a5ad54977079178913458f339555",
+          "sha256": "7c57d3654746cad7c83ce7f649eedd00bfc5751e7a0b0c90a3b48b37ad4af5d5"
+        },
+        "downloads": -1,
+        "filename": "shapefile_to_sqlite-0.4.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1076a5ad54977079178913458f339555",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10705,
+        "upload_time": "2023-01-08T20:26:12",
+        "upload_time_iso_8601": "2023-01-08T20:26:12.029442Z",
+        "url": "https://files.pythonhosted.org/packages/ae/4b/ecda285141fe5ae43aeebc6902a7460fc07bf93510cd536a146f0d6e5417/shapefile_to_sqlite-0.4.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8955fe8b70938e8b20a2864d0439760b840a71296abdc78e2f7c650b81f27941",
+          "md5": "7d7c01fd36c741e908df63daa9e17bd3",
+          "sha256": "68bccd2fbdd5a9edacf2398e1c72d5261b965ba4e835c7580601990b26711a21"
+        },
+        "downloads": -1,
+        "filename": "shapefile-to-sqlite-0.4.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7d7c01fd36c741e908df63daa9e17bd3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9745,
+        "upload_time": "2023-01-08T20:26:13",
+        "upload_time_iso_8601": "2023-01-08T20:26:13.171551Z",
+        "url": "https://files.pythonhosted.org/packages/89/55/fe8b70938e8b20a2864d0439760b840a71296abdc78e2f7c650b81f27941/shapefile-to-sqlite-0.4.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8e9fb14de6bf78596a1a54423bb898ed45d8fc607a5de0eae116b5638d4f7e34",
-        "md5": "35a5b37d8e7688aa1afa4a0b346fdd55",
-        "sha256": "4a80ef1b7f63ae73c07f4692bd6afd031b2037ca7dd09db60fa8eacf44fb3eb9"
+        "blake2b_256": "ae4becda285141fe5ae43aeebc6902a7460fc07bf93510cd536a146f0d6e5417",
+        "md5": "1076a5ad54977079178913458f339555",
+        "sha256": "7c57d3654746cad7c83ce7f649eedd00bfc5751e7a0b0c90a3b48b37ad4af5d5"
       },
       "downloads": -1,
-      "filename": "shapefile_to_sqlite-0.4.1-py3-none-any.whl",
+      "filename": "shapefile_to_sqlite-0.4.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "35a5b37d8e7688aa1afa4a0b346fdd55",
+      "md5_digest": "1076a5ad54977079178913458f339555",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 10591,
-      "upload_time": "2020-08-23T05:49:24",
-      "upload_time_iso_8601": "2020-08-23T05:49:24.641000Z",
-      "url": "https://files.pythonhosted.org/packages/8e/9f/b14de6bf78596a1a54423bb898ed45d8fc607a5de0eae116b5638d4f7e34/shapefile_to_sqlite-0.4.1-py3-none-any.whl",
+      "size": 10705,
+      "upload_time": "2023-01-08T20:26:12",
+      "upload_time_iso_8601": "2023-01-08T20:26:12.029442Z",
+      "url": "https://files.pythonhosted.org/packages/ae/4b/ecda285141fe5ae43aeebc6902a7460fc07bf93510cd536a146f0d6e5417/shapefile_to_sqlite-0.4.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "8955fe8b70938e8b20a2864d0439760b840a71296abdc78e2f7c650b81f27941",
+        "md5": "7d7c01fd36c741e908df63daa9e17bd3",
+        "sha256": "68bccd2fbdd5a9edacf2398e1c72d5261b965ba4e835c7580601990b26711a21"
+      },
+      "downloads": -1,
+      "filename": "shapefile-to-sqlite-0.4.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "7d7c01fd36c741e908df63daa9e17bd3",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 9745,
+      "upload_time": "2023-01-08T20:26:13",
+      "upload_time_iso_8601": "2023-01-08T20:26:13.171551Z",
+      "url": "https://files.pythonhosted.org/packages/89/55/fe8b70938e8b20a2864d0439760b840a71296abdc78e2f7c650b81f27941/shapefile-to-sqlite-0.4.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
