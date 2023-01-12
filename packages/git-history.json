@@ -42,7 +42,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 12248703,
+  "last_serial": 16394465,
   "releases": {
     "0.1": [
       {
@@ -436,6 +436,50 @@
         "upload_time": "2021-12-08T20:30:36",
         "upload_time_iso_8601": "2021-12-08T20:30:36.065292Z",
         "url": "https://files.pythonhosted.org/packages/d8/24/ad8bcddc30e1bc9aa1242e242a28ddf836265d099eba5e23c0625ca48928/git-history-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "599ca8c7cba63024d4d7fdf07ef0fe225585e2ab34d5d772a4889ae48439f1c5",
+          "md5": "30e16a1836adb2dec2564c8e1a2c6b8a",
+          "sha256": "792a71d8507e5450cb9af7265ba51dd30212d24ed87dced786ad822c612ab0d5"
+        },
+        "downloads": -1,
+        "filename": "git_history-0.7a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "30e16a1836adb2dec2564c8e1a2c6b8a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 17655,
+        "upload_time": "2023-01-11T20:14:55",
+        "upload_time_iso_8601": "2023-01-11T20:14:55.382796Z",
+        "url": "https://files.pythonhosted.org/packages/59/9c/a8c7cba63024d4d7fdf07ef0fe225585e2ab34d5d772a4889ae48439f1c5/git_history-0.7a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "85cc27199e0b1ad0d45ed36a3006efb6353986c961642af0fc0a1139a0c1776e",
+          "md5": "dbd6d7fca4dc6569e59328f28c296286",
+          "sha256": "cb69a7bd669026ae8a5525e2b12ab730a8383af588d3d7d7ebfed2691577678e"
+        },
+        "downloads": -1,
+        "filename": "git-history-0.7a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dbd6d7fca4dc6569e59328f28c296286",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 22376,
+        "upload_time": "2023-01-11T20:14:56",
+        "upload_time_iso_8601": "2023-01-11T20:14:56.719385Z",
+        "url": "https://files.pythonhosted.org/packages/85/cc/27199e0b1ad0d45ed36a3006efb6353986c961642af0fc0a1139a0c1776e/git-history-0.7a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
