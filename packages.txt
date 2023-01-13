@@ -144,3 +144,8 @@ datasette-export
 datasette-ephemeral-tables
 dclient
 datasette-secret-santa
+datasette-openai
+datasette-cookies-for-magic-parameters
+datasette-faiss
+openai-to-sqlite
+json-to-files
