@@ -69,6 +69,7 @@ datasette-ripgrep
 datasette-rure
 datasette-saved-queries
 datasette-schema-versions
+datasette-scraper
 datasette-seaborn
 datasette-search-all
 datasette-sentry
