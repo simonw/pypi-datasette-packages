@@ -1,0 +1,134 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# json-to-files\n\n[![PyPI](https://img.shields.io/pypi/v/json-to-files.svg)](https://pypi.org/project/json-to-files/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/json-to-files?include_prereleases&label=changelog)](https://github.com/simonw/json-to-files/releases)\n[![Tests](https://github.com/simonw/json-to-files/workflows/Test/badge.svg)](https://github.com/simonw/json-to-files/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/json-to-files/blob/master/LICENSE)\n\nCreate separate files on disk based on a JSON object\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install json-to-files\n\n## Usage\n\nThis tool takes a JSON file that looks like this:\n\n```json\n{\n    \"foo.txt\": \"The contents of foo.txt\",\n    \"bar/baz.txt\": \"The contents of baz.txt\"\n}\n```\nAnd uses it to write out the following files on disk:\n\n- `foo.txt` containing \"The contents of foo.txt\"\n- `bar/baz.txt` containing \"The contents of baz.txt\"\n\nYou can run it like this:\n\n    json-to-files bundle.json\n\nOr you can specify a directory to write those files to:\n\n    json-to-files bundle.json -d /tmp/other-directory\n\nThe `bundles.json` file name is optional - if omitted, this tool will read from standard input:\n\n    cat bundle.json | json-to-files\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd json-to-files\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/json-to-files",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "json-to-files",
+    "package_url": "https://pypi.org/project/json-to-files/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/json-to-files/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/json-to-files/actions",
+      "Changelog": "https://github.com/simonw/json-to-files/releases",
+      "Homepage": "https://github.com/simonw/json-to-files",
+      "Issues": "https://github.com/simonw/json-to-files/issues"
+    },
+    "release_url": "https://pypi.org/project/json-to-files/0.1/",
+    "requires_dist": [
+      "click",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Create separate files on disk based on a JSON object",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16379696,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "bb93aebcad9d449a6791a45ab9df377ce626e807c6f6b7f9352e4854831d5ab8",
+          "md5": "006b936d50983f20d773fbb8e91fc2f2",
+          "sha256": "4a1301eb5440b887c36a73ddec3663762a4fb0de21c6fff54832242868f87ea7"
+        },
+        "downloads": -1,
+        "filename": "json_to_files-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "006b936d50983f20d773fbb8e91fc2f2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7464,
+        "upload_time": "2023-01-10T20:13:28",
+        "upload_time_iso_8601": "2023-01-10T20:13:28.794117Z",
+        "url": "https://files.pythonhosted.org/packages/bb/93/aebcad9d449a6791a45ab9df377ce626e807c6f6b7f9352e4854831d5ab8/json_to_files-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "27e5e64d2949d322b92333b771b49e34551b4cf9a6139b8444b23f8ab6189736",
+          "md5": "1fda0c6bfaedf7abaf148c567faec045",
+          "sha256": "870aec33c2963e8db2f1bda28d64f189c14b6e33d4ce5ca6de9b0e18261eedc5"
+        },
+        "downloads": -1,
+        "filename": "json-to-files-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1fda0c6bfaedf7abaf148c567faec045",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6803,
+        "upload_time": "2023-01-10T20:13:30",
+        "upload_time_iso_8601": "2023-01-10T20:13:30.181685Z",
+        "url": "https://files.pythonhosted.org/packages/27/e5/e64d2949d322b92333b771b49e34551b4cf9a6139b8444b23f8ab6189736/json-to-files-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "bb93aebcad9d449a6791a45ab9df377ce626e807c6f6b7f9352e4854831d5ab8",
+        "md5": "006b936d50983f20d773fbb8e91fc2f2",
+        "sha256": "4a1301eb5440b887c36a73ddec3663762a4fb0de21c6fff54832242868f87ea7"
+      },
+      "downloads": -1,
+      "filename": "json_to_files-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "006b936d50983f20d773fbb8e91fc2f2",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7464,
+      "upload_time": "2023-01-10T20:13:28",
+      "upload_time_iso_8601": "2023-01-10T20:13:28.794117Z",
+      "url": "https://files.pythonhosted.org/packages/bb/93/aebcad9d449a6791a45ab9df377ce626e807c6f6b7f9352e4854831d5ab8/json_to_files-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "27e5e64d2949d322b92333b771b49e34551b4cf9a6139b8444b23f8ab6189736",
+        "md5": "1fda0c6bfaedf7abaf148c567faec045",
+        "sha256": "870aec33c2963e8db2f1bda28d64f189c14b6e33d4ce5ca6de9b0e18261eedc5"
+      },
+      "downloads": -1,
+      "filename": "json-to-files-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "1fda0c6bfaedf7abaf148c567faec045",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6803,
+      "upload_time": "2023-01-10T20:13:30",
+      "upload_time_iso_8601": "2023-01-10T20:13:30.181685Z",
+      "url": "https://files.pythonhosted.org/packages/27/e5/e64d2949d322b92333b771b49e34551b4cf9a6139b8444b23f8ab6189736/json-to-files-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

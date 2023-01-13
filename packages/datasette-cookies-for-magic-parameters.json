@@ -1,0 +1,226 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-cookies-for-magic-parameters\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cookies-for-magic-parameters.svg)](https://pypi.org/project/datasette-cookies-for-magic-parameters/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-cookies-for-magic-parameters?include_prereleases&label=changelog)](https://github.com/simonw/datasette-cookies-for-magic-parameters/releases)\n[![Tests](https://github.com/simonw/datasette-cookies-for-magic-parameters/workflows/Test/badge.svg)](https://github.com/simonw/datasette-cookies-for-magic-parameters/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cookies-for-magic-parameters/blob/main/LICENSE)\n\nUI for setting cookies to populate magic parameters\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-cookies-for-magic-parameters\n\n## Usage\n\nThis plugin only affects canned queries. If you have a canned query configured like this:\n\n```yaml\ndatabases:\n  mydatabase:\n    queries:\n      api_query:\n        sql: select 'Your API key is' || :_cookie_openai_api_token;\n```\nThen the `/mydatabase/api_query` page will include a new interface for setting the `openapi_api_token` cookie, or unsetting it if it has already been set.\n\n## Why use this?\n\nThis plugin was initially developed to use with [datasette-openai](https://github.com/simonw/datasette-openai) - a plugin that provides custom SQL functions that take an API token as one of their parameters.\n\nPassing these API tokens in a GET query string is unsafe, as they may leak through referrers or other log files.\n\nInstead, this plugin enables them to be set and passed using a cookie, which is much less likely to be logged.\n\nThis pattern takes advantage of the `:_cookie_x` feature of Datasette's [magic parameters](https://docs.datasette.io/en/stable/sql_queries.html#magic-parameters) mechanism.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-cookies-for-magic-parameters\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-cookies-for-magic-parameters",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-cookies-for-magic-parameters",
+    "package_url": "https://pypi.org/project/datasette-cookies-for-magic-parameters/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-cookies-for-magic-parameters/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-cookies-for-magic-parameters/actions",
+      "Changelog": "https://github.com/simonw/datasette-cookies-for-magic-parameters/releases",
+      "Homepage": "https://github.com/simonw/datasette-cookies-for-magic-parameters",
+      "Issues": "https://github.com/simonw/datasette-cookies-for-magic-parameters/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-cookies-for-magic-parameters/0.1.2/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "UI for setting cookies to populate magic parameters",
+    "version": "0.1.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16408081,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "445078bdcb3b495cd46a04b0fd27be5d2511cadeb04b8adeb2e6e35866966866",
+          "md5": "e28169900e37e78fd1d4dc97f51718bc",
+          "sha256": "cfa31f387f1d7bee620587a9719462e5c5fc73d91fb6be7a211907aae8936a4c"
+        },
+        "downloads": -1,
+        "filename": "datasette_cookies_for_magic_parameters-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e28169900e37e78fd1d4dc97f51718bc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8597,
+        "upload_time": "2023-01-11T22:54:03",
+        "upload_time_iso_8601": "2023-01-11T22:54:03.855694Z",
+        "url": "https://files.pythonhosted.org/packages/44/50/78bdcb3b495cd46a04b0fd27be5d2511cadeb04b8adeb2e6e35866966866/datasette_cookies_for_magic_parameters-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ecc51ef67fa594c9ed6ceeb3a83d9e2b9c7cf50508f5ba98fef0ca3cd9f329bd",
+          "md5": "8aa8931d4aeb2b2cbce4eb245f8ccaa0",
+          "sha256": "a0b1e8defe8e6152ce567cc17a8ccfabce9fc0499926929f19381f13bb4049f9"
+        },
+        "downloads": -1,
+        "filename": "datasette-cookies-for-magic-parameters-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8aa8931d4aeb2b2cbce4eb245f8ccaa0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7938,
+        "upload_time": "2023-01-11T22:54:05",
+        "upload_time_iso_8601": "2023-01-11T22:54:05.351716Z",
+        "url": "https://files.pythonhosted.org/packages/ec/c5/1ef67fa594c9ed6ceeb3a83d9e2b9c7cf50508f5ba98fef0ca3cd9f329bd/datasette-cookies-for-magic-parameters-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e9526e19f80ba7f82e944c65b382ca705d14c80afdf7685d13f988e0d49397f6",
+          "md5": "a51a66138f1eb7f5223b35a4f7e009a2",
+          "sha256": "5233dd6e8b32af0c58ea3854dee92dbb9b9611fa57b6fdad89904bf9990098a4"
+        },
+        "downloads": -1,
+        "filename": "datasette_cookies_for_magic_parameters-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a51a66138f1eb7f5223b35a4f7e009a2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8632,
+        "upload_time": "2023-01-11T23:43:48",
+        "upload_time_iso_8601": "2023-01-11T23:43:48.185498Z",
+        "url": "https://files.pythonhosted.org/packages/e9/52/6e19f80ba7f82e944c65b382ca705d14c80afdf7685d13f988e0d49397f6/datasette_cookies_for_magic_parameters-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d5a85c37ecec1c4dd29778459663b7e1b33f420e9dfa63b0a7e3da62b0e8b02b",
+          "md5": "70491feb2c4295147545e7ad1fe0da8a",
+          "sha256": "0d900f8a45350310deeb35b5280b2a9030580cf87a8627aa58349e8f615c99ac"
+        },
+        "downloads": -1,
+        "filename": "datasette-cookies-for-magic-parameters-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "70491feb2c4295147545e7ad1fe0da8a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7958,
+        "upload_time": "2023-01-11T23:43:49",
+        "upload_time_iso_8601": "2023-01-11T23:43:49.454898Z",
+        "url": "https://files.pythonhosted.org/packages/d5/a8/5c37ecec1c4dd29778459663b7e1b33f420e9dfa63b0a7e3da62b0e8b02b/datasette-cookies-for-magic-parameters-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7042f4163ba1b15801bdf5c8d4a397ccdfc577dd9c6ff823ba4dce6a537b6c91",
+          "md5": "a11ef2466b032217c76045e34d7b4d3e",
+          "sha256": "45d79e11e08efa38c108f12fc32fddea7d16ce84c22d2199e7dd6e64be34442d"
+        },
+        "downloads": -1,
+        "filename": "datasette_cookies_for_magic_parameters-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a11ef2466b032217c76045e34d7b4d3e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8642,
+        "upload_time": "2023-01-12T19:05:53",
+        "upload_time_iso_8601": "2023-01-12T19:05:53.105000Z",
+        "url": "https://files.pythonhosted.org/packages/70/42/f4163ba1b15801bdf5c8d4a397ccdfc577dd9c6ff823ba4dce6a537b6c91/datasette_cookies_for_magic_parameters-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "dc789d0f2f8ae1f5b609358cfcdb8affaa88cffe8d11f1492eb40d86ba93d3f1",
+          "md5": "080b3fa049e1354c76742b47a05087b7",
+          "sha256": "0e16376e9217b0c8749b5148ccecc59f16f70e0275359857fe5ff6dabdedd3b4"
+        },
+        "downloads": -1,
+        "filename": "datasette-cookies-for-magic-parameters-0.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "080b3fa049e1354c76742b47a05087b7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7997,
+        "upload_time": "2023-01-12T19:05:54",
+        "upload_time_iso_8601": "2023-01-12T19:05:54.329888Z",
+        "url": "https://files.pythonhosted.org/packages/dc/78/9d0f2f8ae1f5b609358cfcdb8affaa88cffe8d11f1492eb40d86ba93d3f1/datasette-cookies-for-magic-parameters-0.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "7042f4163ba1b15801bdf5c8d4a397ccdfc577dd9c6ff823ba4dce6a537b6c91",
+        "md5": "a11ef2466b032217c76045e34d7b4d3e",
+        "sha256": "45d79e11e08efa38c108f12fc32fddea7d16ce84c22d2199e7dd6e64be34442d"
+      },
+      "downloads": -1,
+      "filename": "datasette_cookies_for_magic_parameters-0.1.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a11ef2466b032217c76045e34d7b4d3e",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8642,
+      "upload_time": "2023-01-12T19:05:53",
+      "upload_time_iso_8601": "2023-01-12T19:05:53.105000Z",
+      "url": "https://files.pythonhosted.org/packages/70/42/f4163ba1b15801bdf5c8d4a397ccdfc577dd9c6ff823ba4dce6a537b6c91/datasette_cookies_for_magic_parameters-0.1.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "dc789d0f2f8ae1f5b609358cfcdb8affaa88cffe8d11f1492eb40d86ba93d3f1",
+        "md5": "080b3fa049e1354c76742b47a05087b7",
+        "sha256": "0e16376e9217b0c8749b5148ccecc59f16f70e0275359857fe5ff6dabdedd3b4"
+      },
+      "downloads": -1,
+      "filename": "datasette-cookies-for-magic-parameters-0.1.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "080b3fa049e1354c76742b47a05087b7",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 7997,
+      "upload_time": "2023-01-12T19:05:54",
+      "upload_time_iso_8601": "2023-01-12T19:05:54.329888Z",
+      "url": "https://files.pythonhosted.org/packages/dc/78/9d0f2f8ae1f5b609358cfcdb8affaa88cffe8d11f1492eb40d86ba93d3f1/datasette-cookies-for-magic-parameters-0.1.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

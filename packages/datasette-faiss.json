@@ -1,0 +1,140 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-faiss\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-faiss.svg)](https://pypi.org/project/datasette-faiss/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-faiss?include_prereleases&label=changelog)](https://github.com/simonw/datasette-faiss/releases)\n[![Tests](https://github.com/simonw/datasette-faiss/workflows/Test/badge.svg)](https://github.com/simonw/datasette-faiss/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-faiss/blob/main/LICENSE)\n\nMaintain a FAISS index for specified Datasette tables\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-faiss\n\n## Usage\n\nThis plugin creates in-memory FAISS indexes for specified tables on startup.\n\nIf the tables are modified after the server has started the indexes will not (yet) pick up those changes.\n\n### Configuration\n\nThe tables to be indexed must have `id` and `embedding` columns. The `embedding` column must be a `blob` containing embeddings that are arrays of floating point numbers that have been encoded using the following Python function:\n\n```python\ndef encode(vector):\n    return struct.pack(\"f\" * len(vector), *vector)\n```\nYou can import that function from this package like so:\n```python\nfrom datasette_faiss import encode\n```\nYou can specify which tables should have indexes created for them by adding this to `metadata.json`:\n```json\n{\n    \"plugins\": {\n        \"datasette-faiss\": {\n            \"tables\": [\n                [\"blog\", \"embeddings\"]\n            ]\n        }\n    }\n}\n```\nEach table is an array listing the database name and the table name.\n\nIf you are using `metadata.yml` the configuration should look like this:\n\n```yaml\nplugins:\n  datasette-faiss:\n    tables:\n    - [\"blog\", \"embeddings\"]\n```\n\n### SQL functions\n\nThe plugin makes four new SQL functions available within Datasette:\n\n#### faiss_search(database, table, embedding, k)\n  \nReturns the `k` nearest neighbors to the `embedding` found in the specified database and table. For example:\n```sql\nselect faiss_search('blog', 'embeddings', (select embedding from embeddings where id = 3), 5)\n```\nThis will return a JSON array of the five IDs of the records in the `embeddings` table in the `blog` database that are closest to the specified embedding. The returned value looks like this:\n\n```json\n[\"1\", \"1249\", \"1011\", \"5\", \"10\"]\n```\nYou can use the SQLite `json_each()` function to turn that into a table-like sequence that you can join against.\n\nHere's an example query that does that:\n\n```sql\nwith related as (\n  select value from json_each(\n    faiss_search(\n      'blog',\n      'embeddings',\n      (select embedding from embeddings limit 1),\n      5\n    )\n  )\n)\nselect * from blog_entry, related\nwhere id = value\n```\n#### faiss_search_with_scores(database, table, embedding, k)\n\nTakes the same arguments as above, but the return value is a JSON array of pairs, each with an ID and a score - something like this:\n\n```json\n[\n    [\"1\", 0.0],\n    [\"1249\", 0.21042244136333466],\n    [\"1011\", 0.29391372203826904],\n    [\"5\", 0.29505783319473267],\n    [\"10\", 0.31554925441741943]\n]\n```\n\n#### faiss_encode(json_vector)\n\nGiven a JSON array of floats, returns the binary embedding blob that can be used with the other functions:\n\n```sql\nselect faiss_encode('[2.4, 4.1, 1.8]')\n-- Returns a 12 byte blob\nselect hex(faiss_encode('[2.4, 4.1, 1.8]'))\n-- Returns 9A991940333383406666E63F\n```\n\n#### faiss_decode(vector_blob)\n\nThe opposite of `faiss_encode()`.\n\n```sql\nselect faiss_decode(X'9A991940333383406666E63F')\n```\nReturns:\n```json\n[2.4000000953674316, 4.099999904632568, 1.7999999523162842]\n```\nNote that floating point arithmetic results in numbers that don't quite round-trip to the exact same expected value.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-faiss\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-faiss",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-faiss",
+    "package_url": "https://pypi.org/project/datasette-faiss/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-faiss/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-faiss/actions",
+      "Changelog": "https://github.com/simonw/datasette-faiss/releases",
+      "Homepage": "https://github.com/simonw/datasette-faiss",
+      "Issues": "https://github.com/simonw/datasette-faiss/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-faiss/0.1a0/",
+    "requires_dist": [
+      "datasette",
+      "faiss-cpu",
+      "numpy",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Maintain a FAISS index for specified Datasette tables",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16385510,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5018976329be29170fd646b3ca084be38cb347b70129905404e1ddbbdf440515",
+          "md5": "dd7cb1d7331dfed9db572e0e87bff9c6",
+          "sha256": "8695358863d2c530bb0b6c6e2cc93a5cdcf30ce0bc5fe46ab5542ba12ec97ec5"
+        },
+        "downloads": -1,
+        "filename": "datasette_faiss-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dd7cb1d7331dfed9db572e0e87bff9c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8336,
+        "upload_time": "2023-01-11T05:27:04",
+        "upload_time_iso_8601": "2023-01-11T05:27:04.403728Z",
+        "url": "https://files.pythonhosted.org/packages/50/18/976329be29170fd646b3ca084be38cb347b70129905404e1ddbbdf440515/datasette_faiss-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c679851c77fc34ec5494cf36271105f70fb7af4795e864f8afff070dbf09e0f1",
+          "md5": "23dc3ed8335edc1c503969c7da951728",
+          "sha256": "7ddc1f440917fccd01610945284b0f0aaaae4124c421dc1122f478d065d4e2e6"
+        },
+        "downloads": -1,
+        "filename": "datasette-faiss-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "23dc3ed8335edc1c503969c7da951728",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7854,
+        "upload_time": "2023-01-11T05:27:05",
+        "upload_time_iso_8601": "2023-01-11T05:27:05.798985Z",
+        "url": "https://files.pythonhosted.org/packages/c6/79/851c77fc34ec5494cf36271105f70fb7af4795e864f8afff070dbf09e0f1/datasette-faiss-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "5018976329be29170fd646b3ca084be38cb347b70129905404e1ddbbdf440515",
+        "md5": "dd7cb1d7331dfed9db572e0e87bff9c6",
+        "sha256": "8695358863d2c530bb0b6c6e2cc93a5cdcf30ce0bc5fe46ab5542ba12ec97ec5"
+      },
+      "downloads": -1,
+      "filename": "datasette_faiss-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "dd7cb1d7331dfed9db572e0e87bff9c6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8336,
+      "upload_time": "2023-01-11T05:27:04",
+      "upload_time_iso_8601": "2023-01-11T05:27:04.403728Z",
+      "url": "https://files.pythonhosted.org/packages/50/18/976329be29170fd646b3ca084be38cb347b70129905404e1ddbbdf440515/datasette_faiss-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "c679851c77fc34ec5494cf36271105f70fb7af4795e864f8afff070dbf09e0f1",
+        "md5": "23dc3ed8335edc1c503969c7da951728",
+        "sha256": "7ddc1f440917fccd01610945284b0f0aaaae4124c421dc1122f478d065d4e2e6"
+      },
+      "downloads": -1,
+      "filename": "datasette-faiss-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "23dc3ed8335edc1c503969c7da951728",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 7854,
+      "upload_time": "2023-01-11T05:27:05",
+      "upload_time_iso_8601": "2023-01-11T05:27:05.798985Z",
+      "url": "https://files.pythonhosted.org/packages/c6/79/851c77fc34ec5494cf36271105f70fb7af4795e864f8afff070dbf09e0f1/datasette-faiss-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,227 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-openai\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-openai.svg)](https://pypi.org/project/datasette-openai/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-openai?include_prereleases&label=changelog)](https://github.com/simonw/datasette-openai/releases)\n[![Tests](https://github.com/simonw/datasette-openai/workflows/Test/badge.svg)](https://github.com/simonw/datasette-openai/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-openai/blob/main/LICENSE)\n\nSQL functions for calling OpenAI APIs\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-openai\n\n## ⚠️ Warning ⚠️\n\nThis plugin allows you to call a commercial, priced API using SQL queries.\n\nUse this with care! You could accidentally spend a lot of money.\n\nFor example, the following query:\n\n```sql\nselect\n  openai_davinci(\n    'Summarize this text: ' || content, 200, 1, :api_key\n) as summary\nfrom documents\n```\nWould execute one paid API call for every item in the `documents` database. This could become very expensive.\n\nBe sure to familiarize yourself with [OpenAI pricing](https://openai.com/api/pricing/). You will need to obtain an [API key](https://beta.openai.com/account/api-keys).\n\n## Usage\n\nThis extension provides three new SQL functions:\n\n### openai_davinci(prompt, max_tokens, temperature, api_key)\n\nThis function runs a `text-davinci-003` completion against the provided prompt, with the specified values for max tokens and temperature.\n\nDa Vinci is currently 2 cents per thousand tokens.\n\n### openai_embedding(text, api_key)\n\nThis calls the OpenAI embedding endpoint and returns a binary object representing the floating point embedding for the provided text.\n\n```sql\nselect openai_embedding(:query, :api_key)\n```\nAn embedding is an array of 1536 floating point values. The returned value from this is a `blob` encoding of those values.\n\nIt's mainly useful for using with the `openai_embedding_similarity()` function.\n\nThe embedding API is very inexpensive: at time of writing, $0.0004 cents per thousand tokens, where a token is more-or-less a single word.\n\n### openai_embedding_similarity(a, b)\n\nThis function does not make any API calls. It takes two embedding blobs and returns the cosine similarity between the two.\n\nThis function is particularly useful if you have stored embeddings of documents in a database table, and you want to find the most similar documents to a query or to another document.\n\nA simple search query could look like this:\n```sql\nwith query as (\n  select\n    openai_embedding(:query, :token) as q\n)\nselect\n  id,\n  title,\n  openai_embedding_similarity(query.q, embedding) as score\nfrom\n  content, query\norder by\n  score desc\nlimit 10\n```\n\n## openai_strip_tags(text)\n\nSometimes it can be useful to strip HTML tags from text in order to reduce the number of tokens used. This function does a very simple version of tag stripping - just removing anything that matches `<...>`.\n\n## openai_tokenize(text)\n\nReturns a JSON array of tokens for the provided text.\n\nThis uses a regular expression [extracted from OpenAI's GPT-2](https://github.com/openai/gpt-2/blob/a74da5d99abaaba920de8131d64da2862a8f213b/src/encoder.py#L53).\n\n## openai_count_tokens(text)\n\nReturns a count of the number of tokens in the provided text.\n\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-openai\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-openai",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-openai",
+    "package_url": "https://pypi.org/project/datasette-openai/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-openai/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-openai/actions",
+      "Changelog": "https://github.com/simonw/datasette-openai/releases",
+      "Homepage": "https://github.com/simonw/datasette-openai",
+      "Issues": "https://github.com/simonw/datasette-openai/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-openai/0.1a2/",
+    "requires_dist": [
+      "datasette",
+      "regex",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "SQL functions for calling OpenAI APIs",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16407549,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "81fc3d1fdb451fbd8bd99d2b2b7827083ebeb2f41b43e236706ad4f860ac68ec",
+          "md5": "15b7ad575c9a5fc455b68401a7bd0533",
+          "sha256": "afec76baea95442462fce7c25f4f94ca5459e11750b9b2f493a260fb7e852d01"
+        },
+        "downloads": -1,
+        "filename": "datasette_openai-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "15b7ad575c9a5fc455b68401a7bd0533",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7818,
+        "upload_time": "2023-01-03T19:19:14",
+        "upload_time_iso_8601": "2023-01-03T19:19:14.566463Z",
+        "url": "https://files.pythonhosted.org/packages/81/fc/3d1fdb451fbd8bd99d2b2b7827083ebeb2f41b43e236706ad4f860ac68ec/datasette_openai-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "69ec5e840d65665cc2d0e5492924ba5ef4adc76cb66a865e2259a3f4f6cba915",
+          "md5": "bf1ca4ae7b49ae7a51f395dbb4b31b12",
+          "sha256": "3bd72c311b8aaed042bb2034907dbfbe6f42730d657ee2ae32b410b2908203eb"
+        },
+        "downloads": -1,
+        "filename": "datasette-openai-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bf1ca4ae7b49ae7a51f395dbb4b31b12",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7350,
+        "upload_time": "2023-01-03T19:19:16",
+        "upload_time_iso_8601": "2023-01-03T19:19:16.012110Z",
+        "url": "https://files.pythonhosted.org/packages/69/ec/5e840d65665cc2d0e5492924ba5ef4adc76cb66a865e2259a3f4f6cba915/datasette-openai-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3ab67a02842223fd3d1991d8e1b3bd145d3ca2d38a40e6138635d890abef3326",
+          "md5": "79a653028825ce0ae3b7fca5db9e5019",
+          "sha256": "3df42912d1a21abbcec9097ae77160e0bed0ab268a58f03ca6839f3aabfbf550"
+        },
+        "downloads": -1,
+        "filename": "datasette_openai-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "79a653028825ce0ae3b7fca5db9e5019",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7829,
+        "upload_time": "2023-01-10T18:24:29",
+        "upload_time_iso_8601": "2023-01-10T18:24:29.881092Z",
+        "url": "https://files.pythonhosted.org/packages/3a/b6/7a02842223fd3d1991d8e1b3bd145d3ca2d38a40e6138635d890abef3326/datasette_openai-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "55e5493fd9ae6e31276d2004563636a2cbe8055607ec610e6dd8dbf80da7af3e",
+          "md5": "1bb089fc6de8eb173b5fdb3da705c9ff",
+          "sha256": "389e478fb8f6e1752613cb167016d1be5769629bd75dcb3b1be3ae5b012faadc"
+        },
+        "downloads": -1,
+        "filename": "datasette-openai-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1bb089fc6de8eb173b5fdb3da705c9ff",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 7375,
+        "upload_time": "2023-01-10T18:24:31",
+        "upload_time_iso_8601": "2023-01-10T18:24:31.175091Z",
+        "url": "https://files.pythonhosted.org/packages/55/e5/493fd9ae6e31276d2004563636a2cbe8055607ec610e6dd8dbf80da7af3e/datasette-openai-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "373d90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a",
+          "md5": "4390b7e3650465a9ef7e6ed2e4673ce9",
+          "sha256": "02501149fcbe27ee101959dc0e46b05a3046f14098f865b6c504b1cc7a692a0e"
+        },
+        "downloads": -1,
+        "filename": "datasette_openai-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4390b7e3650465a9ef7e6ed2e4673ce9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8797,
+        "upload_time": "2023-01-12T18:17:21",
+        "upload_time_iso_8601": "2023-01-12T18:17:21.610428Z",
+        "url": "https://files.pythonhosted.org/packages/37/3d/90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a/datasette_openai-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4dad81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24",
+          "md5": "1acd2357d73cc3af5b025caefea99e0a",
+          "sha256": "c15d004f34fa7e0fb490e1b4cc3376d7686e0889cdaedb2e94962229c146b256"
+        },
+        "downloads": -1,
+        "filename": "datasette-openai-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1acd2357d73cc3af5b025caefea99e0a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8217,
+        "upload_time": "2023-01-12T18:17:23",
+        "upload_time_iso_8601": "2023-01-12T18:17:23.024075Z",
+        "url": "https://files.pythonhosted.org/packages/4d/ad/81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24/datasette-openai-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "373d90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a",
+        "md5": "4390b7e3650465a9ef7e6ed2e4673ce9",
+        "sha256": "02501149fcbe27ee101959dc0e46b05a3046f14098f865b6c504b1cc7a692a0e"
+      },
+      "downloads": -1,
+      "filename": "datasette_openai-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "4390b7e3650465a9ef7e6ed2e4673ce9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8797,
+      "upload_time": "2023-01-12T18:17:21",
+      "upload_time_iso_8601": "2023-01-12T18:17:21.610428Z",
+      "url": "https://files.pythonhosted.org/packages/37/3d/90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a/datasette_openai-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "4dad81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24",
+        "md5": "1acd2357d73cc3af5b025caefea99e0a",
+        "sha256": "c15d004f34fa7e0fb490e1b4cc3376d7686e0889cdaedb2e94962229c146b256"
+      },
+      "downloads": -1,
+      "filename": "datasette-openai-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "1acd2357d73cc3af5b025caefea99e0a",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 8217,
+      "upload_time": "2023-01-12T18:17:23",
+      "upload_time_iso_8601": "2023-01-12T18:17:23.024075Z",
+      "url": "https://files.pythonhosted.org/packages/4d/ad/81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24/datasette-openai-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

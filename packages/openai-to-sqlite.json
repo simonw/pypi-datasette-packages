@@ -1,0 +1,181 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# openai-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/openai-to-sqlite.svg)](https://pypi.org/project/openai-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/openai-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/openai-to-sqlite/releases)\n[![Tests](https://github.com/simonw/openai-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/openai-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/openai-to-sqlite/blob/master/LICENSE)\n\nThis tool provides utilities for interacting with OpenAI APIs and storing the results in a SQLite database.\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install openai-to-sqlite\n\n## Configuration\n\nYou will need an OpenAI API key to use this tool.\n\nYou can create one at https://beta.openai.com/account/api-keys\n\nYou can then either set the API key as an environment variable:\n\n    export OPENAI_API_KEY=sk-...\n\nOr pass it to each command using the `--token sk-...` option.\n\n## Embeddings\n\nThe `embeddings` command can be used to calculate and store [OpenAI embeddings](https://beta.openai.com/docs/guides/embeddings) for strings of text.\n\nEach embedding has a cost, so be sure to familiarize yourself with [the pricing](https://openai.com/api/pricing/) for the embedding model.\n\nThe command can accept data in four different ways:\n\n- As a JSON file containing a list of objects\n- As a CSV file\n- As a TSV file\n- By running queries against a SQLite database\n\nFor all of these formats there should be an `id` column, followed by one or more text columns.\n\nThe ID will be stored as the content ID. Any other columns will be concatenated together and used as the text to be embedded.\n\nThe embeddings from the API will then be saved as binary blobs in the `embeddings` table of the specified SQLite database - or another table, if you pass the `-t/--table` option.\n\n### JSON, CSV and TSV\n\nGiven a CSV file like this:\n\n    id,content\n    1,This is a test\n    2,This is another test\n\nEmbeddings can be stored like so:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv\n```\n\nThe resulting schema looks like this:\n\n```sql\nCREATE TABLE [embeddings] (\n   [id] TEXT PRIMARY KEY,\n   [embedding] BLOB\n);\n```\nThe same data can be provided as TSV data:\n```\nid    content\n1     This is a test\n2     This is another test\n```\nThen imported like this:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv\n```\nOr as JSON data:\n```json\n[\n  {\"id\": 1, \"content\": \"This is a test\"},\n  {\"id\": 2, \"content\": \"This is another test\"}\n]\n```\nImported like this:\n```\nopenai-to-sqlite embeddings embeddings.db data.json\n```\nIn each of these cases the tool automatically detects the format of the data. It does this by inspecting the data itself - it does not consider the file extension.\n\nIf the automatic detection is not working, you can pass `--format json`, `csv` or `tsv` to explicitly specify a format:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv --format tsv\n```\n### Importing data from standard input\n\nYou can use a filename of `-` to pipe data in to standard input:\n\n```bash\ncat data.tsv | openai-to-sqlite embeddings embeddings.db -\n```\n\n### Data from a SQL query\n\nThe `--sql` option can be used to read data to be embedded from the attached SQLite database. The query must return an `id` column and one or more text columns to be embedded.\n\n```\nopenai-to-sqlite embeddings content.db \\\n  --sql \"select id, title from documents\"\n```\nThis will create a `embeddings` table in the `content.db` database and populate it with embeddings calculated from the `title` column in that query.\n\nYou can also store embeddings in one database while reading data from another database, using the `--attach alias filename.db` option:\n\n```\nopenai-to-sqlite embeddings embeddings.db \\\n  --attach documents documents.db \\\n  --sql \"select id, title from documents.documents\"\n```\nA progress bar will be displayed when using `--sql` that indicates how long the embeddings are likely to take to calculate.\n\nThe CSV/TSV/JSON options do not correctly display the progress bar. You can work around this by importing your data into SQLite first (e.g. [using sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data)) and then running the embeddings using `--sql`.\n\n### Batching\n\nEmbeddings will be sent to the OpenAI embeddings API in batches of 100. If you know that your data is short strings you can increase the batch size, up to 2048, using the `--batch-size` option:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv --batch-size 2048\n```\n\n### Working with the stored embeddings\n\nThe `embedding` column is a SQLite blob containing 1536 floating point numbers encoded as a sequence of 4 byte values.\n\nYou can extract them back to an array of floating point values in Python like this:\n```python\nimport struct\n\nvector = struct.unpack(\n    \"f\" * 1536, binary_embedding\n)\n```\n\n### Searching embeddings with the search command\n\nHaving saved the embeddings for content, you can run searches using the `search` command:\n```bash\nopenai-to-sqlite search embeddings.db 'this is my search term'\n```\nThe output will be a list of cosine similarity scores and content IDs:\n```\n% openai-to-sqlite search blog.db 'cool datasette demo'\n0.843 7849\n0.830 8036\n0.828 8195\n0.826 8098\n0.818 8086\n0.817 8171\n0.816 8121\n0.815 7860\n0.815 7872\n0.814 8169\n```\n\nAdd the `-t/--table` option if your embeddings are stored in a different table:\n```bash\nopenai-to-sqlite search content.db 'this is my search term' -t documents\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd openai-to-sqlite\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/openai-to-sqlite",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "openai-to-sqlite",
+    "package_url": "https://pypi.org/project/openai-to-sqlite/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/openai-to-sqlite/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/openai-to-sqlite/actions",
+      "Changelog": "https://github.com/simonw/openai-to-sqlite/releases",
+      "Homepage": "https://github.com/simonw/openai-to-sqlite",
+      "Issues": "https://github.com/simonw/openai-to-sqlite/issues"
+    },
+    "release_url": "https://pypi.org/project/openai-to-sqlite/0.2/",
+    "requires_dist": [
+      "click",
+      "httpx",
+      "sqlite-utils (>=3.28)",
+      "pytest ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Save OpenAI API results to a SQLite database",
+    "version": "0.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16419834,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "979485262c3d7894d810267fe64d2948f5f8372cecfc401593e54ce853c69fd0",
+          "md5": "cc64bb7eb7f66f67ab5f52ec4d1d3320",
+          "sha256": "620998af7fcfb189a4f0d431988ebc0a30e89295d8cc2509be35361a2f1d4deb"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cc64bb7eb7f66f67ab5f52ec4d1d3320",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9273,
+        "upload_time": "2023-01-03T01:25:46",
+        "upload_time_iso_8601": "2023-01-03T01:25:46.029607Z",
+        "url": "https://files.pythonhosted.org/packages/97/94/85262c3d7894d810267fe64d2948f5f8372cecfc401593e54ce853c69fd0/openai_to_sqlite-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "30e4e1f9b7c4a78b47b8253c6eac3ff2da1cc10241658d8139748d837d3b3f5f",
+          "md5": "ef747061c4656575f97d505866935397",
+          "sha256": "2b057d013f8e676a3a1eeafb197fd4839f62052db20e09dda29c3f6fe64b29f9"
+        },
+        "downloads": -1,
+        "filename": "openai-to-sqlite-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ef747061c4656575f97d505866935397",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8399,
+        "upload_time": "2023-01-03T01:25:47",
+        "upload_time_iso_8601": "2023-01-03T01:25:47.781374Z",
+        "url": "https://files.pythonhosted.org/packages/30/e4/e1f9b7c4a78b47b8253c6eac3ff2da1cc10241658d8139748d837d3b3f5f/openai-to-sqlite-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "722183d99a96e521d9126715cf258a9414194e52eb75fbb61c691f79d2db286b",
+          "md5": "220602cf695291ec86ff79957554cf02",
+          "sha256": "c8926e11e9f2f368f88c1f69f0a74bd513f1edc4c9f1f685a3ea66d98ff439ef"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "220602cf695291ec86ff79957554cf02",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10907,
+        "upload_time": "2023-01-13T17:01:00",
+        "upload_time_iso_8601": "2023-01-13T17:01:00.630339Z",
+        "url": "https://files.pythonhosted.org/packages/72/21/83d99a96e521d9126715cf258a9414194e52eb75fbb61c691f79d2db286b/openai_to_sqlite-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1243c8cdcfdc4e31223cdc2bc13afe37eccff4bd235540419d7c0085254a602b",
+          "md5": "439f5a920649b8dc44b096183bd98774",
+          "sha256": "d7eab0bf655084ac71c1ea7cf3d8174f980b8b2388434b3a2eb2358ec8d8065c"
+        },
+        "downloads": -1,
+        "filename": "openai-to-sqlite-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "439f5a920649b8dc44b096183bd98774",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9992,
+        "upload_time": "2023-01-13T17:01:01",
+        "upload_time_iso_8601": "2023-01-13T17:01:01.808379Z",
+        "url": "https://files.pythonhosted.org/packages/12/43/c8cdcfdc4e31223cdc2bc13afe37eccff4bd235540419d7c0085254a602b/openai-to-sqlite-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "722183d99a96e521d9126715cf258a9414194e52eb75fbb61c691f79d2db286b",
+        "md5": "220602cf695291ec86ff79957554cf02",
+        "sha256": "c8926e11e9f2f368f88c1f69f0a74bd513f1edc4c9f1f685a3ea66d98ff439ef"
+      },
+      "downloads": -1,
+      "filename": "openai_to_sqlite-0.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "220602cf695291ec86ff79957554cf02",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 10907,
+      "upload_time": "2023-01-13T17:01:00",
+      "upload_time_iso_8601": "2023-01-13T17:01:00.630339Z",
+      "url": "https://files.pythonhosted.org/packages/72/21/83d99a96e521d9126715cf258a9414194e52eb75fbb61c691f79d2db286b/openai_to_sqlite-0.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "1243c8cdcfdc4e31223cdc2bc13afe37eccff4bd235540419d7c0085254a602b",
+        "md5": "439f5a920649b8dc44b096183bd98774",
+        "sha256": "d7eab0bf655084ac71c1ea7cf3d8174f980b8b2388434b3a2eb2358ec8d8065c"
+      },
+      "downloads": -1,
+      "filename": "openai-to-sqlite-0.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "439f5a920649b8dc44b096183bd98774",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 9992,
+      "upload_time": "2023-01-13T17:01:01",
+      "upload_time_iso_8601": "2023-01-13T17:01:01.808379Z",
+      "url": "https://files.pythonhosted.org/packages/12/43/c8cdcfdc4e31223cdc2bc13afe37eccff4bd235540419d7c0085254a602b/openai-to-sqlite-0.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
