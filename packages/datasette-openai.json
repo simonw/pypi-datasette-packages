@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-openai\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-openai.svg)](https://pypi.org/project/datasette-openai/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-openai?include_prereleases&label=changelog)](https://github.com/simonw/datasette-openai/releases)\n[![Tests](https://github.com/simonw/datasette-openai/workflows/Test/badge.svg)](https://github.com/simonw/datasette-openai/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-openai/blob/main/LICENSE)\n\nSQL functions for calling OpenAI APIs\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-openai\n\n## ⚠️ Warning ⚠️\n\nThis plugin allows you to call a commercial, priced API using SQL queries.\n\nUse this with care! You could accidentally spend a lot of money.\n\nFor example, the following query:\n\n```sql\nselect\n  openai_davinci(\n    'Summarize this text: ' || content, 200, 1, :api_key\n) as summary\nfrom documents\n```\nWould execute one paid API call for every item in the `documents` database. This could become very expensive.\n\nBe sure to familiarize yourself with [OpenAI pricing](https://openai.com/api/pricing/). You will need to obtain an [API key](https://beta.openai.com/account/api-keys).\n\n## Usage\n\nThis extension provides three new SQL functions:\n\n### openai_davinci(prompt, max_tokens, temperature, api_key)\n\nThis function runs a `text-davinci-003` completion against the provided prompt, with the specified values for max tokens and temperature.\n\nDa Vinci is currently 2 cents per thousand tokens.\n\n### openai_embedding(text, api_key)\n\nThis calls the OpenAI embedding endpoint and returns a binary object representing the floating point embedding for the provided text.\n\n```sql\nselect openai_embedding(:query, :api_key)\n```\nAn embedding is an array of 1536 floating point values. The returned value from this is a `blob` encoding of those values.\n\nIt's mainly useful for using with the `openai_embedding_similarity()` function.\n\nThe embedding API is very inexpensive: at time of writing, $0.0004 cents per thousand tokens, where a token is more-or-less a single word.\n\n### openai_embedding_similarity(a, b)\n\nThis function does not make any API calls. It takes two embedding blobs and returns the cosine similarity between the two.\n\nThis function is particularly useful if you have stored embeddings of documents in a database table, and you want to find the most similar documents to a query or to another document.\n\nA simple search query could look like this:\n```sql\nwith query as (\n  select\n    openai_embedding(:query, :token) as q\n)\nselect\n  id,\n  title,\n  openai_embedding_similarity(query.q, embedding) as score\nfrom\n  content, query\norder by\n  score desc\nlimit 10\n```\n\n## openai_strip_tags(text)\n\nSometimes it can be useful to strip HTML tags from text in order to reduce the number of tokens used. This function does a very simple version of tag stripping - just removing anything that matches `<...>`.\n\n## openai_tokenize(text)\n\nReturns a JSON array of tokens for the provided text.\n\nThis uses a regular expression [extracted from OpenAI's GPT-2](https://github.com/openai/gpt-2/blob/a74da5d99abaaba920de8131d64da2862a8f213b/src/encoder.py#L53).\n\n## openai_count_tokens(text)\n\nReturns a count of the number of tokens in the provided text.\n\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-openai\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-openai\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-openai.svg)](https://pypi.org/project/datasette-openai/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-openai?include_prereleases&label=changelog)](https://github.com/simonw/datasette-openai/releases)\n[![Tests](https://github.com/simonw/datasette-openai/workflows/Test/badge.svg)](https://github.com/simonw/datasette-openai/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-openai/blob/main/LICENSE)\n\nSQL functions for calling OpenAI APIs\n\nSee [Semantic search answers: Q&A against documentation with GPT3 + OpenAI embeddings](https://simonwillison.net/2023/Jan/13/semantic-search-answers/) for background on this project.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-openai\n\n## ⚠️ Warning ⚠️\n\nThis plugin allows you to call a commercial, priced API using SQL queries.\n\nUse this with care! You could accidentally spend a lot of money.\n\nFor example, the following query:\n\n```sql\nselect\n  openai_davinci(\n    'Summarize this text: ' || content, 200, 1, :api_key\n) as summary\nfrom documents\n```\nWould execute one paid API call for every item in the `documents` database. This could become very expensive.\n\nBe sure to familiarize yourself with [OpenAI pricing](https://openai.com/api/pricing/). You will need to obtain an [API key](https://beta.openai.com/account/api-keys).\n\n## Usage\n\nThis extension provides three new SQL functions:\n\n### openai_davinci(prompt, max_tokens, temperature, api_key)\n\nThis function runs a `text-davinci-003` completion against the provided prompt, with the specified values for max tokens and temperature.\n\nDa Vinci is currently 2 cents per thousand tokens.\n\n### openai_embedding(text, api_key)\n\nThis calls the OpenAI embedding endpoint and returns a binary object representing the floating point embedding for the provided text.\n\n```sql\nselect openai_embedding(:query, :api_key)\n```\nAn embedding is an array of 1536 floating point values. The returned value from this is a `blob` encoding of those values.\n\nIt's mainly useful for using with the `openai_embedding_similarity()` function.\n\nThe embedding API is very inexpensive: at time of writing, $0.0004 cents per thousand tokens, where a token is more-or-less a single word.\n\n### openai_embedding_similarity(a, b)\n\nThis function does not make any API calls. It takes two embedding blobs and returns the cosine similarity between the two.\n\nThis function is particularly useful if you have stored embeddings of documents in a database table, and you want to find the most similar documents to a query or to another document.\n\nA simple search query could look like this:\n```sql\nwith query as (\n  select\n    openai_embedding(:query, :token) as q\n)\nselect\n  id,\n  title,\n  openai_embedding_similarity(query.q, embedding) as score\nfrom\n  content, query\norder by\n  score desc\nlimit 10\n```\n\n## openai_build_prompt(text, prefix, suffix, completion_tokens, token_limit=4000)\n\nThis aggregate function helps build a prompt from a number of inputs in a way that fits the GPT-3 prompt size limit.\n\nIt takes the following argument:\n\n- `text` - this is the column that is being aggregated, so the function expects to have multiple values for this. All other arguments will only be read the first time they are passed, so should be consistent across all calls to the function.\n- `prefix` - text to use for the prefix of the prompt\n- `suffix` - text to use for the suffix of the prompt\n- `completion_tokens` - the number of tokens to reserve for the prompt response - this will be subtracted from the token limit\n- `token_limit` - this value is optional (there are 4-argument and 5-argument versions of the function registered). It defaults to the GPT-3 Da Vinci size limit of 4,000 tokens but can be changed if the model the prompt is being used with has a different size limit.\n\nHere's an example usage of this function, adapted from [this article](https://simonwillison.net/2023/Jan/13/semantic-search-answers/):\n\n```sql\nwith top_n as (\n  select body from blog_entry order by id desc limit 3\n)\nselect openai_build_prompt(body, 'Context:\n------------\n', '\n------------\nGiven the above context, answer the following question: ' || :question,\n  500,\n  2000\n  ) from top_n\n```\n[Try that here](https://datasette.simonwillison.net/simonwillisonblog?sql=with+top_n+as+%28%0D%0A++select+body+from+blog_entry+order+by+id+desc+limit+5%0D%0A%29%0D%0Aselect+openai_build_prompt%28body%2C+%27Context%3A%0D%0A------------%0D%0A%27%2C+%27%0D%0A------------%0D%0AGiven+the+above+context%2C+answer+the+following+question%3A+%27+%7C%7C+%3Aquestion%2C%0D%0A++500%2C%0D%0A++2000%0D%0A++%29+from+top_n&question=Examples+of+a+language+model%3F).\n\nThis query first retrieves the three most recent blog entries, then constructs a prompt that with the provided prefix and suffix designed to fit 1500 tokens (2000 total, minus 500 reserved for the response).\n\nThe output looks something like this (truncated for space):\n\n```\nContext:\n------------\n< p > If you 've spent any time with GPT - 3 or ChatGPT , you 've likely thought about how ...\nI release Datasette 0 . 64 this morning . This release is mainly a response to the realization that it 's not safe to run Datasette with the SpatiaLite extension loaded if that Datasette instance is configured to enable arbitrary SQL queries from untrusted users ...\nIn lieu of my regular weeknotes ( I took two weeks off for the holidays ) here 's a look back at 2022 , mainly in terms of projects and things I 've written about ...\n------------\nGiven the above context, answer the following question: Examples of a language model?\n```\nThe body of each entry has been truncated to the number of tokens that will allow examples from all three entries to be included in the generated prompt.\n\n## openai_strip_tags(text)\n\nSometimes it can be useful to strip HTML tags from text in order to reduce the number of tokens used. This function does a very simple version of tag stripping - just removing anything that matches `<...>`.\n\n## openai_tokenize(text)\n\nReturns a JSON array of tokens for the provided text.\n\nThis uses a regular expression [extracted from OpenAI's GPT-2](https://github.com/openai/gpt-2/blob/a74da5d99abaaba920de8131d64da2862a8f213b/src/encoder.py#L53).\n\n## openai_count_tokens(text)\n\nReturns a count of the number of tokens in the provided text.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-openai\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-openai",
       "Issues": "https://github.com/simonw/datasette-openai/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-openai/0.1a2/",
+    "release_url": "https://pypi.org/project/datasette-openai/0.2/",
     "requires_dist": [
       "datasette",
       "regex",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "SQL functions for calling OpenAI APIs",
-    "version": "0.1a2",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 16407549,
+  "last_serial": 16424875,
   "releases": {
     "0.1a0": [
       {
@@ -177,48 +177,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "94e42667edd4d1f3c440d640ebacfdae7106f32d0d4ab66b32a2642a6b7ddf41",
+          "md5": "99ebf7eab3f5c5d6cf4764042549a2b6",
+          "sha256": "5bf549142f9698244dc0e317baf714837e8bb09336e7714d780435b39562a017"
+        },
+        "downloads": -1,
+        "filename": "datasette_openai-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "99ebf7eab3f5c5d6cf4764042549a2b6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 10005,
+        "upload_time": "2023-01-14T02:29:25",
+        "upload_time_iso_8601": "2023-01-14T02:29:25.445020Z",
+        "url": "https://files.pythonhosted.org/packages/94/e4/2667edd4d1f3c440d640ebacfdae7106f32d0d4ab66b32a2642a6b7ddf41/datasette_openai-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a5d77d60ae26aca81a92d0d555b6739ea08f25671b165a9f186d8140c6b3ae5b",
+          "md5": "619a873181985b077467e8293cc25574",
+          "sha256": "c5a626a9a211d48089cf604afb5528dcd4d95b67cf3bc37f21d22412c6bb2fa7"
+        },
+        "downloads": -1,
+        "filename": "datasette-openai-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "619a873181985b077467e8293cc25574",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 9452,
+        "upload_time": "2023-01-14T02:29:26",
+        "upload_time_iso_8601": "2023-01-14T02:29:26.783898Z",
+        "url": "https://files.pythonhosted.org/packages/a5/d7/7d60ae26aca81a92d0d555b6739ea08f25671b165a9f186d8140c6b3ae5b/datasette-openai-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "373d90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a",
-        "md5": "4390b7e3650465a9ef7e6ed2e4673ce9",
-        "sha256": "02501149fcbe27ee101959dc0e46b05a3046f14098f865b6c504b1cc7a692a0e"
+        "blake2b_256": "94e42667edd4d1f3c440d640ebacfdae7106f32d0d4ab66b32a2642a6b7ddf41",
+        "md5": "99ebf7eab3f5c5d6cf4764042549a2b6",
+        "sha256": "5bf549142f9698244dc0e317baf714837e8bb09336e7714d780435b39562a017"
       },
       "downloads": -1,
-      "filename": "datasette_openai-0.1a2-py3-none-any.whl",
+      "filename": "datasette_openai-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "4390b7e3650465a9ef7e6ed2e4673ce9",
+      "md5_digest": "99ebf7eab3f5c5d6cf4764042549a2b6",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8797,
-      "upload_time": "2023-01-12T18:17:21",
-      "upload_time_iso_8601": "2023-01-12T18:17:21.610428Z",
-      "url": "https://files.pythonhosted.org/packages/37/3d/90141e4b6cc592fa1a945c3202f44669f63fa5ffde4e0e7c56c9773e664a/datasette_openai-0.1a2-py3-none-any.whl",
+      "size": 10005,
+      "upload_time": "2023-01-14T02:29:25",
+      "upload_time_iso_8601": "2023-01-14T02:29:25.445020Z",
+      "url": "https://files.pythonhosted.org/packages/94/e4/2667edd4d1f3c440d640ebacfdae7106f32d0d4ab66b32a2642a6b7ddf41/datasette_openai-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "4dad81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24",
-        "md5": "1acd2357d73cc3af5b025caefea99e0a",
-        "sha256": "c15d004f34fa7e0fb490e1b4cc3376d7686e0889cdaedb2e94962229c146b256"
+        "blake2b_256": "a5d77d60ae26aca81a92d0d555b6739ea08f25671b165a9f186d8140c6b3ae5b",
+        "md5": "619a873181985b077467e8293cc25574",
+        "sha256": "c5a626a9a211d48089cf604afb5528dcd4d95b67cf3bc37f21d22412c6bb2fa7"
       },
       "downloads": -1,
-      "filename": "datasette-openai-0.1a2.tar.gz",
+      "filename": "datasette-openai-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "1acd2357d73cc3af5b025caefea99e0a",
+      "md5_digest": "619a873181985b077467e8293cc25574",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 8217,
-      "upload_time": "2023-01-12T18:17:23",
-      "upload_time_iso_8601": "2023-01-12T18:17:23.024075Z",
-      "url": "https://files.pythonhosted.org/packages/4d/ad/81ce9444af63d3ef26aed18ce7c36762fc2b6d0d3fb45275170f5cc53c24/datasette-openai-0.1a2.tar.gz",
+      "size": 9452,
+      "upload_time": "2023-01-14T02:29:26",
+      "upload_time_iso_8601": "2023-01-14T02:29:26.783898Z",
+      "url": "https://files.pythonhosted.org/packages/a5/d7/7d60ae26aca81a92d0d555b6739ea08f25671b165a9f186d8140c6b3ae5b/datasette-openai-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
