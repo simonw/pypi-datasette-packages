@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-scraper\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-scraper.svg)](https://pypi.org/project/datasette-scraper/)\n[![Changelog](https://img.shields.io/github/v/release/cldellow/datasette-scraper?include_prereleases&label=changelog)](https://github.com/cldellow/datasette-scraper/releases)\n[![Tests](https://github.com/cldellow/datasette-scraper/workflows/Test/badge.svg)](https://github.com/cldellow/datasette-scraper/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/cldellow/datasette-scraper/blob/main/LICENSE)\n\n`datasette-scraper` is a Datasette plugin to manage small-ish (~100K pages) crawl and extract jobs.\n\n- Opinionated yet extensible\n  - Some useful tasks are possible out-of-the-box, or write your own pluggy hooks to go further\n- Leans heavily into SQLite\n  - Introspect your crawls via ops tables exposed in Datasette\n- Built on robust libraries\n  - [Datasette](https://datasette.io/) as a host\n  - [selectolax](https://github.com/rushter/selectolax) for HTML parsing\n  - [httpx](https://www.python-httpx.org/) for HTTP requests\n  - [pluggy](https://pluggy.readthedocs.io/en/stable/) for extensibility\n  - [zstandard](https://github.com/indygreg/python-zstandard) for efficiently compressing HTTP responses\n- **Not for adversarial crawling**\n  - Want to crawl a site that blocks bots? You're on your own\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-scraper\n\n## Usage\n\nConfigure `datasette-scraper` via `metadata.json`. You need to enable the plugin\non a per-database level.\n\nTo enable it in the `my-database` database, write something like this:\n\n```\n{\n  \"databases\": {\n    \"my-database\": {\n      \"plugins\": {\n        \"datasette-scraper\": {\n        }\n      }\n    }\n  }\n}\n```\n\nThe next time you start datasette, the plugin will create several tables in\nthe specified database. Go to the `dss_crawl` table to define a crawl.\n\n## Usage notes\n\n`datasette-scraper` requires a database in which to track its operational data,\nand a database in which to store scraped data. They can be the same database.\n\nBoth databases will be put into WAL mode.\n\nThe ops database's `user_version` pragma will be used to track schema versions.\n\n## Architecture\n\n`datasette-scraper` handles the core bookkeeping for scraping--keeping track of\nURLs to be scraped, rate-limiting requests to origins, persisting data into the DB.\nIt relies on plugins to do almost all the interesting work. For example, fetching\nthe actual pages, following redirects, navigating sitemaps, extracting data.\n\nThe tool comes with plugins for common use cases. Some users may want to author\ntheir own `after_fetch_url` or `extract_from_response` implementations to do custom\nprocessing.\n\n### Overview\n\n```mermaid\nflowchart LR\ndirection TB\n\nsubgraph init\n  A(user starts crawl) --> B[get_seed_urls]\nend\n\nsubgraph crawl [for each URL to crawl]\n  before_fetch_url --> fetch_cached_url --> fetch_url --> after_fetch_url\n  fetch_cached_url --> after_fetch_url\nend\n\nsubgraph discover [for each URL crawled]\n  discover_urls --> canonicalize_url --> canonicalize_url\n  canonicalize_url --> x[queue URL to crawl]\n  extract_from_response\nend\n\ninit --> crawl --> discover\n```\n\n### Plugin hooks\n\nMost plugins will only implement a few of these hooks.\n\n- `conn` is a read/write `sqlite3.Connection` to the database\n- `config` is the crawl's config\n\n#### `get_seed_urls(config)`\n\nReturns a list of strings representing seed URLs to be fetched.\n\nThey will be considered to have depth of 0, i.e. seeds.\n\n#### `before_fetch_url(conn, config, job_id, url, depth, request_headers)`\n\n`request_headers` is a dict, you can modify it to control what gets sent in the request.\n\nReturns:\n  - truthy to indicate this URL should not be crawled (for example, crawl max page limit)\n  - falsy to express no opinion\n\n> **Note** `before_fetch_url` vs `canonicalize_url`\n>\n> You can also use the `canonicalize_url` hook to reject URLs prior to them entering\n> the crawl queue.\n>\n> A URL rejected by `canonicalize_url` will not result in an entry in the\n> `dss_crawl_queue` and `dss_crawl_queue_history` tables.\n>\n> Which one you use is a matter of taste, in general, if you _never_ want the URL,\n> reject it at canonicalization time.\n\n#### `fetch_cached_url(conn, config, url, depth, request_headers)`\n\nFetch a previously-cached HTTP response. The system will not have checked that\nthere was rate limit available before calling this.\n\nReturns:\n  - `None`, to indicate not handled\n  - a response object, which is a dict with:\n    - `fetched_at` - an ISO 8601 time like `2022-12-26 01:23:45.00`\n    - `headers` - the response headers, eg `[['content-type', 'text/html']]`\n    - `status_code` - the respones code, eg `200`\n    - `text` - the response body\n\nOnce any plugin has returned a truthy value, no other plugin's `fetch_url`\nhook will be invoked.\n\n\n#### `fetch_url(conn, config, url, request_headers)`\n\nFetch an HTTP response from the live server. The system will have checked that there\nwas rate limit available before calling this.\n\nSame return type and behaviour as `fetch_cached_url`.\n\n#### `after_fetch_url(conn, config, url, request_headers, response, fresh, fetch_duration)`\n\nDo something with a fetched URL.\n\n#### `discover_urls(config, url, response)`\n\nReturns a list of URLs to crawl.\n\nThe URLs can be either strings, in which case they'll get enqueued as depth + 1, or tuple of URL and depth. This can be useful for paginated index pages, where you'd like to crawl to a max depth of, say, 2, but treat all the index pages as being at depth 1.\n\n#### `canonicalize_url(config, from_url, to_url, to_url_depth)`\n\nReturns:\n  - `False` to filter URL\n  - an URL to be crawled instead\n  - `None` or `True` to no-op\n\nThe URL to be crawled can be a string, or a tuple of string and depth.\n\nThis hook is useful for:\n  - blocking URLs that we never want\n  - canonicalizing URLs, for example, by omitting query parameters\n  - restricting crawls to same origin\n  - resetting depth for pagination\n\n#### `extract_from_response(config, url, response)`\n\nReturns an object of rows-to-be-inserted-or-upserted:\n\n```jsonc\n{\n  \"dbname\": {  // can be omitted, in which case, current DB will be used\n    \"tablename\": [\n      {\n        \"id!\": \"cldellow@gmail.com\",  // ! indicates pkey, compound OK\n        \"name\": \"Colin\",\n        \"age\": 37\n      }\n    ]\n  }\n}\n```\n\nAny missing tables or columns will be created. Columns will have `ANY` data type,\nand be nullable. If you'd like to control the schema more carefully, please\ncreate the table manually.\n\n#### Metadata hooks\n\nThese hooks don't affect operation of the scrapes. They provide metadata to\nhelp validate a user's configuration and show UI to configure a crawl.\n\n##### config_schema()\n\nReturns a `ConfigSchema` option that defines how this plugin is configured.\n\nConfiguration is done via [JSON schema](https://json-schema.org/understanding-json-schema/). UI is done via [JSON Forms](https://jsonforms.io/).\n\nLook at the existing plugins to learn how to use this hook.\n\nThe schema is optional; if omitted, you will need to configure the plug in\nout of band.\n\n##### config_default_value()\n\nReturns `None` to indicate that new crawls should not use this plugin by default.\n\nOtherwise, returns a reasonable default value that conforms to the schema in `config_schema()`\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-scraper\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-scraper\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-scraper.svg)](https://pypi.org/project/datasette-scraper/)\n[![Changelog](https://img.shields.io/github/v/release/cldellow/datasette-scraper?include_prereleases&label=changelog)](https://github.com/cldellow/datasette-scraper/releases)\n[![Tests](https://github.com/cldellow/datasette-scraper/workflows/Test/badge.svg)](https://github.com/cldellow/datasette-scraper/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/cldellow/datasette-scraper/blob/main/LICENSE)\n\n`datasette-scraper` is a Datasette plugin to manage small-ish (~100K pages) crawl and extract jobs.\n\n- Opinionated yet extensible\n  - Some useful tasks are possible out-of-the-box, or write your own pluggy hooks to go further\n- Leans heavily into SQLite\n  - Introspect your crawls via ops tables exposed in Datasette\n- Built on robust libraries\n  - [Datasette](https://datasette.io/) as a host\n  - [selectolax](https://github.com/rushter/selectolax) for HTML parsing\n  - [httpx](https://www.python-httpx.org/) for HTTP requests\n  - [pluggy](https://pluggy.readthedocs.io/en/stable/) for extensibility\n  - [zstandard](https://github.com/indygreg/python-zstandard) for efficiently compressing HTTP responses\n\n**Not for adversarial crawling**. Want to crawl a site that blocks bots? You're on your own.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-scraper\n\n## Usage\n\nConfigure `datasette-scraper` via `metadata.json`. You need to enable the plugin\non a per-database level.\n\nTo enable it in the `my-database` database, write something like this:\n\n```\n{\n  \"databases\": {\n    \"my-database\": {\n      \"plugins\": {\n        \"datasette-scraper\": {\n        }\n      }\n    }\n  }\n}\n```\n\nThe next time you start datasette, the plugin will create several tables in\nthe specified database. Go to the `dss_crawl` table to define a crawl.\n\nA 10-minute end-to-end walkthrough video is available:\n\n<div align=\"left\">\n      <a href=\"https://www.youtube.com/watch?v=zrSGnz7ErNI\">\n         <img src=\"https://img.youtube.com/vi/zrSGnz7ErNI/maxresdefault.jpg\" style=\"width:100%;\">\n      </a>\n</div>\n\n## Usage notes\n\n`datasette-scraper` requires a database in which to track its operational data,\nand a database in which to store scraped data. They can be the same database.\n\nBoth databases will be put into WAL mode.\n\nThe ops database's `user_version` pragma will be used to track schema versions.\n\n## Architecture\n\n`datasette-scraper` handles the core bookkeeping for scraping--keeping track of\nURLs to be scraped, rate-limiting requests to origins, persisting data into the DB.\nIt relies on plugins to do almost all the interesting work. For example, fetching\nthe actual pages, following redirects, navigating sitemaps, extracting data.\n\nThe tool comes with plugins for common use cases. Some users may want to author\ntheir own `after_fetch_url` or `extract_from_response` implementations to do custom\nprocessing.\n\n### Overview\n\n```mermaid\nflowchart LR\ndirection TB\n\nsubgraph init\n  A(user starts crawl) --> B[get_seed_urls]\nend\n\nsubgraph crawl [for each URL to crawl]\n  before_fetch_url --> fetch_cached_url --> fetch_url --> after_fetch_url\n  fetch_cached_url --> after_fetch_url\nend\n\nsubgraph discover [for each URL crawled]\n  discover_urls --> canonicalize_url --> canonicalize_url\n  canonicalize_url --> x[queue URL to crawl]\n  extract_from_response\nend\n\ninit --> crawl --> discover\n```\n\n### Plugin hooks\n\nMost plugins will only implement a few of these hooks.\n\n- `conn` is a read/write `sqlite3.Connection` to the database\n- `config` is the crawl's config\n\n#### `get_seed_urls(config)`\n\nReturns a list of strings representing seed URLs to be fetched.\n\nThey will be considered to have depth of 0, i.e. seeds.\n\n#### `before_fetch_url(conn, config, job_id, url, depth, request_headers)`\n\n`request_headers` is a dict, you can modify it to control what gets sent in the request.\n\nReturns:\n  - truthy to indicate this URL should not be crawled (for example, crawl max page limit)\n  - falsy to express no opinion\n\n> **Note** `before_fetch_url` vs `canonicalize_url`\n>\n> You can also use the `canonicalize_url` hook to reject URLs prior to them entering\n> the crawl queue.\n>\n> A URL rejected by `canonicalize_url` will not result in an entry in the\n> `dss_crawl_queue` and `dss_crawl_queue_history` tables.\n>\n> Which one you use is a matter of taste, in general, if you _never_ want the URL,\n> reject it at canonicalization time.\n\n#### `fetch_cached_url(conn, config, url, depth, request_headers)`\n\nFetch a previously-cached HTTP response. The system will not have checked that\nthere was rate limit available before calling this.\n\nReturns:\n  - `None`, to indicate not handled\n  - a response object, which is a dict with:\n    - `fetched_at` - an ISO 8601 time like `2022-12-26 01:23:45.00`\n    - `headers` - the response headers, eg `[['content-type', 'text/html']]`\n    - `status_code` - the respones code, eg `200`\n    - `text` - the response body\n\nOnce any plugin has returned a truthy value, no other plugin's `fetch_url`\nhook will be invoked.\n\n\n#### `fetch_url(conn, config, url, request_headers)`\n\nFetch an HTTP response from the live server. The system will have checked that there\nwas rate limit available before calling this.\n\nSame return type and behaviour as `fetch_cached_url`.\n\n#### `after_fetch_url(conn, config, url, request_headers, response, fresh, fetch_duration)`\n\nDo something with a fetched URL.\n\n#### `discover_urls(config, url, response)`\n\nReturns a list of URLs to crawl.\n\nThe URLs can be either strings, in which case they'll get enqueued as depth + 1, or tuple of URL and depth. This can be useful for paginated index pages, where you'd like to crawl to a max depth of, say, 2, but treat all the index pages as being at depth 1.\n\n#### `canonicalize_url(config, from_url, to_url, to_url_depth)`\n\nReturns:\n  - `False` to filter URL\n  - an URL to be crawled instead\n  - `None` or `True` to no-op\n\nThe URL to be crawled can be a string, or a tuple of string and depth.\n\nThis hook is useful for:\n  - blocking URLs that we never want\n  - canonicalizing URLs, for example, by omitting query parameters\n  - restricting crawls to same origin\n  - resetting depth for pagination\n\n#### `extract_from_response(config, url, response)`\n\nReturns an object of rows-to-be-inserted-or-upserted:\n\n```jsonc\n{\n  \"dbname\": {  // can be omitted, in which case, current DB will be used\n    \"users\": [\n      {\n        \"id!\": \"cldellow@gmail.com\",  // ! indicates pkey, compound OK\n        \"name\": \"Colin\",\n      },\n      {\n        \"id!\": \"santa@northpole.com\",\n        \"name\": \"Santa Claus\",\n      }\n    ],\n    \"places\": [\n      {\n        \"id@\": \"santa@northpole.com\",\n        \"__delete\": true\n      },\n      {\n        \"id@\": \"cldellow@gmail.com\",\n        \"city\": \"Kitchener\",\n      },\n      {\n        \"id@\": \"cldellow@gmail.com\",\n        \"city\": \"Dawson Creek\"\n      }\n    ]\n  }\n}\n```\n\nColumn names can have sigils at the end:\n- `!` says the column is part of the pkey; there can be at most 1 row with this value\n- `@` says the column should be indexed; there can be multiple rows with this value\n\nColumns with sigils must be known at table creation time. Although you can have\nmultiple columns with sigils, you cannot mix `!` and `@` sigils in the same table.\n\nAny missing tables or columns will be created. Columns will have `ANY` data type.\nColumns will be nullable unless they have the `!` sigil.\n\nYou can indicate that a row should be deleted by emitting `__delete` key in your object.\n\n`datasette-scraper` may commit your changes to the database in batches in order to\nreduce write transactions and improve throughput. It may also elide\nDELETE/INSERT statements entirely if it determines that the state of the database\nwould be unchanged.\n\nIf you'd like to control the schema more carefully, please create the table manually.\n\n#### Metadata hooks\n\nThese hooks don't affect operation of the scrapes. They provide metadata to\nhelp validate a user's configuration and show UI to configure a crawl.\n\n##### config_schema()\n\nReturns a `ConfigSchema` option that defines how this plugin is configured.\n\nConfiguration is done via [JSON schema](https://json-schema.org/understanding-json-schema/). UI is done via [JSON Forms](https://jsonforms.io/).\n\nLook at the existing plugins to learn how to use this hook.\n\nThe schema is optional; if omitted, you will need to configure the plug in\nout of band.\n\n##### config_default_value()\n\nReturns `None` to indicate that new crawls should not use this plugin by default.\n\nOtherwise, returns a reasonable default value that conforms to the schema in `config_schema()`\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-scraper\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/cldellow/datasette-scraper",
       "Issues": "https://github.com/cldellow/datasette-scraper/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-scraper/0.4/",
+    "release_url": "https://pypi.org/project/datasette-scraper/0.5/",
     "requires_dist": [
       "datasette",
       "selectolax",
@@ -43,15 +43,16 @@
       "wheel ; extra == 'test'",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
-      "pytest-watch ; extra == 'test'"
+      "pytest-watch ; extra == 'test'",
+      "coverage ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Adds website scraping abilities to Datasette.",
-    "version": "0.4",
+    "version": "0.5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 16274558,
+  "last_serial": 16524023,
   "releases": {
     "0.4": [
       {
@@ -96,48 +97,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "96a099a7a88974728a0636aec8ae3e4a4f3f88171247e2a200769bee1e934c80",
+          "md5": "e84cc1883ab4e5069a2e553a18901ba8",
+          "sha256": "5633deffd31e25aa721a452807552372b0380e680517dd87578de2fd54224b03"
+        },
+        "downloads": -1,
+        "filename": "datasette_scraper-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e84cc1883ab4e5069a2e553a18901ba8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 263095,
+        "upload_time": "2023-01-22T18:37:07",
+        "upload_time_iso_8601": "2023-01-22T18:37:07.734752Z",
+        "url": "https://files.pythonhosted.org/packages/96/a0/99a7a88974728a0636aec8ae3e4a4f3f88171247e2a200769bee1e934c80/datasette_scraper-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "277a75128dc1538569f12a06aaed09f319530cb0ee974c58f495eaea4e786a1f",
+          "md5": "8c442fead8306adc1d292b1148241dd8",
+          "sha256": "338e1500bd5644c9b95fe0af2eb8274ac52b6b0e0af4cceb75f2d4f9bc905431"
+        },
+        "downloads": -1,
+        "filename": "datasette-scraper-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8c442fead8306adc1d292b1148241dd8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 237899,
+        "upload_time": "2023-01-22T18:37:09",
+        "upload_time_iso_8601": "2023-01-22T18:37:09.412041Z",
+        "url": "https://files.pythonhosted.org/packages/27/7a/75128dc1538569f12a06aaed09f319530cb0ee974c58f495eaea4e786a1f/datasette-scraper-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f1bce157320a99434b4a0f536c74ca039ee0840a46cc5c85ca2084018b6a6ebd",
-        "md5": "341b6d599132619c98037b1280cda6f8",
-        "sha256": "e40cf0d698c58702735501c0d5bfb065fb951b1563af408f82dbe35e54e85760"
+        "blake2b_256": "96a099a7a88974728a0636aec8ae3e4a4f3f88171247e2a200769bee1e934c80",
+        "md5": "e84cc1883ab4e5069a2e553a18901ba8",
+        "sha256": "5633deffd31e25aa721a452807552372b0380e680517dd87578de2fd54224b03"
       },
       "downloads": -1,
-      "filename": "datasette_scraper-0.4-py3-none-any.whl",
+      "filename": "datasette_scraper-0.5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "341b6d599132619c98037b1280cda6f8",
+      "md5_digest": "e84cc1883ab4e5069a2e553a18901ba8",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 255649,
-      "upload_time": "2023-01-01T22:14:34",
-      "upload_time_iso_8601": "2023-01-01T22:14:34.978200Z",
-      "url": "https://files.pythonhosted.org/packages/f1/bc/e157320a99434b4a0f536c74ca039ee0840a46cc5c85ca2084018b6a6ebd/datasette_scraper-0.4-py3-none-any.whl",
+      "size": 263095,
+      "upload_time": "2023-01-22T18:37:07",
+      "upload_time_iso_8601": "2023-01-22T18:37:07.734752Z",
+      "url": "https://files.pythonhosted.org/packages/96/a0/99a7a88974728a0636aec8ae3e4a4f3f88171247e2a200769bee1e934c80/datasette_scraper-0.5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8a842eb8f1c4aacbc239000f060fa0a47aac0c19bef4bd6d14dcf245b7d84f5f",
-        "md5": "5391a23ce572b0854db4e9c6e23f7b91",
-        "sha256": "b74e23dd58644f5fc47aa1698ef0c8548afb1e2a8395df231ee673431557e2f5"
+        "blake2b_256": "277a75128dc1538569f12a06aaed09f319530cb0ee974c58f495eaea4e786a1f",
+        "md5": "8c442fead8306adc1d292b1148241dd8",
+        "sha256": "338e1500bd5644c9b95fe0af2eb8274ac52b6b0e0af4cceb75f2d4f9bc905431"
       },
       "downloads": -1,
-      "filename": "datasette-scraper-0.4.tar.gz",
+      "filename": "datasette-scraper-0.5.tar.gz",
       "has_sig": false,
-      "md5_digest": "5391a23ce572b0854db4e9c6e23f7b91",
+      "md5_digest": "8c442fead8306adc1d292b1148241dd8",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 232257,
-      "upload_time": "2023-01-01T22:14:36",
-      "upload_time_iso_8601": "2023-01-01T22:14:36.353006Z",
-      "url": "https://files.pythonhosted.org/packages/8a/84/2eb8f1c4aacbc239000f060fa0a47aac0c19bef4bd6d14dcf245b7d84f5f/datasette-scraper-0.4.tar.gz",
+      "size": 237899,
+      "upload_time": "2023-01-22T18:37:09",
+      "upload_time_iso_8601": "2023-01-22T18:37:09.412041Z",
+      "url": "https://files.pythonhosted.org/packages/27/7a/75128dc1538569f12a06aaed09f319530cb0ee974c58f495eaea4e786a1f/datasette-scraper-0.5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
