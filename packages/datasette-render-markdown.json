@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-render-markdown\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-markdown.svg)](https://pypi.org/project/datasette-render-markdown/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-markdown?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-markdown/releases)\n[![Tests](https://github.com/simonw/datasette-render-markdown/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-markdown/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-markdown/blob/main/LICENSE)\n\nDatasette plugin for rendering Markdown.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable this new functionality:\n\n    $ pip install datasette-render-markdown\n\n## Usage\n\nYou can explicitly list the columns you would like to treat as Markdown using [plugin configuration](https://datasette.readthedocs.io/en/stable/plugins.html#plugin-configuration) in a `metadata.json` file.\n\nAdd a `\"datasette-render-markdown\"` configuration block and use a `\"columns\"` key to list the columns you would like to treat as Markdown values:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"columns\": [\"body\"]\n        }\n    }\n}\n```\n\nThis will cause any `body` column in any table to be treated as markdown and safely rendered using [Python-Markdown](https://python-markdown.github.io/). The resulting HTML is then run through [Bleach](https://bleach.readthedocs.io/) to avoid the risk of XSS security problems.\n\nSave this to `metadata.json` and run Datasette with the `--metadata` flag to load this configuration:\n\n    $ datasette serve mydata.db --metadata metadata.json\n\nThe configuration block can be used at the top level, or it can be applied just to specific databases or tables. Here's how to apply it to just the `entries` table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"tables\": {\n                \"entries\": {\n                    \"plugins\": {\n                        \"datasette-render-markdown\": {\n                            \"columns\": [\"body\"]\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nAnd here's how to apply it to every `body` column in every table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"plugins\": {\n                \"datasette-render-markdown\": {\n                    \"columns\": [\"body\"]\n                }\n            }\n        }\n    }\n}\n```\n\n## Columns that match a naming convention\n\nThis plugin can also render markdown in any columns that match a specific naming convention.\n\nBy default, columns that have a name ending in `_markdown` will be rendered.\n\nYou can try this out using the following query:\n\n```sql\nselect '# Hello there\n\n* This is a list\n* of items\n\n[And a link](https://github.com/simonw/datasette-render-markdown).'\nas demo_markdown\n```\n\nYou can configure a different list of wildcard patterns using the `\"patterns\"` configuration key. Here's how to render columns that end in either `_markdown` or `_md`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"patterns\": [\"*_markdown\", \"*_md\"]\n        }\n    }\n}\n```\n\nTo disable wildcard column matching entirely, set `\"patterns\": []` in your plugin metadata configuration.\n\n## Markdown extensions\n\nThe [Python-Markdown library](https://python-markdown.github.io/) that powers this plugin supports extensions, both [bundled](https://python-markdown.github.io/extensions/) and [third-party](https://github.com/Python-Markdown/markdown/wiki/Third-Party-Extensions). These can be used to enable additional Markdown features such as [table support](https://python-markdown.github.io/extensions/tables/).\n\nYou can configure support for extensions using the `\"extensions\"` key in your plugin metadata configuration.\n\nSince extensions may introduce new HTML tags, you will also need to add those tags to the list of tags that are allowed by the [Bleach](https://bleach.readthedocs.io/) sanitizer. You can do that using the `\"extra_tags\"` key, and you can whitelist additional HTML attributes using `\"extra_attrs\"`. See [the Bleach documentation](https://bleach.readthedocs.io/en/latest/clean.html#allowed-tags-tags) for more information on this.\n\nHere's how to enable support for [Markdown tables](https://python-markdown.github.io/extensions/tables/):\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extensions\": [\"tables\"],\n            \"extra_tags\": [\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"]\n        }\n    }\n}\n```\n\n### GitHub-Flavored Markdown\n\nEnabling [GitHub-Flavored Markdown](https://help.github.com/en/github/writing-on-github) (useful for if you are working with data imported from GitHub using [github-to-sqlite](https://github.com/dogsheep/github-to-sqlite)) is a little more complicated.\n\nFirst, you will need to install the [py-gfm](https://py-gfm.readthedocs.io) package:\n\n    $ pip install py-gfm\n\nNote that `py-gfm` has [a bug](https://github.com/Zopieux/py-gfm/issues/13) that causes it to pin to `Markdown<3.0` - so if you are using it you should install it _before_ installing `datasette-render-markdown` to ensure you get a compatibly version of that dependency.\n\nNow you can configure it like this. Note that the extension name is `mdx_gfm:GithubFlavoredMarkdownExtension` and you need to whitelist several extra HTML tags and attributes:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extra_tags\": [\n                \"hr\",\n                \"br\",\n                \"details\",\n                \"summary\",\n                \"input\"\n            ],\n            \"extra_attrs\": {\n                \"input\": [\n                    \"type\",\n                    \"disabled\",\n                    \"checked\"\n                ],\n            },\n            \"extensions\": [\n                \"mdx_gfm:GithubFlavoredMarkdownExtension\"\n            ]\n        }\n    }\n}\n```\n\nThe `<input type=\"\" checked disabled>` attributes are needed to support rendering checkboxes in issue descriptions.\n\n## Markdown in templates\n\nThe plugin also adds a new template function: `render_markdown(value)`. You can use this in your templates like so:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n# This is markdown\n\n* One\n* Two\n* Three\n\"\"\") }}\n```\n\nYou can load additional extensions and whitelist tags by passing extra arguments to the function like this:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n## Markdown table\n\nFirst Header  | Second Header\n------------- | -------------\nContent Cell  | Content Cell\nContent Cell  | Content Cell\n\"\"\", extensions=[\"tables\"],\n    extra_tags=[\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"])) }}\n```\n\n\n",
+    "description": "# datasette-render-markdown\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-markdown.svg)](https://pypi.org/project/datasette-render-markdown/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-markdown?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-markdown/releases)\n[![Tests](https://github.com/simonw/datasette-render-markdown/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-markdown/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-markdown/blob/main/LICENSE)\n\nDatasette plugin for rendering Markdown.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette to enable this new functionality:\n\n    $ pip install datasette-render-markdown\n\n## Usage\n\nYou can explicitly list the columns you would like to treat as Markdown using [plugin configuration](https://datasette.readthedocs.io/en/stable/plugins.html#plugin-configuration) in a `metadata.json` file.\n\nAdd a `\"datasette-render-markdown\"` configuration block and use a `\"columns\"` key to list the columns you would like to treat as Markdown values:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"columns\": [\"body\"]\n        }\n    }\n}\n```\n\nThis will cause any `body` column in any table to be treated as markdown and safely rendered using [Python-Markdown](https://python-markdown.github.io/). The resulting HTML is then run through [Bleach](https://bleach.readthedocs.io/) to avoid the risk of XSS security problems.\n\nSave this to `metadata.json` and run Datasette with the `--metadata` flag to load this configuration:\n\n    $ datasette serve mydata.db --metadata metadata.json\n\nThe configuration block can be used at the top level, or it can be applied just to specific databases or tables. Here's how to apply it to just the `entries` table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"tables\": {\n                \"entries\": {\n                    \"plugins\": {\n                        \"datasette-render-markdown\": {\n                            \"columns\": [\"body\"]\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nAnd here's how to apply it to every `body` column in every table in the `news.db` database:\n\n```json\n{\n    \"databases\": {\n        \"news\": {\n            \"plugins\": {\n                \"datasette-render-markdown\": {\n                    \"columns\": [\"body\"]\n                }\n            }\n        }\n    }\n}\n```\n\n## Columns that match a naming convention\n\nThis plugin can also render markdown in any columns that match a specific naming convention.\n\nBy default, columns that have a name ending in `_markdown` will be rendered.\n\nYou can try this out using the following query:\n\n```sql\nselect '# Hello there\n\n* This is a list\n* of items\n\n[And a link](https://github.com/simonw/datasette-render-markdown).'\nas demo_markdown\n```\n\nYou can configure a different list of wildcard patterns using the `\"patterns\"` configuration key. Here's how to render columns that end in either `_markdown` or `_md`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"patterns\": [\"*_markdown\", \"*_md\"]\n        }\n    }\n}\n```\n\nTo disable wildcard column matching entirely, set `\"patterns\": []` in your plugin metadata configuration.\n\n## Markdown extensions\n\nThe [Python-Markdown library](https://python-markdown.github.io/) that powers this plugin supports extensions, both [bundled](https://python-markdown.github.io/extensions/) and [third-party](https://github.com/Python-Markdown/markdown/wiki/Third-Party-Extensions). These can be used to enable additional Markdown features such as [table support](https://python-markdown.github.io/extensions/tables/).\n\nYou can configure support for extensions using the `\"extensions\"` key in your plugin metadata configuration.\n\nSince extensions may introduce new HTML tags, you will also need to add those tags to the list of tags that are allowed by the [Bleach](https://bleach.readthedocs.io/) sanitizer. You can do that using the `\"extra_tags\"` key, and you can whitelist additional HTML attributes using `\"extra_attrs\"`. See [the Bleach documentation](https://bleach.readthedocs.io/en/latest/clean.html#allowed-tags-tags) for more information on this.\n\nHere's how to enable support for [Markdown tables](https://python-markdown.github.io/extensions/tables/):\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extensions\": [\"tables\"],\n            \"extra_tags\": [\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"]\n        }\n    }\n}\n```\n\n### GitHub-Flavored Markdown\n\nEnabling [GitHub-Flavored Markdown](https://help.github.com/en/github/writing-on-github) (useful for if you are working with data imported from GitHub using [github-to-sqlite](https://github.com/dogsheep/github-to-sqlite)) is a little more complicated.\n\nFirst, you will need to install the [py-gfm](https://py-gfm.readthedocs.io) package:\n\n    $ pip install py-gfm\n\nNote that `py-gfm` has [a bug](https://github.com/Zopieux/py-gfm/issues/13) that causes it to pin to `Markdown<3.0` - so if you are using it you should install it _before_ installing `datasette-render-markdown` to ensure you get a compatibly version of that dependency.\n\nNow you can configure it like this. Note that the extension name is `mdx_gfm:GithubFlavoredMarkdownExtension` and you need to whitelist several extra HTML tags and attributes:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-markdown\": {\n            \"extra_tags\": [\n                \"hr\",\n                \"br\",\n                \"details\",\n                \"summary\",\n                \"input\"\n            ],\n            \"extra_attrs\": {\n                \"input\": [\n                    \"type\",\n                    \"disabled\",\n                    \"checked\"\n                ],\n            },\n            \"extensions\": [\n                \"mdx_gfm:GithubFlavoredMarkdownExtension\"\n            ]\n        }\n    }\n}\n```\n\nThe `<input type=\"\" checked disabled>` attributes are needed to support rendering checkboxes in issue descriptions.\n\n## Markdown in templates\n\nThe plugin also adds a new template function: `render_markdown(value)`. You can use this in your templates like so:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n# This is markdown\n\n* One\n* Two\n* Three\n\"\"\") }}\n```\n\nYou can load additional extensions and whitelist tags by passing extra arguments to the function like this:\n\n```html+jinja\n{{ render_markdown(\"\"\"\n## Markdown table\n\nFirst Header  | Second Header\n------------- | -------------\nContent Cell  | Content Cell\nContent Cell  | Content Cell\n\"\"\", extensions=[\"tables\"],\n    extra_tags=[\"table\", \"thead\", \"tr\", \"th\", \"td\", \"tbody\"])) }}\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,12 +20,12 @@
     "maintainer_email": "",
     "name": "datasette-render-markdown",
     "package_url": "https://pypi.org/project/datasette-render-markdown/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-render-markdown/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-render-markdown"
     },
-    "release_url": "https://pypi.org/project/datasette-render-markdown/2.1/",
+    "release_url": "https://pypi.org/project/datasette-render-markdown/2.1.1/",
     "requires_dist": [
       "datasette",
       "markdown",
@@ -33,13 +33,13 @@
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.7",
     "summary": "Datasette plugin for rendering Markdown",
-    "version": "2.1",
+    "version": "2.1.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13019906,
+  "last_serial": 16596152,
   "releases": {
     "0.1a0": [
       {
@@ -354,48 +354,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "2.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "449eb0cb473cf5b8b89921824bf8fd2c2e9212fe57d464dc369c07fddfd7dffe",
+          "md5": "0face5df63d9069e6d401ad0662d19c0",
+          "sha256": "fbadcf30190fac66d6bfe239f12c25abe358b5b8a0f625b3673c23c3e822d4f4"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_markdown-2.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0face5df63d9069e6d401ad0662d19c0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 9068,
+        "upload_time": "2023-01-27T23:32:37",
+        "upload_time_iso_8601": "2023-01-27T23:32:37.799283Z",
+        "url": "https://files.pythonhosted.org/packages/44/9e/b0cb473cf5b8b89921824bf8fd2c2e9212fe57d464dc369c07fddfd7dffe/datasette_render_markdown-2.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f11a18bcd6ffa7d890800bfec3a13117cb8ee19ef92cf5ac2dc68f19324153fd",
+          "md5": "ea06d13b59fea9696561205a75e5edc7",
+          "sha256": "5487d57080e0bb0db40a7048c2f41d86cedb05e4fb669fcb9ac6e20051361675"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-markdown-2.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ea06d13b59fea9696561205a75e5edc7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8466,
+        "upload_time": "2023-01-27T23:32:39",
+        "upload_time_iso_8601": "2023-01-27T23:32:39.326716Z",
+        "url": "https://files.pythonhosted.org/packages/f1/1a/18bcd6ffa7d890800bfec3a13117cb8ee19ef92cf5ac2dc68f19324153fd/datasette-render-markdown-2.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "5e2773047ebe2b455f07ee1ff0a448a49f3fc006ca87bac88ef64e2e34822661",
-        "md5": "9c08990f9fdaad47863481bfa400b78c",
-        "sha256": "0f3173e1576c16c8ab2d9e6b6f2cd3d4591eaa567f670bf6a636182b4035deb5"
+        "blake2b_256": "449eb0cb473cf5b8b89921824bf8fd2c2e9212fe57d464dc369c07fddfd7dffe",
+        "md5": "0face5df63d9069e6d401ad0662d19c0",
+        "sha256": "fbadcf30190fac66d6bfe239f12c25abe358b5b8a0f625b3673c23c3e822d4f4"
       },
       "downloads": -1,
-      "filename": "datasette_render_markdown-2.1-py3-none-any.whl",
+      "filename": "datasette_render_markdown-2.1.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "9c08990f9fdaad47863481bfa400b78c",
+      "md5_digest": "0face5df63d9069e6d401ad0662d19c0",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 9032,
-      "upload_time": "2022-02-26T18:23:53",
-      "upload_time_iso_8601": "2022-02-26T18:23:53.966706Z",
-      "url": "https://files.pythonhosted.org/packages/5e/27/73047ebe2b455f07ee1ff0a448a49f3fc006ca87bac88ef64e2e34822661/datasette_render_markdown-2.1-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 9068,
+      "upload_time": "2023-01-27T23:32:37",
+      "upload_time_iso_8601": "2023-01-27T23:32:37.799283Z",
+      "url": "https://files.pythonhosted.org/packages/44/9e/b0cb473cf5b8b89921824bf8fd2c2e9212fe57d464dc369c07fddfd7dffe/datasette_render_markdown-2.1.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "9593b99de00d41495961f9c2df626be647cd6275dcdec0a71c6d523da52f3705",
-        "md5": "17728408a4d9ec886ee0cd2e2215ac54",
-        "sha256": "b4c18db6ffebab6f7e21cd7f8a3fad40f7f0d36b9cc6356c1bb83e76d648eeaa"
+        "blake2b_256": "f11a18bcd6ffa7d890800bfec3a13117cb8ee19ef92cf5ac2dc68f19324153fd",
+        "md5": "ea06d13b59fea9696561205a75e5edc7",
+        "sha256": "5487d57080e0bb0db40a7048c2f41d86cedb05e4fb669fcb9ac6e20051361675"
       },
       "downloads": -1,
-      "filename": "datasette-render-markdown-2.1.tar.gz",
+      "filename": "datasette-render-markdown-2.1.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "17728408a4d9ec886ee0cd2e2215ac54",
+      "md5_digest": "ea06d13b59fea9696561205a75e5edc7",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 8431,
-      "upload_time": "2022-02-26T18:23:55",
-      "upload_time_iso_8601": "2022-02-26T18:23:55.611378Z",
-      "url": "https://files.pythonhosted.org/packages/95/93/b99de00d41495961f9c2df626be647cd6275dcdec0a71c6d523da52f3705/datasette-render-markdown-2.1.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 8466,
+      "upload_time": "2023-01-27T23:32:39",
+      "upload_time_iso_8601": "2023-01-27T23:32:39.326716Z",
+      "url": "https://files.pythonhosted.org/packages/f1/1a/18bcd6ffa7d890800bfec3a13117cb8ee19ef92cf5ac2dc68f19324153fd/datasette-render-markdown-2.1.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
