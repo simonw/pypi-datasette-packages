@@ -4,16 +4,18 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [
-      "Development Status :: 3 - Alpha",
       "Intended Audience :: Developers",
       "Intended Audience :: End Users/Desktop",
       "Intended Audience :: Science/Research",
       "License :: OSI Approved :: Apache Software License",
-      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.10",
+      "Programming Language :: Python :: 3.11",
       "Programming Language :: Python :: 3.7",
+      "Programming Language :: Python :: 3.8",
+      "Programming Language :: Python :: 3.9",
       "Topic :: Database"
     ],
-    "description": "# db-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/db-to-sqlite.svg)](https://pypi.python.org/pypi/db-to-sqlite)\n[![Changelog](https://img.shields.io/github/v/release/simonw/db-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/db-to-sqlite/releases)\n[![Tests](https://github.com/simonw/db-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/db-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/db-to-sqlite/blob/main/LICENSE)\n\nCLI tool for exporting tables or queries from any SQL database to a SQLite file.\n\n## Installation\n\nInstall from PyPI like so:\n\n    pip install db-to-sqlite\n\nIf you want to use it with MySQL, you can install the extra dependency like this:\n\n    pip install 'db-to-sqlite[mysql]'\n\nInstalling the `mysqlclient` library on OS X can be tricky - I've found [this recipe](https://gist.github.com/simonw/90ac0afd204cd0d6d9c3135c3888d116) to work (run that before installing `db-to-sqlite`).\n\nFor PostgreSQL, use this:\n\n    pip install 'db-to-sqlite[postgresql]'\n\n## Usage\n\n    Usage: db-to-sqlite [OPTIONS] CONNECTION PATH\n\n      Load data from any database into SQLite.\n\n      PATH is a path to the SQLite file to create, e.c. /tmp/my_database.db\n\n      CONNECTION is a SQLAlchemy connection string, for example:\n\n          postgresql://localhost/my_database\n          postgresql://username:passwd@localhost/my_database\n\n          mysql://root@localhost/my_database\n          mysql://username:passwd@localhost/my_database\n\n      More: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls\n\n    Options:\n      --version                     Show the version and exit.\n      --all                         Detect and copy all tables\n      --table TEXT                  Specific tables to copy\n      --skip TEXT                   When using --all skip these tables\n      --redact TEXT...              (table, column) pairs to redact with ***\n      --sql TEXT                    Optional SQL query to run\n      --output TEXT                 Table in which to save --sql query results\n      --pk TEXT                     Optional column to use as a primary key\n      --index-fks / --no-index-fks  Should foreign keys have indexes? Default on\n      -p, --progress                Show progress bar\n      --postgres-schema TEXT        PostgreSQL schema to use\n      --help                        Show this message and exit.\n\nFor example, to save the content of the `blog_entry` table from a PostgreSQL database to a local file called `blog.db` you could do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --table=blog_entry\n\nYou can specify `--table` more than once.\n\nYou can also save the data from all of your tables, effectively creating a SQLite copy of your entire database. Any foreign key relationships will be detected and added to the SQLite database. For example:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all\n\nWhen running `--all` you can specify tables to skip using `--skip`:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --skip=django_migrations\n\nIf you want to save the results of a custom SQL query, do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" output.db \\\n        --output=query_results \\\n        --sql=\"select id, title, created from blog_entry\" \\\n        --pk=id\n\nThe `--output` option specifies the table that should contain the results of the query.\n\n## Using db-to-sqlite with PostgreSQL schemas\n\nIf the tables you want to copy from your PostgreSQL database aren't in the default schema, you can specify an alternate one with the `--postgres-schema` option:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --postgres-schema my_schema\n\n## Using db-to-sqlite with Heroku Postgres\n\nIf you run an application on [Heroku](https://www.heroku.com/) using their [Postgres database product](https://www.heroku.com/postgres), you can use the `heroku config` command to access a compatible connection string:\n\n    $ heroku config --app myappname | grep HEROKU_POSTG\n    HEROKU_POSTGRESQL_OLIVE_URL: postgres://username:password@ec2-xxx-xxx-xxx-x.compute-1.amazonaws.com:5432/dbname\n\nYou can pass this to `db-to-sqlite` to create a local SQLite database with the data from your Heroku instance.\n\nYou can even do this using a bash one-liner:\n\n    $ db-to-sqlite $(heroku config --app myappname | grep HEROKU_POSTG | cut -d: -f 2-) \\\n        /tmp/heroku.db --all -p\n    1/23: django_migrations\n    ...\n    17/23: blog_blogmark\n    [####################################]  100%\n    ...\n\n## Related projects\n\n* [Datasette](https://github.com/simonw/datasette): A tool for exploring and publishing data. Works great with SQLite files generated using `db-to-sqlite`.\n* [sqlite-utils](https://github.com/simonw/sqlite-utils): Python CLI utility and library for manipulating SQLite databases.\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database.\n\n## Development\n\nTo set up this tool locally, first checkout the code. Then create a new virtual environment:\n\n    cd db-to-sqlite\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nThis will skip tests against MySQL or PostgreSQL if you do not have their additional dependencies installed.\n\nYou can install those extra dependencies like so:\n\n    pip install -e '.[test_mysql,test_postgresql]'\n\nYou can alternative use `pip install psycopg2-binary` if you cannot install the `psycopg2` dependency used by the `test_postgresql` extra.\n\nSee [Running a MySQL server using Homebrew](https://til.simonwillison.net/homebrew/mysql-homebrew) for tips on running the tests against MySQL on macOS, including how to install the `mysqlclient` dependency.\n\nThe PostgreSQL and MySQL tests default to expecting to run against servers on localhost. You can use environment variables to point them at different test database servers:\n\n- `MYSQL_TEST_DB_CONNECTION` - defaults to `mysql://root@localhost/test_db_to_sqlite`\n- `POSTGRESQL_TEST_DB_CONNECTION` - defaults to `postgresql://localhost/test_db_to_sqlite`\n\nThe database you indicate in the environment variable - `test_db_to_sqlite` by default - will be deleted and recreated on every test run.\n\n\n",
+    "description": "# db-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/db-to-sqlite.svg)](https://pypi.python.org/pypi/db-to-sqlite)\n[![Changelog](https://img.shields.io/github/v/release/simonw/db-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/db-to-sqlite/releases)\n[![Tests](https://github.com/simonw/db-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/db-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/db-to-sqlite/blob/main/LICENSE)\n\nCLI tool for exporting tables or queries from any SQL database to a SQLite file.\n\n## Installation\n\nInstall from PyPI like so:\n\n    pip install db-to-sqlite\n\nIf you want to use it with MySQL, you can install the extra dependency like this:\n\n    pip install 'db-to-sqlite[mysql]'\n\nInstalling the `mysqlclient` library on OS X can be tricky - I've found [this recipe](https://gist.github.com/simonw/90ac0afd204cd0d6d9c3135c3888d116) to work (run that before installing `db-to-sqlite`).\n\nFor PostgreSQL, use this:\n\n    pip install 'db-to-sqlite[postgresql]'\n\n## Usage\n```\nUsage: db-to-sqlite [OPTIONS] CONNECTION PATH\n\n  Load data from any database into SQLite.\n\n  PATH is a path to the SQLite file to create, e.c. /tmp/my_database.db\n\n  CONNECTION is a SQLAlchemy connection string, for example:\n\n      postgresql://localhost/my_database\n      postgresql://username:passwd@localhost/my_database\n\n      mysql://root@localhost/my_database\n      mysql://username:passwd@localhost/my_database\n\n  More: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls\n\nOptions:\n  --version                     Show the version and exit.\n  --all                         Detect and copy all tables\n  --table TEXT                  Specific tables to copy\n  --skip TEXT                   When using --all skip these tables\n  --redact TEXT...              (table, column) pairs to redact with ***\n  --sql TEXT                    Optional SQL query to run\n  --output TEXT                 Table in which to save --sql query results\n  --pk TEXT                     Optional column to use as a primary key\n  --index-fks / --no-index-fks  Should foreign keys have indexes? Default on\n  -p, --progress                Show progress bar\n  --postgres-schema TEXT        PostgreSQL schema to use\n  --help                        Show this message and exit.\n```\n\nFor example, to save the content of the `blog_entry` table from a PostgreSQL database to a local file called `blog.db` you could do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --table=blog_entry\n\nYou can specify `--table` more than once.\n\nYou can also save the data from all of your tables, effectively creating a SQLite copy of your entire database. Any foreign key relationships will be detected and added to the SQLite database. For example:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all\n\nWhen running `--all` you can specify tables to skip using `--skip`:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --skip=django_migrations\n\nIf you want to save the results of a custom SQL query, do this:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" output.db \\\n        --output=query_results \\\n        --sql=\"select id, title, created from blog_entry\" \\\n        --pk=id\n\nThe `--output` option specifies the table that should contain the results of the query.\n\n## Using db-to-sqlite with PostgreSQL schemas\n\nIf the tables you want to copy from your PostgreSQL database aren't in the default schema, you can specify an alternate one with the `--postgres-schema` option:\n\n    db-to-sqlite \"postgresql://localhost/myblog\" blog.db \\\n        --all \\\n        --postgres-schema my_schema\n\n## Using db-to-sqlite with MS SQL\n\nThe best way to get the connection string needed for the MS SQL connections below is to use urllib from the Standard Library as below\n\n    params = urllib.parse.quote_plus(\n        \"DRIVER={SQL Server Native Client 11.0};\"\n        \"SERVER=localhost;\"\n        \"DATABASE=my_database;\"\n        \"Trusted_Connection=yes;\"\n    )\n\nThe above will resolve to\n\n    DRIVER%3D%7BSQL+Server+Native+Client+11.0%7D%3B+SERVER%3Dlocalhost%3B+DATABASE%3Dmy_database%3B+Trusted_Connection%3Dyes\n\nYou can then use the string above in the odbc_connect below\n\n    mssql+pyodbc:///?odbc_connect=DRIVER%3D%7BSQL+Server+Native+Client+11.0%7D%3B+SERVER%3Dlocalhost%3B+DATABASE%3Dmy_database%3B+Trusted_Connection%3Dyes\n    mssql+pyodbc:///?odbc_connect=DRIVER%3D%7BSQL+Server+Native+Client+11.0%7D%3B+SERVER%3Dlocalhost%3B+DATABASE%3Dmy_database%3B+UID%3Dusername%3B+PWD%3Dpasswd\n\n## Using db-to-sqlite with Heroku Postgres\n\nIf you run an application on [Heroku](https://www.heroku.com/) using their [Postgres database product](https://www.heroku.com/postgres), you can use the `heroku config` command to access a compatible connection string:\n\n    $ heroku config --app myappname | grep HEROKU_POSTG\n    HEROKU_POSTGRESQL_OLIVE_URL: postgres://username:password@ec2-xxx-xxx-xxx-x.compute-1.amazonaws.com:5432/dbname\n\nYou can pass this to `db-to-sqlite` to create a local SQLite database with the data from your Heroku instance.\n\nYou can even do this using a bash one-liner:\n\n    $ db-to-sqlite $(heroku config --app myappname | grep HEROKU_POSTG | cut -d: -f 2-) \\\n        /tmp/heroku.db --all -p\n    1/23: django_migrations\n    ...\n    17/23: blog_blogmark\n    [####################################]  100%\n    ...\n\n## Related projects\n\n* [Datasette](https://github.com/simonw/datasette): A tool for exploring and publishing data. Works great with SQLite files generated using `db-to-sqlite`.\n* [sqlite-utils](https://github.com/simonw/sqlite-utils): Python CLI utility and library for manipulating SQLite databases.\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database.\n\n## Development\n\nTo set up this tool locally, first checkout the code. Then create a new virtual environment:\n\n    cd db-to-sqlite\n    python3 -m venv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\nThis will skip tests against MySQL or PostgreSQL if you do not have their additional dependencies installed.\n\nYou can install those extra dependencies like so:\n\n    pip install -e '.[test_mysql,test_postgresql]'\n\nYou can alternative use `pip install psycopg2-binary` if you cannot install the `psycopg2` dependency used by the `test_postgresql` extra.\n\nSee [Running a MySQL server using Homebrew](https://til.simonwillison.net/homebrew/mysql-homebrew) for tips on running the tests against MySQL on macOS, including how to install the `mysqlclient` dependency.\n\nThe PostgreSQL and MySQL tests default to expecting to run against servers on localhost. You can use environment variables to point them at different test database servers:\n\n- `MYSQL_TEST_DB_CONNECTION` - defaults to `mysql://root@localhost/test_db_to_sqlite`\n- `POSTGRESQL_TEST_DB_CONNECTION` - defaults to `postgresql://localhost/test_db_to_sqlite`\n\nThe database you indicate in the environment variable - `test_db_to_sqlite` by default - will be deleted and recreated on every test run.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -22,24 +24,24 @@
       "last_month": -1,
       "last_week": -1
     },
-    "home_page": "https://github.com/simonw/db-to-sqlite",
+    "home_page": "https://datasette.io/tools/db-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
     "maintainer": "",
     "maintainer_email": "",
     "name": "db-to-sqlite",
     "package_url": "https://pypi.org/project/db-to-sqlite/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/db-to-sqlite/",
     "project_urls": {
       "CI": "https://travis-ci.com/simonw/db-to-sqlite",
       "Changelog": "https://github.com/simonw/db-to-sqlite/releases",
       "Documentation": "https://github.com/simonw/db-to-sqlite/blob/main/README.md",
-      "Homepage": "https://github.com/simonw/db-to-sqlite",
+      "Homepage": "https://datasette.io/tools/db-to-sqlite",
       "Issues": "https://github.com/simonw/db-to-sqlite/issues",
       "Source code": "https://github.com/simonw/db-to-sqlite"
     },
-    "release_url": "https://pypi.org/project/db-to-sqlite/1.4/",
+    "release_url": "https://pypi.org/project/db-to-sqlite/1.5/",
     "requires_dist": [
       "sqlalchemy",
       "sqlite-utils (>=2.9.1)",
@@ -47,18 +49,19 @@
       "mysqlclient ; extra == 'mysql'",
       "psycopg2 ; extra == 'postgresql'",
       "pytest ; extra == 'test'",
+      "pytest-timeout ; extra == 'test'",
       "pytest ; extra == 'test_mysql'",
       "mysqlclient ; extra == 'test_mysql'",
       "pytest ; extra == 'test_postgresql'",
       "psycopg2 ; extra == 'test_postgresql'"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.7",
     "summary": "CLI tool for exporting tables or queries from any SQL database to a SQLite file",
-    "version": "1.4",
+    "version": "1.5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 10627951,
+  "last_serial": 16719794,
   "releases": {
     "0.1": [
       {
@@ -448,48 +451,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ba8a8d721fac196657f8c3d074fa2f9a9211661cb3bd4b8904d357bb0c5f511d",
+          "md5": "f5af175d7d153c8efceffd6b3c21704a",
+          "sha256": "b2bcd1f76a3fd77b69487d62d1f0ebe6ef89d74770f22d99c4334fcca611ba2d"
+        },
+        "downloads": -1,
+        "filename": "db_to_sqlite-1.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f5af175d7d153c8efceffd6b3c21704a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 16283,
+        "upload_time": "2023-02-07T01:11:27",
+        "upload_time_iso_8601": "2023-02-07T01:11:27.635699Z",
+        "url": "https://files.pythonhosted.org/packages/ba/8a/8d721fac196657f8c3d074fa2f9a9211661cb3bd4b8904d357bb0c5f511d/db_to_sqlite-1.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a71a2db017f1323d0b9199fa537a96eb87e614ede73ddd97bc73b49dba6287d2",
+          "md5": "936077267d20d9eba0f1222fb73fefb0",
+          "sha256": "1d6ca66287ac53bddd7515197cea58480d2d4673ced8e5c8d3e05c6ec1e84be9"
+        },
+        "downloads": -1,
+        "filename": "db-to-sqlite-1.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "936077267d20d9eba0f1222fb73fefb0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 14077,
+        "upload_time": "2023-02-07T01:11:28",
+        "upload_time_iso_8601": "2023-02-07T01:11:28.784162Z",
+        "url": "https://files.pythonhosted.org/packages/a7/1a/2db017f1323d0b9199fa537a96eb87e614ede73ddd97bc73b49dba6287d2/db-to-sqlite-1.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "7c1000b17f07042be98f7f212115cbf9345f5075db2b24db3b0ade9d302cb8fb",
-        "md5": "219523a0edf9fbed324185caa00c3e41",
-        "sha256": "8c243d0b775e6e3c89dc2e801ce361f9487d230d1a0b0fad230896d5de2e150b"
+        "blake2b_256": "ba8a8d721fac196657f8c3d074fa2f9a9211661cb3bd4b8904d357bb0c5f511d",
+        "md5": "f5af175d7d153c8efceffd6b3c21704a",
+        "sha256": "b2bcd1f76a3fd77b69487d62d1f0ebe6ef89d74770f22d99c4334fcca611ba2d"
       },
       "downloads": -1,
-      "filename": "db_to_sqlite-1.4-py3-none-any.whl",
+      "filename": "db_to_sqlite-1.5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "219523a0edf9fbed324185caa00c3e41",
+      "md5_digest": "f5af175d7d153c8efceffd6b3c21704a",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 16253,
-      "upload_time": "2021-06-11T22:57:58",
-      "upload_time_iso_8601": "2021-06-11T22:57:58.580834Z",
-      "url": "https://files.pythonhosted.org/packages/7c/10/00b17f07042be98f7f212115cbf9345f5075db2b24db3b0ade9d302cb8fb/db_to_sqlite-1.4-py3-none-any.whl",
+      "requires_python": ">=3.7",
+      "size": 16283,
+      "upload_time": "2023-02-07T01:11:27",
+      "upload_time_iso_8601": "2023-02-07T01:11:27.635699Z",
+      "url": "https://files.pythonhosted.org/packages/ba/8a/8d721fac196657f8c3d074fa2f9a9211661cb3bd4b8904d357bb0c5f511d/db_to_sqlite-1.5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f631d2c1cd39f0f0fb3ea7900b4a01fbb7fe00cab4b913009db5658569153ed3",
-        "md5": "03f4cc10d33c525f2e40bdca906a9c59",
-        "sha256": "0ef7007c10077304416a743b1bef4cd0a10aa3530b00a96e13857bd5d4eee056"
+        "blake2b_256": "a71a2db017f1323d0b9199fa537a96eb87e614ede73ddd97bc73b49dba6287d2",
+        "md5": "936077267d20d9eba0f1222fb73fefb0",
+        "sha256": "1d6ca66287ac53bddd7515197cea58480d2d4673ced8e5c8d3e05c6ec1e84be9"
       },
       "downloads": -1,
-      "filename": "db-to-sqlite-1.4.tar.gz",
+      "filename": "db-to-sqlite-1.5.tar.gz",
       "has_sig": false,
-      "md5_digest": "03f4cc10d33c525f2e40bdca906a9c59",
+      "md5_digest": "936077267d20d9eba0f1222fb73fefb0",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 14725,
-      "upload_time": "2021-06-11T22:57:59",
-      "upload_time_iso_8601": "2021-06-11T22:57:59.540295Z",
-      "url": "https://files.pythonhosted.org/packages/f6/31/d2c1cd39f0f0fb3ea7900b4a01fbb7fe00cab4b913009db5658569153ed3/db-to-sqlite-1.4.tar.gz",
+      "requires_python": ">=3.7",
+      "size": 14077,
+      "upload_time": "2023-02-07T01:11:28",
+      "upload_time_iso_8601": "2023-02-07T01:11:28.784162Z",
+      "url": "https://files.pythonhosted.org/packages/a7/1a/2db017f1323d0b9199fa537a96eb87e614ede73ddd97bc73b49dba6287d2/db-to-sqlite-1.5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
