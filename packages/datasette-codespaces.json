@@ -1,0 +1,139 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-codespaces\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-codespaces.svg)](https://pypi.org/project/datasette-codespaces/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-codespaces?include_prereleases&label=changelog)](https://github.com/simonw/datasette-codespaces/releases)\n[![Tests](https://github.com/simonw/datasette-codespaces/workflows/Test/badge.svg)](https://github.com/simonw/datasette-codespaces/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-codespaces/blob/main/LICENSE)\n\n Conveniences for running Datasette on GitHub Codespaces\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-codespaces\n\n## Usage\n\nInstall this when you are using Datasette inside of GitHub Codespaces. It makes the following changes:\n\n- All requests will be treated as the `root` actor provided Datasette is running inside Codespaces (detected through the presence of the `CODESPACE_NAME` environment variable). This should still be secure as GitHub restricts access to servers running in the Codespaces environment based on GitHub authentication.\n- The [datasette-x-forwarded-host](https://datasette.io/plugins/datasette-x-forwarded-host) plugin will be installed, ensuring links to other pages within Datasette such as facet navigation work correctly.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-codespaces\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-codespaces",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-codespaces",
+    "package_url": "https://pypi.org/project/datasette-codespaces/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-codespaces/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-codespaces/actions",
+      "Changelog": "https://github.com/simonw/datasette-codespaces/releases",
+      "Homepage": "https://github.com/simonw/datasette-codespaces",
+      "Issues": "https://github.com/simonw/datasette-codespaces/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-codespaces/0.1/",
+    "requires_dist": [
+      "datasette",
+      "datasette-x-forwarded-host",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Conveniences for running Datasette on GitHub Codespaces",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16981654,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3bad3d96993f20f61a5c88b5326d0029f96a1cbe5f95a157cb08eea76bcd2139",
+          "md5": "926ec9fbf22904545d5eb63a726266b1",
+          "sha256": "10fb72b48c2fc915e408333bc8d1a9bc784a448e42af82d29caab3a388e4f100"
+        },
+        "downloads": -1,
+        "filename": "datasette_codespaces-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "926ec9fbf22904545d5eb63a726266b1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6880,
+        "upload_time": "2023-02-22T19:00:01",
+        "upload_time_iso_8601": "2023-02-22T19:00:01.196767Z",
+        "url": "https://files.pythonhosted.org/packages/3b/ad/3d96993f20f61a5c88b5326d0029f96a1cbe5f95a157cb08eea76bcd2139/datasette_codespaces-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "aba9fba7adf7e16bdcc9faee89b102c53ebad65411ff6633354e9b9722857830",
+          "md5": "5b27ad5724935d935590f2d7d3adf899",
+          "sha256": "7bbe41a5af0b8bbea5e878d10a38466dea801ef43f58f3e1adf3d8103f9a8d5e"
+        },
+        "downloads": -1,
+        "filename": "datasette-codespaces-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5b27ad5724935d935590f2d7d3adf899",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6666,
+        "upload_time": "2023-02-22T19:00:02",
+        "upload_time_iso_8601": "2023-02-22T19:00:02.954150Z",
+        "url": "https://files.pythonhosted.org/packages/ab/a9/fba7adf7e16bdcc9faee89b102c53ebad65411ff6633354e9b9722857830/datasette-codespaces-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "3bad3d96993f20f61a5c88b5326d0029f96a1cbe5f95a157cb08eea76bcd2139",
+        "md5": "926ec9fbf22904545d5eb63a726266b1",
+        "sha256": "10fb72b48c2fc915e408333bc8d1a9bc784a448e42af82d29caab3a388e4f100"
+      },
+      "downloads": -1,
+      "filename": "datasette_codespaces-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "926ec9fbf22904545d5eb63a726266b1",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6880,
+      "upload_time": "2023-02-22T19:00:01",
+      "upload_time_iso_8601": "2023-02-22T19:00:01.196767Z",
+      "url": "https://files.pythonhosted.org/packages/3b/ad/3d96993f20f61a5c88b5326d0029f96a1cbe5f95a157cb08eea76bcd2139/datasette_codespaces-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "aba9fba7adf7e16bdcc9faee89b102c53ebad65411ff6633354e9b9722857830",
+        "md5": "5b27ad5724935d935590f2d7d3adf899",
+        "sha256": "7bbe41a5af0b8bbea5e878d10a38466dea801ef43f58f3e1adf3d8103f9a8d5e"
+      },
+      "downloads": -1,
+      "filename": "datasette-codespaces-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5b27ad5724935d935590f2d7d3adf899",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6666,
+      "upload_time": "2023-02-22T19:00:02",
+      "upload_time_iso_8601": "2023-02-22T19:00:02.954150Z",
+      "url": "https://files.pythonhosted.org/packages/ab/a9/fba7adf7e16bdcc9faee89b102c53ebad65411ff6633354e9b9722857830/datasette-codespaces-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
