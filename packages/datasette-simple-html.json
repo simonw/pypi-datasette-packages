@@ -1,0 +1,138 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-simple-html\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-simple-html.svg)](https://pypi.org/project/datasette-simple-html/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-simple-html?include_prereleases&label=changelog)](https://github.com/simonw/datasette-simple-html/releases)\n[![Tests](https://github.com/simonw/datasette-simple-html/workflows/Test/badge.svg)](https://github.com/simonw/datasette-simple-html/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-simple-html/blob/main/LICENSE)\n\nDatasette SQL functions for very simple HTML operations\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-simple-html\n\n## Usage\n\nThis plugin provides the following SQL functions:\n\n### html_strip_tags(text)\n\nReturns the text with any `<...>` tags removed.\n\n### html_escape(text)\n\nEscapes any HTML special characters in the text, e.g. `>` becomes `&gt;`. Uses [html.escape(text, quote=True)](https://docs.python.org/3/library/html.html#html.escape) from the Python standard library.\n\n### html_unescape(text)\n\nUnescapes any HTML special characters, so `&gt;` becomes `>`. Also handles numeric entities, so `&#x27;` becomes `'`. Uses [html.unescape(text)](https://docs.python.org/3/library/html.html#html.unescape) from the Python standard library.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-simple-html\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-simple-html",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-simple-html",
+    "package_url": "https://pypi.org/project/datasette-simple-html/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-simple-html/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-simple-html/actions",
+      "Changelog": "https://github.com/simonw/datasette-simple-html/releases",
+      "Homepage": "https://github.com/simonw/datasette-simple-html",
+      "Issues": "https://github.com/simonw/datasette-simple-html/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-simple-html/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Datasette SQL functions for very simple HTML operations",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 17105991,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "02030179120566c3c26bb872c5442fa358180dfd06cb2d24507abfa83bffd427",
+          "md5": "ddf4d3fc751f8345eddd2db4538c9311",
+          "sha256": "90e90ddfccdbbc589b94a0ac73a2e6c953b45bc6b29b415919d5da2fd7d01a05"
+        },
+        "downloads": -1,
+        "filename": "datasette_simple_html-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ddf4d3fc751f8345eddd2db4538c9311",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6812,
+        "upload_time": "2023-03-01T02:36:08",
+        "upload_time_iso_8601": "2023-03-01T02:36:08.869869Z",
+        "url": "https://files.pythonhosted.org/packages/02/03/0179120566c3c26bb872c5442fa358180dfd06cb2d24507abfa83bffd427/datasette_simple_html-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "db2b89c10a44ddc181066bd37a4a7b8b241cd6c49616f921b0ea18e576384701",
+          "md5": "44629d9dc5348e8b851b427e56b02064",
+          "sha256": "adabf13802b1f4b6ba0abcc23a17af8f91343db3e0057e92377efd6e804cc57d"
+        },
+        "downloads": -1,
+        "filename": "datasette-simple-html-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "44629d9dc5348e8b851b427e56b02064",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6732,
+        "upload_time": "2023-03-01T02:36:10",
+        "upload_time_iso_8601": "2023-03-01T02:36:10.482463Z",
+        "url": "https://files.pythonhosted.org/packages/db/2b/89c10a44ddc181066bd37a4a7b8b241cd6c49616f921b0ea18e576384701/datasette-simple-html-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "02030179120566c3c26bb872c5442fa358180dfd06cb2d24507abfa83bffd427",
+        "md5": "ddf4d3fc751f8345eddd2db4538c9311",
+        "sha256": "90e90ddfccdbbc589b94a0ac73a2e6c953b45bc6b29b415919d5da2fd7d01a05"
+      },
+      "downloads": -1,
+      "filename": "datasette_simple_html-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ddf4d3fc751f8345eddd2db4538c9311",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6812,
+      "upload_time": "2023-03-01T02:36:08",
+      "upload_time_iso_8601": "2023-03-01T02:36:08.869869Z",
+      "url": "https://files.pythonhosted.org/packages/02/03/0179120566c3c26bb872c5442fa358180dfd06cb2d24507abfa83bffd427/datasette_simple_html-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "db2b89c10a44ddc181066bd37a4a7b8b241cd6c49616f921b0ea18e576384701",
+        "md5": "44629d9dc5348e8b851b427e56b02064",
+        "sha256": "adabf13802b1f4b6ba0abcc23a17af8f91343db3e0057e92377efd6e804cc57d"
+      },
+      "downloads": -1,
+      "filename": "datasette-simple-html-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "44629d9dc5348e8b851b427e56b02064",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6732,
+      "upload_time": "2023-03-01T02:36:10",
+      "upload_time_iso_8601": "2023-03-01T02:36:10.482463Z",
+      "url": "https://files.pythonhosted.org/packages/db/2b/89c10a44ddc181066bd37a4a7b8b241cd6c49616f921b0ea18e576384701/datasette-simple-html-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
