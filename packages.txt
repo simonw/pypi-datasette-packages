@@ -150,5 +150,6 @@ datasette-cookies-for-magic-parameters
 datasette-faiss
 openai-to-sqlite
 json-to-files
+datasette-simple-html
 datasette-youtube-embed
 datasette-codespaces
