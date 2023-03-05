@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/cldellow/datasette-scraper",
       "Issues": "https://github.com/cldellow/datasette-scraper/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-scraper/0.5.2/",
+    "release_url": "https://pypi.org/project/datasette-scraper/0.5.3/",
     "requires_dist": [
       "datasette",
       "selectolax",
@@ -48,11 +48,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Adds website scraping abilities to Datasette.",
-    "version": "0.5.2",
+    "version": "0.5.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 17106395,
+  "last_serial": 17159665,
   "releases": {
     "0.4": [
       {
@@ -229,48 +229,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3bca8ef9f792c8d313ec36d950e188c1d98b3abc70e9201bbb2a5b4cc92be0a5",
+          "md5": "4ab159f48509f988e68aaebf09c27a14",
+          "sha256": "0b83bb03a4cd5cf9fb493499ba8b665234d4850e02f46d2cb08dd68438d63d66"
+        },
+        "downloads": -1,
+        "filename": "datasette_scraper-0.5.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4ab159f48509f988e68aaebf09c27a14",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 263234,
+        "upload_time": "2023-03-04T22:12:45",
+        "upload_time_iso_8601": "2023-03-04T22:12:45.681289Z",
+        "url": "https://files.pythonhosted.org/packages/3b/ca/8ef9f792c8d313ec36d950e188c1d98b3abc70e9201bbb2a5b4cc92be0a5/datasette_scraper-0.5.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9648c26e805bfcbc7d67315de755dabbba0c954344e0a2cf7cd718db4d35e0ee",
+          "md5": "3c8c1087826f168fa0e80d379d4f0a82",
+          "sha256": "8c4197af695e1c8bbbce5fad39ca10f7f00bcb678ac231a064ce63fc55f21b8b"
+        },
+        "downloads": -1,
+        "filename": "datasette-scraper-0.5.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3c8c1087826f168fa0e80d379d4f0a82",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 238682,
+        "upload_time": "2023-03-04T22:12:46",
+        "upload_time_iso_8601": "2023-03-04T22:12:46.939212Z",
+        "url": "https://files.pythonhosted.org/packages/96/48/c26e805bfcbc7d67315de755dabbba0c954344e0a2cf7cd718db4d35e0ee/datasette-scraper-0.5.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "48bbcc75d227c01a1b553d68a425b58a88a474d91b7b4b16cd8f0ca2a5b1091a",
-        "md5": "057ead32bf12f4c5c0bd1a0efd5e4d77",
-        "sha256": "3b93a6b74045bdb755cebaa861b15db53af3e80e3d763c2c8f681bea7f42bd3a"
+        "blake2b_256": "3bca8ef9f792c8d313ec36d950e188c1d98b3abc70e9201bbb2a5b4cc92be0a5",
+        "md5": "4ab159f48509f988e68aaebf09c27a14",
+        "sha256": "0b83bb03a4cd5cf9fb493499ba8b665234d4850e02f46d2cb08dd68438d63d66"
       },
       "downloads": -1,
-      "filename": "datasette_scraper-0.5.2-py3-none-any.whl",
+      "filename": "datasette_scraper-0.5.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "057ead32bf12f4c5c0bd1a0efd5e4d77",
+      "md5_digest": "4ab159f48509f988e68aaebf09c27a14",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 263140,
-      "upload_time": "2023-03-01T03:35:04",
-      "upload_time_iso_8601": "2023-03-01T03:35:04.762347Z",
-      "url": "https://files.pythonhosted.org/packages/48/bb/cc75d227c01a1b553d68a425b58a88a474d91b7b4b16cd8f0ca2a5b1091a/datasette_scraper-0.5.2-py3-none-any.whl",
+      "size": 263234,
+      "upload_time": "2023-03-04T22:12:45",
+      "upload_time_iso_8601": "2023-03-04T22:12:45.681289Z",
+      "url": "https://files.pythonhosted.org/packages/3b/ca/8ef9f792c8d313ec36d950e188c1d98b3abc70e9201bbb2a5b4cc92be0a5/datasette_scraper-0.5.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "4dad5586d052e47dbebe59eac7bf890fba1d406df21c529d0e832832b760aaf3",
-        "md5": "c422cf5ae0453539cb2212eb45b23617",
-        "sha256": "323be5afa5c598b245ce4d0fe67fa73904038eb8a7cde575683542bad48e64cb"
+        "blake2b_256": "9648c26e805bfcbc7d67315de755dabbba0c954344e0a2cf7cd718db4d35e0ee",
+        "md5": "3c8c1087826f168fa0e80d379d4f0a82",
+        "sha256": "8c4197af695e1c8bbbce5fad39ca10f7f00bcb678ac231a064ce63fc55f21b8b"
       },
       "downloads": -1,
-      "filename": "datasette-scraper-0.5.2.tar.gz",
+      "filename": "datasette-scraper-0.5.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "c422cf5ae0453539cb2212eb45b23617",
+      "md5_digest": "3c8c1087826f168fa0e80d379d4f0a82",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 238587,
-      "upload_time": "2023-03-01T03:35:06",
-      "upload_time_iso_8601": "2023-03-01T03:35:06.654070Z",
-      "url": "https://files.pythonhosted.org/packages/4d/ad/5586d052e47dbebe59eac7bf890fba1d406df21c529d0e832832b760aaf3/datasette-scraper-0.5.2.tar.gz",
+      "size": 238682,
+      "upload_time": "2023-03-04T22:12:46",
+      "upload_time_iso_8601": "2023-03-04T22:12:46.939212Z",
+      "url": "https://files.pythonhosted.org/packages/96/48/c26e805bfcbc7d67315de755dabbba0c954344e0a2cf7cd718db4d35e0ee/datasette-scraper-0.5.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
