@@ -153,3 +153,4 @@ json-to-files
 datasette-simple-html
 datasette-youtube-embed
 datasette-codespaces
+datasette-explain
