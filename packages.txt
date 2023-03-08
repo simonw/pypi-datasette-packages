@@ -154,3 +154,4 @@ datasette-simple-html
 datasette-youtube-embed
 datasette-codespaces
 datasette-explain
+datasette-matomo
