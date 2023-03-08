@@ -1,0 +1,138 @@
+{
+  "info": {
+    "author": "UUDigitalHumanitiesLab",
+    "author_email": "digitalhumanities@uu.nl",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-matomo\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-matomo.svg)](https://pypi.org/project/datasette-matomo/)\n[![Changelog](https://img.shields.io/github/v/release/UUDigitalHumanitieslab/datasette-matomo?include_prereleases&label=changelog)](https://github.com/UUDigitalHumanitieslab/datasette-matomo/releases)\n[![Tests](https://github.com/UUDigitalHumanitieslab/datasette-matomo/workflows/Test/badge.svg)](https://github.com/UUDigitalHumanitieslab/datasette-matomo/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/UUDigitalHumanitieslab/datasette-matomo/blob/main/LICENSE)\n\nAdd Matomo Web Analytics JavaScript tracking code to Datasette.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-matomo\n\n## Usage\n\nMake your configuration available to the Datasette process as environment variables:\n\n    DATASETTE_MATOMO_SERVER_URL=https://example.com/\n    DATASETTE_MATOMO_SITE_ID=1\n\nThe server URL must include a final slash.\n\nIf you use `datasette publish`:\n\n    datasette publish heroku example.db --install datasette-matomo \\\n        --plugin-secret datasette-matomo server_url http://example.com/ \\\n        --plugin-secret datasette-matomo site_id 1\n\nNote: not all `datasette publish` providers currently support the `--plugin-secret` option.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-matomo\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/UUDigitalHumanitieslab/datasette-matomo",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-matomo",
+    "package_url": "https://pypi.org/project/datasette-matomo/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-matomo/",
+    "project_urls": {
+      "CI": "https://github.com/UUDigitalHumanitieslab/datasette-matomo/actions",
+      "Changelog": "https://github.com/UUDigitalHumanitieslab/datasette-matomo/releases",
+      "Homepage": "https://github.com/UUDigitalHumanitieslab/datasette-matomo",
+      "Issues": "https://github.com/UUDigitalHumanitieslab/datasette-matomo/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-matomo/0.1.0/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Add Matomo Web Analytics tracking code to Datasette",
+    "version": "0.1.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16601706,
+  "releases": {
+    "0.1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d778fa4cde66583c6d964c1813eb8174d1d6a26a59241da8cce3b6900f9ad4e8",
+          "md5": "ca188c3e3803fde0ab3b204d6ef2bc6a",
+          "sha256": "b1142ed75241bfec536ef68b069c78c74d2815027c7c38c9804fc67853a58c0a"
+        },
+        "downloads": -1,
+        "filename": "datasette_matomo-0.1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ca188c3e3803fde0ab3b204d6ef2bc6a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 7401,
+        "upload_time": "2023-01-28T15:04:59",
+        "upload_time_iso_8601": "2023-01-28T15:04:59.759930Z",
+        "url": "https://files.pythonhosted.org/packages/d7/78/fa4cde66583c6d964c1813eb8174d1d6a26a59241da8cce3b6900f9ad4e8/datasette_matomo-0.1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1626d472207d17d1f6f2b9f5a6b142f6962cda5f2ada14aef24d985b1816e064",
+          "md5": "e5652082ac35e6e9a600899031c970d3",
+          "sha256": "a5f71923fc7dc2a1c8600362139bfd016256b441766b32919f4c50dee7c6c67d"
+        },
+        "downloads": -1,
+        "filename": "datasette-matomo-0.1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e5652082ac35e6e9a600899031c970d3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6920,
+        "upload_time": "2023-01-28T15:05:01",
+        "upload_time_iso_8601": "2023-01-28T15:05:01.583998Z",
+        "url": "https://files.pythonhosted.org/packages/16/26/d472207d17d1f6f2b9f5a6b142f6962cda5f2ada14aef24d985b1816e064/datasette-matomo-0.1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "d778fa4cde66583c6d964c1813eb8174d1d6a26a59241da8cce3b6900f9ad4e8",
+        "md5": "ca188c3e3803fde0ab3b204d6ef2bc6a",
+        "sha256": "b1142ed75241bfec536ef68b069c78c74d2815027c7c38c9804fc67853a58c0a"
+      },
+      "downloads": -1,
+      "filename": "datasette_matomo-0.1.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ca188c3e3803fde0ab3b204d6ef2bc6a",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 7401,
+      "upload_time": "2023-01-28T15:04:59",
+      "upload_time_iso_8601": "2023-01-28T15:04:59.759930Z",
+      "url": "https://files.pythonhosted.org/packages/d7/78/fa4cde66583c6d964c1813eb8174d1d6a26a59241da8cce3b6900f9ad4e8/datasette_matomo-0.1.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "1626d472207d17d1f6f2b9f5a6b142f6962cda5f2ada14aef24d985b1816e064",
+        "md5": "e5652082ac35e6e9a600899031c970d3",
+        "sha256": "a5f71923fc7dc2a1c8600362139bfd016256b441766b32919f4c50dee7c6c67d"
+      },
+      "downloads": -1,
+      "filename": "datasette-matomo-0.1.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e5652082ac35e6e9a600899031c970d3",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6920,
+      "upload_time": "2023-01-28T15:05:01",
+      "upload_time_iso_8601": "2023-01-28T15:05:01.583998Z",
+      "url": "https://files.pythonhosted.org/packages/16/26/d472207d17d1f6f2b9f5a6b142f6962cda5f2ada14aef24d985b1816e064/datasette-matomo-0.1.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
