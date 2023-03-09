@@ -155,3 +155,4 @@ datasette-youtube-embed
 datasette-codespaces
 datasette-explain
 datasette-matomo
+apple-notes-to-sqlite
