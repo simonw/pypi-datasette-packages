@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-render-html\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-html.svg)](https://pypi.org/project/datasette-render-html/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-render-html.svg?style=svg)](https://circleci.com/gh/simonw/datasette-render-html)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-html/blob/master/LICENSE)\n\nThis Datasette plugin lets you configure Datasette to render specific columns as HTML in the table and row interfaces.\n\nThis means you can store HTML in those columns and have it rendered as such on those pages.\n\nIf you have a database called `docs.db` containing a `glossary` table and you want the `definition` column in that table to be rendered as HTML, you would use a `metadata.json` file that looks like this:\n\n    {\n        \"databases\": {\n            \"docs\": {\n                \"tables\": {\n                    \"glossary\": {\n                        \"plugins\": {\n                            \"datasette-render-html\": {\n                                \"columns\": [\"definition\"]\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n\n## Security\n\nThis plugin allows HTML to be rendered exactly as it is stored in the database. As such, you should be sure only to use this against columns with content that you trust - otherwise you could open yourself up to an [XSS attack](https://owasp.org/www-community/attacks/xss/).\n\nIt's possible to configure this plugin to apply to columns with specific names across whole databases or the full Datasette instance, but doing so is not safe. It could open you up to XSS vulnerabilities where an attacker composes a SQL query that results in a column containing unsafe HTML.\n\nAs such, you should only use this plugin against specific columns in specific tables, as shown in the example above.\n\n\n",
+    "description": "# datasette-render-html\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-html.svg)](https://pypi.org/project/datasette-render-html/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-html?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-html/releases)\n[![Tests](https://github.com/simonw/datasette-render-html/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-html/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-html/blob/main/LICENSE)\n\nThis Datasette plugin lets you configure Datasette to render specific columns as HTML in the table and row interfaces.\n\nThis means you can store HTML in those columns and have it rendered as such on those pages.\n\nIf you have a database called `docs.db` containing a `glossary` table and you want the `definition` column in that table to be rendered as HTML, you would use a `metadata.json` file that looks like this:\n\n    {\n        \"databases\": {\n            \"docs\": {\n                \"tables\": {\n                    \"glossary\": {\n                        \"plugins\": {\n                            \"datasette-render-html\": {\n                                \"columns\": [\"definition\"]\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-render-html\n\n## Usage\n\nWith the plugin installed, launch Datasette with the above `metadata.json` configuration:\n\n    $ datasette -m metadata.json docs.db\n\n## Security\n\nThis plugin allows HTML to be rendered exactly as it is stored in the database. As such, you should be sure only to use this against columns with content that you trust - otherwise you could open yourself up to an [XSS attack](https://owasp.org/www-community/attacks/xss/).\n\nIt's possible to configure this plugin to apply to columns with specific names across whole databases or the full Datasette instance, but doing so is not safe. It could open you up to XSS vulnerabilities where an attacker composes a SQL query that results in a column containing unsafe HTML.\n\nAs such, you should only use this plugin against specific columns in specific tables, as shown in the example above.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,23 +20,23 @@
     "maintainer_email": "",
     "name": "datasette-render-html",
     "package_url": "https://pypi.org/project/datasette-render-html/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-render-html/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-render-html"
     },
-    "release_url": "https://pypi.org/project/datasette-render-html/0.1.2/",
+    "release_url": "https://pypi.org/project/datasette-render-html/1.0/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin that renders specified cells as HTML",
-    "version": "0.1.2",
+    "version": "1.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 6857384,
+  "last_serial": 17218375,
   "releases": {
     "0.1": [
       {
@@ -106,27 +106,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "23fe2ff9b3952ddd442004a44c78beee8dd842dae2ac16e9a7baa98329ebeea7",
+          "md5": "0a4797d5eb3eb577f645dd8d522a8889",
+          "sha256": "c6437c015bfb25bef983451b3840fc81fe9c1636c3158064d6ce04dde0f850f2"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_html-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0a4797d5eb3eb577f645dd8d522a8889",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2737,
+        "upload_time": "2023-03-09T02:47:39",
+        "upload_time_iso_8601": "2023-03-09T02:47:39.465833Z",
+        "url": "https://files.pythonhosted.org/packages/23/fe/2ff9b3952ddd442004a44c78beee8dd842dae2ac16e9a7baa98329ebeea7/datasette_render_html-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "763287bb45b4f790041575429fdf04681c6ef5a4104c4d710054c83a2b9391a9",
+          "md5": "606a5995ef8de17f73cdc9b59e3de058",
+          "sha256": "8e7a9ab21caed72cf42ebef4cecb0e84a6d2068e4681b4eeddfc48c5379949ab"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-html-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "606a5995ef8de17f73cdc9b59e3de058",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2380,
+        "upload_time": "2023-03-09T02:47:40",
+        "upload_time_iso_8601": "2023-03-09T02:47:40.977089Z",
+        "url": "https://files.pythonhosted.org/packages/76/32/87bb45b4f790041575429fdf04681c6ef5a4104c4d710054c83a2b9391a9/datasette-render-html-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "091598a23edf0021d56107ab0833976169bf7e076d9d5777e215a69f63c0c525",
-        "md5": "109f39e0633c78cb32c93432d2790a69",
-        "sha256": "6633cf7be61a712e5b003ec6e6c5f8f23b79b83a53b48b85bef5c2961feb14d1"
+        "blake2b_256": "23fe2ff9b3952ddd442004a44c78beee8dd842dae2ac16e9a7baa98329ebeea7",
+        "md5": "0a4797d5eb3eb577f645dd8d522a8889",
+        "sha256": "c6437c015bfb25bef983451b3840fc81fe9c1636c3158064d6ce04dde0f850f2"
       },
       "downloads": -1,
-      "filename": "datasette_render_html-0.1.2-py3-none-any.whl",
+      "filename": "datasette_render_html-1.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "109f39e0633c78cb32c93432d2790a69",
+      "md5_digest": "0a4797d5eb3eb577f645dd8d522a8889",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 2634,
-      "upload_time": "2020-03-21T22:06:36",
-      "upload_time_iso_8601": "2020-03-21T22:06:36.690301Z",
-      "url": "https://files.pythonhosted.org/packages/09/15/98a23edf0021d56107ab0833976169bf7e076d9d5777e215a69f63c0c525/datasette_render_html-0.1.2-py3-none-any.whl",
+      "size": 2737,
+      "upload_time": "2023-03-09T02:47:39",
+      "upload_time_iso_8601": "2023-03-09T02:47:39.465833Z",
+      "url": "https://files.pythonhosted.org/packages/23/fe/2ff9b3952ddd442004a44c78beee8dd842dae2ac16e9a7baa98329ebeea7/datasette_render_html-1.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "763287bb45b4f790041575429fdf04681c6ef5a4104c4d710054c83a2b9391a9",
+        "md5": "606a5995ef8de17f73cdc9b59e3de058",
+        "sha256": "8e7a9ab21caed72cf42ebef4cecb0e84a6d2068e4681b4eeddfc48c5379949ab"
+      },
+      "downloads": -1,
+      "filename": "datasette-render-html-1.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "606a5995ef8de17f73cdc9b59e3de058",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2380,
+      "upload_time": "2023-03-09T02:47:40",
+      "upload_time_iso_8601": "2023-03-09T02:47:40.977089Z",
+      "url": "https://files.pythonhosted.org/packages/76/32/87bb45b4f790041575429fdf04681c6ef5a4104c4d710054c83a2b9391a9/datasette-render-html-1.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
