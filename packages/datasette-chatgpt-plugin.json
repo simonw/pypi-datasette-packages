@@ -1,0 +1,138 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-chatgpt-plugin\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-chatgpt-plugin.svg)](https://pypi.org/project/datasette-chatgpt-plugin/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-chatgpt-plugin?include_prereleases&label=changelog)](https://github.com/simonw/datasette-chatgpt-plugin/releases)\n[![Tests](https://github.com/simonw/datasette-chatgpt-plugin/workflows/Test/badge.svg)](https://github.com/simonw/datasette-chatgpt-plugin/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-chatgpt-plugin/blob/main/LICENSE)\n\nA Datasette plugin that turns a Datasette instance into a ChatGPT plugin - so you can use ChatGPT to ask questions of your data.\n\nFor more on this project, see [Building a ChatGPT plugin to ask questions of data hosted in Datasette](https://simonwillison.net/2023/Mar/24/datasette-chatgpt-plugin/).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette, on a deployed instance.\n\n    datasette install datasette-chatgpt-plugin\n\nOr if you are using `datasette publish` to deploy Datasette:\n\n    datasette publish cloudrun/vercel/fly/heroku data.db \\\n      --install datasette-chatgpt-plugin\n\n## Usage\n\nOnce installed, your Datasette instance will work with the new [ChatGPT plugins](https://openai.com/blog/chatgpt-plugins) system - provided you have access to that preview.\n\nClick `Plugins -> Plugin store -> Install an unverified plugin` and enter the URL of your Datasette instance.\n\nChatGPT will discover the plugin by hitting the `/.well-known/ai-plugin.json` endpoint.\n\nYou can then ask it questions! Some starting examples:\n\n- Show a list of tables (this is always good to start with as it ensures ChatGPT knows which tables are available)\n- Show the first 10 rows of the `mytable` table\n\nThis plugin currently exposes a single database - the first database attached to your instance.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-chatgpt-plugin\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-chatgpt-plugin",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-chatgpt-plugin",
+    "package_url": "https://pypi.org/project/datasette-chatgpt-plugin/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-chatgpt-plugin/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-chatgpt-plugin/actions",
+      "Changelog": "https://github.com/simonw/datasette-chatgpt-plugin/releases",
+      "Homepage": "https://github.com/simonw/datasette-chatgpt-plugin",
+      "Issues": "https://github.com/simonw/datasette-chatgpt-plugin/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-chatgpt-plugin/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "A Datasette plugin that turns a Datasette instance into a ChatGPT plugin",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 17431991,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2f1f841a2961da1306f1a661961e8e87c8ddb011959522bb53ef58ce36ba4335",
+          "md5": "51ede99ab95dce568031dd0418e3491a",
+          "sha256": "062c4bde96e881c654a3472877f98f3daddff2ed93562e8ab1657804913405df"
+        },
+        "downloads": -1,
+        "filename": "datasette_chatgpt_plugin-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "51ede99ab95dce568031dd0418e3491a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8331,
+        "upload_time": "2023-03-24T14:33:21",
+        "upload_time_iso_8601": "2023-03-24T14:33:21.887458Z",
+        "url": "https://files.pythonhosted.org/packages/2f/1f/841a2961da1306f1a661961e8e87c8ddb011959522bb53ef58ce36ba4335/datasette_chatgpt_plugin-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fdad6a723dfb9ca96665c10a36005e4e6414d3e69defa1e3d0f0721a56398e08",
+          "md5": "7bd657335ae6fcb555261d3a8bb305be",
+          "sha256": "5a657c17b85b1339dd1856f53a5fdde62680b7368633580c34050ce42bb61343"
+        },
+        "downloads": -1,
+        "filename": "datasette-chatgpt-plugin-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7bd657335ae6fcb555261d3a8bb305be",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8319,
+        "upload_time": "2023-03-24T14:33:24",
+        "upload_time_iso_8601": "2023-03-24T14:33:24.004286Z",
+        "url": "https://files.pythonhosted.org/packages/fd/ad/6a723dfb9ca96665c10a36005e4e6414d3e69defa1e3d0f0721a56398e08/datasette-chatgpt-plugin-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "2f1f841a2961da1306f1a661961e8e87c8ddb011959522bb53ef58ce36ba4335",
+        "md5": "51ede99ab95dce568031dd0418e3491a",
+        "sha256": "062c4bde96e881c654a3472877f98f3daddff2ed93562e8ab1657804913405df"
+      },
+      "downloads": -1,
+      "filename": "datasette_chatgpt_plugin-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "51ede99ab95dce568031dd0418e3491a",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 8331,
+      "upload_time": "2023-03-24T14:33:21",
+      "upload_time_iso_8601": "2023-03-24T14:33:21.887458Z",
+      "url": "https://files.pythonhosted.org/packages/2f/1f/841a2961da1306f1a661961e8e87c8ddb011959522bb53ef58ce36ba4335/datasette_chatgpt_plugin-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "fdad6a723dfb9ca96665c10a36005e4e6414d3e69defa1e3d0f0721a56398e08",
+        "md5": "7bd657335ae6fcb555261d3a8bb305be",
+        "sha256": "5a657c17b85b1339dd1856f53a5fdde62680b7368633580c34050ce42bb61343"
+      },
+      "downloads": -1,
+      "filename": "datasette-chatgpt-plugin-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "7bd657335ae6fcb555261d3a8bb305be",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 8319,
+      "upload_time": "2023-03-24T14:33:24",
+      "upload_time_iso_8601": "2023-03-24T14:33:24.004286Z",
+      "url": "https://files.pythonhosted.org/packages/fd/ad/6a723dfb9ca96665c10a36005e4e6414d3e69defa1e3d0f0721a56398e08/datasette-chatgpt-plugin-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
