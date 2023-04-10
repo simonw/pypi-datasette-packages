@@ -157,6 +157,7 @@ datasette-explain
 datasette-matomo
 apple-notes-to-sqlite
 datasette-chatgpt-plugin
+datasette-sqlite-vss
 datasette-sqlite-regex
 datasette-sqlite-ulid
 datasette-sqlite-jsonschema
