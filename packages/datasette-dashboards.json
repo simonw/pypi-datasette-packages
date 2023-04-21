@@ -3,8 +3,14 @@
     "author": "Romain Clement",
     "author_email": "",
     "bugtrack_url": null,
-    "classifiers": [],
-    "description": "# datasette-dashboards\n\n> Datasette plugin providing data dashboards from metadata\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-dashboards.svg)](https://pypi.org/project/datasette-dashboards/)\n[![CI/CD](https://github.com/rclement/datasette-dashboards/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/datasette-dashboards/actions/workflows/ci-cd.yml)\n[![Coverage Status](https://img.shields.io/codecov/c/github/rclement/datasette-dashboards)](https://codecov.io/gh/rclement/datasette-dashboards)\n[![License](https://img.shields.io/github/license/rclement/datasette-dashboards)](https://github.com/rclement/datasette-dashboards/blob/master/LICENSE)\n\nTry out a live demo at [https://datasette-dashboards-demo.vercel.app](https://datasette-dashboards-demo.vercel.app/-/dashboards)\n\n**WARNING**: this plugin is still experimental and not ready for production.\nSome breaking changes might happen between releases before reaching a stable version.\nUse it at your own risks!\n\n![Datasette Dashboards Demo](https://raw.githubusercontent.com/rclement/datasette-dashboards/master/demo/datasette-dashboards-demo.png)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\n$ datasette install datasette-dashboards\n```\n\n## Usage\n\nDefine dashboards within `metadata.yml` / `metadata.json`:\n\n```yaml\nplugins:\n  datasette-dashboards:\n    my-dashboard:\n      title: My Dashboard\n      description: Showing some nice metrics\n      layout:\n        - [analysis-note, events-count]\n        - [analysis-note, events-source]\n      filters:\n        date_start:\n          name: Date Start\n          type: date\n          default: \"2021-01-01\"\n        date_end:\n          name: Date End\n          type: date\n        category:\n          name: My Category\n          type: select\n          options: [Option 1, Option 2, Option 3]\n        dynamic_category:\n          name: My Dynamic Category\n          type: select\n          db: jobs\n          query: SELECT region FROM jobs ORDER BY region ASC\n      charts:\n        analysis-note:\n          library: markdown\n          display: |-\n            # Analysis notes\n            > A quick rundown of events statistics and KPIs\n\n        events-count:\n          title: Total number of events\n          db: jobs\n          query: SELECT count(*) as count FROM events\n          library: metric\n          display:\n            field: count\n            prefix:\n            suffix:\n\n        events-source:\n          title: Number of events by source\n          db: jobs\n          query: SELECT source, count(*) as count FROM events WHERE TRUE [[ AND date >= date(:date_start) ]] [[ AND date <= date(:date_end) ]] GROUP BY source ORDER BY count DESC\n          library: vega\n          display:\n            mark: { type: bar, tooltip: true }\n            encoding:\n              color: { field: source, type: nominal }\n              theta: { field: count, type: quantitative }\n```\n\nA new menu entry is now available, pointing at `/-/dashboards` to access all defined dashboards.\n\n### Properties\n\nDashboard properties:\n\n| Property      | Type     | Description           |\n| ------------- | -------- | --------------------- |\n| `title`       | `string` | Dashboard title       |\n| `description` | `string` | Dashboard description |\n| `settings`    | `object` | Dashboard settings    |\n| `layout`      | `array`  | Dashboard layout      |\n| `filters`     | `object` | Dashboard filters     |\n\nDashboard settings:\n\n| Property           | Type     | Description                                                    |\n| ------------------ | -------- | -------------------------------------------------------------- |\n| `allow_fullscreen` | `bool`   | Allow dashboard to be toggled in fullscreen  (default `false`) |\n| `autorefresh`      | `number` | Auto-refresh timeout in minutes                                |\n\nDashboard filters:\n\n| Property  | Type               | Description                                      |\n| --------- | ------------------ | ------------------------------------------------ |\n| `name`    | `string`           | Filter display name                              |\n| `type`    | `string`           | Filter type (`text`, `date`, `number`, `select`) |\n| `default` | `string`, `number` | (optional) Filter default value                  |\n| `min`     | `number`           | (optional) Filter minimum value                  |\n| `max`     | `number`           | (optional) Filter maximum value                  |\n| `step`    | `number`           | (optional) Filter stepping value                 |\n| `options` | `list`             | (optional) Select filter options list            |\n| `db`      | `string`           | (optional) Dynamic select filter database        |\n| `query`   | `string`           | (optional) Dynamic select filter query           |\n\nCommon chart properties for all chart types:\n\n| Property  | Type     | Description                                                                           |\n| --------- | -------- | ------------------------------------------------------------------------------------- |\n| `title`   | `string` | Chart title                                                                           |\n| `db`      | `string` | Database name against which to run the query                                          |\n| `query`   | `string` | SQL query to run and extract data from                                                |\n| `library` | `string` | One of supported libraries: `vega`, `vega-lite`, `markdown`, `metric`, `table`, `map` |\n| `display` | `object` | Chart display specification (depend on the used library)                              |\n\nTo define SQL queries using dashboard filters:\n\n```sql\nSELECT * FROM mytable [[ WHERE col >= :my_filter ]]\n```\n\n```sql\nSELECT * FROM mytable WHERE TRUE [[ AND col1 = :my_filter_1 ]] [[ AND col2 = :my_filter_2 ]]\n```\n\n#### Vega properties\n\nAvailable configuration for `vega` charts:\n\n| Property  | Type     | Description               |\n| --------- | -------- | ------------------------- |\n| `library` | `string` | Must be set to `vega`     |\n| `display` | `object` | Vega specification object |\n\nNotes about the `display` property:\n\n- Requires a valid [Vega specification object](https://vega.github.io/vega/docs/)\n- Some fields are pre-defined: `$schema`, `description`, `autosize`, `data`, `signals`\n- All fields are passed along as-is (overriding pre-defined fields if any)\n- Only `mark` and `encoding` fields are required as the bare-minimum\n\n#### Vega-Lite properties\n\nAvailable configuration for `vega-lite` charts:\n\n| Property  | Type     | Description                |\n| --------- | -------- | -------------------------- |\n| `library` | `string` | Must be set to `vega-lite` |\n| `display` | `object` | Vega specification object  |\n\nNotes about the `display` property:\n\n- Requires a valid [Vega-Lite specification object](https://vega.github.io/vega-lite/docs/)\n- Some fields are pre-defined: `$schema`, `description`, `width`, `view`, `config`, `data`\n- All fields are passed along as-is (overriding pre-defined fields if any)\n- Only `mark` and `encoding` fields are required as the bare-minimum\n\n#### Markdown properties\n\nAvailable configuration for `markdown` chart:\n\n| Property  | Type     | Description                                       |\n| --------- | -------- | ------------------------------------------------- |\n| `library` | `string` | Must be set to `markdown`                         |\n| `display` | `string` | Multi-line string containing the Markdown content |\n\nNote :\n\n- Some common properties do not apply and can be omitted: `title`, `db`, `query`\n- Markdown rendering is done by [`datasette-render-markdown`](https://datasette.io/plugins/datasette-render-markdown)\n- To configure Markdown rendering, extensions can be enabled in [metadata](https://datasette.io/plugins/datasette-render-markdown#user-content-markdown-extensions)\n\n#### Metric properties\n\nAvailable configuration for `metric` chart:\n\n| Property         | Type     | Description                               |\n| ---------------- | -------- | ----------------------------------------- |\n| `library`        | `string` | Must be set to `metric`                   |\n| `display.field`  | `string` | Numerical field to be displayed as metric |\n| `display.prefix` | `string` | Prefix to be displayed before metric      |\n| `display.suffix` | `string` | Prefix to be displayed after metric       |\n\nNote:\n\n- The `display.field` must reference a single-numerical value from the SQL query\n  (e.g. numerical `number` field in `SELECT count(*) as number FROM events`)\n\n#### Table properties\n\nThere is no required configured in `display`, so you can either ignored or\nleave it empty for table charts.\n\nSome advice for a nice table chart:\n\n- Set proper column names in the `SELECT` clause\n- Limit the number of columns in the `SELECT` clause\n- Limit the number of rows with the `LIMIT` clause\n- Order the rows explicitely with the `ORDER BY` clause\n- Use SQLite string concatenation operator (`||`) to format column data (for instance to include HTML markup!)\n\n#### Map properties\n\nAvailable configuration for `map` chart:\n\n| Property                    | Type      | Description                                                                         |\n| --------------------------- | --------- | ----------------------------------------------------------------------------------- |\n| `library`                   | `string`  | Must be set to `map`                                                                |\n| `display.latitude_column`   | `string`  | Name of the latitude column (default: `latitude`)                                   |\n| `display.longitude_column`  | `string`  | Name of the latitude column (default: `longitude`)                                  |\n| `display.show_latlng_popup` | `boolean` | Whether or not to display latitude and longitude values in popup (default: `false`) |\n\n**Warning**: do not try to load more than a thousand rows for a map at the risk of\nslugginess and being unreadable. Make sensible use of the `LIMIT` clause to reduce\nthe number of items to display on the map.\n\n### Dashboard layout\n\nThe default dashboard layout will present two charts per row (one per row on mobile).\nTo make use of custom dashboard layout using [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout),\ndefine the `layout` array property as a grid / matrix:\n\n- Each entry represents a row of charts\n- Each column is referring a chart by its property name\n\n### Embedding dashboards and charts\n\nDashboards can be embedded within an HTML page using an `iframe` element:\n\n```html\n<iframe\n  src=\"/-/dashboards/my-dashboard/embed?start_date=2023-01-01&end_date=2023-12-31\"\n  frameborder=\"0\"\n  width=\"100%\"\n  height=\"600\"\n  allowtransparency\n>\n</iframe>\n```\n\nSame goes for charts:\n\n```html\n<iframe\n  src=\"/-/dashboards/my-dashboard/my-chart/embed?start_date=2023-01-01&end_date=2023-12-31\"\n  frameborder=\"0\"\n  width=\"100%\"\n  height=\"600\"\n  allowtransparency\n>\n</iframe>\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code.\nThen create a new virtual environment and the required dependencies:\n\n```bash\npipenv install -d\npipenv shell\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n\n## Demo\n\nWith the developmnent environment setup, you can run the demo locally:\n\n```bash\ndatasette \\\n  --metadata demo/metadata.yml \\\n  --template-dir demo/templates \\\n  demo/jobs.db\n```\n\n## License\n\nLicensed under Apache License, Version 2.0\n\nCopyright (c) 2021 - present Romain Clement\n",
+    "classifiers": [
+      "License :: Other/Proprietary License",
+      "Programming Language :: Python :: 3",
+      "Programming Language :: Python :: 3.10",
+      "Programming Language :: Python :: 3.11",
+      "Programming Language :: Python :: 3.9"
+    ],
+    "description": "# datasette-dashboards\n\n> Datasette plugin providing data dashboards from metadata\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-dashboards.svg)](https://pypi.org/project/datasette-dashboards/)\n[![CI/CD](https://github.com/rclement/datasette-dashboards/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/datasette-dashboards/actions/workflows/ci-cd.yml)\n[![Coverage Status](https://img.shields.io/codecov/c/github/rclement/datasette-dashboards)](https://codecov.io/gh/rclement/datasette-dashboards)\n[![License](https://img.shields.io/github/license/rclement/datasette-dashboards)](https://github.com/rclement/datasette-dashboards/blob/master/LICENSE)\n\nTry out a live demo at [https://datasette-dashboards-demo.vercel.app](https://datasette-dashboards-demo.vercel.app/-/dashboards)\n\n**WARNING**: this plugin is still experimental and not ready for production.\nSome breaking changes might happen between releases before reaching a stable version.\nUse it at your own risks!\n\n![Datasette Dashboards Demo](https://raw.githubusercontent.com/rclement/datasette-dashboards/master/demo/datasette-dashboards-demo.png)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\n$ datasette install datasette-dashboards\n```\n\n## Usage\n\nDefine dashboards within `metadata.yml` / `metadata.json`:\n\n```yaml\nplugins:\n  datasette-dashboards:\n    my-dashboard:\n      title: My Dashboard\n      description: Showing some nice metrics\n      layout:\n        - [analysis-note, events-count]\n        - [analysis-note, events-source]\n      filters:\n        date_start:\n          name: Date Start\n          type: date\n          default: \"2021-01-01\"\n        date_end:\n          name: Date End\n          type: date\n        category:\n          name: My Category\n          type: select\n          options: [Option 1, Option 2, Option 3]\n        dynamic_category:\n          name: My Dynamic Category\n          type: select\n          db: jobs\n          query: SELECT region FROM jobs ORDER BY region ASC\n      charts:\n        analysis-note:\n          library: markdown\n          display: |-\n            # Analysis notes\n            > A quick rundown of events statistics and KPIs\n\n        events-count:\n          title: Total number of events\n          db: jobs\n          query: SELECT count(*) as count FROM events\n          library: metric\n          display:\n            field: count\n            prefix:\n            suffix:\n\n        events-source:\n          title: Number of events by source\n          db: jobs\n          query: SELECT source, count(*) as count FROM events WHERE TRUE [[ AND date >= date(:date_start) ]] [[ AND date <= date(:date_end) ]] GROUP BY source ORDER BY count DESC\n          library: vega\n          display:\n            mark: { type: bar, tooltip: true }\n            encoding:\n              color: { field: source, type: nominal }\n              theta: { field: count, type: quantitative }\n```\n\nA new menu entry is now available, pointing at `/-/dashboards` to access all defined dashboards.\n\n### Properties\n\nDashboard properties:\n\n| Property      | Type     | Description           |\n| ------------- | -------- | --------------------- |\n| `title`       | `string` | Dashboard title       |\n| `description` | `string` | Dashboard description |\n| `settings`    | `object` | Dashboard settings    |\n| `layout`      | `array`  | Dashboard layout      |\n| `filters`     | `object` | Dashboard filters     |\n\nDashboard settings:\n\n| Property           | Type     | Description                                                    |\n| ------------------ | -------- | -------------------------------------------------------------- |\n| `allow_fullscreen` | `bool`   | Allow dashboard to be toggled in fullscreen  (default `false`) |\n| `autorefresh`      | `number` | Auto-refresh timeout in minutes                                |\n\nDashboard filters:\n\n| Property  | Type               | Description                                      |\n| --------- | ------------------ | ------------------------------------------------ |\n| `name`    | `string`           | Filter display name                              |\n| `type`    | `string`           | Filter type (`text`, `date`, `number`, `select`) |\n| `default` | `string`, `number` | (optional) Filter default value                  |\n| `min`     | `number`           | (optional) Filter minimum value                  |\n| `max`     | `number`           | (optional) Filter maximum value                  |\n| `step`    | `number`           | (optional) Filter stepping value                 |\n| `options` | `list`             | (optional) Select filter options list            |\n| `db`      | `string`           | (optional) Dynamic select filter database        |\n| `query`   | `string`           | (optional) Dynamic select filter query           |\n\nCommon chart properties for all chart types:\n\n| Property  | Type     | Description                                                                           |\n| --------- | -------- | ------------------------------------------------------------------------------------- |\n| `title`   | `string` | Chart title                                                                           |\n| `db`      | `string` | Database name against which to run the query                                          |\n| `query`   | `string` | SQL query to run and extract data from                                                |\n| `library` | `string` | One of supported libraries: `vega`, `vega-lite`, `markdown`, `metric`, `table`, `map` |\n| `display` | `object` | Chart display specification (depend on the used library)                              |\n\nTo define SQL queries using dashboard filters:\n\n```sql\nSELECT * FROM mytable [[ WHERE col >= :my_filter ]]\n```\n\n```sql\nSELECT * FROM mytable WHERE TRUE [[ AND col1 = :my_filter_1 ]] [[ AND col2 = :my_filter_2 ]]\n```\n\n#### Vega properties\n\nAvailable configuration for `vega` charts:\n\n| Property  | Type     | Description               |\n| --------- | -------- | ------------------------- |\n| `library` | `string` | Must be set to `vega`     |\n| `display` | `object` | Vega specification object |\n\nNotes about the `display` property:\n\n- Requires a valid [Vega specification object](https://vega.github.io/vega/docs/)\n- Some fields are pre-defined: `$schema`, `description`, `autosize`, `data`, `signals`\n- All fields are passed along as-is (overriding pre-defined fields if any)\n- Only `mark` and `encoding` fields are required as the bare-minimum\n\n#### Vega-Lite properties\n\nAvailable configuration for `vega-lite` charts:\n\n| Property  | Type     | Description                |\n| --------- | -------- | -------------------------- |\n| `library` | `string` | Must be set to `vega-lite` |\n| `display` | `object` | Vega specification object  |\n\nNotes about the `display` property:\n\n- Requires a valid [Vega-Lite specification object](https://vega.github.io/vega-lite/docs/)\n- Some fields are pre-defined: `$schema`, `description`, `width`, `view`, `config`, `data`\n- All fields are passed along as-is (overriding pre-defined fields if any)\n- Only `mark` and `encoding` fields are required as the bare-minimum\n\n#### Markdown properties\n\nAvailable configuration for `markdown` chart:\n\n| Property  | Type     | Description                                       |\n| --------- | -------- | ------------------------------------------------- |\n| `library` | `string` | Must be set to `markdown`                         |\n| `display` | `string` | Multi-line string containing the Markdown content |\n\nNote :\n\n- Some common properties do not apply and can be omitted: `title`, `db`, `query`\n- Markdown rendering is done by [`datasette-render-markdown`](https://datasette.io/plugins/datasette-render-markdown)\n- To configure Markdown rendering, extensions can be enabled in [metadata](https://datasette.io/plugins/datasette-render-markdown#user-content-markdown-extensions)\n\n#### Metric properties\n\nAvailable configuration for `metric` chart:\n\n| Property         | Type     | Description                               |\n| ---------------- | -------- | ----------------------------------------- |\n| `library`        | `string` | Must be set to `metric`                   |\n| `display.field`  | `string` | Numerical field to be displayed as metric |\n| `display.prefix` | `string` | Prefix to be displayed before metric      |\n| `display.suffix` | `string` | Prefix to be displayed after metric       |\n\nNote:\n\n- The `display.field` must reference a single-numerical value from the SQL query\n  (e.g. numerical `number` field in `SELECT count(*) as number FROM events`)\n\n#### Table properties\n\nThere is no required configured in `display`, so you can either ignored or\nleave it empty for table charts.\n\nSome advice for a nice table chart:\n\n- Set proper column names in the `SELECT` clause\n- Limit the number of columns in the `SELECT` clause\n- Limit the number of rows with the `LIMIT` clause\n- Order the rows explicitely with the `ORDER BY` clause\n- Use SQLite string concatenation operator (`||`) to format column data (for instance to include HTML markup!)\n\n#### Map properties\n\nAvailable configuration for `map` chart:\n\n| Property                    | Type      | Description                                                                         |\n| --------------------------- | --------- | ----------------------------------------------------------------------------------- |\n| `library`                   | `string`  | Must be set to `map`                                                                |\n| `display.latitude_column`   | `string`  | Name of the latitude column (default: `latitude`)                                   |\n| `display.longitude_column`  | `string`  | Name of the latitude column (default: `longitude`)                                  |\n| `display.show_latlng_popup` | `boolean` | Whether or not to display latitude and longitude values in popup (default: `false`) |\n\n**Warning**: do not try to load more than a thousand rows for a map at the risk of\nslugginess and being unreadable. Make sensible use of the `LIMIT` clause to reduce\nthe number of items to display on the map.\n\n### Dashboard layout\n\nThe default dashboard layout will present two charts per row (one per row on mobile).\nTo make use of custom dashboard layout using [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout),\ndefine the `layout` array property as a grid / matrix:\n\n- Each entry represents a row of charts\n- Each column is referring a chart by its property name\n\n### Embedding dashboards and charts\n\nDashboards can be embedded within an HTML page using an `iframe` element:\n\n```html\n<iframe\n  src=\"/-/dashboards/my-dashboard/embed?start_date=2023-01-01&end_date=2023-12-31\"\n  frameborder=\"0\"\n  width=\"100%\"\n  height=\"600\"\n  allowtransparency\n>\n</iframe>\n```\n\nSame goes for charts:\n\n```html\n<iframe\n  src=\"/-/dashboards/my-dashboard/my-chart/embed?start_date=2023-01-01&end_date=2023-12-31\"\n  frameborder=\"0\"\n  width=\"100%\"\n  height=\"600\"\n  allowtransparency\n>\n</iframe>\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code.\nThen create a new virtual environment and the required dependencies:\n\n```bash\npoetry install\npoetry shell\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n\n## Demo\n\nWith the developmnent environment setup, you can run the demo locally:\n\n```bash\ndatasette \\\n  --metadata demo/metadata.yml \\\n  --template-dir demo/templates \\\n  demo/jobs.db\n```\n\n## License\n\nLicensed under Apache License, Version 2.0\n\nCopyright (c) 2021 - present Romain Clement\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -24,25 +30,22 @@
     "project_url": "https://pypi.org/project/datasette-dashboards/",
     "project_urls": {
       "Changelog": "https://github.com/rclement/datasette-dashboards/blob/master/CHANGELOG.md",
-      "Homepage": "https://github.com/rclement/datasette-dashboards"
+      "Homepage": "https://github.com/rclement/datasette-dashboards",
+      "Repository": "https://github.com/rclement/datasette-dashboards"
     },
-    "release_url": "https://pypi.org/project/datasette-dashboards/0.4.0/",
+    "release_url": "https://pypi.org/project/datasette-dashboards/0.5.0/",
     "requires_dist": [
       "datasette",
       "datasette-leaflet",
-      "datasette-render-markdown",
-      "faker ; extra == 'test'",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'"
+      "datasette-render-markdown"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.8.1,<4.0.0",
     "summary": "Datasette plugin providing data dashboards from metadata",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 17510269,
+  "last_serial": 17790414,
   "releases": {
     "0.1.0": [
       {
@@ -571,48 +574,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a63619581a375138380b68634fea301f1f5e6f43df3f4b91938bb8ee649472e4",
+          "md5": "04097a61a87f809fb53ee3278bb41f72",
+          "sha256": "cc327c94624c3ccf923418d5f552a700f0f4c59e2a8835c766850cd9001b01a4"
+        },
+        "downloads": -1,
+        "filename": "datasette_dashboards-0.5.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "04097a61a87f809fb53ee3278bb41f72",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 292655,
+        "upload_time": "2023-04-20T16:52:16",
+        "upload_time_iso_8601": "2023-04-20T16:52:16.834278Z",
+        "url": "https://files.pythonhosted.org/packages/a6/36/19581a375138380b68634fea301f1f5e6f43df3f4b91938bb8ee649472e4/datasette_dashboards-0.5.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a65380dc944ad1f724cc35ec60a797c204587bbe67b252808619a6c9919746e8",
+          "md5": "6ebb6ac00e39cfd13ab27c8f70d4b392",
+          "sha256": "5243b48de3a4870b5be8d1404bf19cfafdab41936f96e027b31e0e8cbedd4b65"
+        },
+        "downloads": -1,
+        "filename": "datasette_dashboards-0.5.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6ebb6ac00e39cfd13ab27c8f70d4b392",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 291596,
+        "upload_time": "2023-04-20T16:52:18",
+        "upload_time_iso_8601": "2023-04-20T16:52:18.383352Z",
+        "url": "https://files.pythonhosted.org/packages/a6/53/80dc944ad1f724cc35ec60a797c204587bbe67b252808619a6c9919746e8/datasette_dashboards-0.5.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "ee6197f6395f93cebfde35f29cc373404cfee29d99f9d3ff3e6077b9929477f4",
-        "md5": "060cf298753a86d3da50e242876c62dc",
-        "sha256": "9c91ae409f219237731dadf55b6578f8ecea1ffc676847627629dfaad278a993"
+        "blake2b_256": "a63619581a375138380b68634fea301f1f5e6f43df3f4b91938bb8ee649472e4",
+        "md5": "04097a61a87f809fb53ee3278bb41f72",
+        "sha256": "cc327c94624c3ccf923418d5f552a700f0f4c59e2a8835c766850cd9001b01a4"
       },
       "downloads": -1,
-      "filename": "datasette_dashboards-0.4.0-py3-none-any.whl",
+      "filename": "datasette_dashboards-0.5.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "060cf298753a86d3da50e242876c62dc",
+      "md5_digest": "04097a61a87f809fb53ee3278bb41f72",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 292689,
-      "upload_time": "2023-03-30T12:37:46",
-      "upload_time_iso_8601": "2023-03-30T12:37:46.677199Z",
-      "url": "https://files.pythonhosted.org/packages/ee/61/97f6395f93cebfde35f29cc373404cfee29d99f9d3ff3e6077b9929477f4/datasette_dashboards-0.4.0-py3-none-any.whl",
+      "requires_python": ">=3.8.1,<4.0.0",
+      "size": 292655,
+      "upload_time": "2023-04-20T16:52:16",
+      "upload_time_iso_8601": "2023-04-20T16:52:16.834278Z",
+      "url": "https://files.pythonhosted.org/packages/a6/36/19581a375138380b68634fea301f1f5e6f43df3f4b91938bb8ee649472e4/datasette_dashboards-0.5.0-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "89a3859484e0b3394d79455e5defeb79ea4c781be6959ff63062aa0fc24f4e4d",
-        "md5": "55e92529ba933583812cbf5fb2e41cd0",
-        "sha256": "a517aae2ce4ce9d945dc21635cc875883656c62c95c6ce0693b338623fa19983"
+        "blake2b_256": "a65380dc944ad1f724cc35ec60a797c204587bbe67b252808619a6c9919746e8",
+        "md5": "6ebb6ac00e39cfd13ab27c8f70d4b392",
+        "sha256": "5243b48de3a4870b5be8d1404bf19cfafdab41936f96e027b31e0e8cbedd4b65"
       },
       "downloads": -1,
-      "filename": "datasette-dashboards-0.4.0.tar.gz",
+      "filename": "datasette_dashboards-0.5.0.tar.gz",
       "has_sig": false,
-      "md5_digest": "55e92529ba933583812cbf5fb2e41cd0",
+      "md5_digest": "6ebb6ac00e39cfd13ab27c8f70d4b392",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 292476,
-      "upload_time": "2023-03-30T12:37:48",
-      "upload_time_iso_8601": "2023-03-30T12:37:48.903599Z",
-      "url": "https://files.pythonhosted.org/packages/89/a3/859484e0b3394d79455e5defeb79ea4c781be6959ff63062aa0fc24f4e4d/datasette-dashboards-0.4.0.tar.gz",
+      "requires_python": ">=3.8.1,<4.0.0",
+      "size": 291596,
+      "upload_time": "2023-04-20T16:52:18",
+      "upload_time_iso_8601": "2023-04-20T16:52:18.383352Z",
+      "url": "https://files.pythonhosted.org/packages/a6/53/80dc944ad1f724cc35ec60a797c204587bbe67b252808619a6c9919746e8/datasette_dashboards-0.5.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
