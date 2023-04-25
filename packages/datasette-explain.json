@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-explain",
       "Issues": "https://github.com/simonw/datasette-explain/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-explain/0.1a1/",
+    "release_url": "https://pypi.org/project/datasette-explain/0.1a2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Explain SQL queries executed using Datasette",
-    "version": "0.1a1",
+    "version": "0.1a2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 17579769,
+  "last_serial": 17828917,
   "releases": {
     "0.1a0": [
       {
@@ -132,48 +132,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5e93793ab854ca573065f10d75fed3d04f4f9dbdce938804faa9ffe7994dde38",
+          "md5": "0ca7d04836e9fbb101fbe2564a1a1920",
+          "sha256": "b6a5d82731dcb865bfbde48a62d44c7a469e1d49eb83bcb953ff07ca22e3b4ba"
+        },
+        "downloads": -1,
+        "filename": "datasette_explain-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0ca7d04836e9fbb101fbe2564a1a1920",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8274,
+        "upload_time": "2023-04-24T03:58:16",
+        "upload_time_iso_8601": "2023-04-24T03:58:16.997926Z",
+        "url": "https://files.pythonhosted.org/packages/5e/93/793ab854ca573065f10d75fed3d04f4f9dbdce938804faa9ffe7994dde38/datasette_explain-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "61fdd4bf5d01c168c5a6c68c4a36307cfb5f03c4e3ad6eb24e9fd5d6686ee153",
+          "md5": "7c0b0ebbdc84b48ca5f046200fa89287",
+          "sha256": "009e28d3cc5e80f5a6c093ac63edb91d89778c6d194cb197f2cbd4f9a5b92ebc"
+        },
+        "downloads": -1,
+        "filename": "datasette-explain-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7c0b0ebbdc84b48ca5f046200fa89287",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8393,
+        "upload_time": "2023-04-24T03:58:19",
+        "upload_time_iso_8601": "2023-04-24T03:58:19.156606Z",
+        "url": "https://files.pythonhosted.org/packages/61/fd/d4bf5d01c168c5a6c68c4a36307cfb5f03c4e3ad6eb24e9fd5d6686ee153/datasette-explain-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "9160240aa1f7ae111c61d62fc1e3b27808811102ad60083a3f799b0403f1e2e9",
-        "md5": "1f28f25c9327c7d3d6a5f19e501356da",
-        "sha256": "aa244547dcb2c88d79e6753aa43a233d247d2efa557356ce3f2dc0b5e18534c7"
+        "blake2b_256": "5e93793ab854ca573065f10d75fed3d04f4f9dbdce938804faa9ffe7994dde38",
+        "md5": "0ca7d04836e9fbb101fbe2564a1a1920",
+        "sha256": "b6a5d82731dcb865bfbde48a62d44c7a469e1d49eb83bcb953ff07ca22e3b4ba"
       },
       "downloads": -1,
-      "filename": "datasette_explain-0.1a1-py3-none-any.whl",
+      "filename": "datasette_explain-0.1a2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "1f28f25c9327c7d3d6a5f19e501356da",
+      "md5_digest": "0ca7d04836e9fbb101fbe2564a1a1920",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8264,
-      "upload_time": "2023-04-04T19:11:14",
-      "upload_time_iso_8601": "2023-04-04T19:11:14.894547Z",
-      "url": "https://files.pythonhosted.org/packages/91/60/240aa1f7ae111c61d62fc1e3b27808811102ad60083a3f799b0403f1e2e9/datasette_explain-0.1a1-py3-none-any.whl",
+      "size": 8274,
+      "upload_time": "2023-04-24T03:58:16",
+      "upload_time_iso_8601": "2023-04-24T03:58:16.997926Z",
+      "url": "https://files.pythonhosted.org/packages/5e/93/793ab854ca573065f10d75fed3d04f4f9dbdce938804faa9ffe7994dde38/datasette_explain-0.1a2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "a8b9999c2af115737333df380c55aa9b67ba5d6e3ae08ce8f0632fe73fe5a95e",
-        "md5": "3edcc57faecf8dd39ad82f334c78244b",
-        "sha256": "926a04e2fd18402b66e50c03010704d78820c27e945d7aa7e636e72b74455034"
+        "blake2b_256": "61fdd4bf5d01c168c5a6c68c4a36307cfb5f03c4e3ad6eb24e9fd5d6686ee153",
+        "md5": "7c0b0ebbdc84b48ca5f046200fa89287",
+        "sha256": "009e28d3cc5e80f5a6c093ac63edb91d89778c6d194cb197f2cbd4f9a5b92ebc"
       },
       "downloads": -1,
-      "filename": "datasette-explain-0.1a1.tar.gz",
+      "filename": "datasette-explain-0.1a2.tar.gz",
       "has_sig": false,
-      "md5_digest": "3edcc57faecf8dd39ad82f334c78244b",
+      "md5_digest": "7c0b0ebbdc84b48ca5f046200fa89287",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 8406,
-      "upload_time": "2023-04-04T19:11:16",
-      "upload_time_iso_8601": "2023-04-04T19:11:16.497470Z",
-      "url": "https://files.pythonhosted.org/packages/a8/b9/999c2af115737333df380c55aa9b67ba5d6e3ae08ce8f0632fe73fe5a95e/datasette-explain-0.1a1.tar.gz",
+      "size": 8393,
+      "upload_time": "2023-04-24T03:58:19",
+      "upload_time_iso_8601": "2023-04-24T03:58:19.156606Z",
+      "url": "https://files.pythonhosted.org/packages/61/fd/d4bf5d01c168c5a6c68c4a36307cfb5f03c4e3ad6eb24e9fd5d6686ee153/datasette-explain-0.1a2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
