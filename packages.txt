@@ -157,6 +157,16 @@ datasette-explain
 datasette-matomo
 apple-notes-to-sqlite
 datasette-chatgpt-plugin
+datasette-sqlite-vss
+datasette-sqlite-regex
+datasette-sqlite-ulid
+datasette-sqlite-jsonschema
+datasette-sqlite-fastrand
+datasette-sqlite-path
+datasette-sqlite-url
+datasette-sqlite-html
+datasette-sqlite-http
+datasette-sqlite-lines
 llm
 strip-tags
 ttok
