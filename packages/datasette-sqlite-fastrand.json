@@ -1,0 +1,300 @@
+{
+  "info": {
+    "author": "Alex Garcia",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/asg017/sqlite-fastrand",
+    "keywords": "",
+    "license": "MIT License, Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-sqlite-fastrand",
+    "package_url": "https://pypi.org/project/datasette-sqlite-fastrand/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-sqlite-fastrand/",
+    "project_urls": {
+      "CI": "https://github.com/asg017/sqlite-fastrand/actions",
+      "Changelog": "https://github.com/asg017/sqlite-fastrand/releases",
+      "Homepage": "https://github.com/asg017/sqlite-fastrand",
+      "Issues": "https://github.com/asg017/sqlite-fastrand/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-sqlite-fastrand/0.2.0/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-fastrand",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "",
+    "version": "0.2.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 18454137,
+  "releases": {
+    "0.1.1a4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2adab20cd4146f9b4d37c4e662452276dc1cd378b59144d697220fe68b9dd6a8",
+          "md5": "15ce809fb99bbaa998a8a6324a27c9d9",
+          "sha256": "d40a503565aeb1ba2fbc6022b725bf9320afe73484c9ba588f546fac987ca5f5"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.1.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "15ce809fb99bbaa998a8a6324a27c9d9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 1962,
+        "upload_time": "2023-02-02T21:52:38",
+        "upload_time_iso_8601": "2023-02-02T21:52:38.048316Z",
+        "url": "https://files.pythonhosted.org/packages/2a/da/b20cd4146f9b4d37c4e662452276dc1cd378b59144d697220fe68b9dd6a8/datasette_sqlite_fastrand-0.1.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5ca480bcf34183e97c89d3f80cc747b64f262f67aee20b5ce12dfaf21f3212d3",
+          "md5": "8d524d00cbf0d8e366e03f19ae568a29",
+          "sha256": "c796a62d27216ad7185e17c02e70a7cde7fada145269f7d14e685bfa4c11d47b"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8d524d00cbf0d8e366e03f19ae568a29",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 1938,
+        "upload_time": "2023-02-06T18:37:18",
+        "upload_time_iso_8601": "2023-02-06T18:37:18.932594Z",
+        "url": "https://files.pythonhosted.org/packages/5c/a4/80bcf34183e97c89d3f80cc747b64f262f67aee20b5ce12dfaf21f3212d3/datasette_sqlite_fastrand-0.2.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "756c41f771ac26c3147745ca204f1f97c3d6187f9e3b723832180018274b882b",
+          "md5": "6403c22d4a5b6d3ea83694886dc76a02",
+          "sha256": "784031850403eba26244ce225fb67070a57d7580eacfccc22bbfb9fc0a0fabf4"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6403c22d4a5b6d3ea83694886dc76a02",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2241,
+        "upload_time": "2023-02-21T23:19:49",
+        "upload_time_iso_8601": "2023-02-21T23:19:49.149029Z",
+        "url": "https://files.pythonhosted.org/packages/75/6c/41f771ac26c3147745ca204f1f97c3d6187f9e3b723832180018274b882b/datasette_sqlite_fastrand-0.2.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fad02b03ccf1681171bcd11a5cae44b2127d3b9ace935c4702f72bd3bd270cb7",
+          "md5": "9c741298d1f65263484281bf21f21bb8",
+          "sha256": "d664faa6daa484460eac252bb32b59aa94ba86fc5b54163fd97c6c6c2406cd45"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c741298d1f65263484281bf21f21bb8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2244,
+        "upload_time": "2023-03-07T01:13:12",
+        "upload_time_iso_8601": "2023-03-07T01:13:12.933713Z",
+        "url": "https://files.pythonhosted.org/packages/fa/d0/2b03ccf1681171bcd11a5cae44b2127d3b9ace935c4702f72bd3bd270cb7/datasette_sqlite_fastrand-0.2.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ee479940c138d6d075dbb5ce3ae92be1c8b44063e437da151a839991080cd689",
+          "md5": "818be8e7c245a43b5c1806fc60c0c4c1",
+          "sha256": "94f82cd59886b68c6bd5e4c6b82d633191e9935859f1b734a7ed90df7ecd81f0"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "818be8e7c245a43b5c1806fc60c0c4c1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2244,
+        "upload_time": "2023-03-08T17:17:37",
+        "upload_time_iso_8601": "2023-03-08T17:17:37.343505Z",
+        "url": "https://files.pythonhosted.org/packages/ee/47/9940c138d6d075dbb5ce3ae92be1c8b44063e437da151a839991080cd689/datasette_sqlite_fastrand-0.2.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0166864d981e8bb15661bc3e601e64d7d54a581b8908999734e88496f3cbf523",
+          "md5": "ecb84398a4c5b144cda11501045b8cdb",
+          "sha256": "e4414cd1bb966af2fba95c9c8789e7954370c1df9e631a7de8c64a0bee863e7a"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ecb84398a4c5b144cda11501045b8cdb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2242,
+        "upload_time": "2023-06-07T17:50:04",
+        "upload_time_iso_8601": "2023-06-07T17:50:04.085376Z",
+        "url": "https://files.pythonhosted.org/packages/01/66/864d981e8bb15661bc3e601e64d7d54a581b8908999734e88496f3cbf523/datasette_sqlite_fastrand-0.2.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a1ae14b8e2e40f260489b35da724402939d30d41b756799001e149502fa87e9b",
+          "md5": "9a16f4c3f7b13595d6e13bb74400f00b",
+          "sha256": "19447b35382827c802dac628834d0ba766636072583312baea3cca6d5abb09dc"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9a16f4c3f7b13595d6e13bb74400f00b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2244,
+        "upload_time": "2023-06-07T18:39:15",
+        "upload_time_iso_8601": "2023-06-07T18:39:15.251951Z",
+        "url": "https://files.pythonhosted.org/packages/a1/ae/14b8e2e40f260489b35da724402939d30d41b756799001e149502fa87e9b/datasette_sqlite_fastrand-0.2.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c8fa629e30d1e5e27e3c348e07d0f11d3e53021b6aab855212ea1dea6e14bceb",
+          "md5": "9ffce570a97eaa59b275b7511fb75083",
+          "sha256": "4c694afb27ea0d723579d55981b77482fbc7d458e8a346d29e71aca2b042e015"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9ffce570a97eaa59b275b7511fb75083",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2243,
+        "upload_time": "2023-06-07T19:01:49",
+        "upload_time_iso_8601": "2023-06-07T19:01:49.114913Z",
+        "url": "https://files.pythonhosted.org/packages/c8/fa/629e30d1e5e27e3c348e07d0f11d3e53021b6aab855212ea1dea6e14bceb/datasette_sqlite_fastrand-0.2.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "028bc548eca77b1609b0705a2a62ac74dc85a30edd9aefe663f46e207a2ba40a",
+          "md5": "fe66cf0417cca1143b47cb26b5c095b0",
+          "sha256": "b4ded6975bbab7d76cabfb6b32ce2a2f15cca7fe0a8caa9702e4ee9ee3a3e78b"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fe66cf0417cca1143b47cb26b5c095b0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2241,
+        "upload_time": "2023-06-10T20:59:44",
+        "upload_time_iso_8601": "2023-06-10T20:59:44.537697Z",
+        "url": "https://files.pythonhosted.org/packages/02/8b/c548eca77b1609b0705a2a62ac74dc85a30edd9aefe663f46e207a2ba40a/datasette_sqlite_fastrand-0.2.1a8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a9": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "59a71f9b3dc45fd0c3e59a2d2014b1e475a4d9cd5ad94be2efd884665cc73301",
+          "md5": "fae36f81fd31448628a84209524826c0",
+          "sha256": "c68351180d08510a1337b01ee5eaf3d2f34e53ef025cea4d60f8c7fbc5c79d9b"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_fastrand-0.2.1a9-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fae36f81fd31448628a84209524826c0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2243,
+        "upload_time": "2023-06-10T21:43:35",
+        "upload_time_iso_8601": "2023-06-10T21:43:35.559512Z",
+        "url": "https://files.pythonhosted.org/packages/59/a7/1f9b3dc45fd0c3e59a2d2014b1e475a4d9cd5ad94be2efd884665cc73301/datasette_sqlite_fastrand-0.2.1a9-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "5ca480bcf34183e97c89d3f80cc747b64f262f67aee20b5ce12dfaf21f3212d3",
+        "md5": "8d524d00cbf0d8e366e03f19ae568a29",
+        "sha256": "c796a62d27216ad7185e17c02e70a7cde7fada145269f7d14e685bfa4c11d47b"
+      },
+      "downloads": -1,
+      "filename": "datasette_sqlite_fastrand-0.2.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8d524d00cbf0d8e366e03f19ae568a29",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 1938,
+      "upload_time": "2023-02-06T18:37:18",
+      "upload_time_iso_8601": "2023-02-06T18:37:18.932594Z",
+      "url": "https://files.pythonhosted.org/packages/5c/a4/80bcf34183e97c89d3f80cc747b64f262f67aee20b5ce12dfaf21f3212d3/datasette_sqlite_fastrand-0.2.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
