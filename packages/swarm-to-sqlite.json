@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# swarm-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/swarm-to-sqlite.svg)](https://pypi.org/project/swarm-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/swarm-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/swarm-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/swarm-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/swarm-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/swarm-to-sqlite/blob/main/LICENSE)\n\nCreate a SQLite database containing your checkin history from Foursquare Swarm.\n\n## How to install\n\n    $ pip install swarm-to-sqlite\n\n## Usage\n\nYou will need to first obtain a valid OAuth token for your Foursquare account. You can do so using this tool: https://your-foursquare-oauth-token.glitch.me/\n\nSimplest usage is to simply provide the name of the database file you wish to write to. The tool will prompt you to paste in your token, and will then download your checkins and store them in the specified database file.\n\n    $ swarm-to-sqlite checkins.db\n    Please provide your Foursquare OAuth token:\n    Importing 3699 checkins  [#########-----------------------] 27% 00:02:31\n\nYou can also pass the token as a command-line option:\n\n    $ swarm-to-sqlite checkins.db --token=XXX\n\nOr as an environment variable:\n\n    $ export FOURSQUARE_TOKEN=XXX\n    $ swarm-to-sqlite checkins.db\n\nTo retrieve just checkins within the past X hours, days or weeks, use the `--since=` option. For example, to pull only checkins that happened within the last 10 days use:\n\n    $ swarm-to-sqlite checkins.db --token=XXX --since=10d\n\nUse `2w` for two weeks, `10h` for ten hours, `3d` for three days.\n\nIn addition to saving the checkins to a database, you can also write them to a JSON file using the `--save` option:\n\n    $ swarm-to-sqlite checkins.db --save=checkins.json\n\nHaving done this, you can re-import checkins directly from that file (rather than making API calls to fetch data from Foursquare) like this:\n\n    $ swarm-to-sqlite checkins.db --load=checkins.json\n\n## Using with Datasette\n\nThe SQLite database produced by this tool is designed to be browsed using [Datasette](https://datasette.io/).\n\nYou can install the [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map) plugin to view your checkins on a map.\n\n\n",
+    "description": "# swarm-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/swarm-to-sqlite.svg)](https://pypi.org/project/swarm-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/swarm-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/swarm-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/swarm-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/swarm-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/swarm-to-sqlite/blob/main/LICENSE)\n\nCreate a SQLite database containing your checkin history from Foursquare Swarm.\n\n## How to install\n\n    $ pip install swarm-to-sqlite\n\n## Usage\n\nYou will need to first obtain a valid OAuth token for your Foursquare account. You can do so using this tool: https://your-foursquare-oauth-token.glitch.me/\n\nSimplest usage is to simply provide the name of the database file you wish to write to. The tool will prompt you to paste in your token, and will then download your checkins and store them in the specified database file.\n\n    $ swarm-to-sqlite checkins.db\n    Please provide your Foursquare OAuth token:\n    Importing 3699 checkins  [#########-----------------------] 27% 00:02:31\n\nYou can also pass the token as a command-line option:\n\n    $ swarm-to-sqlite checkins.db --token=XXX\n\nOr as an environment variable:\n\n    $ export FOURSQUARE_TOKEN=XXX\n    $ swarm-to-sqlite checkins.db\n\nTo retrieve just checkins within the past X hours, days or weeks, use the `--since=` option. For example, to pull only checkins that happened within the last 10 days use:\n\n    $ swarm-to-sqlite checkins.db --token=XXX --since=10d\n\nUse `2w` for two weeks, `10h` for ten hours, `3d` for three days.\n\nIn addition to saving the checkins to a database, you can also write them to a JSON file using the `--save` option:\n\n    $ swarm-to-sqlite checkins.db --save=checkins.json\n\nHaving done this, you can re-import checkins directly from that file (rather than making API calls to fetch data from Foursquare) like this:\n\n    $ swarm-to-sqlite checkins.db --load=checkins.json\n\n## Using with Datasette\n\nThe SQLite database produced by this tool is designed to be browsed using [Datasette](https://datasette.io/).\n\nYou can install the [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map) plugin to view your checkins on a map.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "swarm-to-sqlite",
     "package_url": "https://pypi.org/project/swarm-to-sqlite/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/swarm-to-sqlite/",
     "project_urls": {
       "CI": "https://github.com/dogsheep/swarm-to-sqlite/actions",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/dogsheep/swarm-to-sqlite",
       "Issues": "https://github.com/dogsheep/swarm-to-sqlite/issues"
     },
-    "release_url": "https://pypi.org/project/swarm-to-sqlite/0.3.3/",
+    "release_url": "https://pypi.org/project/swarm-to-sqlite/0.3.4/",
     "requires_dist": [
       "sqlite-utils (>=3.3)",
       "click",
@@ -37,11 +37,11 @@
     ],
     "requires_python": "",
     "summary": "Create a SQLite database containing your checkin history from Foursquare Swarm",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9160712,
+  "last_serial": 17654629,
   "releases": {
     "0.1": [
       {
@@ -222,48 +222,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "916d29114b61f1d7261c0b2f6cc5b3d09c6650f86ac4b0b4d2af59f2693d6f08",
+          "md5": "467155136dc0ca7bd8436b58ac021e74",
+          "sha256": "f4cf88d6641840c8c1896328876b587d1fb2daed5cf03a527f95c9961c4914aa"
+        },
+        "downloads": -1,
+        "filename": "swarm_to_sqlite-0.3.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "467155136dc0ca7bd8436b58ac021e74",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 10206,
+        "upload_time": "2023-04-11T03:18:59",
+        "upload_time_iso_8601": "2023-04-11T03:18:59.207120Z",
+        "url": "https://files.pythonhosted.org/packages/91/6d/29114b61f1d7261c0b2f6cc5b3d09c6650f86ac4b0b4d2af59f2693d6f08/swarm_to_sqlite-0.3.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f73cb7a03171a655a8bcd19fd0715b67b2ee2efd8544c5a3eb3b2e44b2d13690",
+          "md5": "ad274b52f510922f53e41daf424e84cc",
+          "sha256": "45365c2abb2335342c24a0fa476622cbf89c9d767f47a46b91094c6c1b8336d6"
+        },
+        "downloads": -1,
+        "filename": "swarm-to-sqlite-0.3.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ad274b52f510922f53e41daf424e84cc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9357,
+        "upload_time": "2023-04-11T03:19:00",
+        "upload_time_iso_8601": "2023-04-11T03:19:00.349618Z",
+        "url": "https://files.pythonhosted.org/packages/f7/3c/b7a03171a655a8bcd19fd0715b67b2ee2efd8544c5a3eb3b2e44b2d13690/swarm-to-sqlite-0.3.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f9218161c88dd5c6d8f48ed095b8ae27628677be545ca4404a356d0fe1583a90",
-        "md5": "87e34e73d0aa0abff13cc6710c15794d",
-        "sha256": "243fd2f81b0cb1bf6957af739c11a40b3069335cbd23d00331f5644938286fdb"
+        "blake2b_256": "916d29114b61f1d7261c0b2f6cc5b3d09c6650f86ac4b0b4d2af59f2693d6f08",
+        "md5": "467155136dc0ca7bd8436b58ac021e74",
+        "sha256": "f4cf88d6641840c8c1896328876b587d1fb2daed5cf03a527f95c9961c4914aa"
       },
       "downloads": -1,
-      "filename": "swarm_to_sqlite-0.3.3-py3-none-any.whl",
+      "filename": "swarm_to_sqlite-0.3.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "87e34e73d0aa0abff13cc6710c15794d",
+      "md5_digest": "467155136dc0ca7bd8436b58ac021e74",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 10166,
-      "upload_time": "2021-01-18T04:37:17",
-      "upload_time_iso_8601": "2021-01-18T04:37:17.407665Z",
-      "url": "https://files.pythonhosted.org/packages/f9/21/8161c88dd5c6d8f48ed095b8ae27628677be545ca4404a356d0fe1583a90/swarm_to_sqlite-0.3.3-py3-none-any.whl",
+      "size": 10206,
+      "upload_time": "2023-04-11T03:18:59",
+      "upload_time_iso_8601": "2023-04-11T03:18:59.207120Z",
+      "url": "https://files.pythonhosted.org/packages/91/6d/29114b61f1d7261c0b2f6cc5b3d09c6650f86ac4b0b4d2af59f2693d6f08/swarm_to_sqlite-0.3.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "5e7c6117247837a284912ff8e80703d4a16e9fc0c3339d9fafeb39d4e49b321c",
-        "md5": "ca6eabf5ef74adb72ddc69c674578a56",
-        "sha256": "7665b1ee6e480f4db663f1d53a86462b1f69d04f72e03f0f4f66ca247e9dd7ec"
+        "blake2b_256": "f73cb7a03171a655a8bcd19fd0715b67b2ee2efd8544c5a3eb3b2e44b2d13690",
+        "md5": "ad274b52f510922f53e41daf424e84cc",
+        "sha256": "45365c2abb2335342c24a0fa476622cbf89c9d767f47a46b91094c6c1b8336d6"
       },
       "downloads": -1,
-      "filename": "swarm-to-sqlite-0.3.3.tar.gz",
+      "filename": "swarm-to-sqlite-0.3.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "ca6eabf5ef74adb72ddc69c674578a56",
+      "md5_digest": "ad274b52f510922f53e41daf424e84cc",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 5452,
-      "upload_time": "2021-01-18T04:37:18",
-      "upload_time_iso_8601": "2021-01-18T04:37:18.513530Z",
-      "url": "https://files.pythonhosted.org/packages/5e/7c/6117247837a284912ff8e80703d4a16e9fc0c3339d9fafeb39d4e49b321c/swarm-to-sqlite-0.3.3.tar.gz",
+      "size": 9357,
+      "upload_time": "2023-04-11T03:19:00",
+      "upload_time_iso_8601": "2023-04-11T03:19:00.349618Z",
+      "url": "https://files.pythonhosted.org/packages/f7/3c/b7a03171a655a8bcd19fd0715b67b2ee2efd8544c5a3eb3b2e44b2d13690/swarm-to-sqlite-0.3.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

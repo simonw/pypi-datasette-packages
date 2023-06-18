@@ -167,3 +167,6 @@ datasette-sqlite-url
 datasette-sqlite-html
 datasette-sqlite-http
 datasette-sqlite-lines
+llm
+strip-tags
+ttok

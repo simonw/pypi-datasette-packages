@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-render-images\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-images.svg)](https://pypi.org/project/datasette-render-images/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-images?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-images/releases)\n[![Tests](https://github.com/simonw/datasette-render-images/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-images/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-images/blob/main/LICENSE)\n\nA Datasette plugin that renders binary blob images with data-uris, using the [render_cell() plugin hook](https://datasette.readthedocs.io/en/stable/plugins.html#render-cell-value-column-table-database-datasette).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-render-images\n\n## Usage\n\nIf a database row contains binary image data (PNG, GIF or JPEG), this plugin will detect that it is an image (using the [imghdr module](https://docs.python.org/3/library/imghdr.html) and render that cell using an `<img src=\"data:image/png;base64,...\">` element.\n\nHere's a [demo of the plugin in action](https://datasette-render-images-demo.datasette.io/favicons/favicons).\n\n## Creating a compatible database table\n\nYou can use the [sqlite-utils insert-files](https://sqlite-utils.readthedocs.io/en/stable/cli.html#inserting-binary-data-from-files) command to insert image files into a database table:\n\n    $ pip install sqlite-utils\n    $ sqlite-utils insert-files gifs.db images *.gif\n\nSee [Fun with binary data and SQLite](https://simonwillison.net/2020/Jul/30/fun-binary-data-and-sqlite/) for more on this tool.\n\n## Configuration\n\nBy default the plugin will only render images that are smaller than 100KB. You can adjust this limit using the `size_limit` plugin configuration option - for example, to increase the limit to 1MB (1000000 bytes) use the following in `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-images\": {\n            \"size_limit\": 1000000\n        }\n    }\n}\n```\n\n\n",
+    "description": "# datasette-render-images\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-render-images.svg)](https://pypi.org/project/datasette-render-images/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-render-images?include_prereleases&label=changelog)](https://github.com/simonw/datasette-render-images/releases)\n[![Tests](https://github.com/simonw/datasette-render-images/workflows/Test/badge.svg)](https://github.com/simonw/datasette-render-images/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-render-images/blob/main/LICENSE)\n\nA Datasette plugin that renders binary blob images with data-uris, using the [render_cell() plugin hook](https://docs.datasette.io/en/stable/plugins.html#render-cell-value-column-table-database-datasette).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-render-images\n\n## Usage\n\nIf a database row contains binary image data (PNG, GIF or JPEG), this plugin will detect that it is an image (using the [imghdr module](https://docs.python.org/3/library/imghdr.html) and render that cell using an `<img src=\"data:image/png;base64,...\">` element.\n\nHere's a [demo of the plugin in action](https://datasette-render-images-demo.datasette.io/favicons/favicons).\n\n## Creating a compatible database table\n\nYou can use the [sqlite-utils insert-files](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-data-from-files) command to insert image files into a database table:\n\n    $ pip install sqlite-utils\n    $ sqlite-utils insert-files gifs.db images *.gif\n\nSee [Fun with binary data and SQLite](https://simonwillison.net/2020/Jul/30/fun-binary-data-and-sqlite/) for more on this tool.\n\n## Configuration\n\nBy default the plugin will only render images that are smaller than 100KB. You can adjust this limit using the `size_limit` plugin configuration option - for example, to increase the limit to 1MB (1000000 bytes) use the following in `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-render-images\": {\n            \"size_limit\": 1000000\n        }\n    }\n}\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,23 +20,23 @@
     "maintainer_email": "",
     "name": "datasette-render-images",
     "package_url": "https://pypi.org/project/datasette-render-images/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-render-images/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-render-images"
     },
-    "release_url": "https://pypi.org/project/datasette-render-images/0.3.2/",
+    "release_url": "https://pypi.org/project/datasette-render-images/0.4/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin that renders binary blob images using data-uris",
-    "version": "0.3.2",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 8023243,
+  "last_serial": 18507151,
   "releases": {
     "0.1": [
       {
@@ -196,48 +196,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9a4dfcec9f11d81310772543a7709983a712295bfb69c9bf2b57dedd5ea9a160",
+          "md5": "687d5f0816c2eee93bcf883560f9bc72",
+          "sha256": "337a5871a126637d706a7a8db4b2939ff6fa4f337a9e8aaeb476aca3bdb8835b"
+        },
+        "downloads": -1,
+        "filename": "datasette_render_images-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "687d5f0816c2eee93bcf883560f9bc72",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 3760,
+        "upload_time": "2023-06-14T21:37:08",
+        "upload_time_iso_8601": "2023-06-14T21:37:08.259556Z",
+        "url": "https://files.pythonhosted.org/packages/9a/4d/fcec9f11d81310772543a7709983a712295bfb69c9bf2b57dedd5ea9a160/datasette_render_images-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5dfbb81a7b969764620f35f5a9720a0fe69bedde34e18bc3dd6382e5e9aff6cf",
+          "md5": "1b258632645f6e91ea162808d98d12c7",
+          "sha256": "384ea7b7acad8f015df246d2847d5f9d4e0b98dbb20bb011c9722d27f1f8c8d4"
+        },
+        "downloads": -1,
+        "filename": "datasette-render-images-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1b258632645f6e91ea162808d98d12c7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3350,
+        "upload_time": "2023-06-14T21:37:09",
+        "upload_time_iso_8601": "2023-06-14T21:37:09.457015Z",
+        "url": "https://files.pythonhosted.org/packages/5d/fb/b81a7b969764620f35f5a9720a0fe69bedde34e18bc3dd6382e5e9aff6cf/datasette-render-images-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "ffe3abc74d8755d47d4318a3d0f0f9ac5f6321f38331bae18222a4d7597f2b53",
-        "md5": "89dd16bce43bfa78952d6cd812707d1a",
-        "sha256": "7220821d9753a3f35bfe50e581be6651c022f41acdbc791f14b4fed079c8d04e"
+        "blake2b_256": "9a4dfcec9f11d81310772543a7709983a712295bfb69c9bf2b57dedd5ea9a160",
+        "md5": "687d5f0816c2eee93bcf883560f9bc72",
+        "sha256": "337a5871a126637d706a7a8db4b2939ff6fa4f337a9e8aaeb476aca3bdb8835b"
       },
       "downloads": -1,
-      "filename": "datasette_render_images-0.3.2-py3-none-any.whl",
+      "filename": "datasette_render_images-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "89dd16bce43bfa78952d6cd812707d1a",
+      "md5_digest": "687d5f0816c2eee93bcf883560f9bc72",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 3036,
-      "upload_time": "2020-08-23T18:37:14",
-      "upload_time_iso_8601": "2020-08-23T18:37:14.367254Z",
-      "url": "https://files.pythonhosted.org/packages/ff/e3/abc74d8755d47d4318a3d0f0f9ac5f6321f38331bae18222a4d7597f2b53/datasette_render_images-0.3.2-py3-none-any.whl",
+      "size": 3760,
+      "upload_time": "2023-06-14T21:37:08",
+      "upload_time_iso_8601": "2023-06-14T21:37:08.259556Z",
+      "url": "https://files.pythonhosted.org/packages/9a/4d/fcec9f11d81310772543a7709983a712295bfb69c9bf2b57dedd5ea9a160/datasette_render_images-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "0aa27600a7fd0fa04ca9a0279b779f9b71c77ce3769a1b864db968601e4dead6",
-        "md5": "02787dc4daa5abaf6f8d77bd0046c31d",
-        "sha256": "ba0ce86177df21ee720a30f8a159d938cc74893bc8075dd510c89db5be446026"
+        "blake2b_256": "5dfbb81a7b969764620f35f5a9720a0fe69bedde34e18bc3dd6382e5e9aff6cf",
+        "md5": "1b258632645f6e91ea162808d98d12c7",
+        "sha256": "384ea7b7acad8f015df246d2847d5f9d4e0b98dbb20bb011c9722d27f1f8c8d4"
       },
       "downloads": -1,
-      "filename": "datasette-render-images-0.3.2.tar.gz",
+      "filename": "datasette-render-images-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "02787dc4daa5abaf6f8d77bd0046c31d",
+      "md5_digest": "1b258632645f6e91ea162808d98d12c7",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 2705,
-      "upload_time": "2020-08-23T18:37:15",
-      "upload_time_iso_8601": "2020-08-23T18:37:15.249282Z",
-      "url": "https://files.pythonhosted.org/packages/0a/a2/7600a7fd0fa04ca9a0279b779f9b71c77ce3769a1b864db968601e4dead6/datasette-render-images-0.3.2.tar.gz",
+      "size": 3350,
+      "upload_time": "2023-06-14T21:37:09",
+      "upload_time_iso_8601": "2023-06-14T21:37:09.457015Z",
+      "url": "https://files.pythonhosted.org/packages/5d/fb/b81a7b969764620f35f5a9720a0fe69bedde34e18bc3dd6382e5e9aff6cf/datasette-render-images-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
