@@ -157,3 +157,6 @@ datasette-explain
 datasette-matomo
 apple-notes-to-sqlite
 datasette-chatgpt-plugin
+llm
+strip-tags
+ttok
