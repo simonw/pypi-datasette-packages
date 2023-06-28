@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-upload-csvs\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-upload-csvs.svg)](https://pypi.org/project/datasette-upload-csvs/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-upload-csvs?include_prereleases&label=changelog)](https://github.com/simonw/datasette-upload-csvs/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-upload-csvs/blob/main/LICENSE)\n\nDatasette plugin for uploading CSV files and converting them to database tables\n\n## Installation\n\n    datasette install datasette-upload-csvs\n\n## Usage\n\nThe plugin adds an interface at `/-/upload-csvs` for uploading a CSV file and using it to create a new database table.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `upload-csvs` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n",
+    "description": "# datasette-upload-csvs\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-upload-csvs.svg)](https://pypi.org/project/datasette-upload-csvs/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-upload-csvs?include_prereleases&label=changelog)](https://github.com/simonw/datasette-upload-csvs/releases)\n[![Tests](https://github.com/simonw/datasette-upload-csvs/workflows/Test/badge.svg)](https://github.com/simonw/datasette-upload-csvs/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-upload-csvs/blob/main/LICENSE)\n\nDatasette plugin for uploading CSV files and converting them to database tables\n\n## Installation\n\n    datasette install datasette-upload-csvs\n\n## Usage\n\nThe plugin adds an interface at `/-/upload-csvs` for uploading a CSV file and using it to create a new database table.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `upload-csvs` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://datasette.io/plugins/datasette-upload-csvs",
       "Issues": "https://github.com/simonw/datasette-upload-csvs/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-upload-csvs/0.8.2/",
+    "release_url": "https://pypi.org/project/datasette-upload-csvs/0.8.3/",
     "requires_dist": [
       "datasette (>=0.61)",
       "asgi-csrf (>=0.7)",
@@ -45,11 +45,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for uploading CSV files and converting them to database tables",
-    "version": "0.8.2",
+    "version": "0.8.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15037212,
+  "last_serial": 18671342,
   "releases": {
     "0.1a0": [
       {
@@ -538,48 +538,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.8.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2d77291a5688d785cb842d371fc3ccd600b6f4da1ebe461c981e9c7334e8ed6b",
+          "md5": "cd1a6b0168cc1684353f122968f000c3",
+          "sha256": "6c5a151792095de0a61e4bc684da355937fe339d158d34edd4faefef3b2d01bb"
+        },
+        "downloads": -1,
+        "filename": "datasette_upload_csvs-0.8.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cd1a6b0168cc1684353f122968f000c3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11229,
+        "upload_time": "2023-06-28T01:26:48",
+        "upload_time_iso_8601": "2023-06-28T01:26:48.505554Z",
+        "url": "https://files.pythonhosted.org/packages/2d/77/291a5688d785cb842d371fc3ccd600b6f4da1ebe461c981e9c7334e8ed6b/datasette_upload_csvs-0.8.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "018381a9295525e649f9ba0fcba38c166e6351c22702a2d77354cde42c081849",
+          "md5": "d764b2d8441c09d9a5ff7763df99c9e9",
+          "sha256": "dc2a2f9b6e8e89a7156063b3e18e5e6492ead11e709148fd4a06d97f3025afb9"
+        },
+        "downloads": -1,
+        "filename": "datasette-upload-csvs-0.8.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d764b2d8441c09d9a5ff7763df99c9e9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 12186,
+        "upload_time": "2023-06-28T01:26:49",
+        "upload_time_iso_8601": "2023-06-28T01:26:49.802398Z",
+        "url": "https://files.pythonhosted.org/packages/01/83/81a9295525e649f9ba0fcba38c166e6351c22702a2d77354cde42c081849/datasette-upload-csvs-0.8.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8da1bf4051a93e134087c78f6dd1ae0958b32085dae1e35aff5aaf415c3aa13c",
-        "md5": "9a57be4b1d37f35e207490dcba448708",
-        "sha256": "6bee2a7edcd924ce998eb519757c57695d83fb94573254e039801f89b478db75"
+        "blake2b_256": "2d77291a5688d785cb842d371fc3ccd600b6f4da1ebe461c981e9c7334e8ed6b",
+        "md5": "cd1a6b0168cc1684353f122968f000c3",
+        "sha256": "6c5a151792095de0a61e4bc684da355937fe339d158d34edd4faefef3b2d01bb"
       },
       "downloads": -1,
-      "filename": "datasette_upload_csvs-0.8.2-py3-none-any.whl",
+      "filename": "datasette_upload_csvs-0.8.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "9a57be4b1d37f35e207490dcba448708",
+      "md5_digest": "cd1a6b0168cc1684353f122968f000c3",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 11147,
-      "upload_time": "2022-09-08T20:17:03",
-      "upload_time_iso_8601": "2022-09-08T20:17:03.562733Z",
-      "url": "https://files.pythonhosted.org/packages/8d/a1/bf4051a93e134087c78f6dd1ae0958b32085dae1e35aff5aaf415c3aa13c/datasette_upload_csvs-0.8.2-py3-none-any.whl",
+      "size": 11229,
+      "upload_time": "2023-06-28T01:26:48",
+      "upload_time_iso_8601": "2023-06-28T01:26:48.505554Z",
+      "url": "https://files.pythonhosted.org/packages/2d/77/291a5688d785cb842d371fc3ccd600b6f4da1ebe461c981e9c7334e8ed6b/datasette_upload_csvs-0.8.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "fb0a9232fcd9b1da99c47c776760fd67e4ee621eb01930645a79f00d45d16e30",
-        "md5": "975ea4a7e620b8b176b3d78954385f66",
-        "sha256": "aeeb197dabb63c52a00861f9e971da08668b6e1ee8c49534713611306f3e68d1"
+        "blake2b_256": "018381a9295525e649f9ba0fcba38c166e6351c22702a2d77354cde42c081849",
+        "md5": "d764b2d8441c09d9a5ff7763df99c9e9",
+        "sha256": "dc2a2f9b6e8e89a7156063b3e18e5e6492ead11e709148fd4a06d97f3025afb9"
       },
       "downloads": -1,
-      "filename": "datasette-upload-csvs-0.8.2.tar.gz",
+      "filename": "datasette-upload-csvs-0.8.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "975ea4a7e620b8b176b3d78954385f66",
+      "md5_digest": "d764b2d8441c09d9a5ff7763df99c9e9",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 10066,
-      "upload_time": "2022-09-08T20:17:04",
-      "upload_time_iso_8601": "2022-09-08T20:17:04.798435Z",
-      "url": "https://files.pythonhosted.org/packages/fb/0a/9232fcd9b1da99c47c776760fd67e4ee621eb01930645a79f00d45d16e30/datasette-upload-csvs-0.8.2.tar.gz",
+      "size": 12186,
+      "upload_time": "2023-06-28T01:26:49",
+      "upload_time_iso_8601": "2023-06-28T01:26:49.802398Z",
+      "url": "https://files.pythonhosted.org/packages/01/83/81a9295525e649f9ba0fcba38c166e6351c22702a2d77354cde42c081849/datasette-upload-csvs-0.8.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

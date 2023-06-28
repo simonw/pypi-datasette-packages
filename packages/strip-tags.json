@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# strip-tags\n\n[![PyPI](https://img.shields.io/pypi/v/strip-tags.svg)](https://pypi.org/project/strip-tags/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/strip-tags?include_prereleases&label=changelog)](https://github.com/simonw/strip-tags/releases)\n[![Tests](https://github.com/simonw/strip-tags/workflows/Test/badge.svg)](https://github.com/simonw/strip-tags/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/strip-tags/blob/master/LICENSE)\n\nStrip tags from HTML, optionally from areas identified by CSS selectors\n\nSee [llm, ttok and strip-tags—CLI tools for working with ChatGPT and other LLMs](https://simonwillison.net/2023/May/18/cli-tools-for-llms/) for more on this project.\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install strip-tags\n```\n## Usage\n\nPipe content into this tool to strip tags from it:\n```bash\ncat input.html | strip-tags > output.txt\n````\nOr pass a filename:\n```bash\nstrip-tags -i input.html > output.txt\n```\nTo run against just specific areas identified by CSS selectors:\n```bash\nstrip-tags '.content' -i input.html > output.txt\n```\nThis can be called with multiple selectors:\n```bash\ncat input.html | strip-tags '.content' '.sidebar' > output.txt\n```\nTo return just the first element on the page that matches one of the selectors, use `--first`:\n```bash\ncat input.html | strip-tags .content --first > output.txt\n```\nTo minify whitespace - reducing multiple space and tab characters to a single space, and multiple newlines and spaces to a maximum of two newlines - add `-m` or `--minify`:\n```bash\ncat input.html | strip-tags -m > output.txt\n```\nYou can also run this command using `python -m` like this:\n```bash\npython -m strip_tags --help\n```\n### Keeping the markup for specified tags\n\nWhen passing content to a language model, it can sometimes be useful to leave in a subset of HTML tags - `<h1>This is the heading</h1>` for example - to provide extra hints to the model.\n\nThe `-t/--keep-tag` option can be passed multiple times to specify tags that should be kept.\n\nThis example looks at the `<header>` section of https://datasette.io/ and keeps the tags around the list items and `<h1>` elements:\n\n```\ncurl -s https://datasette.io/ | strip-tags header -t h1 -t li\n```html\n<li>Uses</li>\n<li>Documentation Docs</li>\n<li>Tutorials</li>\n<li>Examples</li>\n<li>Plugins</li>\n<li>Tools</li>\n<li>News</li>\n<h1>\n    Datasette\n</h1>\nFind stories in data\n```\nAll attributes will be removed from the tags, except for the `id=` and `class=` attribute since those may provide further useful hints to the language model.\n\nThe `href` attribute on links, the `alt` attribute on images and the `name` and `value` attributes on `meta` tags are kept as well.\n\nYou can also specify a bundle of tags. For example, `strip-tags -t hs` will keep the tag markup for all levels of headings.\n\nThe following bundles can be used:\n\n- `-t hs`: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`\n- `-t metadata`: `<title>`, `<meta>`\n- `-t structure`: `<header>`, `<section>`, `<main>`, `<aside>`, `<footer>`, `<article>`, `<nav>`\n\n\n## As a Python library\n\nYou can use `strip-tags` from Python code too. The function signature looks like this:\n\n```python\ndef strip_tags(\n    input: str,\n    selectors: Optional[Iterable[str]] = None,\n    *,\n    minify: bool = False,\n    first: bool = False,\n    keep_tags: Optional[Iterable[str]] = None,\n    all_attrs: bool = False,\n) -> str:\n```\nHere's an example:\n```python\nfrom strip_tags import strip_tags\n\nhtml = \"\"\"\n<div>\n<h1>This has tags</h1>\n\n<p>And whitespace too</p>\n</div>\nIgnore this bit.\n\"\"\"\nstripped = strip_tags(html, [\"div\"], minify=True, keep_tags=[\"h1\"])\nprint(stripped)\n```\nOutput:\n```\n<h1>This has tags</h1>\n\nAnd whitespace too\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd strip-tags\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# strip-tags\n\n[![PyPI](https://img.shields.io/pypi/v/strip-tags.svg)](https://pypi.org/project/strip-tags/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/strip-tags?include_prereleases&label=changelog)](https://github.com/simonw/strip-tags/releases)\n[![Tests](https://github.com/simonw/strip-tags/workflows/Test/badge.svg)](https://github.com/simonw/strip-tags/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/strip-tags/blob/master/LICENSE)\n\nStrip tags from HTML, optionally from areas identified by CSS selectors\n\nSee [llm, ttok and strip-tags—CLI tools for working with ChatGPT and other LLMs](https://simonwillison.net/2023/May/18/cli-tools-for-llms/) for more on this project.\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install strip-tags\n```\n## Usage\n\nPipe content into this tool to strip tags from it:\n```bash\ncat input.html | strip-tags > output.txt\n````\nOr pass a filename:\n```bash\nstrip-tags -i input.html > output.txt\n```\nTo run against just specific areas identified by CSS selectors:\n```bash\nstrip-tags '.content' -i input.html > output.txt\n```\nThis can be called with multiple selectors:\n```bash\ncat input.html | strip-tags '.content' '.sidebar' > output.txt\n```\nTo return just the first element on the page that matches one of the selectors, use `--first`:\n```bash\ncat input.html | strip-tags .content --first > output.txt\n```\nTo remove content contained by specific selectors - e.g. the `<nav>` section of a page, use `-r` or `--remove`:\n```bash\ncat input.html | strip-tags -r nav > output.txt\n```\nTo minify whitespace - reducing multiple space and tab characters to a single space, and multiple newlines and spaces to a maximum of two newlines - add `-m` or `--minify`:\n```bash\ncat input.html | strip-tags -m > output.txt\n```\nYou can also run this command using `python -m` like this:\n```bash\npython -m strip_tags --help\n```\n### Keeping the markup for specified tags\n\nWhen passing content to a language model, it can sometimes be useful to leave in a subset of HTML tags - `<h1>This is the heading</h1>` for example - to provide extra hints to the model.\n\nThe `-t/--keep-tag` option can be passed multiple times to specify tags that should be kept.\n\nThis example looks at the `<header>` section of https://datasette.io/ and keeps the tags around the list items and `<h1>` elements:\n\n```\ncurl -s https://datasette.io/ | strip-tags header -t h1 -t li\n```\n```html\n<li>Uses</li>\n<li>Documentation Docs</li>\n<li>Tutorials</li>\n<li>Examples</li>\n<li>Plugins</li>\n<li>Tools</li>\n<li>News</li>\n<h1>\n    Datasette\n</h1>\nFind stories in data\n```\nAll attributes will be removed from the tags, except for the `id=` and `class=` attribute since those may provide further useful hints to the language model.\n\nThe `href` attribute on links, the `alt` attribute on images and the `name` and `value` attributes on `meta` tags are kept as well.\n\nYou can also specify a bundle of tags. For example, `strip-tags -t hs` will keep the tag markup for all levels of headings.\n\nThe following bundles can be used:\n\n<!-- [[[cog\nimport cog\nfrom strip_tags.lib import BUNDLES\nlines = []\nfor name, tags in BUNDLES.items():\n    lines.append(\"- `-t {}`: {}\".format(name, \", \".join(\"`<{}>`\".format(tag) for tag in tags)))\ncog.out(\"\\n\".join(lines))\n]]] -->\n- `-t hs`: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`\n- `-t metadata`: `<title>`, `<meta>`\n- `-t structure`: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`\n- `-t tables`: `<table>`, `<tr>`, `<td>`, `<th>`, `<thead>`, `<tbody>`, `<tfoot>`, `<caption>`, `<colgroup>`, `<col>`\n- `-t lists`: `<ul>`, `<ol>`, `<li>`, `<dl>`, `<dd>`, `<dt>`\n<!-- [[[end]]] -->\n\n## As a Python library\n\nYou can use `strip-tags` from Python code too. The function signature looks like this:\n\n<!-- [[[cog\nimport ast\nmodule = ast.parse(open(\"strip_tags/lib.py\").read())\nstrip_tags = [\n    fn for fn in module.body\n    if getattr(fn, 'name', None) == 'strip_tags'\n][0]\ncode = ast.unparse(strip_tags)\ndefline = code.split(\"\\n\")[0]\ncode = (\n    ',\\n    '.join(defline.split(', ')).replace(\") ->\", \"\\n) ->\").replace(\"strip_tags(\", \"strip_tags(\\n    \")\n)\ncog.out(\"```python\\n{}\\n```\".format(code))\n]]] -->\n```python\ndef strip_tags(\n    input: str,\n    selectors: Optional[Iterable[str]]=None,\n    *,\n    removes: Optional[Iterable[str]]=None,\n    minify: bool=False,\n    first: bool=False,\n    keep_tags: Optional[Iterable[str]]=None,\n    all_attrs: bool=False\n) -> str:\n```\n<!-- [[[end]]] -->\n\nHere's an example:\n```python\nfrom strip_tags import strip_tags\n\nhtml = \"\"\"\n<div>\n<h1>This has tags</h1>\n\n<p>And whitespace too</p>\n</div>\nIgnore this bit.\n\"\"\"\nstripped = strip_tags(html, [\"div\"], minify=True, keep_tags=[\"h1\"])\nprint(stripped)\n```\nOutput:\n```\n<h1>This has tags</h1>\n\nAnd whitespace too\n```\n\n## strip-tags --help\n\n<!-- [[[cog\nimport cog\nfrom strip_tags import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: strip-tags\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: strip-tags [OPTIONS] [SELECTORS]...\n\n  Strip tags from HTML, optionally from areas identified by CSS selectors\n\n  Example usage:\n\n      cat input.html | strip-tags > output.txt\n\n  To run against just specific areas identified by CSS selectors:\n\n      cat input.html | strip-tags .entry .footer > output.txt\n\nOptions:\n  --version             Show the version and exit.\n  -r, --remove TEXT     Remove content in these selectors\n  -i, --input FILENAME  Input file\n  -m, --minify          Minify whitespace\n  -t, --keep-tag TEXT   Keep these <tags>\n  --all-attrs           Include all attributes on kept tags\n  --first               First element matching the selectors\n  --help                Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd strip-tags\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,21 +28,22 @@
       "Homepage": "https://github.com/simonw/strip-tags",
       "Issues": "https://github.com/simonw/strip-tags/issues"
     },
-    "release_url": "https://pypi.org/project/strip-tags/0.4.1/",
+    "release_url": "https://pypi.org/project/strip-tags/0.5/",
     "requires_dist": [
       "click",
       "beautifulsoup4",
       "html5lib",
       "pytest ; extra == 'test'",
-      "pytest-icdiff ; extra == 'test'"
+      "PyYAML ; extra == 'test'",
+      "cogapp ; extra == 'test'"
     ],
     "requires_python": ">=3.7",
     "summary": "Strip tags from HTML, optionally from areas identified by CSS selectors",
-    "version": "0.4.1",
+    "version": "0.5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18548758,
+  "last_serial": 18668455,
   "releases": {
     "0.1": [
       {
@@ -263,48 +264,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "39d96d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a",
+          "md5": "479ad8b0a3764e3d0fe012d83492891b",
+          "sha256": "5e96c6304a60878501be62e76be151be577f0fff288c32dafb3cf54d01cb86e0"
+        },
+        "downloads": -1,
+        "filename": "strip_tags-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "479ad8b0a3764e3d0fe012d83492891b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11167,
+        "upload_time": "2023-06-27T20:29:00",
+        "upload_time_iso_8601": "2023-06-27T20:29:00.443463Z",
+        "url": "https://files.pythonhosted.org/packages/39/d9/6d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a/strip_tags-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5399d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3",
+          "md5": "09047d6f13eeef8376f59b92b2214ccb",
+          "sha256": "2ffa18e4941544c0491699dc5f86858f594fb6cc22033df7ec9fee14e540f1dc"
+        },
+        "downloads": -1,
+        "filename": "strip-tags-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "09047d6f13eeef8376f59b92b2214ccb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 11086,
+        "upload_time": "2023-06-27T20:29:01",
+        "upload_time_iso_8601": "2023-06-27T20:29:01.759042Z",
+        "url": "https://files.pythonhosted.org/packages/53/99/d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3/strip-tags-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "00545376cc24cb543b04bad5f69ad019a8461ed17a315e1a4a1817e6afe8a902",
-        "md5": "5a95e5bfd1adf74bc6c3b8d0eb1808eb",
-        "sha256": "37881027ef3038fb41f88e7ba0e0604eec79279b75ca72d4a867d101e15ce356"
+        "blake2b_256": "39d96d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a",
+        "md5": "479ad8b0a3764e3d0fe012d83492891b",
+        "sha256": "5e96c6304a60878501be62e76be151be577f0fff288c32dafb3cf54d01cb86e0"
       },
       "downloads": -1,
-      "filename": "strip_tags-0.4.1-py3-none-any.whl",
+      "filename": "strip_tags-0.5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "5a95e5bfd1adf74bc6c3b8d0eb1808eb",
+      "md5_digest": "479ad8b0a3764e3d0fe012d83492891b",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 10263,
-      "upload_time": "2023-06-18T08:39:21",
-      "upload_time_iso_8601": "2023-06-18T08:39:21.354952Z",
-      "url": "https://files.pythonhosted.org/packages/00/54/5376cc24cb543b04bad5f69ad019a8461ed17a315e1a4a1817e6afe8a902/strip_tags-0.4.1-py3-none-any.whl",
+      "size": 11167,
+      "upload_time": "2023-06-27T20:29:00",
+      "upload_time_iso_8601": "2023-06-27T20:29:00.443463Z",
+      "url": "https://files.pythonhosted.org/packages/39/d9/6d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a/strip_tags-0.5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f997deabda2e5390a15f8ddda5e53a98aedc01bbf6197f96fa598e800eac060d",
-        "md5": "96508d791cfe1db0fcd0bc27bc2984fd",
-        "sha256": "f0ea0b5ceac6f724948a758462662eda2479c60314c24cfd005a60d34883f2da"
+        "blake2b_256": "5399d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3",
+        "md5": "09047d6f13eeef8376f59b92b2214ccb",
+        "sha256": "2ffa18e4941544c0491699dc5f86858f594fb6cc22033df7ec9fee14e540f1dc"
       },
       "downloads": -1,
-      "filename": "strip-tags-0.4.1.tar.gz",
+      "filename": "strip-tags-0.5.tar.gz",
       "has_sig": false,
-      "md5_digest": "96508d791cfe1db0fcd0bc27bc2984fd",
+      "md5_digest": "09047d6f13eeef8376f59b92b2214ccb",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 11049,
-      "upload_time": "2023-06-18T08:39:22",
-      "upload_time_iso_8601": "2023-06-18T08:39:22.715177Z",
-      "url": "https://files.pythonhosted.org/packages/f9/97/deabda2e5390a15f8ddda5e53a98aedc01bbf6197f96fa598e800eac060d/strip-tags-0.4.1.tar.gz",
+      "size": 11086,
+      "upload_time": "2023-06-27T20:29:01",
+      "upload_time_iso_8601": "2023-06-27T20:29:01.759042Z",
+      "url": "https://files.pythonhosted.org/packages/53/99/d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3/strip-tags-0.5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
