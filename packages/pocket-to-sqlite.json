@@ -6,7 +6,7 @@
     "classifiers": [
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# pocket-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/pocket-to-sqlite.svg)](https://pypi.org/project/pocket-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/pocket-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/pocket-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/pocket-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/pocket-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/pocket-to-sqlite/blob/main/LICENSE)\n\nCreate a SQLite database containing data from your [Pocket](https://getpocket.com/) account.\n\n## How to install\n\n    $ pip install pocket-to-sqlite\n\n## Usage\n\nYou will need to first obtain a valid OAuth token for your Pocket account. You can do this by running the `auth` command and following the prompts:\n\n    $ pocket-to-sqlite auth\n    Visit this page and sign in with your Pocket account:\n\n    https://getpocket.com/auth/author...\n\n    Once you have signed in there, hit <enter> to continue\n    Authentication tokens written to auth.json\n\nNow you can fetch all of your items from Pocket like this:\n\n    $ pocket-to-sqlite fetch pocket.db\n\nThe first time you run this command it will fetch all of your items, and display a progress bar while it does it.\n\nOn subsequent runs it will only fetch new items.\n\nYou can force it to fetch everything from the beginning again using `--all`. Use `--silent` to disable the progress bar.\n\n## Using with Datasette\n\nThe SQLite database produced by this tool is designed to be browsed using [Datasette](https://datasette.readthedocs.io/). Use the [datasette-render-timestamps](https://github.com/simonw/datasette-render-timestamps) plugin to improve the display of the timestamp values.\n",
+    "description": "# pocket-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/pocket-to-sqlite.svg)](https://pypi.org/project/pocket-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/pocket-to-sqlite?include_prereleases&label=changelog)](https://github.com/dogsheep/pocket-to-sqlite/releases)\n[![Tests](https://github.com/dogsheep/pocket-to-sqlite/workflows/Test/badge.svg)](https://github.com/dogsheep/pocket-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/pocket-to-sqlite/blob/main/LICENSE)\n\nCreate a SQLite database containing data from your [Pocket](https://getpocket.com/) account.\n\n## How to install\n```bash\npip install pocket-to-sqlite\n```\n## Usage\n\nYou will need to first obtain a valid OAuth token for your Pocket account. You can do this by running the `auth` command and following the prompts:\n```bash\npocket-to-sqlite auth\n```\nWhich looks like this:\n```\nVisit this page and sign in with your Pocket account:\n\nhttps://getpocket.com/auth/author...\n\nOnce you have signed in there, hit <enter> to continue\nAuthentication tokens written to auth.json\n```\n\nNow you can fetch all of your items from Pocket like this:\n\n```bash\npocket-to-sqlite fetch pocket.db\n```\n\nThe first time you run this command it will fetch all of your items, and display a progress bar while it does it.\n\nOn subsequent runs it will only fetch new items.\n\nYou can force it to fetch everything from the beginning again using `--all`. Use `--silent` to disable the progress bar.\n\n## Using with Datasette\n\nThe SQLite database produced by this tool is designed to be browsed using [Datasette](https://datasette.readthedocs.io/). Use the [datasette-render-timestamps](https://github.com/simonw/datasette-render-timestamps) plugin to improve the display of the timestamp values.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -15,9 +15,9 @@
       "last_month": -1,
       "last_week": -1
     },
-    "home_page": "https://github.com/dogsheep/pocket-to-sqlite",
+    "home_page": "",
     "keywords": "",
-    "license": "Apache License, Version 2.0",
+    "license": "Apache-2.0",
     "maintainer": "",
     "maintainer_email": "",
     "name": "pocket-to-sqlite",
@@ -27,23 +27,23 @@
     "project_urls": {
       "CI": "https://github.com/dogsheep/pocket-to-sqlite/actions",
       "Changelog": "https://github.com/dogsheep/pocket-to-sqlite/releases",
-      "Homepage": "https://github.com/dogsheep/pocket-to-sqlite",
-      "Issues": "https://github.com/dogsheep/pocket-to-sqlite/issues"
+      "Issues": "https://github.com/dogsheep/pocket-to-sqlite/issues",
+      "homepage": "https://github.com/dogsheep/pocket-to-sqlite"
     },
-    "release_url": "https://pypi.org/project/pocket-to-sqlite/0.2.2/",
+    "release_url": "https://pypi.org/project/pocket-to-sqlite/0.2.3/",
     "requires_dist": [
       "sqlite-utils (>=2.4.4)",
       "click",
       "requests",
       "pytest ; extra == 'test'"
     ],
-    "requires_python": "",
+    "requires_python": ">3.7",
     "summary": "Create a SQLite database containing data from your Pocket account",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14838028,
+  "last_serial": 18817037,
   "releases": {
     "0.1": [
       {
@@ -157,48 +157,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "bc9e7c93f37dfbe2d155976616b84912fd8a647ad53193613c8021b83903ff40",
+          "md5": "e21813ec69377d4859981ab6dc1e930a",
+          "sha256": "a9822e12b5e93ff7dde9efbe18341e7e98601e1f25f1dd0e68535fee405a06e7"
+        },
+        "downloads": -1,
+        "filename": "pocket_to_sqlite-0.2.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e21813ec69377d4859981ab6dc1e930a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">3.7",
+        "size": 9392,
+        "upload_time": "2023-07-09T01:16:07",
+        "upload_time_iso_8601": "2023-07-09T01:16:07.455649Z",
+        "url": "https://files.pythonhosted.org/packages/bc/9e/7c93f37dfbe2d155976616b84912fd8a647ad53193613c8021b83903ff40/pocket_to_sqlite-0.2.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2bc4ccfb042bc2dc13521ad140d71c00e8633304eae35a2ef65bb8732f5e96e0",
+          "md5": "daf8d3310edb14bf36cda2e7be3d6b48",
+          "sha256": "396690c372e12110b0af59a17e51baafd7d4656f44f4d6e68c894a454e186eab"
+        },
+        "downloads": -1,
+        "filename": "pocket-to-sqlite-0.2.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "daf8d3310edb14bf36cda2e7be3d6b48",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">3.7",
+        "size": 9178,
+        "upload_time": "2023-07-09T01:16:08",
+        "upload_time_iso_8601": "2023-07-09T01:16:08.723512Z",
+        "url": "https://files.pythonhosted.org/packages/2b/c4/ccfb042bc2dc13521ad140d71c00e8633304eae35a2ef65bb8732f5e96e0/pocket-to-sqlite-0.2.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "75aa8b1cc8d77fd4100aa7d9f32ebe8de358b43e39b002323ba48af3799e9dfb",
-        "md5": "efb3e9a07f715428d75261ef21312ba6",
-        "sha256": "5deb568a041c8eef24333f6ef6b5ccfd8cb211e2cfc510c47d31d5da280e869c"
+        "blake2b_256": "bc9e7c93f37dfbe2d155976616b84912fd8a647ad53193613c8021b83903ff40",
+        "md5": "e21813ec69377d4859981ab6dc1e930a",
+        "sha256": "a9822e12b5e93ff7dde9efbe18341e7e98601e1f25f1dd0e68535fee405a06e7"
       },
       "downloads": -1,
-      "filename": "pocket_to_sqlite-0.2.2-py3-none-any.whl",
+      "filename": "pocket_to_sqlite-0.2.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "efb3e9a07f715428d75261ef21312ba6",
+      "md5_digest": "e21813ec69377d4859981ab6dc1e930a",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 9359,
-      "upload_time": "2022-08-22T16:22:49",
-      "upload_time_iso_8601": "2022-08-22T16:22:49.576152Z",
-      "url": "https://files.pythonhosted.org/packages/75/aa/8b1cc8d77fd4100aa7d9f32ebe8de358b43e39b002323ba48af3799e9dfb/pocket_to_sqlite-0.2.2-py3-none-any.whl",
+      "requires_python": ">3.7",
+      "size": 9392,
+      "upload_time": "2023-07-09T01:16:07",
+      "upload_time_iso_8601": "2023-07-09T01:16:07.455649Z",
+      "url": "https://files.pythonhosted.org/packages/bc/9e/7c93f37dfbe2d155976616b84912fd8a647ad53193613c8021b83903ff40/pocket_to_sqlite-0.2.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "def1b1d41ea081352beefe0c7f954b015edabc61c7cb5ba948765869e5cb9fb1",
-        "md5": "4122d1fff8f88a496b37994ff2c52f9e",
-        "sha256": "56405816800fe87e085a794311353eef11653727c70080b1409ba89b4b458459"
+        "blake2b_256": "2bc4ccfb042bc2dc13521ad140d71c00e8633304eae35a2ef65bb8732f5e96e0",
+        "md5": "daf8d3310edb14bf36cda2e7be3d6b48",
+        "sha256": "396690c372e12110b0af59a17e51baafd7d4656f44f4d6e68c894a454e186eab"
       },
       "downloads": -1,
-      "filename": "pocket-to-sqlite-0.2.2.tar.gz",
+      "filename": "pocket-to-sqlite-0.2.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "4122d1fff8f88a496b37994ff2c52f9e",
+      "md5_digest": "daf8d3310edb14bf36cda2e7be3d6b48",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 8398,
-      "upload_time": "2022-08-22T16:22:50",
-      "upload_time_iso_8601": "2022-08-22T16:22:50.694289Z",
-      "url": "https://files.pythonhosted.org/packages/de/f1/b1d41ea081352beefe0c7f954b015edabc61c7cb5ba948765869e5cb9fb1/pocket-to-sqlite-0.2.2.tar.gz",
+      "requires_python": ">3.7",
+      "size": 9178,
+      "upload_time": "2023-07-09T01:16:08",
+      "upload_time_iso_8601": "2023-07-09T01:16:08.723512Z",
+      "url": "https://files.pythonhosted.org/packages/2b/c4/ccfb042bc2dc13521ad140d71c00e8633304eae35a2ef65bb8732f5e96e0/pocket-to-sqlite-0.2.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
