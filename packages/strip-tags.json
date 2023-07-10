@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/strip-tags",
       "Issues": "https://github.com/simonw/strip-tags/issues"
     },
-    "release_url": "https://pypi.org/project/strip-tags/0.5/",
+    "release_url": "https://pypi.org/project/strip-tags/0.5.1/",
     "requires_dist": [
       "click",
       "beautifulsoup4",
@@ -39,11 +39,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Strip tags from HTML, optionally from areas identified by CSS selectors",
-    "version": "0.5",
+    "version": "0.5.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18668455,
+  "last_serial": 18823711,
   "releases": {
     "0.1": [
       {
@@ -308,48 +308,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f5b60bf8b369ca8b07f8b74b867fdbdd2e693452ab715d726a8f7f134aee44d3",
+          "md5": "d393fbd17d696e9bada559c88bb12e88",
+          "sha256": "2ced3d245bab6cd2ea34948baabbc244e1ee734c89e65705eff0e8ac6fdef46e"
+        },
+        "downloads": -1,
+        "filename": "strip_tags-0.5.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d393fbd17d696e9bada559c88bb12e88",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11195,
+        "upload_time": "2023-07-09T21:53:09",
+        "upload_time_iso_8601": "2023-07-09T21:53:09.849379Z",
+        "url": "https://files.pythonhosted.org/packages/f5/b6/0bf8b369ca8b07f8b74b867fdbdd2e693452ab715d726a8f7f134aee44d3/strip_tags-0.5.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "59221b50f0c98d35c7e958b080aa7947a90bd74b3dc7e72b759034727edc10e3",
+          "md5": "082e61f5591611c4500ae4baf7b3e984",
+          "sha256": "841a158bc8f57e3a891d45132e78c1eb8fdd9b978b8a40e68028446118dedad3"
+        },
+        "downloads": -1,
+        "filename": "strip-tags-0.5.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "082e61f5591611c4500ae4baf7b3e984",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 11159,
+        "upload_time": "2023-07-09T21:53:11",
+        "upload_time_iso_8601": "2023-07-09T21:53:11.365078Z",
+        "url": "https://files.pythonhosted.org/packages/59/22/1b50f0c98d35c7e958b080aa7947a90bd74b3dc7e72b759034727edc10e3/strip-tags-0.5.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "39d96d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a",
-        "md5": "479ad8b0a3764e3d0fe012d83492891b",
-        "sha256": "5e96c6304a60878501be62e76be151be577f0fff288c32dafb3cf54d01cb86e0"
+        "blake2b_256": "f5b60bf8b369ca8b07f8b74b867fdbdd2e693452ab715d726a8f7f134aee44d3",
+        "md5": "d393fbd17d696e9bada559c88bb12e88",
+        "sha256": "2ced3d245bab6cd2ea34948baabbc244e1ee734c89e65705eff0e8ac6fdef46e"
       },
       "downloads": -1,
-      "filename": "strip_tags-0.5-py3-none-any.whl",
+      "filename": "strip_tags-0.5.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "479ad8b0a3764e3d0fe012d83492891b",
+      "md5_digest": "d393fbd17d696e9bada559c88bb12e88",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 11167,
-      "upload_time": "2023-06-27T20:29:00",
-      "upload_time_iso_8601": "2023-06-27T20:29:00.443463Z",
-      "url": "https://files.pythonhosted.org/packages/39/d9/6d426a76110f618bbbb0f2a3b4a1801f0cbfeef1f2a7521cd7bced310b1a/strip_tags-0.5-py3-none-any.whl",
+      "size": 11195,
+      "upload_time": "2023-07-09T21:53:09",
+      "upload_time_iso_8601": "2023-07-09T21:53:09.849379Z",
+      "url": "https://files.pythonhosted.org/packages/f5/b6/0bf8b369ca8b07f8b74b867fdbdd2e693452ab715d726a8f7f134aee44d3/strip_tags-0.5.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "5399d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3",
-        "md5": "09047d6f13eeef8376f59b92b2214ccb",
-        "sha256": "2ffa18e4941544c0491699dc5f86858f594fb6cc22033df7ec9fee14e540f1dc"
+        "blake2b_256": "59221b50f0c98d35c7e958b080aa7947a90bd74b3dc7e72b759034727edc10e3",
+        "md5": "082e61f5591611c4500ae4baf7b3e984",
+        "sha256": "841a158bc8f57e3a891d45132e78c1eb8fdd9b978b8a40e68028446118dedad3"
       },
       "downloads": -1,
-      "filename": "strip-tags-0.5.tar.gz",
+      "filename": "strip-tags-0.5.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "09047d6f13eeef8376f59b92b2214ccb",
+      "md5_digest": "082e61f5591611c4500ae4baf7b3e984",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 11086,
-      "upload_time": "2023-06-27T20:29:01",
-      "upload_time_iso_8601": "2023-06-27T20:29:01.759042Z",
-      "url": "https://files.pythonhosted.org/packages/53/99/d7b526fdaa31028450afeb33edbb407d014bb9d1d63f693ab9810a3358d3/strip-tags-0.5.tar.gz",
+      "size": 11159,
+      "upload_time": "2023-07-09T21:53:11",
+      "upload_time_iso_8601": "2023-07-09T21:53:11.365078Z",
+      "url": "https://files.pythonhosted.org/packages/59/22/1b50f0c98d35c7e958b080aa7947a90bd74b3dc7e72b759034727edc10e3/strip-tags-0.5.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
