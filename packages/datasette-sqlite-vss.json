@@ -40,7 +40,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18969271,
+  "last_serial": 19019187,
   "releases": {
     "0.0.1a8": [
       {
@@ -981,6 +981,52 @@
         "upload_time": "2023-05-28T18:39:10",
         "upload_time_iso_8601": "2023-05-28T18:39:10.511006Z",
         "url": "https://files.pythonhosted.org/packages/78/39/1de339a6154e659c8a6464539aaa36ab5e4340a7d77d50f437b106ca0d12/datasette_sqlite_vss-0.1.1a9-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "074a1519826014c21a68581439a72f95465239082edb16e8ee65934be1999128",
+          "md5": "3bcbb18969b0db40cc8b259d572d0d91",
+          "sha256": "70555aaf585d0057aefa849458fe79bc075cde19e069a33564c720bd784158d6"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_vss-0.1.2a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3bcbb18969b0db40cc8b259d572d0d91",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2124,
+        "upload_time": "2023-07-24T20:32:00",
+        "upload_time_iso_8601": "2023-07-24T20:32:00.152729Z",
+        "url": "https://files.pythonhosted.org/packages/07/4a/1519826014c21a68581439a72f95465239082edb16e8ee65934be1999128/datasette_sqlite_vss-0.1.2a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9ace3ab986926bfbb842dd3fa4cd92f99fad2dd7d51764eaf825262563b65803",
+          "md5": "40e49a5e8121e7da3970e1a4dc3132e3",
+          "sha256": "9d87b1f3dbbdc82126b5e2fab92f91cd7d280394dddd440e368aa10e797d59a8"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_vss-0.1.2a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "40e49a5e8121e7da3970e1a4dc3132e3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2124,
+        "upload_time": "2023-07-24T21:22:55",
+        "upload_time_iso_8601": "2023-07-24T21:22:55.898076Z",
+        "url": "https://files.pythonhosted.org/packages/9a/ce/3ab986926bfbb842dd3fa4cd92f99fad2dd7d51764eaf825262563b65803/datasette_sqlite_vss-0.1.2a2-py3-none-any.whl",
         "yanked": false,
         "yanked_reason": null
       }

@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/asg017/sqlite-ulid",
       "Issues": "https://github.com/asg017/sqlite-ulid/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-sqlite-ulid/0.2.0/",
+    "release_url": "https://pypi.org/project/datasette-sqlite-ulid/0.2.1/",
     "requires_dist": [
       "datasette",
       "sqlite-ulid",
@@ -36,11 +36,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18957439,
+  "last_serial": 19008737,
   "releases": {
     "0.1.1a2": [
       {
@@ -130,6 +130,29 @@
         "upload_time": "2023-02-06T18:18:54",
         "upload_time_iso_8601": "2023-02-06T18:18:54.567733Z",
         "url": "https://files.pythonhosted.org/packages/63/70/64c0e71e1e69b7acd4e12d1301d8a1b9bfc007226e37713d4f641c787206/datasette_sqlite_ulid-0.2.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "89bb6442c5d5d60e3a1fcdda5e86aad1e88b124afd068bba54a7306d870df929",
+          "md5": "bbb056c6b10223b39559162e3a5fdee0",
+          "sha256": "c7ec4325e5f4af6a6ca70f93a2d5ad1d7ef7798c4a08f59966c16fc317a94ff5"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_ulid-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bbb056c6b10223b39559162e3a5fdee0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2139,
+        "upload_time": "2023-07-24T06:15:20",
+        "upload_time_iso_8601": "2023-07-24T06:15:20.894825Z",
+        "url": "https://files.pythonhosted.org/packages/89/bb/6442c5d5d60e3a1fcdda5e86aad1e88b124afd068bba54a7306d870df929/datasette_sqlite_ulid-0.2.1-py3-none-any.whl",
         "yanked": false,
         "yanked_reason": null
       }
@@ -268,6 +291,29 @@
         "upload_time": "2023-07-19T23:44:54",
         "upload_time_iso_8601": "2023-07-19T23:44:54.557626Z",
         "url": "https://files.pythonhosted.org/packages/c9/a5/7e009c03437cfa11827ba08ac06b1a31a7f8129f398a71d7b7a5480fe350/datasette_sqlite_ulid-0.2.1a15-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1a19": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b442dd8287449a9d579aedf90d9546402f90d4a72d02eaa63abf24fb1ba94373",
+          "md5": "31b40d67a36963f9822bafd800549ed2",
+          "sha256": "293c323a140fa08f797c2e1f1d76bf9e4303aaae64e3b922d44727bb6002dfec"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_ulid-0.2.1a19-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "31b40d67a36963f9822bafd800549ed2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2186,
+        "upload_time": "2023-07-24T04:49:21",
+        "upload_time_iso_8601": "2023-07-24T04:49:21.727971Z",
+        "url": "https://files.pythonhosted.org/packages/b4/42/dd8287449a9d579aedf90d9546402f90d4a72d02eaa63abf24fb1ba94373/datasette_sqlite_ulid-0.2.1a19-py3-none-any.whl",
         "yanked": false,
         "yanked_reason": null
       }
@@ -438,21 +484,21 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "637064c0e71e1e69b7acd4e12d1301d8a1b9bfc007226e37713d4f641c787206",
-        "md5": "da8d4277b1cf538dc5f642fda46bacc0",
-        "sha256": "afa9a929ca891287ee2b6be931368ec74898f54b8391f6f5accf021b852e301f"
+        "blake2b_256": "89bb6442c5d5d60e3a1fcdda5e86aad1e88b124afd068bba54a7306d870df929",
+        "md5": "bbb056c6b10223b39559162e3a5fdee0",
+        "sha256": "c7ec4325e5f4af6a6ca70f93a2d5ad1d7ef7798c4a08f59966c16fc317a94ff5"
       },
       "downloads": -1,
-      "filename": "datasette_sqlite_ulid-0.2.0-py3-none-any.whl",
+      "filename": "datasette_sqlite_ulid-0.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "da8d4277b1cf538dc5f642fda46bacc0",
+      "md5_digest": "bbb056c6b10223b39559162e3a5fdee0",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 1875,
-      "upload_time": "2023-02-06T18:18:54",
-      "upload_time_iso_8601": "2023-02-06T18:18:54.567733Z",
-      "url": "https://files.pythonhosted.org/packages/63/70/64c0e71e1e69b7acd4e12d1301d8a1b9bfc007226e37713d4f641c787206/datasette_sqlite_ulid-0.2.0-py3-none-any.whl",
+      "size": 2139,
+      "upload_time": "2023-07-24T06:15:20",
+      "upload_time_iso_8601": "2023-07-24T06:15:20.894825Z",
+      "url": "https://files.pythonhosted.org/packages/89/bb/6442c5d5d60e3a1fcdda5e86aad1e88b124afd068bba54a7306d870df929/datasette_sqlite_ulid-0.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     }
