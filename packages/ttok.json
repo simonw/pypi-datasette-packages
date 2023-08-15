@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# ttok\n\n[![PyPI](https://img.shields.io/pypi/v/ttok.svg)](https://pypi.org/project/ttok/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/ttok?include_prereleases&label=changelog)](https://github.com/simonw/ttok/releases)\n[![Tests](https://github.com/simonw/ttok/workflows/Test/badge.svg)](https://github.com/simonw/ttok/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/ttok/blob/master/LICENSE)\n\nCount and truncate text based on tokens\n\n## Background\n\nLarge language models such as GPT-3.5 and GPT-4 work in terms of tokens.\n\nThis tool can count tokens, using OpenAI's [tiktoken](https://github.com/openai/tiktoken) library.\n\nIt can also truncate text to a specified number of tokens.\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install ttok\n\n## Counting tokens\n\nProvide text as arguments to this tool to count tokens:\n\n```bash\nttok Hello world\n```\n```\n2\n```\nYou can also pipe text into the tool:\n```bash\necho -n \"Hello world\" -n | ttok\n```\n```\n2\n```\nHere the `echo -n` option prevents echo from adding a newline - without that you would get a token count of 3.\n\nTo pipe in text and then append extra tokens from arguments, use the `-i -` option:\n\n```bash\necho -n \"Hello world\" -n | ttok more text -i -\n```\n```\n6\n```\n## Different models\n\nBy default, the tokenizer model for GPT-3.5 and GPT-4 is used.\n\nTo use the model for GPT-2 and GPT-3, add `--model gpt2`:\n\n```bash\nttok boo Hello there this is -m gpt2\n```\n```\n6\n```\nCompared to GPT-3.5:\n```bash\nttok boo Hello there this is\n```\n```\n5\n```\nFurther model options are [documented here](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb).\n\n## Truncating text\n\nUse the `-t 10` or `--truncate 10` option to truncate text to a specified number of tokens:\n\n```bash\nttok This is too many tokens -t 3\n```\n```\nThis is too\n```\n\n## Viewing tokens\n\nThe `--tokens` option can be used to view the integer token IDs for the incoming text:\n\n```bash\nttok Hello world --tokens\n```\n```\n9906 1917\n```\n\n## ttok --help\n\n<!-- [[[cog\nimport cog\nfrom ttok import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: ttok\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: ttok [OPTIONS] [PROMPT]...\n\n  Count and truncate text based on tokens\n\n  To count tokens for text passed as arguments:\n\n      ttok one two three\n\n  To count tokens from stdin:\n\n      cat input.txt | ttok\n\n  To truncate to 100 tokens:\n\n      cat input.txt | ttok -t 100\n\n  To truncate to 100 tokens using the gpt2 model:\n\n      cat input.txt | ttok -t 100 -m gpt2\n\n  To view tokens:\n\n      cat input.txt | ttok --tokens\n\nOptions:\n  --version               Show the version and exit.\n  -i, --input FILENAME\n  -t, --truncate INTEGER  Truncate to this many tokens\n  -m, --model TEXT        Which model to use\n  --tokens                Output token integers\n  --help                  Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\nYou can also run this command using:\n\n```bash\npython -m ttok --help\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n```bash\ncd ttok\npython -m venv venv\nsource venv/bin/activate\n```\n\nNow install the dependencies and test dependencies:\n\n```bash\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n",
+    "description": "# ttok\n\n[![PyPI](https://img.shields.io/pypi/v/ttok.svg)](https://pypi.org/project/ttok/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/ttok?include_prereleases&label=changelog)](https://github.com/simonw/ttok/releases)\n[![Tests](https://github.com/simonw/ttok/workflows/Test/badge.svg)](https://github.com/simonw/ttok/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/ttok/blob/master/LICENSE)\n\nCount and truncate text based on tokens\n\n## Background\n\nLarge language models such as GPT-3.5 and GPT-4 work in terms of tokens.\n\nThis tool can count tokens, using OpenAI's [tiktoken](https://github.com/openai/tiktoken) library.\n\nIt can also truncate text to a specified number of tokens.\n\nSee [llm, ttok and strip-tags—CLI tools for working with ChatGPT and other LLMs](https://simonwillison.net/2023/May/18/cli-tools-for-llms/) for more on this project.\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install ttok\n\n## Counting tokens\n\nProvide text as arguments to this tool to count tokens:\n\n```bash\nttok Hello world\n```\n```\n2\n```\nYou can also pipe text into the tool:\n```bash\necho -n \"Hello world\" | ttok\n```\n```\n2\n```\nHere the `echo -n` option prevents echo from adding a newline - without that you would get a token count of 3.\n\nTo pipe in text and then append extra tokens from arguments, use the `-i -` option:\n\n```bash\necho -n \"Hello world\" | ttok more text -i -\n```\n```\n6\n```\n## Different models\n\nBy default, the tokenizer model for GPT-3.5 and GPT-4 is used.\n\nTo use the model for GPT-2 and GPT-3, add `--model gpt2`:\n\n```bash\nttok boo Hello there this is -m gpt2\n```\n```\n6\n```\nCompared to GPT-3.5:\n```bash\nttok boo Hello there this is\n```\n```\n5\n```\nFurther model options are [documented here](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb).\n\n## Truncating text\n\nUse the `-t 10` or `--truncate 10` option to truncate text to a specified number of tokens:\n\n```bash\nttok This is too many tokens -t 3\n```\n```\nThis is too\n```\n\n## Viewing tokens\n\nThe `--encode` option can be used to view the integer token IDs for the incoming text:\n\n```bash\nttok Hello world --encode\n```\n```\n9906 1917\n```\nThe `--decode` method reverses this process:\n\n```bash\nttok 9906 1917 --decode\n```\n```\nHello world\n```\nAdd `--tokens` to either of these options to see a detailed breakdown of the tokens:\n\n```bash\nttok Hello world --encode --tokens\n```\n```\n[b'Hello', b' world']\n```\n\n## ttok --help\n\n<!-- [[[cog\nimport cog\nfrom ttok import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: ttok\")\ncog.out(\n    \"```\\n{}\\n```\".format(help)\n)\n]]] -->\n```\nUsage: ttok [OPTIONS] [PROMPT]...\n\n  Count and truncate text based on tokens\n\n  To count tokens for text passed as arguments:\n\n      ttok one two three\n\n  To count tokens from stdin:\n\n      cat input.txt | ttok\n\n  To truncate to 100 tokens:\n\n      cat input.txt | ttok -t 100\n\n  To truncate to 100 tokens using the gpt2 model:\n\n      cat input.txt | ttok -t 100 -m gpt2\n\n  To view token integers:\n\n      cat input.txt | ttok --encode\n\n  To convert tokens back to text:\n\n      ttok 9906 1917 --decode\n\n  To see the details of the tokens:\n\n      ttok \"hello world\" --tokens\n\n  Outputs:\n\n      [b'hello', b' world']\n\nOptions:\n  --version               Show the version and exit.\n  -i, --input FILENAME\n  -t, --truncate INTEGER  Truncate to this many tokens\n  -m, --model TEXT        Which model to use\n  --encode, --tokens      Output token integers\n  --decode                Convert token integers to text\n  --tokens                Output full tokens\n  --help                  Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\nYou can also run this command using:\n\n```bash\npython -m ttok --help\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n```bash\ncd ttok\npython -m venv venv\nsource venv/bin/activate\n```\n\nNow install the dependencies and test dependencies:\n\n```bash\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/ttok",
       "Issues": "https://github.com/simonw/ttok/issues"
     },
-    "release_url": "https://pypi.org/project/ttok/0.1/",
+    "release_url": "https://pypi.org/project/ttok/0.2/",
     "requires_dist": [
       "click",
       "tiktoken",
@@ -37,11 +37,11 @@
     ],
     "requires_python": ">=3.8",
     "summary": "Count and truncate text based on tokens",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18159825,
+  "last_serial": 18837668,
   "releases": {
     "0.1": [
       {
@@ -86,48 +86,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c324d7c7b50d8bc639c3564fca565a68d4d161c0be81ab524652165de7271850",
+          "md5": "dbca7b61dff02c486556de118ed5f345",
+          "sha256": "d8e0aaf6667ad238c4367c6262d68e1c0b1bc5496a35bdb054bbc313da237afd"
+        },
+        "downloads": -1,
+        "filename": "ttok-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dbca7b61dff02c486556de118ed5f345",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8532,
+        "upload_time": "2023-07-10T23:38:29",
+        "upload_time_iso_8601": "2023-07-10T23:38:29.989675Z",
+        "url": "https://files.pythonhosted.org/packages/c3/24/d7c7b50d8bc639c3564fca565a68d4d161c0be81ab524652165de7271850/ttok-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a19e1f5960f74227414b1c421a22e86ec3e35ae1c4f2a4d0f8ae4770384c7271",
+          "md5": "f202707bdec51ecb27286b140d6e677f",
+          "sha256": "b5ec7b39358194bbd2cae50fc589e5f80ac3bb173ae39a7ea4d523e2c0a2d745"
+        },
+        "downloads": -1,
+        "filename": "ttok-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f202707bdec51ecb27286b140d6e677f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9034,
+        "upload_time": "2023-07-10T23:38:31",
+        "upload_time_iso_8601": "2023-07-10T23:38:31.280907Z",
+        "url": "https://files.pythonhosted.org/packages/a1/9e/1f5960f74227414b1c421a22e86ec3e35ae1c4f2a4d0f8ae4770384c7271/ttok-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "536db1e5db1504393c0712ea9dbf6e814a5fa9a3e6a9c76120faa81fe94b2f32",
-        "md5": "66b73b0a375107d56ac627a6ad43920c",
-        "sha256": "bfa88dca85e83e04ea50cff13b18dd3525fe94cfc18a3cf70f373fa6cbaa29d0"
+        "blake2b_256": "c324d7c7b50d8bc639c3564fca565a68d4d161c0be81ab524652165de7271850",
+        "md5": "dbca7b61dff02c486556de118ed5f345",
+        "sha256": "d8e0aaf6667ad238c4367c6262d68e1c0b1bc5496a35bdb054bbc313da237afd"
       },
       "downloads": -1,
-      "filename": "ttok-0.1-py3-none-any.whl",
+      "filename": "ttok-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "66b73b0a375107d56ac627a6ad43920c",
+      "md5_digest": "dbca7b61dff02c486556de118ed5f345",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 8023,
-      "upload_time": "2023-05-18T19:54:39",
-      "upload_time_iso_8601": "2023-05-18T19:54:39.283926Z",
-      "url": "https://files.pythonhosted.org/packages/53/6d/b1e5db1504393c0712ea9dbf6e814a5fa9a3e6a9c76120faa81fe94b2f32/ttok-0.1-py3-none-any.whl",
+      "size": 8532,
+      "upload_time": "2023-07-10T23:38:29",
+      "upload_time_iso_8601": "2023-07-10T23:38:29.989675Z",
+      "url": "https://files.pythonhosted.org/packages/c3/24/d7c7b50d8bc639c3564fca565a68d4d161c0be81ab524652165de7271850/ttok-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "d8d38f895865f5aa0bb38130383ac103c4e4204b93fdff7a1a301d5e81b2c588",
-        "md5": "0c2c6cd144b1dd202d7c92b0378682fb",
-        "sha256": "8b9439f71be222e117392b2c8b38bb94e416341ccb938191a56589ec3353951a"
+        "blake2b_256": "a19e1f5960f74227414b1c421a22e86ec3e35ae1c4f2a4d0f8ae4770384c7271",
+        "md5": "f202707bdec51ecb27286b140d6e677f",
+        "sha256": "b5ec7b39358194bbd2cae50fc589e5f80ac3bb173ae39a7ea4d523e2c0a2d745"
       },
       "downloads": -1,
-      "filename": "ttok-0.1.tar.gz",
+      "filename": "ttok-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "0c2c6cd144b1dd202d7c92b0378682fb",
+      "md5_digest": "f202707bdec51ecb27286b140d6e677f",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 8025,
-      "upload_time": "2023-05-18T19:54:41",
-      "upload_time_iso_8601": "2023-05-18T19:54:41.760686Z",
-      "url": "https://files.pythonhosted.org/packages/d8/d3/8f895865f5aa0bb38130383ac103c4e4204b93fdff7a1a301d5e81b2c588/ttok-0.1.tar.gz",
+      "size": 9034,
+      "upload_time": "2023-07-10T23:38:31",
+      "upload_time_iso_8601": "2023-07-10T23:38:31.280907Z",
+      "url": "https://files.pythonhosted.org/packages/a1/9e/1f5960f74227414b1c421a22e86ec3e35ae1c4f2a4d0f8ae4770384c7271/ttok-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

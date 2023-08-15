@@ -1,0 +1,270 @@
+{
+  "info": {
+    "author": "Romain Clement",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "License :: Other/Proprietary License",
+      "Programming Language :: Python :: 3",
+      "Programming Language :: Python :: 3.10",
+      "Programming Language :: Python :: 3.11",
+      "Programming Language :: Python :: 3.9"
+    ],
+    "description": "# Datasette ML\n\n> Bringing Machine Learning models near your data, not the other way around!\n\nDatasette ML is a [Datasette](https://datasette.io) plugin providing an MLOps\nplatform to train, evaluate and make predictions from machine learning models.\n\nAll the underlying features are provided by [`sqlite-ml`](https://github.com/rclement/sqlite-ml).\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ml.svg)](https://pypi.org/project/datasette-ml/)\n[![CI/CD](https://github.com/rclement/datasette-ml/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/datasette-ml/actions/workflows/ci-cd.yml)\n[![Coverage Status](https://img.shields.io/codecov/c/github/rclement/datasette-ml)](https://codecov.io/gh/rclement/datasette-ml)\n[![License](https://img.shields.io/github/license/rclement/datasette-ml)](https://github.com/rclement/datasette-ml/blob/master/LICENSE)\n\n<!-- Try out a live demo at [https://datasette-ml-demo.vercel.app](https://datasette-ml-demo.vercel.app/-/dashboards) -->\n\n**WARNING**: this plugin is still experimental and not ready for production.\nSome breaking changes might happen between releases before reaching a stable version.\nUse it at your own risks!\n\n<!-- ![Datasette ML Demo](https://raw.githubusercontent.com/rclement/datasette-ml/master/demo/datasette-ml-demo.png) -->\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\n$ datasette install datasette-ml\n```\n\n## Usage\n\nDefine configuration within `metadata.yml` / `metadata.json`:\n\n```yaml\nplugins:\n  datasette-ml:\n    db: sqml\n```\n\nA new menu entry is now available, pointing at `/-/ml` to access the MLOps dashboard.\n\n### Configuration properties\n\n| Property | Type     | Description                                     |\n| -------- | -------- | ----------------------------------------------- |\n| `db`     | `string` | Database to store ML models (default is `sqml`) |\n\n## Tutorial\n\nUsing `datasette-ml` you can start training Machine Learning models directly\nalong your data, simply by using custom SQL functions! Let's get started by\ntraining a classifier against the famous \"Iris Dataset\" to predict flower types.\n\n### Loading the dataset\n\nFirst let's load our data. For a real world project, your data may live with its\nown table or being accessed through an SQL view. For the purpose of this tutorial,\nwe can use the `sqml_load_dataset` function to load\n[standard Scikit-Learn datasets](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets):\n\n```sql\nSELECT sqml_load_dataset('iris') AS dataset;\n```\n\nIt will return the following data:\n\n| dataset |\n| --- |\n| {\"table\": \"dataset_iris\", \"feature_names\": [\"sepal length (cm)\", \"sepal width (cm)\", \"petal length (cm)\", \"petal width (cm)\"], \"target_names\": [\"setosa\", \"versicolor\", \"virginica\"], \"size\": 150} |\n\nThe Iris dataset is loaded into a table nammed `dataset_iris`,\ncontaining 150 examples, 4 features and 3 classes to be predicted.\n\n### Training a classifier\n\nNow that our dataset is ready, let's train a first machine learning model to\nperform a classification task using the `sqml_train` function:\n\n```sql\nSELECT sqml_train(\n  'Iris prediction',\n  'classification',\n  'logistic_regression',\n  'dataset_iris',\n  'target'\n) AS training;\n```\n\nIt will return the following data:\n\n| training |\n| --- |\n| {\"experiment_name\": \"Iris prediction\", \"prediction_type\": \"classification\", \"algorithm\": \"logistic_regression\", \"deployed\": true, \"score\": 0.9473684210526315} |\n\nWe have just trained our first machine learning model! The output data informs us\nthat our model has been trained, yields a score of 0.94 and has been deployed.\n\n### Performing predictions\n\nNow that we have trained our classifier, let's use it to make predictions!\n\nPredict the target label for the first row of `dataset_iris` using the\n`sqml_predict` function:\n\n```sql\nSELECT\n  dataset_iris.*,\n  sqml_predict(\n    'Iris prediction',\n    json_object(\n      'sepal length (cm)', [sepal length (cm)],\n      'sepal width (cm)', [sepal width (cm)],\n      'petal length (cm)', [petal length (cm)],\n      'petal width (cm)', [petal width (cm)]\n    )\n  ) AS prediction\nFROM dataset_iris\nLIMIT 1;\n```\n\nThis will output the following data:\n\n| sepal length (cm) | sepal width (cm) | petal length (cm) | petal width (cm) | target | prediction |\n| --- | --- | --- | --- | --- | --- |\n| 5.1 | 3.5 | 1.4 | 0.2 | 0.0 | 0.0 |\n\nYay! Our prediction is matching the target label!\n\nLet's see if we can find some predictions not matching the target label.\nTo perform lots of predictions, we will use `sqml_predict_batch` which is more\nefficient than `sqml_predict`:\n\n```sql\nSELECT\n  dataset_iris.*,\n  batch.value AS prediction,\n  dataset_iris.target = batch.value AS match\nFROM\n  dataset_iris\n  JOIN json_each (\n    (\n      SELECT\n        sqml_predict_batch(\n          'Iris prediction',\n          json_group_array(\n            json_object(\n              'sepal length (cm)', [sepal length (cm)],\n              'sepal width (cm)', [sepal width (cm)],\n              'petal length (cm)', [petal length (cm)],\n              'petal width (cm)', [petal width (cm)]\n            )\n          )\n        )\n      FROM\n        dataset_iris\n    )\n  ) batch ON (batch.rowid + 1) = dataset_iris.rowid\nWHERE match = FALSE;\n```\n\nThis will yield the following output data:\n\n| sepal length (cm) | sepal width (cm) | petal length (cm) | petal width (cm) | target | prediction | match |\n| --- | --- | --- | --- | --- | --- | --- |\n| 5.9 | 3.2 | 4.8 | 1.8 | 1.0 | 2.0 | 0 |\n| 6.7 | 3.0 | 5.0 | 1.7 | 1.0 | 2.0 | 0 |\n| 6.0 | 2.7 | 5.1 | 1.6 | 1.0 | 2.0 | 0 |\n| 4.9 | 2.5 | 4.5 | 1.7 | 2.0 | 1.0 | 0 |\n\nOh no! 4 predictions have not predicted the correct target label!\n\nLet's see if we can train a better algorithm to enhance the prediction quality.\n\n### Training a new model\n\nLet's use a Support Vector Machine algorithm, usually yielding better results\ncompared to the more simplistic Logistic Regression:\n\n```sql\nSELECT sqml_train(\n  'Iris prediction',\n  'classification',\n  'svc',\n  'dataset_iris',\n  'target'\n) AS training;\n```\n\nThis will yield the following data:\n\n| training |\n| --- |\n| {\"experiment_name\": \"Iris prediction\", \"prediction_type\": \"classification\", \"algorithm\": \"svc\", \"deployed\": true, \"score\": 0.9736842105263158} |\n\nWe can already see that the score of this new model is higher than the previous one and it has been deployed.\n\nLet's try our new classifier on the same dataset:\n\n```sql\nSELECT\n  dataset_iris.*,\n  batch.value AS prediction,\n  dataset_iris.target = batch.value AS match\nFROM\n  dataset_iris\n  JOIN json_each (\n    (\n      SELECT\n        sqml_predict_batch(\n          'Iris prediction',\n          json_group_array(\n            json_object(\n              'sepal length (cm)', [sepal length (cm)],\n              'sepal width (cm)', [sepal width (cm)],\n              'petal length (cm)', [petal length (cm)],\n              'petal width (cm)', [petal width (cm)]\n            )\n          )\n        )\n      FROM\n        dataset_iris\n    )\n  ) batch ON (batch.rowid + 1) = dataset_iris.rowid\nWHERE match = FALSE;\n```\n\nThis will lead the following results:\n\n| sepal length (cm) | sepal width (cm) | petal length (cm) | petal width (cm) | target | prediction | match |\n| --- | --- | --- | --- | --- | --- | --- |\n| 5.9 | 3.2 | 4.8 | 1.8 | 1.0 | 2.0 | 0 |\n| 6.7 | 3.0 | 5.0 | 1.7 | 1.0 | 2.0 | 0 |\n| 6.0 | 2.7 | 5.1 | 1.6 | 1.0 | 2.0 | 0 |\n\nYay! We manage to predict one more target label with this new model!\n\nAlso note that we did not have to do anything to switch to the better model:\nexactly the same query is used to perform the prediction without having to\nspecify anything about the new model! This is because new models are deployed\nautomatically for the current experiment only if their score outperforms the\nscore of the previously deployed model.\n\n### SQL functions\n\nThis plugin registers a few SQL functions to perform machine learning model training and predictions:\n\n`sqml_load_dataset(name, table)`\n- `name: str`: name of the dataset to load\n- `table: str`: (optional) custom table name destination for the dataset\n\n`sqml_train(experiment_name, prediction_type, algorithm, dataset, target, test_size, split_strategy)`:\n- `experiment_name: str`: name of the experiment to train the model within\n- `prediction_type: str`: prediction task type to be performed for this experiment (`regression`, `classification`)\n- `algorithm: str`: algorithm type to be trained\n- `dataset: str`: name of the table or view containing the dataset\n- `target: str`: name of the column to be treated as target label\n- `test_size: float`: (optional) dataset test size ratio (default is `0.25`)\n- `split_strategy: str`: (optional) dataset train/test split strategy (default is `shuffle`)\n\n`sqml_predict(experiment_name, features)`\n- `experiment_name: str`: name of the experiment to train the model within\n- `features: json object`: JSON object containing the features\n\n`sqml_predict_batch(experiment_name, features)`\n- `experiment_name: str`: name of the experiment to train the model within\n- `features: json list`: JSON list containing all feature objects\n\n## Development\n\nTo set up this plugin locally, first checkout the code.\nThen create a new virtual environment and the required dependencies:\n\n```bash\npoetry shell\npoetry install\n```\n\nTo run the QA suite:\n\n```bash\nblack --check datasette_ml tests\nflake8 datasette_ml tests\nmypy datasette_ml tests\npytest -v --cov=datasette_ml --cov=tests --cov-branch --cov-report=term-missing tests\n```\n\n## Demo\n\nWith the developmnent environment setup, you can run the demo locally:\n\n```bash\npython demo/generate.py\ndatasette --metadata demo/metadata.yml demo/sqml.db\n```\n\n## Inspiration\n\nAll the things on the internet that have been inspiring this project:\n\n- [PostgresML](https://postgresml.org)\n- [MLFlow](https://mlflow.org)\n- [SQLite  Run-Time Loadable Extensions](https://www.sqlite.org/loadext.html)\n- [Alex Garcia's `sqlite-loadable-rs`](https://github.com/asg017/sqlite-loadable-rs)\n- [Alex Garcia's SQLite extensions](https://github.com/asg017)\n- [Alex Garcia, \"Making SQLite extensions pip install-able\"](https://observablehq.com/@asg017/making-sqlite-extensions-pip-install-able)\n- [Max Halford, \"Online gradient descent written in SQL\"](https://maxhalford.github.io/blog/ogd-in-sql/)\n- [Ricardo Anderegg, \"Extending SQLite with Rust\"](https://ricardoanderegg.com/posts/extending-sqlite-with-rust/)\n\n## License\n\nLicensed under Apache License, Version 2.0\n\nCopyright (c) 2023 - present Romain Clement\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/rclement/datasette-ml",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-ml",
+    "package_url": "https://pypi.org/project/datasette-ml/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-ml/",
+    "project_urls": {
+      "Homepage": "https://github.com/rclement/datasette-ml",
+      "Repository": "https://github.com/rclement/datasette-ml"
+    },
+    "release_url": "https://pypi.org/project/datasette-ml/0.1.2/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-ml (==0.1.2)"
+    ],
+    "requires_python": ">=3.8.1,<4.0.0",
+    "summary": "A Datasette plugin providing an MLOps platform to train, eval and predict machine learning models",
+    "version": "0.1.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 18263444,
+  "releases": {
+    "0.0.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4fb5795b37aff5112b33c27c626ac0f3a08b9e248d11035812fc4a8a6b3a68da",
+          "md5": "efc1f58f9f7decdc753fe29bdac64a58",
+          "sha256": "d5a05b7486c10bf30378e97a5dfc8d19dc2f73bfc1c220e179fd89b48411a97b"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.0.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "efc1f58f9f7decdc753fe29bdac64a58",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 14465,
+        "upload_time": "2023-04-18T16:37:17",
+        "upload_time_iso_8601": "2023-04-18T16:37:17.158560Z",
+        "url": "https://files.pythonhosted.org/packages/4f/b5/795b37aff5112b33c27c626ac0f3a08b9e248d11035812fc4a8a6b3a68da/datasette_ml-0.0.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a4b70c50ad7ff6058b1d17c12ccae292582b15a0e1e1ae8617830e25576d64c4",
+          "md5": "9cfb86e02581e4295892c9770d92788a",
+          "sha256": "025b0e157f7874ed38bc1d5e6fd45e1c907376b188d89c65e56f24ae77123722"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.0.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9cfb86e02581e4295892c9770d92788a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 15956,
+        "upload_time": "2023-04-18T16:37:18",
+        "upload_time_iso_8601": "2023-04-18T16:37:18.864854Z",
+        "url": "https://files.pythonhosted.org/packages/a4/b7/0c50ad7ff6058b1d17c12ccae292582b15a0e1e1ae8617830e25576d64c4/datasette_ml-0.0.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4dd31ac0c3bca55aec3106f7312810f3e2b5097d7a19f4881f6ce3661d238b3d",
+          "md5": "6a20ce677d877716c1ac80272263964d",
+          "sha256": "e8a5d068118353b79ef8db09b2a5846cfbe1ee501a2ac69aa5aef7e9db74958d"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6a20ce677d877716c1ac80272263964d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 14466,
+        "upload_time": "2023-04-18T16:58:33",
+        "upload_time_iso_8601": "2023-04-18T16:58:33.109662Z",
+        "url": "https://files.pythonhosted.org/packages/4d/d3/1ac0c3bca55aec3106f7312810f3e2b5097d7a19f4881f6ce3661d238b3d/datasette_ml-0.1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "008e13e2d28c2675a53db61463fb9304347b153c465d191268f3eae80debe426",
+          "md5": "6d0134d5619a2e67381a0f62315ae547",
+          "sha256": "e8dbd26639fec6080563e9617e03f32cf4b9f1206f33e710e74e8d324cea0547"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6d0134d5619a2e67381a0f62315ae547",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 15822,
+        "upload_time": "2023-04-18T16:58:34",
+        "upload_time_iso_8601": "2023-04-18T16:58:34.767390Z",
+        "url": "https://files.pythonhosted.org/packages/00/8e/13e2d28c2675a53db61463fb9304347b153c465d191268f3eae80debe426/datasette_ml-0.1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f7a6a525ee21e4f72e19e26c9cc03281563631e0a6187cb6b1321f3289f427cf",
+          "md5": "32bbf843e90c06858094e0050d012afa",
+          "sha256": "09fd697b286bd16319179c718d1eaa42549c00d2eb8e59991de14d9951c89b41"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "32bbf843e90c06858094e0050d012afa",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 9409,
+        "upload_time": "2023-04-20T15:15:14",
+        "upload_time_iso_8601": "2023-04-20T15:15:14.532901Z",
+        "url": "https://files.pythonhosted.org/packages/f7/a6/a525ee21e4f72e19e26c9cc03281563631e0a6187cb6b1321f3289f427cf/datasette_ml-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "229ba34a468ff277d9153449d72e6f51b9f42fa318f5aa39f0287fa38f26123b",
+          "md5": "46e316469065f140bd277be808ed826b",
+          "sha256": "802d89c029adfa14e7d040ede1d0eb1bd4460e82c42535d60e61a40e10befd99"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "46e316469065f140bd277be808ed826b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 8739,
+        "upload_time": "2023-04-20T15:15:16",
+        "upload_time_iso_8601": "2023-04-20T15:15:16.073791Z",
+        "url": "https://files.pythonhosted.org/packages/22/9b/a34a468ff277d9153449d72e6f51b9f42fa318f5aa39f0287fa38f26123b/datasette_ml-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0a1e60f828b037d854cf03f012875640e13d44a410bce1ed55798f102760ce21",
+          "md5": "0cbf43a3c849fd6800fd623b7743b804",
+          "sha256": "2372c82c06dbeb20bdcc88960dc6028d61c467d821de0b15981de050ec13ecde"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0cbf43a3c849fd6800fd623b7743b804",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 9450,
+        "upload_time": "2023-05-26T13:32:04",
+        "upload_time_iso_8601": "2023-05-26T13:32:04.412442Z",
+        "url": "https://files.pythonhosted.org/packages/0a/1e/60f828b037d854cf03f012875640e13d44a410bce1ed55798f102760ce21/datasette_ml-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "70c66d228d0ae49216e753af46ec552d0c544f9d360afdd4fa8fa62e64b3ba47",
+          "md5": "f49e8efb3012cea8787ea581bd0fb66f",
+          "sha256": "d47438bfb2acc2e3c5ada7a49b949abeb26cae6686dff80760490d5352a24af7"
+        },
+        "downloads": -1,
+        "filename": "datasette_ml-0.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f49e8efb3012cea8787ea581bd0fb66f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8.1,<4.0.0",
+        "size": 8771,
+        "upload_time": "2023-05-26T13:32:06",
+        "upload_time_iso_8601": "2023-05-26T13:32:06.170160Z",
+        "url": "https://files.pythonhosted.org/packages/70/c6/6d228d0ae49216e753af46ec552d0c544f9d360afdd4fa8fa62e64b3ba47/datasette_ml-0.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "0a1e60f828b037d854cf03f012875640e13d44a410bce1ed55798f102760ce21",
+        "md5": "0cbf43a3c849fd6800fd623b7743b804",
+        "sha256": "2372c82c06dbeb20bdcc88960dc6028d61c467d821de0b15981de050ec13ecde"
+      },
+      "downloads": -1,
+      "filename": "datasette_ml-0.1.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "0cbf43a3c849fd6800fd623b7743b804",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8.1,<4.0.0",
+      "size": 9450,
+      "upload_time": "2023-05-26T13:32:04",
+      "upload_time_iso_8601": "2023-05-26T13:32:04.412442Z",
+      "url": "https://files.pythonhosted.org/packages/0a/1e/60f828b037d854cf03f012875640e13d44a410bce1ed55798f102760ce21/datasette_ml-0.1.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "70c66d228d0ae49216e753af46ec552d0c544f9d360afdd4fa8fa62e64b3ba47",
+        "md5": "f49e8efb3012cea8787ea581bd0fb66f",
+        "sha256": "d47438bfb2acc2e3c5ada7a49b949abeb26cae6686dff80760490d5352a24af7"
+      },
+      "downloads": -1,
+      "filename": "datasette_ml-0.1.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "f49e8efb3012cea8787ea581bd0fb66f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8.1,<4.0.0",
+      "size": 8771,
+      "upload_time": "2023-05-26T13:32:06",
+      "upload_time_iso_8601": "2023-05-26T13:32:06.170160Z",
+      "url": "https://files.pythonhosted.org/packages/70/c6/6d228d0ae49216e753af46ec552d0c544f9d360afdd4fa8fa62e64b3ba47/datasette_ml-0.1.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
