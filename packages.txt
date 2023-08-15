@@ -170,3 +170,4 @@ datasette-sqlite-lines
 llm
 strip-tags
 ttok
+datasette-ml
