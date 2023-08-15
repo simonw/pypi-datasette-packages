@@ -1,0 +1,315 @@
+{
+  "info": {
+    "author": "Alex Garcia",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-write-ui\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-write-ui.svg)](https://pypi.org/project/datasette-write-ui/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-write-ui?include_prereleases&label=changelog)](https://github.com/datasette/datasette-write-ui/releases)\n[![Tests](https://github.com/datasette/datasette-write-ui/workflows/Test/badge.svg)](https://github.com/datasette/datasette-write-ui/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-write-ui/blob/main/LICENSE)\n\nA Datasette plugin that adds UI elements to edit, insert, or delete rows in SQLite tables.\n\n## Installation\n\nThis plugin requires the alpha version of Datasette 1.0. You can install it with:\n\n```bash\npip install datasette==1.0a3\n```\n\nAfter that, you can install this plugin in the same environment as Datasette.\n\n```bash\ndatasette install datasette-write-ui\n```\n\n## Usage\n\nOnce installed, the new UI elements will appear on the table page. You'll need special permission in order to see them. The easiest way is to [use the root user](https://docs.datasette.io/en/latest/authentication.html#using-the-root-actor), or otherwise use a [custom actor](https://docs.datasette.io/en/latest/authentication.html#actors).\n\n<img width=600 src=\"https://camo.githubusercontent.com/f02dbf756d3ba7ed148a9e7263eb045fafcbb549733f37cd1350aafe54ff2c9f/68747470733a2f2f6461746173657474652d636c6f75642d6173736574732e73332e616d617a6f6e6177732e636f6d2f626c6f672f323032332f696e74726f647563696e672d6461746173657474652d77726974652d75692f75692d7461626c652d73637265656e73686f742e6a7067\"/>\n\nIf you actor has the `insert-row` permissions, you'll see the \"Insert new row\" button at the bottom of the page.\n\n<video src=\"https://datasette-cloud-assets.s3.amazonaws.com/blog/2023/introducing-datasette-write-ui/insert-demo.mp4\" width=600 controls autoplay type=\"video/mp4\" ></video>\n\nIf your actor has the `update-row` permissions, you'll see a new \"Edit row\" option in a new menu on each row.\n\n<video src=\"https://datasette-cloud-assets.s3.amazonaws.com/blog/2023/introducing-datasette-write-ui/edit-demo.mp4\" width=600 controls autoplay type=\"video/mp4\" ></video>\n\nIf your actor has the `delete-row` permissions, you'll see a new \"Delete row\" option in a new menu on each row.\n\n<video src=\"https://datasette-cloud-assets.s3.amazonaws.com/blog/2023/introducing-datasette-write-ui/delete-demo.mp4\" width=600 controls autoplay type=\"video/mp4\" ></video>\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-write-ui\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/datasette/datasette-write-ui",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-write-ui",
+    "package_url": "https://pypi.org/project/datasette-write-ui/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-write-ui/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-write-ui/actions",
+      "Changelog": "https://github.com/datasette/datasette-write-ui/releases",
+      "Homepage": "https://github.com/datasette/datasette-write-ui",
+      "Issues": "https://github.com/datasette/datasette-write-ui/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-write-ui/0.0.1a6/",
+    "requires_dist": [
+      "datasette >=1.0a1",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "",
+    "version": "0.0.1a6",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 19303902,
+  "releases": {
+    "0.0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "da430a7927a5e7a11e2fbf736e07ea38167156b1e8d9cba4f4b5372c73947818",
+          "md5": "497c4a70d5ca80f60a078fe4cbcb3f18",
+          "sha256": "5a1c6cc3016071e34b3ecb4499a115e4e39a2c4ccd9e83a25f640c52e6c26f21"
+        },
+        "downloads": -1,
+        "filename": "datasette_write_ui-0.0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "497c4a70d5ca80f60a078fe4cbcb3f18",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 13518,
+        "upload_time": "2023-08-08T15:53:21",
+        "upload_time_iso_8601": "2023-08-08T15:53:21.655253Z",
+        "url": "https://files.pythonhosted.org/packages/da/43/0a7927a5e7a11e2fbf736e07ea38167156b1e8d9cba4f4b5372c73947818/datasette_write_ui-0.0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c55a7eaf04b9ac3200a956409904eefbb84466de0450c8e895314cfe387dac3f",
+          "md5": "fc4e8d97df81fe31a65c44f2ae83d323",
+          "sha256": "03c641b9a212269ccee0ab088807463caf10ee66fa02e1505ea53f9e8c9dda84"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-ui-0.0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fc4e8d97df81fe31a65c44f2ae83d323",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 14158,
+        "upload_time": "2023-08-08T15:53:22",
+        "upload_time_iso_8601": "2023-08-08T15:53:22.830414Z",
+        "url": "https://files.pythonhosted.org/packages/c5/5a/7eaf04b9ac3200a956409904eefbb84466de0450c8e895314cfe387dac3f/datasette-write-ui-0.0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fc39894c0120d330a2e65b88545204767dcdeb37dd1683083061b2fd6a6b6939",
+          "md5": "930ccdbcbd1d64386004870347baf3d6",
+          "sha256": "22ab5c02f60a0e9ec8df4f0da5a083bb4054be883a659703c2a54bcf941a17e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_write_ui-0.0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "930ccdbcbd1d64386004870347baf3d6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 13645,
+        "upload_time": "2023-08-09T21:26:37",
+        "upload_time_iso_8601": "2023-08-09T21:26:37.048818Z",
+        "url": "https://files.pythonhosted.org/packages/fc/39/894c0120d330a2e65b88545204767dcdeb37dd1683083061b2fd6a6b6939/datasette_write_ui-0.0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5ff786acd4c2af3b39eec672ce2a54f8309f0061f924402956d60041f0e3c42a",
+          "md5": "c7a27522ae4de084e44b1867fb58e580",
+          "sha256": "9a5cfbed3dab98cf2dfbe0ee3b93674e0cc9e5852d456653f08e1a1cc958e9df"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-ui-0.0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c7a27522ae4de084e44b1867fb58e580",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 14495,
+        "upload_time": "2023-08-09T21:26:38",
+        "upload_time_iso_8601": "2023-08-09T21:26:38.459976Z",
+        "url": "https://files.pythonhosted.org/packages/5f/f7/86acd4c2af3b39eec672ce2a54f8309f0061f924402956d60041f0e3c42a/datasette-write-ui-0.0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "bfc0e87fb6dbcbfdce89c9d2255c870e7827ad7cbf906c070e40d3975d66f1db",
+          "md5": "471aaecf8868249c31c9668dd68f31a8",
+          "sha256": "4f93a828ddcbf6f1cbb91fc5603052a977c808aaf608dfd374d5285f5e577810"
+        },
+        "downloads": -1,
+        "filename": "datasette_write_ui-0.0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "471aaecf8868249c31c9668dd68f31a8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 14359,
+        "upload_time": "2023-08-10T00:34:08",
+        "upload_time_iso_8601": "2023-08-10T00:34:08.281259Z",
+        "url": "https://files.pythonhosted.org/packages/bf/c0/e87fb6dbcbfdce89c9d2255c870e7827ad7cbf906c070e40d3975d66f1db/datasette_write_ui-0.0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e8a92f12294500275d24e6118b1fd211034de12a5743f154b653b735befbcb8d",
+          "md5": "7823c33b98f240680b2e2d603980c7e5",
+          "sha256": "51ec3d7526f16811a1b1032f1608248de95ff37a9045ed35c5620855c367c32e"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-ui-0.0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7823c33b98f240680b2e2d603980c7e5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 15828,
+        "upload_time": "2023-08-10T00:34:09",
+        "upload_time_iso_8601": "2023-08-10T00:34:09.415683Z",
+        "url": "https://files.pythonhosted.org/packages/e8/a9/2f12294500275d24e6118b1fd211034de12a5743f154b653b735befbcb8d/datasette-write-ui-0.0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e4f30e8bb57a1d2985cfc49c1024cc05b50c7c9fdbee58ef863546c20a803817",
+          "md5": "4c364b044ae66718126ccc1997177c20",
+          "sha256": "4bc787971885b3099ec755f548e64e18fad4f9a3f36bfa5601e5d8cb7721bf15"
+        },
+        "downloads": -1,
+        "filename": "datasette_write_ui-0.0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4c364b044ae66718126ccc1997177c20",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 14422,
+        "upload_time": "2023-08-10T04:08:12",
+        "upload_time_iso_8601": "2023-08-10T04:08:12.859709Z",
+        "url": "https://files.pythonhosted.org/packages/e4/f3/0e8bb57a1d2985cfc49c1024cc05b50c7c9fdbee58ef863546c20a803817/datasette_write_ui-0.0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3e05b90f50aec99b188cf3b3554994f7bbe98f85e3a0d537dff4b3189b86c26e",
+          "md5": "d3bd9a09f37f7bb54c2753227ef2e9ce",
+          "sha256": "84681740cc4493f889bfbb82722c2167a0b8ae45963f2d61d9749d71f0318802"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-ui-0.0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d3bd9a09f37f7bb54c2753227ef2e9ce",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 15843,
+        "upload_time": "2023-08-10T04:08:14",
+        "upload_time_iso_8601": "2023-08-10T04:08:14.409630Z",
+        "url": "https://files.pythonhosted.org/packages/3e/05/b90f50aec99b188cf3b3554994f7bbe98f85e3a0d537dff4b3189b86c26e/datasette-write-ui-0.0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6c377f3229fead3b9c0854ba7bd7ca5466033bd3542032b437660f8760beb178",
+          "md5": "5493f5a24d33c4e6c147befb2088beb9",
+          "sha256": "6a76c6b11d3c66e472d95442b4df7521529461cb55c57e97c0a3be99e52887ca"
+        },
+        "downloads": -1,
+        "filename": "datasette_write_ui-0.0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5493f5a24d33c4e6c147befb2088beb9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 14406,
+        "upload_time": "2023-08-14T19:03:13",
+        "upload_time_iso_8601": "2023-08-14T19:03:13.787808Z",
+        "url": "https://files.pythonhosted.org/packages/6c/37/7f3229fead3b9c0854ba7bd7ca5466033bd3542032b437660f8760beb178/datasette_write_ui-0.0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "aa4a65f8a326c093f1978cec4e33091b531d73bbeb8dddb09b4d4e2f3cba3411",
+          "md5": "207ec9baa243fba31509ead1a8839835",
+          "sha256": "14fb4c39e2712177fb0742f715af4b1bcb5703cc6820433d9d586bafe8cd63f4"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-ui-0.0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "207ec9baa243fba31509ead1a8839835",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 15817,
+        "upload_time": "2023-08-14T19:03:14",
+        "upload_time_iso_8601": "2023-08-14T19:03:14.834609Z",
+        "url": "https://files.pythonhosted.org/packages/aa/4a/65f8a326c093f1978cec4e33091b531d73bbeb8dddb09b4d4e2f3cba3411/datasette-write-ui-0.0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "6c377f3229fead3b9c0854ba7bd7ca5466033bd3542032b437660f8760beb178",
+        "md5": "5493f5a24d33c4e6c147befb2088beb9",
+        "sha256": "6a76c6b11d3c66e472d95442b4df7521529461cb55c57e97c0a3be99e52887ca"
+      },
+      "downloads": -1,
+      "filename": "datasette_write_ui-0.0.1a6-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "5493f5a24d33c4e6c147befb2088beb9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 14406,
+      "upload_time": "2023-08-14T19:03:13",
+      "upload_time_iso_8601": "2023-08-14T19:03:13.787808Z",
+      "url": "https://files.pythonhosted.org/packages/6c/37/7f3229fead3b9c0854ba7bd7ca5466033bd3542032b437660f8760beb178/datasette_write_ui-0.0.1a6-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "aa4a65f8a326c093f1978cec4e33091b531d73bbeb8dddb09b4d4e2f3cba3411",
+        "md5": "207ec9baa243fba31509ead1a8839835",
+        "sha256": "14fb4c39e2712177fb0742f715af4b1bcb5703cc6820433d9d586bafe8cd63f4"
+      },
+      "downloads": -1,
+      "filename": "datasette-write-ui-0.0.1a6.tar.gz",
+      "has_sig": false,
+      "md5_digest": "207ec9baa243fba31509ead1a8839835",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 15817,
+      "upload_time": "2023-08-14T19:03:14",
+      "upload_time_iso_8601": "2023-08-14T19:03:14.834609Z",
+      "url": "https://files.pythonhosted.org/packages/aa/4a/65f8a326c093f1978cec4e33091b531d73bbeb8dddb09b4d4e2f3cba3411/datasette-write-ui-0.0.1a6.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
