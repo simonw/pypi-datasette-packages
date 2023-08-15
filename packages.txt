@@ -171,3 +171,4 @@ llm
 strip-tags
 ttok
 datasette-ml
+datasette-write-ui
