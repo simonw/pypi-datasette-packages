@@ -42,7 +42,7 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues",
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
-    "release_url": "https://pypi.org/project/sqlite-utils/3.34/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.35/",
     "requires_dist": [
       "sqlite-fts4",
       "click",
@@ -54,7 +54,7 @@
       "sphinx-autobuild ; extra == 'docs'",
       "codespell ; extra == 'docs'",
       "sphinx-copybutton ; extra == 'docs'",
-      "beanbag-docutils (>=2.0) ; extra == 'docs'",
+      "beanbag-docutils >=2.0 ; extra == 'docs'",
       "pygments-csv-lexer ; extra == 'docs'",
       "flake8 ; extra == 'flake8'",
       "mypy ; extra == 'mypy'",
@@ -71,11 +71,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "CLI tool and Python library for manipulating SQLite databases",
-    "version": "3.34",
+    "version": "3.35",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 18998315,
+  "last_serial": 19355252,
   "releases": {
     "0.10": [
       {
@@ -3659,6 +3659,50 @@
         "yanked_reason": null
       }
     ],
+    "3.35": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "39ee26699f8fd03c6a8aa74e096812e70a7d6d84d053cb9c8481d619f9cc018d",
+          "md5": "d6ff9ed2a9cc902ac296b0ac0cd72f24",
+          "sha256": "d95591db18716ce7eac9a6359f4958598944d9e6640ccc42a2be6ab8456edddf"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.35-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d6ff9ed2a9cc902ac296b0ac0cd72f24",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 67127,
+        "upload_time": "2023-08-18T02:16:08",
+        "upload_time_iso_8601": "2023-08-18T02:16:08.819455Z",
+        "url": "https://files.pythonhosted.org/packages/39/ee/26699f8fd03c6a8aa74e096812e70a7d6d84d053cb9c8481d619f9cc018d/sqlite_utils-3.35-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "734fa652fe1b36ac71f7f7bd85219f233d3619f327efcfe0a1c235b262a5ab53",
+          "md5": "fd9e55a949a2242b77f368349296c207",
+          "sha256": "8f6fe7f8d12772cd5cf4594703a98dcd0c37c0fd6820dd20541ba74b9fca363a"
+        },
+        "downloads": -1,
+        "filename": "sqlite-utils-3.35.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fd9e55a949a2242b77f368349296c207",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 208749,
+        "upload_time": "2023-08-18T02:16:10",
+        "upload_time_iso_8601": "2023-08-18T02:16:10.611466Z",
+        "url": "https://files.pythonhosted.org/packages/73/4f/a652fe1b36ac71f7f7bd85219f233d3619f327efcfe0a1c235b262a5ab53/sqlite-utils-3.35.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.4": [
       {
         "comment_text": "",
@@ -4016,42 +4060,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "3221d9c65fa8927b1fb14044b25f137dfab1da1a6883faf99b8e4c2ee0123479",
-        "md5": "a4421c8442b36dc2172d570df6f6cb3c",
-        "sha256": "234c2a3245e43ea7da588c1a879904e4b139f44ef621f5a9376d737a67e6077f"
+        "blake2b_256": "39ee26699f8fd03c6a8aa74e096812e70a7d6d84d053cb9c8481d619f9cc018d",
+        "md5": "d6ff9ed2a9cc902ac296b0ac0cd72f24",
+        "sha256": "d95591db18716ce7eac9a6359f4958598944d9e6640ccc42a2be6ab8456edddf"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.34-py3-none-any.whl",
+      "filename": "sqlite_utils-3.35-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a4421c8442b36dc2172d570df6f6cb3c",
+      "md5_digest": "d6ff9ed2a9cc902ac296b0ac0cd72f24",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 66825,
-      "upload_time": "2023-07-22T23:37:47",
-      "upload_time_iso_8601": "2023-07-22T23:37:47.093686Z",
-      "url": "https://files.pythonhosted.org/packages/32/21/d9c65fa8927b1fb14044b25f137dfab1da1a6883faf99b8e4c2ee0123479/sqlite_utils-3.34-py3-none-any.whl",
+      "size": 67127,
+      "upload_time": "2023-08-18T02:16:08",
+      "upload_time_iso_8601": "2023-08-18T02:16:08.819455Z",
+      "url": "https://files.pythonhosted.org/packages/39/ee/26699f8fd03c6a8aa74e096812e70a7d6d84d053cb9c8481d619f9cc018d/sqlite_utils-3.35-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "294deae906595a22c1ffa96105f6a5477cd502cc3ec1dfcabad2f5057dced4ea",
-        "md5": "14756ab81520099799c78dfd4d10e098",
-        "sha256": "4607683cbb32cfd4f3c63929045eaa020ab0221c5036f9bb41b7b25bc755cd23"
+        "blake2b_256": "734fa652fe1b36ac71f7f7bd85219f233d3619f327efcfe0a1c235b262a5ab53",
+        "md5": "fd9e55a949a2242b77f368349296c207",
+        "sha256": "8f6fe7f8d12772cd5cf4594703a98dcd0c37c0fd6820dd20541ba74b9fca363a"
       },
       "downloads": -1,
-      "filename": "sqlite-utils-3.34.tar.gz",
+      "filename": "sqlite-utils-3.35.tar.gz",
       "has_sig": false,
-      "md5_digest": "14756ab81520099799c78dfd4d10e098",
+      "md5_digest": "fd9e55a949a2242b77f368349296c207",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 207124,
-      "upload_time": "2023-07-22T23:37:48",
-      "upload_time_iso_8601": "2023-07-22T23:37:48.502219Z",
-      "url": "https://files.pythonhosted.org/packages/29/4d/eae906595a22c1ffa96105f6a5477cd502cc3ec1dfcabad2f5057dced4ea/sqlite-utils-3.34.tar.gz",
+      "size": 208749,
+      "upload_time": "2023-08-18T02:16:10",
+      "upload_time_iso_8601": "2023-08-18T02:16:10.611466Z",
+      "url": "https://files.pythonhosted.org/packages/73/4f/a652fe1b36ac71f7f7bd85219f233d3619f327efcfe0a1c235b262a5ab53/sqlite-utils-3.35.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
