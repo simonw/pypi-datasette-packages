@@ -25,21 +25,21 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-configure-fts"
     },
-    "release_url": "https://pypi.org/project/datasette-configure-fts/1.1.1/",
+    "release_url": "https://pypi.org/project/datasette-configure-fts/1.1.2/",
     "requires_dist": [
-      "datasette (>=0.51)",
-      "sqlite-utils (>=2.10)",
+      "datasette >=0.51",
+      "sqlite-utils >=2.10",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "httpx ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin for enabling full-text search against selected table columns",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15810219,
+  "last_serial": 19425147,
   "releases": {
     "0.1.1a0": [
       {
@@ -335,48 +335,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0d5311a6c5b3decb2792c39c728abfe2ed63ec48465269c74ae0a64da315a78c",
+          "md5": "56b07000dbb8a6d467fe60eea2059df9",
+          "sha256": "25c1d854515ab807ea6373a43b4fcf400418dbdf461c2df4fed9375cc5235fc8"
+        },
+        "downloads": -1,
+        "filename": "datasette_configure_fts-1.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "56b07000dbb8a6d467fe60eea2059df9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9070,
+        "upload_time": "2023-08-23T18:42:32",
+        "upload_time_iso_8601": "2023-08-23T18:42:32.918835Z",
+        "url": "https://files.pythonhosted.org/packages/0d/53/11a6c5b3decb2792c39c728abfe2ed63ec48465269c74ae0a64da315a78c/datasette_configure_fts-1.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d0f1795082d7d4a403e353436e86cb1a1bbea6da8f94eb7475bcdb34a549075f",
+          "md5": "1fee04cce44531e487d1235eb7305592",
+          "sha256": "ace498162baaba1ab82375b48b7257faa42123dbc09e30de9e8e7d191753c292"
+        },
+        "downloads": -1,
+        "filename": "datasette-configure-fts-1.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1fee04cce44531e487d1235eb7305592",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9313,
+        "upload_time": "2023-08-23T18:42:33",
+        "upload_time_iso_8601": "2023-08-23T18:42:33.891627Z",
+        "url": "https://files.pythonhosted.org/packages/d0/f1/795082d7d4a403e353436e86cb1a1bbea6da8f94eb7475bcdb34a549075f/datasette-configure-fts-1.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "11644b6cfcc1c9db4989950eb8fdaebeb4d03740e1c304d3794016a2d40bf0cf",
-        "md5": "99e0896ebcb30818c8c431e1500de123",
-        "sha256": "43a2957120d97bfdc49d7b45e03d336a5b2e24f46cc4a537e9ba747ceca41267"
+        "blake2b_256": "0d5311a6c5b3decb2792c39c728abfe2ed63ec48465269c74ae0a64da315a78c",
+        "md5": "56b07000dbb8a6d467fe60eea2059df9",
+        "sha256": "25c1d854515ab807ea6373a43b4fcf400418dbdf461c2df4fed9375cc5235fc8"
       },
       "downloads": -1,
-      "filename": "datasette_configure_fts-1.1.1-py3-none-any.whl",
+      "filename": "datasette_configure_fts-1.1.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "99e0896ebcb30818c8c431e1500de123",
+      "md5_digest": "56b07000dbb8a6d467fe60eea2059df9",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 9030,
-      "upload_time": "2022-11-18T03:51:39",
-      "upload_time_iso_8601": "2022-11-18T03:51:39.997104Z",
-      "url": "https://files.pythonhosted.org/packages/11/64/4b6cfcc1c9db4989950eb8fdaebeb4d03740e1c304d3794016a2d40bf0cf/datasette_configure_fts-1.1.1-py3-none-any.whl",
+      "size": 9070,
+      "upload_time": "2023-08-23T18:42:32",
+      "upload_time_iso_8601": "2023-08-23T18:42:32.918835Z",
+      "url": "https://files.pythonhosted.org/packages/0d/53/11a6c5b3decb2792c39c728abfe2ed63ec48465269c74ae0a64da315a78c/datasette_configure_fts-1.1.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "61cee31d4c8d2151c0fb1b21ff5c14e7cf278fe3300e5d0402b26df128d21e4e",
-        "md5": "2c0212192b7f9d211d9f2b9f5db71822",
-        "sha256": "7b83ff89a9de2fac5b21f49efab2845973b215ab374fd250ab8f040fb1c1c04b"
+        "blake2b_256": "d0f1795082d7d4a403e353436e86cb1a1bbea6da8f94eb7475bcdb34a549075f",
+        "md5": "1fee04cce44531e487d1235eb7305592",
+        "sha256": "ace498162baaba1ab82375b48b7257faa42123dbc09e30de9e8e7d191753c292"
       },
       "downloads": -1,
-      "filename": "datasette-configure-fts-1.1.1.tar.gz",
+      "filename": "datasette-configure-fts-1.1.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "2c0212192b7f9d211d9f2b9f5db71822",
+      "md5_digest": "1fee04cce44531e487d1235eb7305592",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 7799,
-      "upload_time": "2022-11-18T03:51:41",
-      "upload_time_iso_8601": "2022-11-18T03:51:41.285637Z",
-      "url": "https://files.pythonhosted.org/packages/61/ce/e31d4c8d2151c0fb1b21ff5c14e7cf278fe3300e5d0402b26df128d21e4e/datasette-configure-fts-1.1.1.tar.gz",
+      "size": 9313,
+      "upload_time": "2023-08-23T18:42:33",
+      "upload_time_iso_8601": "2023-08-23T18:42:33.891627Z",
+      "url": "https://files.pythonhosted.org/packages/d0/f1/795082d7d4a403e353436e86cb1a1bbea6da8f94eb7475bcdb34a549075f/datasette-configure-fts-1.1.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
