@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-jellyfish\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-jellyfish.svg)](https://pypi.org/project/datasette-jellyfish/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-jellyfish?include_prereleases&label=changelog)](https://github.com/simonw/datasette-jellyfish/releases)\n[![Tests](https://github.com/simonw/datasette-jellyfish/workflows/Test/badge.svg)](https://github.com/simonw/datasette-jellyfish/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-jellyfish/blob/main/LICENSE)\n\nDatasette plugin that adds custom SQL functions for fuzzy string matching, built on top of the [Jellyfish](https://github.com/jamesturk/jellyfish) Python library by James Turk and Michael Stephens.\n\nInteractive demos:\n\n* [soundex, metaphone, nysiis, match_rating_codex comparison](https://latest-with-plugins.datasette.io/fixtures?sql=SELECT%0D%0A++++soundex%28%3As%29%2C+%0D%0A++++metaphone%28%3As%29%2C+%0D%0A++++nysiis%28%3As%29%2C+%0D%0A++++match_rating_codex%28%3As%29&s=demo).\n* [distance functions comparison](https://latest-with-plugins.datasette.io/fixtures?sql=SELECT%0D%0A++++levenshtein_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++damerau_levenshtein_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++hamming_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++jaro_similarity%28%3As1%2C+%3As2%29%2C%0D%0A++++jaro_winkler_similarity%28%3As1%2C+%3As2%29%2C%0D%0A++++match_rating_comparison%28%3As1%2C+%3As2%29%3B&s1=barrack+obama&s2=barrack+h+obama)\n\nExamples:\n\n    SELECT soundex(\"hello\");\n        -- Outputs H400\n    SELECT metaphone(\"hello\");\n        -- Outputs HL\n    SELECT nysiis(\"hello\");\n        -- Outputs HAL\n    SELECT match_rating_codex(\"hello\");\n        -- Outputs HLL\n    SELECT porter_stem(\"running\");\n        -- Outputs run\n    SELECT levenshtein_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT damerau_levenshtein_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT hamming_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT jaro_similarity(\"hello\", \"hello world\");\n        -- Outputs 0.8181818181818182\n    SELECT jaro_winkler_similarity(\"hello\", \"hello world\");\n        -- Outputs 0.890909090909091\n    SELECT match_rating_comparison(\"hello\", \"helloo\");\n        -- Outputs 1\n\nSee [the Jellyfish documentation](https://jellyfish.readthedocs.io/en/latest/) for an explanation of each of these functions.\n\n",
+    "description": "# datasette-jellyfish\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-jellyfish.svg)](https://pypi.org/project/datasette-jellyfish/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-jellyfish?include_prereleases&label=changelog)](https://github.com/simonw/datasette-jellyfish/releases)\n[![Tests](https://github.com/simonw/datasette-jellyfish/workflows/Test/badge.svg)](https://github.com/simonw/datasette-jellyfish/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-jellyfish/blob/main/LICENSE)\n\nDatasette plugin that adds custom SQL functions for fuzzy string matching, built on top of the [Jellyfish](https://github.com/jamesturk/jellyfish) Python library by James Turk and Michael Stephens.\n\nInteractive demos:\n\n* [soundex, metaphone, nysiis, match_rating_codex comparison](https://latest-with-plugins.datasette.io/fixtures?sql=SELECT%0D%0A++++soundex%28%3As%29%2C+%0D%0A++++metaphone%28%3As%29%2C+%0D%0A++++nysiis%28%3As%29%2C+%0D%0A++++match_rating_codex%28%3As%29&s=demo).\n* [distance functions comparison](https://latest-with-plugins.datasette.io/fixtures?sql=SELECT%0D%0A++++levenshtein_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++damerau_levenshtein_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++hamming_distance%28%3As1%2C+%3As2%29%2C%0D%0A++++jaro_similarity%28%3As1%2C+%3As2%29%2C%0D%0A++++jaro_winkler_similarity%28%3As1%2C+%3As2%29%2C%0D%0A++++match_rating_comparison%28%3As1%2C+%3As2%29%3B&s1=barrack+obama&s2=barrack+h+obama)\n\nExamples:\n\n    SELECT soundex(\"hello\");\n        -- Outputs H400\n    SELECT metaphone(\"hello\");\n        -- Outputs HL\n    SELECT nysiis(\"hello\");\n        -- Outputs HAL\n    SELECT match_rating_codex(\"hello\");\n        -- Outputs HLL\n    SELECT levenshtein_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT damerau_levenshtein_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT hamming_distance(\"hello\", \"hello world\");\n        -- Outputs 6\n    SELECT jaro_similarity(\"hello\", \"hello world\");\n        -- Outputs 0.8181818181818182\n    SELECT jaro_winkler_similarity(\"hello\", \"hello world\");\n        -- Outputs 0.890909090909091\n    SELECT match_rating_comparison(\"hello\", \"helloo\");\n        -- Outputs 1\n\nSee [the Jellyfish documentation](https://jellyfish.readthedocs.io/en/latest/) for an explanation of each of these functions.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-jellyfish",
     "package_url": "https://pypi.org/project/datasette-jellyfish/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-jellyfish/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-jellyfish/actions",
@@ -28,19 +28,19 @@
       "Homepage": "https://datasette.io/plugins/datasette-jellyfish",
       "Issues": "https://github.com/simonw/datasette-jellyfish/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-jellyfish/1.0.1/",
+    "release_url": "https://pypi.org/project/datasette-jellyfish/2.0/",
     "requires_dist": [
       "datasette",
-      "jellyfish (>=0.8.2)",
+      "jellyfish >0.9.0",
       "pytest ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin adding SQL functions for fuzzy text matching powered by Jellyfish",
-    "version": "1.0.1",
+    "version": "2.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9334811,
+  "last_serial": 19443102,
   "releases": {
     "0.2": [
       {
@@ -175,48 +175,136 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2805b000b479576b721642e467f9f0b7e0431dedc09dd5b35341681f26604c4c",
+          "md5": "1f9d24c05faef928afd74056d5b65cf8",
+          "sha256": "c2703e9ed7846f288c4f35ba85013f970460d5952d05169c498abc6113a858ec"
+        },
+        "downloads": -1,
+        "filename": "datasette_jellyfish-1.0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1f9d24c05faef928afd74056d5b65cf8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6967,
+        "upload_time": "2023-08-24T21:40:46",
+        "upload_time_iso_8601": "2023-08-24T21:40:46.608431Z",
+        "url": "https://files.pythonhosted.org/packages/28/05/b000b479576b721642e467f9f0b7e0431dedc09dd5b35341681f26604c4c/datasette_jellyfish-1.0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b1f85684ff3918738dd4ed1caeef91d8be0b9613b097054f6ba8c1ae0e32a168",
+          "md5": "ba02dcc89aed4d50c0ae6e7d213a2d2d",
+          "sha256": "30e4f3ceff5868f06958ec66124e0246fcc6a263926e340bd843e326393f668f"
+        },
+        "downloads": -1,
+        "filename": "datasette-jellyfish-1.0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ba02dcc89aed4d50c0ae6e7d213a2d2d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6779,
+        "upload_time": "2023-08-24T21:40:48",
+        "upload_time_iso_8601": "2023-08-24T21:40:48.115132Z",
+        "url": "https://files.pythonhosted.org/packages/b1/f8/5684ff3918738dd4ed1caeef91d8be0b9613b097054f6ba8c1ae0e32a168/datasette-jellyfish-1.0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "2.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b4168aa72ac5e2f634ebebff4f5732ef867f8d6ddc4de024dcc2573505995d60",
+          "md5": "abead56a2868a022c61b136bd2124a6c",
+          "sha256": "057708a96fef725294708537ac9dae68dac308268eaf283b7f5c6945dd319dff"
+        },
+        "downloads": -1,
+        "filename": "datasette_jellyfish-2.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "abead56a2868a022c61b136bd2124a6c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6909,
+        "upload_time": "2023-08-24T21:46:20",
+        "upload_time_iso_8601": "2023-08-24T21:46:20.274553Z",
+        "url": "https://files.pythonhosted.org/packages/b4/16/8aa72ac5e2f634ebebff4f5732ef867f8d6ddc4de024dcc2573505995d60/datasette_jellyfish-2.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "62cd473c4f1ac7e3406afac8fafbfb3ec68f08a3305c3ce4780783225f9654e3",
+          "md5": "6043f7448296719143d2ba892a9c5336",
+          "sha256": "4ca91fa7b09658a31b6942db2771884e46e7ead0dd731c06424adf5f4eb8965f"
+        },
+        "downloads": -1,
+        "filename": "datasette-jellyfish-2.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6043f7448296719143d2ba892a9c5336",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6743,
+        "upload_time": "2023-08-24T21:46:22",
+        "upload_time_iso_8601": "2023-08-24T21:46:22.006757Z",
+        "url": "https://files.pythonhosted.org/packages/62/cd/473c4f1ac7e3406afac8fafbfb3ec68f08a3305c3ce4780783225f9654e3/datasette-jellyfish-2.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "a4e902fd76b12c18449125a3e9501ba9adbcf5d977af0c97a57650382f36b774",
-        "md5": "30de7105886b129821aa5b8d25d84f68",
-        "sha256": "be7d2b13f9938e05256829a9494f2dd99d2f1b71dd300fcb4d64b8c9b731e675"
+        "blake2b_256": "b4168aa72ac5e2f634ebebff4f5732ef867f8d6ddc4de024dcc2573505995d60",
+        "md5": "abead56a2868a022c61b136bd2124a6c",
+        "sha256": "057708a96fef725294708537ac9dae68dac308268eaf283b7f5c6945dd319dff"
       },
       "downloads": -1,
-      "filename": "datasette_jellyfish-1.0.1-py3-none-any.whl",
+      "filename": "datasette_jellyfish-2.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "30de7105886b129821aa5b8d25d84f68",
+      "md5_digest": "abead56a2868a022c61b136bd2124a6c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6984,
-      "upload_time": "2021-02-06T02:35:09",
-      "upload_time_iso_8601": "2021-02-06T02:35:09.573819Z",
-      "url": "https://files.pythonhosted.org/packages/a4/e9/02fd76b12c18449125a3e9501ba9adbcf5d977af0c97a57650382f36b774/datasette_jellyfish-1.0.1-py3-none-any.whl",
+      "size": 6909,
+      "upload_time": "2023-08-24T21:46:20",
+      "upload_time_iso_8601": "2023-08-24T21:46:20.274553Z",
+      "url": "https://files.pythonhosted.org/packages/b4/16/8aa72ac5e2f634ebebff4f5732ef867f8d6ddc4de024dcc2573505995d60/datasette_jellyfish-2.0-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "38f7fc0ad5fc04c90c151f6a5a40fb81263b10485ca7872cb8a8931d79553b86",
-        "md5": "18efded96ca5f8ecf5c412f35aa2c417",
-        "sha256": "1afc341540256e0bcca9d697591fcee953958d40c10d7c65a3aea8302131a1b0"
+        "blake2b_256": "62cd473c4f1ac7e3406afac8fafbfb3ec68f08a3305c3ce4780783225f9654e3",
+        "md5": "6043f7448296719143d2ba892a9c5336",
+        "sha256": "4ca91fa7b09658a31b6942db2771884e46e7ead0dd731c06424adf5f4eb8965f"
       },
       "downloads": -1,
-      "filename": "datasette-jellyfish-1.0.1.tar.gz",
+      "filename": "datasette-jellyfish-2.0.tar.gz",
       "has_sig": false,
-      "md5_digest": "18efded96ca5f8ecf5c412f35aa2c417",
+      "md5_digest": "6043f7448296719143d2ba892a9c5336",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 2570,
-      "upload_time": "2021-02-06T02:35:10",
-      "upload_time_iso_8601": "2021-02-06T02:35:10.493194Z",
-      "url": "https://files.pythonhosted.org/packages/38/f7/fc0ad5fc04c90c151f6a5a40fb81263b10485ca7872cb8a8931d79553b86/datasette-jellyfish-1.0.1.tar.gz",
+      "size": 6743,
+      "upload_time": "2023-08-24T21:46:22",
+      "upload_time_iso_8601": "2023-08-24T21:46:22.006757Z",
+      "url": "https://files.pythonhosted.org/packages/62/cd/473c4f1ac7e3406afac8fafbfb3ec68f08a3305c3ce4780783225f9654e3/datasette-jellyfish-2.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
