@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# LLM\n\n[![PyPI](https://img.shields.io/pypi/v/llm.svg)](https://pypi.org/project/llm/)\n[![Documentation](https://readthedocs.org/projects/llm/badge/?version=latest)](https://llm.datasette.io/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/llm?include_prereleases&label=changelog)](https://llm.datasette.io/en/stable/changelog.html)\n[![Tests](https://github.com/simonw/llm/workflows/Test/badge.svg)](https://github.com/simonw/llm/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/llm/blob/main/LICENSE)\n[![Discord](https://img.shields.io/discord/823971286308356157?label=discord)](https://datasette.io/discord-llm)\n\nA CLI utility and Python library for interacting with Large Language Models, including OpenAI, PaLM and local models installed on your own machine.\n\nFull documentation: **[llm.datasette.io](https://llm.datasette.io/)**\n\nBackground on this project:\n- [llm, ttok and strip-tags—CLI tools for working with ChatGPT and other LLMs](https://simonwillison.net/2023/May/18/cli-tools-for-llms/)\n- [The LLM CLI tool now supports self-hosted language models via plugins](https://simonwillison.net/2023/Jul/12/llm/)\n- [Accessing Llama 2 from the command-line with the llm-replicate plugin](https://simonwillison.net/2023/Jul/18/accessing-llama-2/)\n- [Run Llama 2 on your own Mac using LLM and Homebrew](https://simonwillison.net/2023/Aug/1/llama-2-mac/)\n- [Catching up on the weird world of LLMs](https://simonwillison.net/2023/Aug/3/weird-world-of-llms/)\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install llm\n```\nOr using [Homebrew](https://brew.sh/):\n```bash\nbrew install llm\n```\n[Detailed installation instructions](https://llm.datasette.io/en/stable/setup.html).\n\n## Getting started\n\nIf you have an [OpenAI API key](https://platform.openai.com/account/api-keys) you can get started using the OpenAI models right away.\n\nAs an alternative to OpenAI, you can [install plugins](https://llm.datasette.io/en/stable/plugins/installing-plugins.html) to access models by other providers, including models that can be installed and run on your own device.\n\nSave your OpenAI API key like this:\n\n```bash\nllm keys set openai\n```\nThis will prompt you for your key like so:\n```bash\nllm keys set openai\n```\n```\nEnter key: <paste here>\n```\nNow that you've saved a key you can run a prompt like this:\n```bash\nllm \"Five cute names for a pet penguin\"\n```\n```\n1. Waddles\n2. Pebbles\n3. Bubbles\n4. Flappy\n5. Chilly\n```\nRead the [usage instructions](https://llm.datasette.io/en/stable/usage.html) for more.\n\n## Using a system prompt\n\nYou can use the `-s/--system` option to set a system prompt, providing instructions for processing other input to the tool.\n\nTo describe how the code a file works, try this:\n\n```bash\ncat mycode.py | llm -s \"Explain this code\"\n```\n\n## Help\n\nFor help, run:\n\n    llm --help\n\nYou can also use:\n\n    python -m llm --help\n",
+    "description": "# LLM\n\n[![PyPI](https://img.shields.io/pypi/v/llm.svg)](https://pypi.org/project/llm/)\n[![Documentation](https://readthedocs.org/projects/llm/badge/?version=latest)](https://llm.datasette.io/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/llm?include_prereleases&label=changelog)](https://llm.datasette.io/en/stable/changelog.html)\n[![Tests](https://github.com/simonw/llm/workflows/Test/badge.svg)](https://github.com/simonw/llm/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/llm/blob/main/LICENSE)\n[![Discord](https://img.shields.io/discord/823971286308356157?label=discord)](https://datasette.io/discord-llm)\n[![Homebrew](https://img.shields.io/homebrew/installs/dy/llm?color=yellow&label=homebrew&logo=homebrew)](https://formulae.brew.sh/formula/llm)\n\nA CLI utility and Python library for interacting with Large Language Models, both via remote APIs and models that can be installed and run on your own machine.\n\n[Run prompts from the command-line](https://llm.datasette.io/en/stable/usage.html#executing-a-prompt), [store the results in SQLite](https://llm.datasette.io/en/stable/logging.html), [generate embeddings](https://llm.datasette.io/en/stable/embeddings/index.html) and more.\n\nFull documentation: **[llm.datasette.io](https://llm.datasette.io/)**\n\nBackground on this project:\n- [llm, ttok and strip-tags—CLI tools for working with ChatGPT and other LLMs](https://simonwillison.net/2023/May/18/cli-tools-for-llms/)\n- [The LLM CLI tool now supports self-hosted language models via plugins](https://simonwillison.net/2023/Jul/12/llm/)\n- [Accessing Llama 2 from the command-line with the llm-replicate plugin](https://simonwillison.net/2023/Jul/18/accessing-llama-2/)\n- [Run Llama 2 on your own Mac using LLM and Homebrew](https://simonwillison.net/2023/Aug/1/llama-2-mac/)\n- [Catching up on the weird world of LLMs](https://simonwillison.net/2023/Aug/3/weird-world-of-llms/)\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install llm\n```\nOr using [Homebrew](https://brew.sh/):\n```bash\nbrew install llm\n```\n[Detailed installation instructions](https://llm.datasette.io/en/stable/setup.html).\n\n## Getting started\n\nIf you have an [OpenAI API key](https://platform.openai.com/account/api-keys) you can get started using the OpenAI models right away.\n\nAs an alternative to OpenAI, you can [install plugins](https://llm.datasette.io/en/stable/plugins/installing-plugins.html) to access models by other providers, including models that can be installed and run on your own device.\n\nSave your OpenAI API key like this:\n\n```bash\nllm keys set openai\n```\nThis will prompt you for your key like so:\n```bash\nllm keys set openai\n```\n```\nEnter key: <paste here>\n```\nNow that you've saved a key you can run a prompt like this:\n```bash\nllm \"Five cute names for a pet penguin\"\n```\n```\n1. Waddles\n2. Pebbles\n3. Bubbles\n4. Flappy\n5. Chilly\n```\nRead the [usage instructions](https://llm.datasette.io/en/stable/usage.html) for more.\n\n## Using a system prompt\n\nYou can use the `-s/--system` option to set a system prompt, providing instructions for processing other input to the tool.\n\nTo describe how the code a file works, try this:\n\n```bash\ncat mycode.py | llm -s \"Explain this code\"\n```\n\n## Help\n\nFor help, run:\n\n    llm --help\n\nYou can also use:\n\n    python -m llm --help\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -29,12 +29,13 @@
       "Homepage": "https://github.com/simonw/llm",
       "Issues": "https://github.com/simonw/llm/issues"
     },
-    "release_url": "https://pypi.org/project/llm/0.8.1/",
+    "release_url": "https://pypi.org/project/llm/0.9/",
     "requires_dist": [
       "click",
       "openai",
       "click-default-group-wheel",
       "sqlite-utils >=3.35.0",
+      "sqlite-migrate >=0.1a2",
       "pydantic >=1.10.2",
       "PyYAML",
       "pluggy",
@@ -53,11 +54,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "A CLI utility and Python library for interacting with Large Language Models, including OpenAI, PaLM and local models installed on your own machine.",
-    "version": "0.8.1",
+    "version": "0.9",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19568798,
+  "last_serial": 19599046,
   "releases": {
     "0.1": [
       {
@@ -587,6 +588,50 @@
         "yanked_reason": null
       }
     ],
+    "0.9": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "46318bdc9347b677a1721e66b8dd7513c12190819657fbb9074e87b4e18a0b36",
+          "md5": "5ac4420bcdec94078f71928b371e8d35",
+          "sha256": "435823202512214f8ca715ffac8233f8925fd0e11bb8f3a29e2131abd7f4095c"
+        },
+        "downloads": -1,
+        "filename": "llm-0.9-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5ac4420bcdec94078f71928b371e8d35",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 33667,
+        "upload_time": "2023-09-04T02:42:13",
+        "upload_time_iso_8601": "2023-09-04T02:42:13.243729Z",
+        "url": "https://files.pythonhosted.org/packages/46/31/8bdc9347b677a1721e66b8dd7513c12190819657fbb9074e87b4e18a0b36/llm-0.9-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "10d4d2e0afafe54d904c848ab24dfbc9e72f459f3a92920bb4c26b39e9490752",
+          "md5": "7aa9fd5a1335b598a4617a5f8ecca789",
+          "sha256": "a8b60750ea03c9e9cc3cc05ba777711bdc6853c63d366a378431f70e1186126f"
+        },
+        "downloads": -1,
+        "filename": "llm-0.9.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7aa9fd5a1335b598a4617a5f8ecca789",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 31338,
+        "upload_time": "2023-09-04T02:42:14",
+        "upload_time_iso_8601": "2023-09-04T02:42:14.789935Z",
+        "url": "https://files.pythonhosted.org/packages/10/d4/d2e0afafe54d904c848ab24dfbc9e72f459f3a92920bb4c26b39e9490752/llm-0.9.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.9a0": [
       {
         "comment_text": "",
@@ -630,48 +675,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.9a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "25ecaa70e67237f7875c6642bb261a54de536f08ea65db6989fd3f4c0da01e2c",
+          "md5": "e28d2678c47f62b6ceb0fb276c3ab1f3",
+          "sha256": "2957e46f051ca2a48ed9b081b1fa093ea55e5d2d06c74cf26eb596357bc93146"
+        },
+        "downloads": -1,
+        "filename": "llm-0.9a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e28d2678c47f62b6ceb0fb276c3ab1f3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 33592,
+        "upload_time": "2023-09-04T01:29:37",
+        "upload_time_iso_8601": "2023-09-04T01:29:37.179165Z",
+        "url": "https://files.pythonhosted.org/packages/25/ec/aa70e67237f7875c6642bb261a54de536f08ea65db6989fd3f4c0da01e2c/llm-0.9a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0f0c925ded0bb88820785a49c837a648a299bccb30b512e4f95487ae893627ac",
+          "md5": "dc6ee0bcbf5fed5ec709df085fcef7ea",
+          "sha256": "9dda4b7545adefebd27243487a779795692773d629f9bfc93608949d67b28930"
+        },
+        "downloads": -1,
+        "filename": "llm-0.9a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dc6ee0bcbf5fed5ec709df085fcef7ea",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 31158,
+        "upload_time": "2023-09-04T01:29:38",
+        "upload_time_iso_8601": "2023-09-04T01:29:38.605766Z",
+        "url": "https://files.pythonhosted.org/packages/0f/0c/925ded0bb88820785a49c837a648a299bccb30b512e4f95487ae893627ac/llm-0.9a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "3090700ef3b9696e1c8c57ede7e3111ce60dc8899f500fe87fd83d073aa710b1",
-        "md5": "d4a2d8448082b7850921847eea232530",
-        "sha256": "d3b4aed7e88a4e7b0dae98469de404e02175f17c9f08e6cd06c60e3e689ec821"
+        "blake2b_256": "46318bdc9347b677a1721e66b8dd7513c12190819657fbb9074e87b4e18a0b36",
+        "md5": "5ac4420bcdec94078f71928b371e8d35",
+        "sha256": "435823202512214f8ca715ffac8233f8925fd0e11bb8f3a29e2131abd7f4095c"
       },
       "downloads": -1,
-      "filename": "llm-0.8.1-py3-none-any.whl",
+      "filename": "llm-0.9-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "d4a2d8448082b7850921847eea232530",
+      "md5_digest": "5ac4420bcdec94078f71928b371e8d35",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 25705,
-      "upload_time": "2023-09-01T03:36:25",
-      "upload_time_iso_8601": "2023-09-01T03:36:25.477122Z",
-      "url": "https://files.pythonhosted.org/packages/30/90/700ef3b9696e1c8c57ede7e3111ce60dc8899f500fe87fd83d073aa710b1/llm-0.8.1-py3-none-any.whl",
+      "size": 33667,
+      "upload_time": "2023-09-04T02:42:13",
+      "upload_time_iso_8601": "2023-09-04T02:42:13.243729Z",
+      "url": "https://files.pythonhosted.org/packages/46/31/8bdc9347b677a1721e66b8dd7513c12190819657fbb9074e87b4e18a0b36/llm-0.9-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "158ae300b7e9865ca41e16198d1e659d7a6ede6e5b5fad2f9c0f69797b78c62f",
-        "md5": "d7e516eabc7140bd85d59cec4d093db9",
-        "sha256": "3360b4df917660d59180dcde5748a2b3f5d51a80b82485a93845eb32dba03a23"
+        "blake2b_256": "10d4d2e0afafe54d904c848ab24dfbc9e72f459f3a92920bb4c26b39e9490752",
+        "md5": "7aa9fd5a1335b598a4617a5f8ecca789",
+        "sha256": "a8b60750ea03c9e9cc3cc05ba777711bdc6853c63d366a378431f70e1186126f"
       },
       "downloads": -1,
-      "filename": "llm-0.8.1.tar.gz",
+      "filename": "llm-0.9.tar.gz",
       "has_sig": false,
-      "md5_digest": "d7e516eabc7140bd85d59cec4d093db9",
+      "md5_digest": "7aa9fd5a1335b598a4617a5f8ecca789",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 23983,
-      "upload_time": "2023-09-01T03:36:26",
-      "upload_time_iso_8601": "2023-09-01T03:36:26.526009Z",
-      "url": "https://files.pythonhosted.org/packages/15/8a/e300b7e9865ca41e16198d1e659d7a6ede6e5b5fad2f9c0f69797b78c62f/llm-0.8.1.tar.gz",
+      "size": 31338,
+      "upload_time": "2023-09-04T02:42:14",
+      "upload_time_iso_8601": "2023-09-04T02:42:14.789935Z",
+      "url": "https://files.pythonhosted.org/packages/10/d4/d2e0afafe54d904c848ab24dfbc9e72f459f3a92920bb4c26b39e9490752/llm-0.9.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
