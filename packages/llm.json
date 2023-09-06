@@ -58,7 +58,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19599046,
+  "last_serial": 19613993,
   "releases": {
     "0.1": [
       {
@@ -100,6 +100,50 @@
         "upload_time": "2023-04-01T22:02:19",
         "upload_time_iso_8601": "2023-04-01T22:02:19.013291Z",
         "url": "https://files.pythonhosted.org/packages/31/1e/5e9692da23ec1e3af54a7bf0c36486f18249811a0d8c339fb4d122dc19bd/llm-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.10a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7a1dfef0ce7de2c1c02c92ab4d94f24f012e5e08f02fbcd7e402f4e7e37ca0db",
+          "md5": "5178fb45611bfc8cd3a14a96c7e1bf05",
+          "sha256": "231515e33640ce1363759b44a2e4e13a66ec7e9830f43dbbc02178a8f186dd91"
+        },
+        "downloads": -1,
+        "filename": "llm-0.10a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5178fb45611bfc8cd3a14a96c7e1bf05",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 34249,
+        "upload_time": "2023-09-05T06:44:39",
+        "upload_time_iso_8601": "2023-09-05T06:44:39.578546Z",
+        "url": "https://files.pythonhosted.org/packages/7a/1d/fef0ce7de2c1c02c92ab4d94f24f012e5e08f02fbcd7e402f4e7e37ca0db/llm-0.10a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a61679c429df11bc6b908c5c7e7dc10b3aa27a782572fd36d31a8af2bbdba196",
+          "md5": "615b5054f411909d3f3aee82082d626a",
+          "sha256": "aad31a00b878024e2f49b020d1847d16db7347aa472e44fd25f3762a1a502170"
+        },
+        "downloads": -1,
+        "filename": "llm-0.10a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "615b5054f411909d3f3aee82082d626a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 31957,
+        "upload_time": "2023-09-05T06:44:40",
+        "upload_time_iso_8601": "2023-09-05T06:44:40.630935Z",
+        "url": "https://files.pythonhosted.org/packages/a6/16/79c429df11bc6b908c5c7e7dc10b3aa27a782572fd36d31a8af2bbdba196/llm-0.10a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
