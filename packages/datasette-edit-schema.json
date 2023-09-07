@@ -38,7 +38,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19356664,
+  "last_serial": 19641554,
   "releases": {
     "0.3": [
       {
@@ -388,6 +388,94 @@
         "upload_time": "2023-08-18T06:13:31",
         "upload_time_iso_8601": "2023-08-18T06:13:31.559463Z",
         "url": "https://files.pythonhosted.org/packages/19/ab/4d0f21bca079ef0f882f90599510c59e2f3ae6278089d978f6ee68e876ef/datasette-edit-schema-0.5.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ac6491a9726e6ec67b10fe564318b885aabc2325b0e0569200f82a8cf70549df",
+          "md5": "174ef19923820fe724a924ab99d76388",
+          "sha256": "b497a6457db30ce3fa6074b50f2be09a12ba1f411c8a729e3e12ad766db841df"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.6a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "174ef19923820fe724a924ab99d76388",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 60350,
+        "upload_time": "2023-09-06T22:32:13",
+        "upload_time_iso_8601": "2023-09-06T22:32:13.602057Z",
+        "url": "https://files.pythonhosted.org/packages/ac/64/91a9726e6ec67b10fe564318b885aabc2325b0e0569200f82a8cf70549df/datasette_edit_schema-0.6a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "edf41076e795e310c301f2197074ec8e010f7eba60ef29d783093f739e528afb",
+          "md5": "15c15e1ea0f85ad9305f60ded2823f65",
+          "sha256": "67d9d63471502f588be692b4b628037897d67dc9c91fe75010b3ddf8dbe88171"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-schema-0.6a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "15c15e1ea0f85ad9305f60ded2823f65",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 61524,
+        "upload_time": "2023-09-06T22:32:15",
+        "upload_time_iso_8601": "2023-09-06T22:32:15.097833Z",
+        "url": "https://files.pythonhosted.org/packages/ed/f4/1076e795e310c301f2197074ec8e010f7eba60ef29d783093f739e528afb/datasette-edit-schema-0.6a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5de94f58feae9bfeeb4068b75c7e4602c4bf3cee652efed438bb2fe756addc9c",
+          "md5": "8a48c88b6e3f2d8a8257e363894da342",
+          "sha256": "28d031918de1a6872891a271c39579831e01fe416df7271fe37ead7ed6251f56"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.6a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8a48c88b6e3f2d8a8257e363894da342",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 61475,
+        "upload_time": "2023-09-06T23:27:35",
+        "upload_time_iso_8601": "2023-09-06T23:27:35.495656Z",
+        "url": "https://files.pythonhosted.org/packages/5d/e9/4f58feae9bfeeb4068b75c7e4602c4bf3cee652efed438bb2fe756addc9c/datasette_edit_schema-0.6a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2d5a8947cf7648ea6b909345a82e2512d3e79478955ec94cccb94881f54fe186",
+          "md5": "a28c62a4830b9fac6e6d80f756f45c43",
+          "sha256": "e6a72a1403f12cbdebb5f9fdcf3aa84bbb0bbaf11a636aaae0bfa1f2eca17b28"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-schema-0.6a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a28c62a4830b9fac6e6d80f756f45c43",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 62607,
+        "upload_time": "2023-09-06T23:27:37",
+        "upload_time_iso_8601": "2023-09-06T23:27:37.236379Z",
+        "url": "https://files.pythonhosted.org/packages/2d/5a/8947cf7648ea6b909345a82e2512d3e79478955ec94cccb94881f54fe186/datasette-edit-schema-0.6a1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
