@@ -46,7 +46,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 12237465,
+  "last_serial": 19701539,
   "releases": {
     "0.1": [
       {
@@ -729,6 +729,50 @@
         "upload_time": "2021-01-26T06:33:46",
         "upload_time_iso_8601": "2021-01-26T06:33:46.078649Z",
         "url": "https://files.pythonhosted.org/packages/b9/34/22cb5c84df105deb11bef5f654ab96bfff96a98e5af45f76d1c768fbbed0/datasette-cluster-map-0.17a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.18a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cfa7671e9561e731367fb436c81a3143a6da26fd3975f957ad67ae4fdd038329",
+          "md5": "34324267cf0f0f464a562fe47f6e4050",
+          "sha256": "e36797e50322856093238160fa69f4b0420d8b57f3294e7b620b9eee96e25f63"
+        },
+        "downloads": -1,
+        "filename": "datasette_cluster_map-0.18a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "34324267cf0f0f464a562fe47f6e4050",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 34411,
+        "upload_time": "2023-09-11T17:29:03",
+        "upload_time_iso_8601": "2023-09-11T17:29:03.319698Z",
+        "url": "https://files.pythonhosted.org/packages/cf/a7/671e9561e731367fb436c81a3143a6da26fd3975f957ad67ae4fdd038329/datasette_cluster_map-0.18a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f4de6de375cdfdfef738dd50ed5a753df5eff1d8e8bb799fcd7c2293a3ef2809",
+          "md5": "1ab7ea8ce9e946b542ce72140dac55b3",
+          "sha256": "b5bff82f277b2165ec4bbf815ffe57b07ab4f1f96c42a12d29e32ca660c92f32"
+        },
+        "downloads": -1,
+        "filename": "datasette-cluster-map-0.18a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1ab7ea8ce9e946b542ce72140dac55b3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 37156,
+        "upload_time": "2023-09-11T17:29:04",
+        "upload_time_iso_8601": "2023-09-11T17:29:04.767104Z",
+        "url": "https://files.pythonhosted.org/packages/f4/de/6de375cdfdfef738dd50ed5a753df5eff1d8e8bb799fcd7c2293a3ef2809/datasette-cluster-map-0.18a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
