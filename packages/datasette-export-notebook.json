@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-export-notebook\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-export-notebook.svg)](https://pypi.org/project/datasette-export-notebook/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-export-notebook?include_prereleases&label=changelog)](https://github.com/simonw/datasette-export-notebook/releases)\n[![Tests](https://github.com/simonw/datasette-export-notebook/workflows/Test/badge.svg)](https://github.com/simonw/datasette-export-notebook/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-export-notebook/blob/main/LICENSE)\n\nDatasette plugin providing instructions for exporting data to a [Jupyter](https://jupyter.org/) or [Observable](https://observablehq.com/) notebook.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-export-notebook\n\n## Usage\n\nOnce installed, the plugin will add a `.Notebook` export option to every table and query. Clicking on this link will show instructions for exporting the data to Jupyter or Observable.\n\n## Demo\n\nYou can see this plugin in action on the [latest-with-plugins.datasette.io](https://latest-with-plugins.datasette.io/) Datasette instance - for example on [/github/commits.Notebook](https://latest-with-plugins.datasette.io/github/commits.Notebook).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-export-notebook\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-export-notebook\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-export-notebook.svg)](https://pypi.org/project/datasette-export-notebook/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-export-notebook?include_prereleases&label=changelog)](https://github.com/simonw/datasette-export-notebook/releases)\n[![Tests](https://github.com/simonw/datasette-export-notebook/workflows/Test/badge.svg)](https://github.com/simonw/datasette-export-notebook/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-export-notebook/blob/main/LICENSE)\n\nDatasette plugin providing instructions for exporting data to a [Jupyter](https://jupyter.org/) or [Observable](https://observablehq.com/) notebook.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-export-notebook\n\n## Usage\n\nOnce installed, the plugin will add a `.Notebook` export option to every table and query. Clicking on this link will show instructions for exporting the data to Jupyter or Observable.\n\n## Demo\n\nYou can see this plugin in action on the [latest-with-plugins.datasette.io](https://latest-with-plugins.datasette.io/) Datasette instance - for example on [/github/commits.Notebook](https://latest-with-plugins.datasette.io/github/commits.Notebook).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-export-notebook\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,7 +20,7 @@
     "maintainer_email": "",
     "name": "datasette-export-notebook",
     "package_url": "https://pypi.org/project/datasette-export-notebook/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-export-notebook/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-export-notebook/actions",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/datasette-export-notebook",
       "Issues": "https://github.com/simonw/datasette-export-notebook/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-export-notebook/1.0/",
+    "release_url": "https://pypi.org/project/datasette-export-notebook/1.0.1/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -37,11 +37,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "Datasette plugin providing instructions for exporting data to Jupyter or Observable",
-    "version": "1.0",
+    "version": "1.0.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 10933195,
+  "last_serial": 19767486,
   "releases": {
     "0.1": [
       {
@@ -262,48 +262,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "605c0bc7fcadb0e021785031f5e961d7ea9a34090d5b385b949635385dd5fc50",
+          "md5": "b45f0ea42cf27401dd1d9c126ed478ea",
+          "sha256": "f690800587547a7901e02b3264fa24af574df95dee4c0a997c3e7e31e86a3106"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_notebook-1.0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b45f0ea42cf27401dd1d9c126ed478ea",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5562,
+        "upload_time": "2023-09-15T19:00:34",
+        "upload_time_iso_8601": "2023-09-15T19:00:34.100550Z",
+        "url": "https://files.pythonhosted.org/packages/60/5c/0bc7fcadb0e021785031f5e961d7ea9a34090d5b385b949635385dd5fc50/datasette_export_notebook-1.0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d0af89d87338994ac2dc3f9687fd888eaa24981a237c8b9f7223aed90342a25d",
+          "md5": "09f3bda8190931365d07da0d285c8787",
+          "sha256": "dee6f0c005be9a86f9ca52d3d2615938731ceb4845bd5f2edd7e1efdc0194556"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-notebook-1.0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "09f3bda8190931365d07da0d285c8787",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 5727,
+        "upload_time": "2023-09-15T19:00:35",
+        "upload_time_iso_8601": "2023-09-15T19:00:35.572488Z",
+        "url": "https://files.pythonhosted.org/packages/d0/af/89d87338994ac2dc3f9687fd888eaa24981a237c8b9f7223aed90342a25d/datasette-export-notebook-1.0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "ed97782f8980427227b63e041948e96af558a58b8ea7d2199028b08cd329f6f0",
-        "md5": "67d5627cc0e20ce0137befb5b38cdb19",
-        "sha256": "68b168485b44e2ab661315e005f810caee4cd523acba8f91ff72b3f55da6f7d4"
+        "blake2b_256": "605c0bc7fcadb0e021785031f5e961d7ea9a34090d5b385b949635385dd5fc50",
+        "md5": "b45f0ea42cf27401dd1d9c126ed478ea",
+        "sha256": "f690800587547a7901e02b3264fa24af574df95dee4c0a997c3e7e31e86a3106"
       },
       "downloads": -1,
-      "filename": "datasette_export_notebook-1.0-py3-none-any.whl",
+      "filename": "datasette_export_notebook-1.0.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "67d5627cc0e20ce0137befb5b38cdb19",
+      "md5_digest": "b45f0ea42cf27401dd1d9c126ed478ea",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 5533,
-      "upload_time": "2021-07-17T04:02:36",
-      "upload_time_iso_8601": "2021-07-17T04:02:36.631406Z",
-      "url": "https://files.pythonhosted.org/packages/ed/97/782f8980427227b63e041948e96af558a58b8ea7d2199028b08cd329f6f0/datasette_export_notebook-1.0-py3-none-any.whl",
+      "size": 5562,
+      "upload_time": "2023-09-15T19:00:34",
+      "upload_time_iso_8601": "2023-09-15T19:00:34.100550Z",
+      "url": "https://files.pythonhosted.org/packages/60/5c/0bc7fcadb0e021785031f5e961d7ea9a34090d5b385b949635385dd5fc50/datasette_export_notebook-1.0.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "44ab850197a989af13ae9a458bfb332bee856e633a133a419a3433568d2f6e19",
-        "md5": "01c7bac427016263db90cb8f772567b9",
-        "sha256": "94b5e8b285685a9e904bf32f8875d820f4513370fe566b97d3e48f3b277a2e56"
+        "blake2b_256": "d0af89d87338994ac2dc3f9687fd888eaa24981a237c8b9f7223aed90342a25d",
+        "md5": "09f3bda8190931365d07da0d285c8787",
+        "sha256": "dee6f0c005be9a86f9ca52d3d2615938731ceb4845bd5f2edd7e1efdc0194556"
       },
       "downloads": -1,
-      "filename": "datasette-export-notebook-1.0.tar.gz",
+      "filename": "datasette-export-notebook-1.0.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "01c7bac427016263db90cb8f772567b9",
+      "md5_digest": "09f3bda8190931365d07da0d285c8787",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 4850,
-      "upload_time": "2021-07-17T04:02:37",
-      "upload_time_iso_8601": "2021-07-17T04:02:37.814543Z",
-      "url": "https://files.pythonhosted.org/packages/44/ab/850197a989af13ae9a458bfb332bee856e633a133a419a3433568d2f6e19/datasette-export-notebook-1.0.tar.gz",
+      "size": 5727,
+      "upload_time": "2023-09-15T19:00:35",
+      "upload_time_iso_8601": "2023-09-15T19:00:35.572488Z",
+      "url": "https://files.pythonhosted.org/packages/d0/af/89d87338994ac2dc3f9687fd888eaa24981a237c8b9f7223aed90342a25d/datasette-export-notebook-1.0.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
