@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-mask-columns\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-mask-columns.svg)](https://pypi.org/project/datasette-mask-columns/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-mask-columns?include_prereleases&label=changelog)](https://github.com/simonw/datasette-mask-columns/releases)\n[![Tests](https://github.com/simonw/datasette-mask-columns/workflows/Test/badge.svg)](https://github.com/simonw/datasette-mask-columns/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-mask-columns/blob/main/LICENSE)\n\nDatasette plugin that masks specified database columns\n\n## Installation\n\n    pip install datasette-mask-columns\n\nThis depends on plugin hook changes in a not-yet released branch of Datasette. See [issue #678](https://github.com/simonw/datasette/issues/678) for details.\n\n## Usage\n\nIn your `metadata.json` file add a section like this describing the database and table in which you wish to mask columns:\n\n```json\n{\n    \"databases\": {\n        \"my-database\": {\n            \"plugins\": {\n                \"datasette-mask-columns\": {\n                    \"users\": [\"password\"]\n                }\n            }\n        }\n    }\n}\n```\nAll SQL queries against the `users` table in `my-database.db` will now return `null` for the `password` column, no matter what value that column actually holds.\n\nThe table page for `users` will display the text `REDACTED` in the masked column. This visual hint will only be available on the table page; it will not display his text for arbitrary queries against the table.\n\n\n",
+    "description": "# datasette-mask-columns\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-mask-columns.svg)](https://pypi.org/project/datasette-mask-columns/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-mask-columns?include_prereleases&label=changelog)](https://github.com/simonw/datasette-mask-columns/releases)\n[![Tests](https://github.com/simonw/datasette-mask-columns/workflows/Test/badge.svg)](https://github.com/simonw/datasette-mask-columns/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-mask-columns/blob/main/LICENSE)\n\nDatasette plugin that masks specified database columns\n\n## Installation\n\n    pip install datasette-mask-columns\n\nThis depends on plugin hook changes in a not-yet released branch of Datasette. See [issue #678](https://github.com/simonw/datasette/issues/678) for details.\n\n## Usage\n\nIn your `metadata.json` file add a section like this describing the database and table in which you wish to mask columns:\n\n```json\n{\n    \"databases\": {\n        \"my-database\": {\n            \"plugins\": {\n                \"datasette-mask-columns\": {\n                    \"users\": [\"password\"]\n                }\n            }\n        }\n    }\n}\n```\nAll SQL queries against the `users` table in `my-database.db` will now return `null` for the `password` column, no matter what value that column actually holds.\n\nThe table page for `users` will display the text `REDACTED` in the masked column. This visual hint will only be available on the table page; it will not display his text for arbitrary queries against the table.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,12 +20,12 @@
     "maintainer_email": "",
     "name": "datasette-mask-columns",
     "package_url": "https://pypi.org/project/datasette-mask-columns/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-mask-columns/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-mask-columns"
     },
-    "release_url": "https://pypi.org/project/datasette-mask-columns/0.2.1/",
+    "release_url": "https://pypi.org/project/datasette-mask-columns/0.2.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -35,11 +35,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin that masks specified database columns",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 10614832,
+  "last_serial": 19822529,
   "releases": {
     "0.1": [
       {
@@ -130,48 +130,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3edd5321c418f23ddf6fb1c31345d422bd3e2acb935486eb2242efbff8452b8a",
+          "md5": "c1fadefb76b5c69cbd2ce5963288c497",
+          "sha256": "053eef05ad9b8975440ecd9416dd7a766f2b056bc84490dfa54471ba6d426240"
+        },
+        "downloads": -1,
+        "filename": "datasette_mask_columns-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c1fadefb76b5c69cbd2ce5963288c497",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6955,
+        "upload_time": "2023-09-20T02:18:49",
+        "upload_time_iso_8601": "2023-09-20T02:18:49.405106Z",
+        "url": "https://files.pythonhosted.org/packages/3e/dd/5321c418f23ddf6fb1c31345d422bd3e2acb935486eb2242efbff8452b8a/datasette_mask_columns-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e3432df25a9584e6f68d4cf72e5963101a48c6cc8dcf7d516f8f0170ef5e511c",
+          "md5": "2c8ae7da2a1c50f39df685bb9e637885",
+          "sha256": "0386263bd751a79ebf2b1fa2d767fe4b2e68dee3153db937283fae8f91494630"
+        },
+        "downloads": -1,
+        "filename": "datasette-mask-columns-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2c8ae7da2a1c50f39df685bb9e637885",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6926,
+        "upload_time": "2023-09-20T02:18:50",
+        "upload_time_iso_8601": "2023-09-20T02:18:50.332273Z",
+        "url": "https://files.pythonhosted.org/packages/e3/43/2df25a9584e6f68d4cf72e5963101a48c6cc8dcf7d516f8f0170ef5e511c/datasette-mask-columns-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8643e50cb96cae2513b1a03bdac3992dbd75e4192de6ed8862a7d7b0a8a9b142",
-        "md5": "249055c62db4dc236589f9725b1770f7",
-        "sha256": "c9474cba7096211769aad75f136596e7e86c0c94fea3e69a87e2b65d5d99bbda"
+        "blake2b_256": "3edd5321c418f23ddf6fb1c31345d422bd3e2acb935486eb2242efbff8452b8a",
+        "md5": "c1fadefb76b5c69cbd2ce5963288c497",
+        "sha256": "053eef05ad9b8975440ecd9416dd7a766f2b056bc84490dfa54471ba6d426240"
       },
       "downloads": -1,
-      "filename": "datasette_mask_columns-0.2.1-py3-none-any.whl",
+      "filename": "datasette_mask_columns-0.2.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "249055c62db4dc236589f9725b1770f7",
+      "md5_digest": "c1fadefb76b5c69cbd2ce5963288c497",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6964,
-      "upload_time": "2021-06-10T19:51:59",
-      "upload_time_iso_8601": "2021-06-10T19:51:59.248305Z",
-      "url": "https://files.pythonhosted.org/packages/86/43/e50cb96cae2513b1a03bdac3992dbd75e4192de6ed8862a7d7b0a8a9b142/datasette_mask_columns-0.2.1-py3-none-any.whl",
+      "size": 6955,
+      "upload_time": "2023-09-20T02:18:49",
+      "upload_time_iso_8601": "2023-09-20T02:18:49.405106Z",
+      "url": "https://files.pythonhosted.org/packages/3e/dd/5321c418f23ddf6fb1c31345d422bd3e2acb935486eb2242efbff8452b8a/datasette_mask_columns-0.2.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "22c8dca872c05469aca4192187c969284432e5f6c028479048c2f680f4094b95",
-        "md5": "4b7816c4bb8bdc99457ce48a59aeab2b",
-        "sha256": "c58c90427b4a13d64254b5359bc605ac05b0f33b920f45ef09de9a580259519a"
+        "blake2b_256": "e3432df25a9584e6f68d4cf72e5963101a48c6cc8dcf7d516f8f0170ef5e511c",
+        "md5": "2c8ae7da2a1c50f39df685bb9e637885",
+        "sha256": "0386263bd751a79ebf2b1fa2d767fe4b2e68dee3153db937283fae8f91494630"
       },
       "downloads": -1,
-      "filename": "datasette-mask-columns-0.2.1.tar.gz",
+      "filename": "datasette-mask-columns-0.2.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "4b7816c4bb8bdc99457ce48a59aeab2b",
+      "md5_digest": "2c8ae7da2a1c50f39df685bb9e637885",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 6442,
-      "upload_time": "2021-06-10T19:52:00",
-      "upload_time_iso_8601": "2021-06-10T19:52:00.273623Z",
-      "url": "https://files.pythonhosted.org/packages/22/c8/dca872c05469aca4192187c969284432e5f6c028479048c2f680f4094b95/datasette-mask-columns-0.2.1.tar.gz",
+      "size": 6926,
+      "upload_time": "2023-09-20T02:18:50",
+      "upload_time_iso_8601": "2023-09-20T02:18:50.332273Z",
+      "url": "https://files.pythonhosted.org/packages/e3/43/2df25a9584e6f68d4cf72e5963101a48c6cc8dcf7d516f8f0170ef5e511c/datasette-mask-columns-0.2.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
