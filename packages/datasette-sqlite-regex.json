@@ -40,7 +40,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19008779,
+  "last_serial": 20058161,
   "releases": {
     "0.1.1a4": [
       {
@@ -383,6 +383,29 @@
         "upload_time": "2023-06-10T21:32:15",
         "upload_time_iso_8601": "2023-06-10T21:32:15.378893Z",
         "url": "https://files.pythonhosted.org/packages/48/62/95bcaf409cd88ea3aac6424ee42ecd2df4fa5dab60b5bc2d965cbd656673/datasette_sqlite_regex-0.2.3a9-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.4a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b78d7f012b67a25ab50247ef0ab129ffd48443d54f513a868fecb2eedc8f422c",
+          "md5": "204f542cb8e22ba6164e11e0721b03a6",
+          "sha256": "6d937887d2baad0bc804ea2db780a2cf40d9efaa5435d5b58074161c08d3e816"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_regex-0.2.4a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "204f542cb8e22ba6164e11e0721b03a6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 2192,
+        "upload_time": "2023-10-07T01:32:53",
+        "upload_time_iso_8601": "2023-10-07T01:32:53.898440Z",
+        "url": "https://files.pythonhosted.org/packages/b7/8d/7f012b67a25ab50247ef0ab129ffd48443d54f513a868fecb2eedc8f422c/datasette_sqlite_regex-0.2.4a1-py3-none-any.whl",
         "yanked": false,
         "yanked_reason": null
       }
