@@ -31,7 +31,7 @@
       "Homepage": "https://github.com/simonw/datasette-ripgrep",
       "Issues": "https://github.com/simonw/datasette-ripgrep/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-ripgrep/0.8.1/",
+    "release_url": "https://pypi.org/project/datasette-ripgrep/0.8.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -40,11 +40,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Web interface for searching your code using ripgrep, built as a Datasette plugin",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19396208,
+  "last_serial": 20319870,
   "releases": {
     "0.1": [
       {
@@ -661,48 +661,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.8.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fba43e208df7d24b0ab9423f9dacc581ce2332e06a55c7394e66a3de0d6911f4",
+          "md5": "0f9531324d1416d0f052019722f7e782",
+          "sha256": "7696c6806cc5a45597cbab5fcb0d3f180f080b4ffb46d09a634d48079d28d5f1"
+        },
+        "downloads": -1,
+        "filename": "datasette_ripgrep-0.8.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0f9531324d1416d0f052019722f7e782",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 11169,
+        "upload_time": "2023-10-25T00:10:45",
+        "upload_time_iso_8601": "2023-10-25T00:10:45.719172Z",
+        "url": "https://files.pythonhosted.org/packages/fb/a4/3e208df7d24b0ab9423f9dacc581ce2332e06a55c7394e66a3de0d6911f4/datasette_ripgrep-0.8.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "af789673d5fa9464e8fbcef3d9fde53d0d0025dc69e0a5f889efa7a549d3d8d2",
+          "md5": "fffc6794ffe1da2d7289e195d8b2d2b9",
+          "sha256": "a785627b08f6288f10f0f94dcfe5c40502b6b5614f8fd844f824236e165f3bdf"
+        },
+        "downloads": -1,
+        "filename": "datasette-ripgrep-0.8.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fffc6794ffe1da2d7289e195d8b2d2b9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 12101,
+        "upload_time": "2023-10-25T00:10:47",
+        "upload_time_iso_8601": "2023-10-25T00:10:47.326974Z",
+        "url": "https://files.pythonhosted.org/packages/af/78/9673d5fa9464e8fbcef3d9fde53d0d0025dc69e0a5f889efa7a549d3d8d2/datasette-ripgrep-0.8.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "3180d8a2c4438871a0547ec465f4e7602ca2a6906466c0af354f8a497fb50826",
-        "md5": "b7c92a321cfafa5c7e18c782b0e9ec67",
-        "sha256": "844fe8ea73d23255a3272f064a2cfd11035a35c460ff80b34897d6a604f1d9c2"
+        "blake2b_256": "fba43e208df7d24b0ab9423f9dacc581ce2332e06a55c7394e66a3de0d6911f4",
+        "md5": "0f9531324d1416d0f052019722f7e782",
+        "sha256": "7696c6806cc5a45597cbab5fcb0d3f180f080b4ffb46d09a634d48079d28d5f1"
       },
       "downloads": -1,
-      "filename": "datasette_ripgrep-0.8.1-py3-none-any.whl",
+      "filename": "datasette_ripgrep-0.8.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "b7c92a321cfafa5c7e18c782b0e9ec67",
+      "md5_digest": "0f9531324d1416d0f052019722f7e782",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 11160,
-      "upload_time": "2023-08-21T22:37:32",
-      "upload_time_iso_8601": "2023-08-21T22:37:32.413078Z",
-      "url": "https://files.pythonhosted.org/packages/31/80/d8a2c4438871a0547ec465f4e7602ca2a6906466c0af354f8a497fb50826/datasette_ripgrep-0.8.1-py3-none-any.whl",
+      "size": 11169,
+      "upload_time": "2023-10-25T00:10:45",
+      "upload_time_iso_8601": "2023-10-25T00:10:45.719172Z",
+      "url": "https://files.pythonhosted.org/packages/fb/a4/3e208df7d24b0ab9423f9dacc581ce2332e06a55c7394e66a3de0d6911f4/datasette_ripgrep-0.8.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "2065030c4e8c32f2604403d39873d4139a4ebf4f917ad5f35d77ea49be2638d9",
-        "md5": "e82fae86d8c9b9488cd412ac057dd5be",
-        "sha256": "24acf23198e983e0d8a9c598d5d04e139f0d3f5171ece4a7a6676a880d337f81"
+        "blake2b_256": "af789673d5fa9464e8fbcef3d9fde53d0d0025dc69e0a5f889efa7a549d3d8d2",
+        "md5": "fffc6794ffe1da2d7289e195d8b2d2b9",
+        "sha256": "a785627b08f6288f10f0f94dcfe5c40502b6b5614f8fd844f824236e165f3bdf"
       },
       "downloads": -1,
-      "filename": "datasette-ripgrep-0.8.1.tar.gz",
+      "filename": "datasette-ripgrep-0.8.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "e82fae86d8c9b9488cd412ac057dd5be",
+      "md5_digest": "fffc6794ffe1da2d7289e195d8b2d2b9",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 12077,
-      "upload_time": "2023-08-21T22:37:33",
-      "upload_time_iso_8601": "2023-08-21T22:37:33.363462Z",
-      "url": "https://files.pythonhosted.org/packages/20/65/030c4e8c32f2604403d39873d4139a4ebf4f917ad5f35d77ea49be2638d9/datasette-ripgrep-0.8.1.tar.gz",
+      "size": 12101,
+      "upload_time": "2023-10-25T00:10:47",
+      "upload_time_iso_8601": "2023-10-25T00:10:47.326974Z",
+      "url": "https://files.pythonhosted.org/packages/af/78/9673d5fa9464e8fbcef3d9fde53d0d0025dc69e0a5f889efa7a549d3d8d2/datasette-ripgrep-0.8.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
