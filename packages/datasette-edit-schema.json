@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-edit-schema\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-edit-schema.svg)](https://pypi.org/project/datasette-edit-schema/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-edit-schema?include_prereleases&label=changelog)](https://github.com/simonw/datasette-edit-schema/releases)\n[![Tests](https://github.com/simonw/datasette-edit-schema/workflows/Test/badge.svg)](https://github.com/simonw/datasette-edit-schema/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-edit-schema/blob/master/LICENSE)\n\nDatasette plugin for modifying table schemas\n\n## Features\n\n* Add new columns to a table\n* Rename columns in a table\n* Modify the type of columns in a table\n* Re-order the columns in a table\n* Rename a table\n* Delete a table\n* Change the primary key of a table to another column containing unique values\n* Update the foreign key constraints on a table\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\npip install datasette-edit-schema\n```\n## Usage\n\nNavigate to `/-/edit-schema/dbname/tablename` on your Datasette instance to edit a specific table.\n\nUse `/-/edit-schema/dbname` to create a new table in a specific database.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\n## Permissions\n\nThe `edit-schema` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\nThese permission checks will call the `permission_allowed()` plugin hook with three arguments:\n\n- `action` will be the string `\"edit-schema\"`\n- `actor` will be the currently authenticated actor - usually a dictionary\n- `resource` will be the string name of the database\n\n## Screenshot\n\n![datasette-edit-schema interface](https://raw.githubusercontent.com/simonw/datasette-edit-schema/main/datasette-edit-schema.png)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-edit-schema\npython3 -mvenv venv\nsource venv/bin/activate\n```\nOr if you are using `pipenv`:\n```bash\npipenv shell\n```\nNow install the dependencies and tests:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-edit-schema\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-edit-schema.svg)](https://pypi.org/project/datasette-edit-schema/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-edit-schema?include_prereleases&label=changelog)](https://github.com/simonw/datasette-edit-schema/releases)\n[![Tests](https://github.com/simonw/datasette-edit-schema/workflows/Test/badge.svg)](https://github.com/simonw/datasette-edit-schema/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-edit-schema/blob/master/LICENSE)\n\nDatasette plugin for modifying table schemas\n\n## Features\n\n* Add new columns to a table\n* Rename columns in a table\n* Modify the type of columns in a table\n* Re-order the columns in a table\n* Rename a table\n* Delete a table\n* Change the primary key of a table to another column containing unique values\n* Update the foreign key constraints on a table\n* Add an index (or unique index) to a column on a table\n* Drop an index from a table\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\npip install datasette-edit-schema\n```\n## Usage\n\nNavigate to `/-/edit-schema/dbname/tablename` on your Datasette instance to edit a specific table.\n\nUse `/-/edit-schema/dbname` to create a new table in a specific database.\n\nBy default only [the root actor](https://datasette.readthedocs.io/en/stable/authentication.html#using-the-root-actor) can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\n## Permissions\n\nThe `edit-schema` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\nThese permission checks will call the `permission_allowed()` plugin hook with three arguments:\n\n- `action` will be the string `\"edit-schema\"`\n- `actor` will be the currently authenticated actor - usually a dictionary\n- `resource` will be the string name of the database\n\n## Screenshot\n\n![datasette-edit-schema interface](https://raw.githubusercontent.com/simonw/datasette-edit-schema/main/datasette-edit-schema.png)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-edit-schema\npython3 -mvenv venv\nsource venv/bin/activate\n```\nOr if you are using `pipenv`:\n```bash\npipenv shell\n```\nNow install the dependencies and tests:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -25,7 +25,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-edit-schema"
     },
-    "release_url": "https://pypi.org/project/datasette-edit-schema/0.6/",
+    "release_url": "https://pypi.org/project/datasette-edit-schema/0.7/",
     "requires_dist": [
       "datasette >=0.63",
       "sqlite-utils >=3.35",
@@ -36,11 +36,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Datasette plugin for modifying table schemas",
-    "version": "0.6",
+    "version": "0.7",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19674094,
+  "last_serial": 20337821,
   "releases": {
     "0.3": [
       {
@@ -569,48 +569,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "23162b5dfa6e8984c0d861ca1599d4ea8c2ddd10c03cf12dde5a5034f14552cc",
+          "md5": "62fe2acf324a4b84180b952b2874d6e1",
+          "sha256": "98da5d1bafe70240a6ceb70d199a9a7a889fd2fda5722e4e29977f9eaa9af853"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "62fe2acf324a4b84180b952b2874d6e1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 65417,
+        "upload_time": "2023-10-26T00:50:16",
+        "upload_time_iso_8601": "2023-10-26T00:50:16.017128Z",
+        "url": "https://files.pythonhosted.org/packages/23/16/2b5dfa6e8984c0d861ca1599d4ea8c2ddd10c03cf12dde5a5034f14552cc/datasette_edit_schema-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d7cabc0304ef29504c9dc0ad13ad5f70172e63500dafd243eb0ea20aacf79545",
+          "md5": "46b456a43fbad02a21a1829918609940",
+          "sha256": "4ba851628c3bb8283c4e2f6213b25d03dc08eb18c699f33da87a38e05a14a0bb"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-schema-0.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "46b456a43fbad02a21a1829918609940",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 67687,
+        "upload_time": "2023-10-26T00:50:17",
+        "upload_time_iso_8601": "2023-10-26T00:50:17.623552Z",
+        "url": "https://files.pythonhosted.org/packages/d7/ca/bc0304ef29504c9dc0ad13ad5f70172e63500dafd243eb0ea20aacf79545/datasette-edit-schema-0.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "7f9617c81a6bec2d050b54fba0e97375e587de0f0e58afe9684df6142b37e61f",
-        "md5": "ed6d791f32e4c3f5888e0403160714f8",
-        "sha256": "d0a39b1971c8929dcae8714d84053889730e3c7e95f23060fc7a7860d9e625c6"
+        "blake2b_256": "23162b5dfa6e8984c0d861ca1599d4ea8c2ddd10c03cf12dde5a5034f14552cc",
+        "md5": "62fe2acf324a4b84180b952b2874d6e1",
+        "sha256": "98da5d1bafe70240a6ceb70d199a9a7a889fd2fda5722e4e29977f9eaa9af853"
       },
       "downloads": -1,
-      "filename": "datasette_edit_schema-0.6-py3-none-any.whl",
+      "filename": "datasette_edit_schema-0.7-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "ed6d791f32e4c3f5888e0403160714f8",
+      "md5_digest": "62fe2acf324a4b84180b952b2874d6e1",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 64477,
-      "upload_time": "2023-09-09T00:22:14",
-      "upload_time_iso_8601": "2023-09-09T00:22:14.479926Z",
-      "url": "https://files.pythonhosted.org/packages/7f/96/17c81a6bec2d050b54fba0e97375e587de0f0e58afe9684df6142b37e61f/datasette_edit_schema-0.6-py3-none-any.whl",
+      "size": 65417,
+      "upload_time": "2023-10-26T00:50:16",
+      "upload_time_iso_8601": "2023-10-26T00:50:16.017128Z",
+      "url": "https://files.pythonhosted.org/packages/23/16/2b5dfa6e8984c0d861ca1599d4ea8c2ddd10c03cf12dde5a5034f14552cc/datasette_edit_schema-0.7-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "03488362433b8213494988261946536df7f0e7d8aec1ecc359a0fdd508f5f13c",
-        "md5": "1d915673f3a31fe0ea2acf13170bdf45",
-        "sha256": "241c2ed59b07988336ea32b180ca3dae06193154fae3e419475e200f64558eac"
+        "blake2b_256": "d7cabc0304ef29504c9dc0ad13ad5f70172e63500dafd243eb0ea20aacf79545",
+        "md5": "46b456a43fbad02a21a1829918609940",
+        "sha256": "4ba851628c3bb8283c4e2f6213b25d03dc08eb18c699f33da87a38e05a14a0bb"
       },
       "downloads": -1,
-      "filename": "datasette-edit-schema-0.6.tar.gz",
+      "filename": "datasette-edit-schema-0.7.tar.gz",
       "has_sig": false,
-      "md5_digest": "1d915673f3a31fe0ea2acf13170bdf45",
+      "md5_digest": "46b456a43fbad02a21a1829918609940",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 66322,
-      "upload_time": "2023-09-09T00:22:16",
-      "upload_time_iso_8601": "2023-09-09T00:22:16.107867Z",
-      "url": "https://files.pythonhosted.org/packages/03/48/8362433b8213494988261946536df7f0e7d8aec1ecc359a0fdd508f5f13c/datasette-edit-schema-0.6.tar.gz",
+      "size": 67687,
+      "upload_time": "2023-10-26T00:50:17",
+      "upload_time_iso_8601": "2023-10-26T00:50:17.623552Z",
+      "url": "https://files.pythonhosted.org/packages/d7/ca/bc0304ef29504c9dc0ad13ad5f70172e63500dafd243eb0ea20aacf79545/datasette-edit-schema-0.7.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
