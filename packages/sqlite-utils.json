@@ -11,6 +11,7 @@
       "License :: OSI Approved :: Apache Software License",
       "Programming Language :: Python :: 3.10",
       "Programming Language :: Python :: 3.11",
+      "Programming Language :: Python :: 3.12",
       "Programming Language :: Python :: 3.7",
       "Programming Language :: Python :: 3.8",
       "Programming Language :: Python :: 3.9",
@@ -42,7 +43,7 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues",
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
-    "release_url": "https://pypi.org/project/sqlite-utils/3.35.1/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.35.2/",
     "requires_dist": [
       "sqlite-fts4",
       "click",
@@ -71,11 +72,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "CLI tool and Python library for manipulating SQLite databases",
-    "version": "3.35.1",
+    "version": "3.35.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19675067,
+  "last_serial": 20477492,
   "releases": {
     "0.10": [
       {
@@ -3747,6 +3748,50 @@
         "yanked_reason": null
       }
     ],
+    "3.35.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8fddc7d310fe9373c6d8209e457427d92513f5a2d64b51dd70b7cbfd1713fad6",
+          "md5": "64cdb092ccee7cdebc5ee4bc592a0e56",
+          "sha256": "afd7df2d248adb9a107695ad73a9abf39b1a4913a80e6915f696ca7420d42a16"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.35.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "64cdb092ccee7cdebc5ee4bc592a0e56",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 67286,
+        "upload_time": "2023-11-04T01:17:12",
+        "upload_time_iso_8601": "2023-11-04T01:17:12.331489Z",
+        "url": "https://files.pythonhosted.org/packages/8f/dd/c7d310fe9373c6d8209e457427d92513f5a2d64b51dd70b7cbfd1713fad6/sqlite_utils-3.35.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "10914febf8cfe2d0b57a6a77595180bdb4ab97a89ffd36223ed295d1d8bfbbc7",
+          "md5": "cc6f71ea1bea101834e554f60f5b46b1",
+          "sha256": "590b14ad277914cb3fc7d5e254764847facdaaa23c7bafd85ec93874f6f42143"
+        },
+        "downloads": -1,
+        "filename": "sqlite-utils-3.35.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cc6f71ea1bea101834e554f60f5b46b1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 210134,
+        "upload_time": "2023-11-04T01:17:16",
+        "upload_time_iso_8601": "2023-11-04T01:17:16.326006Z",
+        "url": "https://files.pythonhosted.org/packages/10/91/4febf8cfe2d0b57a6a77595180bdb4ab97a89ffd36223ed295d1d8bfbbc7/sqlite-utils-3.35.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.4": [
       {
         "comment_text": "",
@@ -4104,42 +4149,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "fd1e355898e86370659315439de39878ea1b0b0a5f986f93526062195705b94e",
-        "md5": "c316581c8da923ed11e08c2019842909",
-        "sha256": "58da19f64b37fd47e33158ac4dadf2616701cd17d825a1625866d04647f72805"
+        "blake2b_256": "8fddc7d310fe9373c6d8209e457427d92513f5a2d64b51dd70b7cbfd1713fad6",
+        "md5": "64cdb092ccee7cdebc5ee4bc592a0e56",
+        "sha256": "afd7df2d248adb9a107695ad73a9abf39b1a4913a80e6915f696ca7420d42a16"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.35.1-py3-none-any.whl",
+      "filename": "sqlite_utils-3.35.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "c316581c8da923ed11e08c2019842909",
+      "md5_digest": "64cdb092ccee7cdebc5ee4bc592a0e56",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 67228,
-      "upload_time": "2023-09-09T01:09:38",
-      "upload_time_iso_8601": "2023-09-09T01:09:38.999884Z",
-      "url": "https://files.pythonhosted.org/packages/fd/1e/355898e86370659315439de39878ea1b0b0a5f986f93526062195705b94e/sqlite_utils-3.35.1-py3-none-any.whl",
+      "size": 67286,
+      "upload_time": "2023-11-04T01:17:12",
+      "upload_time_iso_8601": "2023-11-04T01:17:12.331489Z",
+      "url": "https://files.pythonhosted.org/packages/8f/dd/c7d310fe9373c6d8209e457427d92513f5a2d64b51dd70b7cbfd1713fad6/sqlite_utils-3.35.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "84394ce5c5ac7ac6a485349f8636a920cd2568bf8f11298519d552b0c57351db",
-        "md5": "d822bf388596a8df7ea5257c16d855f4",
-        "sha256": "e0f03e6976b05bdb7a5c56454971a0e980fc16dbfd3512bbd3bdcac4f0e4370e"
+        "blake2b_256": "10914febf8cfe2d0b57a6a77595180bdb4ab97a89ffd36223ed295d1d8bfbbc7",
+        "md5": "cc6f71ea1bea101834e554f60f5b46b1",
+        "sha256": "590b14ad277914cb3fc7d5e254764847facdaaa23c7bafd85ec93874f6f42143"
       },
       "downloads": -1,
-      "filename": "sqlite-utils-3.35.1.tar.gz",
+      "filename": "sqlite-utils-3.35.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "d822bf388596a8df7ea5257c16d855f4",
+      "md5_digest": "cc6f71ea1bea101834e554f60f5b46b1",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 209457,
-      "upload_time": "2023-09-09T01:09:40",
-      "upload_time_iso_8601": "2023-09-09T01:09:40.842971Z",
-      "url": "https://files.pythonhosted.org/packages/84/39/4ce5c5ac7ac6a485349f8636a920cd2568bf8f11298519d552b0c57351db/sqlite-utils-3.35.1.tar.gz",
+      "size": 210134,
+      "upload_time": "2023-11-04T01:17:16",
+      "upload_time_iso_8601": "2023-11-04T01:17:16.326006Z",
+      "url": "https://files.pythonhosted.org/packages/10/91/4febf8cfe2d0b57a6a77595180bdb4ab97a89ffd36223ed295d1d8bfbbc7/sqlite-utils-3.35.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
