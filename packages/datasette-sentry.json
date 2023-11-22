@@ -8,7 +8,7 @@
       "Programming Language :: Python :: 3.7",
       "Programming Language :: Python :: 3.8"
     ],
-    "description": "# datasette-sentry\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sentry.svg)](https://pypi.org/project/datasette-sentry/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sentry?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sentry/releases)\n[![Tests](https://github.com/simonw/datasette-sentry/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sentry/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sentry/blob/main/LICENSE)\n\nDatasette plugin for configuring Sentry for error reporting\n \n## Installation\n\n    pip install datasette-sentry\n\n## Usage\n\nThis plugin only takes effect if your `metadata.json` file contains relevant top-level plugin configuration in a `\"datasette-sentry\"` configuration key.\n\nYou will need a Sentry DSN - see their [Getting Started instructions](https://docs.sentry.io/error-reporting/quickstart/?platform=python).\n\nAdd it to `metadata.json` like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": \"https://KEY@sentry.io/PROJECTID\"\n        }\n    }\n}\n```\nSettings in `metadata.json` are visible to anyone who visits the `/-/metadata` URL so this is a good place to take advantage of Datasette's [secret configuration values](https://datasette.readthedocs.io/en/stable/plugins.html#secret-configuration-values), in which case your configuration will look more like this:\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            }\n        }\n    }\n}\n```\nThen make a `SENTRY_DSN` environment variable available to Datasette.\n\n## Configuration\n\nIn addition to the `dsn` setting, you can also configure the Sentry [sample rate](https://docs.sentry.io/platforms/python/configuration/sampling/) by setting  `sample_rate` to a floating point number between 0 and 1.\n\nFor example, to capture 25% of errors you would do this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            },\n            \"sample_rate\": 0.25\n        }\n    }\n}\n```\n",
+    "description": "# datasette-sentry\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sentry.svg)](https://pypi.org/project/datasette-sentry/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-sentry?include_prereleases&label=changelog)](https://github.com/simonw/datasette-sentry/releases)\n[![Tests](https://github.com/simonw/datasette-sentry/workflows/Test/badge.svg)](https://github.com/simonw/datasette-sentry/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-sentry/blob/main/LICENSE)\n\nDatasette plugin for configuring Sentry for error reporting\n \n## Installation\n```bash\npip install datasette-sentry\n```\n## Usage\n\nThis plugin only takes effect if your `metadata.json` file contains relevant top-level plugin configuration in a `\"datasette-sentry\"` configuration key.\n\nYou will need a Sentry DSN - see their [Getting Started instructions](https://docs.sentry.io/error-reporting/quickstart/?platform=python).\n\nAdd it to `metadata.json` like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": \"https://KEY@sentry.io/PROJECTID\"\n        }\n    }\n}\n```\nSettings in `metadata.json` are visible to anyone who visits the `/-/metadata` URL so this is a good place to take advantage of Datasette's [secret configuration values](https://datasette.readthedocs.io/en/stable/plugins.html#secret-configuration-values), in which case your configuration will look more like this:\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            }\n        }\n    }\n}\n```\nThen make a `SENTRY_DSN` environment variable available to Datasette.\n\n## Configuration\n\nIn addition to the `dsn` setting, you can also configure the Sentry [sample rate](https://docs.sentry.io/platforms/python/configuration/sampling/) by setting  `sample_rate` to a floating point number between 0 and 1.\n\nFor example, to capture 25% of errors you would do this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            },\n            \"sample_rate\": 0.25\n        }\n    }\n}\n```\n\n### Performance monitoring\n\nSentry [Performance Monitoring](https://docs.sentry.io/product/performance/) records full traces of page for further analysis, in addition to tracking errors.\n\nYou can enable that by adding \"enable_tracing\" to your plugin configuration:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            },\n            \"enable_tracing\": true\n        }\n    }\n}\n```\nThe default sample rate if you do this will be `1.0`, meaning every response will be traced. This can get expensive - you can adjust the tracing rate using `traces_sample_rate`. Set that to `0.1` to sample 10% of requests, for example:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-sentry\": {\n            \"dsn\": {\n                \"$env\": \"SENTRY_DSN\"\n            },\n            \"enable_tracing\": true,\n            \"traces_sample_rate\": 0.1\n        }\n    }\n}\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -29,20 +29,20 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-sentry"
     },
-    "release_url": "https://pypi.org/project/datasette-sentry/0.3/",
+    "release_url": "https://pypi.org/project/datasette-sentry/0.4/",
     "requires_dist": [
       "sentry-sdk",
-      "datasette (>=0.62)",
+      "datasette >=0.62",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin for configuring Sentry",
-    "version": "0.3",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15328806,
+  "last_serial": 20737308,
   "releases": {
     "0.1": [
       {
@@ -265,48 +265,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ab2f46a300bb5fdee640481692547e1e10746bc2a8defce3bf64898bcf06ab77",
+          "md5": "866766484848de887b99c6cfd6bdba22",
+          "sha256": "9dc7276039d7c5688b904416e3ceeb94773c23dcb0b20a450e2ea282b201f8ca"
+        },
+        "downloads": -1,
+        "filename": "datasette_sentry-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "866766484848de887b99c6cfd6bdba22",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7416,
+        "upload_time": "2023-11-21T19:23:37",
+        "upload_time_iso_8601": "2023-11-21T19:23:37.239362Z",
+        "url": "https://files.pythonhosted.org/packages/ab/2f/46a300bb5fdee640481692547e1e10746bc2a8defce3bf64898bcf06ab77/datasette_sentry-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fc6ca4f5fd7f3ffe06c05cf49ad8363f2cdb3e8f0099d544d511e6ae15ad1ef0",
+          "md5": "ef403364a1fa3e195f2f0fe9139a3dbe",
+          "sha256": "662b00661f8f0f6b91de0504d7c356d991eddf36bfe61d43afd36c7ca3472df3"
+        },
+        "downloads": -1,
+        "filename": "datasette-sentry-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ef403364a1fa3e195f2f0fe9139a3dbe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7032,
+        "upload_time": "2023-11-21T19:23:38",
+        "upload_time_iso_8601": "2023-11-21T19:23:38.922752Z",
+        "url": "https://files.pythonhosted.org/packages/fc/6c/a4f5fd7f3ffe06c05cf49ad8363f2cdb3e8f0099d544d511e6ae15ad1ef0/datasette-sentry-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8ea47b6231f09d565684399b7cbc6be20e2329033e22b5977336120220179fe0",
-        "md5": "0ef85d0c423f4dd27a87bdc609790d1a",
-        "sha256": "f9c7eb58ddb55306ce7bbf77c69f0c1f09ce155551fc3e5069af1d6484183051"
+        "blake2b_256": "ab2f46a300bb5fdee640481692547e1e10746bc2a8defce3bf64898bcf06ab77",
+        "md5": "866766484848de887b99c6cfd6bdba22",
+        "sha256": "9dc7276039d7c5688b904416e3ceeb94773c23dcb0b20a450e2ea282b201f8ca"
       },
       "downloads": -1,
-      "filename": "datasette_sentry-0.3-py3-none-any.whl",
+      "filename": "datasette_sentry-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0ef85d0c423f4dd27a87bdc609790d1a",
+      "md5_digest": "866766484848de887b99c6cfd6bdba22",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 7113,
-      "upload_time": "2022-10-06T22:32:26",
-      "upload_time_iso_8601": "2022-10-06T22:32:26.164628Z",
-      "url": "https://files.pythonhosted.org/packages/8e/a4/7b6231f09d565684399b7cbc6be20e2329033e22b5977336120220179fe0/datasette_sentry-0.3-py3-none-any.whl",
+      "size": 7416,
+      "upload_time": "2023-11-21T19:23:37",
+      "upload_time_iso_8601": "2023-11-21T19:23:37.239362Z",
+      "url": "https://files.pythonhosted.org/packages/ab/2f/46a300bb5fdee640481692547e1e10746bc2a8defce3bf64898bcf06ab77/datasette_sentry-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "475a907bc4fad1f11f23f34b1c8fd7603851ce9cc5b59d86f72079d2bb0d464e",
-        "md5": "9e30a71b2e3d933abcc3ffddcad1324c",
-        "sha256": "aafd3841e53ec2e5c43c3b3226c044df810c0a6511c71c31356608af93b2ca52"
+        "blake2b_256": "fc6ca4f5fd7f3ffe06c05cf49ad8363f2cdb3e8f0099d544d511e6ae15ad1ef0",
+        "md5": "ef403364a1fa3e195f2f0fe9139a3dbe",
+        "sha256": "662b00661f8f0f6b91de0504d7c356d991eddf36bfe61d43afd36c7ca3472df3"
       },
       "downloads": -1,
-      "filename": "datasette-sentry-0.3.tar.gz",
+      "filename": "datasette-sentry-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "9e30a71b2e3d933abcc3ffddcad1324c",
+      "md5_digest": "ef403364a1fa3e195f2f0fe9139a3dbe",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 6659,
-      "upload_time": "2022-10-06T22:32:29",
-      "upload_time_iso_8601": "2022-10-06T22:32:29.372192Z",
-      "url": "https://files.pythonhosted.org/packages/47/5a/907bc4fad1f11f23f34b1c8fd7603851ce9cc5b59d86f72079d2bb0d464e/datasette-sentry-0.3.tar.gz",
+      "size": 7032,
+      "upload_time": "2023-11-21T19:23:38",
+      "upload_time_iso_8601": "2023-11-21T19:23:38.922752Z",
+      "url": "https://files.pythonhosted.org/packages/fc/6c/a4f5fd7f3ffe06c05cf49ad8363f2cdb3e8f0099d544d511e6ae15ad1ef0/datasette-sentry-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
