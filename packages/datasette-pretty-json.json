@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-pretty-json\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-pretty-json.svg)](https://pypi.org/project/datasette-pretty-json/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-pretty-json?include_prereleases&label=changelog)](https://github.com/simonw/datasette-pretty-json/releases)\n[![Tests](https://github.com/simonw/datasette-pretty-json/workflows/Test/badge.svg)](https://github.com/simonw/datasette-pretty-json/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-pretty-json/blob/main/LICENSE)\n\n\n[Datasette](https://github.com/simonw/datasette) plugin that pretty-prints any column values that are valid JSON objects or arrays.\n\nYou may also be interested in [datasette-json-html](https://github.com/simonw/datasette-json-html).\n\n\n",
+    "description": "# datasette-pretty-json\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-pretty-json.svg)](https://pypi.org/project/datasette-pretty-json/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-pretty-json?include_prereleases&label=changelog)](https://github.com/simonw/datasette-pretty-json/releases)\n[![Tests](https://github.com/simonw/datasette-pretty-json/workflows/Test/badge.svg)](https://github.com/simonw/datasette-pretty-json/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-pretty-json/blob/main/LICENSE)\n\n\n[Datasette](https://github.com/simonw/datasette) plugin that pretty-prints any column values that are valid JSON objects or arrays.\n\nYou may also be interested in [datasette-json-html](https://github.com/simonw/datasette-json-html).\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -25,18 +25,18 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-pretty-json"
     },
-    "release_url": "https://pypi.org/project/datasette-pretty-json/0.2.2/",
+    "release_url": "https://pypi.org/project/datasette-pretty-json/0.3/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin that pretty-prints any column values that are valid JSON objects or arrays",
-    "version": "0.2.2",
+    "version": "0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15246436,
+  "last_serial": 20824391,
   "releases": {
     "0.0.1": [
       {
@@ -171,48 +171,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a2147ba9aaf5e319fd38aa6361690af09af908eab9cb0463474733b60de9106c",
+          "md5": "fcf5bf475e638ffed8d1485b0d1779fe",
+          "sha256": "ead45c4840de41cbaa22b7977b9abad1f1ff0b5bc5fed975592ee41e2520f188"
+        },
+        "downloads": -1,
+        "filename": "datasette_pretty_json-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fcf5bf475e638ffed8d1485b0d1779fe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6435,
+        "upload_time": "2023-11-28T18:30:32",
+        "upload_time_iso_8601": "2023-11-28T18:30:32.935564Z",
+        "url": "https://files.pythonhosted.org/packages/a2/14/7ba9aaf5e319fd38aa6361690af09af908eab9cb0463474733b60de9106c/datasette_pretty_json-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ecb8e28e5bb7d1ca06f3ece1cefb4a130d49a271c26f70c6eab858e03c8efc87",
+          "md5": "8fae515b090d7d67243b38488f227e76",
+          "sha256": "f23ef3eae6c0df13305368f716e5cb385050d8fbeceb6d0ebcf6618d60f2ddaf"
+        },
+        "downloads": -1,
+        "filename": "datasette-pretty-json-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8fae515b090d7d67243b38488f227e76",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6235,
+        "upload_time": "2023-11-28T18:30:34",
+        "upload_time_iso_8601": "2023-11-28T18:30:34.507730Z",
+        "url": "https://files.pythonhosted.org/packages/ec/b8/e28e5bb7d1ca06f3ece1cefb4a130d49a271c26f70c6eab858e03c8efc87/datasette-pretty-json-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "bb1ddfd97220b0e27fbe3d0740b413288be9f2035b03b405eb1df7c7d5e4eed7",
-        "md5": "29e3e0f6bccdf634c148c158554ca6f1",
-        "sha256": "a959cdf47513de2fcf4216431c72d3d4e30ede1b07a313128b47072a66b77aaa"
+        "blake2b_256": "a2147ba9aaf5e319fd38aa6361690af09af908eab9cb0463474733b60de9106c",
+        "md5": "fcf5bf475e638ffed8d1485b0d1779fe",
+        "sha256": "ead45c4840de41cbaa22b7977b9abad1f1ff0b5bc5fed975592ee41e2520f188"
       },
       "downloads": -1,
-      "filename": "datasette_pretty_json-0.2.2-py3-none-any.whl",
+      "filename": "datasette_pretty_json-0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "29e3e0f6bccdf634c148c158554ca6f1",
+      "md5_digest": "fcf5bf475e638ffed8d1485b0d1779fe",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6450,
-      "upload_time": "2022-09-28T21:07:28",
-      "upload_time_iso_8601": "2022-09-28T21:07:28.896548Z",
-      "url": "https://files.pythonhosted.org/packages/bb/1d/dfd97220b0e27fbe3d0740b413288be9f2035b03b405eb1df7c7d5e4eed7/datasette_pretty_json-0.2.2-py3-none-any.whl",
+      "size": 6435,
+      "upload_time": "2023-11-28T18:30:32",
+      "upload_time_iso_8601": "2023-11-28T18:30:32.935564Z",
+      "url": "https://files.pythonhosted.org/packages/a2/14/7ba9aaf5e319fd38aa6361690af09af908eab9cb0463474733b60de9106c/datasette_pretty_json-0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "17b4d0574646b4b0488527c9004ea4dddf9fd04fca53073d123f6d9cb9c10575",
-        "md5": "63eea8d9fab78c19c4cdc09f370e321e",
-        "sha256": "1c3a91fcd510271cbcd654e15ced670d340bd815059bc5e64d1fa67a3152641d"
+        "blake2b_256": "ecb8e28e5bb7d1ca06f3ece1cefb4a130d49a271c26f70c6eab858e03c8efc87",
+        "md5": "8fae515b090d7d67243b38488f227e76",
+        "sha256": "f23ef3eae6c0df13305368f716e5cb385050d8fbeceb6d0ebcf6618d60f2ddaf"
       },
       "downloads": -1,
-      "filename": "datasette-pretty-json-0.2.2.tar.gz",
+      "filename": "datasette-pretty-json-0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "63eea8d9fab78c19c4cdc09f370e321e",
+      "md5_digest": "8fae515b090d7d67243b38488f227e76",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 5878,
-      "upload_time": "2022-09-28T21:07:30",
-      "upload_time_iso_8601": "2022-09-28T21:07:30.106615Z",
-      "url": "https://files.pythonhosted.org/packages/17/b4/d0574646b4b0488527c9004ea4dddf9fd04fca53073d123f6d9cb9c10575/datasette-pretty-json-0.2.2.tar.gz",
+      "size": 6235,
+      "upload_time": "2023-11-28T18:30:34",
+      "upload_time_iso_8601": "2023-11-28T18:30:34.507730Z",
+      "url": "https://files.pythonhosted.org/packages/ec/b8/e28e5bb7d1ca06f3ece1cefb4a130d49a271c26f70c6eab858e03c8efc87/datasette-pretty-json-0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
