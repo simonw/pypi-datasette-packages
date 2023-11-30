@@ -173,3 +173,9 @@ ttok
 datasette-ml
 datasette-write-ui
 datasette-llm-embed
+datasette-comments
+datasette-enrichments
+datasette-enrichments-gpt
+datasette-enrichments-re2
+datasette-enrichments-opencage
+datasette-enrichments-jinja
