@@ -1,0 +1,141 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-enrichments-opencage\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-enrichments-opencage.svg)](https://pypi.org/project/datasette-enrichments-opencage/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-enrichments-opencage?include_prereleases&label=changelog)](https://github.com/datasette/datasette-enrichments-opencage/releases)\n[![Tests](https://github.com/datasette/datasette-enrichments-opencage/workflows/Test/badge.svg)](https://github.com/datasette/datasette-enrichments-opencage/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-enrichments-opencage/blob/main/LICENSE)\n\nGeocoding enrichment using OpenCage\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-enrichments-opencage\n```\n## Usage\n\nThis plugin adds an enrichment for geocoding using the [OpenCage Geocoder](https://opencagedata.com/).\n\nYou will need an API key from OpenCage - you can sign up for a free trial at https://opencagedata.com/users/sign_up.\n\nFilter for data that you wish to geocode, then apply the OpenCage geocoder enrichment.\n\nYou'll need to specify a template to be passed to the geocoder, specifying which templates should be used as the input.\n\nIf you have a single column containing the address, you can use this:\n\n    {{ address }}\n\nIf you have separate columns for the street, city, state and country, you can use this:\n\n    {{ street }}, {{ city }}, {{ state }}, {{ country }}\n\nIf your address column is missing the country, but all of the addresses are in the USA, you could use this:\n\n    {{ address }}, USA\n\nSee the [OpenCage guide](https://opencagedata.com/guides/how-to-format-your-geocoding-query) for tips on how to get the best results.\n\nBy default only the latitude and longitude from the geocoder will be stored, in the `latitude` and `longitude` columns on your table. These columns will be created if they do not yet exist.\n\nYou can optionally specify a column to store the full JSON output of the geocoder. This column will also be created if it does not exist.\n\nThe full JSON format is [described here](https://opencagedata.com/api#response).\n\n## Configuration\n\nYou can use this plugin without configuration, but you'll need to enter your API key every time you run an enrichment.\n\nTo avoid that, you can set your API key as plugin configuration like this:\n\n```bash\nexport OPENCAGE_API_KEY=\"your-api-key\"\n```\nThen in `metadata.yml`:\n```yaml\nplugins:\n  datasette-enrichments-opencage:\n    api_key:\n      $env: OPENCAGE_API_KEY\n```\nThen run Datasette like this:\n```bash\ndatasette mydatabase.db -m metadata.yml --root\n```\nThis well give you a URL to sign in as the \"root\" user, which grants you access to the enrichment.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-enrichments-opencage\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-enrichments-opencage",
+    "package_url": "https://pypi.org/project/datasette-enrichments-opencage/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-enrichments-opencage/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-enrichments-opencage/actions",
+      "Changelog": "https://github.com/datasette/datasette-enrichments-opencage/releases",
+      "Homepage": "https://github.com/datasette/datasette-enrichments-opencage",
+      "Issues": "https://github.com/datasette/datasette-enrichments-opencage/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-enrichments-opencage/0.1/",
+    "requires_dist": [
+      "datasette",
+      "datasette-enrichments >=0.2",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Geocoding enrichment using OpenCage",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 20849995,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "06ab6277dd9c61d745631d48f73224bb67d65276b1641a4a1a9094c1b9dddacc",
+          "md5": "1259a380bef4fbac790d5c610c0d2061",
+          "sha256": "2f669622ad831b8c05fc5dbbe850d1cb4b5bff01548b72a4d5a1da63ded729b8"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_opencage-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1259a380bef4fbac790d5c610c0d2061",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8946,
+        "upload_time": "2023-11-30T05:31:23",
+        "upload_time_iso_8601": "2023-11-30T05:31:23.012832Z",
+        "url": "https://files.pythonhosted.org/packages/06/ab/6277dd9c61d745631d48f73224bb67d65276b1641a4a1a9094c1b9dddacc/datasette_enrichments_opencage-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b9be5decc32bd9c862a71c177eaa365d9ee60023d9d3122b97000adb2a5f8996",
+          "md5": "6b76d8fcdde7d340cff5c87c699d6aaf",
+          "sha256": "95f933e5c5df9bfcf3da611e0b5267cf6c42896936b691835e860a3b4fd78288"
+        },
+        "downloads": -1,
+        "filename": "datasette-enrichments-opencage-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6b76d8fcdde7d340cff5c87c699d6aaf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9084,
+        "upload_time": "2023-11-30T05:31:24",
+        "upload_time_iso_8601": "2023-11-30T05:31:24.570994Z",
+        "url": "https://files.pythonhosted.org/packages/b9/be/5decc32bd9c862a71c177eaa365d9ee60023d9d3122b97000adb2a5f8996/datasette-enrichments-opencage-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "06ab6277dd9c61d745631d48f73224bb67d65276b1641a4a1a9094c1b9dddacc",
+        "md5": "1259a380bef4fbac790d5c610c0d2061",
+        "sha256": "2f669622ad831b8c05fc5dbbe850d1cb4b5bff01548b72a4d5a1da63ded729b8"
+      },
+      "downloads": -1,
+      "filename": "datasette_enrichments_opencage-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "1259a380bef4fbac790d5c610c0d2061",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 8946,
+      "upload_time": "2023-11-30T05:31:23",
+      "upload_time_iso_8601": "2023-11-30T05:31:23.012832Z",
+      "url": "https://files.pythonhosted.org/packages/06/ab/6277dd9c61d745631d48f73224bb67d65276b1641a4a1a9094c1b9dddacc/datasette_enrichments_opencage-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "b9be5decc32bd9c862a71c177eaa365d9ee60023d9d3122b97000adb2a5f8996",
+        "md5": "6b76d8fcdde7d340cff5c87c699d6aaf",
+        "sha256": "95f933e5c5df9bfcf3da611e0b5267cf6c42896936b691835e860a3b4fd78288"
+      },
+      "downloads": -1,
+      "filename": "datasette-enrichments-opencage-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "6b76d8fcdde7d340cff5c87c699d6aaf",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 9084,
+      "upload_time": "2023-11-30T05:31:24",
+      "upload_time_iso_8601": "2023-11-30T05:31:24.570994Z",
+      "url": "https://files.pythonhosted.org/packages/b9/be/5decc32bd9c862a71c177eaa365d9ee60023d9d3122b97000adb2a5f8996/datasette-enrichments-opencage-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

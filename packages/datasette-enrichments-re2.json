@@ -1,0 +1,185 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-enrichments-re2\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-enrichments-re2.svg)](https://pypi.org/project/datasette-enrichments-re2/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-enrichments-re2?include_prereleases&label=changelog)](https://github.com/datasette/datasette-enrichments-re2/releases)\n[![Tests](https://github.com/datasette/datasette-enrichments-re2/workflows/Test/badge.svg)](https://github.com/datasette/datasette-enrichments-re2/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-enrichments-re2/blob/main/LICENSE)\n\nEnrich data using regular expressions\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-enrichments-re2\n```\n## Usage\n\nThis enrichment allows you to run a regular expression against a column and perform one of the following:\n\n- Execute a search and replace against that column\n- Extract the first matching result and store that in the specified column (adding a column if necessary)\n- Extract all matching results and store them as a JSON array in the specified column. If the regular expression uses named capture groups this will be an array of objects, otherwise it will be an array of strings.\n- Execute a regular expression with named capture groups and store the results in multiple columns, one for each of those named groups\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-enrichments-re2\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-enrichments-re2",
+    "package_url": "https://pypi.org/project/datasette-enrichments-re2/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-enrichments-re2/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-enrichments-re2/actions",
+      "Changelog": "https://github.com/datasette/datasette-enrichments-re2/releases",
+      "Homepage": "https://github.com/datasette/datasette-enrichments-re2",
+      "Issues": "https://github.com/datasette/datasette-enrichments-re2/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-enrichments-re2/0.1/",
+    "requires_dist": [
+      "datasette",
+      "datasette-enrichments >=0.2",
+      "google-re2",
+      "sqlite-utils",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Enrich data using regular expressions",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 20847036,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7b622faf00138b8700a71522f851513d7b4f646114b777236939c04a45d01c5c",
+          "md5": "d6ad6e03d94504f7ce482de1c9a02bec",
+          "sha256": "08a854ee3d9359e31e9760af036f66c9cc0a47a04bbc79f3aa477be802ce6ca3"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_re2-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d6ad6e03d94504f7ce482de1c9a02bec",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8824,
+        "upload_time": "2023-11-30T02:13:41",
+        "upload_time_iso_8601": "2023-11-30T02:13:41.651462Z",
+        "url": "https://files.pythonhosted.org/packages/7b/62/2faf00138b8700a71522f851513d7b4f646114b777236939c04a45d01c5c/datasette_enrichments_re2-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f2f8c6251040335b85a5179133fb81d38bc5a388f757cf1c37848363f90de52f",
+          "md5": "fab41c7ae909398554efcf2ca894cb69",
+          "sha256": "9fc84c940cca541ab5b697356cdb162a6fc1d46d2097431ceb4e74b3af8d6b5e"
+        },
+        "downloads": -1,
+        "filename": "datasette-enrichments-re2-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fab41c7ae909398554efcf2ca894cb69",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9010,
+        "upload_time": "2023-11-30T02:13:42",
+        "upload_time_iso_8601": "2023-11-30T02:13:42.622245Z",
+        "url": "https://files.pythonhosted.org/packages/f2/f8/c6251040335b85a5179133fb81d38bc5a388f757cf1c37848363f90de52f/datasette-enrichments-re2-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "558a183cd272d9bec193688f629bd6d739a378459befb39f22eafa4ad401ce7b",
+          "md5": "2b2d3105f887e340c64d768122b879fb",
+          "sha256": "9cf578b2daf5dca66bbd70f474494088f0e2085d50602c2a9999c40a5899f894"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_re2-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2b2d3105f887e340c64d768122b879fb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8795,
+        "upload_time": "2023-11-28T02:08:14",
+        "upload_time_iso_8601": "2023-11-28T02:08:14.210184Z",
+        "url": "https://files.pythonhosted.org/packages/55/8a/183cd272d9bec193688f629bd6d739a378459befb39f22eafa4ad401ce7b/datasette_enrichments_re2-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "56de174321742b6af595208fed3c5f436bb721bf2b270ce2d1b9f0ca5e816bd6",
+          "md5": "cdc7f818b6967de69e20e3d643de874b",
+          "sha256": "82a94d81ec4c9e4ba9e9ae23359cff53839e89c759a0d3df27532e703a7d163e"
+        },
+        "downloads": -1,
+        "filename": "datasette-enrichments-re2-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cdc7f818b6967de69e20e3d643de874b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 8913,
+        "upload_time": "2023-11-28T02:08:15",
+        "upload_time_iso_8601": "2023-11-28T02:08:15.973486Z",
+        "url": "https://files.pythonhosted.org/packages/56/de/174321742b6af595208fed3c5f436bb721bf2b270ce2d1b9f0ca5e816bd6/datasette-enrichments-re2-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "7b622faf00138b8700a71522f851513d7b4f646114b777236939c04a45d01c5c",
+        "md5": "d6ad6e03d94504f7ce482de1c9a02bec",
+        "sha256": "08a854ee3d9359e31e9760af036f66c9cc0a47a04bbc79f3aa477be802ce6ca3"
+      },
+      "downloads": -1,
+      "filename": "datasette_enrichments_re2-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d6ad6e03d94504f7ce482de1c9a02bec",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 8824,
+      "upload_time": "2023-11-30T02:13:41",
+      "upload_time_iso_8601": "2023-11-30T02:13:41.651462Z",
+      "url": "https://files.pythonhosted.org/packages/7b/62/2faf00138b8700a71522f851513d7b4f646114b777236939c04a45d01c5c/datasette_enrichments_re2-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "f2f8c6251040335b85a5179133fb81d38bc5a388f757cf1c37848363f90de52f",
+        "md5": "fab41c7ae909398554efcf2ca894cb69",
+        "sha256": "9fc84c940cca541ab5b697356cdb162a6fc1d46d2097431ceb4e74b3af8d6b5e"
+      },
+      "downloads": -1,
+      "filename": "datasette-enrichments-re2-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "fab41c7ae909398554efcf2ca894cb69",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 9010,
+      "upload_time": "2023-11-30T02:13:42",
+      "upload_time_iso_8601": "2023-11-30T02:13:42.622245Z",
+      "url": "https://files.pythonhosted.org/packages/f2/f8/c6251040335b85a5179133fb81d38bc5a388f757cf1c37848363f90de52f/datasette-enrichments-re2-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
