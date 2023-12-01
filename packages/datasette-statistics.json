@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-statistics\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-statistics.svg)](https://pypi.org/project/datasette-statistics/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-statistics?include_prereleases&label=changelog)](https://github.com/simonw/datasette-statistics/releases)\n[![Tests](https://github.com/simonw/datasette-statistics/workflows/Test/badge.svg)](https://github.com/simonw/datasette-statistics/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-statistics/blob/main/LICENSE)\n\nSQL statistics functions for Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-statistics\n\n## Usage\n\nThis plugin adds new SQL aggregate functions for use within Datasette:\n\n- `statistics_mean()` for calculating the [mean](https://docs.python.org/3/library/statistics.html#statistics.mean)\n- `statistics_geometric_mean()` for calculating the [geometric mean](https://docs.python.org/3/library/statistics.html#statistics.geometric_mean) (requires Python 3.8+)\n- `statistics_median()` for calculating the [median](https://docs.python.org/3/library/statistics.html#statistics.median)\n- `statistics_median_low()` for calculating the [low median](https://docs.python.org/3/library/statistics.html#statistics.median_low)\n- `statistics_median_high()` for calculating the [high median](https://docs.python.org/3/library/statistics.html#statistics.median_high)\n- `statistics_mode()` for calculating the [mode](https://docs.python.org/3/library/statistics.html#statistics.mode)\n- `statistics_stdev()` for calculating the [sample standard deviation](https://docs.python.org/3/library/statistics.html#statistics.stdev)\n- `statistics_pstdev()` for calculating the [population standard deviation](https://docs.python.org/3/library/statistics.html#statistics.pstdev)\n- `statistics_variance()` for calculating the [sample variance](https://docs.python.org/3/library/statistics.html#statistics.variance)\n- `statistics_pvariance()` for calculating the [population variance](https://docs.python.org/3/library/statistics.html#statistics.pvariance)\n\nThese all use the implementations from the [Python statistics library](https://docs.python.org/3/library/statistics.html).\n\nUse them like this:\n\n    select statistics_mean(numeric_column) from mytable\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-statistics\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-statistics\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-statistics.svg)](https://pypi.org/project/datasette-statistics/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-statistics?include_prereleases&label=changelog)](https://github.com/simonw/datasette-statistics/releases)\n[![Tests](https://github.com/simonw/datasette-statistics/workflows/Test/badge.svg)](https://github.com/simonw/datasette-statistics/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-statistics/blob/main/LICENSE)\n\nSQL statistics functions for Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-statistics\n```\n## Usage\n\nThis plugin adds new SQL aggregate functions for use within Datasette:\n\n- `statistics_mean()` for calculating the [mean](https://docs.python.org/3/library/statistics.html#statistics.mean)\n- `statistics_geometric_mean()` for calculating the [geometric mean](https://docs.python.org/3/library/statistics.html#statistics.geometric_mean) (requires Python 3.8+)\n- `statistics_median()` for calculating the [median](https://docs.python.org/3/library/statistics.html#statistics.median)\n- `statistics_median_low()` for calculating the [low median](https://docs.python.org/3/library/statistics.html#statistics.median_low)\n- `statistics_median_high()` for calculating the [high median](https://docs.python.org/3/library/statistics.html#statistics.median_high)\n- `statistics_mode()` for calculating the [mode](https://docs.python.org/3/library/statistics.html#statistics.mode)\n- `statistics_stdev()` for calculating the [sample standard deviation](https://docs.python.org/3/library/statistics.html#statistics.stdev)\n- `statistics_pstdev()` for calculating the [population standard deviation](https://docs.python.org/3/library/statistics.html#statistics.pstdev)\n- `statistics_variance()` for calculating the [sample variance](https://docs.python.org/3/library/statistics.html#statistics.variance)\n- `statistics_pvariance()` for calculating the [population variance](https://docs.python.org/3/library/statistics.html#statistics.pvariance)\n\nThese all use the implementations from the [Python statistics library](https://docs.python.org/3/library/statistics.html).\n\nUse them like this:\n```sql\nselect statistics_mean(numeric_column) from mytable\n```\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-statistics\npython3 -mvenv venv\nsource venv/bin/activate\n```\nOr if you are using `pipenv`:\n```bash\npipenv shell\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -13,14 +13,14 @@
       "last_month": -1,
       "last_week": -1
     },
-    "home_page": "https://github.com/simonw/datasette-statistics",
+    "home_page": "",
     "keywords": "",
     "license": "Apache License, Version 2.0",
     "maintainer": "",
     "maintainer_email": "",
     "name": "datasette-statistics",
     "package_url": "https://pypi.org/project/datasette-statistics/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-statistics/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-statistics/actions",
@@ -28,20 +28,21 @@
       "Homepage": "https://github.com/simonw/datasette-statistics",
       "Issues": "https://github.com/simonw/datasette-statistics/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-statistics/0.2/",
+    "release_url": "https://pypi.org/project/datasette-statistics/0.2.1/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
+      "pytest-mock ; extra == 'test'",
       "sqlite-utils ; extra == 'test'"
     ],
     "requires_python": ">=3.6",
     "summary": "SQL statistics functions for Datasette",
-    "version": "0.2",
+    "version": "0.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 11738310,
+  "last_serial": 20861518,
   "releases": {
     "0.1": [
       {
@@ -174,48 +175,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "010d34986a50640d397e0951c8b49f89d81296665d487ecc1a4040280120cb41",
+          "md5": "5e7e0dec790cb9a8ef96d52f654afd19",
+          "sha256": "dce7da349cacc8bd9d744595cc627cd960a3947f7d28831a502c6941d967e5ca"
+        },
+        "downloads": -1,
+        "filename": "datasette_statistics-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5e7e0dec790cb9a8ef96d52f654afd19",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2876,
+        "upload_time": "2023-11-30T23:35:53",
+        "upload_time_iso_8601": "2023-11-30T23:35:53.104520Z",
+        "url": "https://files.pythonhosted.org/packages/01/0d/34986a50640d397e0951c8b49f89d81296665d487ecc1a4040280120cb41/datasette_statistics-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f817f9ca64f1b86305c35226c71eb43b373143f7a8020c2bb72384cea16f4760",
+          "md5": "2e98af1006f1fbd489d86c41018692e2",
+          "sha256": "4bc1f8ccbd0ff106527d3435dc1bf9daba7f952ba4022cfe21cdf4f8e7f010b7"
+        },
+        "downloads": -1,
+        "filename": "datasette-statistics-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2e98af1006f1fbd489d86c41018692e2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3075,
+        "upload_time": "2023-11-30T23:35:54",
+        "upload_time_iso_8601": "2023-11-30T23:35:54.649157Z",
+        "url": "https://files.pythonhosted.org/packages/f8/17/f9ca64f1b86305c35226c71eb43b373143f7a8020c2bb72384cea16f4760/datasette-statistics-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "a5755a557075082de8c15a31d3a7f129ebde78fcefe2e2fce41cdc738c52fabb",
-        "md5": "3e8eec2c7f13c081a6e55af78a661254",
-        "sha256": "3d2d3899db5990a27a9f3b91d534f08ac46c7c685c1b5054757ec54af1c7cbec"
+        "blake2b_256": "010d34986a50640d397e0951c8b49f89d81296665d487ecc1a4040280120cb41",
+        "md5": "5e7e0dec790cb9a8ef96d52f654afd19",
+        "sha256": "dce7da349cacc8bd9d744595cc627cd960a3947f7d28831a502c6941d967e5ca"
       },
       "downloads": -1,
-      "filename": "datasette_statistics-0.2-py3-none-any.whl",
+      "filename": "datasette_statistics-0.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "3e8eec2c7f13c081a6e55af78a661254",
+      "md5_digest": "5e7e0dec790cb9a8ef96d52f654afd19",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 2854,
-      "upload_time": "2021-10-15T18:48:50",
-      "upload_time_iso_8601": "2021-10-15T18:48:50.975441Z",
-      "url": "https://files.pythonhosted.org/packages/a5/75/5a557075082de8c15a31d3a7f129ebde78fcefe2e2fce41cdc738c52fabb/datasette_statistics-0.2-py3-none-any.whl",
+      "size": 2876,
+      "upload_time": "2023-11-30T23:35:53",
+      "upload_time_iso_8601": "2023-11-30T23:35:53.104520Z",
+      "url": "https://files.pythonhosted.org/packages/01/0d/34986a50640d397e0951c8b49f89d81296665d487ecc1a4040280120cb41/datasette_statistics-0.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8ab1ae33627699383a3acf1db4fb556d62675e45b2640562598c9153b7b16068",
-        "md5": "f9bc9695f9775418e46ef9fe2df63cb1",
-        "sha256": "ee818a21dba1b9f9df60a65244ccd833f4ad4c488d9485f597c37f283b7b0151"
+        "blake2b_256": "f817f9ca64f1b86305c35226c71eb43b373143f7a8020c2bb72384cea16f4760",
+        "md5": "2e98af1006f1fbd489d86c41018692e2",
+        "sha256": "4bc1f8ccbd0ff106527d3435dc1bf9daba7f952ba4022cfe21cdf4f8e7f010b7"
       },
       "downloads": -1,
-      "filename": "datasette-statistics-0.2.tar.gz",
+      "filename": "datasette-statistics-0.2.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "f9bc9695f9775418e46ef9fe2df63cb1",
+      "md5_digest": "2e98af1006f1fbd489d86c41018692e2",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 2570,
-      "upload_time": "2021-10-15T18:48:51",
-      "upload_time_iso_8601": "2021-10-15T18:48:51.764015Z",
-      "url": "https://files.pythonhosted.org/packages/8a/b1/ae33627699383a3acf1db4fb556d62675e45b2640562598c9153b7b16068/datasette-statistics-0.2.tar.gz",
+      "size": 3075,
+      "upload_time": "2023-11-30T23:35:54",
+      "upload_time_iso_8601": "2023-11-30T23:35:54.649157Z",
+      "url": "https://files.pythonhosted.org/packages/f8/17/f9ca64f1b86305c35226c71eb43b373143f7a8020c2bb72384cea16f4760/datasette-statistics-0.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
