@@ -31,20 +31,65 @@
       "Homepage": "https://github.com/datasette/datasette-enrichments-jinja",
       "Issues": "https://github.com/datasette/datasette-enrichments-jinja/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-enrichments-jinja/0.1a1/",
+    "release_url": "https://pypi.org/project/datasette-enrichments-jinja/0.1/",
     "requires_dist": [
       "datasette-enrichments >=0.1a4",
       "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "pytest-asyncio ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
     ],
     "requires_python": ">=3.8",
     "summary": "Datasette enrichment for evaluating templates in a Jinja sandbox",
-    "version": "0.1a1",
+    "version": "0.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 20709432,
+  "last_serial": 20944648,
   "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "727f8f0755a646cb461e622b58a9bef3895be9fabe39df8d18a95745e5c4f5bc",
+          "md5": "4c83993da2737f296bf01e3a78009711",
+          "sha256": "0f424eb7c19bd7dfcbe11ec1d7c223123eb2bfbb5ba0a19db678fb2fce17f30a"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_jinja-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4c83993da2737f296bf01e3a78009711",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7744,
+        "upload_time": "2023-12-06T20:12:31",
+        "upload_time_iso_8601": "2023-12-06T20:12:31.001277Z",
+        "url": "https://files.pythonhosted.org/packages/72/7f/8f0755a646cb461e622b58a9bef3895be9fabe39df8d18a95745e5c4f5bc/datasette_enrichments_jinja-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6a428b1cb747a2f97f6b1c98c7feb1fcc26f81b1577bc5f76bc7c88fd3d6a2a6",
+          "md5": "f888cf2d62141295ac1b65029ddedea7",
+          "sha256": "f383d6d487615abf9ad84d27bae7ccdfb4a92d38f482a017790a9859cd02dd4b"
+        },
+        "downloads": -1,
+        "filename": "datasette-enrichments-jinja-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f888cf2d62141295ac1b65029ddedea7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7809,
+        "upload_time": "2023-12-06T20:12:31",
+        "upload_time_iso_8601": "2023-12-06T20:12:31.949219Z",
+        "url": "https://files.pythonhosted.org/packages/6a/42/8b1cb747a2f97f6b1c98c7feb1fcc26f81b1577bc5f76bc7c88fd3d6a2a6/datasette-enrichments-jinja-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.1a0": [
       {
         "comment_text": "",
@@ -138,42 +183,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "646c7b42361e97d870f48af8316c24fa7be529944b5738cc2b3b0113db76c37d",
-        "md5": "f29f0c3abb802432045eb6dba503ecb9",
-        "sha256": "b8406b659d232618834b9e49d7de080320654c898d3996d3d7cce094c5b26c75"
+        "blake2b_256": "727f8f0755a646cb461e622b58a9bef3895be9fabe39df8d18a95745e5c4f5bc",
+        "md5": "4c83993da2737f296bf01e3a78009711",
+        "sha256": "0f424eb7c19bd7dfcbe11ec1d7c223123eb2bfbb5ba0a19db678fb2fce17f30a"
       },
       "downloads": -1,
-      "filename": "datasette_enrichments_jinja-0.1a1-py3-none-any.whl",
+      "filename": "datasette_enrichments_jinja-0.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "f29f0c3abb802432045eb6dba503ecb9",
+      "md5_digest": "4c83993da2737f296bf01e3a78009711",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 7763,
-      "upload_time": "2023-11-20T05:07:13",
-      "upload_time_iso_8601": "2023-11-20T05:07:13.235750Z",
-      "url": "https://files.pythonhosted.org/packages/64/6c/7b42361e97d870f48af8316c24fa7be529944b5738cc2b3b0113db76c37d/datasette_enrichments_jinja-0.1a1-py3-none-any.whl",
+      "size": 7744,
+      "upload_time": "2023-12-06T20:12:31",
+      "upload_time_iso_8601": "2023-12-06T20:12:31.001277Z",
+      "url": "https://files.pythonhosted.org/packages/72/7f/8f0755a646cb461e622b58a9bef3895be9fabe39df8d18a95745e5c4f5bc/datasette_enrichments_jinja-0.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "96ed1943dfb0a556b84ba3b209685db0d67ca633583d5ca651124809499ef63a",
-        "md5": "9525fef52f7a9f35ce7514ad54c90410",
-        "sha256": "9a13ea6b2a047e6573666eaf16821b8b086d0e7531b74c770ba27f38cb121bda"
+        "blake2b_256": "6a428b1cb747a2f97f6b1c98c7feb1fcc26f81b1577bc5f76bc7c88fd3d6a2a6",
+        "md5": "f888cf2d62141295ac1b65029ddedea7",
+        "sha256": "f383d6d487615abf9ad84d27bae7ccdfb4a92d38f482a017790a9859cd02dd4b"
       },
       "downloads": -1,
-      "filename": "datasette-enrichments-jinja-0.1a1.tar.gz",
+      "filename": "datasette-enrichments-jinja-0.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "9525fef52f7a9f35ce7514ad54c90410",
+      "md5_digest": "f888cf2d62141295ac1b65029ddedea7",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 7633,
-      "upload_time": "2023-11-20T05:07:14",
-      "upload_time_iso_8601": "2023-11-20T05:07:14.607968Z",
-      "url": "https://files.pythonhosted.org/packages/96/ed/1943dfb0a556b84ba3b209685db0d67ca633583d5ca651124809499ef63a/datasette-enrichments-jinja-0.1a1.tar.gz",
+      "size": 7809,
+      "upload_time": "2023-12-06T20:12:31",
+      "upload_time_iso_8601": "2023-12-06T20:12:31.949219Z",
+      "url": "https://files.pythonhosted.org/packages/6a/42/8b1cb747a2f97f6b1c98c7feb1fcc26f81b1577bc5f76bc7c88fd3d6a2a6/datasette-enrichments-jinja-0.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
