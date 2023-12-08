@@ -180,3 +180,4 @@ datasette-enrichments-re2
 datasette-enrichments-opencage
 datasette-enrichments-jinja
 datasette-statistics
+datasette-chronicle
