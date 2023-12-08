@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-leaflet-geojson\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-leaflet-geojson.svg)](https://pypi.org/project/datasette-leaflet-geojson/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-leaflet-geojson?include_prereleases&label=changelog)](https://github.com/simonw/datasette-leaflet-geojson/releases)\n[![Tests](https://github.com/simonw/datasette-leaflet-geojson/workflows/Test/badge.svg)](https://github.com/simonw/datasette-leaflet-geojson/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-leaflet-geojson/blob/main/LICENSE)\n\nDatasette plugin that replaces any GeoJSON column values with a Leaflet map\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-leaflet-geojson\n\n## Usage\n\nAny columns containing valid GeoJSON strings will have their contents replaced with a Leaflet map when they are displayed in the Datasette interface.\n\n## Demo\n\nYou can try this plugin out at https://calands.datasettes.com/calands/superunits_with_maps?MNG_AGENCY=Palo+Alto%2C+City+of\n\n![datasette-leaflet-geojson in action](https://raw.github.com/simonw/datasette-leaflet-geojson/main/datasette-leaflet-geojson.png)\n\n## Configuration\n\nBy default this plugin displays maps for the first ten rows, and shows a \"Click to load map\" prompt for rows past the first ten.\n\nYou can change this limit using the `default_maps_to_load` plugin configuration setting. Add this to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-leaflet-geojson\": {\n            \"default_maps_to_load\": 20\n        }\n    }\n}\n```\nThen run Datasette with `datasette mydb.db -m metadata.json`.\n\n",
+    "description": "# datasette-leaflet-geojson\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-leaflet-geojson.svg)](https://pypi.org/project/datasette-leaflet-geojson/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-leaflet-geojson?include_prereleases&label=changelog)](https://github.com/simonw/datasette-leaflet-geojson/releases)\n[![Tests](https://github.com/simonw/datasette-leaflet-geojson/workflows/Test/badge.svg)](https://github.com/simonw/datasette-leaflet-geojson/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-leaflet-geojson/blob/main/LICENSE)\n\nDatasette plugin that replaces any GeoJSON column values with a Leaflet map\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-leaflet-geojson\n\n## Usage\n\nAny columns containing valid GeoJSON strings will have their contents replaced with a Leaflet map when they are displayed in the Datasette interface.\n\n## Demo\n\nYou can try this plugin out at https://calands.datasettes.com/calands/superunits_with_maps\n\n![datasette-leaflet-geojson in action](https://raw.github.com/simonw/datasette-leaflet-geojson/main/datasette-leaflet-geojson.png)\n\n## Configuration\n\nBy default this plugin displays maps for the first ten rows, and shows a \"Click to load map\" prompt for rows past the first ten.\n\nYou can change this limit using the `default_maps_to_load` plugin configuration setting. Add this to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-leaflet-geojson\": {\n            \"default_maps_to_load\": 20\n        }\n    }\n}\n```\nThen run Datasette with `datasette mydb.db -m metadata.json`.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -20,25 +20,25 @@
     "maintainer_email": "",
     "name": "datasette-leaflet-geojson",
     "package_url": "https://pypi.org/project/datasette-leaflet-geojson/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-leaflet-geojson/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-leaflet-geojson"
     },
-    "release_url": "https://pypi.org/project/datasette-leaflet-geojson/0.8/",
+    "release_url": "https://pypi.org/project/datasette-leaflet-geojson/0.8.1/",
     "requires_dist": [
-      "datasette (>=0.54)",
-      "datasette-leaflet (>=0.2)",
+      "datasette >=0.54",
+      "datasette-leaflet >=0.2",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "A Datasette plugin that renders GeoJSON columns using Leaflet",
-    "version": "0.8",
+    "version": "0.8.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9229800,
+  "last_serial": 20962718,
   "releases": {
     "0.1": [
       {
@@ -307,48 +307,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.8.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9085a8cb0c2de2b5fbe677b714cb6fa245fd71c9b634e93c2baaaa13d0774243",
+          "md5": "6392731ebd238607f4aadc256d94474d",
+          "sha256": "e33812f30c759f9591f793d611c4da7acb1bfded5c3a43926f1e28ed18d2bc47"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet_geojson-0.8.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6392731ebd238607f4aadc256d94474d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 4902,
+        "upload_time": "2023-12-07T20:55:31",
+        "upload_time_iso_8601": "2023-12-07T20:55:31.912946Z",
+        "url": "https://files.pythonhosted.org/packages/90/85/a8cb0c2de2b5fbe677b714cb6fa245fd71c9b634e93c2baaaa13d0774243/datasette_leaflet_geojson-0.8.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e7294f5a63c9691b89f71f5d91b43aa79525a29143899ecffc6cf9135cdb1dd7",
+          "md5": "9d6bd282c9743ee26109aaa211d0dc5a",
+          "sha256": "ab4412960d9e9c3220f24dd2264a8470a8da01854be5ce772adeff43a1f460aa"
+        },
+        "downloads": -1,
+        "filename": "datasette-leaflet-geojson-0.8.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9d6bd282c9743ee26109aaa211d0dc5a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 4795,
+        "upload_time": "2023-12-07T20:55:32",
+        "upload_time_iso_8601": "2023-12-07T20:55:32.896701Z",
+        "url": "https://files.pythonhosted.org/packages/e7/29/4f5a63c9691b89f71f5d91b43aa79525a29143899ecffc6cf9135cdb1dd7/datasette-leaflet-geojson-0.8.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "994969dc9a7c0dc1b733d83c4841ba07445ca8763090d1d0a0db825ca8b04b47",
-        "md5": "64858c539442cbfbe9b4f42bc67b2ec2",
-        "sha256": "6b3212e213eeecb9f3ca5e68cc3ff111c9179e3a30e22a24af06cc1033fd3b9e"
+        "blake2b_256": "9085a8cb0c2de2b5fbe677b714cb6fa245fd71c9b634e93c2baaaa13d0774243",
+        "md5": "6392731ebd238607f4aadc256d94474d",
+        "sha256": "e33812f30c759f9591f793d611c4da7acb1bfded5c3a43926f1e28ed18d2bc47"
       },
       "downloads": -1,
-      "filename": "datasette_leaflet_geojson-0.8-py3-none-any.whl",
+      "filename": "datasette_leaflet_geojson-0.8.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "64858c539442cbfbe9b4f42bc67b2ec2",
+      "md5_digest": "6392731ebd238607f4aadc256d94474d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 4846,
-      "upload_time": "2021-01-26T02:42:03",
-      "upload_time_iso_8601": "2021-01-26T02:42:03.490042Z",
-      "url": "https://files.pythonhosted.org/packages/99/49/69dc9a7c0dc1b733d83c4841ba07445ca8763090d1d0a0db825ca8b04b47/datasette_leaflet_geojson-0.8-py3-none-any.whl",
+      "size": 4902,
+      "upload_time": "2023-12-07T20:55:31",
+      "upload_time_iso_8601": "2023-12-07T20:55:31.912946Z",
+      "url": "https://files.pythonhosted.org/packages/90/85/a8cb0c2de2b5fbe677b714cb6fa245fd71c9b634e93c2baaaa13d0774243/datasette_leaflet_geojson-0.8.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "4bd569d010fb3b5f426fbbedf3664a21168adcaaca24a0e5eb0c3f2183352a7c",
-        "md5": "4fa6b1c267075c1ad235b0eb8d189e9e",
-        "sha256": "65fc69d0ef0c2a059b86245052870ae6274a208da6c2431d7a5227afe1e7a654"
+        "blake2b_256": "e7294f5a63c9691b89f71f5d91b43aa79525a29143899ecffc6cf9135cdb1dd7",
+        "md5": "9d6bd282c9743ee26109aaa211d0dc5a",
+        "sha256": "ab4412960d9e9c3220f24dd2264a8470a8da01854be5ce772adeff43a1f460aa"
       },
       "downloads": -1,
-      "filename": "datasette-leaflet-geojson-0.8.tar.gz",
+      "filename": "datasette-leaflet-geojson-0.8.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "4fa6b1c267075c1ad235b0eb8d189e9e",
+      "md5_digest": "9d6bd282c9743ee26109aaa211d0dc5a",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 4176,
-      "upload_time": "2021-01-26T02:42:04",
-      "upload_time_iso_8601": "2021-01-26T02:42:04.436888Z",
-      "url": "https://files.pythonhosted.org/packages/4b/d5/69d010fb3b5f426fbbedf3664a21168adcaaca24a0e5eb0c3f2183352a7c/datasette-leaflet-geojson-0.8.tar.gz",
+      "size": 4795,
+      "upload_time": "2023-12-07T20:55:32",
+      "upload_time_iso_8601": "2023-12-07T20:55:32.896701Z",
+      "url": "https://files.pythonhosted.org/packages/e7/29/4f5a63c9691b89f71f5d91b43aa79525a29143899ecffc6cf9135cdb1dd7/datasette-leaflet-geojson-0.8.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
