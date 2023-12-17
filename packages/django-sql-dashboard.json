@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# django-sql-dashboard\n\n[![PyPI](https://img.shields.io/pypi/v/django-sql-dashboard.svg)](https://pypi.org/project/django-sql-dashboard/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/django-sql-dashboard?include_prereleases&label=changelog)](https://github.com/simonw/django-sql-dashboard/releases)\n[![Tests](https://github.com/simonw/django-sql-dashboard/workflows/Test/badge.svg)](https://github.com/simonw/django-sql-dashboard/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/django-sql-dashboard/badge/?version=latest)](http://django-sql-dashboard.datasette.io/en/latest/?badge=latest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/django-sql-dashboard/blob/main/LICENSE)\n\nDjango SQL Dashboard provides an authenticated interface for executing read-only SQL queries directly against your PostgreSQL database, bringing a useful subset of [Datasette](https://datasette.io/) to Django.\n\nApplications include ad-hoc analysis and debugging, plus the creation of reporting dashboards that can be shared with team members or published online.\n\nSee my blog for [more about this project](https://simonwillison.net/2021/May/10/django-sql-dashboard/), including [a video demo](https://www.youtube.com/watch?v=ausrmMZkPEY).\n\nFeatures include:\n\n- Safely run read-only one or more SQL queries against your database and view the results in your browser\n- Bookmark queries and share those links with other members of your team\n- Create [saved dashboards](https://django-sql-dashboard.datasette.io/en/latest/saved-dashboards.html) from your queries, with full control over who can view and edit them\n- [Named parameters](https://django-sql-dashboard.datasette.io/en/latest/sql.html#sql-parameters) such as `select * from entries where id = %(id)s` will be turned into form fields, allowing quick creation of interactive dashboards\n- Produce [bar charts](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#bar-label-bar-quantity), [progress bars](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#total-count-completed-count) and more from SQL queries, with the ability to easily create new [custom dashboard widgets](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#custom-widgets) using the Django template system\n- Write SQL queries that safely construct and render [markdown](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#markdown) and [HTML](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#html)\n- Export the full results of a SQL query as a downloadable CSV or TSV file, using a combination of Django's [streaming HTTP response](https://docs.djangoproject.com/en/3.2/ref/request-response/#django.http.StreamingHttpResponse) mechanism and PostgreSQL [server-side cursors](https://www.psycopg.org/docs/usage.html#server-side-cursors) to efficiently stream large amounts of data without running out of resources\n- Copy and paste the results of SQL queries directly into tools such as Google Sheets or Excel\n- Uses Django's authentication system, so dashboard accounts can be granted using Django's Admin tools\n\n## Documentation\n\nFull documentation is at [django-sql-dashboard.datasette.io](https://django-sql-dashboard.datasette.io/)\n\n## Screenshot\n\n<img width=\"1018\" alt=\"Screenshot showing a SQL query that produces a table and one that produces a bar chart\" src=\"https://user-images.githubusercontent.com/9599/124050883-42ad2300-d9d0-11eb-83e6-44ad85f7ef64.png\">\n\n## Alternatives\n\n- [django-sql-explorer](https://github.com/groveco/django-sql-explorer) provides a related set of functionality that also works against database backends other than PostgreSQL\n\n\n",
+    "description": "# django-sql-dashboard\n\n[![PyPI](https://img.shields.io/pypi/v/django-sql-dashboard.svg)](https://pypi.org/project/django-sql-dashboard/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/django-sql-dashboard?include_prereleases&label=changelog)](https://github.com/simonw/django-sql-dashboard/releases)\n[![Tests](https://github.com/simonw/django-sql-dashboard/workflows/Test/badge.svg)](https://github.com/simonw/django-sql-dashboard/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/django-sql-dashboard/badge/?version=latest)](http://django-sql-dashboard.datasette.io/en/latest/?badge=latest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/django-sql-dashboard/blob/main/LICENSE)\n\nDjango SQL Dashboard provides an authenticated interface for executing read-only SQL queries directly against your PostgreSQL database, bringing a useful subset of [Datasette](https://datasette.io/) to Django.\n\nApplications include ad-hoc analysis and debugging, plus the creation of reporting dashboards that can be shared with team members or published online.\n\nSee my blog for [more about this project](https://simonwillison.net/2021/May/10/django-sql-dashboard/), including [a video demo](https://www.youtube.com/watch?v=ausrmMZkPEY).\n\nFeatures include:\n\n- Safely run read-only one or more SQL queries against your database and view the results in your browser\n- Bookmark queries and share those links with other members of your team\n- Create [saved dashboards](https://django-sql-dashboard.datasette.io/en/latest/saved-dashboards.html) from your queries, with full control over who can view and edit them\n- [Named parameters](https://django-sql-dashboard.datasette.io/en/latest/sql.html#sql-parameters) such as `select * from entries where id = %(id)s` will be turned into form fields, allowing quick creation of interactive dashboards\n- Produce [bar charts](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#bar-label-bar-quantity), [progress bars](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#total-count-completed-count) and more from SQL queries, with the ability to easily create new [custom dashboard widgets](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#custom-widgets) using the Django template system\n- Write SQL queries that safely construct and render [markdown](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#markdown) and [HTML](https://django-sql-dashboard.datasette.io/en/latest/widgets.html#html)\n- Export the full results of a SQL query as a downloadable CSV or TSV file, using a combination of Django's [streaming HTTP response](https://docs.djangoproject.com/en/3.2/ref/request-response/#django.http.StreamingHttpResponse) mechanism and PostgreSQL [server-side cursors](https://www.psycopg.org/docs/usage.html#server-side-cursors) to efficiently stream large amounts of data without running out of resources\n- Copy and paste the results of SQL queries directly into tools such as Google Sheets or Excel\n- Uses Django's authentication system, so dashboard accounts can be granted using Django's Admin tools\n\n## Documentation\n\nFull documentation is at [django-sql-dashboard.datasette.io](https://django-sql-dashboard.datasette.io/)\n\n## Screenshot\n\n<img width=\"1018\" alt=\"Screenshot showing a SQL query that produces a table and one that produces a bar chart\" src=\"https://user-images.githubusercontent.com/9599/124050883-42ad2300-d9d0-11eb-83e6-44ad85f7ef64.png\">\n\n## Alternatives\n\n- [django-sql-explorer](https://github.com/groveco/django-sql-explorer) provides a related set of functionality that also works against database backends other than PostgreSQL\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -29,15 +29,15 @@
       "Homepage": "https://github.com/simonw/django-sql-dashboard",
       "Issues": "https://github.com/simonw/django-sql-dashboard/issues"
     },
-    "release_url": "https://pypi.org/project/django-sql-dashboard/1.1/",
+    "release_url": "https://pypi.org/project/django-sql-dashboard/1.2/",
     "requires_dist": [
-      "Django (>=3.0)",
+      "Django >=3.0",
       "markdown",
       "bleach",
-      "black (>=22.3.0) ; extra == 'test'",
+      "black >=22.3.0 ; extra == 'test'",
       "psycopg2 ; extra == 'test'",
       "pytest ; extra == 'test'",
-      "pytest-django (==4.2.0) ; extra == 'test'",
+      "pytest-django ==4.2.0 ; extra == 'test'",
       "pytest-pythonpath ; extra == 'test'",
       "dj-database-url ; extra == 'test'",
       "testing.postgresql ; extra == 'test'",
@@ -46,11 +46,11 @@
     ],
     "requires_python": ">=3.6",
     "summary": "Django app for building dashboards using raw SQL queries",
-    "version": "1.1",
+    "version": "1.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13562337,
+  "last_serial": 21085911,
   "releases": {
     "0.10a0": [
       {
@@ -1591,48 +1591,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "315c5c16c89d24b661c9ac7746b11b377acbf443f96cfa71f9c1e1283260c3bb",
+          "md5": "9a216958ba43545287695d0970576f68",
+          "sha256": "656e9d8ecd2d0ce6a877a732f66adb69d79c4b535c5fcbc0dc5099ef97de260a"
+        },
+        "downloads": -1,
+        "filename": "django_sql_dashboard-1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9a216958ba43545287695d0970576f68",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 35254,
+        "upload_time": "2023-12-16T07:05:50",
+        "upload_time_iso_8601": "2023-12-16T07:05:50.179464Z",
+        "url": "https://files.pythonhosted.org/packages/31/5c/5c16c89d24b661c9ac7746b11b377acbf443f96cfa71f9c1e1283260c3bb/django_sql_dashboard-1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "75b7ac4015ea4aa2962d20408077c03c1a4d79298e967272a7dfe5bf1d52c2ec",
+          "md5": "d9dd09f1407f70f553cf615796feb879",
+          "sha256": "7bc8ee6cb212d74147216e31ec392e29f5c16bdcb5cc8e76a3715f0d527713a9"
+        },
+        "downloads": -1,
+        "filename": "django-sql-dashboard-1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d9dd09f1407f70f553cf615796feb879",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 27193,
+        "upload_time": "2023-12-16T07:05:51",
+        "upload_time_iso_8601": "2023-12-16T07:05:51.924051Z",
+        "url": "https://files.pythonhosted.org/packages/75/b7/ac4015ea4aa2962d20408077c03c1a4d79298e967272a7dfe5bf1d52c2ec/django-sql-dashboard-1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "c503ab11c5b3e03ec6d77489656a16ddd5fffdab2a15b656fc8b37c9d165527a",
-        "md5": "7bfe27935a59102e717eaaee0ae48372",
-        "sha256": "33d516dd795bec89b11c88c10ed3dd1da518b59e4caf5292cdc97f1288813337"
+        "blake2b_256": "315c5c16c89d24b661c9ac7746b11b377acbf443f96cfa71f9c1e1283260c3bb",
+        "md5": "9a216958ba43545287695d0970576f68",
+        "sha256": "656e9d8ecd2d0ce6a877a732f66adb69d79c4b535c5fcbc0dc5099ef97de260a"
       },
       "downloads": -1,
-      "filename": "django_sql_dashboard-1.1-py3-none-any.whl",
+      "filename": "django_sql_dashboard-1.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "7bfe27935a59102e717eaaee0ae48372",
+      "md5_digest": "9a216958ba43545287695d0970576f68",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 35049,
-      "upload_time": "2022-04-20T00:31:35",
-      "upload_time_iso_8601": "2022-04-20T00:31:35.912274Z",
-      "url": "https://files.pythonhosted.org/packages/c5/03/ab11c5b3e03ec6d77489656a16ddd5fffdab2a15b656fc8b37c9d165527a/django_sql_dashboard-1.1-py3-none-any.whl",
+      "size": 35254,
+      "upload_time": "2023-12-16T07:05:50",
+      "upload_time_iso_8601": "2023-12-16T07:05:50.179464Z",
+      "url": "https://files.pythonhosted.org/packages/31/5c/5c16c89d24b661c9ac7746b11b377acbf443f96cfa71f9c1e1283260c3bb/django_sql_dashboard-1.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "86a265397ceca8bcceb738d65d1989a1067f29d6373cf4f874b068baa1d7d4ee",
-        "md5": "5ead08e80e20ebda68bf2570aed9b10a",
-        "sha256": "6e8033840f424603505a8f7c2aad53faa936f7bea1c27e76808a7cad93f79ff7"
+        "blake2b_256": "75b7ac4015ea4aa2962d20408077c03c1a4d79298e967272a7dfe5bf1d52c2ec",
+        "md5": "d9dd09f1407f70f553cf615796feb879",
+        "sha256": "7bc8ee6cb212d74147216e31ec392e29f5c16bdcb5cc8e76a3715f0d527713a9"
       },
       "downloads": -1,
-      "filename": "django-sql-dashboard-1.1.tar.gz",
+      "filename": "django-sql-dashboard-1.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "5ead08e80e20ebda68bf2570aed9b10a",
+      "md5_digest": "d9dd09f1407f70f553cf615796feb879",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 26825,
-      "upload_time": "2022-04-20T00:31:37",
-      "upload_time_iso_8601": "2022-04-20T00:31:37.261387Z",
-      "url": "https://files.pythonhosted.org/packages/86/a2/65397ceca8bcceb738d65d1989a1067f29d6373cf4f874b068baa1d7d4ee/django-sql-dashboard-1.1.tar.gz",
+      "size": 27193,
+      "upload_time": "2023-12-16T07:05:51",
+      "upload_time_iso_8601": "2023-12-16T07:05:51.924051Z",
+      "url": "https://files.pythonhosted.org/packages/75/b7/ac4015ea4aa2962d20408077c03c1a4d79298e967272a7dfe5bf1d52c2ec/django-sql-dashboard-1.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
