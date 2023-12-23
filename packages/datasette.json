@@ -43,7 +43,7 @@
       "Live demo": "https://latest.datasette.io/",
       "Source code": "https://github.com/simonw/datasette"
     },
-    "release_url": "https://pypi.org/project/datasette/0.64.5/",
+    "release_url": "https://pypi.org/project/datasette/0.64.6/",
     "requires_dist": [
       "asgiref >=3.2.10",
       "click >=7.1.1",
@@ -80,11 +80,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "An open source multi-tool for exploring and publishing data",
-    "version": "0.64.5",
+    "version": "0.64.6",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 20073836,
+  "last_serial": 21178756,
   "releases": {
     "0.10": [
       {
@@ -4609,6 +4609,50 @@
         "yanked_reason": null
       }
     ],
+    "0.64.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "70f617fa43f66da919df0745a659f7430095a6e1f2869067a2dadd4e75e907c0",
+          "md5": "64aad694aee735ad606ba63518181f26",
+          "sha256": "158dbdfab1a4c613da7757518444a7664ecd39f54a617304edff4f119dd057df"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.64.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "64aad694aee735ad606ba63518181f26",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 232297,
+        "upload_time": "2023-12-22T23:22:42",
+        "upload_time_iso_8601": "2023-12-22T23:22:42.427169Z",
+        "url": "https://files.pythonhosted.org/packages/70/f6/17fa43f66da919df0745a659f7430095a6e1f2869067a2dadd4e75e907c0/datasette-0.64.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c87d667e3bfceef9e428e38117b8d9704f502395fddc1effb7ef760b2dd0c4e6",
+          "md5": "3d26ca79756cbf4d1db593db941ac581",
+          "sha256": "85ca3aabca64fd9560052042aec27d3b32a1f85303853da3550434866d0fa539"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.64.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3d26ca79756cbf4d1db593db941ac581",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 211021,
+        "upload_time": "2023-12-22T23:22:45",
+        "upload_time_iso_8601": "2023-12-22T23:22:45.636337Z",
+        "url": "https://files.pythonhosted.org/packages/c8/7d/667e3bfceef9e428e38117b8d9704f502395fddc1effb7ef760b2dd0c4e6/datasette-0.64.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.8": [
       {
         "comment_text": "",
@@ -5012,59 +5056,45 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "57c6c87d049481c08873e77051b8a24b18ee19787db2c8d96ea7182a75dd4256",
-        "md5": "ac38edaf8f7ad86c9837e519941bce55",
-        "sha256": "a7370d832a656ff0804e262d79fe16080c2bcba56be5e2873a0b64f465542404"
+        "blake2b_256": "70f617fa43f66da919df0745a659f7430095a6e1f2869067a2dadd4e75e907c0",
+        "md5": "64aad694aee735ad606ba63518181f26",
+        "sha256": "158dbdfab1a4c613da7757518444a7664ecd39f54a617304edff4f119dd057df"
       },
       "downloads": -1,
-      "filename": "datasette-0.64.5-py3-none-any.whl",
+      "filename": "datasette-0.64.6-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "ac38edaf8f7ad86c9837e519941bce55",
+      "md5_digest": "64aad694aee735ad606ba63518181f26",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 232286,
-      "upload_time": "2023-10-08T16:10:00",
-      "upload_time_iso_8601": "2023-10-08T16:10:00.920960Z",
-      "url": "https://files.pythonhosted.org/packages/57/c6/c87d049481c08873e77051b8a24b18ee19787db2c8d96ea7182a75dd4256/datasette-0.64.5-py3-none-any.whl",
+      "size": 232297,
+      "upload_time": "2023-12-22T23:22:42",
+      "upload_time_iso_8601": "2023-12-22T23:22:42.427169Z",
+      "url": "https://files.pythonhosted.org/packages/70/f6/17fa43f66da919df0745a659f7430095a6e1f2869067a2dadd4e75e907c0/datasette-0.64.6-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "44692c4e85d5409ca9d162a51312d284676eb7ba4293aff6c3d427523fef116d",
-        "md5": "2885c70c53557a1b7815135a26ab3e1d",
-        "sha256": "df917896f181ce57e26c6b3b78ff7fdfdc46c322c46673b2276fae1d8e7f19e2"
+        "blake2b_256": "c87d667e3bfceef9e428e38117b8d9704f502395fddc1effb7ef760b2dd0c4e6",
+        "md5": "3d26ca79756cbf4d1db593db941ac581",
+        "sha256": "85ca3aabca64fd9560052042aec27d3b32a1f85303853da3550434866d0fa539"
       },
       "downloads": -1,
-      "filename": "datasette-0.64.5.tar.gz",
+      "filename": "datasette-0.64.6.tar.gz",
       "has_sig": false,
-      "md5_digest": "2885c70c53557a1b7815135a26ab3e1d",
+      "md5_digest": "3d26ca79756cbf4d1db593db941ac581",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 211004,
-      "upload_time": "2023-10-08T16:10:05",
-      "upload_time_iso_8601": "2023-10-08T16:10:05.123036Z",
-      "url": "https://files.pythonhosted.org/packages/44/69/2c4e85d5409ca9d162a51312d284676eb7ba4293aff6c3d427523fef116d/datasette-0.64.5.tar.gz",
+      "size": 211021,
+      "upload_time": "2023-12-22T23:22:45",
+      "upload_time_iso_8601": "2023-12-22T23:22:45.636337Z",
+      "url": "https://files.pythonhosted.org/packages/c8/7d/667e3bfceef9e428e38117b8d9704f502395fddc1effb7ef760b2dd0c4e6/datasette-0.64.6.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
   ],
-  "vulnerabilities": [
-    {
-      "aliases": [
-        "CVE-2023-40570",
-        "GHSA-7ch3-7pp7-7cpq"
-      ],
-      "details": "Datasette is an open source multi-tool for exploring and publishing data. This bug affects Datasette instances running a Datasette 1.0 alpha - 1.0a0, 1.0a1, 1.0a2 or 1.0a3 - in an online accessible location but with authentication enabled using a plugin such as datasette-auth-passwords. The `/-/api` API explorer endpoint could reveal the names of both databases and tables - but not their contents - to an unauthenticated user. Datasette 1.0a4 has a fix for this issue. This will block access to the API explorer but will still allow access to the Datasette read or write JSON APIs, as those use different URL patterns within the Datasette `/database` hierarchy. This issue is patched in version 1.0a4.",
-      "fixed_in": [],
-      "id": "PYSEC-2023-154",
-      "link": "https://osv.dev/vulnerability/PYSEC-2023-154",
-      "source": "osv",
-      "summary": null,
-      "withdrawn": null
-    }
-  ]
+  "vulnerabilities": []
 }
