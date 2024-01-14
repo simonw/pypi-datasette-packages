@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-cluster-map\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cluster-map.svg)](https://pypi.org/project/datasette-cluster-map/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-cluster-map?include_prereleases&label=changelog)](https://github.com/simonw/datasette-cluster-map/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cluster-map/blob/main/LICENSE)\n\nA [Datasette plugin](https://docs.datasette.io/en/stable/plugins.html) that detects tables with `latitude` and `longitude` columns and then plots them on a map using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster).\n\nMore about this project: [Datasette plugins, and building a clustered map visualization](https://simonwillison.net/2018/Apr/20/datasette-plugins/).\n\n## Demo\n\n[global-power-plants.datasettes.com](https://global-power-plants.datasettes.com/global-power-plants/global-power-plants) hosts a demo of this plugin running against a database of 33,000 power plants around the world.\n\n![Cluster map demo](https://static.simonwillison.net/static/2020/global-power-plants.png)\n\n## Installation\n\nRun `datasette install datasette-cluster-map` to add this plugin to your Datasette virtual environment. Datasette will automatically load the plugin if it is installed in this way.\n\nIf you are deploying using the `datasette publish` command you can use the `--install` option:\n\n    datasette publish cloudrun mydb.db --install=datasette-cluster-map\n\nIf any of your tables have a `latitude` and `longitude` column, a map will be automatically displayed.\n\n## Configuration\n\nIf your columns are called something else you can configure the column names using [plugin configuration](https://docs.datasette.io/en/stable/plugins.html#plugin-configuration) in a `metadata.json` file. For example, if all of your columns are called `xlat` and `xlng` you can create a `metadata.json` file like this:\n\n```json\n{\n    \"title\": \"Regular metadata keys can go here too\",\n    \"plugins\": {\n        \"datasette-cluster-map\": {\n            \"latitude_column\": \"xlat\",\n            \"longitude_column\": \"xlng\"\n        }\n    }\n}\n```\n\nThen run Datasette like this:\n\n    datasette mydata.db -m metadata.json\n\nThis will configure the required column names for every database loaded by that Datasette instance.\n\nIf you want to customize the column names for just one table in one database, you can do something like this:\n\n```json\n{\n    \"databases\": {\n        \"polar-bears\": {\n            \"tables\": {\n                \"USGS_WC_eartag_deployments_2009-2011\": {\n                    \"plugins\": {\n                        \"datasette-cluster-map\": {\n                            \"latitude_column\": \"Capture Latitude\",\n                            \"longitude_column\": \"Capture Longitude\"\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nYou can also use a custom SQL query to rename those columns to `latitude` and `longitude`, [for example](https://polar-bears.now.sh/polar-bears?sql=select+*%2C%0D%0A++++%22Capture+Latitude%22+as+latitude%2C%0D%0A++++%22Capture+Longitude%22+as+longitude%0D%0Afrom+%5BUSGS_WC_eartag_deployments_2009-2011%5D):\n\n```sql\nselect *,\n    \"Capture Latitude\" as latitude,\n    \"Capture Longitude\" as longitude\nfrom [USGS_WC_eartag_deployments_2009-2011]\n```\n\nThe map defaults to being displayed above the main results table on the page. You can use the `\"container\"` plugin setting to provide a CSS selector indicating an element that the map should be appended to instead.\n\n## Custom tile layers\n\nYou can customize the tile layer used  by the maps using the `tile_layer` and `tile_layer_options` configuration settings. For example, to use the [Stamen Watercolor tiles](http://maps.stamen.com/watercolor/#12/37.7706/-122.3782) you can use these settings:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cluster-map\": {\n            \"tile_layer\": \"https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}\",\n            \"tile_layer_options\": {\n                \"attribution\": \"Map tiles by <a href=\\\"http://stamen.com\\\">Stamen Design</a>, <a href=\\\"http://creativecommons.org/licenses/by/3.0\\\">CC BY 3.0</a> &mdash; Map data &copy; <a href=\\\"https://www.openstreetmap.org/copyright\\\">OpenStreetMap</a> contributors\",\n                \"subdomains\": \"abcd\",\n                \"minZoom\": 1,\n                \"maxZoom\": 16,\n                \"ext\": \"jpg\"\n            }\n        }\n    }\n}\n```\nThe [Leaflet Providers preview list](https://leaflet-extras.github.io/leaflet-providers/preview/index.html) has details of many other tile layers you can use.\n\n## Custom marker popups\n\nThe marker popup defaults to displaying the data for the underlying database row.\n\nYou can customize this by including a `popup` column in your results containing JSON that defines a more useful popup.\n\nThe JSON in the popup column should look something like this:\n\n```json\n{\n    \"image\": \"https://niche-museums.imgix.net/dodgems.heic?w=800&h=400&fit=crop\",\n    \"alt\": \"Dingles Fairground Heritage Centre\",\n    \"title\": \"Dingles Fairground Heritage Centre\",\n    \"description\": \"Home of the National Fairground Collection, Dingles has over 45,000 indoor square feet of vintage fairground rides... and you can go on them! Highlights include the last complete surviving and opera\",\n    \"link\": \"/browse/museums/26\"\n}\n```\n\nEach of these columns is optional.\n\n- `title` is the title to show at the top of the popup\n- `image` is the URL to an image to display in the popup\n- `alt` is the alt attribute to use for that image\n- `description` is a longer string of text to use as a description\n- `link` is a URL that the marker content should link to\n\nYou can use the SQLite `json_object()` function to construct this data dynamically as part of your SQL query. Here's an example:\n\n```sql\nselect json_object(\n  'image', photo_url || '?w=800&h=400&fit=crop',\n  'title', name,\n  'description', substr(description, 0, 200),\n  'link', '/browse/museums/' || id\n  ) as popup,\n  latitude, longitude from museums\nwhere id in (26, 27) order by id\n```\n\n[Try that example here](https://www.niche-museums.com/browse?sql=select+json_object%28%0D%0A++%27image%27%2C+photo_url+%7C%7C+%27%3Fw%3D800%26h%3D400%26fit%3Dcrop%27%2C%0D%0A++%27title%27%2C+name%2C%0D%0A++%27description%27%2C+substr%28description%2C+0%2C+200%29%2C%0D%0A++%27link%27%2C+%27%2Fbrowse%2Fmuseums%2F%27+%7C%7C+id%0D%0A++%29+as+popup%2C%0D%0A++latitude%2C+longitude+from+museums) or take a look at [this demo built using a SQL view](https://dogsheep-photos.dogsheep.net/public/photos_on_a_map).\n\n## How I deployed the demo\n\n    datasette publish cloudrun global-power-plants.db \\\n        --service global-power-plants \\\n        --metadata metadata.json \\\n        --install=datasette-cluster-map \\\n        --extra-options=\"--config facet_time_limit_ms:1000\"\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-cluster-map\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-cluster-map\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cluster-map.svg)](https://pypi.org/project/datasette-cluster-map/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-cluster-map?include_prereleases&label=changelog)](https://github.com/simonw/datasette-cluster-map/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cluster-map/blob/main/LICENSE)\n\nA [Datasette plugin](https://docs.datasette.io/en/stable/plugins.html) that detects tables with `latitude` and `longitude` columns and then plots them on a map using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster).\n\nMore about this project: [Datasette plugins, and building a clustered map visualization](https://simonwillison.net/2018/Apr/20/datasette-plugins/).\n\n## Demo\n\n[global-power-plants.datasettes.com](https://global-power-plants.datasettes.com/global-power-plants/global-power-plants) hosts a demo of this plugin running against a database of 33,000 power plants around the world.\n\n![Cluster map demo](https://static.simonwillison.net/static/2020/global-power-plants.png)\n\n## Installation\n\nRun `datasette install datasette-cluster-map` to add this plugin to your Datasette virtual environment. Datasette will automatically load the plugin if it is installed in this way.\n\nIf you are deploying using the `datasette publish` command you can use the `--install` option:\n\n    datasette publish cloudrun mydb.db --install=datasette-cluster-map\n\nIf any of your tables have one of the following pairs of columns a map will be automatically displayed:\n\n- `latitude` and `longitude`\n- `lat` and `lng`\n- `lat` and `lon`\n- `lat` and `long`\n- `*_latitude` and `*_longitude`\n- `*_lat` and `*_lng` for any of the three variants of `lng`\n\n## Configuration\n\nIf your columns are called something else you can configure the column names using [plugin configuration](https://docs.datasette.io/en/stable/plugins.html#plugin-configuration) in a `metadata.json` file. For example, if all of your columns are called `xlat` and `xlng` you can create a `metadata.json` file like this:\n\n```json\n{\n    \"title\": \"Regular metadata keys can go here too\",\n    \"plugins\": {\n        \"datasette-cluster-map\": {\n            \"latitude_column\": \"xlat\",\n            \"longitude_column\": \"xlng\"\n        }\n    }\n}\n```\n\nThen run Datasette like this:\n\n    datasette mydata.db -m metadata.json\n\nThis will configure the required column names for every database loaded by that Datasette instance.\n\nIf you want to customize the column names for just one table in one database, you can do something like this:\n\n```json\n{\n    \"databases\": {\n        \"polar-bears\": {\n            \"tables\": {\n                \"USGS_WC_eartag_deployments_2009-2011\": {\n                    \"plugins\": {\n                        \"datasette-cluster-map\": {\n                            \"latitude_column\": \"Capture Latitude\",\n                            \"longitude_column\": \"Capture Longitude\"\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\nYou can also use a custom SQL query to rename those columns to `latitude` and `longitude`, [for example](https://polar-bears.now.sh/polar-bears?sql=select+*%2C%0D%0A++++%22Capture+Latitude%22+as+latitude%2C%0D%0A++++%22Capture+Longitude%22+as+longitude%0D%0Afrom+%5BUSGS_WC_eartag_deployments_2009-2011%5D):\n\n```sql\nselect *,\n    \"Capture Latitude\" as latitude,\n    \"Capture Longitude\" as longitude\nfrom [USGS_WC_eartag_deployments_2009-2011]\n```\n\nThe map defaults to being displayed above the main results table on the page. You can use the `\"container\"` plugin setting to provide a CSS selector indicating an element that the map should be appended to instead.\n\n## Custom tile layers\n\nYou can customize the tile layer used  by the maps using the `tile_layer` and `tile_layer_options` configuration settings. For example, to use the [OpenTopoMap](https://opentopomap.org/) you can use these settings:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cluster-map\": {\n            \"tile_layer\": \"https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png\",\n            \"tile_layer_options\": {\n                \"attribution\": \"Map data: &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors, <a href='http://viewfinderpanoramas.org'>SRTM</a> | Map style: &copy; <a href='https://opentopomap.org'>OpenTopoMap</a> (<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>)\",\n                \"maxZoom\": 17\n            }\n        }\n    }\n}\n```\nThe [Leaflet Providers preview list](https://leaflet-extras.github.io/leaflet-providers/preview/index.html) has details of many other tile layers you can use.\n\n## Custom marker popups\n\nThe marker popup defaults to displaying the data for the underlying database row.\n\nYou can customize this by including a `popup` column in your results containing JSON that defines a more useful popup.\n\nThe JSON in the popup column should look something like this:\n\n```json\n{\n    \"image\": \"https://niche-museums.imgix.net/dodgems.heic?w=800&h=400&fit=crop\",\n    \"alt\": \"Dingles Fairground Heritage Centre\",\n    \"title\": \"Dingles Fairground Heritage Centre\",\n    \"description\": \"Home of the National Fairground Collection, Dingles has over 45,000 indoor square feet of vintage fairground rides... and you can go on them! Highlights include the last complete surviving and opera\",\n    \"link\": \"/browse/museums/26\"\n}\n```\n\nEach of these columns is optional.\n\n- `title` is the title to show at the top of the popup\n- `image` is the URL to an image to display in the popup\n- `alt` is the alt attribute to use for that image\n- `description` is a longer string of text to use as a description\n- `link` is a URL that the marker content should link to\n\nYou can use the SQLite `json_object()` function to construct this data dynamically as part of your SQL query. Here's an example:\n\n```sql\nselect json_object(\n  'image', photo_url || '?w=800&h=400&fit=crop',\n  'title', name,\n  'description', substr(description, 0, 200),\n  'link', '/browse/museums/' || id\n  ) as popup,\n  latitude, longitude from museums\nwhere id in (26, 27) order by id\n```\n\n[Try that example here](https://www.niche-museums.com/browse?sql=select+json_object%28%0D%0A++%27image%27%2C+photo_url+%7C%7C+%27%3Fw%3D800%26h%3D400%26fit%3Dcrop%27%2C%0D%0A++%27title%27%2C+name%2C%0D%0A++%27description%27%2C+substr%28description%2C+0%2C+200%29%2C%0D%0A++%27link%27%2C+%27%2Fbrowse%2Fmuseums%2F%27+%7C%7C+id%0D%0A++%29+as+popup%2C%0D%0A++latitude%2C+longitude+from+museums) or take a look at [this demo built using a SQL view](https://dogsheep-photos.dogsheep.net/public/photos_on_a_map).\n\n## How I deployed the demo\n\n    datasette publish cloudrun global-power-plants.db \\\n        --service global-power-plants \\\n        --metadata metadata.json \\\n        --install=datasette-cluster-map \\\n        --extra-options=\"--config facet_time_limit_ms:1000\"\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-cluster-map\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -23,7 +23,7 @@
     "maintainer_email": "",
     "name": "datasette-cluster-map",
     "package_url": "https://pypi.org/project/datasette-cluster-map/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-cluster-map/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-cluster-map/actions",
@@ -31,22 +31,24 @@
       "Homepage": "https://github.com/simonw/datasette-cluster-map",
       "Issues": "https://github.com/simonw/datasette-cluster-map/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-cluster-map/0.17.2/",
+    "release_url": "https://pypi.org/project/datasette-cluster-map/0.18/",
     "requires_dist": [
-      "datasette (>=0.54)",
-      "datasette-leaflet (>=0.2.2)",
+      "datasette >=0.54",
+      "datasette-leaflet >=0.2.2",
+      "pytest-playwright ; extra == 'playwright'",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
       "httpx ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'"
+      "sqlite-utils ; extra == 'test'",
+      "nest-asyncio ; extra == 'test'"
     ],
     "requires_python": "",
     "summary": "Datasette plugin that shows a map for any data with latitude/longitude columns",
-    "version": "0.17.2",
+    "version": "0.18",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19701539,
+  "last_serial": 21412782,
   "releases": {
     "0.1": [
       {
@@ -733,6 +735,50 @@
         "yanked_reason": null
       }
     ],
+    "0.18": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9a321f68403a0aae5d72612addae3b97590eae6c4fd5fa5856d1b728b5025ca4",
+          "md5": "58f160873e227596d98aa172dfef4235",
+          "sha256": "aeae32b12164e0726014cd21fa267cd681c8c98334872a087b511f591ebd337c"
+        },
+        "downloads": -1,
+        "filename": "datasette_cluster_map-0.18-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "58f160873e227596d98aa172dfef4235",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 35005,
+        "upload_time": "2024-01-13T06:51:30",
+        "upload_time_iso_8601": "2024-01-13T06:51:30.659214Z",
+        "url": "https://files.pythonhosted.org/packages/9a/32/1f68403a0aae5d72612addae3b97590eae6c4fd5fa5856d1b728b5025ca4/datasette_cluster_map-0.18-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b89466eaefa360ae3caf010ab5d20f6b3f785ada7bdb515458ec5a896c22d635",
+          "md5": "8df81b94e50148f87b4e29f4b1fcc56a",
+          "sha256": "bde295d13fb6c300a11d085536071133c369f8f823141203256799f9ae9f7144"
+        },
+        "downloads": -1,
+        "filename": "datasette-cluster-map-0.18.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8df81b94e50148f87b4e29f4b1fcc56a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 38367,
+        "upload_time": "2024-01-13T06:51:32",
+        "upload_time_iso_8601": "2024-01-13T06:51:32.453229Z",
+        "url": "https://files.pythonhosted.org/packages/b8/94/66eaefa360ae3caf010ab5d20f6b3f785ada7bdb515458ec5a896c22d635/datasette-cluster-map-0.18.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.18a0": [
       {
         "comment_text": "",
@@ -989,42 +1035,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "6aaa60fbc9e9d5b69736abb7279b7da66777fc1b2cc431a39a5c947f3099d82e",
-        "md5": "88e78957f30b0c874db879ba88ded9eb",
-        "sha256": "7ae0c28865b3741363bfc705046d49aba253b23113f6f659b34691b031e6a308"
+        "blake2b_256": "9a321f68403a0aae5d72612addae3b97590eae6c4fd5fa5856d1b728b5025ca4",
+        "md5": "58f160873e227596d98aa172dfef4235",
+        "sha256": "aeae32b12164e0726014cd21fa267cd681c8c98334872a087b511f591ebd337c"
       },
       "downloads": -1,
-      "filename": "datasette_cluster_map-0.17.2-py3-none-any.whl",
+      "filename": "datasette_cluster_map-0.18-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "88e78957f30b0c874db879ba88ded9eb",
+      "md5_digest": "58f160873e227596d98aa172dfef4235",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 34442,
-      "upload_time": "2021-12-07T19:40:22",
-      "upload_time_iso_8601": "2021-12-07T19:40:22.518266Z",
-      "url": "https://files.pythonhosted.org/packages/6a/aa/60fbc9e9d5b69736abb7279b7da66777fc1b2cc431a39a5c947f3099d82e/datasette_cluster_map-0.17.2-py3-none-any.whl",
+      "size": 35005,
+      "upload_time": "2024-01-13T06:51:30",
+      "upload_time_iso_8601": "2024-01-13T06:51:30.659214Z",
+      "url": "https://files.pythonhosted.org/packages/9a/32/1f68403a0aae5d72612addae3b97590eae6c4fd5fa5856d1b728b5025ca4/datasette_cluster_map-0.18-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "d0c15d903f8dbb4d5ac6f7925fbee875ffee1b373cdc271b144b62df194e91bd",
-        "md5": "06437573a959e0287dc1fa92ad693127",
-        "sha256": "863854f7ee3d037b172a696b5a0861648394502514087745e2224da5a0135622"
+        "blake2b_256": "b89466eaefa360ae3caf010ab5d20f6b3f785ada7bdb515458ec5a896c22d635",
+        "md5": "8df81b94e50148f87b4e29f4b1fcc56a",
+        "sha256": "bde295d13fb6c300a11d085536071133c369f8f823141203256799f9ae9f7144"
       },
       "downloads": -1,
-      "filename": "datasette-cluster-map-0.17.2.tar.gz",
+      "filename": "datasette-cluster-map-0.18.tar.gz",
       "has_sig": false,
-      "md5_digest": "06437573a959e0287dc1fa92ad693127",
+      "md5_digest": "8df81b94e50148f87b4e29f4b1fcc56a",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 35631,
-      "upload_time": "2021-12-07T19:40:23",
-      "upload_time_iso_8601": "2021-12-07T19:40:23.938092Z",
-      "url": "https://files.pythonhosted.org/packages/d0/c1/5d903f8dbb4d5ac6f7925fbee875ffee1b373cdc271b144b62df194e91bd/datasette-cluster-map-0.17.2.tar.gz",
+      "size": 38367,
+      "upload_time": "2024-01-13T06:51:32",
+      "upload_time_iso_8601": "2024-01-13T06:51:32.453229Z",
+      "url": "https://files.pythonhosted.org/packages/b8/94/66eaefa360ae3caf010ab5d20f6b3f785ada7bdb515458ec5a896c22d635/datasette-cluster-map-0.18.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
