@@ -1,0 +1,142 @@
+{
+  "info": {
+    "author": "Datasette",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-build\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-build.svg)](https://pypi.org/project/datasette-build/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-build?include_prereleases&label=changelog)](https://github.com/datasette/datasette-build/releases)\n[![Tests](https://github.com/datasette/datasette-build/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-build/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-build/blob/main/LICENSE)\n\nBuild a directory full of files into a SQLite database\n\n> ⚠️ **Early alpha preview**. Everything about this tool is likely to change.\n\n## Installation\n\nInstall this tool using `pip` or `pipx`:\n```bash\npipx install datasette-build\n```\nThis will provide the `datasette-build` CLI application.\n\nYou can also install it as a Datasette plugin. First [install Datasette](https://docs.datasette.io/en/stable/installation.html), then run:\n```bash\ndatasette install datasette-build\n```\nThis will provide a `datasette build ...` command that works the same as the `datasette-build` CLI application.\n\nOr you can install it as a plugin for [sqlite-utils](https://sqlite-utils.datasette.io/). With that installed, run this:\n```bash\nsqlite-utils install datasette-build\n```\nNow you can access the tool as `sqlite-utils build ...`\n\n## Usage\n\nThe `datasette-build` (or `datasette build` or `sqlite-utils build`) command takes two arguments: a path to a SQLite database file and a path to a directory containing files to be loaded into that database:\n\n```bash\ndatasette-build mydatabase.db myfiles/\n```\nThe `myfiles/` folder can contain a mixture of CSV, TSV and JSON files. Each file will be loaded into a table in the `mydatabase.db` SQLite database.\n\nThe database file will be created if it does not already exist.\n\nConsider a `myfiles/cities.csv` file like this:\n```csv\nid,name,latitude,longitude,country\nnyc,New York City,40.7128,-74.006,US\nlon,London,51.5074,-0.1278,GB\ntok,Tokyo,35.6895,139.6917,JP\npar,Paris,48.8566,2.3522,FR\nber,Berlin,52.52,13.405,DE\nsyd,Sydney,-33.8688,151.2093,AU\ncai,Cairo,30.0444,31.2357,EG\nrio,Rio de Janeiro,-22.9068,-43.1729,BR\nmos,Moscow,55.7558,37.6173,RU\nmum,Mumbai,19.076,72.8777,IN\n```\nSince this has a `id` column the primary key for the table will be set to `id`. Without an `id` column the primary key will not be defined.\n\nA `myfiles/counties.tsv` file could look like this:\n```tsv\nid\tname\tpopulation\nUS\tUnited States\t331002651\nGB\tUnited Kingdom\t67886011\nJP\tJapan\t126476461\nFR\tFrance\t65273511\nDE\tGermany\t83783942\nAU\tAustralia\t25499884\nEG\tEgypt\t102334404\nBR\tBrazil\t212559417\nRU\tRussia\t145934462\nIN\tIndia\t1380004385\n```\nAnd a `myfiles/museums.json` file like this:\n```json\n[\n  {\n    \"id\": 1,\n    \"name\": \"Metropolitan Museum of Art\",\n    \"city_id\": \"nyc\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"British Museum\",\n    \"city_id\": \"lon\"\n  }\n]\n```\nRunning `datasette-build mydatabase.db myfiles/` will create a SQLite database file containing three tables: `cities`, `counties` and `museums`. The schema will look like this:\n\n```sql\nCREATE TABLE [museums] (\n   [id] INTEGER PRIMARY KEY,\n   [name] TEXT,\n   [city_id] TEXT\n);\nCREATE TABLE \"cities\" (\n   [id] TEXT PRIMARY KEY,\n   [name] TEXT,\n   [latitude] FLOAT,\n   [longitude] FLOAT,\n   [country] TEXT\n);\nCREATE TABLE \"countries\" (\n   [id] TEXT PRIMARY KEY,\n   [name] TEXT,\n   [population] INTEGER\n);\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-build\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-build",
+    "package_url": "https://pypi.org/project/datasette-build/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-build/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-build/actions",
+      "Changelog": "https://github.com/datasette/datasette-build/releases",
+      "Homepage": "https://github.com/datasette/datasette-build",
+      "Issues": "https://github.com/datasette/datasette-build/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-build/0.1a0/",
+    "requires_dist": [
+      "click",
+      "sqlite-utils",
+      "PyYAML",
+      "pluggy",
+      "datasette ; extra == 'datasette'",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Build a directory full of files into a SQLite database",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 21427208,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6d5967188661678b623866aa69099862664a49181ba127444e1c04c8f03e5a73",
+          "md5": "c5fb4c42d34b66d1f5755ef87fed2522",
+          "sha256": "04388c38c66ec49625d49807aaf4da3e730605654f4a9fbb9641b9ef6e333a71"
+        },
+        "downloads": -1,
+        "filename": "datasette_build-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c5fb4c42d34b66d1f5755ef87fed2522",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 10371,
+        "upload_time": "2024-01-15T02:19:35",
+        "upload_time_iso_8601": "2024-01-15T02:19:35.344746Z",
+        "url": "https://files.pythonhosted.org/packages/6d/59/67188661678b623866aa69099862664a49181ba127444e1c04c8f03e5a73/datasette_build-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7332dccb279c4ea99fb418918d7bb6c0a2843e56d3182727a2c40d6656892258",
+          "md5": "72d30b2040ce9e949f39f114921f869b",
+          "sha256": "f9d12862ab86f9a77a8d69c432df3a0fa6673b77e2c3348d925571cf42e2d3ec"
+        },
+        "downloads": -1,
+        "filename": "datasette-build-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "72d30b2040ce9e949f39f114921f869b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9546,
+        "upload_time": "2024-01-15T02:19:36",
+        "upload_time_iso_8601": "2024-01-15T02:19:36.798008Z",
+        "url": "https://files.pythonhosted.org/packages/73/32/dccb279c4ea99fb418918d7bb6c0a2843e56d3182727a2c40d6656892258/datasette-build-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "6d5967188661678b623866aa69099862664a49181ba127444e1c04c8f03e5a73",
+        "md5": "c5fb4c42d34b66d1f5755ef87fed2522",
+        "sha256": "04388c38c66ec49625d49807aaf4da3e730605654f4a9fbb9641b9ef6e333a71"
+      },
+      "downloads": -1,
+      "filename": "datasette_build-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c5fb4c42d34b66d1f5755ef87fed2522",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 10371,
+      "upload_time": "2024-01-15T02:19:35",
+      "upload_time_iso_8601": "2024-01-15T02:19:35.344746Z",
+      "url": "https://files.pythonhosted.org/packages/6d/59/67188661678b623866aa69099862664a49181ba127444e1c04c8f03e5a73/datasette_build-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "7332dccb279c4ea99fb418918d7bb6c0a2843e56d3182727a2c40d6656892258",
+        "md5": "72d30b2040ce9e949f39f114921f869b",
+        "sha256": "f9d12862ab86f9a77a8d69c432df3a0fa6673b77e2c3348d925571cf42e2d3ec"
+      },
+      "downloads": -1,
+      "filename": "datasette-build-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "72d30b2040ce9e949f39f114921f869b",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 9546,
+      "upload_time": "2024-01-15T02:19:36",
+      "upload_time_iso_8601": "2024-01-15T02:19:36.798008Z",
+      "url": "https://files.pythonhosted.org/packages/73/32/dccb279c4ea99fb418918d7bb6c0a2843e56d3182727a2c40d6656892258/datasette-build-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
