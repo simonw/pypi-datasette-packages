@@ -182,3 +182,5 @@ datasette-enrichments-jinja
 datasette-statistics
 datasette-chronicle
 datasette-plot
+datasette-build
+datasette-upgrade
