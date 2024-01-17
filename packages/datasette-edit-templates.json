@@ -28,20 +28,23 @@
       "Homepage": "https://github.com/simonw/datasette-edit-templates",
       "Issues": "https://github.com/simonw/datasette-edit-templates/issues"
     },
-    "release_url": "https://pypi.org/project/datasette-edit-templates/0.4.1/",
+    "release_url": "https://pypi.org/project/datasette-edit-templates/0.4.3/",
     "requires_dist": [
       "datasette >=0.63",
+      "pytest-playwright ; extra == 'playwright'",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'"
+      "sqlite-utils ; extra == 'test'",
+      "datasette-test >=0.2 ; extra == 'test'",
+      "nest-asyncio ; extra == 'test'"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.8",
     "summary": "Plugin allowing Datasette templates to be edited within Datasette",
-    "version": "0.4.1",
+    "version": "0.4.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 21442502,
+  "last_serial": 21455274,
   "releases": {
     "0.1": [
       {
@@ -306,48 +309,136 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5f6c94f20f9f45cc1e7d8bf3e203c19eb7051f87a2242ce45af25a15b0232727",
+          "md5": "65a0463c28f109f6ce93fcd55f01348d",
+          "sha256": "107ab02c9ccc266ca892ff87dbea1245b856adc6fb95fe4845cc85dfcbb0555d"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_templates-0.4.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "65a0463c28f109f6ce93fcd55f01348d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 81081,
+        "upload_time": "2024-01-17T00:25:13",
+        "upload_time_iso_8601": "2024-01-17T00:25:13.091699Z",
+        "url": "https://files.pythonhosted.org/packages/5f/6c/94f20f9f45cc1e7d8bf3e203c19eb7051f87a2242ce45af25a15b0232727/datasette_edit_templates-0.4.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1bbaa5cbe7539f303be65cc6f6cc2a7500a0b8c6496294cd3a2134be2a485f3a",
+          "md5": "f08d30de607a335bf144d33950dce083",
+          "sha256": "3830878fab929941ff2148e56a3ed8eb745cb12c8f8a3a13f1ac9e7e10d8ed55"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-templates-0.4.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f08d30de607a335bf144d33950dce083",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 82751,
+        "upload_time": "2024-01-17T00:25:14",
+        "upload_time_iso_8601": "2024-01-17T00:25:14.150853Z",
+        "url": "https://files.pythonhosted.org/packages/1b/ba/a5cbe7539f303be65cc6f6cc2a7500a0b8c6496294cd3a2134be2a485f3a/datasette-edit-templates-0.4.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "82d17c8ecd3d4f96c0637894ab64f363987c5b0533e336b5dcb328ab7f1c24d3",
+          "md5": "0538d8f2ea346bc7f66f25f9e0d4ba33",
+          "sha256": "6fcb5b400d8f8cde0eba2781bfab8ba444a457fed32176fed5d62dece7ed2e8e"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_templates-0.4.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0538d8f2ea346bc7f66f25f9e0d4ba33",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 82925,
+        "upload_time": "2024-01-17T00:40:24",
+        "upload_time_iso_8601": "2024-01-17T00:40:24.239384Z",
+        "url": "https://files.pythonhosted.org/packages/82/d1/7c8ecd3d4f96c0637894ab64f363987c5b0533e336b5dcb328ab7f1c24d3/datasette_edit_templates-0.4.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9e8beb6de2d0dfb711e4374b6af88e2e371714c02ebc6b147a2f939a2f5447dc",
+          "md5": "35806850c488d3dfa6ccec2ce4b56fbd",
+          "sha256": "ad34eb90235e08b9883ce4262875d1d07d7564119e1fb9321ef595b9fd484157"
+        },
+        "downloads": -1,
+        "filename": "datasette-edit-templates-0.4.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "35806850c488d3dfa6ccec2ce4b56fbd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 84332,
+        "upload_time": "2024-01-17T00:40:26",
+        "upload_time_iso_8601": "2024-01-17T00:40:26.094444Z",
+        "url": "https://files.pythonhosted.org/packages/9e/8b/eb6de2d0dfb711e4374b6af88e2e371714c02ebc6b147a2f939a2f5447dc/datasette-edit-templates-0.4.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "115f971b1c3eb0e9e70ce7a7c479dff875f5a48ed61a81884315cba73804d94f",
-        "md5": "f8266b9ac6aebf45965f037051b5ad64",
-        "sha256": "1c9c1bdc37175a2912b0ab5460673ccd353f9bae49d33e1b19530c744ef45b40"
+        "blake2b_256": "82d17c8ecd3d4f96c0637894ab64f363987c5b0533e336b5dcb328ab7f1c24d3",
+        "md5": "0538d8f2ea346bc7f66f25f9e0d4ba33",
+        "sha256": "6fcb5b400d8f8cde0eba2781bfab8ba444a457fed32176fed5d62dece7ed2e8e"
       },
       "downloads": -1,
-      "filename": "datasette_edit_templates-0.4.1-py3-none-any.whl",
+      "filename": "datasette_edit_templates-0.4.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "f8266b9ac6aebf45965f037051b5ad64",
+      "md5_digest": "0538d8f2ea346bc7f66f25f9e0d4ba33",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 8396,
-      "upload_time": "2024-01-16T05:49:30",
-      "upload_time_iso_8601": "2024-01-16T05:49:30.700893Z",
-      "url": "https://files.pythonhosted.org/packages/11/5f/971b1c3eb0e9e70ce7a7c479dff875f5a48ed61a81884315cba73804d94f/datasette_edit_templates-0.4.1-py3-none-any.whl",
+      "requires_python": ">=3.8",
+      "size": 82925,
+      "upload_time": "2024-01-17T00:40:24",
+      "upload_time_iso_8601": "2024-01-17T00:40:24.239384Z",
+      "url": "https://files.pythonhosted.org/packages/82/d1/7c8ecd3d4f96c0637894ab64f363987c5b0533e336b5dcb328ab7f1c24d3/datasette_edit_templates-0.4.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "0a657f436702efb0772abce437b839a2461175c30d77019a00c2b331ba2170a1",
-        "md5": "622e4deb77df7b41e2285510d9035c09",
-        "sha256": "f5803cd216ffcc752ddb9f2e27ea4abb4c407e9f8ec78b423fb98d8d33a8fe4b"
+        "blake2b_256": "9e8beb6de2d0dfb711e4374b6af88e2e371714c02ebc6b147a2f939a2f5447dc",
+        "md5": "35806850c488d3dfa6ccec2ce4b56fbd",
+        "sha256": "ad34eb90235e08b9883ce4262875d1d07d7564119e1fb9321ef595b9fd484157"
       },
       "downloads": -1,
-      "filename": "datasette-edit-templates-0.4.1.tar.gz",
+      "filename": "datasette-edit-templates-0.4.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "622e4deb77df7b41e2285510d9035c09",
+      "md5_digest": "35806850c488d3dfa6ccec2ce4b56fbd",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 10000,
-      "upload_time": "2024-01-16T05:49:32",
-      "upload_time_iso_8601": "2024-01-16T05:49:32.044908Z",
-      "url": "https://files.pythonhosted.org/packages/0a/65/7f436702efb0772abce437b839a2461175c30d77019a00c2b331ba2170a1/datasette-edit-templates-0.4.1.tar.gz",
+      "requires_python": ">=3.8",
+      "size": 84332,
+      "upload_time": "2024-01-17T00:40:26",
+      "upload_time_iso_8601": "2024-01-17T00:40:26.094444Z",
+      "url": "https://files.pythonhosted.org/packages/9e/8b/eb6de2d0dfb711e4374b6af88e2e371714c02ebc6b147a2f939a2f5447dc/datasette-edit-templates-0.4.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
