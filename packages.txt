@@ -184,3 +184,5 @@ datasette-chronicle
 datasette-plot
 datasette-build
 datasette-upgrade
+datasette-test
+datasette-proxy-url
