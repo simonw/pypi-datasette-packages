@@ -186,3 +186,4 @@ datasette-build
 datasette-upgrade
 datasette-test
 datasette-proxy-url
+datasette-reconcile
