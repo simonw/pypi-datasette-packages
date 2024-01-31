@@ -187,3 +187,4 @@ datasette-upgrade
 datasette-test
 datasette-proxy-url
 datasette-reconcile
+datasette-homepage-table
