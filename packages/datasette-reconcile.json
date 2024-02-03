@@ -1,6 +1,6 @@
 {
   "info": {
-    "author": null,
+    "author": "",
     "author_email": "David Kane <david@dkane.net>",
     "bugtrack_url": null,
     "classifiers": [
@@ -18,17 +18,17 @@
     "description": "# datasette-reconcile\n\n[![PyPI - Version](https://img.shields.io/pypi/v/datasette-reconcile.svg)](https://pypi.org/project/datasette-reconcile)\n[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/datasette-reconcile.svg)](https://pypi.org/project/datasette-reconcile)\n[![Changelog](https://img.shields.io/github/v/release/drkane/datasette-reconcile?include_prereleases&label=changelog)](https://github.com/drkane/datasette-reconcile/releases)\n[![Tests](https://github.com/drkane/datasette-reconcile/workflows/Test/badge.svg)](https://github.com/drkane/datasette-reconcile/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/drkane/datasette-reconcile/blob/main/LICENSE)\n\nAdds a reconciliation API endpoint to [Datasette](https://docs.datasette.io/en/stable/), based on the [Reconciliation Service API](https://reconciliation-api.github.io/specs/latest/) specification.\n\nThe reconciliation API is used to match a set of strings to their correct identifiers, to help with disambiguation and consistency in large datasets. For example, the strings \"United Kingdom\", \"United Kingdom of Great Britain and Northern Ireland\" and \"UK\" could all be used to identify the country which has the ISO country code `GB`. It is particularly implemented in [OpenRefine](https://openrefine.org/).\n\nThe plugin adds a `/-/reconcile` endpoint to a table served by datasette, which responds based on the Reconciliation Service API specification. In order to activate this endpoint you need to configure the reconciliation service, as dscribed in the [usage](#usage) section.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-reconcile\n\n## Usage\n\n### Plugin configuration\n\nThe plugin should be configured using Datasette's [`metadata.json`](https://docs.datasette.io/en/stable/metadata.html) file. The configuration can be put at the root, database or table layer of `metadata.json`, for most use cases it will make most sense to configure at the table level.\n\nAdd a `datasette-reconcile` object under `plugins` in `metadata.json`. This should look something like:\n\n```json\n{\n  \"databases\": {\n    \"sf-trees\": {\n      \"tables\": {\n        \"Street_Tree_List\": {\n          \"plugins\": {\n            \"datasette-reconcile\": {\n              \"id_field\": \"id\",\n              \"name_field\": \"name\",\n              \"type_field\": \"type\",\n              \"type_default\": [\n                {\n                  \"id\": \"tree\",\n                  \"name\": \"Tree\"\n                }\n              ],\n              \"max_limit\": 5,\n              \"service_name\": \"Tree reconciliation\",\n              \"view_url\": \"https://example.com/trees/{{id}}\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nThe only required item in the configuration is `name_field`. This refers to the field in the table which will be searched to match the query text.\n\nThe rest of the configuration items are optional, and are as follows:\n\n- `id_field`: The field containing the identifier for this entity. If not provided, and there is a primary key set, then the primary key will be used. A primary key of more than one field will give an error.\n- `type_field`: If provided, this field will be used to determine the type of the entity. If not provided, then the `type_default` setting will be used instead.\n- `type_default`: If provided, this value will be used as the type of every entity returned. If not provided the default of `Object` will be used for every entity.\n- `max_limit`: The maximum number of records that a query can request to return. This is 5 by default. A individual query can request fewer results than this, but it cannot request more.\n- `service_name`: The name of the reconciliation service that will appear in the service manifest. If not provided it will take the form `<database name> <table name> reconciliation`.\n- `identifierSpace`: [Identifier space](https://reconciliation-api.github.io/specs/latest/#identifier-and-schema-spaces) given in the service manifest. If not provided a default of `http://rdf.freebase.com/ns/type.object.id` is used.\n- `schemaSpace`: [Schema space](https://reconciliation-api.github.io/specs/latest/#identifier-and-schema-spaces) given in the service manifest. If not provided a default of `http://rdf.freebase.com/ns/type.object.id` is used.\n- `view_url`: [URL for a view of an individual entity](https://reconciliation-api.github.io/specs/latest/#dfn-view-template). It must contain the string `{{id}}` which will be replaced with the ID of the entity. If not provided it will use the default datasette view for the entity record (something like `/<db_name>/<table>/{{id}}`).\n\n### Using the endpoint\n\nOnce the plugin is configured for a particular database or table, you can access the reconciliation endpoint using the url `/<db_name>/<table>/-/reconcile`.\n\nA simple GET request to `/<db_name>/<table>/-/reconcile` will return the [Service Manifest](https://reconciliation-api.github.io/specs/latest/#service-manifest) as JSON which reconciliation clients can use to determine how the service is set up.\n\nA POST request to the same url with the `queries` argument set will trigger the reconciliation process. The `queries` parameter should be a json object in the format described in [the specification](https://reconciliation-api.github.io/specs/latest/#reconciliation-queries). An example set of two queries would look like:\n\n```json\n{\n  \"q1\": {\n    \"query\": \"Hans-Eberhard Urbaniak\"\n  },\n  \"q2\": {\n    \"query\": \"Ernst Schwanhold\"\n  }\n}\n```\n\nThe query can optionally be encoded as a `queries` parameter in a GET request. For example:\n\n```\n/<db_name>/<table>/-/reconcile?queries={\"q1\":{\"query\":\"Hans-Eberhard Urbaniak\"},\"q2\":{\"query\": \"Ernst Schwanhold\"}}\n```\n\nVarious options are available in the query object. Current the only ones implemented in datasette-reconcile are the mandatory `query` string, and the `limit` option, which must be less than or equal to the value in the `max_limit` configration option.\n\nAll endpoints that start with `/<db_name>/<table>/-/reconcile` are configured to send an `Access-Control-Allow-Origin: *` CORS header to allow access [as described in the specification](https://reconciliation-api.github.io/specs/latest/#cross-origin-access).\n\nJSONP output is not yet supported.\n\n### Returned value\n\nThe result of the GET or POST `queries` requests described above is a json object describing potential [reconciliation candidates](https://reconciliation-api.github.io/specs/latest/#reconciliation-query-responses) for each of the queries specified. The result will look something like:\n\n```json\n{\n  \"q1\": {\n    \"result\": [\n      {\n        \"id\": \"120333937\",\n        \"name\": \"Urbaniak, Regina\",\n        \"score\": 53.015232,\n        \"match\": false,\n        \"type\": [\n          {\n            \"id\": \"person\",\n            \"name\": \"Person\"\n          }\n        ]\n      },\n      {\n        \"id\": \"1127147390\",\n        \"name\": \"Urbaniak, Jan\",\n        \"score\": 52.357353,\n        \"match\": false,\n        \"type\": [\n          {\n            \"id\": \"person\",\n            \"name\": \"Person\"\n          }\n        ]\n      }\n    ]\n  },\n  \"q2\": {\n    \"result\": [\n      {\n        \"id\": \"123064325\",\n        \"name\": \"Schwanhold, Ernst\",\n        \"score\": 86.43497,\n        \"match\": true,\n        \"type\": [\n          {\n            \"id\": \"person\",\n            \"name\": \"Person\"\n          }\n        ]\n      },\n      {\n        \"id\": \"116362988X\",\n        \"name\": \"Schwanhold, Nadine\",\n        \"score\": 62.04763,\n        \"match\": false,\n        \"type\": [\n          {\n            \"id\": \"person\",\n            \"name\": \"Person\"\n          }\n        ]\n      }\n    ]\n  }\n}\n```\n\n### Behind the scenes\n\nThe reconcile engine works by performing an SQL query against the `name_field` within the specified database table. Where that table has a full text search index implemented, the search will be performed against that index.\n\nWhen a full text search index is present on the table, the SQL query takes the form (based on the search query `test`, note that double quotes are added to facilitate searching - these are not present in the original query):\n\n```sql\nselect <id_field>, <name_field>\nfrom <table>\n  inner join (\n    select \"rowid\", \"rank\"\n    from <fts_table>\n    where <fts_table> MATCH '\"test\"'\n  ) as \"a\" on <table>.\"rowid\" = a.\"rowid\"\norder by a.rank\nlimit 5\n```\n\nIf a full text search index is not present, the query looks like this (note that the wildcard `%` is added to either side of the query - these are not present in the original query):\n\n```sql\nselect <id_field>, <name_field>\nfrom <table>\nwhere <name_field> like '%test%'\nlimit 5\n```\n\n### Extend endpoint\n\nYou can also use the reconciliation API [Data extension service](https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/#data-extension-service) to find additional properties for a set of entities, given an ID.\n\nSend a GET request to the `/<db_name>/<table>/-/reconcile/extend/propose` endpoint to find a list of the possible properties you can select. The properties are all the columns in the table (excluding any that have been hidden). An example response would look like:\n\n```json\n{\n  \"limit\": 5,\n  \"type\": \"Person\",\n  \"properties\": [\n    {\n      \"id\": \"preferredName\",\n      \"name\": \"preferredName\"\n    },\n    {\n      \"id\": \"professionOrOccupation\",\n      \"name\": \"professionOrOccupation\"\n    },\n    {\n      \"id\": \"wikidataId\",\n      \"name\": \"wikidataId\"\n    }\n  ]\n}\n```\n\nThen send a POST request to the `/<db_name>/<table>/-/reconcile` endpoint with an `extend` argument. The `extend` argument should be a JSON object with a set of `ids` to lookup and `properties` to return. For example:\n\n```json\n{\n  \"ids\": [\"10662041X\", \"1064905412\"],\n  \"properties\": [\n    {\n      \"id\": \"professionOrOccupation\"\n    },\n    {\n      \"id\": \"wikidataId\"\n    }\n  ]\n}\n```\n\nThe endpoint will return a result that looks like:\n\n```json\n{\n  \"meta\": [\n    {\n      \"id\": \"professionOrOccupation\",\n      \"name\": \"professionOrOccupation\"\n    },\n    {\n      \"id\": \"wikidataId\",\n      \"name\": \"wikidataId\"\n    }\n  ],\n  \"rows\": {\n    \"10662041X\": {\n      \"professionOrOccupation\": [\n        {\n          \"str\": \"Doctor\"\n        }\n      ],\n      \"wikidataId\": [\n        {\n          \"str\": \"Q3874347\"\n        }\n      ]\n    },\n    \"1064905412\": {\n      \"professionOrOccupation\": [\n        {\n          \"str\": \"Architect\"\n        }\n      ],\n      \"wikidataId\": [\n        {\n          \"str\": \"Q3874347\"\n        }\n      ]\n    }\n  }\n}\n```\n\n### Suggest endpoints\n\nYou can also use the [suggest endpoints](https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/#suggest-services) to get quick suggestions, for example for an auto-complete dropdown menu. The following endpoints are available:\n\n- `/<db_name>/<table>/-/reconcile/suggest/property` - looks up in a list of table columns\n- `/<db_name>/<table>/-/reconcile/suggest/entity` - looks up in a list of table rows\n- `/<db_name>/<table>/-/reconcile/suggest/type` - not currently implemented\n\nEach endpoint takes a `prefix` argument which can be used in a GET request. For example, the GET request `/<db_name>/<table>/-/reconcile/suggest/entity?prefix=abc` will produce a response such as:\n\n```json\n{\n  \"result\": [\n    {\n      \"name\": \"abc company limited\",\n      \"id\": \"Q123456\"\n    },\n    {\n      \"name\": \"abc other company limited\",\n      \"id\": \"Q123457\"\n    }\n  ]\n}\n```\n\n## Development\n\nThis plugin uses hatch for build and testing. To set up this plugin locally, first checkout the code.\n\nYou'll need to fetch the git submodules for the tests too:\n\n    git submodule init\n    git submodule update\n\nTo run the tests:\n\n    hatch run test\n\nRun tests then report on coverage\n\n    hatch run cov\n\nRun tests then run a server showing where coverage is missing\n\n    hatch run cov-html\n\n### Linting/formatting\n\nBlack and ruff should be run before committing any changes.\n\nTo check for any changes needed:\n\n    hatch run lint:style\n\nTo run any autoformatting possible:\n\n    hatch run lint:fmt\n\n### Publish to pypi\n\n    hatch build\n    hatch publish\n    git tag v<VERSION_NUMBER>\n    git push origin v<VERSION_NUMBER>\n\n## Acknowledgements\n\nThanks for [@simonw](https://github.com/simonw/) for developing datasette and the datasette ecosystem.\n\nOther contributions from:\n\n- [@JBPressac](https://github.com/JBPressac/)\n- [@nicokant](https://github.com/nicokant/) - implementation of extend service\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": null,
+    "download_url": "",
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
-    "home_page": null,
-    "keywords": null,
-    "license": null,
-    "maintainer": null,
-    "maintainer_email": null,
+    "home_page": "",
+    "keywords": "",
+    "license": "",
+    "maintainer": "",
+    "maintainer_email": "",
     "name": "datasette-reconcile",
     "package_url": "https://pypi.org/project/datasette-reconcile/",
     "platform": null,
@@ -40,7 +40,7 @@
       "Issues": "https://github.com/drkane/datasette-reconcile/issues",
       "Source": "https://github.com/drkane/datasette-reconcile"
     },
-    "release_url": "https://pypi.org/project/datasette-reconcile/0.4.0/",
+    "release_url": "https://pypi.org/project/datasette-reconcile/0.6.3/",
     "requires_dist": [
       "datasette",
       "fuzzywuzzy[speedup]",
@@ -55,11 +55,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Adds a reconciliation API to Datasette.",
-    "version": "0.4.0",
+    "version": "0.6.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 21172586,
+  "last_serial": 21710844,
   "releases": {
     "0.1": [
       {
@@ -368,48 +368,268 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6d5dcbedf49e0356b791983ed7a08d4f5c3a85e8dbaa39e17c662386a61fa7a6",
+          "md5": "16cf34d5d215adec2ca7631ed5ad94ad",
+          "sha256": "52f884722d0309db7bf67ef276c0f7c4460175b9e75e3cf8fa0d81ed7a0407e8"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.5.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "16cf34d5d215adec2ca7631ed5ad94ad",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12461,
+        "upload_time": "2024-02-02T12:04:10",
+        "upload_time_iso_8601": "2024-02-02T12:04:10.669247Z",
+        "url": "https://files.pythonhosted.org/packages/6d/5d/cbedf49e0356b791983ed7a08d4f5c3a85e8dbaa39e17c662386a61fa7a6/datasette_reconcile-0.5.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2d9949d4e3046562d5b2aceefff8f28988b47cf5b48a9059e6d4a6b216e2be38",
+          "md5": "3a19665a3881a788d96049b6e3b305b2",
+          "sha256": "41983a0ba82e599a7ff761662bc422c5bfeb89dff103ff50ad8fb13f9378c57c"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.5.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3a19665a3881a788d96049b6e3b305b2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 284341,
+        "upload_time": "2024-02-02T12:04:13",
+        "upload_time_iso_8601": "2024-02-02T12:04:13.017549Z",
+        "url": "https://files.pythonhosted.org/packages/2d/99/49d4e3046562d5b2aceefff8f28988b47cf5b48a9059e6d4a6b216e2be38/datasette_reconcile-0.5.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e35810e218506a64469ff889fa88ce7096794825d3177f7a0eb9f00b01dde31c",
+          "md5": "89f7d6234a84836ef58d1676559f3e83",
+          "sha256": "189aaad564f5230d2c3612c55b5e3e41888e5813949afab3ba25863a84095c07"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "89f7d6234a84836ef58d1676559f3e83",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12700,
+        "upload_time": "2024-02-02T12:44:11",
+        "upload_time_iso_8601": "2024-02-02T12:44:11.830454Z",
+        "url": "https://files.pythonhosted.org/packages/e3/58/10e218506a64469ff889fa88ce7096794825d3177f7a0eb9f00b01dde31c/datasette_reconcile-0.6.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "140c537b8f9c8f848065ecec8e4d72416a5f5988d6cfb370679dacb12466871d",
+          "md5": "51455dc914133a718dc93217959dcb0c",
+          "sha256": "62ac87b3a94440d16a6eda8c9721c98362b8b9b9f914c040f963ace76bd48fba"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "51455dc914133a718dc93217959dcb0c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 284912,
+        "upload_time": "2024-02-02T12:44:13",
+        "upload_time_iso_8601": "2024-02-02T12:44:13.942867Z",
+        "url": "https://files.pythonhosted.org/packages/14/0c/537b8f9c8f848065ecec8e4d72416a5f5988d6cfb370679dacb12466871d/datasette_reconcile-0.6.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "bfde7558e84556368fba0cbacaf0ddf0323a700e2afd78091cb30a7a4d22c81d",
+          "md5": "80a2e4cd0fa30479f54d9bd7ab19f4ea",
+          "sha256": "151d4e56398273f8c8eec4179ac2a9c9ade768a9f4227ffa382700077f0e5959"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "80a2e4cd0fa30479f54d9bd7ab19f4ea",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12730,
+        "upload_time": "2024-02-02T12:54:02",
+        "upload_time_iso_8601": "2024-02-02T12:54:02.617292Z",
+        "url": "https://files.pythonhosted.org/packages/bf/de/7558e84556368fba0cbacaf0ddf0323a700e2afd78091cb30a7a4d22c81d/datasette_reconcile-0.6.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d5a3e2bd630cb821527ef092c6f029bfd188afd78175416002d4042db1713e81",
+          "md5": "fec3abc7ab23430f9bcda45c0d328aff",
+          "sha256": "5baa86461ef7e931224547b796d1e991ad7fd9f19cf7d7a9dad9f38de0b30ca4"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fec3abc7ab23430f9bcda45c0d328aff",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 285024,
+        "upload_time": "2024-02-02T12:54:04",
+        "upload_time_iso_8601": "2024-02-02T12:54:04.859211Z",
+        "url": "https://files.pythonhosted.org/packages/d5/a3/e2bd630cb821527ef092c6f029bfd188afd78175416002d4042db1713e81/datasette_reconcile-0.6.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "dddc0d6043302555c476e3e778890713fc37eee5384a777630d9792b27f61701",
+          "md5": "f72ebe178f788d6b1dfd3c4299bc5bb4",
+          "sha256": "a2237d4f45f4919764324edd649b6d3d9ef19a0dda3acd9015d58917fdc9f4dd"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f72ebe178f788d6b1dfd3c4299bc5bb4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12679,
+        "upload_time": "2024-02-02T15:50:21",
+        "upload_time_iso_8601": "2024-02-02T15:50:21.119655Z",
+        "url": "https://files.pythonhosted.org/packages/dd/dc/0d6043302555c476e3e778890713fc37eee5384a777630d9792b27f61701/datasette_reconcile-0.6.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "abd32ea9f3a1c9e14d6d1d8d9fc2c971e7323e6881d906f4e7b9e1f2767f7723",
+          "md5": "67476857a880bbeedb1846680df3a4ad",
+          "sha256": "5be68f690b460b7340bd5c373adbe013096378407211e605fa42388aac9079fd"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "67476857a880bbeedb1846680df3a4ad",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 15536,
+        "upload_time": "2024-02-02T15:50:22",
+        "upload_time_iso_8601": "2024-02-02T15:50:22.266390Z",
+        "url": "https://files.pythonhosted.org/packages/ab/d3/2ea9f3a1c9e14d6d1d8d9fc2c971e7323e6881d906f4e7b9e1f2767f7723/datasette_reconcile-0.6.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3365ee82c49086a0f972d2edd07c7ac1b0eaec3c3576942f61cbc68c1c283d02",
+          "md5": "a06412084a4771b86309574187e9b4fd",
+          "sha256": "17d7409bedd315fa84ffffa8498a73238424c90a757aaa7c38d3aea34b4bc1a2"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a06412084a4771b86309574187e9b4fd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 12970,
+        "upload_time": "2024-02-02T17:18:27",
+        "upload_time_iso_8601": "2024-02-02T17:18:27.492477Z",
+        "url": "https://files.pythonhosted.org/packages/33/65/ee82c49086a0f972d2edd07c7ac1b0eaec3c3576942f61cbc68c1c283d02/datasette_reconcile-0.6.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "62bf5a8a82102755db57980ada8319c0dbe92be597ac8a0262250476cb6f493f",
+          "md5": "27142a99a880a8c7aff2c6c1ec3bdb8a",
+          "sha256": "61616caaae00ee3c2401b932e31fc554008de49dc1bf293a90e19b0e79822603"
+        },
+        "downloads": -1,
+        "filename": "datasette_reconcile-0.6.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "27142a99a880a8c7aff2c6c1ec3bdb8a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 16194,
+        "upload_time": "2024-02-02T17:18:29",
+        "upload_time_iso_8601": "2024-02-02T17:18:29.146232Z",
+        "url": "https://files.pythonhosted.org/packages/62/bf/5a8a82102755db57980ada8319c0dbe92be597ac8a0262250476cb6f493f/datasette_reconcile-0.6.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": null,
+      "comment_text": "",
       "digests": {
-        "blake2b_256": "ab9bd9d36e8852d78584ea8954d11ea4ccdfcfb88be8286ff6235532c60aa902",
-        "md5": "53b739a839be0ec7b173e6bcb72241b9",
-        "sha256": "b7f562c2c797528d09cc213025e79ed3d4743b677ea1d9d07a56ed5f7827e53a"
+        "blake2b_256": "3365ee82c49086a0f972d2edd07c7ac1b0eaec3c3576942f61cbc68c1c283d02",
+        "md5": "a06412084a4771b86309574187e9b4fd",
+        "sha256": "17d7409bedd315fa84ffffa8498a73238424c90a757aaa7c38d3aea34b4bc1a2"
       },
       "downloads": -1,
-      "filename": "datasette_reconcile-0.4.0-py3-none-any.whl",
+      "filename": "datasette_reconcile-0.6.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "53b739a839be0ec7b173e6bcb72241b9",
+      "md5_digest": "a06412084a4771b86309574187e9b4fd",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 12431,
-      "upload_time": "2023-12-22T12:35:27",
-      "upload_time_iso_8601": "2023-12-22T12:35:27.579080Z",
-      "url": "https://files.pythonhosted.org/packages/ab/9b/d9d36e8852d78584ea8954d11ea4ccdfcfb88be8286ff6235532c60aa902/datasette_reconcile-0.4.0-py3-none-any.whl",
+      "size": 12970,
+      "upload_time": "2024-02-02T17:18:27",
+      "upload_time_iso_8601": "2024-02-02T17:18:27.492477Z",
+      "url": "https://files.pythonhosted.org/packages/33/65/ee82c49086a0f972d2edd07c7ac1b0eaec3c3576942f61cbc68c1c283d02/datasette_reconcile-0.6.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": null,
+      "comment_text": "",
       "digests": {
-        "blake2b_256": "91453749ab3c3d5d2a875178125cbd1b4ab7b633ca1ce94cda6cd40e52ced81a",
-        "md5": "641696364dbd455ba87a548c14e30c99",
-        "sha256": "8cd828f64a2aedf3a5fe192fdb5ab892ebe9ea3c6356e9668c1499c148e6270f"
+        "blake2b_256": "62bf5a8a82102755db57980ada8319c0dbe92be597ac8a0262250476cb6f493f",
+        "md5": "27142a99a880a8c7aff2c6c1ec3bdb8a",
+        "sha256": "61616caaae00ee3c2401b932e31fc554008de49dc1bf293a90e19b0e79822603"
       },
       "downloads": -1,
-      "filename": "datasette_reconcile-0.4.0.tar.gz",
+      "filename": "datasette_reconcile-0.6.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "641696364dbd455ba87a548c14e30c99",
+      "md5_digest": "27142a99a880a8c7aff2c6c1ec3bdb8a",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 284246,
-      "upload_time": "2023-12-22T12:35:30",
-      "upload_time_iso_8601": "2023-12-22T12:35:30.356066Z",
-      "url": "https://files.pythonhosted.org/packages/91/45/3749ab3c3d5d2a875178125cbd1b4ab7b633ca1ce94cda6cd40e52ced81a/datasette_reconcile-0.4.0.tar.gz",
+      "size": 16194,
+      "upload_time": "2024-02-02T17:18:29",
+      "upload_time_iso_8601": "2024-02-02T17:18:29.146232Z",
+      "url": "https://files.pythonhosted.org/packages/62/bf/5a8a82102755db57980ada8319c0dbe92be597ac8a0262250476cb6f493f/datasette_reconcile-0.6.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
