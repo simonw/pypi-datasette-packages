@@ -188,3 +188,4 @@ datasette-test
 datasette-proxy-url
 datasette-reconcile
 datasette-homepage-table
+datasette-events-db
