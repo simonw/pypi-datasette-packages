@@ -42,7 +42,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 21416677,
+  "last_serial": 21859895,
   "releases": {
     "0.1": [
       {
@@ -574,6 +574,50 @@
         "upload_time": "2024-01-13T18:59:34",
         "upload_time_iso_8601": "2024-01-13T18:59:34.769366Z",
         "url": "https://files.pythonhosted.org/packages/f2/46/1168afd68cd2a88645727068a8633c8d453fe58ab98bb23f3fa5a15c40db/datasette-auth-tokens-0.4a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4a8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "878c4d49f902cef1113acada2a8e1c77ffc08f3d325961eb89c3499de635807c",
+          "md5": "5fdc44a25f7ed8fad7b3c7fc7f7b95b1",
+          "sha256": "ab22d80b31edae1b86f38650d64b91ae1811ab59642195adaa97220a8cf0f7e6"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_tokens-0.4a8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5fdc44a25f7ed8fad7b3c7fc7f7b95b1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 20202,
+        "upload_time": "2024-02-14T00:22:28",
+        "upload_time_iso_8601": "2024-02-14T00:22:28.947621Z",
+        "url": "https://files.pythonhosted.org/packages/87/8c/4d49f902cef1113acada2a8e1c77ffc08f3d325961eb89c3499de635807c/datasette_auth_tokens-0.4a8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ebfaf4d463f4944cdd3141221e3d7e5e4972899d2f8a17e70b7377f9e024527f",
+          "md5": "1137193282596c46a8d62ea0df4016b7",
+          "sha256": "196683a8538d117783d21aab8839e6d0e55e26bce64750f971b9abec3070770f"
+        },
+        "downloads": -1,
+        "filename": "datasette-auth-tokens-0.4a8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1137193282596c46a8d62ea0df4016b7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 24506,
+        "upload_time": "2024-02-14T00:22:30",
+        "upload_time_iso_8601": "2024-02-14T00:22:30.032528Z",
+        "url": "https://files.pythonhosted.org/packages/eb/fa/f4d463f4944cdd3141221e3d7e5e4972899d2f8a17e70b7377f9e024527f/datasette-auth-tokens-0.4a8.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
