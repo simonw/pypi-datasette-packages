@@ -1,0 +1,182 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-visible-internal-db\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-visible-internal-db.svg)](https://pypi.org/project/datasette-visible-internal-db/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-visible-internal-db?include_prereleases&label=changelog)](https://github.com/datasette/datasette-visible-internal-db/releases)\n[![Tests](https://github.com/datasette/datasette-visible-internal-db/workflows/Test/badge.svg)](https://github.com/datasette/datasette-visible-internal-db/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-visible-internal-db/blob/main/LICENSE)\n\nDatasette plugin for making the internal database visible for debugging\n\nDatasette 1.0a5 made [the internal database](https://docs.datasette.io/en/1.0a5/internals.html#datasette-s-internal-database) no longer visible through the Datasette interface.\n\nThis plugin brings it back, for debugging purposes.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-visible-internal-db\n```\n\nThe internal database will now be publicly visible at `/_internal` in your Datasette instance.\n\n## Controlling access to the internal database\n\nYou can use Datasette's [permissions mechanism](https://docs.datasette.io/en/stable/authentication.html#permissions) to control who is allowed to interact with the internal database.\n\nTo restrict access to just the `root` actor, drop this into your configuration:\n\n```yaml\ndatabases:\n  _internal:\n    allow:\n      id: root\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-visible-internal-db",
+    "package_url": "https://pypi.org/project/datasette-visible-internal-db/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-visible-internal-db/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-visible-internal-db/actions",
+      "Changelog": "https://github.com/datasette/datasette-visible-internal-db/releases",
+      "Homepage": "https://github.com/datasette/datasette-visible-internal-db",
+      "Issues": "https://github.com/datasette/datasette-visible-internal-db/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-visible-internal-db/0.1.1/",
+    "requires_dist": [
+      "datasette >=1.0a5",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin for making the internal database visible for debugging",
+    "version": "0.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 19525109,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f18cd8c2370bfb87877deee6e1f3ee84f5ae6b1815478097f6466824c44696dc",
+          "md5": "2cd9b25c507845b133c3caf248e60733",
+          "sha256": "01b4ccba391bba0c0498a2c0811dccbb87f761d4a971ec2e29be02014c70605c"
+        },
+        "downloads": -1,
+        "filename": "datasette_visible_internal_db-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2cd9b25c507845b133c3caf248e60733",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2565,
+        "upload_time": "2023-08-30T22:43:27",
+        "upload_time_iso_8601": "2023-08-30T22:43:27.370804Z",
+        "url": "https://files.pythonhosted.org/packages/f1/8c/d8c2370bfb87877deee6e1f3ee84f5ae6b1815478097f6466824c44696dc/datasette_visible_internal_db-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ba5b05f437392d9f307a41f3762178b06464ac02cef21ba614c7fa71f7b217d8",
+          "md5": "e0e87aad5de2d1d1e7d9e6ed62ba5318",
+          "sha256": "4364ab18c72223c68b99bf543f28a01bfacdf7814246e5a7aa1ec8d77980bed1"
+        },
+        "downloads": -1,
+        "filename": "datasette-visible-internal-db-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e0e87aad5de2d1d1e7d9e6ed62ba5318",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2311,
+        "upload_time": "2023-08-30T22:43:28",
+        "upload_time_iso_8601": "2023-08-30T22:43:28.810842Z",
+        "url": "https://files.pythonhosted.org/packages/ba/5b/05f437392d9f307a41f3762178b06464ac02cef21ba614c7fa71f7b217d8/datasette-visible-internal-db-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "09c15d0b4642c2c3bda8309f16e963bdbb59bf75bb1a52f8ebc42ad58770a771",
+          "md5": "7ca0725f491eeecf247babd4366db379",
+          "sha256": "840ebd9b84b28f6e263e226209aa229d63dd138a00b5a20a5d19ec3b7d42f094"
+        },
+        "downloads": -1,
+        "filename": "datasette_visible_internal_db-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7ca0725f491eeecf247babd4366db379",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2577,
+        "upload_time": "2023-08-30T22:50:17",
+        "upload_time_iso_8601": "2023-08-30T22:50:17.189003Z",
+        "url": "https://files.pythonhosted.org/packages/09/c1/5d0b4642c2c3bda8309f16e963bdbb59bf75bb1a52f8ebc42ad58770a771/datasette_visible_internal_db-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "620d7316e1bc5926788d2126c8dd0fc9b242b2873aa152591d39460548c4673e",
+          "md5": "c895c0a46f2e35de8c38aefee63b13a3",
+          "sha256": "13e28fb0a996a47c37e5c727abc514d4edc618b5dabcfd05047585a4fe63c83f"
+        },
+        "downloads": -1,
+        "filename": "datasette-visible-internal-db-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c895c0a46f2e35de8c38aefee63b13a3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2316,
+        "upload_time": "2023-08-30T22:50:18",
+        "upload_time_iso_8601": "2023-08-30T22:50:18.528747Z",
+        "url": "https://files.pythonhosted.org/packages/62/0d/7316e1bc5926788d2126c8dd0fc9b242b2873aa152591d39460548c4673e/datasette-visible-internal-db-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "09c15d0b4642c2c3bda8309f16e963bdbb59bf75bb1a52f8ebc42ad58770a771",
+        "md5": "7ca0725f491eeecf247babd4366db379",
+        "sha256": "840ebd9b84b28f6e263e226209aa229d63dd138a00b5a20a5d19ec3b7d42f094"
+      },
+      "downloads": -1,
+      "filename": "datasette_visible_internal_db-0.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "7ca0725f491eeecf247babd4366db379",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2577,
+      "upload_time": "2023-08-30T22:50:17",
+      "upload_time_iso_8601": "2023-08-30T22:50:17.189003Z",
+      "url": "https://files.pythonhosted.org/packages/09/c1/5d0b4642c2c3bda8309f16e963bdbb59bf75bb1a52f8ebc42ad58770a771/datasette_visible_internal_db-0.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "620d7316e1bc5926788d2126c8dd0fc9b242b2873aa152591d39460548c4673e",
+        "md5": "c895c0a46f2e35de8c38aefee63b13a3",
+        "sha256": "13e28fb0a996a47c37e5c727abc514d4edc618b5dabcfd05047585a4fe63c83f"
+      },
+      "downloads": -1,
+      "filename": "datasette-visible-internal-db-0.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "c895c0a46f2e35de8c38aefee63b13a3",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2316,
+      "upload_time": "2023-08-30T22:50:18",
+      "upload_time_iso_8601": "2023-08-30T22:50:18.528747Z",
+      "url": "https://files.pythonhosted.org/packages/62/0d/7316e1bc5926788d2126c8dd0fc9b242b2873aa152591d39460548c4673e/datasette-visible-internal-db-0.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
