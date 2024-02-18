@@ -190,3 +190,4 @@ datasette-reconcile
 datasette-homepage-table
 datasette-events-db
 datasette-enrichments-quickjs
+datasette-visible-internal-db
