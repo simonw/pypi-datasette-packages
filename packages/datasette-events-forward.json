@@ -1,0 +1,142 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-events-forward\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-events-forward.svg)](https://pypi.org/project/datasette-events-forward/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-events-forward?include_prereleases&label=changelog)](https://github.com/datasette/datasette-events-forward/releases)\n[![Tests](https://github.com/datasette/datasette-events-forward/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-events-forward/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-events-forward/blob/main/LICENSE)\n\nForward Datasette events to another instance\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-events-forward\n```\n\n## Configuration\n\nConfigure the plugin like so:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-events-forward\": {\n            \"api_token\": \"***\",\n            \"api_url\": \"https://stats.datasette.cloud/data/-/create\",\n            \"instance\": \"localhost\"\n        }\n    }\n}\n```\nThe plugin will then gather all events and forward them to the specified instance, adding them to a table called `datasette_events` which will be created if it does not exist.\n\nThe `instance` key can be used to differentiate different instances that report to the same backend. Events are identified with a ULID to ensure they are unique even across different instances.\n\nEvents are forwarded in batches of up to 10, no more than once every 10 seconds.\n\nFull list of configuration settings:\n\n- `api_url`: The write API URL of a Datasette instance to forward the events to.\n- `api_token`: The API token to use when sending events. Use `{\"$env\": \"FORWARD_TOKEN\"}` to read the token from the `FORWARD_TOKEN` environment variable.\n- `instance`: A string to identify the instance that is sending the events.\n\nThe `api_url` can be either a `https://datasette.example.com/data/datasette_events/-/insert` endpoint for inserting rows, or a `https://datasette.example.com/data/-/create` endpoint for creating a table and inserting rows into it. If the table does not yet exist you should use the `/-/create` variant, otherwise use the `/-/insert` variant.\n\nIf you use `/-/insert` your API token just needs `insert-row` permissions. For `/-/create` you will need `create-table` permissions as well.\n\nAnd to control the rate at which batches of events are sent to the Datasette write API:\n\n- `batch_limit`: The number of events to send in each batch, defaults to 10. The Datasette write API has a 100 row limit by default so this should be set to a value less than that.\n- `max_rate`: The maximum number of deliver HTTP requests to send in the specified time period, defaults to 1.\n- `time_period`: The time period for the rate limiting in seconds, defaults to 10.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-events-forward\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-events-forward",
+    "package_url": "https://pypi.org/project/datasette-events-forward/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-events-forward/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-events-forward/actions",
+      "Changelog": "https://github.com/datasette/datasette-events-forward/releases",
+      "Homepage": "https://github.com/datasette/datasette-events-forward",
+      "Issues": "https://github.com/datasette/datasette-events-forward/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-events-forward/0.1a0/",
+    "requires_dist": [
+      "datasette >=1.0a10",
+      "python-ulid",
+      "aiolimiter",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'",
+      "datasette-test ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Forward Datasette events to another instance",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 21958456,
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ff6a10734da87295c3305568e661218234bba7dc6128bbb34ab994ac1fccafae",
+          "md5": "d59f7e603342c3f4642b85888a0b50a6",
+          "sha256": "6d46ce05d0ef9afdbab4599ed59224abc5e2f57ee93895dcdb8384d832c726df"
+        },
+        "downloads": -1,
+        "filename": "datasette_events_forward-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d59f7e603342c3f4642b85888a0b50a6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 9001,
+        "upload_time": "2024-02-20T19:48:43",
+        "upload_time_iso_8601": "2024-02-20T19:48:43.196603Z",
+        "url": "https://files.pythonhosted.org/packages/ff/6a/10734da87295c3305568e661218234bba7dc6128bbb34ab994ac1fccafae/datasette_events_forward-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "662b40521fc04de632bc508672a01832315906776c896ce4703653071e9e521d",
+          "md5": "7b8b13d2aea5dccf16074ce8ccf10c58",
+          "sha256": "18816f2bf2e48c3ba95183e4f67bcadbd05bae020462e599ea0438d62ab95414"
+        },
+        "downloads": -1,
+        "filename": "datasette-events-forward-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7b8b13d2aea5dccf16074ce8ccf10c58",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9126,
+        "upload_time": "2024-02-20T19:48:44",
+        "upload_time_iso_8601": "2024-02-20T19:48:44.261770Z",
+        "url": "https://files.pythonhosted.org/packages/66/2b/40521fc04de632bc508672a01832315906776c896ce4703653071e9e521d/datasette-events-forward-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "ff6a10734da87295c3305568e661218234bba7dc6128bbb34ab994ac1fccafae",
+        "md5": "d59f7e603342c3f4642b85888a0b50a6",
+        "sha256": "6d46ce05d0ef9afdbab4599ed59224abc5e2f57ee93895dcdb8384d832c726df"
+      },
+      "downloads": -1,
+      "filename": "datasette_events_forward-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d59f7e603342c3f4642b85888a0b50a6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 9001,
+      "upload_time": "2024-02-20T19:48:43",
+      "upload_time_iso_8601": "2024-02-20T19:48:43.196603Z",
+      "url": "https://files.pythonhosted.org/packages/ff/6a/10734da87295c3305568e661218234bba7dc6128bbb34ab994ac1fccafae/datasette_events_forward-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "662b40521fc04de632bc508672a01832315906776c896ce4703653071e9e521d",
+        "md5": "7b8b13d2aea5dccf16074ce8ccf10c58",
+        "sha256": "18816f2bf2e48c3ba95183e4f67bcadbd05bae020462e599ea0438d62ab95414"
+      },
+      "downloads": -1,
+      "filename": "datasette-events-forward-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "7b8b13d2aea5dccf16074ce8ccf10c58",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 9126,
+      "upload_time": "2024-02-20T19:48:44",
+      "upload_time_iso_8601": "2024-02-20T19:48:44.261770Z",
+      "url": "https://files.pythonhosted.org/packages/66/2b/40521fc04de632bc508672a01832315906776c896ce4703653071e9e521d/datasette-events-forward-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
