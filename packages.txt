@@ -192,3 +192,4 @@ datasette-events-db
 datasette-enrichments-quickjs
 datasette-visible-internal-db
 datasette-unsafe-actor-debug
+datasette-events-forward
