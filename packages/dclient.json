@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# dclient\n\n[![PyPI](https://img.shields.io/pypi/v/dclient.svg)](https://pypi.org/project/dclient/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/dclient?include_prereleases&label=changelog)](https://github.com/simonw/dclient/releases)\n[![Tests](https://github.com/simonw/dclient/workflows/Test/badge.svg)](https://github.com/simonw/dclient/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/dclient/blob/master/LICENSE)\n\nA client CLI utility for [Datasette](https://datasette.io/) instances.\n\nMuch of the functionality requires Datasette 1.0a2 or higher.\n\n## Things you can do with dclient\n\n- Run SQL queries against Datasette and returning the results as JSON\n- Run queries against authenticated Datasette instances\n- Create aliases and store authentication tokens for convenient access to Datasette\n- Insert data into Datasette using the [insert API](https://docs.datasette.io/en/latest/json_api.html#the-json-write-api) (Datasette 1.0 alpha or higher)\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install dclient\n```\nIf you want to install it in the same virtual environment as Datasette (to use it as a plugin) you can instead run:\n```bash\ndatasette install dclient\n```\n## Running a query\n\n```bash\ndclient query https://latest.datasette.io/fixtures \"select * from facetable limit 1\"\n```\n\n## Documentation\n\nVisit **[dclient.datasette.io](https://dclient.datasette.io)** for full documentation on using this tool.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd dclient\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# dclient\n\n[![PyPI](https://img.shields.io/pypi/v/dclient.svg)](https://pypi.org/project/dclient/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/dclient?include_prereleases&label=changelog)](https://github.com/simonw/dclient/releases)\n[![Tests](https://github.com/simonw/dclient/workflows/Test/badge.svg)](https://github.com/simonw/dclient/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/dclient/blob/master/LICENSE)\n\nA client CLI utility for [Datasette](https://datasette.io/) instances.\n\nMuch of the functionality requires Datasette 1.0a2 or higher.\n\n## Things you can do with dclient\n\n- Run SQL queries against Datasette and returning the results as JSON\n- Run queries against authenticated Datasette instances\n- Create aliases and store authentication tokens for convenient access to Datasette\n- Insert data into Datasette using the [insert API](https://docs.datasette.io/en/latest/json_api.html#the-json-write-api) (Datasette 1.0 alpha or higher)\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install dclient\n```\nIf you want to install it in the same virtual environment as Datasette (to use it as a plugin) you can instead run:\n```bash\ndatasette install dclient\n```\n## Running a query\n\n```bash\ndclient query https://latest.datasette.io/fixtures \"select * from facetable limit 1\"\n```\nTo shorten that, create an alias:\n```bash\ndclient alias add fixtures https://latest.datasette.io/fixtures\n```\nThen run it like this instead:\n```bash\ndclient query fixtures \"select * from facetable limit 1\"\n```\n## Documentation\n\nVisit **[dclient.datasette.io](https://dclient.datasette.io)** for full documentation on using this tool.\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd dclient\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -28,7 +28,7 @@
       "Homepage": "https://github.com/simonw/dclient",
       "Issues": "https://github.com/simonw/dclient/issues"
     },
-    "release_url": "https://pypi.org/project/dclient/0.2/",
+    "release_url": "https://pypi.org/project/dclient/0.3/",
     "requires_dist": [
       "click",
       "httpx",
@@ -38,15 +38,15 @@
       "pytest-httpx ; extra == 'test'",
       "cogapp ; extra == 'test'",
       "pytest-mock ; extra == 'test'",
-      "datasette (>=1.0a2) ; extra == 'test'"
+      "datasette >=1.0a2 ; extra == 'test'"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.8",
     "summary": "A client CLI utility for Datasette instances",
-    "version": "0.2",
+    "version": "0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19020013,
+  "last_serial": 22032589,
   "releases": {
     "0.1a0": [
       {
@@ -223,48 +223,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b1dd08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4",
+          "md5": "c0bd21f8094cb6b5a6724be8d7e69832",
+          "sha256": "78cfa8bc8db18517005d8d3cd9f7f7c060d52083be38844e013d960ad9542f12"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c0bd21f8094cb6b5a6724be8d7e69832",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 11223,
+        "upload_time": "2024-02-25T19:38:05",
+        "upload_time_iso_8601": "2024-02-25T19:38:05.033421Z",
+        "url": "https://files.pythonhosted.org/packages/b1/dd/08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4/dclient-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "dbd3c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69",
+          "md5": "679278f87c1675885bdf466f15262e1f",
+          "sha256": "b265dd976cc1e1562b8f8e02bf495fc6746da306c27c78bcc5993997694293f1"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "679278f87c1675885bdf466f15262e1f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 14732,
+        "upload_time": "2024-02-25T19:38:07",
+        "upload_time_iso_8601": "2024-02-25T19:38:07.078134Z",
+        "url": "https://files.pythonhosted.org/packages/db/d3/c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69/dclient-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "401d03465b4e1b0f9a81e62ce9d463210321c0b573d024220cd38bb4bb4c1d3f",
-        "md5": "aa5928780b4c60ffdd983cb9bf947807",
-        "sha256": "590280fc1760cac21ab8a5288d9d726b0938f51d35ce07344ef6029c51480aeb"
+        "blake2b_256": "b1dd08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4",
+        "md5": "c0bd21f8094cb6b5a6724be8d7e69832",
+        "sha256": "78cfa8bc8db18517005d8d3cd9f7f7c060d52083be38844e013d960ad9542f12"
       },
       "downloads": -1,
-      "filename": "dclient-0.2-py3-none-any.whl",
+      "filename": "dclient-0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "aa5928780b4c60ffdd983cb9bf947807",
+      "md5_digest": "c0bd21f8094cb6b5a6724be8d7e69832",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 10967,
-      "upload_time": "2023-07-24T23:27:16",
-      "upload_time_iso_8601": "2023-07-24T23:27:16.768909Z",
-      "url": "https://files.pythonhosted.org/packages/40/1d/03465b4e1b0f9a81e62ce9d463210321c0b573d024220cd38bb4bb4c1d3f/dclient-0.2-py3-none-any.whl",
+      "requires_python": ">=3.8",
+      "size": 11223,
+      "upload_time": "2024-02-25T19:38:05",
+      "upload_time_iso_8601": "2024-02-25T19:38:05.033421Z",
+      "url": "https://files.pythonhosted.org/packages/b1/dd/08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4/dclient-0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "66c627daa1f97ae833fa03a35339b9f123004e75544d612cec8c93e3809ec518",
-        "md5": "1f68d0963bd2399b386e87428071f2d0",
-        "sha256": "4e15713c8832edee8bd449d3405b4a624c52c4bb3aa94d4214417413eed25dae"
+        "blake2b_256": "dbd3c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69",
+        "md5": "679278f87c1675885bdf466f15262e1f",
+        "sha256": "b265dd976cc1e1562b8f8e02bf495fc6746da306c27c78bcc5993997694293f1"
       },
       "downloads": -1,
-      "filename": "dclient-0.2.tar.gz",
+      "filename": "dclient-0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "1f68d0963bd2399b386e87428071f2d0",
+      "md5_digest": "679278f87c1675885bdf466f15262e1f",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 14331,
-      "upload_time": "2023-07-24T23:27:18",
-      "upload_time_iso_8601": "2023-07-24T23:27:18.141306Z",
-      "url": "https://files.pythonhosted.org/packages/66/c6/27daa1f97ae833fa03a35339b9f123004e75544d612cec8c93e3809ec518/dclient-0.2.tar.gz",
+      "requires_python": ">=3.8",
+      "size": 14732,
+      "upload_time": "2024-02-25T19:38:07",
+      "upload_time_iso_8601": "2024-02-25T19:38:07.078134Z",
+      "url": "https://files.pythonhosted.org/packages/db/d3/c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69/dclient-0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
