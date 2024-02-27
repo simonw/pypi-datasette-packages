@@ -25,6 +25,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://datasette.io/",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -43,6 +44,7 @@
       "Live demo": "https://latest.datasette.io/",
       "Source code": "https://github.com/simonw/datasette"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette/0.64.6/",
     "requires_dist": [
       "asgiref >=3.2.10",

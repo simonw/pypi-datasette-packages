@@ -16,6 +16,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -31,6 +32,7 @@
       "Homepage": "https://github.com/simonw/datasette-haversine",
       "Issues": "https://github.com/simonw/datasette-haversine/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-haversine/0.2.1/",
     "requires_dist": [
       "datasette",

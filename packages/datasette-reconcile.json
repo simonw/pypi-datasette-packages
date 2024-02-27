@@ -24,6 +24,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "",
     "keywords": "",
     "license": "",
@@ -40,6 +41,7 @@
       "Issues": "https://github.com/drkane/datasette-reconcile/issues",
       "Source": "https://github.com/drkane/datasette-reconcile"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-reconcile/0.6.3/",
     "requires_dist": [
       "datasette",

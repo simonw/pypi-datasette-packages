@@ -26,6 +26,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/sqlite-utils",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -43,6 +44,7 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues",
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/sqlite-utils/3.36/",
     "requires_dist": [
       "sqlite-fts4",

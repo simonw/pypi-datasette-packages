@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://datasette.io/tools/twitter-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://datasette.io/tools/twitter-to-sqlite",
       "Issues": "https://github.com/dogsheep/twitter-to-sqlite/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/twitter-to-sqlite/0.22/",
     "requires_dist": [
       "sqlite-utils (>=2.4.2)",

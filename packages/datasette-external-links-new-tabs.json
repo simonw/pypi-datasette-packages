@@ -16,6 +16,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -31,6 +32,7 @@
       "Homepage": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs",
       "Issues": "https://github.com/ocdtrekkie/datasette-external-links-new-tabs/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-external-links-new-tabs/0.1/",
     "requires_dist": [
       "datasette",

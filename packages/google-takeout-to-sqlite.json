@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/dogsheep/google-takeout-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -25,6 +26,7 @@
     "project_urls": {
       "Homepage": "https://github.com/dogsheep/google-takeout-to-sqlite"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/google-takeout-to-sqlite/0.2/",
     "requires_dist": [
       "sqlite-utils (~=1.11)",

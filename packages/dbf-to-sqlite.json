@@ -22,6 +22,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/dbf-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -34,6 +35,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/dbf-to-sqlite"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/dbf-to-sqlite/0.1/",
     "requires_dist": [
       "dbf (==0.97.11)",

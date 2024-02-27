@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/django-sql-dashboard",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -29,6 +30,7 @@
       "Homepage": "https://github.com/simonw/django-sql-dashboard",
       "Issues": "https://github.com/simonw/django-sql-dashboard/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/django-sql-dashboard/1.2/",
     "requires_dist": [
       "Django >=3.0",

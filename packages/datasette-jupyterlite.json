@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-jupyterlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://github.com/simonw/datasette-jupyterlite",
       "Issues": "https://github.com/simonw/datasette-jupyterlite/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-jupyterlite/0.1a1/",
     "requires_dist": [
       "datasette",

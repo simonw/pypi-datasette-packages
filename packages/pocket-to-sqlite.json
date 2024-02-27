@@ -15,6 +15,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "",
     "keywords": "",
     "license": "Apache-2.0",
@@ -30,6 +31,7 @@
       "Issues": "https://github.com/dogsheep/pocket-to-sqlite/issues",
       "homepage": "https://github.com/dogsheep/pocket-to-sqlite"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/pocket-to-sqlite/0.2.3/",
     "requires_dist": [
       "sqlite-utils (>=2.4.4)",

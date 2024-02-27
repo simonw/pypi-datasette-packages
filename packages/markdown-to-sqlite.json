@@ -21,6 +21,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/markdown-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -36,6 +37,7 @@
       "Homepage": "https://github.com/simonw/markdown-to-sqlite",
       "Issues": "https://github.com/simonw/markdown-to-sqlite/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/markdown-to-sqlite/1.0/",
     "requires_dist": [
       "yamldown",

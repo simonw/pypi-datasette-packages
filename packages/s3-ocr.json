@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/s3-ocr",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://github.com/simonw/s3-ocr",
       "Issues": "https://github.com/simonw/s3-ocr/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/s3-ocr/0.6.3/",
     "requires_dist": [
       "click (>=8.0)",

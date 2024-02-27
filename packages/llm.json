@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/llm",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -29,6 +30,7 @@
       "Homepage": "https://github.com/simonw/llm",
       "Issues": "https://github.com/simonw/llm/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/llm/0.13.1/",
     "requires_dist": [
       "click",

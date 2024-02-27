@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/dogsheep/dogsheep-photos",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -25,6 +26,7 @@
     "project_urls": {
       "Homepage": "https://github.com/dogsheep/dogsheep-photos"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/dogsheep-photos/0.4.1/",
     "requires_dist": [
       "sqlite-utils (>=2.7)",

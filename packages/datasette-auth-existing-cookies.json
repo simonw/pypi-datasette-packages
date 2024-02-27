@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-auth-existing-cookies",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -25,6 +26,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-auth-existing-cookies"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-auth-existing-cookies/0.7/",
     "requires_dist": [
       "appdirs",
