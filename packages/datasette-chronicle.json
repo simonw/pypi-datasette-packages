@@ -16,6 +16,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "",
     "keywords": "",
     "license": "Apache-2.0",
@@ -31,6 +32,7 @@
       "Homepage": "https://github.com/datasette/datasette-chronicle",
       "Issues": "https://github.com/datasette/datasette-chronicle/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-chronicle/0.2.1/",
     "requires_dist": [
       "datasette",

@@ -16,6 +16,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "",
     "keywords": "",
     "license": "Apache-2.0",
@@ -31,6 +32,7 @@
       "Homepage": "https://github.com/datasette/datasette-enrichments-jinja",
       "Issues": "https://github.com/datasette/datasette-enrichments-jinja/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-enrichments-jinja/0.1/",
     "requires_dist": [
       "datasette-enrichments >=0.1a4",

@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://datasette.io/plugins/datasette-upload-csvs",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://datasette.io/plugins/datasette-upload-csvs",
       "Issues": "https://github.com/simonw/datasette-upload-csvs/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-upload-csvs/0.9/",
     "requires_dist": [
       "datasette >=0.61",

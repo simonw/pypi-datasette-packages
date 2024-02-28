@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-psutil",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -25,6 +26,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-psutil"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-psutil/0.2/",
     "requires_dist": [
       "datasette (>=0.44)",

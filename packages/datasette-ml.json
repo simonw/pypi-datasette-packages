@@ -19,6 +19,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/rclement/datasette-ml",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -32,6 +33,7 @@
       "Homepage": "https://github.com/rclement/datasette-ml",
       "Repository": "https://github.com/rclement/datasette-ml"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-ml/0.1.2/",
     "requires_dist": [
       "datasette",

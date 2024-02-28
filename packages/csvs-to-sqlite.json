@@ -23,6 +23,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/csvs-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -35,6 +36,7 @@
     "project_urls": {
       "Homepage": "https://github.com/simonw/csvs-to-sqlite"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/csvs-to-sqlite/1.3/",
     "requires_dist": [
       "click (~=7.0)",

@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-search-all",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://github.com/simonw/datasette-search-all",
       "Issues": "https://github.com/simonw/datasette-search-all/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-search-all/1.1.2/",
     "requires_dist": [
       "datasette >=0.63.1",

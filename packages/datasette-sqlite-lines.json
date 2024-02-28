@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/asg017/sqlite-lines",
     "keywords": "",
     "license": "MIT License, Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://github.com/asg017/sqlite-lines",
       "Issues": "https://github.com/asg017/sqlite-lines/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-sqlite-lines/0.2.2/",
     "requires_dist": [
       "datasette",

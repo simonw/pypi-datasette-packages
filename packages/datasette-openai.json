@@ -16,6 +16,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-openai",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -31,6 +32,7 @@
       "Homepage": "https://github.com/simonw/datasette-openai",
       "Issues": "https://github.com/simonw/datasette-openai/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-openai/0.2/",
     "requires_dist": [
       "datasette",

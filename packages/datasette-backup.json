@@ -13,6 +13,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-backup",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -28,6 +29,7 @@
       "Homepage": "https://github.com/simonw/datasette-backup",
       "Issues": "https://github.com/simonw/datasette-backup/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/datasette-backup/0.1/",
     "requires_dist": [
       "datasette",

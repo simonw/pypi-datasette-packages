@@ -22,6 +22,7 @@
       "last_month": -1,
       "last_week": -1
     },
+    "dynamic": null,
     "home_page": "https://github.com/simonw/sqlite-diffable",
     "keywords": "",
     "license": "Apache License, Version 2.0",
@@ -37,6 +38,7 @@
       "Homepage": "https://github.com/simonw/sqlite-diffable",
       "Issues": "https://github.com/simonw/sqlite-diffable/issues"
     },
+    "provides_extra": null,
     "release_url": "https://pypi.org/project/sqlite-diffable/0.5/",
     "requires_dist": [
       "click",
