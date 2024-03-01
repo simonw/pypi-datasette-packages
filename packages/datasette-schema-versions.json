@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-schema-versions\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-schema-versions.svg)](https://pypi.org/project/datasette-schema-versions/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-schema-versions?include_prereleases&label=changelog)](https://github.com/simonw/datasette-schema-versions/releases)\n[![Tests](https://github.com/simonw/datasette-schema-versions/workflows/Test/badge.svg)](https://github.com/simonw/datasette-schema-versions/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-schema-versions/blob/main/LICENSE)\n\nDatasette plugin that shows the schema version of every attached database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-schema-versions\n\n## Usage\n\nVisit `/-/schema-versions` on your Datasette instance to see a numeric version for the schema for each of your databases.\n\nAny changes you make to the schema will increase this version number.\n\n\n",
+    "description": "# datasette-schema-versions\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-schema-versions.svg)](https://pypi.org/project/datasette-schema-versions/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-schema-versions?include_prereleases&label=changelog)](https://github.com/simonw/datasette-schema-versions/releases)\n[![Tests](https://github.com/simonw/datasette-schema-versions/workflows/Test/badge.svg)](https://github.com/simonw/datasette-schema-versions/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-schema-versions/blob/main/LICENSE)\n\nDatasette plugin that shows the schema version of every attached database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-schema-versions\n\n## Usage\n\nVisit `/-/schema-versions` on your Datasette instance to see a numeric version for the schema for each of your databases.\n\nAny changes you make to the schema will increase this version number.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -21,7 +21,7 @@
     "maintainer_email": "",
     "name": "datasette-schema-versions",
     "package_url": "https://pypi.org/project/datasette-schema-versions/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-schema-versions/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-schema-versions/actions",
@@ -30,7 +30,7 @@
       "Issues": "https://github.com/simonw/datasette-schema-versions/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-schema-versions/0.2/",
+    "release_url": "https://pypi.org/project/datasette-schema-versions/0.3/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
@@ -40,11 +40,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin that shows the schema version of every attached database",
-    "version": "0.2",
+    "version": "0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 11421834,
+  "last_serial": 22108074,
   "releases": {
     "0.1": [
       {
@@ -133,48 +133,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "67f7589145a986c5c8631dc31ea31d9a2aefe68cdb98e9724e5214fe64fcd0b6",
+          "md5": "c607d090d1d9ea4c558b1383ecfcef63",
+          "sha256": "a8181a0d16c6b09086a16e983e41928c8ae191b4298f29565fea95adeb3dd5e1"
+        },
+        "downloads": -1,
+        "filename": "datasette_schema_versions-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c607d090d1d9ea4c558b1383ecfcef63",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2693,
+        "upload_time": "2024-03-01T02:44:52",
+        "upload_time_iso_8601": "2024-03-01T02:44:52.359092Z",
+        "url": "https://files.pythonhosted.org/packages/67/f7/589145a986c5c8631dc31ea31d9a2aefe68cdb98e9724e5214fe64fcd0b6/datasette_schema_versions-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0111d1880a2193a3ff96534226146d403e0873a2fa0238c7be645b694f3f3fea",
+          "md5": "c7159dda2270b3890cab68c9b82189a6",
+          "sha256": "5ac4d3e7dadc987b2d2b5975466edf51679978a1b1946a3dc319c92db647f13e"
+        },
+        "downloads": -1,
+        "filename": "datasette-schema-versions-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c7159dda2270b3890cab68c9b82189a6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2799,
+        "upload_time": "2024-03-01T02:44:53",
+        "upload_time_iso_8601": "2024-03-01T02:44:53.656741Z",
+        "url": "https://files.pythonhosted.org/packages/01/11/d1880a2193a3ff96534226146d403e0873a2fa0238c7be645b694f3f3fea/datasette-schema-versions-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "fd4cf225ab2dfc3e0eac6bd9358afb1c2a5b48878ab79ed5dc67f13027a5bbee",
-        "md5": "2ec124c27c851c41ab2c9d9ad01a31e3",
-        "sha256": "9f45d06c94dab04c108714452b513bb3bc478a80ea1339bf4d9a122a8a2876fe"
+        "blake2b_256": "67f7589145a986c5c8631dc31ea31d9a2aefe68cdb98e9724e5214fe64fcd0b6",
+        "md5": "c607d090d1d9ea4c558b1383ecfcef63",
+        "sha256": "a8181a0d16c6b09086a16e983e41928c8ae191b4298f29565fea95adeb3dd5e1"
       },
       "downloads": -1,
-      "filename": "datasette_schema_versions-0.2-py3-none-any.whl",
+      "filename": "datasette_schema_versions-0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "2ec124c27c851c41ab2c9d9ad01a31e3",
+      "md5_digest": "c607d090d1d9ea4c558b1383ecfcef63",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 2653,
-      "upload_time": "2021-09-11T02:45:27",
-      "upload_time_iso_8601": "2021-09-11T02:45:27.510464Z",
-      "url": "https://files.pythonhosted.org/packages/fd/4c/f225ab2dfc3e0eac6bd9358afb1c2a5b48878ab79ed5dc67f13027a5bbee/datasette_schema_versions-0.2-py3-none-any.whl",
+      "size": 2693,
+      "upload_time": "2024-03-01T02:44:52",
+      "upload_time_iso_8601": "2024-03-01T02:44:52.359092Z",
+      "url": "https://files.pythonhosted.org/packages/67/f7/589145a986c5c8631dc31ea31d9a2aefe68cdb98e9724e5214fe64fcd0b6/datasette_schema_versions-0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "6c2823a6b8123b5ff00c48c39adfe9d5935c620793ae3e1982f24478ec6735b9",
-        "md5": "908f54801bdda69b1fab20db6d32250e",
-        "sha256": "4e8b9c6d83d83ed7a5c2cf555460e2dcafd8285d5c79117e403edb9c19f604af"
+        "blake2b_256": "0111d1880a2193a3ff96534226146d403e0873a2fa0238c7be645b694f3f3fea",
+        "md5": "c7159dda2270b3890cab68c9b82189a6",
+        "sha256": "5ac4d3e7dadc987b2d2b5975466edf51679978a1b1946a3dc319c92db647f13e"
       },
       "downloads": -1,
-      "filename": "datasette-schema-versions-0.2.tar.gz",
+      "filename": "datasette-schema-versions-0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "908f54801bdda69b1fab20db6d32250e",
+      "md5_digest": "c7159dda2270b3890cab68c9b82189a6",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 2333,
-      "upload_time": "2021-09-11T02:45:28",
-      "upload_time_iso_8601": "2021-09-11T02:45:28.298403Z",
-      "url": "https://files.pythonhosted.org/packages/6c/28/23a6b8123b5ff00c48c39adfe9d5935c620793ae3e1982f24478ec6735b9/datasette-schema-versions-0.2.tar.gz",
+      "size": 2799,
+      "upload_time": "2024-03-01T02:44:53",
+      "upload_time_iso_8601": "2024-03-01T02:44:53.656741Z",
+      "url": "https://files.pythonhosted.org/packages/01/11/d1880a2193a3ff96534226146d403e0873a2fa0238c7be645b694f3f3fea/datasette-schema-versions-0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
