@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-expose-env\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-expose-env.svg)](https://pypi.org/project/datasette-expose-env/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-expose-env?include_prereleases&label=changelog)](https://github.com/simonw/datasette-expose-env/releases)\n[![Tests](https://github.com/simonw/datasette-expose-env/workflows/Test/badge.svg)](https://github.com/simonw/datasette-expose-env/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-expose-env/blob/main/LICENSE)\n\nDatasette plugin to expose selected environment variables at `/-/env` for debugging\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-expose-env\n\n## Configuration\n\nDecide on a list of environment variables you would like to expose, then add the following to your `metadata.yml` configuration:\n\n```yaml\nplugins:\n    datasette-expose-env:\n    - ENV_VAR_1\n    - ENV_VAR_2\n    - ENV_VAR_3\n```\n\nIf you are using JSON in a `metadata.json` file use the following:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-expose-env\": [\n            \"ENV_VAR_1\",\n            \"ENV_VAR_2\",\n            \"ENV_VAR_3\"\n        ]\n    }\n}\n```\n\nVisit `/-/env` on your Datasette instance to see the values of the environment variables.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-expose-env\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-expose-env\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-expose-env.svg)](https://pypi.org/project/datasette-expose-env/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-expose-env?include_prereleases&label=changelog)](https://github.com/simonw/datasette-expose-env/releases)\n[![Tests](https://github.com/simonw/datasette-expose-env/workflows/Test/badge.svg)](https://github.com/simonw/datasette-expose-env/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-expose-env/blob/main/LICENSE)\n\nDatasette plugin to expose selected environment variables at `/-/env` for debugging\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-expose-env\n```\n## Configuration\n\nDecide on a list of environment variables you would like to expose, then add the following to your `metadata.yml` configuration:\n\n```yaml\nplugins:\n  datasette-expose-env:\n    variables:\n    - ENV_VAR_1\n    - ENV_VAR_2\n    - ENV_VAR_3\n```\n\nIf you are using JSON in a `metadata.json` file use the following:\n\n```json\n{\n  \"plugins\": {\n    \"datasette-expose-env\": {\n      \"variables\": [\n        \"ENV_VAR_1\",\n        \"ENV_VAR_2\",\n        \"ENV_VAR_3\"\n      ]\n    }\n  }\n}\n```\nTo show a full list of redacted environment variables use `\"show_all_redacted\": true`:\n\n```yaml\nplugins:\n  datasette-expose-env:\n    show_all_redacted: true\n    variables:\n    - ENV_VAR_1\n    - ENV_VAR_2\n```\nThis will show the values for `ENV_VAR_1` and `ENV_VAR_2` and then a full list of other variables with their value shown as `...`.\n\n\nVisit `/-/env` on your Datasette instance to see the values of the environment variables.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-expose-env\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -33,19 +33,20 @@
       "Issues": "https://github.com/simonw/datasette-expose-env/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-expose-env/0.1/",
+    "release_url": "https://pypi.org/project/datasette-expose-env/0.2/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "pytest-asyncio ; extra == 'test'",
+      "datasette-test ; extra == 'test'"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.8",
     "summary": "Datasette plugin to expose selected environment variables at /-/env for debugging",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14324239,
+  "last_serial": 22136993,
   "releases": {
     "0.1": [
       {
@@ -90,48 +91,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0acb553cc0a3d4040e3e1d792df6c86126b5299da1f9809d0cf25ea2e26653c4",
+          "md5": "dc1ab00ac00166b35ab3c8ec4d42f8ad",
+          "sha256": "04c4b42c16ca1e66640fb9bb896792cb9beb6d566219a8f7d85758af89f7c1e8"
+        },
+        "downloads": -1,
+        "filename": "datasette_expose_env-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dc1ab00ac00166b35ab3c8ec4d42f8ad",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7216,
+        "upload_time": "2024-03-03T00:07:36",
+        "upload_time_iso_8601": "2024-03-03T00:07:36.930312Z",
+        "url": "https://files.pythonhosted.org/packages/0a/cb/553cc0a3d4040e3e1d792df6c86126b5299da1f9809d0cf25ea2e26653c4/datasette_expose_env-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "dcb5c58a01d57fdefa168c8a704175d5ce253049e5a918431227a38491598795",
+          "md5": "077df2c47a4d4205d3efd2f3f26a0d32",
+          "sha256": "3d17c93daadd8f3a3a3996622de4bb6e9b3035135139a5a27502b73b98769d8c"
+        },
+        "downloads": -1,
+        "filename": "datasette-expose-env-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "077df2c47a4d4205d3efd2f3f26a0d32",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7286,
+        "upload_time": "2024-03-03T00:07:37",
+        "upload_time_iso_8601": "2024-03-03T00:07:37.897604Z",
+        "url": "https://files.pythonhosted.org/packages/dc/b5/c58a01d57fdefa168c8a704175d5ce253049e5a918431227a38491598795/datasette-expose-env-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "657c486fd6eac1c944c4f560dfeb4fbbdec6b5934cce01ced5a0195baea653c0",
-        "md5": "dc4bed8a3a1e66a5086e1c2d5b11bce5",
-        "sha256": "5146572133c6bcfc120f5d8f5181ce463f37a5a214a257447e3d97e25197df8d"
+        "blake2b_256": "0acb553cc0a3d4040e3e1d792df6c86126b5299da1f9809d0cf25ea2e26653c4",
+        "md5": "dc1ab00ac00166b35ab3c8ec4d42f8ad",
+        "sha256": "04c4b42c16ca1e66640fb9bb896792cb9beb6d566219a8f7d85758af89f7c1e8"
       },
       "downloads": -1,
-      "filename": "datasette_expose_env-0.1-py3-none-any.whl",
+      "filename": "datasette_expose_env-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "dc4bed8a3a1e66a5086e1c2d5b11bce5",
+      "md5_digest": "dc1ab00ac00166b35ab3c8ec4d42f8ad",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 6964,
-      "upload_time": "2022-07-03T21:30:18",
-      "upload_time_iso_8601": "2022-07-03T21:30:18.052933Z",
-      "url": "https://files.pythonhosted.org/packages/65/7c/486fd6eac1c944c4f560dfeb4fbbdec6b5934cce01ced5a0195baea653c0/datasette_expose_env-0.1-py3-none-any.whl",
+      "requires_python": ">=3.8",
+      "size": 7216,
+      "upload_time": "2024-03-03T00:07:36",
+      "upload_time_iso_8601": "2024-03-03T00:07:36.930312Z",
+      "url": "https://files.pythonhosted.org/packages/0a/cb/553cc0a3d4040e3e1d792df6c86126b5299da1f9809d0cf25ea2e26653c4/datasette_expose_env-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "a0190c54cc539de508b8ac38319b1158c062182d30d6b0e0ac9b5c06a3e7962b",
-        "md5": "24d47d00de3817cb75cd506476df2f09",
-        "sha256": "1a1d1c54ee82bbfd54d77a9551db09a54285346c54012de36094843923cfab72"
+        "blake2b_256": "dcb5c58a01d57fdefa168c8a704175d5ce253049e5a918431227a38491598795",
+        "md5": "077df2c47a4d4205d3efd2f3f26a0d32",
+        "sha256": "3d17c93daadd8f3a3a3996622de4bb6e9b3035135139a5a27502b73b98769d8c"
       },
       "downloads": -1,
-      "filename": "datasette-expose-env-0.1.tar.gz",
+      "filename": "datasette-expose-env-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "24d47d00de3817cb75cd506476df2f09",
+      "md5_digest": "077df2c47a4d4205d3efd2f3f26a0d32",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 6451,
-      "upload_time": "2022-07-03T21:30:19",
-      "upload_time_iso_8601": "2022-07-03T21:30:19.569721Z",
-      "url": "https://files.pythonhosted.org/packages/a0/19/0c54cc539de508b8ac38319b1158c062182d30d6b0e0ac9b5c06a3e7962b/datasette-expose-env-0.1.tar.gz",
+      "requires_python": ">=3.8",
+      "size": 7286,
+      "upload_time": "2024-03-03T00:07:37",
+      "upload_time_iso_8601": "2024-03-03T00:07:37.897604Z",
+      "url": "https://files.pythonhosted.org/packages/dc/b5/c58a01d57fdefa168c8a704175d5ce253049e5a918431227a38491598795/datasette-expose-env-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
