@@ -193,3 +193,8 @@ datasette-enrichments-quickjs
 datasette-visible-internal-db
 datasette-unsafe-actor-debug
 datasette-events-forward
+datasette-uptime
+datasette-sqlite-authorizer
+datasette-sqlite-debug-authorizer
+datasette-tail
+datasette-column-sum
