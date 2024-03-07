@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# pypi-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/pypi-to-sqlite.svg)](https://pypi.org/project/pypi-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/pypi-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/pypi-to-sqlite/releases)\n[![Tests](https://github.com/simonw/pypi-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/pypi-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/pypi-to-sqlite/blob/master/LICENSE)\n\nLoad data about Python packages from PyPI into SQLite\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install pypi-to-sqlite\n\n## Usage\n\nTo create a SQLite database with details of one or more packages, run:\n\n    pypi-to-sqlite pypi.db datasette sqlite-utils\n\nYou can also process JSON that you have previously saved to disk like so:\n\n    curl -o datasette.json https://pypi.org/pypi/datasette/json\n    pypi-to-sqlite pypi.db -f datasette.json\n\nThe tool will create three tables: `packages`, `versions` and `releases`. The full table schema is shown below.\n\nTo create the tables with a prefix, use `--prefix prefix`. For example:\n\n    pypi-to-sqlite pypi.db datasette --prefix pypi_\n\nThis will create tables called `pypi_packages`, `pypi_versions` and `pypi_releases`.\n\n## Database schema\n\n<!-- [[[cog\nimport cog, json\nfrom pypi_to_sqlite import cli\nfrom click.testing import CliRunner\nimport sqlite_utils\nimport tempfile, pathlib\ntmpdir = pathlib.Path(tempfile.mkdtemp())\ndb_path = str(tmpdir / \"pypi.db\")\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [db_path, \"-f\", \"tests/datasette-block.json\"])\ncog.out(\"```sql\\n\")\ncog.out(sqlite_utils.Database(db_path).schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [packages] (\n   [name] TEXT PRIMARY KEY,\n   [summary] TEXT,\n   [classifiers] TEXT,\n   [description] TEXT,\n   [author] TEXT,\n   [author_email] TEXT,\n   [description_content_type] TEXT,\n   [home_page] TEXT,\n   [keywords] TEXT,\n   [license] TEXT,\n   [maintainer] TEXT,\n   [maintainer_email] TEXT,\n   [package_url] TEXT,\n   [platform] TEXT,\n   [project_url] TEXT,\n   [project_urls] TEXT,\n   [release_url] TEXT,\n   [requires_dist] TEXT,\n   [requires_python] TEXT,\n   [version] TEXT,\n   [yanked] INTEGER,\n   [yanked_reason] TEXT\n);\nCREATE TABLE [versions] (\n   [id] TEXT PRIMARY KEY,\n   [package] TEXT REFERENCES [packages]([name]),\n   [name] TEXT\n);\nCREATE TABLE [releases] (\n   [md5_digest] TEXT PRIMARY KEY,\n   [package] TEXT REFERENCES [packages]([name]),\n   [version] TEXT REFERENCES [versions]([id]),\n   [packagetype] TEXT,\n   [filename] TEXT,\n   [comment_text] TEXT,\n   [digests] TEXT,\n   [has_sig] INTEGER,\n   [python_version] TEXT,\n   [requires_python] TEXT,\n   [size] INTEGER,\n   [upload_time] TEXT,\n   [upload_time_iso_8601] TEXT,\n   [url] TEXT,\n   [yanked] INTEGER,\n   [yanked_reason] TEXT\n);\n```\n<!-- [[[end]]] -->\n\n## pypi-to-sqlite --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"--help\"])\ncog.out(\"```\\n\")\ncog.out(result.output.replace(\"Usage: cli\", \"Usage: pypi-to-sqlite\"))\ncog.out(\"\\n```\")\n]]] -->\n```\nUsage: pypi-to-sqlite [OPTIONS] DB_PATH [PACKAGE]...\n\n  Load data about Python packages from PyPI into SQLite\n\n  Usage example:\n\n      pypi-to-sqlite pypy.db datasette sqlite-utils\n\n  Use -f to load data from a JSON file instead:\n\n      pypi-to-sqlite pypy.db -f datasette.json\n\n  Created tables will be packages, versions and releases\n\n  To create tables called pypi_packages, pypi_versions, pypi_releases use\n  --prefix pypi_:\n\n      pypi-to-sqlite pypy.db datasette sqlite-utils --prefix pypi_\n\nOptions:\n  --version            Show the version and exit.\n  -f, --file FILENAME  Import JSON from this file\n  -d, --delay FLOAT    Wait this many seconds between requests\n  --prefix TEXT        Prefix to use for the created database tables\n  --help               Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd pypi-to-sqlite\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# pypi-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/pypi-to-sqlite.svg)](https://pypi.org/project/pypi-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/pypi-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/pypi-to-sqlite/releases)\n[![Tests](https://github.com/simonw/pypi-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/pypi-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/pypi-to-sqlite/blob/master/LICENSE)\n\nLoad data about Python packages from PyPI into SQLite\n\n## Installation\n\nInstall this tool using `pip`:\n\n    pip install pypi-to-sqlite\n\n## Usage\n\nTo create a SQLite database with details of one or more packages, run:\n\n    pypi-to-sqlite pypi.db datasette sqlite-utils\n\nYou can also process JSON that you have previously saved to disk like so:\n\n    curl -o datasette.json https://pypi.org/pypi/datasette/json\n    pypi-to-sqlite pypi.db -f datasette.json\n\nThe tool will create three tables: `packages`, `versions` and `releases`. The full table schema is shown below.\n\nTo create the tables with a prefix, use `--prefix prefix`. For example:\n\n    pypi-to-sqlite pypi.db datasette --prefix pypi_\n\nThis will create tables called `pypi_packages`, `pypi_versions` and `pypi_releases`.\n\n## Demo\n\nYou can see examples of tables created using this tool running in [Datasette](https://datasette.io/) here:\n\n- [packages](https://datasette.io/content/pypi_packages)\n- [versions](https://datasette.io/content/pypi_versions)\n- [releases](https://datasette.io/content/pypi_releases)\n\n## Database schema\n\n<!-- [[[cog\nimport cog, json\nfrom pypi_to_sqlite import cli\nfrom click.testing import CliRunner\nimport sqlite_utils\nimport tempfile, pathlib\ntmpdir = pathlib.Path(tempfile.mkdtemp())\ndb_path = str(tmpdir / \"pypi.db\")\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [db_path, \"-f\", \"tests/datasette-block.json\"])\ncog.out(\"```sql\\n\")\ncog.out(sqlite_utils.Database(db_path).schema)\ncog.out(\"\\n```\")\n]]] -->\n```sql\nCREATE TABLE [packages] (\n   [name] TEXT PRIMARY KEY,\n   [summary] TEXT,\n   [classifiers] TEXT,\n   [description] TEXT,\n   [author] TEXT,\n   [author_email] TEXT,\n   [description_content_type] TEXT,\n   [home_page] TEXT,\n   [keywords] TEXT,\n   [license] TEXT,\n   [maintainer] TEXT,\n   [maintainer_email] TEXT,\n   [package_url] TEXT,\n   [platform] TEXT,\n   [project_url] TEXT,\n   [project_urls] TEXT,\n   [release_url] TEXT,\n   [requires_dist] TEXT,\n   [requires_python] TEXT,\n   [version] TEXT,\n   [yanked] INTEGER,\n   [yanked_reason] TEXT\n);\nCREATE TABLE [versions] (\n   [id] TEXT PRIMARY KEY,\n   [package] TEXT REFERENCES [packages]([name]),\n   [name] TEXT\n);\nCREATE TABLE [releases] (\n   [md5_digest] TEXT PRIMARY KEY,\n   [package] TEXT REFERENCES [packages]([name]),\n   [version] TEXT REFERENCES [versions]([id]),\n   [packagetype] TEXT,\n   [filename] TEXT,\n   [comment_text] TEXT,\n   [digests] TEXT,\n   [has_sig] INTEGER,\n   [python_version] TEXT,\n   [requires_python] TEXT,\n   [size] INTEGER,\n   [upload_time] TEXT,\n   [upload_time_iso_8601] TEXT,\n   [url] TEXT,\n   [yanked] INTEGER,\n   [yanked_reason] TEXT\n);\n```\n<!-- [[[end]]] -->\n\n## pypi-to-sqlite --help\n\n<!-- [[[cog\nresult = runner.invoke(cli.cli, [\"--help\"])\ncog.out(\"```\\n\")\ncog.out(result.output.replace(\"Usage: cli\", \"Usage: pypi-to-sqlite\"))\ncog.out(\"\\n```\")\n]]] -->\n```\nUsage: pypi-to-sqlite [OPTIONS] DB_PATH [PACKAGE]...\n\n  Load data about Python packages from PyPI into SQLite\n\n  Usage example:\n\n      pypi-to-sqlite pypy.db datasette sqlite-utils\n\n  Use -f to load data from a JSON file instead:\n\n      pypi-to-sqlite pypy.db -f datasette.json\n\n  Created tables will be packages, versions and releases\n\n  To create tables called pypi_packages, pypi_versions, pypi_releases use\n  --prefix pypi_:\n\n      pypi-to-sqlite pypy.db datasette sqlite-utils --prefix pypi_\n\nOptions:\n  --version            Show the version and exit.\n  -f, --file FILENAME  Import JSON from this file\n  -d, --delay FLOAT    Wait this many seconds between requests\n  --prefix TEXT        Prefix to use for the created database tables\n  --help               Show this message and exit.\n\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd pypi-to-sqlite\n    python -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -30,7 +30,7 @@
       "Issues": "https://github.com/simonw/pypi-to-sqlite/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/pypi-to-sqlite/0.2.2/",
+    "release_url": "https://pypi.org/project/pypi-to-sqlite/0.2.3/",
     "requires_dist": [
       "click",
       "sqlite-utils",
@@ -41,11 +41,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "Load data about Python packages from PyPI into SQLite",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 13454694,
+  "last_serial": 22191365,
   "releases": {
     "0.1": [
       {
@@ -222,48 +222,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "edb1b417733d3808d635e5b6aa29ec829df81eddfebaf2f7b37379c17a6a3106",
+          "md5": "9214205f884e9197a36072a7024d1d03",
+          "sha256": "20f720cecb4920b7456deb0c718cefb321fb5124f7058fe1b203840a64ec98c0"
+        },
+        "downloads": -1,
+        "filename": "pypi_to_sqlite-0.2.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9214205f884e9197a36072a7024d1d03",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 8719,
+        "upload_time": "2024-03-06T06:17:52",
+        "upload_time_iso_8601": "2024-03-06T06:17:52.168424Z",
+        "url": "https://files.pythonhosted.org/packages/ed/b1/b417733d3808d635e5b6aa29ec829df81eddfebaf2f7b37379c17a6a3106/pypi_to_sqlite-0.2.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1f29cf97b1c72cb1aab81917e44d52e34ba3ffbb7efdfa2125ccf7cedc852602",
+          "md5": "4f27ea2f944de13c32853235156e4772",
+          "sha256": "d6866be63e347d5733d259e0708ffc6e69409744203c82e438ee3bbda44a4e20"
+        },
+        "downloads": -1,
+        "filename": "pypi-to-sqlite-0.2.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4f27ea2f944de13c32853235156e4772",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 8999,
+        "upload_time": "2024-03-06T06:17:53",
+        "upload_time_iso_8601": "2024-03-06T06:17:53.604156Z",
+        "url": "https://files.pythonhosted.org/packages/1f/29/cf97b1c72cb1aab81917e44d52e34ba3ffbb7efdfa2125ccf7cedc852602/pypi-to-sqlite-0.2.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "bac65085b6ddb6db51093163054fff5f65257e80af462f81624ce4c039800675",
-        "md5": "4186b881fa8b72f11d781beabd8bc6b2",
-        "sha256": "620a5f7eaca783aed4b8bf93f0864bc58056231d30493241485c7a19264ba072"
+        "blake2b_256": "edb1b417733d3808d635e5b6aa29ec829df81eddfebaf2f7b37379c17a6a3106",
+        "md5": "9214205f884e9197a36072a7024d1d03",
+        "sha256": "20f720cecb4920b7456deb0c718cefb321fb5124f7058fe1b203840a64ec98c0"
       },
       "downloads": -1,
-      "filename": "pypi_to_sqlite-0.2.2-py3-none-any.whl",
+      "filename": "pypi_to_sqlite-0.2.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "4186b881fa8b72f11d781beabd8bc6b2",
+      "md5_digest": "9214205f884e9197a36072a7024d1d03",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 8653,
-      "upload_time": "2022-04-08T15:13:26",
-      "upload_time_iso_8601": "2022-04-08T15:13:26.435300Z",
-      "url": "https://files.pythonhosted.org/packages/ba/c6/5085b6ddb6db51093163054fff5f65257e80af462f81624ce4c039800675/pypi_to_sqlite-0.2.2-py3-none-any.whl",
+      "size": 8719,
+      "upload_time": "2024-03-06T06:17:52",
+      "upload_time_iso_8601": "2024-03-06T06:17:52.168424Z",
+      "url": "https://files.pythonhosted.org/packages/ed/b1/b417733d3808d635e5b6aa29ec829df81eddfebaf2f7b37379c17a6a3106/pypi_to_sqlite-0.2.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "8391ffd668bd8e8b9803a04af91df39f2414ebceef82ff204e4d14c26a89c598",
-        "md5": "4ab94bb5a26bef417e6924b561e62333",
-        "sha256": "7861948a4da51b12842221db3e2622a1d62c7e80ac33d095da3e481e201c3bf9"
+        "blake2b_256": "1f29cf97b1c72cb1aab81917e44d52e34ba3ffbb7efdfa2125ccf7cedc852602",
+        "md5": "4f27ea2f944de13c32853235156e4772",
+        "sha256": "d6866be63e347d5733d259e0708ffc6e69409744203c82e438ee3bbda44a4e20"
       },
       "downloads": -1,
-      "filename": "pypi-to-sqlite-0.2.2.tar.gz",
+      "filename": "pypi-to-sqlite-0.2.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "4ab94bb5a26bef417e6924b561e62333",
+      "md5_digest": "4f27ea2f944de13c32853235156e4772",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 7948,
-      "upload_time": "2022-04-08T15:13:27",
-      "upload_time_iso_8601": "2022-04-08T15:13:27.844594Z",
-      "url": "https://files.pythonhosted.org/packages/83/91/ffd668bd8e8b9803a04af91df39f2414ebceef82ff204e4d14c26a89c598/pypi-to-sqlite-0.2.2.tar.gz",
+      "size": 8999,
+      "upload_time": "2024-03-06T06:17:53",
+      "upload_time_iso_8601": "2024-03-06T06:17:53.604156Z",
+      "url": "https://files.pythonhosted.org/packages/1f/29/cf97b1c72cb1aab81917e44d52e34ba3ffbb7efdfa2125ccf7cedc852602/pypi-to-sqlite-0.2.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
