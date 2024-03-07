@@ -198,3 +198,4 @@ datasette-sqlite-authorizer
 datasette-sqlite-debug-authorizer
 datasette-tail
 datasette-column-sum
+datasette-create-view
