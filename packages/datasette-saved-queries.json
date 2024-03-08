@@ -4,7 +4,7 @@
     "author_email": "",
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-saved-queries\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-saved-queries.svg)](https://pypi.org/project/datasette-saved-queries/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-saved-queries?label=changelog)](https://github.com/simonw/datasette-saved-queries/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-saved-queries/blob/master/LICENSE)\n\nDatasette plugin that lets users save and execute queries\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-saved-queries\n\n## Usage\n\nWhen the plugin is installed Datasette will automatically create a `saved_queries` table in the first connected database when it starts up.\n\nIt also creates a `save_query` writable canned query which you can use to save new queries.\n\nQueries that you save will be added to the query list on the database page.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-saved-queries\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-saved-queries\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-saved-queries.svg)](https://pypi.org/project/datasette-saved-queries/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-saved-queries?label=changelog)](https://github.com/simonw/datasette-saved-queries/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-saved-queries/blob/master/LICENSE)\n\nDatasette plugin that lets users save and execute queries\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-saved-queries\n\n## Usage\n\nWhen the plugin is installed Datasette will automatically create a `saved_queries` table in the first connected database when it starts up.\n\nIt also creates a `save_query` writable canned query which you can use to save new queries.\n\nQueries that you save will be added to the query list on the database page.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-saved-queries\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -21,7 +21,7 @@
     "maintainer_email": "",
     "name": "datasette-saved-queries",
     "package_url": "https://pypi.org/project/datasette-saved-queries/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-saved-queries/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-saved-queries/actions",
@@ -30,9 +30,9 @@
       "Issues": "https://github.com/simonw/datasette-saved-queries/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-saved-queries/0.2.1/",
+    "release_url": "https://pypi.org/project/datasette-saved-queries/0.2.2/",
     "requires_dist": [
-      "datasette (>=0.45)",
+      "datasette >=0.45",
       "sqlite-utils",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
@@ -40,11 +40,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin that lets users save and execute queries",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 7969234,
+  "last_serial": 22215095,
   "releases": {
     "0.1": [
       {
@@ -177,48 +177,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "707805068e846f062c8e772b77ff72f9b4dbf6dedb4fd509a1fbb477285434b2",
+          "md5": "40bf063c03a93e96e2daa6effa858001",
+          "sha256": "f151ba8fe03828ee87a2e3f26df78022023684736d508fba2eb9ca372f2fe3b6"
+        },
+        "downloads": -1,
+        "filename": "datasette_saved_queries-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "40bf063c03a93e96e2daa6effa858001",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2882,
+        "upload_time": "2024-03-07T14:34:44",
+        "upload_time_iso_8601": "2024-03-07T14:34:44.528096Z",
+        "url": "https://files.pythonhosted.org/packages/70/78/05068e846f062c8e772b77ff72f9b4dbf6dedb4fd509a1fbb477285434b2/datasette_saved_queries-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "059a6af67ade32054861432423df3a9592ee9a03b8e57573a6397cddfee388ed",
+          "md5": "44b0de6db76444a24ec48ac5135d9796",
+          "sha256": "f78d40eb1c6f3f8bcaadd8d0ed9eafef28c1305c0eb7f5dbd02d95be0ad6b5d1"
+        },
+        "downloads": -1,
+        "filename": "datasette-saved-queries-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "44b0de6db76444a24ec48ac5135d9796",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 3260,
+        "upload_time": "2024-03-07T14:34:45",
+        "upload_time_iso_8601": "2024-03-07T14:34:45.893131Z",
+        "url": "https://files.pythonhosted.org/packages/05/9a/6af67ade32054861432423df3a9592ee9a03b8e57573a6397cddfee388ed/datasette-saved-queries-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "4a2e8dad7fce4dd275f0515099f651a7a74603e9eaf0c16b5db3791a2a65b632",
-        "md5": "8083027258220a5d7f73fa32c05bc1b6",
-        "sha256": "eca47345fff5122c949d875bbcad3c8cd25ca79a04482923cc8476b1e29f868a"
+        "blake2b_256": "707805068e846f062c8e772b77ff72f9b4dbf6dedb4fd509a1fbb477285434b2",
+        "md5": "40bf063c03a93e96e2daa6effa858001",
+        "sha256": "f151ba8fe03828ee87a2e3f26df78022023684736d508fba2eb9ca372f2fe3b6"
       },
       "downloads": -1,
-      "filename": "datasette_saved_queries-0.2.1-py3-none-any.whl",
+      "filename": "datasette_saved_queries-0.2.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "8083027258220a5d7f73fa32c05bc1b6",
+      "md5_digest": "40bf063c03a93e96e2daa6effa858001",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 2879,
-      "upload_time": "2020-08-15T23:39:15",
-      "upload_time_iso_8601": "2020-08-15T23:39:15.981643Z",
-      "url": "https://files.pythonhosted.org/packages/4a/2e/8dad7fce4dd275f0515099f651a7a74603e9eaf0c16b5db3791a2a65b632/datasette_saved_queries-0.2.1-py3-none-any.whl",
+      "size": 2882,
+      "upload_time": "2024-03-07T14:34:44",
+      "upload_time_iso_8601": "2024-03-07T14:34:44.528096Z",
+      "url": "https://files.pythonhosted.org/packages/70/78/05068e846f062c8e772b77ff72f9b4dbf6dedb4fd509a1fbb477285434b2/datasette_saved_queries-0.2.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "bf7d2c265a441552f254da645356b8afa8c0731c50999629515df15248dd2fbe",
-        "md5": "8c6314b6a5f6acff6e8eeca7d41eb859",
-        "sha256": "3762bb4c31d5c5cbed089004d18da8599f004dc3e0e62ee9a645bec5a9fcf9a1"
+        "blake2b_256": "059a6af67ade32054861432423df3a9592ee9a03b8e57573a6397cddfee388ed",
+        "md5": "44b0de6db76444a24ec48ac5135d9796",
+        "sha256": "f78d40eb1c6f3f8bcaadd8d0ed9eafef28c1305c0eb7f5dbd02d95be0ad6b5d1"
       },
       "downloads": -1,
-      "filename": "datasette-saved-queries-0.2.1.tar.gz",
+      "filename": "datasette-saved-queries-0.2.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "8c6314b6a5f6acff6e8eeca7d41eb859",
+      "md5_digest": "44b0de6db76444a24ec48ac5135d9796",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 2633,
-      "upload_time": "2020-08-15T23:39:16",
-      "upload_time_iso_8601": "2020-08-15T23:39:16.930135Z",
-      "url": "https://files.pythonhosted.org/packages/bf/7d/2c265a441552f254da645356b8afa8c0731c50999629515df15248dd2fbe/datasette-saved-queries-0.2.1.tar.gz",
+      "size": 3260,
+      "upload_time": "2024-03-07T14:34:45",
+      "upload_time_iso_8601": "2024-03-07T14:34:45.893131Z",
+      "url": "https://files.pythonhosted.org/packages/05/9a/6af67ade32054861432423df3a9592ee9a03b8e57573a6397cddfee388ed/datasette-saved-queries-0.2.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
