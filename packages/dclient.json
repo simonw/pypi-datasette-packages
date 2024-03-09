@@ -30,7 +30,7 @@
       "Issues": "https://github.com/simonw/dclient/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/dclient/0.3/",
+    "release_url": "https://pypi.org/project/dclient/0.4/",
     "requires_dist": [
       "click",
       "httpx",
@@ -44,11 +44,11 @@
     ],
     "requires_python": ">=3.8",
     "summary": "A client CLI utility for Datasette instances",
-    "version": "0.3",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22032589,
+  "last_serial": 22232795,
   "releases": {
     "0.1a0": [
       {
@@ -269,48 +269,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5a55578dbb01b840fbb060e15df61d925ae2ec9b0f6d1bbbfd26493e102f9f65",
+          "md5": "df84e98d6ed2340122ffe789d84cfa0c",
+          "sha256": "f6089bbbc7ea115cdffa2c581252dd8f71772bc9447d3654923b2ba83dc1820c"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "df84e98d6ed2340122ffe789d84cfa0c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 11638,
+        "upload_time": "2024-03-08T16:11:27",
+        "upload_time_iso_8601": "2024-03-08T16:11:27.722219Z",
+        "url": "https://files.pythonhosted.org/packages/5a/55/578dbb01b840fbb060e15df61d925ae2ec9b0f6d1bbbfd26493e102f9f65/dclient-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "615173fd74eff60cacf0be1f739108e69ee7e2c4bf8fef7cff076b066e600ec9",
+          "md5": "ad49540e45726cf1aa10a30e2eb6e73a",
+          "sha256": "552f79c24d2dd717ffd1a095aaf8f3f4a5b79571116e1078a129594d1c6d4813"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ad49540e45726cf1aa10a30e2eb6e73a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 15869,
+        "upload_time": "2024-03-08T16:11:28",
+        "upload_time_iso_8601": "2024-03-08T16:11:28.609540Z",
+        "url": "https://files.pythonhosted.org/packages/61/51/73fd74eff60cacf0be1f739108e69ee7e2c4bf8fef7cff076b066e600ec9/dclient-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "b1dd08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4",
-        "md5": "c0bd21f8094cb6b5a6724be8d7e69832",
-        "sha256": "78cfa8bc8db18517005d8d3cd9f7f7c060d52083be38844e013d960ad9542f12"
+        "blake2b_256": "5a55578dbb01b840fbb060e15df61d925ae2ec9b0f6d1bbbfd26493e102f9f65",
+        "md5": "df84e98d6ed2340122ffe789d84cfa0c",
+        "sha256": "f6089bbbc7ea115cdffa2c581252dd8f71772bc9447d3654923b2ba83dc1820c"
       },
       "downloads": -1,
-      "filename": "dclient-0.3-py3-none-any.whl",
+      "filename": "dclient-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "c0bd21f8094cb6b5a6724be8d7e69832",
+      "md5_digest": "df84e98d6ed2340122ffe789d84cfa0c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 11223,
-      "upload_time": "2024-02-25T19:38:05",
-      "upload_time_iso_8601": "2024-02-25T19:38:05.033421Z",
-      "url": "https://files.pythonhosted.org/packages/b1/dd/08fb0233fff49c0020cfdf73fbf74f6528a74ec472cc120b35719bbb84f4/dclient-0.3-py3-none-any.whl",
+      "size": 11638,
+      "upload_time": "2024-03-08T16:11:27",
+      "upload_time_iso_8601": "2024-03-08T16:11:27.722219Z",
+      "url": "https://files.pythonhosted.org/packages/5a/55/578dbb01b840fbb060e15df61d925ae2ec9b0f6d1bbbfd26493e102f9f65/dclient-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "dbd3c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69",
-        "md5": "679278f87c1675885bdf466f15262e1f",
-        "sha256": "b265dd976cc1e1562b8f8e02bf495fc6746da306c27c78bcc5993997694293f1"
+        "blake2b_256": "615173fd74eff60cacf0be1f739108e69ee7e2c4bf8fef7cff076b066e600ec9",
+        "md5": "ad49540e45726cf1aa10a30e2eb6e73a",
+        "sha256": "552f79c24d2dd717ffd1a095aaf8f3f4a5b79571116e1078a129594d1c6d4813"
       },
       "downloads": -1,
-      "filename": "dclient-0.3.tar.gz",
+      "filename": "dclient-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "679278f87c1675885bdf466f15262e1f",
+      "md5_digest": "ad49540e45726cf1aa10a30e2eb6e73a",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 14732,
-      "upload_time": "2024-02-25T19:38:07",
-      "upload_time_iso_8601": "2024-02-25T19:38:07.078134Z",
-      "url": "https://files.pythonhosted.org/packages/db/d3/c0019201d16feecf549e869a3c12d557c415b6073eeaa6fe9d4caa0b2e69/dclient-0.3.tar.gz",
+      "size": 15869,
+      "upload_time": "2024-03-08T16:11:28",
+      "upload_time_iso_8601": "2024-03-08T16:11:28.609540Z",
+      "url": "https://files.pythonhosted.org/packages/61/51/73fd74eff60cacf0be1f739108e69ee7e2c4bf8fef7cff076b066e600ec9/dclient-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
