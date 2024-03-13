@@ -86,7 +86,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22104610,
+  "last_serial": 22292786,
   "releases": {
     "0.10": [
       {
@@ -4917,6 +4917,50 @@
         "upload_time": "2024-02-29T22:44:09",
         "upload_time_iso_8601": "2024-02-29T22:44:09.306958Z",
         "url": "https://files.pythonhosted.org/packages/9c/3d/a8a47db714fafcf16e2558722723c5cd193de349a7a0ea4b8fb844c644f3/datasette-1.0a12.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a13": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "83b8eb62630244ce1a288ba495787a854ac4ddf7e1814bbadb08f6af3759f82f",
+          "md5": "70d06d8d74747ac731dd240868cb0994",
+          "sha256": "6bdf35c8a2ffcbafe9f3111bc61c152c180200e2be1975cc73df739cfe2da1fa"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a13-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "70d06d8d74747ac731dd240868cb0994",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 302141,
+        "upload_time": "2024-03-13T02:20:24",
+        "upload_time_iso_8601": "2024-03-13T02:20:24.329757Z",
+        "url": "https://files.pythonhosted.org/packages/83/b8/eb62630244ce1a288ba495787a854ac4ddf7e1814bbadb08f6af3759f82f/datasette-1.0a13-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ee2c9b57a8cd7b45eb4dd82f6a3f4be155a36f9d0c9d274540397eae043b34d9",
+          "md5": "9bbf5774b985a92cb135c405fa115b2e",
+          "sha256": "0337d22b90ec514e6098845b94c49e272ddccb58f084e2218098115132e12184"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a13.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9bbf5774b985a92cb135c405fa115b2e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 372344,
+        "upload_time": "2024-03-13T02:20:28",
+        "upload_time_iso_8601": "2024-03-13T02:20:28.187725Z",
+        "url": "https://files.pythonhosted.org/packages/ee/2c/9b57a8cd7b45eb4dd82f6a3f4be155a36f9d0c9d274540397eae043b34d9/datasette-1.0a13.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
