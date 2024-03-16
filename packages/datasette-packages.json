@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-packages\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-packages.svg)](https://pypi.org/project/datasette-packages/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-packages?include_prereleases&label=changelog)](https://github.com/simonw/datasette-packages/releases)\n[![Tests](https://github.com/simonw/datasette-packages/workflows/Test/badge.svg)](https://github.com/simonw/datasette-packages/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-packages/blob/main/LICENSE)\n\nShow a list of currently installed Python packages\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-packages\n\n## Usage\n\nVisit `/-/packages` to see a list of installed Python packages.\n\nVisit `/-/packages.json` to get that back as JSON.\n\n## Demo\n\nThe output of this plugin can be seen here:\n\n- https://latest-with-plugins.datasette.io/-/packages\n- https://latest-with-plugins.datasette.io/-/packages.json\n\n## With datasette-graphql\n\nif you have version 2.1 or higher of the [datasette-graphql](https://datasette.io/plugins/datasette-graphql) plugin installed you can also query the list of packages using this GraphQL query:\n\n```graphql\n{\n    packages {\n        name\n        version\n    }\n}\n```\n[Demo of this query](https://latest-with-plugins.datasette.io/graphql?query=%7B%0A%20%20%20%20packages%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20version%0A%20%20%20%20%7D%0A%7D).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-packages\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description": "# datasette-packages\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-packages.svg)](https://pypi.org/project/datasette-packages/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-packages?include_prereleases&label=changelog)](https://github.com/simonw/datasette-packages/releases)\n[![Tests](https://github.com/simonw/datasette-packages/workflows/Test/badge.svg)](https://github.com/simonw/datasette-packages/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-packages/blob/main/LICENSE)\n\nShow a list of currently installed Python packages\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-packages\n\n## Usage\n\nVisit `/-/packages` to see a list of installed Python packages.\n\nVisit `/-/packages.json` to get that back as JSON.\n\n## Demo\n\nThe output of this plugin can be seen here:\n\n- https://latest-with-plugins.datasette.io/-/packages\n- https://latest-with-plugins.datasette.io/-/packages.json\n\n## With datasette-graphql\n\nif you have version 2.1 or higher of the [datasette-graphql](https://datasette.io/plugins/datasette-graphql) plugin installed you can also query the list of packages using this GraphQL query:\n\n```graphql\n{\n  packages {\n    name\n    version\n  }\n}\n```\n[Demo of this query](https://latest-with-plugins.datasette.io/graphql?query=%7B%0A%20%20packages%20%7B%0A%20%20%20%20name%0A%20%20%20%20version%0A%20%20%7D%0A%7D).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-packages\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": "",
@@ -33,20 +33,20 @@
       "Issues": "https://github.com/simonw/datasette-packages/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-packages/0.2/",
+    "release_url": "https://pypi.org/project/datasette-packages/0.2.1/",
     "requires_dist": [
       "datasette",
       "pytest ; extra == 'test'",
       "pytest-asyncio ; extra == 'test'",
-      "datasette-graphql (>=2.1) ; extra == 'test'"
+      "datasette-graphql >=2.1 ; extra == 'test'"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.8",
     "summary": "Show a list of currently installed Python packages",
-    "version": "0.2",
+    "version": "0.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 14319897,
+  "last_serial": 22345340,
   "releases": {
     "0.1": [
       {
@@ -179,48 +179,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2765fbb0ef56cba0c9857d6fd5efbb1d5098525ca8ab91f608378715fab1c08a",
+          "md5": "a31411875f58a3b85a2efa933f2c8ffb",
+          "sha256": "ffcc9fa136425589b3cac04eadbff5917b6f3b7f62f71aa8c7da72ae2ef93bfb"
+        },
+        "downloads": -1,
+        "filename": "datasette_packages-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a31411875f58a3b85a2efa933f2c8ffb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7167,
+        "upload_time": "2024-03-16T01:19:42",
+        "upload_time_iso_8601": "2024-03-16T01:19:42.876747Z",
+        "url": "https://files.pythonhosted.org/packages/27/65/fbb0ef56cba0c9857d6fd5efbb1d5098525ca8ab91f608378715fab1c08a/datasette_packages-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "304aeced59667884c4cb5260ea1e77ff75d87383afb7a694f5669d4cc89dcdcb",
+          "md5": "8a6ac9efcb255cb5b9d21bc8f61cf0f9",
+          "sha256": "fafd4057b46bf3a91fab95afa92854e9eb74ef4098f73fb71b11fc073f9cbc7a"
+        },
+        "downloads": -1,
+        "filename": "datasette-packages-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8a6ac9efcb255cb5b9d21bc8f61cf0f9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7192,
+        "upload_time": "2024-03-16T01:19:43",
+        "upload_time_iso_8601": "2024-03-16T01:19:43.882904Z",
+        "url": "https://files.pythonhosted.org/packages/30/4a/eced59667884c4cb5260ea1e77ff75d87383afb7a694f5669d4cc89dcdcb/datasette-packages-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "07ec2c320a5571c0321ad01c55d67ad43ebc6cb4729be7b24cf177c1b9f361cc",
-        "md5": "d7b1af6aa8873295cc7a60792e013ce1",
-        "sha256": "a5cf8602fd6af512c2f0275b83d47df09ae088e140e179d700e8ee9417c28b87"
+        "blake2b_256": "2765fbb0ef56cba0c9857d6fd5efbb1d5098525ca8ab91f608378715fab1c08a",
+        "md5": "a31411875f58a3b85a2efa933f2c8ffb",
+        "sha256": "ffcc9fa136425589b3cac04eadbff5917b6f3b7f62f71aa8c7da72ae2ef93bfb"
       },
       "downloads": -1,
-      "filename": "datasette_packages-0.2-py3-none-any.whl",
+      "filename": "datasette_packages-0.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "d7b1af6aa8873295cc7a60792e013ce1",
+      "md5_digest": "a31411875f58a3b85a2efa933f2c8ffb",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 7136,
-      "upload_time": "2022-07-03T02:30:26",
-      "upload_time_iso_8601": "2022-07-03T02:30:26.590136Z",
-      "url": "https://files.pythonhosted.org/packages/07/ec/2c320a5571c0321ad01c55d67ad43ebc6cb4729be7b24cf177c1b9f361cc/datasette_packages-0.2-py3-none-any.whl",
+      "requires_python": ">=3.8",
+      "size": 7167,
+      "upload_time": "2024-03-16T01:19:42",
+      "upload_time_iso_8601": "2024-03-16T01:19:42.876747Z",
+      "url": "https://files.pythonhosted.org/packages/27/65/fbb0ef56cba0c9857d6fd5efbb1d5098525ca8ab91f608378715fab1c08a/datasette_packages-0.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "9dc964b36febfdf05185df5ed8f4f915460d9ffd100dc827d7b9df07936a01c3",
-        "md5": "a5795aa72f1a85be069871acf81a7a52",
-        "sha256": "2626032dbddc385cf548801b43f6834c79065a862eb8333a102c2ed639691e72"
+        "blake2b_256": "304aeced59667884c4cb5260ea1e77ff75d87383afb7a694f5669d4cc89dcdcb",
+        "md5": "8a6ac9efcb255cb5b9d21bc8f61cf0f9",
+        "sha256": "fafd4057b46bf3a91fab95afa92854e9eb74ef4098f73fb71b11fc073f9cbc7a"
       },
       "downloads": -1,
-      "filename": "datasette-packages-0.2.tar.gz",
+      "filename": "datasette-packages-0.2.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "a5795aa72f1a85be069871acf81a7a52",
+      "md5_digest": "8a6ac9efcb255cb5b9d21bc8f61cf0f9",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 6695,
-      "upload_time": "2022-07-03T02:30:28",
-      "upload_time_iso_8601": "2022-07-03T02:30:28.241332Z",
-      "url": "https://files.pythonhosted.org/packages/9d/c9/64b36febfdf05185df5ed8f4f915460d9ffd100dc827d7b9df07936a01c3/datasette-packages-0.2.tar.gz",
+      "requires_python": ">=3.8",
+      "size": 7192,
+      "upload_time": "2024-03-16T01:19:43",
+      "upload_time_iso_8601": "2024-03-16T01:19:43.882904Z",
+      "url": "https://files.pythonhosted.org/packages/30/4a/eced59667884c4cb5260ea1e77ff75d87383afb7a694f5669d4cc89dcdcb/datasette-packages-0.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
