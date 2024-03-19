@@ -30,7 +30,7 @@
       "Issues": "https://github.com/simonw/datasette-write/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-write/0.3.1/",
+    "release_url": "https://pypi.org/project/datasette-write/0.3.2/",
     "requires_dist": [
       "datasette >=0.64.6",
       "pytest ; extra == 'test'",
@@ -39,11 +39,11 @@
     ],
     "requires_python": "",
     "summary": "Datasette plugin providing a UI for writing to a database",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22311229,
+  "last_serial": 22374744,
   "releases": {
     "0.1": [
       {
@@ -264,48 +264,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f73ec1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6",
+          "md5": "a4bac8bcce9db1ee83404faca549cf80",
+          "sha256": "8a9cfc5ff83274159a72b32216983435dfba315a0ad6e18a514f362ec96a2223"
+        },
+        "downloads": -1,
+        "filename": "datasette_write-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a4bac8bcce9db1ee83404faca549cf80",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6315,
+        "upload_time": "2024-03-18T16:46:58",
+        "upload_time_iso_8601": "2024-03-18T16:46:58.944010Z",
+        "url": "https://files.pythonhosted.org/packages/f7/3e/c1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6/datasette_write-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b45a315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297",
+          "md5": "4a0c5b5cb7e055f4f12eb7369cda4e10",
+          "sha256": "d34cfdb27e79d3ea927cb6fbe0351dfd28399833c084245092033e3a0a31993b"
+        },
+        "downloads": -1,
+        "filename": "datasette-write-0.3.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4a0c5b5cb7e055f4f12eb7369cda4e10",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7440,
+        "upload_time": "2024-03-18T16:47:01",
+        "upload_time_iso_8601": "2024-03-18T16:47:01.619064Z",
+        "url": "https://files.pythonhosted.org/packages/b4/5a/315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297/datasette-write-0.3.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f7f304331c402e3cb21619b34974b2ec45bb6017fde6535950aae3264957f15f",
-        "md5": "7ed8abeeead9113b5f6d8ee30432a475",
-        "sha256": "088de49938d10b6fe139dcc6855a910870356f20b40bef3fc32ffe55779f8ff2"
+        "blake2b_256": "f73ec1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6",
+        "md5": "a4bac8bcce9db1ee83404faca549cf80",
+        "sha256": "8a9cfc5ff83274159a72b32216983435dfba315a0ad6e18a514f362ec96a2223"
       },
       "downloads": -1,
-      "filename": "datasette_write-0.3.1-py3-none-any.whl",
+      "filename": "datasette_write-0.3.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "7ed8abeeead9113b5f6d8ee30432a475",
+      "md5_digest": "a4bac8bcce9db1ee83404faca549cf80",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6325,
-      "upload_time": "2024-03-14T02:37:07",
-      "upload_time_iso_8601": "2024-03-14T02:37:07.810712Z",
-      "url": "https://files.pythonhosted.org/packages/f7/f3/04331c402e3cb21619b34974b2ec45bb6017fde6535950aae3264957f15f/datasette_write-0.3.1-py3-none-any.whl",
+      "size": 6315,
+      "upload_time": "2024-03-18T16:46:58",
+      "upload_time_iso_8601": "2024-03-18T16:46:58.944010Z",
+      "url": "https://files.pythonhosted.org/packages/f7/3e/c1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6/datasette_write-0.3.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "dcd803ec5f0951eeb3ca46ddf3f8d4cc389716f1d153f50eb37bf01c6fc18744",
-        "md5": "1095ee3c842b27858cddc4da95e0d8f5",
-        "sha256": "a365caa8b4d5921ad72e57967f569b4abe617f0d6bb67148e50995fc4e5f86fa"
+        "blake2b_256": "b45a315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297",
+        "md5": "4a0c5b5cb7e055f4f12eb7369cda4e10",
+        "sha256": "d34cfdb27e79d3ea927cb6fbe0351dfd28399833c084245092033e3a0a31993b"
       },
       "downloads": -1,
-      "filename": "datasette-write-0.3.1.tar.gz",
+      "filename": "datasette-write-0.3.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "1095ee3c842b27858cddc4da95e0d8f5",
+      "md5_digest": "4a0c5b5cb7e055f4f12eb7369cda4e10",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 7442,
-      "upload_time": "2024-03-14T02:37:08",
-      "upload_time_iso_8601": "2024-03-14T02:37:08.903472Z",
-      "url": "https://files.pythonhosted.org/packages/dc/d8/03ec5f0951eeb3ca46ddf3f8d4cc389716f1d153f50eb37bf01c6fc18744/datasette-write-0.3.1.tar.gz",
+      "size": 7440,
+      "upload_time": "2024-03-18T16:47:01",
+      "upload_time_iso_8601": "2024-03-18T16:47:01.619064Z",
+      "url": "https://files.pythonhosted.org/packages/b4/5a/315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297/datasette-write-0.3.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
