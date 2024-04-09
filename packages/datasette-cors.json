@@ -1,13 +1,13 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-cors\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cors.svg)](https://pypi.org/project/datasette-cors/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-cors.svg?style=svg)](https://circleci.com/gh/simonw/datasette-cors)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cors/blob/master/LICENSE)\n\nDatasette plugin for configuring CORS headers, based on https://github.com/simonw/asgi-cors\n\nYou can use this plugin to allow JavaScript running on a whitelisted set of domains to make `fetch()` calls to the JSON API provided by your Datasette instance.\n\n## Installation\n\n    pip install datasette-cors\n\n## Configuration\n\nYou need to add some configuration to your Datasette `metadata.json` file for this plugin to take effect.\n\nTo whitelist specific domains, use this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"hosts\": [\"https://www.example.com\"]\n        }\n    }\n}\n```\n\nYou can also whitelist patterns like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"host_wildcards\": [\"https://*.example.com\"]\n        }\n    }\n}\n```\n\n## Testing it\n\nTo test this plugin out, run it locally by saving one of the above examples as `metadata.json` and running this:\n\n    $ datasette --memory -m metadata.json\n\nNow visit https://www.example.com/ in your browser, open the browser developer console and paste in the following:\n\n```javascript\nfetch(\"http://127.0.0.1:8001/:memory:.json?sql=select+sqlite_version%28%29\").then(r => r.json()).then(console.log)\n```\n\nIf the plugin is running correctly, you will see the JSON response output to the console.\n\n\n",
+    "description": "# datasette-cors\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-cors.svg)](https://pypi.org/project/datasette-cors/)\n[![Tests](https://github.com/simonw/datasette-cors/actions/workflows/test.yml/badge.svg)](https://github.com/simonw/datasette-cors/actions/workflows/test.yml)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-cors?include_prereleases&label=changelog)](https://github.com/simonw/datasette-cors/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-cors/blob/main/LICENSE)\n\nDatasette plugin for configuring CORS headers, based on [asgi-cors](https://github.com/simonw/asgi-cors).\n\nYou can use this plugin to allow JavaScript running on an allowlisted set of domains to make `fetch()` calls to the JSON API provided by your Datasette instance.\n\n## Installation\n```bash\ndatasette install datasette-cors\n```\n## Configuration\n\nYou need to add some plugin configuration for this plugin to take effect.\n\nTo allowlist specific domains, use this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"hosts\": [\"https://www.example.com\"]\n        }\n    }\n}\n```\nThis affects the `access-control-allow-origin` header.\n\nYou can also allowlist host patterns like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"host_wildcards\": [\"https://*.example.com\"]\n        }\n    }\n}\n```\n\nTo allow all origins, use:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"allow_all\": true\n        }\n    }\n}\n```\nThis sets the `access-control-allow-origin` header to `*`.\n\nYou can specify allowed headers - with the `access-control-allow-headers` header - using the `headers` option:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"allow_all\": true,\n            \"headers\": [\"Authorization\", \"Content-Type\"]\n        }\n    }\n}\n```\n\nTo allow specific HTTP methods with the `access-control-allow-methods` header, use the `methods` option:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"allow_all\": true,\n            \"methods\": [\"GET\", \"POST\", \"OPTIONS\"]\n        }\n    }\n}\n```\n\nYou can set the `access-control-max-age` header using the `max_age` option:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-cors\": {\n            \"allow_all\": true,\n            \"max_age\": 3600\n        }\n    }\n}\n```\n\n## Testing it\n\nTo test this plugin out, run it locally by saving one of the above examples as `metadata.json` and running this:\n```bash\ndatasette -m metadata.json\n```\nWith Datasette 1.0 use `-c config.json` instead, or try this:\n```bash\ndatasette -s plugins.datasette-cors.allow_all true\n```\n\nNow visit https://www.example.com/ in your browser, open the browser developer console and paste in the following:\n\n```javascript\nfetch(\"http://127.0.0.1:8001/_memory.json?sql=select+sqlite_version%28%29\").then(r => r.json()).then(console.log)\n```\n\nIf the plugin is working correctly, you will see the JSON response output to the console.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
@@ -15,33 +15,33 @@
     },
     "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-cors",
-    "keywords": "",
+    "keywords": null,
     "license": "Apache License, Version 2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-cors",
     "package_url": "https://pypi.org/project/datasette-cors/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-cors/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/datasette-cors"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-cors/0.3/",
+    "release_url": "https://pypi.org/project/datasette-cors/1.0/",
     "requires_dist": [
-      "asgi-cors (~=0.3)",
-      "datasette (~=0.29) ; extra == 'test'",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "asgiref (~=3.1.2) ; extra == 'test'"
+      "asgi-cors>=1.0",
+      "datasette; extra == \"test\"",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "httpx; extra == \"test\""
     ],
-    "requires_python": "",
+    "requires_python": null,
     "summary": "Datasette plugin for configuring CORS headers",
-    "version": "0.3",
+    "version": "1.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 5515146,
+  "last_serial": 22670936,
   "releases": {
     "0.1": [
       {
@@ -111,27 +111,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2ede0503cd831ae2298d34f60bb6c14d9b9f1df0f7424fd5736e1723fd6fb6fb",
+          "md5": "4061158584327b5931e44efb4ec6b82d",
+          "sha256": "1cffc74913140fec228a61889046452574f766dd5374d6c2f0faa55c2523ded3"
+        },
+        "downloads": -1,
+        "filename": "datasette_cors-1.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4061158584327b5931e44efb4ec6b82d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7007,
+        "upload_time": "2024-04-08T17:03:11",
+        "upload_time_iso_8601": "2024-04-08T17:03:11.594327Z",
+        "url": "https://files.pythonhosted.org/packages/2e/de/0503cd831ae2298d34f60bb6c14d9b9f1df0f7424fd5736e1723fd6fb6fb/datasette_cors-1.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f8aaff1596766fbaad9135493bc17a71a9f7e43e82b0cd7506ead7531e9cb406",
+          "md5": "ae90194ccf2e03c55c7b6d6d2ec1a194",
+          "sha256": "8ab9f240618f6dd228816c65bae5a975b6ee1dc796c7dec0c6cecc887d0691ff"
+        },
+        "downloads": -1,
+        "filename": "datasette-cors-1.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ae90194ccf2e03c55c7b6d6d2ec1a194",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6617,
+        "upload_time": "2024-04-08T17:03:13",
+        "upload_time_iso_8601": "2024-04-08T17:03:13.562674Z",
+        "url": "https://files.pythonhosted.org/packages/f8/aa/ff1596766fbaad9135493bc17a71a9f7e43e82b0cd7506ead7531e9cb406/datasette-cors-1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "1eda85322a300c5503284c652acb0b067cdf293a1ba9fc90fa656eee987f1987",
-        "md5": "0c0f962f049abc5187feb658b0038915",
-        "sha256": "f7cb6425d3b2806b3bcde72c23fc84f5b2402517d8655e0cd63cf0d5ef371f9a"
+        "blake2b_256": "2ede0503cd831ae2298d34f60bb6c14d9b9f1df0f7424fd5736e1723fd6fb6fb",
+        "md5": "4061158584327b5931e44efb4ec6b82d",
+        "sha256": "1cffc74913140fec228a61889046452574f766dd5374d6c2f0faa55c2523ded3"
       },
       "downloads": -1,
-      "filename": "datasette_cors-0.3-py3-none-any.whl",
+      "filename": "datasette_cors-1.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0c0f962f049abc5187feb658b0038915",
+      "md5_digest": "4061158584327b5931e44efb4ec6b82d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6684,
-      "upload_time": "2019-07-11T04:41:49",
-      "upload_time_iso_8601": "2019-07-11T04:41:49.234649Z",
-      "url": "https://files.pythonhosted.org/packages/1e/da/85322a300c5503284c652acb0b067cdf293a1ba9fc90fa656eee987f1987/datasette_cors-0.3-py3-none-any.whl",
+      "size": 7007,
+      "upload_time": "2024-04-08T17:03:11",
+      "upload_time_iso_8601": "2024-04-08T17:03:11.594327Z",
+      "url": "https://files.pythonhosted.org/packages/2e/de/0503cd831ae2298d34f60bb6c14d9b9f1df0f7424fd5736e1723fd6fb6fb/datasette_cors-1.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "f8aaff1596766fbaad9135493bc17a71a9f7e43e82b0cd7506ead7531e9cb406",
+        "md5": "ae90194ccf2e03c55c7b6d6d2ec1a194",
+        "sha256": "8ab9f240618f6dd228816c65bae5a975b6ee1dc796c7dec0c6cecc887d0691ff"
+      },
+      "downloads": -1,
+      "filename": "datasette-cors-1.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ae90194ccf2e03c55c7b6d6d2ec1a194",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 6617,
+      "upload_time": "2024-04-08T17:03:13",
+      "upload_time_iso_8601": "2024-04-08T17:03:13.562674Z",
+      "url": "https://files.pythonhosted.org/packages/f8/aa/ff1596766fbaad9135493bc17a71a9f7e43e82b0cd7506ead7531e9cb406/datasette-cors-1.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
