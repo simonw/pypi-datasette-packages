@@ -1,7 +1,7 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
       "Framework :: Datasette",
@@ -10,18 +10,18 @@
     "description": "# datasette-extract\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-extract.svg)](https://pypi.org/project/datasette-extract/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-extract?include_prereleases&label=changelog)](https://github.com/datasette/datasette-extract/releases)\n[![Tests](https://github.com/datasette/datasette-extract/workflows/Test/badge.svg)](https://github.com/datasette/datasette-extract/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-extract/blob/main/LICENSE)\n\nImport unstructured data (text and images) into structured tables\n\n## Installation\n\nInstall this plugin in the same environment as [Datasette](https://datasette.io/).\n```bash\ndatasette install datasette-extract\n```\n\n## Configuration\n\nThis plugin requires an `OPENAI_API_KEY` environment variable with an [OpenAI API key](https://platform.openai.com/api-keys).\n\n## Usage\n\nThis plugin provides the following features:\n\n- In the database action cog menu for a database select \"Create table with extracted data\" to create a new table with data extracted from text or an image\n- In the table action cog menu select \"Extract data into this table\" to extract data into an existing table\n\nWhen creating a table you can specify the column names, types and provide an optional hint (like \"YYYY-MM-DD\" for dates) to influence how the data should be extracted.\n\nWhen populating an existing table you can provide hints and select which columns should be populated.\n\nText input can be pasted directly into the textarea.\n\nDrag and drop a PDF or text file onto the textarea to populate it with the contents of that file. PDF files will have their text extracted, but only if the file contains text as opposed to scanned images.\n\nDrag and drop a single image onto the textarea - or select it with the image file input box - to process an image. These will have OCR run against them using GPT-4 Vision and then that text will be used for structured data extraction.\n\n## Permissions\n\nUsers must have the `datasette-extract` permission to use this tool.\n\nIn order to create tables they also need the `create-table` permission.\n\nTo insert rows into an existing table they need `insert-row`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-extract\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "",
-    "keywords": "",
+    "home_page": null,
+    "keywords": null,
     "license": "Apache-2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-extract",
     "package_url": "https://pypi.org/project/datasette-extract/",
     "platform": null,
@@ -33,25 +33,25 @@
       "Issues": "https://github.com/datasette/datasette-extract/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-extract/0.1a3/",
+    "release_url": "https://pypi.org/project/datasette-extract/0.1a4/",
     "requires_dist": [
-      "datasette >=1.0a12",
+      "datasette>=1.0a12",
       "sqlite-utils",
-      "openai >=1.0",
+      "openai>=1.0",
       "ijson",
       "python-ulid",
       "starlette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "pytest-recording ; extra == 'test'"
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "pytest-recording; extra == \"test\""
     ],
     "requires_python": ">=3.8",
     "summary": "Import unstructured data (text and images) into structured tables",
-    "version": "0.1a3",
+    "version": "0.1a4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22302229,
+  "last_serial": 22688822,
   "releases": {
     "0.1a0": [
       {
@@ -228,48 +228,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "617832ae67446c72816357284fcc711695274e530e465e4ed699f51a15f99085",
+          "md5": "9e84461e4d7eeaa972407db912c3b767",
+          "sha256": "318b0dad7b24393ab6189a2fe2b8434a011d9e6874bfd2bbcf0546fbd34ee7e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_extract-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9e84461e4d7eeaa972407db912c3b767",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 815037,
+        "upload_time": "2024-04-09T19:25:53",
+        "upload_time_iso_8601": "2024-04-09T19:25:53.754676Z",
+        "url": "https://files.pythonhosted.org/packages/61/78/32ae67446c72816357284fcc711695274e530e465e4ed699f51a15f99085/datasette_extract-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3eee54103aceb3b798639279feaeca40e816ddb6b1496e310955c314f958cf06",
+          "md5": "6ba9c32f09183dfb1da6df4a85cf9c3e",
+          "sha256": "341f07f525ba31a643e6483f7fb35d9fe24a21f3bc23987d8406afaf74b29276"
+        },
+        "downloads": -1,
+        "filename": "datasette-extract-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6ba9c32f09183dfb1da6df4a85cf9c3e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 806168,
+        "upload_time": "2024-04-09T19:25:55",
+        "upload_time_iso_8601": "2024-04-09T19:25:55.576907Z",
+        "url": "https://files.pythonhosted.org/packages/3e/ee/54103aceb3b798639279feaeca40e816ddb6b1496e310955c314f958cf06/datasette-extract-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "9f0a7d75bb71fd7075daba5c368c279751add90c66f832e6da652a848aa455aa",
-        "md5": "2693394e8b3a0fbe0ea3ae2727fe4917",
-        "sha256": "54c08895895f2dafff229e9c517e54518865f8db4dd6be369b5121c660e4a180"
+        "blake2b_256": "617832ae67446c72816357284fcc711695274e530e465e4ed699f51a15f99085",
+        "md5": "9e84461e4d7eeaa972407db912c3b767",
+        "sha256": "318b0dad7b24393ab6189a2fe2b8434a011d9e6874bfd2bbcf0546fbd34ee7e2"
       },
       "downloads": -1,
-      "filename": "datasette_extract-0.1a3-py3-none-any.whl",
+      "filename": "datasette_extract-0.1a4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "2693394e8b3a0fbe0ea3ae2727fe4917",
+      "md5_digest": "9e84461e4d7eeaa972407db912c3b767",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 815150,
-      "upload_time": "2024-03-13T15:34:51",
-      "upload_time_iso_8601": "2024-03-13T15:34:51.386982Z",
-      "url": "https://files.pythonhosted.org/packages/9f/0a/7d75bb71fd7075daba5c368c279751add90c66f832e6da652a848aa455aa/datasette_extract-0.1a3-py3-none-any.whl",
+      "size": 815037,
+      "upload_time": "2024-04-09T19:25:53",
+      "upload_time_iso_8601": "2024-04-09T19:25:53.754676Z",
+      "url": "https://files.pythonhosted.org/packages/61/78/32ae67446c72816357284fcc711695274e530e465e4ed699f51a15f99085/datasette_extract-0.1a4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "a215f6264cfd845aec688553cec1982a3c9e3b1c778859dd8a38bdca3830ed73",
-        "md5": "8b29d6673d729857cdb732ff78da617c",
-        "sha256": "26d50dfe61112902de455a4676c6ccc7f234e95c0af06d4f586b0dd80eb66b63"
+        "blake2b_256": "3eee54103aceb3b798639279feaeca40e816ddb6b1496e310955c314f958cf06",
+        "md5": "6ba9c32f09183dfb1da6df4a85cf9c3e",
+        "sha256": "341f07f525ba31a643e6483f7fb35d9fe24a21f3bc23987d8406afaf74b29276"
       },
       "downloads": -1,
-      "filename": "datasette-extract-0.1a3.tar.gz",
+      "filename": "datasette-extract-0.1a4.tar.gz",
       "has_sig": false,
-      "md5_digest": "8b29d6673d729857cdb732ff78da617c",
+      "md5_digest": "6ba9c32f09183dfb1da6df4a85cf9c3e",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 806329,
-      "upload_time": "2024-03-13T15:34:53",
-      "upload_time_iso_8601": "2024-03-13T15:34:53.794989Z",
-      "url": "https://files.pythonhosted.org/packages/a2/15/f6264cfd845aec688553cec1982a3c9e3b1c778859dd8a38bdca3830ed73/datasette-extract-0.1a3.tar.gz",
+      "size": 806168,
+      "upload_time": "2024-04-09T19:25:55",
+      "upload_time_iso_8601": "2024-04-09T19:25:55.576907Z",
+      "url": "https://files.pythonhosted.org/packages/3e/ee/54103aceb3b798639279feaeca40e816ddb6b1496e310955c314f958cf06/datasette-extract-0.1a4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
