@@ -200,3 +200,6 @@ datasette-tail
 datasette-column-sum
 datasette-create-view
 datasette-extract
+datasette-embeddings
+datasette-import
+datasette-query-assistant
