@@ -1,0 +1,140 @@
+{
+  "info": {
+    "author": "Datasette",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-import\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-import.svg)](https://pypi.org/project/datasette-import/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-import?include_prereleases&label=changelog)](https://github.com/datasette/datasette-import/releases)\n[![Tests](https://github.com/datasette/datasette-import/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-import/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-import/blob/main/LICENSE)\n\nTools for importing data into Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-import\n```\n## Usage\n\nThis plugin adds a database action item called \"Create table with imported data\".\n\nThis action is available to users with the `create-table` permission.\n\nIt links to a page that allows users to upload files or paste in CSV, TSV or JSON data, and then use that to create and populate a new table in Datasette.\n\nCSV and TSV data must have headers on the first row.\n\nJSON data must be an array of objects with the same keys, or a container object object where one of the keys is an array of objects.\n\n## Credits\n\nThe CSV and TSV parsing is performed using [Papa Parse](https://www.papaparse.com/), an MIT licensed JavaScript library that is bundled with this plugin.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-import\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": "Apache-2.0",
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-import",
+    "package_url": "https://pypi.org/project/datasette-import/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-import/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-import/actions",
+      "Changelog": "https://github.com/datasette/datasette-import/releases",
+      "Homepage": "https://github.com/datasette/datasette-import",
+      "Issues": "https://github.com/datasette/datasette-import/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-import/0.1a4/",
+    "requires_dist": [
+      "datasette>=1.0a13",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Tools for importing data into Datasette",
+    "version": "0.1a4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 22649328,
+  "releases": {
+    "0.1a4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "899987533858775975a088ddf05ca1ebfa2d64fcabf6870cd75ac9575ce93fd2",
+          "md5": "bee3d0f932aea71d83fb0ae650db5e9c",
+          "sha256": "5284d45f4f1f30d1e07b55c23f86bb699b464a9de56da170a53faf22969f09ef"
+        },
+        "downloads": -1,
+        "filename": "datasette_import-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bee3d0f932aea71d83fb0ae650db5e9c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 18342,
+        "upload_time": "2024-04-06T16:23:41",
+        "upload_time_iso_8601": "2024-04-06T16:23:41.468224Z",
+        "url": "https://files.pythonhosted.org/packages/89/99/87533858775975a088ddf05ca1ebfa2d64fcabf6870cd75ac9575ce93fd2/datasette_import-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a3abe136dbad54b4b6497127ff67674bb6d620347d4a1ae858e8e353b9743026",
+          "md5": "913a02b079aa10034087056e2ec57e5b",
+          "sha256": "bb74b2dd1c31b326257fcc2c425220a8e23efa94f84ee11f2e7c925c48eafa4c"
+        },
+        "downloads": -1,
+        "filename": "datasette-import-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "913a02b079aa10034087056e2ec57e5b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 18664,
+        "upload_time": "2024-04-06T16:23:42",
+        "upload_time_iso_8601": "2024-04-06T16:23:42.520877Z",
+        "url": "https://files.pythonhosted.org/packages/a3/ab/e136dbad54b4b6497127ff67674bb6d620347d4a1ae858e8e353b9743026/datasette-import-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "899987533858775975a088ddf05ca1ebfa2d64fcabf6870cd75ac9575ce93fd2",
+        "md5": "bee3d0f932aea71d83fb0ae650db5e9c",
+        "sha256": "5284d45f4f1f30d1e07b55c23f86bb699b464a9de56da170a53faf22969f09ef"
+      },
+      "downloads": -1,
+      "filename": "datasette_import-0.1a4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "bee3d0f932aea71d83fb0ae650db5e9c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 18342,
+      "upload_time": "2024-04-06T16:23:41",
+      "upload_time_iso_8601": "2024-04-06T16:23:41.468224Z",
+      "url": "https://files.pythonhosted.org/packages/89/99/87533858775975a088ddf05ca1ebfa2d64fcabf6870cd75ac9575ce93fd2/datasette_import-0.1a4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "a3abe136dbad54b4b6497127ff67674bb6d620347d4a1ae858e8e353b9743026",
+        "md5": "913a02b079aa10034087056e2ec57e5b",
+        "sha256": "bb74b2dd1c31b326257fcc2c425220a8e23efa94f84ee11f2e7c925c48eafa4c"
+      },
+      "downloads": -1,
+      "filename": "datasette-import-0.1a4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "913a02b079aa10034087056e2ec57e5b",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 18664,
+      "upload_time": "2024-04-06T16:23:42",
+      "upload_time_iso_8601": "2024-04-06T16:23:42.520877Z",
+      "url": "https://files.pythonhosted.org/packages/a3/ab/e136dbad54b4b6497127ff67674bb6d620347d4a1ae858e8e353b9743026/datasette-import-0.1a4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
