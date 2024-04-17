@@ -1,13 +1,13 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# openai-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/openai-to-sqlite.svg)](https://pypi.org/project/openai-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/openai-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/openai-to-sqlite/releases)\n[![Tests](https://github.com/simonw/openai-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/openai-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/openai-to-sqlite/blob/master/LICENSE)\n\nThis tool provides utilities for interacting with OpenAI APIs and storing the results in a SQLite database.\n\nSee [Semantic search answers: Q&A against documentation with GPT3 + OpenAI embeddings](https://simonwillison.net/2023/Jan/13/semantic-search-answers/) for background on this project.\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install openai-to-sqlite\n```\n## Configuration\n\nYou will need an OpenAI API key to use this tool.\n\nYou can create one at https://beta.openai.com/account/api-keys\n\nYou can then either set the API key as an environment variable:\n```bash\nexport OPENAI_API_KEY=sk-...\n```\nOr pass it to each command using the `--token sk-...` option.\n\n## Calling OpenAI APIs with SQL functions\n\nThe `openai-to-sqlite query` command can be used to execute SQL queries that call OpenAI APIs.\n\nFunctions available are:\n\n- `chatgpt(prompt)` - call the OpenAI Chat API using model `gpt-3.5-turbo` with the specified prompt.\n- `chatgpt(prompt, system)` - call that API with the prompt and the specified system prompt.\n\nMore functions are planned in the future.\n\nHere's how to use this command to run basic sentiment analysis against content in a table:\n```bash\nopenai-to-sqlite query database.db \"\n  update messages set sentiment = chatgpt(\n    'Sentiment analysis for this message: ' || message ||\n    ' - ONLY return a lowercase string from: positive, negative, neutral, unknown'\n  )\n  where sentiment not in ('positive', 'negative', 'neutral', 'unknown')\n    or sentiment is null\n\"\n```\nThis updates the `sentiment` column in a table called `messages`. It populates it with the response from the specified prompt.\n\nThe command will display a progress bar indicating how many rows are being processed.\n\nYou can add an empty `sentiment` column to a table using [sqlite-utils](https://sqlite-utils.datasette.io/) like this:\n\n```bash\nsqlite-utils add-column database.db messages sentiment\n```\n\n## Embeddings\n\nThe `embeddings` command can be used to calculate and store [OpenAI embeddings](https://beta.openai.com/docs/guides/embeddings) for strings of text.\n\nEach embedding has a cost, so be sure to familiarize yourself with [the pricing](https://openai.com/api/pricing/) for the embedding model.\n\nThe command can accept data in four different ways:\n\n- As a JSON file containing a list of objects\n- As a CSV file\n- As a TSV file\n- By running queries against a SQLite database\n\nFor all of these formats there should be an `id` column, followed by one or more text columns.\n\nThe ID will be stored as the content ID. Any other columns will be concatenated together and used as the text to be embedded.\n\nThe embeddings from the API will then be saved as binary blobs in the `embeddings` table of the specified SQLite database - or another table, if you pass the `-t/--table` option.\n\n### JSON, CSV and TSV\n\nGiven a CSV file like this:\n```csv\nid,content\n1,This is a test\n2,This is another test\n```\nEmbeddings can be stored like so:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv\n```\nThe resulting schema looks like this:\n```sql\nCREATE TABLE [embeddings] (\n   [id] TEXT PRIMARY KEY,\n   [embedding] BLOB\n);\n```\nThe same data can be provided as TSV data:\n```\nid    content\n1     This is a test\n2     This is another test\n```\nThen imported like this:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv\n```\nOr as JSON data:\n```json\n[\n  {\"id\": 1, \"content\": \"This is a test\"},\n  {\"id\": 2, \"content\": \"This is another test\"}\n]\n```\nImported like this:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.json\n```\nIn each of these cases the tool automatically detects the format of the data. It does this by inspecting the data itself - it does not consider the file extension.\n\nIf the automatic detection is not working, you can pass `--format json`, `csv` or `tsv` to explicitly specify a format:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv --format tsv\n```\n### Importing data from standard input\n\nYou can use a filename of `-` to pipe data in to standard input:\n\n```bash\ncat data.tsv | openai-to-sqlite embeddings embeddings.db -\n```\n\n### Data from a SQL query\n\nThe `--sql` option can be used to read data to be embedded from the attached SQLite database. The query must return an `id` column and one or more text columns to be embedded.\n\n```bash\nopenai-to-sqlite embeddings content.db \\\n  --sql \"select id, title from documents\"\n```\nThis will create a `embeddings` table in the `content.db` database and populate it with embeddings calculated from the `title` column in that query.\n\nYou can also store embeddings in one database while reading data from another database, using the `--attach alias filename.db` option:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db \\\n  --attach documents documents.db \\\n  --sql \"select id, title from documents.documents\"\n```\nA progress bar will be displayed when using `--sql` that indicates how long the embeddings are likely to take to calculate.\n\nThe CSV/TSV/JSON options do not correctly display the progress bar. You can work around this by importing your data into SQLite first (e.g. [using sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data)) and then running the embeddings using `--sql`.\n\n### Batching\n\nEmbeddings will be sent to the OpenAI embeddings API in batches of 100. If you know that your data is short strings you can increase the batch size, up to 2048, using the `--batch-size` option:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv --batch-size 2048\n```\n\n### Working with the stored embeddings\n\nThe `embedding` column is a SQLite blob containing 1536 floating point numbers encoded as a sequence of 4 byte values.\n\nYou can extract them back to an array of floating point values in Python like this:\n```python\nimport struct\n\nvector = struct.unpack(\n    \"f\" * 1536, binary_embedding\n)\n```\n\n### Searching embeddings with the search command\n\nHaving saved the embeddings for content, you can run searches using the `search` command:\n```bash\nopenai-to-sqlite search embeddings.db 'this is my search term'\n```\nThe output will be a list of cosine similarity scores and content IDs:\n```bash\nopenai-to-sqlite search blog.db 'cool datasette demo'\n```\n```\n0.843 7849\n0.830 8036\n0.828 8195\n0.826 8098\n0.818 8086\n0.817 8171\n0.816 8121\n0.815 7860\n0.815 7872\n0.814 8169\n```\n\nAdd the `-t/--table` option if your embeddings are stored in a different table:\n```bash\nopenai-to-sqlite search content.db 'this is my search term' -t documents\n\nAdd `--count 20` to retrieve 20 results (the default is 10).\n```\n\n### Search for similar content with the similar command\n\nHaving saved the embeddings for content, you can search for similar content with the `similar` command:\n```bash\noopenai-to-sqlite similar embeddings.db '<content identifier>'\n```\nThe output will be a list of cosine similarity scores and content IDs:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db '23G Gose'\n```\n```\n23G Gose\n  1.000 23G Gose\n  0.929 24A Witbier\n  0.921 23A Berliner Weisse\n  0.909 05B Kölsch\n  0.907 01D American Wheat Beer\n  0.906 27 Historical Beer: Lichtenhainer\n  0.905 23D Lambic\n  0.905 10A Weissbier\n  0.904 04B Festbier\n  0.904 01B American Lager\n```\nYou can pass more than one IDs to see similarities calculated for each one:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  '23G Gose' '01A American Light Lager'\n```\nOr pass `--all` to run similarity for every item in the database. This runs similarity calculations for the number of items squared so it can be quite a long running operation:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all\n```\nTo save these calculations to a `similarities` table in the database, use the `--save` option:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all --save\n```\nThe `--save` option disables output. You can re-enable output with `--print`:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all --save --print\n```\nTo save to a database table with a name other than `similarities`, use `--table`:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  --all --save --table my_similarities\n```\n\n### --recalculate-for-matches\n\nRe-calculating similarities for every row in the database can be quite a lengthy operation.\n\nIf you know which rows have just been added, you can speed things up using `--recalculate-for-matches`.\n\nThis tells `openai-to-sqlite similar` to only re-calculate similarities for rows that are close matches to the specified rows.\n\nThis means you can add one or two additional records and then trigger an update of the saved similarity scores for just those new records plus for the twenty closest matches to those new records like this:\n\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  --save '23G Gose' '01A American Light Lager' \\\n  --recalculate-for-matches \\\n  --count 20 \\\n  --print\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd openai-to-sqlite\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# openai-to-sqlite\n\n[![PyPI](https://img.shields.io/pypi/v/openai-to-sqlite.svg)](https://pypi.org/project/openai-to-sqlite/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/openai-to-sqlite?include_prereleases&label=changelog)](https://github.com/simonw/openai-to-sqlite/releases)\n[![Tests](https://github.com/simonw/openai-to-sqlite/workflows/Test/badge.svg)](https://github.com/simonw/openai-to-sqlite/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/openai-to-sqlite/blob/main/LICENSE)\n\nThis tool provides utilities for interacting with OpenAI APIs and storing the results in a SQLite database.\n\nSee [Semantic search answers: Q&A against documentation with GPT3 + OpenAI embeddings](https://simonwillison.net/2023/Jan/13/semantic-search-answers/) for background on this project.\n\nFor a tutorial on using this for related content, see [Storing and serving related documents with openai-to-sqlite and embeddings](https://til.simonwillison.net/llms/openai-embeddings-related-content).\n\n## Installation\n\nInstall this tool using `pip`:\n```bash\npip install openai-to-sqlite\n```\n## Configuration\n\nYou will need an OpenAI API key to use this tool.\n\nYou can create one at https://beta.openai.com/account/api-keys\n\nYou can then either set the API key as an environment variable:\n```bash\nexport OPENAI_API_KEY=sk-...\n```\nOr pass it to each command using the `--token sk-...` option.\n\n## Calling OpenAI APIs with SQL functions\n\nThe `openai-to-sqlite query` command can be used to execute SQL queries that call OpenAI APIs.\n\nFunctions available are:\n\n- `chatgpt(prompt)` - call the OpenAI Chat API using model `gpt-3.5-turbo` with the specified prompt.\n- `chatgpt(prompt, system)` - call that API with the prompt and the specified system prompt.\n\nMore functions are planned in the future.\n\nHere's how to use this command to run basic sentiment analysis against content in a table:\n```bash\nopenai-to-sqlite query database.db \"\n  update messages set sentiment = chatgpt(\n    'Sentiment analysis for this message: ' || message ||\n    ' - ONLY return a lowercase string from: positive, negative, neutral, unknown'\n  )\n  where sentiment not in ('positive', 'negative', 'neutral', 'unknown')\n    or sentiment is null\n\"\n```\nThis updates the `sentiment` column in a table called `messages`. It populates it with the response from the specified prompt.\n\nThe command will display a progress bar indicating how many rows are being processed.\n\nYou can add an empty `sentiment` column to a table using [sqlite-utils](https://sqlite-utils.datasette.io/) like this:\n\n```bash\nsqlite-utils add-column database.db messages sentiment\n```\n\n## Embeddings\n\nThe `embeddings` command can be used to calculate and store [OpenAI embeddings](https://beta.openai.com/docs/guides/embeddings) for strings of text.\n\nEach embedding has a cost, so be sure to familiarize yourself with [the pricing](https://openai.com/api/pricing/) for the embedding model.\n\nThe command can accept data in four different ways:\n\n- As a JSON file containing a list of objects\n- As a CSV file\n- As a TSV file\n- By running queries against a SQLite database\n\nFor all of these formats there should be an `id` column, followed by one or more text columns.\n\nThe ID will be stored as the content ID. Any other columns will be concatenated together and used as the text to be embedded.\n\nThe embeddings from the API will then be saved as binary blobs in the `embeddings` table of the specified SQLite database - or another table, if you pass the `-t/--table` option.\n\n### JSON, CSV and TSV\n\nGiven a CSV file like this:\n```csv\nid,content\n1,This is a test\n2,This is another test\n```\nEmbeddings can be stored like so:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv\n```\nThe resulting schema looks like this:\n```sql\nCREATE TABLE [embeddings] (\n   [id] TEXT PRIMARY KEY,\n   [embedding] BLOB\n);\n```\nThe same data can be provided as TSV data:\n```\nid    content\n1     This is a test\n2     This is another test\n```\nThen imported like this:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv\n```\nOr as JSON data:\n```json\n[\n  {\"id\": 1, \"content\": \"This is a test\"},\n  {\"id\": 2, \"content\": \"This is another test\"}\n]\n```\nImported like this:\n```bash\nopenai-to-sqlite embeddings embeddings.db data.json\n```\nIn each of these cases the tool automatically detects the format of the data. It does this by inspecting the data itself - it does not consider the file extension.\n\nIf the automatic detection is not working, you can pass `--format json`, `csv` or `tsv` to explicitly specify a format:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.tsv --format tsv\n```\n### Importing data from standard input\n\nYou can use a filename of `-` to pipe data in to standard input:\n\n```bash\ncat data.tsv | openai-to-sqlite embeddings embeddings.db -\n```\n\n### Data from a SQL query\n\nThe `--sql` option can be used to read data to be embedded from the attached SQLite database. The query must return an `id` column and one or more text columns to be embedded.\n\n```bash\nopenai-to-sqlite embeddings content.db \\\n  --sql \"select id, title from documents\"\n```\nThis will create a `embeddings` table in the `content.db` database and populate it with embeddings calculated from the `title` column in that query.\n\nYou can also store embeddings in one database while reading data from another database, using the `--attach alias filename.db` option:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db \\\n  --attach documents documents.db \\\n  --sql \"select id, title from documents.documents\"\n```\nA progress bar will be displayed when using `--sql` that indicates how long the embeddings are likely to take to calculate.\n\nThe CSV/TSV/JSON options do not correctly display the progress bar. You can work around this by importing your data into SQLite first (e.g. [using sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data)) and then running the embeddings using `--sql`.\n\n### Batching\n\nEmbeddings will be sent to the OpenAI embeddings API in batches of 100. If you know that your data is short strings you can increase the batch size, up to 2048, using the `--batch-size` option:\n\n```bash\nopenai-to-sqlite embeddings embeddings.db data.csv --batch-size 2048\n```\n\n### Working with the stored embeddings\n\nThe `embedding` column is a SQLite blob containing 1536 floating point numbers encoded as a sequence of 4 byte values.\n\nYou can extract them back to an array of floating point values in Python like this:\n```python\nimport struct\n\nvector = struct.unpack(\n    \"f\" * 1536, binary_embedding\n)\n```\n\n### Searching embeddings with the search command\n\nHaving saved the embeddings for content, you can run searches using the `search` command:\n```bash\nopenai-to-sqlite search embeddings.db 'this is my search term'\n```\nThe output will be a list of cosine similarity scores and content IDs:\n```bash\nopenai-to-sqlite search blog.db 'cool datasette demo'\n```\n```\n0.843 7849\n0.830 8036\n0.828 8195\n0.826 8098\n0.818 8086\n0.817 8171\n0.816 8121\n0.815 7860\n0.815 7872\n0.814 8169\n```\n\nAdd the `-t/--table` option if your embeddings are stored in a different table:\n```bash\nopenai-to-sqlite search content.db 'this is my search term' -t documents\n\nAdd `--count 20` to retrieve 20 results (the default is 10).\n```\n\n### Search for similar content with the similar command\n\nHaving saved the embeddings for content, you can search for similar content with the `similar` command:\n```bash\noopenai-to-sqlite similar embeddings.db '<content identifier>'\n```\nThe output will be a list of cosine similarity scores and content IDs:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db '23G Gose'\n```\n```\n23G Gose\n  1.000 23G Gose\n  0.929 24A Witbier\n  0.921 23A Berliner Weisse\n  0.909 05B Kölsch\n  0.907 01D American Wheat Beer\n  0.906 27 Historical Beer: Lichtenhainer\n  0.905 23D Lambic\n  0.905 10A Weissbier\n  0.904 04B Festbier\n  0.904 01B American Lager\n```\nYou can pass more than one IDs to see similarities calculated for each one:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  '23G Gose' '01A American Light Lager'\n```\nOr pass `--all` to run similarity for every item in the database. This runs similarity calculations for the number of items squared so it can be quite a long running operation:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all\n```\n\n### Saving similarity calculations to the database\n\nTo save these calculations to a `similarities` table in the database, use the `--save` option:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all --save\n```\nThe `--save` option disables output. You can re-enable output with `--print`:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db --all --save --print\n```\nTo save to a database table with a name other than `similarities`, use `--table`:\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  --all --save --table my_similarities\n```\n\n### --recalculate-for-matches\n\nRe-calculating similarities for every row in the database can be quite a lengthy operation.\n\nIf you know which rows have just been added, you can speed things up using `--recalculate-for-matches`.\n\nThis tells `openai-to-sqlite similar` to only re-calculate similarities for rows that are close matches to the specified rows.\n\nThis means you can add one or two additional records and then trigger an update of the saved similarity scores for just those new records plus for the twenty closest matches to those new records like this:\n\n```bash\nopenai-to-sqlite similar embeddings-bjcp-2021.db \\\n  --save '23G Gose' '01A American Light Lager' \\\n  --recalculate-for-matches \\\n  --count 20 \\\n  --print\n```\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n```bash\ncd openai-to-sqlite\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
@@ -15,10 +15,10 @@
     },
     "dynamic": null,
     "home_page": "https://github.com/simonw/openai-to-sqlite",
-    "keywords": "",
+    "keywords": null,
     "license": "Apache License, Version 2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "openai-to-sqlite",
     "package_url": "https://pypi.org/project/openai-to-sqlite/",
     "platform": null,
@@ -30,24 +30,24 @@
       "Issues": "https://github.com/simonw/openai-to-sqlite/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/openai-to-sqlite/0.4/",
+    "release_url": "https://pypi.org/project/openai-to-sqlite/0.4.2/",
     "requires_dist": [
       "click",
       "httpx",
-      "sqlite-utils >=3.28",
+      "sqlite-utils>=3.28",
       "openai",
       "tiktoken",
-      "pytest ; extra == 'test'",
-      "pytest-httpx ; extra == 'test'",
-      "pytest-mock ; extra == 'test'"
+      "pytest; extra == \"test\"",
+      "pytest-httpx; extra == \"test\"",
+      "pytest-mock; extra == \"test\""
     ],
     "requires_python": ">=3.8",
     "summary": "Save OpenAI API results to a SQLite database",
-    "version": "0.4",
+    "version": "0.4.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19309769,
+  "last_serial": 22799186,
   "releases": {
     "0.1a0": [
       {
@@ -224,48 +224,136 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "79f00ff01fb5368e5370e0eeaa20114480029bb1d429cc1887aa6b5d55805e56",
+          "md5": "946be3e8cbfac227cf175c1c9b4e3ad9",
+          "sha256": "62a3f3b5cb8edb5ebef484706a9a45e6e89ab48bfd000bf337e954311ec4fca8"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.4.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "946be3e8cbfac227cf175c1c9b4e3ad9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 14290,
+        "upload_time": "2024-04-17T02:53:34",
+        "upload_time_iso_8601": "2024-04-17T02:53:34.662298Z",
+        "url": "https://files.pythonhosted.org/packages/79/f0/0ff01fb5368e5370e0eeaa20114480029bb1d429cc1887aa6b5d55805e56/openai_to_sqlite-0.4.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3c2c682b30de1407bba63c03dce2187910e686537a8a63f8e83500a32ebb4c59",
+          "md5": "db1e07e517fc5ee241f468fbb6a4f675",
+          "sha256": "e8fc7a1230d8df791a82554d4d802da79ce5a1d0c305d5bab800a50c75a24d15"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.4.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "db1e07e517fc5ee241f468fbb6a4f675",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 19281,
+        "upload_time": "2024-04-17T02:53:36",
+        "upload_time_iso_8601": "2024-04-17T02:53:36.164252Z",
+        "url": "https://files.pythonhosted.org/packages/3c/2c/682b30de1407bba63c03dce2187910e686537a8a63f8e83500a32ebb4c59/openai_to_sqlite-0.4.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2b5e9d7f9afedec6818fe98a464044d67ba7a137608b0d0e6f469bd9e9354640",
+          "md5": "b0c11aeff2cb444011bf14d39ac0d369",
+          "sha256": "28427e7d9a793e7afdc0c7588e8152a54b97f2964923d781bbf9ca105fd9b849"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.4.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b0c11aeff2cb444011bf14d39ac0d369",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 14302,
+        "upload_time": "2024-04-17T02:58:58",
+        "upload_time_iso_8601": "2024-04-17T02:58:58.635456Z",
+        "url": "https://files.pythonhosted.org/packages/2b/5e/9d7f9afedec6818fe98a464044d67ba7a137608b0d0e6f469bd9e9354640/openai_to_sqlite-0.4.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2732ee0dff91994db6e8fb3ae2e18654c03a30b749b9a1af2890ab001c8e3e36",
+          "md5": "f6c81304f36e3937131762c04bc8622d",
+          "sha256": "d77264d0a796688e517bb407d56ae31b735f1170e37499d67647724e400f11cd"
+        },
+        "downloads": -1,
+        "filename": "openai_to_sqlite-0.4.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f6c81304f36e3937131762c04bc8622d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 19307,
+        "upload_time": "2024-04-17T02:59:00",
+        "upload_time_iso_8601": "2024-04-17T02:59:00.259644Z",
+        "url": "https://files.pythonhosted.org/packages/27/32/ee0dff91994db6e8fb3ae2e18654c03a30b749b9a1af2890ab001c8e3e36/openai_to_sqlite-0.4.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "17c89a43b865eedd637a4f6a0a691deaa8967b52d854e9ffb753352c20e5acea",
-        "md5": "34097f053e28fe8481c3fe86eb434089",
-        "sha256": "a389353461e4e74de696f5274f4ced85efafa1db99d8c5b5be3c0304e19a7021"
+        "blake2b_256": "2b5e9d7f9afedec6818fe98a464044d67ba7a137608b0d0e6f469bd9e9354640",
+        "md5": "b0c11aeff2cb444011bf14d39ac0d369",
+        "sha256": "28427e7d9a793e7afdc0c7588e8152a54b97f2964923d781bbf9ca105fd9b849"
       },
       "downloads": -1,
-      "filename": "openai_to_sqlite-0.4-py3-none-any.whl",
+      "filename": "openai_to_sqlite-0.4.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "34097f053e28fe8481c3fe86eb434089",
+      "md5_digest": "b0c11aeff2cb444011bf14d39ac0d369",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 14186,
-      "upload_time": "2023-08-15T05:01:36",
-      "upload_time_iso_8601": "2023-08-15T05:01:36.815787Z",
-      "url": "https://files.pythonhosted.org/packages/17/c8/9a43b865eedd637a4f6a0a691deaa8967b52d854e9ffb753352c20e5acea/openai_to_sqlite-0.4-py3-none-any.whl",
+      "size": 14302,
+      "upload_time": "2024-04-17T02:58:58",
+      "upload_time_iso_8601": "2024-04-17T02:58:58.635456Z",
+      "url": "https://files.pythonhosted.org/packages/2b/5e/9d7f9afedec6818fe98a464044d67ba7a137608b0d0e6f469bd9e9354640/openai_to_sqlite-0.4.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "e8030069d1f1bb66a32440e3e2a3299d0b09f7060ced41a724a93084ff34f418",
-        "md5": "57a8e99187fa8b8ca9ea29e215b5aa48",
-        "sha256": "6e9b58f740f014097ff9701eb12d3a2745613755db8106fe035f9c086486715c"
+        "blake2b_256": "2732ee0dff91994db6e8fb3ae2e18654c03a30b749b9a1af2890ab001c8e3e36",
+        "md5": "f6c81304f36e3937131762c04bc8622d",
+        "sha256": "d77264d0a796688e517bb407d56ae31b735f1170e37499d67647724e400f11cd"
       },
       "downloads": -1,
-      "filename": "openai-to-sqlite-0.4.tar.gz",
+      "filename": "openai_to_sqlite-0.4.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "57a8e99187fa8b8ca9ea29e215b5aa48",
+      "md5_digest": "f6c81304f36e3937131762c04bc8622d",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 19029,
-      "upload_time": "2023-08-15T05:01:38",
-      "upload_time_iso_8601": "2023-08-15T05:01:38.550909Z",
-      "url": "https://files.pythonhosted.org/packages/e8/03/0069d1f1bb66a32440e3e2a3299d0b09f7060ced41a724a93084ff34f418/openai-to-sqlite-0.4.tar.gz",
+      "size": 19307,
+      "upload_time": "2024-04-17T02:59:00",
+      "upload_time_iso_8601": "2024-04-17T02:59:00.259644Z",
+      "url": "https://files.pythonhosted.org/packages/27/32/ee0dff91994db6e8fb3ae2e18654c03a30b749b9a1af2890ab001c8e3e36/openai_to_sqlite-0.4.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
