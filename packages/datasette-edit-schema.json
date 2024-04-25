@@ -42,7 +42,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22311131,
+  "last_serial": 22906635,
   "releases": {
     "0.3": [
       {
@@ -744,6 +744,50 @@
         "upload_time": "2024-03-14T02:32:52",
         "upload_time_iso_8601": "2024-03-14T02:32:52.545856Z",
         "url": "https://files.pythonhosted.org/packages/3e/9c/9a1baca6349874e209bf5ce6df9c5fed95d486a5bf031adb3743fec8ec6d/datasette-edit-schema-0.8a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.8a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "be4794ed5705f8e7d9af97468a9b79ba1b3ad8ec7bad493bf06dd40bcd618b67",
+          "md5": "9c1e1e69770f6acb561c1e5734de3087",
+          "sha256": "6ee222a2a3710365215f383f35625071605d01147d1a62e978fc3b757c727084"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.8a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c1e1e69770f6acb561c1e5734de3087",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 67002,
+        "upload_time": "2024-04-24T04:08:53",
+        "upload_time_iso_8601": "2024-04-24T04:08:53.778410Z",
+        "url": "https://files.pythonhosted.org/packages/be/47/94ed5705f8e7d9af97468a9b79ba1b3ad8ec7bad493bf06dd40bcd618b67/datasette_edit_schema-0.8a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "21e1b9096e1712f8f2d51d69d42711acea5314139b9ebaac0c35e0106c344d42",
+          "md5": "54736eb2f134987eee1fbb61fb437f8d",
+          "sha256": "e3a0b964bdbc90618503c650193539b6da864a71c2f878e93158c62a77ecd4cf"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_schema-0.8a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "54736eb2f134987eee1fbb61fb437f8d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 71247,
+        "upload_time": "2024-04-24T04:08:55",
+        "upload_time_iso_8601": "2024-04-24T04:08:55.366963Z",
+        "url": "https://files.pythonhosted.org/packages/21/e1/b9096e1712f8f2d51d69d42711acea5314139b9ebaac0c35e0106c344d42/datasette_edit_schema-0.8a2.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
