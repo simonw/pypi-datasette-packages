@@ -1,26 +1,26 @@
 {
   "info": {
     "author": "Datasette",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-test\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-test.svg)](https://pypi.org/project/datasette-test/)\n[![Tests](https://github.com/datasette/datasette-test/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-test/actions/workflows/test.yml)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-test?include_prereleases&label=changelog)](https://github.com/datasette/datasette-test/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-test/blob/main/LICENSE)\n\nUtilities to help write tests for Datasette plugins and applications\n\n## Installation\n\nInstall this library using `pip`:\n```bash\npip install datasette-test\n```\n## Tests that use plugin configuration\n\nDatasette 1.0a8 enforced a configuration change where plugins are no longer configured in metadata, but instead use a configuration file.\n\nThis can result in test failures in projects that use the `Datasette(metadata={\"plugins\": {\"...\": \"...\"}})` pattern to test out plugin configuration.\n\nYou can solve this using `datasette_test.Datasette`, a subclass that works with Datasette versions both before and after this breaking change:\n\n```python\nfrom datasette_test import Datasette\nimport pytest\n\n@pytest.mark.asyncio\nasync def test_datasette():\n    ds = Datasette(plugin_config={\"my-plugin\": {\"config\": \"goes here\"})\n```\nThis subclass detects if the underlying plugin needs configuration in metadata or config and instantiates the class correctly either way.\n\nYou can also use this class while continuing to pass `metadata={\"plugins\": ...}` - the class will move that configuration to config when necessary.\n\n## wait_until_responds(url, timeout=5.0)\n\nSome Datasette plugin test suites launch a Datasette server and then need to wait for that server to become available before continuing.\n\nCall this function to wait until the server becomes available, or raise an error if it takes longer than the timeout:\n\n```python\nfrom datasette_test import wait_until_responds\n\ndef test_server():\n    # ... start server ...\n    wait_until_responds(\"http://localhost:8001\")\n    # Now run tests\n```\n\n## Development\n\nTo contribute to this library, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-test\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-test\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-test.svg)](https://pypi.org/project/datasette-test/)\n[![Tests](https://github.com/datasette/datasette-test/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-test/actions/workflows/test.yml)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-test?include_prereleases&label=changelog)](https://github.com/datasette/datasette-test/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-test/blob/main/LICENSE)\n\nUtilities to help write tests for Datasette plugins and applications\n\n## Installation\n\nInstall this library using `pip`:\n```bash\npip install datasette-test\n```\n## Tests that use plugin configuration\n\nDatasette 1.0a8 enforced a configuration change where plugins are no longer configured in metadata, but instead use a configuration file.\n\nThis can result in test failures in projects that use the `Datasette(metadata={\"plugins\": {\"...\": \"...\"}})` pattern to test out plugin configuration.\n\nYou can solve this using `datasette_test.Datasette`, a subclass that works with Datasette versions both before and after this breaking change:\n\n```python\nfrom datasette_test import Datasette\nimport pytest\n\n@pytest.mark.asyncio\nasync def test_datasette():\n    ds = Datasette(plugin_config={\"my-plugin\": {\"config\": \"goes here\"})\n```\nThis subclass detects if the underlying plugin needs configuration in metadata or config and instantiates the class correctly either way.\n\nYou can also use this class while continuing to pass `metadata={\"plugins\": ...}` - the class will move that configuration to config when necessary.\n\n## permissions= convenience argument\n\nDatasette 1.0a introduces a [more convenient way](https://docs.datasette.io/en/1.0a13/authentication.html#other-permissions-in-datasette-yaml) of defining permissions directly in the configuration:\n```python\nds = Datasette(config={\"permissions\": {\"view-instance\": {\"id\": \"root\"}}})\n```\nThis is not supported by Datasette pre 1.0 - but you can use the `permissions=` argument in `datasette_test.Datasette` to achieve the same effect:\n```python\nds = Datasette(permissions={\"view-instance\": {\"id\": \"root\"}})\n```\nThis will work across both major Datasette versions.\n\n## wait_until_responds(url, timeout=5.0)\n\nSome Datasette plugin test suites launch a Datasette server and then need to wait for that server to become available before continuing.\n\nCall this function to wait until the server becomes available, or raise an error if it takes longer than the timeout:\n\n```python\nfrom datasette_test import wait_until_responds\n\ndef test_server():\n    # ... start server ...\n    wait_until_responds(\"http://localhost:8001\")\n    # Now run tests\n```\n\n## actor_cookie(datasette, actor)\n\nEquivalent to `datasette.client.actor_cookie()` in Datasette 1.0a+. Example usage:\n\n```python\n@pytest.mark.asyncio\nasync def test_permissions():\n    ds = Datasette(permissions={\"view-instance\": {\"id\": \"root\"}})\n    response = await ds.client.get(\"/\")\n    assert response.status_code == 403\n    response = await ds.client.get(\n        \"/\", cookies={\"ds_actor\": actor_cookie(ds, {\"id\": \"root\"})}\n    )\n    assert response.status_code == 200\n```\n\n## Development\n\nTo contribute to this library, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-test\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "",
-    "keywords": "",
+    "home_page": null,
+    "keywords": null,
     "license": "Apache-2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-test",
     "package_url": "https://pypi.org/project/datasette-test/",
     "platform": null,
@@ -32,20 +32,22 @@
       "Issues": "https://github.com/datasette/datasette-test/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-test/0.2/",
+    "release_url": "https://pypi.org/project/datasette-test/0.3.2/",
     "requires_dist": [
       "datasette",
       "httpx",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "packaging",
+      "datasette-test-plugin",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
     ],
     "requires_python": ">=3.8",
     "summary": "Utilities to help write tests for Datasette plugins and applications",
-    "version": "0.2",
+    "version": "0.3.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 21454137,
+  "last_serial": 22953821,
   "releases": {
     "0.1": [
       {
@@ -178,48 +180,180 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "81813e5f9ec8643aaef88b96a7b02583cf74e3856d1c1a4353862cee0b3626ed",
+          "md5": "11d09a18e32782dde2a21c402d73e58f",
+          "sha256": "a8bf3383295955ed71219a3c43a8eafbc26322fa83a4e5dcab58aaae0f9f21f6"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "11d09a18e32782dde2a21c402d73e58f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8250,
+        "upload_time": "2024-04-26T18:24:02",
+        "upload_time_iso_8601": "2024-04-26T18:24:02.422581Z",
+        "url": "https://files.pythonhosted.org/packages/81/81/3e5f9ec8643aaef88b96a7b02583cf74e3856d1c1a4353862cee0b3626ed/datasette_test-0.3-py3-none-any.whl",
+        "yanked": true,
+        "yanked_reason": "Breaks everything, see issue #6"
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "70342d9c45761b360a2f3159081eb61cec4520952185f6e7353af0873e71defc",
+          "md5": "90768a4df52fcd12b10028795570c475",
+          "sha256": "ca776d03caa4c86b358f88ff3608faee8145a43931e4dffee55d13a09182a66c"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "90768a4df52fcd12b10028795570c475",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7900,
+        "upload_time": "2024-04-26T18:24:04",
+        "upload_time_iso_8601": "2024-04-26T18:24:04.064377Z",
+        "url": "https://files.pythonhosted.org/packages/70/34/2d9c45761b360a2f3159081eb61cec4520952185f6e7353af0873e71defc/datasette_test-0.3.tar.gz",
+        "yanked": true,
+        "yanked_reason": "Breaks everything, see issue #6"
+      }
+    ],
+    "0.3.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0b1fbabff43a1a73265cfadc0a102cfb13a3a423d1c6bb8d6afb99f283d657f8",
+          "md5": "3249dbb4c146b1ff05e6fcd30f442a5e",
+          "sha256": "0f7386f728a16f062107d25b5a006a05721cdec39bc121bdf8c49095358ab9e8"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3249dbb4c146b1ff05e6fcd30f442a5e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7675,
+        "upload_time": "2024-04-26T18:56:01",
+        "upload_time_iso_8601": "2024-04-26T18:56:01.815332Z",
+        "url": "https://files.pythonhosted.org/packages/0b/1f/babff43a1a73265cfadc0a102cfb13a3a423d1c6bb8d6afb99f283d657f8/datasette_test-0.3.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4b646df90eed62bede7918b3da617253a109720cdc8fde8d1fd165af292625bc",
+          "md5": "bc5dceff1c68ce107dbd55ac4c0390cb",
+          "sha256": "61bf245f20a34eb6dab5e4013019969f76e3f0274d10ebcf4440daad66894890"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bc5dceff1c68ce107dbd55ac4c0390cb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7641,
+        "upload_time": "2024-04-26T18:56:04",
+        "upload_time_iso_8601": "2024-04-26T18:56:04.313661Z",
+        "url": "https://files.pythonhosted.org/packages/4b/64/6df90eed62bede7918b3da617253a109720cdc8fde8d1fd165af292625bc/datasette_test-0.3.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "085043ed3ed434539ea47aea323d135a9f0df74df4276785431cd996f70cb0a4",
+          "md5": "fba9d595c570ee3d9ac082cf61469a2c",
+          "sha256": "894e0267977a6cfd7aef1a930c3cdcc43e7fd25592a48c611a15380b8952f51e"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fba9d595c570ee3d9ac082cf61469a2c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7669,
+        "upload_time": "2024-04-26T23:13:37",
+        "upload_time_iso_8601": "2024-04-26T23:13:37.457638Z",
+        "url": "https://files.pythonhosted.org/packages/08/50/43ed3ed434539ea47aea323d135a9f0df74df4276785431cd996f70cb0a4/datasette_test-0.3.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "677640202239b88b9ccebe980e377df5d5c3661477497f0f42d333175524901c",
+          "md5": "5edfe9409b5528e99fadb4b57e331818",
+          "sha256": "69e76695e713e5900b831eb34172f89553386c0aa50b9909a33e41c490825887"
+        },
+        "downloads": -1,
+        "filename": "datasette_test-0.3.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5edfe9409b5528e99fadb4b57e331818",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7709,
+        "upload_time": "2024-04-26T23:13:39",
+        "upload_time_iso_8601": "2024-04-26T23:13:39.456933Z",
+        "url": "https://files.pythonhosted.org/packages/67/76/40202239b88b9ccebe980e377df5d5c3661477497f0f42d333175524901c/datasette_test-0.3.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "532acce3cee088a8271b352f292b3b8208abcb9211ffa8575f3d40f4ebfc1a02",
-        "md5": "cf54c0f3ae875b1731d1f27826be9e6c",
-        "sha256": "9bd42a2061b36247ffb0d1113a1cc173a8d2ccaffef52cdd07522cfbf949b336"
+        "blake2b_256": "085043ed3ed434539ea47aea323d135a9f0df74df4276785431cd996f70cb0a4",
+        "md5": "fba9d595c570ee3d9ac082cf61469a2c",
+        "sha256": "894e0267977a6cfd7aef1a930c3cdcc43e7fd25592a48c611a15380b8952f51e"
       },
       "downloads": -1,
-      "filename": "datasette_test-0.2-py3-none-any.whl",
+      "filename": "datasette_test-0.3.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "cf54c0f3ae875b1731d1f27826be9e6c",
+      "md5_digest": "fba9d595c570ee3d9ac082cf61469a2c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 7096,
-      "upload_time": "2024-01-16T22:36:32",
-      "upload_time_iso_8601": "2024-01-16T22:36:32.096756Z",
-      "url": "https://files.pythonhosted.org/packages/53/2a/cce3cee088a8271b352f292b3b8208abcb9211ffa8575f3d40f4ebfc1a02/datasette_test-0.2-py3-none-any.whl",
+      "size": 7669,
+      "upload_time": "2024-04-26T23:13:37",
+      "upload_time_iso_8601": "2024-04-26T23:13:37.457638Z",
+      "url": "https://files.pythonhosted.org/packages/08/50/43ed3ed434539ea47aea323d135a9f0df74df4276785431cd996f70cb0a4/datasette_test-0.3.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "fa507ab664ab136ddfc971dcf54602ccc161dadc00616c639a0e96d36f506bdc",
-        "md5": "057224d60208fa868a25f8026434b540",
-        "sha256": "62fdf9686c428a66317e44b47e338e7b686fa0f5c49b3f7a94a853f98e19a587"
+        "blake2b_256": "677640202239b88b9ccebe980e377df5d5c3661477497f0f42d333175524901c",
+        "md5": "5edfe9409b5528e99fadb4b57e331818",
+        "sha256": "69e76695e713e5900b831eb34172f89553386c0aa50b9909a33e41c490825887"
       },
       "downloads": -1,
-      "filename": "datasette-test-0.2.tar.gz",
+      "filename": "datasette_test-0.3.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "057224d60208fa868a25f8026434b540",
+      "md5_digest": "5edfe9409b5528e99fadb4b57e331818",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 7053,
-      "upload_time": "2024-01-16T22:36:33",
-      "upload_time_iso_8601": "2024-01-16T22:36:33.640031Z",
-      "url": "https://files.pythonhosted.org/packages/fa/50/7ab664ab136ddfc971dcf54602ccc161dadc00616c639a0e96d36f506bdc/datasette-test-0.2.tar.gz",
+      "size": 7709,
+      "upload_time": "2024-04-26T23:13:39",
+      "upload_time_iso_8601": "2024-04-26T23:13:39.456933Z",
+      "url": "https://files.pythonhosted.org/packages/67/76/40202239b88b9ccebe980e377df5d5c3661477497f0f42d333175524901c/datasette_test-0.3.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
