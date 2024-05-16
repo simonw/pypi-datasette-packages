@@ -7,7 +7,7 @@
       "Framework :: Datasette",
       "License :: OSI Approved :: Apache Software License"
     ],
-    "description": "# datasette-enrichments-gpt\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-enrichments-gpt.svg)](https://pypi.org/project/datasette-enrichments-gpt/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-enrichments-gpt?include_prereleases&label=changelog)](https://github.com/datasette/datasette-enrichments-gpt/releases)\n[![Tests](https://github.com/datasette/datasette-enrichments-gpt/workflows/Test/badge.svg)](https://github.com/datasette/datasette-enrichments-gpt/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-enrichments-gpt/blob/main/LICENSE)\n\nDatasette enrichment for analyzing row data using OpenAI's GPT models\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-enrichments-gpt\n```\n## Configuration\n\nThis plugin needs an OpenAI API key. Configure that in `metadata.yml` like so\n```yaml\nplugins:\n  datasette-enrichments-gpt:\n    api_key: sk-..\n```\nOr to avoid that key being visible on `/-/metadata` set it as an environment variable and use this:\n```yaml\nplugins:\n  datasette-enrichments-gpt:\n    api_key:\n      $env: OPENAI_API_KEY\n```\n\n## Usage\n\nOnce installed, this plugin will allow users to select rows to enrich and run them through prompts using `gpt-3.5-turbo` or `gpt-4-turbo`, saving the result of the prompt in the specified column.\n\nThe plugin also provides `gpt-4-turbo vision`, which can run prompts against an image identified by a URL.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-enrichments-gpt\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-enrichments-gpt\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-enrichments-gpt.svg)](https://pypi.org/project/datasette-enrichments-gpt/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-enrichments-gpt?include_prereleases&label=changelog)](https://github.com/datasette/datasette-enrichments-gpt/releases)\n[![Tests](https://github.com/datasette/datasette-enrichments-gpt/workflows/Test/badge.svg)](https://github.com/datasette/datasette-enrichments-gpt/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-enrichments-gpt/blob/main/LICENSE)\n\nDatasette enrichment for analyzing row data using OpenAI's GPT models\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-enrichments-gpt\n```\n## Configuration\n\nThis plugin can optionally be configured with an [OpenAI API key](https://platform.openai.com/api-keys). You can set this as an environment variable:\n```bash\nexport DATASETTE_SECRETS_OPENAPI_API_KEY=sk-..\n```\nOr you can configure it using the [datasette-secrets](https://datasette.io/plugins/datasette-secrets) plugin.\n\nIf you do not configure an OpenAI API key users will be asked to enter one any time they execute the enrichment. The key they provide will not be stored anywhere other than in-memory during the enrichment run.\n\n## Usage\n\nOnce installed, this plugin will allow users to select rows to enrich and run them through prompts using `gpt-3.5-turbo` or `gpt-4o`, saving the result of the prompt in the specified column.\n\nThe plugin also provides `gpt-4o vision`, which can run prompts against an image identified by a URL.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-enrichments-gpt\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -33,20 +33,22 @@
       "Issues": "https://github.com/datasette/datasette-enrichments-gpt/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-enrichments-gpt/0.4/",
+    "release_url": "https://pypi.org/project/datasette-enrichments-gpt/0.5/",
     "requires_dist": [
-      "datasette-enrichments>=0.2",
+      "datasette-enrichments>=0.4.1",
       "sqlite-utils",
+      "datasette-test; extra == \"test\"",
       "pytest; extra == \"test\"",
-      "pytest-asyncio; extra == \"test\""
+      "pytest-asyncio; extra == \"test\"",
+      "pytest-recording; extra == \"test\""
     ],
     "requires_python": ">=3.8",
     "summary": "Datasette enrichment for analyzing row data using OpenAI's GPT models",
-    "version": "0.4",
+    "version": "0.5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22695201,
+  "last_serial": 23225018,
   "releases": {
     "0.1a0": [
       {
@@ -223,48 +225,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ea215b8fc281ed6fc5809524fb442ad23a39738da31e1295d2fb3228bc6e1488",
+          "md5": "6bbe11d1abb221cfcaa2a6ab3965bb4e",
+          "sha256": "aef56b3b3cad6c81c4cd067e3c09e4a24f0d7f4ab346421da1e5f7742922db1e"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_gpt-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6bbe11d1abb221cfcaa2a6ab3965bb4e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 9794,
+        "upload_time": "2024-05-15T21:49:47",
+        "upload_time_iso_8601": "2024-05-15T21:49:47.367447Z",
+        "url": "https://files.pythonhosted.org/packages/ea/21/5b8fc281ed6fc5809524fb442ad23a39738da31e1295d2fb3228bc6e1488/datasette_enrichments_gpt-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ac339921ab268a1f31dc40c7a8e8cd2d56e3db9c89096071345ab50d33853f01",
+          "md5": "ba5e4b67f1ebf42f991eac9a2bded0c1",
+          "sha256": "d4aa7992ce85ee18a74592c02387b216f40c027553e2ec5e80f140d01b08011f"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments_gpt-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ba5e4b67f1ebf42f991eac9a2bded0c1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9740,
+        "upload_time": "2024-05-15T21:49:56",
+        "upload_time_iso_8601": "2024-05-15T21:49:56.709004Z",
+        "url": "https://files.pythonhosted.org/packages/ac/33/9921ab268a1f31dc40c7a8e8cd2d56e3db9c89096071345ab50d33853f01/datasette_enrichments_gpt-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "367738d0ae2178a51d6cd086165891844af521c748e151fb25a8c5cccd6d606d",
-        "md5": "fbfc02c2ce0fcf9a636f386662ed7dae",
-        "sha256": "2c67782046d32a7dc7fa2e1bd2b6eb4c6df7d3812c6b50b31650cec7f076501a"
+        "blake2b_256": "ea215b8fc281ed6fc5809524fb442ad23a39738da31e1295d2fb3228bc6e1488",
+        "md5": "6bbe11d1abb221cfcaa2a6ab3965bb4e",
+        "sha256": "aef56b3b3cad6c81c4cd067e3c09e4a24f0d7f4ab346421da1e5f7742922db1e"
       },
       "downloads": -1,
-      "filename": "datasette_enrichments_gpt-0.4-py3-none-any.whl",
+      "filename": "datasette_enrichments_gpt-0.5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "fbfc02c2ce0fcf9a636f386662ed7dae",
+      "md5_digest": "6bbe11d1abb221cfcaa2a6ab3965bb4e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 10035,
-      "upload_time": "2024-04-10T03:28:47",
-      "upload_time_iso_8601": "2024-04-10T03:28:47.790284Z",
-      "url": "https://files.pythonhosted.org/packages/36/77/38d0ae2178a51d6cd086165891844af521c748e151fb25a8c5cccd6d606d/datasette_enrichments_gpt-0.4-py3-none-any.whl",
+      "size": 9794,
+      "upload_time": "2024-05-15T21:49:47",
+      "upload_time_iso_8601": "2024-05-15T21:49:47.367447Z",
+      "url": "https://files.pythonhosted.org/packages/ea/21/5b8fc281ed6fc5809524fb442ad23a39738da31e1295d2fb3228bc6e1488/datasette_enrichments_gpt-0.5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "5c51b96f9e5eac803e1ce08d07b3f96aaec316388111641bf55ea10b3527a67d",
-        "md5": "e95a05abfb9df244ebf865d9725d8954",
-        "sha256": "98143c264fc8938f8fd1882ab2a89a5f2f350ae7d9dde91e201562e90d84d348"
+        "blake2b_256": "ac339921ab268a1f31dc40c7a8e8cd2d56e3db9c89096071345ab50d33853f01",
+        "md5": "ba5e4b67f1ebf42f991eac9a2bded0c1",
+        "sha256": "d4aa7992ce85ee18a74592c02387b216f40c027553e2ec5e80f140d01b08011f"
       },
       "downloads": -1,
-      "filename": "datasette-enrichments-gpt-0.4.tar.gz",
+      "filename": "datasette_enrichments_gpt-0.5.tar.gz",
       "has_sig": false,
-      "md5_digest": "e95a05abfb9df244ebf865d9725d8954",
+      "md5_digest": "ba5e4b67f1ebf42f991eac9a2bded0c1",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 9367,
-      "upload_time": "2024-04-10T03:28:49",
-      "upload_time_iso_8601": "2024-04-10T03:28:49.273170Z",
-      "url": "https://files.pythonhosted.org/packages/5c/51/b96f9e5eac803e1ce08d07b3f96aaec316388111641bf55ea10b3527a67d/datasette-enrichments-gpt-0.4.tar.gz",
+      "size": 9740,
+      "upload_time": "2024-05-15T21:49:56",
+      "upload_time_iso_8601": "2024-05-15T21:49:56.709004Z",
+      "url": "https://files.pythonhosted.org/packages/ac/33/9921ab268a1f31dc40c7a8e8cd2d56e3db9c89096071345ab50d33853f01/datasette_enrichments_gpt-0.5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

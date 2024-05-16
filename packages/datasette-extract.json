@@ -33,7 +33,7 @@
       "Issues": "https://github.com/datasette/datasette-extract/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-extract/0.1a6/",
+    "release_url": "https://pypi.org/project/datasette-extract/0.1a7/",
     "requires_dist": [
       "datasette>=1.0a12",
       "datasette-secrets>=0.1a2",
@@ -48,11 +48,11 @@
     ],
     "requires_python": ">=3.8",
     "summary": "Import unstructured data (text and images) into structured tables",
-    "version": "0.1a6",
+    "version": "0.1a7",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22935707,
+  "last_serial": 23212673,
   "releases": {
     "0.1a0": [
       {
@@ -361,48 +361,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f75852c360fdc7028650bef4fb72b8f6d542b6b1e8b9dca8386eb73db98e9e8f",
+          "md5": "291c43fc85f897da602acd8065b8847a",
+          "sha256": "a27f6d55712b3740b2c3ab117a5fa861248ec3a34d611d16dc89d255dcaa76a9"
+        },
+        "downloads": -1,
+        "filename": "datasette_extract-0.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "291c43fc85f897da602acd8065b8847a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 815658,
+        "upload_time": "2024-05-15T04:32:21",
+        "upload_time_iso_8601": "2024-05-15T04:32:21.666607Z",
+        "url": "https://files.pythonhosted.org/packages/f7/58/52c360fdc7028650bef4fb72b8f6d542b6b1e8b9dca8386eb73db98e9e8f/datasette_extract-0.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8f9bef48778b6e6edbb4a8b03d40032623b61f38621aaf6c08c285a23c0b5fb7",
+          "md5": "85518a310b36de8a23d20b93a4742add",
+          "sha256": "4e3c02069ece412c08687783e99383ff68911d85114ce0f461bd0d8d145ceb0e"
+        },
+        "downloads": -1,
+        "filename": "datasette_extract-0.1a7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "85518a310b36de8a23d20b93a4742add",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 806723,
+        "upload_time": "2024-05-15T04:32:23",
+        "upload_time_iso_8601": "2024-05-15T04:32:23.575579Z",
+        "url": "https://files.pythonhosted.org/packages/8f/9b/ef48778b6e6edbb4a8b03d40032623b61f38621aaf6c08c285a23c0b5fb7/datasette_extract-0.1a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f885ef09d71e20cfa9e3189fca9083c366effa37bb32c5e68fad6068566048dc",
-        "md5": "ae9011980d95908773b16f1b197eb771",
-        "sha256": "13d0e3f8c9a10d2402aa8fdb73327da6f897b92ae9087c02f8be49cad1f14d25"
+        "blake2b_256": "f75852c360fdc7028650bef4fb72b8f6d542b6b1e8b9dca8386eb73db98e9e8f",
+        "md5": "291c43fc85f897da602acd8065b8847a",
+        "sha256": "a27f6d55712b3740b2c3ab117a5fa861248ec3a34d611d16dc89d255dcaa76a9"
       },
       "downloads": -1,
-      "filename": "datasette_extract-0.1a6-py3-none-any.whl",
+      "filename": "datasette_extract-0.1a7-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "ae9011980d95908773b16f1b197eb771",
+      "md5_digest": "291c43fc85f897da602acd8065b8847a",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 815665,
-      "upload_time": "2024-04-25T19:06:37",
-      "upload_time_iso_8601": "2024-04-25T19:06:37.546171Z",
-      "url": "https://files.pythonhosted.org/packages/f8/85/ef09d71e20cfa9e3189fca9083c366effa37bb32c5e68fad6068566048dc/datasette_extract-0.1a6-py3-none-any.whl",
+      "size": 815658,
+      "upload_time": "2024-05-15T04:32:21",
+      "upload_time_iso_8601": "2024-05-15T04:32:21.666607Z",
+      "url": "https://files.pythonhosted.org/packages/f7/58/52c360fdc7028650bef4fb72b8f6d542b6b1e8b9dca8386eb73db98e9e8f/datasette_extract-0.1a7-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "01c878e5fd3415d5887ee99d76c6f8251e7624007d4e349122c86641932404f8",
-        "md5": "eaca5ff11ab67b9a692b6cf72b32e96f",
-        "sha256": "c28da5d545bc1a23a099820219b8feb2e5eeeafcb11eb66bc6e104f343e06b2d"
+        "blake2b_256": "8f9bef48778b6e6edbb4a8b03d40032623b61f38621aaf6c08c285a23c0b5fb7",
+        "md5": "85518a310b36de8a23d20b93a4742add",
+        "sha256": "4e3c02069ece412c08687783e99383ff68911d85114ce0f461bd0d8d145ceb0e"
       },
       "downloads": -1,
-      "filename": "datasette_extract-0.1a6.tar.gz",
+      "filename": "datasette_extract-0.1a7.tar.gz",
       "has_sig": false,
-      "md5_digest": "eaca5ff11ab67b9a692b6cf72b32e96f",
+      "md5_digest": "85518a310b36de8a23d20b93a4742add",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 806727,
-      "upload_time": "2024-04-25T19:06:38",
-      "upload_time_iso_8601": "2024-04-25T19:06:38.979884Z",
-      "url": "https://files.pythonhosted.org/packages/01/c8/78e5fd3415d5887ee99d76c6f8251e7624007d4e349122c86641932404f8/datasette_extract-0.1a6.tar.gz",
+      "size": 806723,
+      "upload_time": "2024-05-15T04:32:23",
+      "upload_time_iso_8601": "2024-05-15T04:32:23.575579Z",
+      "url": "https://files.pythonhosted.org/packages/8f/9b/ef48778b6e6edbb4a8b03d40032623b61f38621aaf6c08c285a23c0b5fb7/datasette_extract-0.1a7.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
