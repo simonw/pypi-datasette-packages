@@ -204,3 +204,4 @@ datasette-embeddings
 datasette-import
 datasette-query-assistant
 datasette-secrets
+datasette-python
