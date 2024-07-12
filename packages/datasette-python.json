@@ -1,0 +1,140 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-python\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-python.svg)](https://pypi.org/project/datasette-python/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-python?include_prereleases&label=changelog)](https://github.com/datasette/datasette-python/releases)\n[![Tests](https://github.com/datasette/datasette-python/workflows/Test/badge.svg)](https://github.com/datasette/datasette-python/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-python/blob/main/LICENSE)\n\nRun a Python interpreter in the Datasette virtual environment\n\n## Installation\n\nInstall this plugin in the same environment as [Datasette](https://datasette.io/).\n```bash\ndatasette install datasette-python\n```\n## Usage\n\nThis plugin adds a new `python` command to Datasette. This executes Python in the same virtual environment as Datasette itself.\n\nYou can use this to check the Python version\n\n```bash\ndatasette python --version\n# Should output 'Python 3.12.4' or similar\n```\nOr  to run commands like `pip`:\n```bash\ndatasette python -m pip install httpx\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-python\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": "Apache-2.0",
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-python",
+    "package_url": "https://pypi.org/project/datasette-python/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-python/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-python/actions",
+      "Changelog": "https://github.com/datasette/datasette-python/releases",
+      "Homepage": "https://github.com/datasette/datasette-python",
+      "Issues": "https://github.com/datasette/datasette-python/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-python/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest; extra == \"test\""
+    ],
+    "requires_python": null,
+    "summary": "Run a Python interpreter in the Datasette virtual environment",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 24110579,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f629877dbdbfac00bd881b60754e99f40b34ce6b09ce0a5248067046591fe119",
+          "md5": "ce2f39056a30901311916a04512a1934",
+          "sha256": "5ae1966801a84134a5a02958ec3550486f9e03d9efc22feea3aa6eb21bdc89ae"
+        },
+        "downloads": -1,
+        "filename": "datasette_python-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ce2f39056a30901311916a04512a1934",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 6623,
+        "upload_time": "2024-07-12T23:09:22",
+        "upload_time_iso_8601": "2024-07-12T23:09:22.434274Z",
+        "url": "https://files.pythonhosted.org/packages/f6/29/877dbdbfac00bd881b60754e99f40b34ce6b09ce0a5248067046591fe119/datasette_python-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "416dd2ecdff0c86894fc4984c8623d0397da37ab5cfec180610b4b30014a46ca",
+          "md5": "c472f865a2342b57498ada9d10a06151",
+          "sha256": "132d5d2143a3c77a37c9b0f85bfdf69ad9b161fadd04abb2c4f305f436db3a9b"
+        },
+        "downloads": -1,
+        "filename": "datasette_python-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c472f865a2342b57498ada9d10a06151",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6363,
+        "upload_time": "2024-07-12T23:09:23",
+        "upload_time_iso_8601": "2024-07-12T23:09:23.697801Z",
+        "url": "https://files.pythonhosted.org/packages/41/6d/d2ecdff0c86894fc4984c8623d0397da37ab5cfec180610b4b30014a46ca/datasette_python-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "f629877dbdbfac00bd881b60754e99f40b34ce6b09ce0a5248067046591fe119",
+        "md5": "ce2f39056a30901311916a04512a1934",
+        "sha256": "5ae1966801a84134a5a02958ec3550486f9e03d9efc22feea3aa6eb21bdc89ae"
+      },
+      "downloads": -1,
+      "filename": "datasette_python-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ce2f39056a30901311916a04512a1934",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 6623,
+      "upload_time": "2024-07-12T23:09:22",
+      "upload_time_iso_8601": "2024-07-12T23:09:22.434274Z",
+      "url": "https://files.pythonhosted.org/packages/f6/29/877dbdbfac00bd881b60754e99f40b34ce6b09ce0a5248067046591fe119/datasette_python-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "416dd2ecdff0c86894fc4984c8623d0397da37ab5cfec180610b4b30014a46ca",
+        "md5": "c472f865a2342b57498ada9d10a06151",
+        "sha256": "132d5d2143a3c77a37c9b0f85bfdf69ad9b161fadd04abb2c4f305f436db3a9b"
+      },
+      "downloads": -1,
+      "filename": "datasette_python-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "c472f865a2342b57498ada9d10a06151",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 6363,
+      "upload_time": "2024-07-12T23:09:23",
+      "upload_time_iso_8601": "2024-07-12T23:09:23.697801Z",
+      "url": "https://files.pythonhosted.org/packages/41/6d/d2ecdff0c86894fc4984c8623d0397da37ab5cfec180610b4b30014a46ca/datasette_python-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
