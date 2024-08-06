@@ -43,7 +43,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 11034216,
+  "last_serial": 24440583,
   "releases": {
     "0.1": [
       {
@@ -129,6 +129,50 @@
         "upload_time": "2021-07-28T23:29:45",
         "upload_time_iso_8601": "2021-07-28T23:29:45.640793Z",
         "url": "https://files.pythonhosted.org/packages/ca/70/c986add50dfc199dadc22fecc4bb92e7a2bcef28687583daeb5d1111bb64/datasette-remote-metadata-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "32fc2a0ef4fbcac52a683103d567359ab520b4cff6fd7a8ae4e001245999c98a",
+          "md5": "91c0d242859b47f33a114af7e91cdebe",
+          "sha256": "6b17ad7e89e4c4563177838508a07e184f09d432530e3acd2510f685d9eda3c1"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_metadata-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "91c0d242859b47f33a114af7e91cdebe",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8381,
+        "upload_time": "2024-08-05T22:50:13",
+        "upload_time_iso_8601": "2024-08-05T22:50:13.956668Z",
+        "url": "https://files.pythonhosted.org/packages/32/fc/2a0ef4fbcac52a683103d567359ab520b4cff6fd7a8ae4e001245999c98a/datasette_remote_metadata-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8a34da573846d3c0441195672caaeb0ebd3713e4a957d19103687bdb08baaf99",
+          "md5": "4cbd4154f1a5adbe168e2f2b058b486d",
+          "sha256": "688c93351c21dbd92fc3f8c9da3753c2f7fe0cc455d343159f18a10def03ae49"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_metadata-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4cbd4154f1a5adbe168e2f2b058b486d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 8568,
+        "upload_time": "2024-08-05T22:50:15",
+        "upload_time_iso_8601": "2024-08-05T22:50:15.372256Z",
+        "url": "https://files.pythonhosted.org/packages/8a/34/da573846d3c0441195672caaeb0ebd3713e4a957d19103687bdb08baaf99/datasette_remote_metadata-0.2a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
