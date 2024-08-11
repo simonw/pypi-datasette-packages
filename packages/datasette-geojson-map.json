@@ -1,13 +1,13 @@
 {
   "info": {
     "author": "Chris Amico",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-geojson-map\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-geojson-map.svg)](https://pypi.org/project/datasette-geojson-map/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/datasette-geojson-map?include_prereleases&label=changelog)](https://github.com/eyeseast/datasette-geojson-map/releases)\n[![Tests](https://github.com/eyeseast/datasette-geojson-map/workflows/Test/badge.svg)](https://github.com/eyeseast/datasette-geojson-map/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/datasette-geojson-map/blob/main/LICENSE)\n\nRender a map for any query with a geometry column\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-geojson-map\n\n## Usage\n\nStart by loading a GIS file.\n\nFor example, you might use [geojson-to-sqlite](https://pypi.org/project/geojson-to-sqlite/) or [shapefile-to-sqlite](https://pypi.org/project/shapefile-to-sqlite/) to load [neighborhood boundaries](https://bostonopendata-boston.opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0/explore) into a SQLite database.\n\n```sh\nwget -O neighborhoods.geojson https://opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0.geojson\ngeojson-to-sqlite boston.db neighborhoods neighborhoods.geojson\n```\n\n(The command above uses Spatialite, but that's not required.)\n\nStart up `datasette` and navigate to the `neighborhoods` table.\n\n```sh\ndatasette serve boston.db\n\n# in another terminal tab\nopen http://localhost:8001/boston/neighborhoods\n```\n\nYou should see a map centered on Boston with each neighborhood outlined. Clicking a boundary will bring up a popup with details on that feature.\n\n![Boston neighbhorhoods map](img/boston-neighborhoods-map.png)\n\nThis plugin relies on (and will install) [datasette-geojson](https://github.com/eyeseast/datasette-geojson). Any query that includes a `geometry` column will produce a map of the results. This also includes single row views.\n\nRun the included `demo` project to see it live.\n\n## Configuration\n\nThis project uses the same map configuration as [datasette-cluster-map](https://github.com/simonw/datasette-cluster-map). Here's how you would use [Stamen's terrain tiles](http://maps.stamen.com/terrain/#12/37.7706/-122.3782):\n\n```yaml\nplugins:\n  datasette-geojson-map:\n    tile_layer: https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}\n    tile_layer_options:\n      attribution: >-\n        Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, \n        under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. \n        Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, \n        under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>.\n      subdomains: abcd\n      minZoom: 1\n      maxZoom: 16\n      ext: jpg\n```\n\nOptions:\n\n- `tile_layer`: Use a URL template that can be passed to a [Leaflet Tilelayer](https://leafletjs.com/reference-1.7.1.html#tilelayer)\n- `tile_layer_options`: All options will be passed to the tile layer. See [Leaflet documentation](https://leafletjs.com/reference-1.7.1.html#tilelayer) for more on possible values here.\n\n## Styling map features\n\nMap features can be styled using the [simplestyle-spec](https://github.com/mapbox/simplestyle-spec). This requires setting specific fields on returned rows. Here's an example:\n\n```sql\nSELECT Name, geometry, \"#ff0000\" as fill, \"#0000ff\" as stroke, 0.2 as stroke-width,  from neighborhoods\n```\n\nThat will render a neighborhood map where each polygon is filled in red, outlined in blue and lines are 0.2 pixels wide.\n\nA more useful approach would use the `CASE` statement to color features based on data:\n\n```sql\nSELECT\n  Name,\n  geometry,\n  CASE\n    Name\n    WHEN \"Roslindale\" THEN \"#ff0000\"\n    WHEN \"Dorchester\" THEN \"#0000ff\"\n    ELSE \"#dddddd\"\n  END fill\nFROM\n  neighborhoods\n```\n\nThis will fill Roslindale in red, Dorchester in blue and all other neighborhoods in gray.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-geojson-map\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-geojson-map\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-geojson-map.svg)](https://pypi.org/project/datasette-geojson-map/)\n[![Changelog](https://img.shields.io/github/v/release/eyeseast/datasette-geojson-map?include_prereleases&label=changelog)](https://github.com/eyeseast/datasette-geojson-map/releases)\n[![Tests](https://github.com/eyeseast/datasette-geojson-map/workflows/Test/badge.svg)](https://github.com/eyeseast/datasette-geojson-map/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/eyeseast/datasette-geojson-map/blob/main/LICENSE)\n\nRender a map for any query with a geometry column\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-geojson-map\n\n## Usage\n\nStart by loading a GIS file.\n\nFor example, you might use [geojson-to-sqlite](https://pypi.org/project/geojson-to-sqlite/) or [shapefile-to-sqlite](https://pypi.org/project/shapefile-to-sqlite/) to load [neighborhood boundaries](https://bostonopendata-boston.opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0/explore) into a SQLite database.\n\n```sh\nwget -O neighborhoods.geojson https://opendata.arcgis.com/datasets/3525b0ee6e6b427f9aab5d0a1d0a1a28_0.geojson\ngeojson-to-sqlite boston.db neighborhoods neighborhoods.geojson\n```\n\n(The command above uses Spatialite, but that's not required.)\n\nStart up `datasette` and navigate to the `neighborhoods` table.\n\n```sh\ndatasette serve boston.db\n\n# in another terminal tab\nopen http://localhost:8001/boston/neighborhoods\n```\n\nYou should see a map centered on Boston with each neighborhood outlined. Clicking a boundary will bring up a popup with details on that feature.\n\n![Boston neighbhorhoods map](https://raw.githubusercontent.com/eyeseast/datasette-geojson-map/main/img/boston-neighborhoods-map.png)\n\nThis plugin relies on (and will install) [datasette-geojson](https://github.com/eyeseast/datasette-geojson). Any query that includes a `geometry` column will produce a map of the results. This also includes single row views.\n\nRun the included `demo` project to see it live.\n\n## Configuration\n\nThis project uses the same map configuration as [datasette-cluster-map](https://github.com/simonw/datasette-cluster-map). Here's how you would use [Stamen's terrain tiles](http://maps.stamen.com/terrain/#12/37.7706/-122.3782):\n\n```yaml\nplugins:\n  datasette-geojson-map:\n    tile_layer: https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}\n    tile_layer_options:\n      attribution: >-\n        Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, \n        under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. \n        Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, \n        under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>.\n      subdomains: abcd\n      minZoom: 1\n      maxZoom: 16\n      ext: jpg\n```\n\nOptions:\n\n- `tile_layer`: Use a URL template that can be passed to a [Leaflet Tilelayer](https://leafletjs.com/reference-1.7.1.html#tilelayer)\n- `tile_layer_options`: All options will be passed to the tile layer. See [Leaflet documentation](https://leafletjs.com/reference-1.7.1.html#tilelayer) for more on possible values here.\n\n## Styling map features\n\nMap features can be styled using the [simplestyle-spec](https://github.com/mapbox/simplestyle-spec). This requires setting specific fields on returned rows. Here's an example:\n\n```sql\nSELECT Name, geometry, \"#ff0000\" as fill, \"#0000ff\" as stroke, 0.2 as stroke-width,  from neighborhoods\n```\n\nThat will render a neighborhood map where each polygon is filled in red, outlined in blue and lines are 0.2 pixels wide.\n\nA more useful approach would use the `CASE` statement to color features based on data:\n\n```sql\nSELECT\n  Name,\n  geometry,\n  CASE\n    Name\n    WHEN \"Roslindale\" THEN \"#ff0000\"\n    WHEN \"Dorchester\" THEN \"#0000ff\"\n    ELSE \"#dddddd\"\n  END fill\nFROM\n  neighborhoods\n```\n\nThis will fill Roslindale in red, Dorchester in blue and all other neighborhoods in gray.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-geojson-map\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
@@ -15,13 +15,13 @@
     },
     "dynamic": null,
     "home_page": "https://github.com/eyeseast/datasette-geojson-map",
-    "keywords": "",
+    "keywords": null,
     "license": "Apache License, Version 2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-geojson-map",
     "package_url": "https://pypi.org/project/datasette-geojson-map/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-geojson-map/",
     "project_urls": {
       "CI": "https://github.com/eyeseast/datasette-geojson-map/actions",
@@ -29,23 +29,25 @@
       "Homepage": "https://github.com/eyeseast/datasette-geojson-map",
       "Issues": "https://github.com/eyeseast/datasette-geojson-map/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-geojson-map/0.4.0/",
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-geojson-map/0.5.0/",
     "requires_dist": [
       "datasette",
       "datasette-geojson",
       "datasette-leaflet",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "geojson-to-sqlite ; extra == 'test'"
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "geojson-to-sqlite; extra == \"test\""
     ],
     "requires_python": ">=3.6",
     "summary": "Render a map for any query with a geometry column",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 12926585,
+  "last_serial": 24516624,
   "releases": {
     "0.1": [
       {
@@ -310,48 +312,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ff63223c02f61926436cc752ecec11e0a93cf43197b5985eeb1f4cd2ea22c682",
+          "md5": "76c84036f0812097d87c8c5c32fb9378",
+          "sha256": "1bbc8380687a7c00ec9a11a8a2cc8102da89d3143d5eed4e4d4b0f8f66b9d4a7"
+        },
+        "downloads": -1,
+        "filename": "datasette_geojson_map-0.5.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "76c84036f0812097d87c8c5c32fb9378",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 10906,
+        "upload_time": "2024-08-10T21:48:34",
+        "upload_time_iso_8601": "2024-08-10T21:48:34.080855Z",
+        "url": "https://files.pythonhosted.org/packages/ff/63/223c02f61926436cc752ecec11e0a93cf43197b5985eeb1f4cd2ea22c682/datasette_geojson_map-0.5.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4d59de3e4cce5efd0f759a1ee56a641383b424b81749e2574cfd9870df00638f",
+          "md5": "7c83ba83ae0b7108c035891800f7fefd",
+          "sha256": "c463744c2a13ac4dedb7830545223e3966e901842daebaad62271ba9abb727e3"
+        },
+        "downloads": -1,
+        "filename": "datasette-geojson-map-0.5.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7c83ba83ae0b7108c035891800f7fefd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 10010,
+        "upload_time": "2024-08-10T21:48:35",
+        "upload_time_iso_8601": "2024-08-10T21:48:35.469214Z",
+        "url": "https://files.pythonhosted.org/packages/4d/59/de3e4cce5efd0f759a1ee56a641383b424b81749e2574cfd9870df00638f/datasette-geojson-map-0.5.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "324bef8061ee1eb16a3d5aaf9ea84af8728616363c2e471b7998fcadef66576f",
-        "md5": "208185ca5d5de963d7d5723b3dfd3cb9",
-        "sha256": "4035a5ae8e5d8caaad31c2ad68e388bbb14b34e3aa94e556fd34491a599c2c40"
+        "blake2b_256": "ff63223c02f61926436cc752ecec11e0a93cf43197b5985eeb1f4cd2ea22c682",
+        "md5": "76c84036f0812097d87c8c5c32fb9378",
+        "sha256": "1bbc8380687a7c00ec9a11a8a2cc8102da89d3143d5eed4e4d4b0f8f66b9d4a7"
       },
       "downloads": -1,
-      "filename": "datasette_geojson_map-0.4.0-py3-none-any.whl",
+      "filename": "datasette_geojson_map-0.5.0-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "208185ca5d5de963d7d5723b3dfd3cb9",
+      "md5_digest": "76c84036f0812097d87c8c5c32fb9378",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.6",
-      "size": 10895,
-      "upload_time": "2022-02-17T21:14:45",
-      "upload_time_iso_8601": "2022-02-17T21:14:45.253423Z",
-      "url": "https://files.pythonhosted.org/packages/32/4b/ef8061ee1eb16a3d5aaf9ea84af8728616363c2e471b7998fcadef66576f/datasette_geojson_map-0.4.0-py3-none-any.whl",
+      "size": 10906,
+      "upload_time": "2024-08-10T21:48:34",
+      "upload_time_iso_8601": "2024-08-10T21:48:34.080855Z",
+      "url": "https://files.pythonhosted.org/packages/ff/63/223c02f61926436cc752ecec11e0a93cf43197b5985eeb1f4cd2ea22c682/datasette_geojson_map-0.5.0-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "3ac7e1b086c503c106300092f4d3ae9863074705c472d0ae107df689a6798cee",
-        "md5": "058b0016d2b4b6dc380312fb2720d461",
-        "sha256": "858701f2bbd60363052b3683d2bbfe73b05ed575c51d3bee3e57690089cb663c"
+        "blake2b_256": "4d59de3e4cce5efd0f759a1ee56a641383b424b81749e2574cfd9870df00638f",
+        "md5": "7c83ba83ae0b7108c035891800f7fefd",
+        "sha256": "c463744c2a13ac4dedb7830545223e3966e901842daebaad62271ba9abb727e3"
       },
       "downloads": -1,
-      "filename": "datasette-geojson-map-0.4.0.tar.gz",
+      "filename": "datasette-geojson-map-0.5.0.tar.gz",
       "has_sig": false,
-      "md5_digest": "058b0016d2b4b6dc380312fb2720d461",
+      "md5_digest": "7c83ba83ae0b7108c035891800f7fefd",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.6",
-      "size": 9990,
-      "upload_time": "2022-02-17T21:14:46",
-      "upload_time_iso_8601": "2022-02-17T21:14:46.491520Z",
-      "url": "https://files.pythonhosted.org/packages/3a/c7/e1b086c503c106300092f4d3ae9863074705c472d0ae107df689a6798cee/datasette-geojson-map-0.4.0.tar.gz",
+      "size": 10010,
+      "upload_time": "2024-08-10T21:48:35",
+      "upload_time_iso_8601": "2024-08-10T21:48:35.469214Z",
+      "url": "https://files.pythonhosted.org/packages/4d/59/de3e4cce5efd0f759a1ee56a641383b424b81749e2574cfd9870df00638f/datasette-geojson-map-0.5.0.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
