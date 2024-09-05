@@ -1,13 +1,13 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-write\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-write.svg)](https://pypi.org/project/datasette-write/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-write?label=changelog)](https://github.com/simonw/datasette-write/releases)\n[![Tests](https://github.com/simonw/datasette-write/workflows/Test/badge.svg)](https://github.com/simonw/datasette-write/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-write/blob/master/LICENSE)\n\nDatasette plugin providing a UI for writing to a database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\npip install datasette-write\n```\n## Usage\n\nHaving installed the plugin, visit `/-/write` on your Datasette instance to submit SQL queries that will be executed against a write connection to the specified database.\n\nBy default only the `root` user can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `datasette-write` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\nPass `?sql=...` in the query string to pre-populate the SQL editor with a query. Pass `?database=...` to specify a database to run the query against.\n\n## Parameterized queries\n\nSQL queries can include parameters like this:\n```sql\ninsert into news (title, body)\n    values (:title, :body_textarea)\n```\nThese will be converted into form fields on the `/-/write` page.\n\nIf a parameter name ends with `_textarea` it will be rendered as a multi-line textarea instead of a text input.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-write\npython3 -mvenv venv\nsource venv/bin/activate\n```\nOr if you are using `pipenv`:\n```bash\npipenv shell\n```\nNow install the dependencies and tests:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-write\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-write.svg)](https://pypi.org/project/datasette-write/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-write?label=changelog)](https://github.com/simonw/datasette-write/releases)\n[![Tests](https://github.com/simonw/datasette-write/workflows/Test/badge.svg)](https://github.com/simonw/datasette-write/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-write/blob/master/LICENSE)\n\nDatasette plugin providing a UI for writing to a database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\npip install datasette-write\n```\n## Usage\n\nHaving installed the plugin, visit `/db/-/write` on your Datasette instance to submit SQL queries that will be executed against a write connection to the specified database.\n\nBy default only the `root` user can access the page - so you'll need to run Datasette with the `--root` option and click on the link shown in the terminal to sign in and access the page.\n\nThe `datasette-write` permission governs access. You can use permission plugins such as [datasette-permissions-sql](https://github.com/simonw/datasette-permissions-sql) to grant additional access to the write interface.\n\nPass `?sql=...` in the query string to pre-populate the SQL editor with a query.\n\n## Parameterized queries\n\nSQL queries can include parameters like this:\n```sql\ninsert into news (title, body)\n    values (:title, :body_textarea)\n```\nThese will be converted into form fields on the `/db/-/write` page.\n\nIf a parameter name ends with `_textarea` it will be rendered as a multi-line textarea instead of a text input.\n\nIf a parameter name ends with `_hidden` it will be rendered as a hidden input.\n\n## Updating rows with SQL\n\nOn Datasette 1.0a13 and higher a row actions menu item will be added to the row page linking to a SQL query for updating that row, for users with the `datasette-write` permission.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-write\npython3 -mvenv venv\nsource venv/bin/activate\n```\nOr if you are using `pipenv`:\n```bash\npipenv shell\n```\nNow install the dependencies and tests:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
@@ -15,10 +15,10 @@
     },
     "dynamic": null,
     "home_page": "https://github.com/simonw/datasette-write",
-    "keywords": "",
+    "keywords": null,
     "license": "Apache License, Version 2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-write",
     "package_url": "https://pypi.org/project/datasette-write/",
     "platform": null,
@@ -29,21 +29,24 @@
       "Homepage": "https://github.com/simonw/datasette-write",
       "Issues": "https://github.com/simonw/datasette-write/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-write/0.3.2/",
-    "requires_dist": [
-      "datasette >=0.64.6",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "httpx ; extra == 'test'"
+    "provides_extra": [
+      "test"
     ],
-    "requires_python": "",
+    "release_url": "https://pypi.org/project/datasette-write/0.4/",
+    "requires_dist": [
+      "datasette>=0.64.6",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "httpx; extra == \"test\"",
+      "beautifulsoup4; extra == \"test\""
+    ],
+    "requires_python": null,
     "summary": "Datasette plugin providing a UI for writing to a database",
-    "version": "0.3.2",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22374744,
+  "last_serial": 24868567,
   "releases": {
     "0.1": [
       {
@@ -308,48 +311,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3ad12dc625b79d8d21ae1066f0a5060a6ea84c1ef8073bc1dd4d03003962cdea",
+          "md5": "f043160c9261863ab89ee5777d47bdc0",
+          "sha256": "810b55b65cc0383d406fa6cd14a0f642280700cacddf683505f58c14f1928849"
+        },
+        "downloads": -1,
+        "filename": "datasette_write-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f043160c9261863ab89ee5777d47bdc0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7503,
+        "upload_time": "2024-09-04T04:50:15",
+        "upload_time_iso_8601": "2024-09-04T04:50:15.736517Z",
+        "url": "https://files.pythonhosted.org/packages/3a/d1/2dc625b79d8d21ae1066f0a5060a6ea84c1ef8073bc1dd4d03003962cdea/datasette_write-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a22952216a9a0d16c4f8e188436b7fb66c08af7a553a6379091b306f01ac8303",
+          "md5": "b3fa9c2fd75cc386d31dcd3910934d69",
+          "sha256": "4b599b05950921b1bceb7a800583de9d7cf2b1071d642ba16fbb2df13d47f665"
+        },
+        "downloads": -1,
+        "filename": "datasette_write-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b3fa9c2fd75cc386d31dcd3910934d69",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9795,
+        "upload_time": "2024-09-04T04:50:16",
+        "upload_time_iso_8601": "2024-09-04T04:50:16.933983Z",
+        "url": "https://files.pythonhosted.org/packages/a2/29/52216a9a0d16c4f8e188436b7fb66c08af7a553a6379091b306f01ac8303/datasette_write-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "f73ec1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6",
-        "md5": "a4bac8bcce9db1ee83404faca549cf80",
-        "sha256": "8a9cfc5ff83274159a72b32216983435dfba315a0ad6e18a514f362ec96a2223"
+        "blake2b_256": "3ad12dc625b79d8d21ae1066f0a5060a6ea84c1ef8073bc1dd4d03003962cdea",
+        "md5": "f043160c9261863ab89ee5777d47bdc0",
+        "sha256": "810b55b65cc0383d406fa6cd14a0f642280700cacddf683505f58c14f1928849"
       },
       "downloads": -1,
-      "filename": "datasette_write-0.3.2-py3-none-any.whl",
+      "filename": "datasette_write-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a4bac8bcce9db1ee83404faca549cf80",
+      "md5_digest": "f043160c9261863ab89ee5777d47bdc0",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 6315,
-      "upload_time": "2024-03-18T16:46:58",
-      "upload_time_iso_8601": "2024-03-18T16:46:58.944010Z",
-      "url": "https://files.pythonhosted.org/packages/f7/3e/c1ed4ae9f83c899d4ad5c1f92b84e51846fe31e4853b410d0c0b5bd773b6/datasette_write-0.3.2-py3-none-any.whl",
+      "size": 7503,
+      "upload_time": "2024-09-04T04:50:15",
+      "upload_time_iso_8601": "2024-09-04T04:50:15.736517Z",
+      "url": "https://files.pythonhosted.org/packages/3a/d1/2dc625b79d8d21ae1066f0a5060a6ea84c1ef8073bc1dd4d03003962cdea/datasette_write-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "b45a315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297",
-        "md5": "4a0c5b5cb7e055f4f12eb7369cda4e10",
-        "sha256": "d34cfdb27e79d3ea927cb6fbe0351dfd28399833c084245092033e3a0a31993b"
+        "blake2b_256": "a22952216a9a0d16c4f8e188436b7fb66c08af7a553a6379091b306f01ac8303",
+        "md5": "b3fa9c2fd75cc386d31dcd3910934d69",
+        "sha256": "4b599b05950921b1bceb7a800583de9d7cf2b1071d642ba16fbb2df13d47f665"
       },
       "downloads": -1,
-      "filename": "datasette-write-0.3.2.tar.gz",
+      "filename": "datasette_write-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "4a0c5b5cb7e055f4f12eb7369cda4e10",
+      "md5_digest": "b3fa9c2fd75cc386d31dcd3910934d69",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 7440,
-      "upload_time": "2024-03-18T16:47:01",
-      "upload_time_iso_8601": "2024-03-18T16:47:01.619064Z",
-      "url": "https://files.pythonhosted.org/packages/b4/5a/315d49ce92034c88ee57da43aba384a194af790f8892a645de3dadcaa297/datasette-write-0.3.2.tar.gz",
+      "size": 9795,
+      "upload_time": "2024-09-04T04:50:16",
+      "upload_time_iso_8601": "2024-09-04T04:50:16.933983Z",
+      "url": "https://files.pythonhosted.org/packages/a2/29/52216a9a0d16c4f8e188436b7fb66c08af7a553a6379091b306f01ac8303/datasette_write-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
