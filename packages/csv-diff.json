@@ -1,7 +1,7 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
       "Development Status :: 4 - Beta",
@@ -12,10 +12,10 @@
       "Programming Language :: Python :: 3.6",
       "Programming Language :: Python :: 3.7"
     ],
-    "description": "# csv-diff\n\n[![PyPI](https://img.shields.io/pypi/v/csv-diff.svg)](https://pypi.org/project/csv-diff/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/csv-diff?include_prereleases&label=changelog)](https://github.com/simonw/csv-diff/releases)\n[![Tests](https://github.com/simonw/csv-diff/workflows/Test/badge.svg)](https://github.com/simonw/csv-diff/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/csv-diff/blob/main/LICENSE)\n\nTool for viewing the difference between two CSV, TSV or JSON files. See [Generating a commit log for San Francisco’s official list of trees](https://simonwillison.net/2019/Mar/13/tree-history/) (and the [sf-tree-history repo commit log](https://github.com/simonw/sf-tree-history/commits)) for background information on this project.\n\n## Installation\n\n    pip install csv-diff\n\n## Usage\n\nConsider two CSV files:\n\n`one.csv`\n\n    id,name,age\n    1,Cleo,4\n    2,Pancakes,2\n\n`two.csv`\n\n    id,name,age\n    1,Cleo,5\n    3,Bailey,1\n\n`csv-diff` can show a human-readable summary of differences between the files:\n\n    $ csv-diff one.csv two.csv --key=id\n    1 row changed, 1 row added, 1 row removed\n\n    1 row changed\n\n      Row 1\n        age: \"4\" => \"5\"\n\n    1 row added\n\n      id: 3\n      name: Bailey\n      age: 1\n\n    1 row removed\n\n      id: 2\n      name: Pancakes\n      age: 2\n\nThe `--key=id` option means that the `id` column should be treated as the unique key, to identify which records have changed.\n\nThe tool will automatically detect if your files are comma- or tab-separated. You can over-ride this automatic detection and force the tool to use a specific format using `--format=tsv` or `--format=csv`.\n\nYou can also feed it JSON files, provided they are a JSON array of objects where each object has the same keys. Use `--format=json` if your input files are JSON.\n\nUse `--show-unchanged` to include full details of the unchanged values for rows with at least one change in the diff output:\n\n    % csv-diff one.csv two.csv --key=id --show-unchanged\n    1 row changed\n\n      id: 1\n        age: \"4\" => \"5\"\n\n        Unchanged:\n          name: \"Cleo\"\n\nYou can use the `--json` option to get a machine-readable difference:\n\n    $ csv-diff one.csv two.csv --key=id --json\n    {\n        \"added\": [\n            {\n                \"id\": \"3\",\n                \"name\": \"Bailey\",\n                \"age\": \"1\"\n            }\n        ],\n        \"removed\": [\n            {\n                \"id\": \"2\",\n                \"name\": \"Pancakes\",\n                \"age\": \"2\"\n            }\n        ],\n        \"changed\": [\n            {\n                \"key\": \"1\",\n                \"changes\": {\n                    \"age\": [\n                        \"4\",\n                        \"5\"\n                    ]\n                }\n            }\n        ],\n        \"columns_added\": [],\n        \"columns_removed\": []\n    }\n\n## As a Python library\n\nYou can also import the Python library into your own code like so:\n\n    from csv_diff import load_csv, compare\n    diff = compare(\n        load_csv(open(\"one.csv\"), key=\"id\"),\n        load_csv(open(\"two.csv\"), key=\"id\")\n    )\n\n`diff` will now contain the same data structure as the output in the `--json` example above.\n\nIf the columns in the CSV have changed, those added or removed columns will be ignored when calculating changes made to specific rows.\n\n\n",
+    "description": "# csv-diff\n\n[![PyPI](https://img.shields.io/pypi/v/csv-diff.svg)](https://pypi.org/project/csv-diff/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/csv-diff?include_prereleases&label=changelog)](https://github.com/simonw/csv-diff/releases)\n[![Tests](https://github.com/simonw/csv-diff/workflows/Test/badge.svg)](https://github.com/simonw/csv-diff/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/csv-diff/blob/main/LICENSE)\n\nTool for viewing the difference between two CSV, TSV or JSON files. See [Generating a commit log for San Francisco’s official list of trees](https://simonwillison.net/2019/Mar/13/tree-history/) (and the [sf-tree-history repo commit log](https://github.com/simonw/sf-tree-history/commits)) for background information on this project.\n\n## Installation\n\n    pip install csv-diff\n\n## Usage\n\nConsider two CSV files:\n\n`one.csv`\n\n    id,name,age\n    1,Cleo,4\n    2,Pancakes,2\n\n`two.csv`\n\n    id,name,age\n    1,Cleo,5\n    3,Bailey,1\n\n`csv-diff` can show a human-readable summary of differences between the files:\n\n    $ csv-diff one.csv two.csv --key=id\n    1 row changed, 1 row added, 1 row removed\n\n    1 row changed\n\n      Row 1\n        age: \"4\" => \"5\"\n\n    1 row added\n\n      id: 3\n      name: Bailey\n      age: 1\n\n    1 row removed\n\n      id: 2\n      name: Pancakes\n      age: 2\n\nThe `--key=id` option means that the `id` column should be treated as the unique key, to identify which records have changed.\n\nThe tool will automatically detect if your files are comma- or tab-separated. You can over-ride this automatic detection and force the tool to use a specific format using `--format=tsv` or `--format=csv`.\n\nYou can also feed it JSON files, provided they are a JSON array of objects where each object has the same keys. Use `--format=json` if your input files are JSON.\n\nUse `--show-unchanged` to include full details of the unchanged values for rows with at least one change in the diff output:\n\n    % csv-diff one.csv two.csv --key=id --show-unchanged\n    1 row changed\n\n      id: 1\n        age: \"4\" => \"5\"\n\n        Unchanged:\n          name: \"Cleo\"\n\n### JSON output\n\nYou can use the `--json` option to get a machine-readable difference:\n\n    $ csv-diff one.csv two.csv --key=id --json\n    {\n        \"added\": [\n            {\n                \"id\": \"3\",\n                \"name\": \"Bailey\",\n                \"age\": \"1\"\n            }\n        ],\n        \"removed\": [\n            {\n                \"id\": \"2\",\n                \"name\": \"Pancakes\",\n                \"age\": \"2\"\n            }\n        ],\n        \"changed\": [\n            {\n                \"key\": \"1\",\n                \"changes\": {\n                    \"age\": [\n                        \"4\",\n                        \"5\"\n                    ]\n                }\n            }\n        ],\n        \"columns_added\": [],\n        \"columns_removed\": []\n    }\n\n### Adding templated extras\n\nYou can specify additional keys to be displayed in the human-readable format using the `--extra` option:\n\n    --extra name \"Python format string with {id} for variables\"\n\nFor example, to output a link to `https://news.ycombinator.com/latest?id={id}` for each item with an ID, you could use this:\n\n```bash\ncsv-diff one.csv two.csv --key=id \\\n  --extra latest \"https://news.ycombinator.com/latest?id={id}\"\n```\nThese extras display something like this:\n```\n1 row changed\n\n  id: 41459472\n    points: \"24\" => \"25\"\n    numComments: \"5\" => \"6\"\n  extras:\n    latest: https://news.ycombinator.com/latest?id=41459472\n```\n\n## As a Python library\n\nYou can also import the Python library into your own code like so:\n\n    from csv_diff import load_csv, compare\n    diff = compare(\n        load_csv(open(\"one.csv\"), key=\"id\"),\n        load_csv(open(\"two.csv\"), key=\"id\")\n    )\n\n`diff` will now contain the same data structure as the output in the `--json` example above.\n\nIf the columns in the CSV have changed, those added or removed columns will be ignored when calculating changes made to specific rows.\n\n## As a Docker container\n\n### Build the image\n\n    $ docker build -t csvdiff .\n\n### Run the container\n\n    $ docker run --rm -v $(pwd):/files csvdiff\n\nSuppose current directory contains two csv files : one.csv two.csv\n\n    $ docker run --rm -v $(pwd):/files csvdiff one.csv two.csv\n    \n## Alternatives\n\n- [csvdiff](https://github.com/aswinkarthik/csvdiff) is a \"fast diff tool for comparing CSV files\" - you may get better results from this than from `csv-diff` against larger files.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
@@ -23,31 +23,33 @@
     },
     "dynamic": null,
     "home_page": "https://github.com/simonw/csv-diff",
-    "keywords": "",
+    "keywords": null,
     "license": "Apache License, Version 2.0",
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "csv-diff",
     "package_url": "https://pypi.org/project/csv-diff/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/csv-diff/",
     "project_urls": {
       "Homepage": "https://github.com/simonw/csv-diff"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/csv-diff/1.1/",
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/csv-diff/1.2/",
     "requires_dist": [
       "click",
       "dictdiffer",
-      "pytest ; extra == 'test'"
+      "pytest; extra == \"test\""
     ],
-    "requires_python": "",
+    "requires_python": null,
     "summary": "Python CLI tool and library for diffing CSV and JSON files",
-    "version": "1.1",
+    "version": "1.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9495245,
+  "last_serial": 24904192,
   "releases": {
     "0.1": [
       {
@@ -297,48 +299,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "239b72d060d002cd391044ddd0816bd5027f6fda6d62104b81a90a7c3611345c",
+          "md5": "ec98c4d69318a98a4d099a96fa66f937",
+          "sha256": "bf9c621a45d250f54a8b08cab14813509aa2709b3f7ad45dffc130383f9a8190"
+        },
+        "downloads": -1,
+        "filename": "csv_diff-1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ec98c4d69318a98a4d099a96fa66f937",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 13587,
+        "upload_time": "2024-09-06T05:21:19",
+        "upload_time_iso_8601": "2024-09-06T05:21:19.027468Z",
+        "url": "https://files.pythonhosted.org/packages/23/9b/72d060d002cd391044ddd0816bd5027f6fda6d62104b81a90a7c3611345c/csv_diff-1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8e40428351c5f57b676e30b7f3a2940b3d017ee1b8e4e091dec4931e488a59fe",
+          "md5": "b5afcf156b1fa071544282526d987b13",
+          "sha256": "f6c251542fbcd9d6eef8b27c3870fc4dfc3592c880c34dac57ed94e382f2d53b"
+        },
+        "downloads": -1,
+        "filename": "csv_diff-1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b5afcf156b1fa071544282526d987b13",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 11922,
+        "upload_time": "2024-09-06T05:21:20",
+        "upload_time_iso_8601": "2024-09-06T05:21:20.290152Z",
+        "url": "https://files.pythonhosted.org/packages/8e/40/428351c5f57b676e30b7f3a2940b3d017ee1b8e4e091dec4931e488a59fe/csv_diff-1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "bbcf53d23ae469f2727a5bdb7d6442573084136d2d713129e420cb554ff5506c",
-        "md5": "5d2bb522ddb9d5354d82f4e1fdf446d2",
-        "sha256": "f41447fb69165c4b4ae04bb0081884162502ff932e3471e78c97b053dc7ce0ef"
+        "blake2b_256": "239b72d060d002cd391044ddd0816bd5027f6fda6d62104b81a90a7c3611345c",
+        "md5": "ec98c4d69318a98a4d099a96fa66f937",
+        "sha256": "bf9c621a45d250f54a8b08cab14813509aa2709b3f7ad45dffc130383f9a8190"
       },
       "downloads": -1,
-      "filename": "csv_diff-1.1-py3-none-any.whl",
+      "filename": "csv_diff-1.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "5d2bb522ddb9d5354d82f4e1fdf446d2",
+      "md5_digest": "ec98c4d69318a98a4d099a96fa66f937",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": null,
-      "size": 12554,
-      "upload_time": "2021-02-23T01:15:19",
-      "upload_time_iso_8601": "2021-02-23T01:15:19.756228Z",
-      "url": "https://files.pythonhosted.org/packages/bb/cf/53d23ae469f2727a5bdb7d6442573084136d2d713129e420cb554ff5506c/csv_diff-1.1-py3-none-any.whl",
+      "size": 13587,
+      "upload_time": "2024-09-06T05:21:19",
+      "upload_time_iso_8601": "2024-09-06T05:21:19.027468Z",
+      "url": "https://files.pythonhosted.org/packages/23/9b/72d060d002cd391044ddd0816bd5027f6fda6d62104b81a90a7c3611345c/csv_diff-1.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "df3e1873856cd1cdb2b373f592e4985d5de99e485daff425c37d6916c89adb3c",
-        "md5": "2c9cf505b45db4cb3c586c84cfef6f2e",
-        "sha256": "ff94117992c67dd8bc4f917374f4dc198945ff85b1d67a11bd148b635f576bea"
+        "blake2b_256": "8e40428351c5f57b676e30b7f3a2940b3d017ee1b8e4e091dec4931e488a59fe",
+        "md5": "b5afcf156b1fa071544282526d987b13",
+        "sha256": "f6c251542fbcd9d6eef8b27c3870fc4dfc3592c880c34dac57ed94e382f2d53b"
       },
       "downloads": -1,
-      "filename": "csv-diff-1.1.tar.gz",
+      "filename": "csv_diff-1.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "2c9cf505b45db4cb3c586c84cfef6f2e",
+      "md5_digest": "b5afcf156b1fa071544282526d987b13",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": null,
-      "size": 7301,
-      "upload_time": "2021-02-23T01:15:21",
-      "upload_time_iso_8601": "2021-02-23T01:15:21.250780Z",
-      "url": "https://files.pythonhosted.org/packages/df/3e/1873856cd1cdb2b373f592e4985d5de99e485daff425c37d6916c89adb3c/csv-diff-1.1.tar.gz",
+      "size": 11922,
+      "upload_time": "2024-09-06T05:21:20",
+      "upload_time_iso_8601": "2024-09-06T05:21:20.290152Z",
+      "url": "https://files.pythonhosted.org/packages/8e/40/428351c5f57b676e30b7f3a2940b3d017ee1b8e4e091dec4931e488a59fe/csv_diff-1.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
