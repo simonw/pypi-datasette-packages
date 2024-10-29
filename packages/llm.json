@@ -33,7 +33,7 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/llm/0.16/",
+    "release_url": "https://pypi.org/project/llm/0.17/",
     "requires_dist": [
       "click",
       "openai>=1.0",
@@ -46,10 +46,11 @@
       "python-ulid",
       "setuptools",
       "pip",
+      "puremagic",
       "pyreadline3; sys_platform == \"win32\"",
       "pytest; extra == \"test\"",
       "numpy; extra == \"test\"",
-      "pytest-httpx; extra == \"test\"",
+      "pytest-httpx>=0.33.0; extra == \"test\"",
       "cogapp; extra == \"test\"",
       "mypy>=1.10.0; extra == \"test\"",
       "black>=24.1.0; extra == \"test\"",
@@ -58,13 +59,13 @@
       "types-PyYAML; extra == \"test\"",
       "types-setuptools; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.9",
     "summary": "A CLI utility and Python library for interacting with Large Language Models, including OpenAI, PaLM and local models installed on your own machine.",
-    "version": "0.16",
+    "version": "0.17",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 25010731,
+  "last_serial": 25717446,
   "releases": {
     "0.1": [
       {
@@ -634,6 +635,94 @@
         "upload_time": "2024-09-12T23:23:07",
         "upload_time_iso_8601": "2024-09-12T23:23:07.243698Z",
         "url": "https://files.pythonhosted.org/packages/7e/cc/57294e607f85c2d922c14f53078ae7545f7bec951e5514416ad88bd72a32/llm-0.16.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.17": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ad3c375ade56d690a07fec3e052561a6c1f5bbed92f54a8719ef7b0cc9b73f06",
+          "md5": "8b3b21e23dd90c46a5821e707dac3062",
+          "sha256": "f1fb15c78fff122ac36ecef40633f7fe3d33946df5b4d7a6f30b7aaa7d1eaf27"
+        },
+        "downloads": -1,
+        "filename": "llm-0.17-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8b3b21e23dd90c46a5821e707dac3062",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 41278,
+        "upload_time": "2024-10-29T02:40:54",
+        "upload_time_iso_8601": "2024-10-29T02:40:54.891871Z",
+        "url": "https://files.pythonhosted.org/packages/ad/3c/375ade56d690a07fec3e052561a6c1f5bbed92f54a8719ef7b0cc9b73f06/llm-0.17-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d00993428c6fd05dfeed2f00bfc6d41dce4f39ab7f155f4fa90431f1e81f6755",
+          "md5": "e6d45d37a475847ad784ffc3d05868d6",
+          "sha256": "16ef3c5f0777180d5c28d5b934d92da3af7b5093264b92023c5d06df96eb4be5"
+        },
+        "downloads": -1,
+        "filename": "llm-0.17.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e6d45d37a475847ad784ffc3d05868d6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 39590,
+        "upload_time": "2024-10-29T02:40:56",
+        "upload_time_iso_8601": "2024-10-29T02:40:56.197564Z",
+        "url": "https://files.pythonhosted.org/packages/d0/09/93428c6fd05dfeed2f00bfc6d41dce4f39ab7f155f4fa90431f1e81f6755/llm-0.17.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.17a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7970e545a71bb064867069478f191fe7f413168fbac20ed1054ab7dbcf3f4d5c",
+          "md5": "91c803c9da9d5f11a4f972dbe81b042a",
+          "sha256": "81d59788cb8cee043699ef85c4356960ce0636a47853ec803d9eac500071f8d1"
+        },
+        "downloads": -1,
+        "filename": "llm-0.17a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "91c803c9da9d5f11a4f972dbe81b042a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 41233,
+        "upload_time": "2024-10-28T22:51:08",
+        "upload_time_iso_8601": "2024-10-28T22:51:08.095474Z",
+        "url": "https://files.pythonhosted.org/packages/79/70/e545a71bb064867069478f191fe7f413168fbac20ed1054ab7dbcf3f4d5c/llm-0.17a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0bbbedd3eb2b871c9496f0b4ed6ac9203a693f61c6fac7350419cc3e0de5d61e",
+          "md5": "e4e6950f639450151fb349385604bbf3",
+          "sha256": "bb7954546696fe1bc7de4b9e2461db3e1392ce747f213b8483ee4476b124c9da"
+        },
+        "downloads": -1,
+        "filename": "llm-0.17a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e4e6950f639450151fb349385604bbf3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 39537,
+        "upload_time": "2024-10-28T22:51:09",
+        "upload_time_iso_8601": "2024-10-28T22:51:09.426910Z",
+        "url": "https://files.pythonhosted.org/packages/0b/bb/edd3eb2b871c9496f0b4ed6ac9203a693f61c6fac7350419cc3e0de5d61e/llm-0.17a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
@@ -1259,42 +1348,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "ff8ea450b23155621c28ae46716a6398afcd9e23fa5a34401d3ca8e4560f5ee4",
-        "md5": "0854a4c81a0a7d9b91bbe7f89347415f",
-        "sha256": "b9fe4f43b0b7da4b2f53d9c051e6abf3cd5db7b14fee6747655b9242f0aee22e"
+        "blake2b_256": "ad3c375ade56d690a07fec3e052561a6c1f5bbed92f54a8719ef7b0cc9b73f06",
+        "md5": "8b3b21e23dd90c46a5821e707dac3062",
+        "sha256": "f1fb15c78fff122ac36ecef40633f7fe3d33946df5b4d7a6f30b7aaa7d1eaf27"
       },
       "downloads": -1,
-      "filename": "llm-0.16-py3-none-any.whl",
+      "filename": "llm-0.17-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0854a4c81a0a7d9b91bbe7f89347415f",
+      "md5_digest": "8b3b21e23dd90c46a5821e707dac3062",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 38335,
-      "upload_time": "2024-09-12T23:23:05",
-      "upload_time_iso_8601": "2024-09-12T23:23:05.840987Z",
-      "url": "https://files.pythonhosted.org/packages/ff/8e/a450b23155621c28ae46716a6398afcd9e23fa5a34401d3ca8e4560f5ee4/llm-0.16-py3-none-any.whl",
+      "requires_python": ">=3.9",
+      "size": 41278,
+      "upload_time": "2024-10-29T02:40:54",
+      "upload_time_iso_8601": "2024-10-29T02:40:54.891871Z",
+      "url": "https://files.pythonhosted.org/packages/ad/3c/375ade56d690a07fec3e052561a6c1f5bbed92f54a8719ef7b0cc9b73f06/llm-0.17-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "7ecc57294e607f85c2d922c14f53078ae7545f7bec951e5514416ad88bd72a32",
-        "md5": "73eac523296388621d733244c3ef1e74",
-        "sha256": "6f8780308d021bb8df755e58e0188ab34af0961f64e303e808f928b456ccc51b"
+        "blake2b_256": "d00993428c6fd05dfeed2f00bfc6d41dce4f39ab7f155f4fa90431f1e81f6755",
+        "md5": "e6d45d37a475847ad784ffc3d05868d6",
+        "sha256": "16ef3c5f0777180d5c28d5b934d92da3af7b5093264b92023c5d06df96eb4be5"
       },
       "downloads": -1,
-      "filename": "llm-0.16.tar.gz",
+      "filename": "llm-0.17.tar.gz",
       "has_sig": false,
-      "md5_digest": "73eac523296388621d733244c3ef1e74",
+      "md5_digest": "e6d45d37a475847ad784ffc3d05868d6",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 36774,
-      "upload_time": "2024-09-12T23:23:07",
-      "upload_time_iso_8601": "2024-09-12T23:23:07.243698Z",
-      "url": "https://files.pythonhosted.org/packages/7e/cc/57294e607f85c2d922c14f53078ae7545f7bec951e5514416ad88bd72a32/llm-0.16.tar.gz",
+      "requires_python": ">=3.9",
+      "size": 39590,
+      "upload_time": "2024-10-29T02:40:56",
+      "upload_time_iso_8601": "2024-10-29T02:40:56.197564Z",
+      "url": "https://files.pythonhosted.org/packages/d0/09/93428c6fd05dfeed2f00bfc6d41dce4f39ab7f155f4fa90431f1e81f6755/llm-0.17.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
