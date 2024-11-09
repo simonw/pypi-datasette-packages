@@ -84,7 +84,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24193917,
+  "last_serial": 25897364,
   "releases": {
     "0.10": [
       {
@@ -3884,6 +3884,50 @@
         "upload_time": "2024-07-18T18:47:25",
         "upload_time_iso_8601": "2024-07-18T18:47:25.665054Z",
         "url": "https://files.pythonhosted.org/packages/65/c5/a16a5d3f5f64e700a77de3df427ce1fcf5029e38db3352e12a0696448569/sqlite_utils-3.37.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "3.38a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c8499790a6b904d09f4e194dc30596453e4cca8f66ff6e786c856574cf55b1b3",
+          "md5": "f38b7f5e5eb1fa304debe31b166fb10b",
+          "sha256": "aa0974f793f149d4b9f6c75935661094e4d47f6e49fe1d18e2430bc9919667ff"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.38a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f38b7f5e5eb1fa304debe31b166fb10b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 67787,
+        "upload_time": "2024-11-08T20:22:04",
+        "upload_time_iso_8601": "2024-11-08T20:22:04.576845Z",
+        "url": "https://files.pythonhosted.org/packages/c8/49/9790a6b904d09f4e194dc30596453e4cca8f66ff6e786c856574cf55b1b3/sqlite_utils-3.38a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a142907e2e6eff6748807b67f297cf15a3b3cbe654a27bca3fe0ed3c06c34743",
+          "md5": "9557db1f0c3009bc49a9b0fe6226c4a1",
+          "sha256": "6ffe7ecd26cc18a78d41f1efb5d547b9ddada2dba0caa7881947ad3307dd1555"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.38a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9557db1f0c3009bc49a9b0fe6226c4a1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 212378,
+        "upload_time": "2024-11-08T20:22:05",
+        "upload_time_iso_8601": "2024-11-08T20:22:05.875173Z",
+        "url": "https://files.pythonhosted.org/packages/a1/42/907e2e6eff6748807b67f297cf15a3b3cbe654a27bca3fe0ed3c06c34743/sqlite_utils-3.38a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
