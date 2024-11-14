@@ -17,6 +17,8 @@
     "home_page": "https://github.com/simonw/s3-ocr",
     "keywords": "",
     "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": "",
     "maintainer_email": "",
     "name": "s3-ocr",

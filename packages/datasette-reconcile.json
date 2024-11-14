@@ -28,6 +28,8 @@
     "home_page": "",
     "keywords": "",
     "license": "",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": "",
     "maintainer_email": "",
     "name": "datasette-reconcile",

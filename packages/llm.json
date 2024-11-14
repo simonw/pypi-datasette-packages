@@ -17,6 +17,8 @@
     "home_page": "https://github.com/simonw/llm",
     "keywords": null,
     "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": null,
     "maintainer_email": null,
     "name": "llm",
@@ -65,7 +67,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 25785979,
+  "last_serial": 25983040,
   "releases": {
     "0.1": [
       {
@@ -767,6 +769,50 @@
         "upload_time": "2024-10-28T22:51:09",
         "upload_time_iso_8601": "2024-10-28T22:51:09.426910Z",
         "url": "https://files.pythonhosted.org/packages/0b/bb/edd3eb2b871c9496f0b4ed6ac9203a693f61c6fac7350419cc3e0de5d61e/llm-0.17a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.18a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "03c4a53096733631aeaad0ac5ef374e098824a728a281820806faac13e9246cf",
+          "md5": "91bb1422f8669da5f60e09ca0abf8ab9",
+          "sha256": "dde9899583172e6434971d8cddeb106bb535ae4ee3589cb4e2d525a4526976da"
+        },
+        "downloads": -1,
+        "filename": "llm-0.18a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "91bb1422f8669da5f60e09ca0abf8ab9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 43149,
+        "upload_time": "2024-11-14T01:57:45",
+        "upload_time_iso_8601": "2024-11-14T01:57:45.879455Z",
+        "url": "https://files.pythonhosted.org/packages/03/c4/a53096733631aeaad0ac5ef374e098824a728a281820806faac13e9246cf/llm-0.18a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1bb665b645cf6d7f86c83b97341b8018a6d25f9c9fa5b8c8dd81ae12b98d368f",
+          "md5": "67340b7bc80ee91ec0098c165753927b",
+          "sha256": "14e53a6ba4b1f762937a4d0fc36917c7d46891deea59120036bb73e07887e530"
+        },
+        "downloads": -1,
+        "filename": "llm-0.18a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "67340b7bc80ee91ec0098c165753927b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 41527,
+        "upload_time": "2024-11-14T01:57:47",
+        "upload_time_iso_8601": "2024-11-14T01:57:47.763681Z",
+        "url": "https://files.pythonhosted.org/packages/1b/b6/65b645cf6d7f86c83b97341b8018a6d25f9c9fa5b8c8dd81ae12b98d368f/llm-0.18a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
