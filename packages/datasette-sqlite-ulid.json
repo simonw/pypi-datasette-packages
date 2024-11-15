@@ -17,6 +17,8 @@
     "home_page": "https://github.com/asg017/sqlite-ulid",
     "keywords": "",
     "license": "MIT License, Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": "",
     "maintainer_email": "",
     "name": "datasette-sqlite-ulid",

@@ -17,6 +17,8 @@
     "home_page": "https://github.com/dogsheep/genome-to-sqlite",
     "keywords": "",
     "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": "",
     "maintainer_email": "",
     "name": "genome-to-sqlite",
