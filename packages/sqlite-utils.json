@@ -47,13 +47,13 @@
       "Source code": "https://github.com/simonw/sqlite-utils"
     },
     "provides_extra": [
-      "docs",
-      "flake8",
-      "mypy",
       "test",
+      "docs",
+      "mypy",
+      "flake8",
       "tui"
     ],
-    "release_url": "https://pypi.org/project/sqlite-utils/3.37/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.38/",
     "requires_dist": [
       "sqlite-fts4",
       "click",
@@ -61,32 +61,32 @@
       "tabulate",
       "python-dateutil",
       "pluggy",
+      "pytest; extra == \"test\"",
+      "black>=24.1.1; extra == \"test\"",
+      "hypothesis; extra == \"test\"",
+      "cogapp; extra == \"test\"",
       "furo; extra == \"docs\"",
       "sphinx-autobuild; extra == \"docs\"",
       "codespell; extra == \"docs\"",
       "sphinx-copybutton; extra == \"docs\"",
       "beanbag-docutils>=2.0; extra == \"docs\"",
       "pygments-csv-lexer; extra == \"docs\"",
-      "flake8; extra == \"flake8\"",
       "mypy; extra == \"mypy\"",
       "types-click; extra == \"mypy\"",
       "types-tabulate; extra == \"mypy\"",
       "types-python-dateutil; extra == \"mypy\"",
       "types-pluggy; extra == \"mypy\"",
       "data-science-types; extra == \"mypy\"",
-      "pytest; extra == \"test\"",
-      "black>=24.1.1; extra == \"test\"",
-      "hypothesis; extra == \"test\"",
-      "cogapp; extra == \"test\"",
+      "flake8; extra == \"flake8\"",
       "trogon; extra == \"tui\""
     ],
     "requires_python": ">=3.8",
     "summary": "CLI tool and Python library for manipulating SQLite databases",
-    "version": "3.37",
+    "version": "3.38",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 25897364,
+  "last_serial": 26142257,
   "releases": {
     "0.10": [
       {
@@ -3890,6 +3890,50 @@
         "yanked_reason": null
       }
     ],
+    "3.38": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4debf8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b",
+          "md5": "9e66860feb66275c42993c894521a333",
+          "sha256": "8a27441015c3b2ef475f555861f7a2592f73bc60d247af9803a11b65fc605bf9"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.38-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9e66860feb66275c42993c894521a333",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 68183,
+        "upload_time": "2024-11-23T22:49:38",
+        "upload_time_iso_8601": "2024-11-23T22:49:38.289905Z",
+        "url": "https://files.pythonhosted.org/packages/4d/eb/f8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b/sqlite_utils-3.38-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5143ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564",
+          "md5": "e5513a55b428db81302f59d82e067aae",
+          "sha256": "1ae77b931384052205a15478d429464f6c67a3ac3b4eafd3c674ac900f623aab"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.38.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e5513a55b428db81302f59d82e067aae",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 214449,
+        "upload_time": "2024-11-23T22:49:40",
+        "upload_time_iso_8601": "2024-11-23T22:49:40.308839Z",
+        "url": "https://files.pythonhosted.org/packages/51/43/ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564/sqlite_utils-3.38.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.38a0": [
       {
         "comment_text": "",
@@ -4291,42 +4335,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "b5372566f7952b512c7bc54859be73b29270791c6893ce0ef97dcf91cba3c775",
-        "md5": "d970b55e7cdc5233adcdf3cd23982787",
-        "sha256": "4fb0dc9e61b1f9226a14eb1f072e984cf3cb69058dc2838887600a0771e9624f"
+        "blake2b_256": "4debf8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b",
+        "md5": "9e66860feb66275c42993c894521a333",
+        "sha256": "8a27441015c3b2ef475f555861f7a2592f73bc60d247af9803a11b65fc605bf9"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.37-py3-none-any.whl",
+      "filename": "sqlite_utils-3.38-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "d970b55e7cdc5233adcdf3cd23982787",
+      "md5_digest": "9e66860feb66275c42993c894521a333",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 67704,
-      "upload_time": "2024-07-18T18:47:22",
-      "upload_time_iso_8601": "2024-07-18T18:47:22.923005Z",
-      "url": "https://files.pythonhosted.org/packages/b5/37/2566f7952b512c7bc54859be73b29270791c6893ce0ef97dcf91cba3c775/sqlite_utils-3.37-py3-none-any.whl",
+      "size": 68183,
+      "upload_time": "2024-11-23T22:49:38",
+      "upload_time_iso_8601": "2024-11-23T22:49:38.289905Z",
+      "url": "https://files.pythonhosted.org/packages/4d/eb/f8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b/sqlite_utils-3.38-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "65c5a16a5d3f5f64e700a77de3df427ce1fcf5029e38db3352e12a0696448569",
-        "md5": "23c2f30da5a594bb3aec160c8f52a1e8",
-        "sha256": "542a71033d4e7936fe909230ac9794d3e200021838ab63dbaf3ce8f5bc2273a4"
+        "blake2b_256": "5143ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564",
+        "md5": "e5513a55b428db81302f59d82e067aae",
+        "sha256": "1ae77b931384052205a15478d429464f6c67a3ac3b4eafd3c674ac900f623aab"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.37.tar.gz",
+      "filename": "sqlite_utils-3.38.tar.gz",
       "has_sig": false,
-      "md5_digest": "23c2f30da5a594bb3aec160c8f52a1e8",
+      "md5_digest": "e5513a55b428db81302f59d82e067aae",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 211980,
-      "upload_time": "2024-07-18T18:47:25",
-      "upload_time_iso_8601": "2024-07-18T18:47:25.665054Z",
-      "url": "https://files.pythonhosted.org/packages/65/c5/a16a5d3f5f64e700a77de3df427ce1fcf5029e38db3352e12a0696448569/sqlite_utils-3.37.tar.gz",
+      "size": 214449,
+      "upload_time": "2024-11-23T22:49:40",
+      "upload_time_iso_8601": "2024-11-23T22:49:40.308839Z",
+      "url": "https://files.pythonhosted.org/packages/51/43/ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564/sqlite_utils-3.38.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
