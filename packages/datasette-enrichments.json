@@ -16,7 +16,19 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "Author",
+      "Classifier",
+      "Description",
+      "Description-Content-Type",
+      "Home-Page",
+      "License",
+      "Project-Url",
+      "Provides-Extra",
+      "Requires-Dist",
+      "Requires-Python",
+      "Summary"
+    ],
     "home_page": "https://github.com/simonw/datasette-enrichments",
     "keywords": null,
     "license": "Apache License, Version 2.0",
@@ -35,33 +47,33 @@
       "Issues": "https://github.com/simonw/datasette-enrichments/issues"
     },
     "provides_extra": [
-      "docs",
-      "test"
+      "test",
+      "docs"
     ],
-    "release_url": "https://pypi.org/project/datasette-enrichments/0.4.3/",
+    "release_url": "https://pypi.org/project/datasette-enrichments/0.5/",
     "requires_dist": [
       "datasette",
       "WTForms",
       "datasette-secrets>=0.2",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "black; extra == \"test\"",
+      "ruff; extra == \"test\"",
+      "packaging; extra == \"test\"",
       "sphinx==7.2.6; extra == \"docs\"",
       "furo==2023.9.10; extra == \"docs\"",
       "sphinx-autobuild; extra == \"docs\"",
       "sphinx-copybutton; extra == \"docs\"",
       "myst-parser; extra == \"docs\"",
-      "cogapp; extra == \"docs\"",
-      "pytest; extra == \"test\"",
-      "pytest-asyncio; extra == \"test\"",
-      "black; extra == \"test\"",
-      "ruff; extra == \"test\"",
-      "packaging; extra == \"test\""
+      "cogapp; extra == \"docs\""
     ],
     "requires_python": ">=3.7",
     "summary": "Tools for running enrichments against data stored in Datasette",
-    "version": "0.4.3",
+    "version": "0.5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 26944477,
+  "last_serial": 26966965,
   "releases": {
     "0.1a0": [
       {
@@ -767,6 +779,50 @@
         "yanked_reason": null
       }
     ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d2fadf28587b61a6cb366a015ca753df50bf454628cd98a1df3a75d0416e2e46",
+          "md5": "edf4794ae1415bb4bd5c9b97b082a877",
+          "sha256": "1711aa863764f40d757f5664254319367816ed6068f44193510f45de586ef65e"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "edf4794ae1415bb4bd5c9b97b082a877",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 24161,
+        "upload_time": "2025-01-15T20:57:37",
+        "upload_time_iso_8601": "2025-01-15T20:57:37.710217Z",
+        "url": "https://files.pythonhosted.org/packages/d2/fa/df28587b61a6cb366a015ca753df50bf454628cd98a1df3a75d0416e2e46/datasette_enrichments-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "36149b43c86a34e71ee57cb222baef18c94f33176b937d4b2e6024089b17a97f",
+          "md5": "815e96cd036681d696291f7787e0d529",
+          "sha256": "4781e020cd66efc2323eb0906cc6a9f662f76b20667c7990e1535b96d49cbf25"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "815e96cd036681d696291f7787e0d529",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 26048,
+        "upload_time": "2025-01-15T20:57:38",
+        "upload_time_iso_8601": "2025-01-15T20:57:38.783569Z",
+        "url": "https://files.pythonhosted.org/packages/36/14/9b43c86a34e71ee57cb222baef18c94f33176b937d4b2e6024089b17a97f/datasette_enrichments-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.5a0": [
       {
         "comment_text": "",
@@ -810,48 +866,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "84baaac4fdf35d413a04a7656cf1de72201fb060c1e042dc532987e8408fae53",
+          "md5": "b7e05428d4a70d16103c228f180789f9",
+          "sha256": "9df1ca38fd0a175555c6e13abf24e50328ceb14ccf9290144397490bc6fb32dc"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments-0.5a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b7e05428d4a70d16103c228f180789f9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 24133,
+        "upload_time": "2025-01-15T19:26:22",
+        "upload_time_iso_8601": "2025-01-15T19:26:22.195583Z",
+        "url": "https://files.pythonhosted.org/packages/84/ba/aac4fdf35d413a04a7656cf1de72201fb060c1e042dc532987e8408fae53/datasette_enrichments-0.5a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1a67c2949ae19408a5270f92fc5fb0b6abbc13cc47b01e9dfc28d3efb0b03bf0",
+          "md5": "9a9f1875d32e87933b2d55607158c33a",
+          "sha256": "f8859931be663d2d68342170b26c63abc341864be1076ecf590cc6f11416cf4a"
+        },
+        "downloads": -1,
+        "filename": "datasette_enrichments-0.5a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9a9f1875d32e87933b2d55607158c33a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 25957,
+        "upload_time": "2025-01-15T19:26:23",
+        "upload_time_iso_8601": "2025-01-15T19:26:23.311276Z",
+        "url": "https://files.pythonhosted.org/packages/1a/67/c2949ae19408a5270f92fc5fb0b6abbc13cc47b01e9dfc28d3efb0b03bf0/datasette_enrichments-0.5a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "4bb035f92fa5650b88369ec90ce88a656bd57acab77d38e9b0bcd775913202d7",
-        "md5": "bf7751c4079b409fb25746a688fe81ee",
-        "sha256": "a3c8c8c3ac7a2a0a93fe72f084aa26a2c384a110fae6056fee4482399df46db6"
+        "blake2b_256": "d2fadf28587b61a6cb366a015ca753df50bf454628cd98a1df3a75d0416e2e46",
+        "md5": "edf4794ae1415bb4bd5c9b97b082a877",
+        "sha256": "1711aa863764f40d757f5664254319367816ed6068f44193510f45de586ef65e"
       },
       "downloads": -1,
-      "filename": "datasette_enrichments-0.4.3-py3-none-any.whl",
+      "filename": "datasette_enrichments-0.5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "bf7751c4079b409fb25746a688fe81ee",
+      "md5_digest": "edf4794ae1415bb4bd5c9b97b082a877",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 15990,
-      "upload_time": "2024-09-03T17:32:19",
-      "upload_time_iso_8601": "2024-09-03T17:32:19.439067Z",
-      "url": "https://files.pythonhosted.org/packages/4b/b0/35f92fa5650b88369ec90ce88a656bd57acab77d38e9b0bcd775913202d7/datasette_enrichments-0.4.3-py3-none-any.whl",
+      "size": 24161,
+      "upload_time": "2025-01-15T20:57:37",
+      "upload_time_iso_8601": "2025-01-15T20:57:37.710217Z",
+      "url": "https://files.pythonhosted.org/packages/d2/fa/df28587b61a6cb366a015ca753df50bf454628cd98a1df3a75d0416e2e46/datasette_enrichments-0.5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "5b5000bfec52b278a188e43a5c13bd9e22124c79258a3613ff6258e74c6fcfda",
-        "md5": "1266c30f0b6c7140b7856482b144eb2e",
-        "sha256": "7eaa158eaa2cce3aac12a55dc6c6c42b29b22212e5b57920268c04eb18594146"
+        "blake2b_256": "36149b43c86a34e71ee57cb222baef18c94f33176b937d4b2e6024089b17a97f",
+        "md5": "815e96cd036681d696291f7787e0d529",
+        "sha256": "4781e020cd66efc2323eb0906cc6a9f662f76b20667c7990e1535b96d49cbf25"
       },
       "downloads": -1,
-      "filename": "datasette_enrichments-0.4.3.tar.gz",
+      "filename": "datasette_enrichments-0.5.tar.gz",
       "has_sig": false,
-      "md5_digest": "1266c30f0b6c7140b7856482b144eb2e",
+      "md5_digest": "815e96cd036681d696291f7787e0d529",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 17130,
-      "upload_time": "2024-09-03T17:32:20",
-      "upload_time_iso_8601": "2024-09-03T17:32:20.828499Z",
-      "url": "https://files.pythonhosted.org/packages/5b/50/00bfec52b278a188e43a5c13bd9e22124c79258a3613ff6258e74c6fcfda/datasette_enrichments-0.4.3.tar.gz",
+      "size": 26048,
+      "upload_time": "2025-01-15T20:57:38",
+      "upload_time_iso_8601": "2025-01-15T20:57:38.783569Z",
+      "url": "https://files.pythonhosted.org/packages/36/14/9b43c86a34e71ee57cb222baef18c94f33176b937d4b2e6024089b17a97f/datasette_enrichments-0.5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
