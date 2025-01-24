@@ -13,7 +13,18 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "Author",
+      "Description",
+      "Description-Content-Type",
+      "Home-Page",
+      "License",
+      "Project-Url",
+      "Provides-Extra",
+      "Requires-Dist",
+      "Requires-Python",
+      "Summary"
+    ],
     "home_page": "https://github.com/simonw/llm",
     "keywords": null,
     "license": "Apache License, Version 2.0",
@@ -35,10 +46,10 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/llm/0.19.1/",
+    "release_url": "https://pypi.org/project/llm/0.20/",
     "requires_dist": [
       "click",
-      "openai>=1.0",
+      "openai>=1.55.3",
       "click-default-group>=1.2.3",
       "sqlite-utils>=3.37",
       "sqlite-migrate>=0.1a2",
@@ -64,11 +75,11 @@
     ],
     "requires_python": ">=3.9",
     "summary": "A CLI utility and Python library for interacting with Large Language Models, including OpenAI, PaLM and local models installed on your own machine.",
-    "version": "0.19.1",
+    "version": "0.20",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 26378085,
+  "last_serial": 27090391,
   "releases": {
     "0.1": [
       {
@@ -1170,6 +1181,50 @@
         "yanked_reason": null
       }
     ],
+    "0.20": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0d5a60bacc305c578c74f995f90498856dd3121ee054aef4f8038c6fe9bd0334",
+          "md5": "afd71eb1b85dd573f9fd1101ca035c8e",
+          "sha256": "530d8e88a9e662376360a8ec17bcd603d6ed5812c69766ef5a146189839d0f08"
+        },
+        "downloads": -1,
+        "filename": "llm-0.20-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "afd71eb1b85dd573f9fd1101ca035c8e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 45792,
+        "upload_time": "2025-01-23T04:48:34",
+        "upload_time_iso_8601": "2025-01-23T04:48:34.614706Z",
+        "url": "https://files.pythonhosted.org/packages/0d/5a/60bacc305c578c74f995f90498856dd3121ee054aef4f8038c6fe9bd0334/llm-0.20-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e964b49f49506d21167389cd845d1276300d1ac3b2acb3ef32b8717275d5e1cb",
+          "md5": "c7f1a56b05d946b9ebd9436fc9f8000b",
+          "sha256": "7f185db83d9e433923fe78fdd4ce4923952fb2c642273e3c099c03b0b48c1ad5"
+        },
+        "downloads": -1,
+        "filename": "llm-0.20.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c7f1a56b05d946b9ebd9436fc9f8000b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 44246,
+        "upload_time": "2025-01-23T04:48:36",
+        "upload_time_iso_8601": "2025-01-23T04:48:36.584151Z",
+        "url": "https://files.pythonhosted.org/packages/e9/64/b49f49506d21167389cd845d1276300d1ac3b2acb3ef32b8717275d5e1cb/llm-0.20.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.3": [
       {
         "comment_text": "",
@@ -1747,42 +1802,42 @@
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "b5ef14d336309ceddce6d35670aca73bcbd7aede32ce60d4c39a8a949773b8f0",
-        "md5": "8de4f6486c44473179b4ef9cbb41aa7b",
-        "sha256": "6450fe6ab7b844365da21a8dfacf03d1e26730109f487aec456b872ffc85ae63"
+        "blake2b_256": "0d5a60bacc305c578c74f995f90498856dd3121ee054aef4f8038c6fe9bd0334",
+        "md5": "afd71eb1b85dd573f9fd1101ca035c8e",
+        "sha256": "530d8e88a9e662376360a8ec17bcd603d6ed5812c69766ef5a146189839d0f08"
       },
       "downloads": -1,
-      "filename": "llm-0.19.1-py3-none-any.whl",
+      "filename": "llm-0.20-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "8de4f6486c44473179b4ef9cbb41aa7b",
+      "md5_digest": "afd71eb1b85dd573f9fd1101ca035c8e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.9",
-      "size": 44483,
-      "upload_time": "2024-12-05T21:49:53",
-      "upload_time_iso_8601": "2024-12-05T21:49:53.498815Z",
-      "url": "https://files.pythonhosted.org/packages/b5/ef/14d336309ceddce6d35670aca73bcbd7aede32ce60d4c39a8a949773b8f0/llm-0.19.1-py3-none-any.whl",
+      "size": 45792,
+      "upload_time": "2025-01-23T04:48:34",
+      "upload_time_iso_8601": "2025-01-23T04:48:34.614706Z",
+      "url": "https://files.pythonhosted.org/packages/0d/5a/60bacc305c578c74f995f90498856dd3121ee054aef4f8038c6fe9bd0334/llm-0.20-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": "",
       "digests": {
-        "blake2b_256": "1a057f9f9295e166e71a839eaf961ea21bdc44a5f2f155c656be9943f2ff3d4a",
-        "md5": "45b6db1e9216e1f03377a64d73dbcfa6",
-        "sha256": "64f0c9500ec26a7de61a3a07b1f0f1cdd333a753c4a7aba7791b4ed3cd54117f"
+        "blake2b_256": "e964b49f49506d21167389cd845d1276300d1ac3b2acb3ef32b8717275d5e1cb",
+        "md5": "c7f1a56b05d946b9ebd9436fc9f8000b",
+        "sha256": "7f185db83d9e433923fe78fdd4ce4923952fb2c642273e3c099c03b0b48c1ad5"
       },
       "downloads": -1,
-      "filename": "llm-0.19.1.tar.gz",
+      "filename": "llm-0.20.tar.gz",
       "has_sig": false,
-      "md5_digest": "45b6db1e9216e1f03377a64d73dbcfa6",
+      "md5_digest": "c7f1a56b05d946b9ebd9436fc9f8000b",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.9",
-      "size": 42888,
-      "upload_time": "2024-12-05T21:49:55",
-      "upload_time_iso_8601": "2024-12-05T21:49:55.622040Z",
-      "url": "https://files.pythonhosted.org/packages/1a/05/7f9f9295e166e71a839eaf961ea21bdc44a5f2f155c656be9943f2ff3d4a/llm-0.19.1.tar.gz",
+      "size": 44246,
+      "upload_time": "2025-01-23T04:48:36",
+      "upload_time_iso_8601": "2025-01-23T04:48:36.584151Z",
+      "url": "https://files.pythonhosted.org/packages/e9/64/b49f49506d21167389cd845d1276300d1ac3b2acb3ef32b8717275d5e1cb/llm-0.20.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
