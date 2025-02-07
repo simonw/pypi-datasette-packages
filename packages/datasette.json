@@ -96,7 +96,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 26232939,
+  "last_serial": 27326558,
   "releases": {
     "0.10": [
       {
@@ -5279,6 +5279,50 @@
         "upload_time": "2024-09-06T04:05:36",
         "upload_time_iso_8601": "2024-09-06T04:05:36.445043Z",
         "url": "https://files.pythonhosted.org/packages/c6/8d/101e6d4c3fec914f1f719a797ca9b9f73e05f1a1b39946e72064f4ea7789/datasette-1.0a16.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a17": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "51dbbe87f56433b11f52819070191f6684a9dda6cd94ce50fb881876660d7224",
+          "md5": "9e7b9dd3590c1185006cbfe89f3c1859",
+          "sha256": "69860e74c4d6b4ee5b09b37bb5623539f8253991e45d9adbe456bdcdd827e520"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a17-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9e7b9dd3590c1185006cbfe89f3c1859",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 305786,
+        "upload_time": "2025-02-06T19:19:13",
+        "upload_time_iso_8601": "2025-02-06T19:19:13.560927Z",
+        "url": "https://files.pythonhosted.org/packages/51/db/be87f56433b11f52819070191f6684a9dda6cd94ce50fb881876660d7224/datasette-1.0a17-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d254f1a15e788d1f809158835b45301fbb4f0558963e42dd7a75148e9fc58d44",
+          "md5": "5849bdd38d64687c2b7db1e5a0f39ffb",
+          "sha256": "468c0906b783116b68efbc2e72d5142cb86a1c6c399ea40175f28ad2dcf16351"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a17.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5849bdd38d64687c2b7db1e5a0f39ffb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 378367,
+        "upload_time": "2025-02-06T19:19:15",
+        "upload_time_iso_8601": "2025-02-06T19:19:15.438221Z",
+        "url": "https://files.pythonhosted.org/packages/d2/54/f1a15e788d1f809158835b45301fbb4f0558963e42dd7a75148e9fc58d44/datasette-1.0a17.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
