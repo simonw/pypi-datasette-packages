@@ -45,7 +45,7 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/shot-scraper/1.6/",
+    "release_url": "https://pypi.org/project/shot-scraper/1.7/",
     "requires_dist": [
       "click",
       "PyYAML",
@@ -57,11 +57,11 @@
     ],
     "requires_python": ">=3.7",
     "summary": "A command-line utility for taking automated screenshots of websites",
-    "version": "1.6",
+    "version": "1.7",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 27445226,
+  "last_serial": 27562377,
   "releases": {
     "0.1": [
       {
@@ -1426,48 +1426,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.7": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "abfcfff0003555428e8a1b6bb020447c836dfbd9e48a2880ffb9cde62a633e6f",
+          "md5": "edab5c052caaa476b5f300c6eb9039c6",
+          "sha256": "196fd0859e20a31020966ba36702c47980efd13e95622c6f32125b7b2d894138"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-1.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "edab5c052caaa476b5f300c6eb9039c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 16760,
+        "upload_time": "2025-02-20T19:11:19",
+        "upload_time_iso_8601": "2025-02-20T19:11:19.126482Z",
+        "url": "https://files.pythonhosted.org/packages/ab/fc/fff0003555428e8a1b6bb020447c836dfbd9e48a2880ffb9cde62a633e6f/shot_scraper-1.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cc8ac331f054f127057b248ac0b004b9bf51ec477e77eed4cbbaa634a0bd868f",
+          "md5": "64bbbf70f28b3deab8f982cc8ea4b10f",
+          "sha256": "3509d30659b19bdc1d6ebb50b3c5a0f1f2f7129478464cdaba6294867eb54de6"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-1.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "64bbbf70f28b3deab8f982cc8ea4b10f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 20034,
+        "upload_time": "2025-02-20T19:11:20",
+        "upload_time_iso_8601": "2025-02-20T19:11:20.570239Z",
+        "url": "https://files.pythonhosted.org/packages/cc/8a/c331f054f127057b248ac0b004b9bf51ec477e77eed4cbbaa634a0bd868f/shot_scraper-1.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "af8dc62549cc70dd654d2d2a765956d2ec67d53af17ab8e792c44ba60638c12a",
-        "md5": "b0bd4789b94b01173cff300a427124f1",
-        "sha256": "1061903272a34032b683e84d548e4e4919ae728d7f186fe1e58d8ed5ae94432a"
+        "blake2b_256": "abfcfff0003555428e8a1b6bb020447c836dfbd9e48a2880ffb9cde62a633e6f",
+        "md5": "edab5c052caaa476b5f300c6eb9039c6",
+        "sha256": "196fd0859e20a31020966ba36702c47980efd13e95622c6f32125b7b2d894138"
       },
       "downloads": -1,
-      "filename": "shot_scraper-1.6-py3-none-any.whl",
+      "filename": "shot_scraper-1.7-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "b0bd4789b94b01173cff300a427124f1",
+      "md5_digest": "edab5c052caaa476b5f300c6eb9039c6",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.7",
-      "size": 16734,
-      "upload_time": "2025-02-13T20:32:01",
-      "upload_time_iso_8601": "2025-02-13T20:32:01.629784Z",
-      "url": "https://files.pythonhosted.org/packages/af/8d/c62549cc70dd654d2d2a765956d2ec67d53af17ab8e792c44ba60638c12a/shot_scraper-1.6-py3-none-any.whl",
+      "size": 16760,
+      "upload_time": "2025-02-20T19:11:19",
+      "upload_time_iso_8601": "2025-02-20T19:11:19.126482Z",
+      "url": "https://files.pythonhosted.org/packages/ab/fc/fff0003555428e8a1b6bb020447c836dfbd9e48a2880ffb9cde62a633e6f/shot_scraper-1.7-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "ed792ec01035cd5d35d50c3c147526c6641e0b580c1cb142b40eb42e3d206bab",
-        "md5": "b8b8e8d4da02eec7933e10766362aa4a",
-        "sha256": "16dbb867324e578c1dca592585c1cd6df859fa66a79cf905bf437bd98fcc63bb"
+        "blake2b_256": "cc8ac331f054f127057b248ac0b004b9bf51ec477e77eed4cbbaa634a0bd868f",
+        "md5": "64bbbf70f28b3deab8f982cc8ea4b10f",
+        "sha256": "3509d30659b19bdc1d6ebb50b3c5a0f1f2f7129478464cdaba6294867eb54de6"
       },
       "downloads": -1,
-      "filename": "shot_scraper-1.6.tar.gz",
+      "filename": "shot_scraper-1.7.tar.gz",
       "has_sig": false,
-      "md5_digest": "b8b8e8d4da02eec7933e10766362aa4a",
+      "md5_digest": "64bbbf70f28b3deab8f982cc8ea4b10f",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.7",
-      "size": 20011,
-      "upload_time": "2025-02-13T20:32:03",
-      "upload_time_iso_8601": "2025-02-13T20:32:03.486689Z",
-      "url": "https://files.pythonhosted.org/packages/ed/79/2ec01035cd5d35d50c3c147526c6641e0b580c1cb142b40eb42e3d206bab/shot_scraper-1.6.tar.gz",
+      "size": 20034,
+      "upload_time": "2025-02-20T19:11:20",
+      "upload_time_iso_8601": "2025-02-20T19:11:20.570239Z",
+      "url": "https://files.pythonhosted.org/packages/cc/8a/c331f054f127057b248ac0b004b9bf51ec477e77eed4cbbaa634a0bd868f/shot_scraper-1.7.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
