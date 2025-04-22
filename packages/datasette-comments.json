@@ -50,7 +50,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 20858545,
+  "last_serial": 28636129,
   "releases": {
     "0.0.1a10": [
       {
@@ -972,6 +972,50 @@
         "upload_time": "2023-11-30T18:25:43",
         "upload_time_iso_8601": "2023-11-30T18:25:43.620327Z",
         "url": "https://files.pythonhosted.org/packages/b3/f5/4cbf49ac7556f4b0590f77edcf273cd36de45ae1231157ceddea2fe23644/datasette-comments-0.1.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6a34e1c6bee97ccd973909e45a57921d61e68780834f1cb78662cdf045f3241a",
+          "md5": "bb5f6ab0e0dc01c4ef23ee4409e10687",
+          "sha256": "6afa6ce4639dc6294ac2ebb4a6b6056f5ae7f81c76f6cda6349f877cc7d738d4"
+        },
+        "downloads": -1,
+        "filename": "datasette_comments-0.1.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bb5f6ab0e0dc01c4ef23ee4409e10687",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 54397,
+        "upload_time": "2025-04-21T18:58:28",
+        "upload_time_iso_8601": "2025-04-21T18:58:28.491223Z",
+        "url": "https://files.pythonhosted.org/packages/6a/34/e1c6bee97ccd973909e45a57921d61e68780834f1cb78662cdf045f3241a/datasette_comments-0.1.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9f82b54fa8c9d2f59e49420a97c0f39da88585c0e7c25eee9974c5b42779cf93",
+          "md5": "ea6e13d790011103176299e493cc2a5a",
+          "sha256": "d0d06f04fe63358c912a134073290750854ef1cb9cbed1611239edc0fb43f8e1"
+        },
+        "downloads": -1,
+        "filename": "datasette_comments-0.1.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ea6e13d790011103176299e493cc2a5a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 48480,
+        "upload_time": "2025-04-21T18:58:29",
+        "upload_time_iso_8601": "2025-04-21T18:58:29.556417Z",
+        "url": "https://files.pythonhosted.org/packages/9f/82/b54fa8c9d2f59e49420a97c0f39da88585c0e7c25eee9974c5b42779cf93/datasette_comments-0.1.1a2.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
