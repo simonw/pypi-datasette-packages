@@ -4,10 +4,9 @@
     "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
-    "description": "# datasette-query-assistant\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-query-assistant.svg)](https://pypi.org/project/datasette-query-assistant/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-query-assistant?include_prereleases&label=changelog)](https://github.com/datasette/datasette-query-assistant/releases)\n[![Tests](https://github.com/datasette/datasette-query-assistant/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-query-assistant/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-query-assistant/blob/main/LICENSE)\n\nQuery databases and tables with AI assistance\n\n**Early alpha**.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-query-assistant\n```\n\n## Configuration\n\nThis plugin currently requires you to set the `ANTHROPIC_API_KEY` environment variable to a working [Anthropic API key](https://console.anthropic.com/account/keys).\n\n## Usage\n\nUsers with `execute-sql` permission will gain a database action menu item for \"Query this database with AI assistance\" which will let them ask a question and be redirected to SQL that will hopefully answer it.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-query-assistant\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\nTo re-generate the tests with refreshed examples from the Claude 3 API:\n```bash\npytest -x --record-mode=rewrite --inline-snapshot=fix\n```\n",
+    "description": "# datasette-query-assistant\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-query-assistant.svg)](https://pypi.org/project/datasette-query-assistant/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-query-assistant?include_prereleases&label=changelog)](https://github.com/datasette/datasette-query-assistant/releases)\n[![Tests](https://github.com/datasette/datasette-query-assistant/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-query-assistant/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-query-assistant/blob/main/LICENSE)\n\nQuery databases and tables with AI assistance\n\n**Early alpha**.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-query-assistant\n```\n\n## Configuration\n\nSet the model ID to be used by this plugin by adding this to your Datasette configuration:\n\n```yaml\nplugins:\n  datasette-query-assistant:\n    model: openai/gpt-4.1-mini\n    key_env_var: OPENAI_API_KEY\n```\nTo use the `openai/gpt-4.1-mini` model you'll need to install `llm-openai-plugin` in addition to `datasette-query-assistant`.\n\nIf the model needs an API key, set the `key_env_var` to the name of an environment variable and ensure that environment variable is correctly set.\n\nYou can use any model that is available via an [LLM plugin](https://llm.datasette.io/en/stable/plugins/directory.html)\n\n## Usage\n\nUsers with `execute-sql` permission will gain a database action menu item for \"Query this database with AI assistance\" which will let them ask a question and be redirected to a commented SQL query that will hopefully answer it.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-query-assistant\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\nTo re-generate the tests with refreshed examples from the API:\n```bash\npytest -x --record-mode=rewrite --inline-snapshot=fix\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -16,12 +15,16 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "License-File"
+    ],
     "home_page": null,
     "keywords": null,
-    "license": "Apache-2.0",
-    "license_expression": null,
-    "license_files": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
     "maintainer": null,
     "maintainer_email": null,
     "name": "datasette-query-assistant",
@@ -34,24 +37,28 @@
       "Homepage": "https://github.com/datasette/datasette-query-assistant",
       "Issues": "https://github.com/datasette/datasette-query-assistant/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a2/",
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a3/",
     "requires_dist": [
-      "datasette",
-      "anthropic",
+      "datasette>=1.0a0",
+      "llm>=0.22",
+      "markdown2",
+      "llm-openai-plugin; extra == \"test\"",
       "inline-snapshot; extra == \"test\"",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\"",
       "pytest-recording; extra == \"test\"",
       "sqlite-utils; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.9",
     "summary": "Query databases and tables with AI assistance",
-    "version": "0.1a2",
+    "version": "0.1a3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22794974,
+  "last_serial": 28830318,
   "releases": {
     "0.1a0": [
       {
@@ -184,48 +191,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ebbc3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6",
+          "md5": "7bb613ba957c723ff78605b6616d78fa",
+          "sha256": "43d444e512de5c8f1655ed4a196f74d9c0f62fd95444306bed0dd895d3d96b7b"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7bb613ba957c723ff78605b6616d78fa",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 11413,
+        "upload_time": "2025-05-01T19:19:25",
+        "upload_time_iso_8601": "2025-05-01T19:19:25.568356Z",
+        "url": "https://files.pythonhosted.org/packages/eb/bc/3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6/datasette_query_assistant-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "08bc380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec",
+          "md5": "b57977efb923aa208e605ad443203299",
+          "sha256": "d06786050fd539df7685bfe0ec227e16fd635ee70a57619cd8f553742401df99"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b57977efb923aa208e605ad443203299",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11307,
+        "upload_time": "2025-05-01T19:19:27",
+        "upload_time_iso_8601": "2025-05-01T19:19:27.059338Z",
+        "url": "https://files.pythonhosted.org/packages/08/bc/380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec/datasette_query_assistant-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "a43c0da9303793c8def306e9e34277161637957f1617f736488aac1c60fcdd1c",
-        "md5": "6f9462e0b85fd87d74595c6ece567e5d",
-        "sha256": "e9556cd6a649561caaf03464297bb1a5dbb9ec838e35083343609fe1b2325c89"
+        "blake2b_256": "ebbc3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6",
+        "md5": "7bb613ba957c723ff78605b6616d78fa",
+        "sha256": "43d444e512de5c8f1655ed4a196f74d9c0f62fd95444306bed0dd895d3d96b7b"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a2-py3-none-any.whl",
+      "filename": "datasette_query_assistant-0.1a3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "6f9462e0b85fd87d74595c6ece567e5d",
+      "md5_digest": "7bb613ba957c723ff78605b6616d78fa",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 9911,
-      "upload_time": "2024-04-16T20:54:32",
-      "upload_time_iso_8601": "2024-04-16T20:54:32.716225Z",
-      "url": "https://files.pythonhosted.org/packages/a4/3c/0da9303793c8def306e9e34277161637957f1617f736488aac1c60fcdd1c/datasette_query_assistant-0.1a2-py3-none-any.whl",
+      "requires_python": ">=3.9",
+      "size": 11413,
+      "upload_time": "2025-05-01T19:19:25",
+      "upload_time_iso_8601": "2025-05-01T19:19:25.568356Z",
+      "url": "https://files.pythonhosted.org/packages/eb/bc/3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6/datasette_query_assistant-0.1a3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "d268b34e3cabf3260c7da7d33bce79806ee333310562b9dc1718e7ce8a536325",
-        "md5": "81118c376cb3d7f284da73e88bf3ab7b",
-        "sha256": "0072d1c3e048443c48a8e0d9a1c33d71581530831c34f4a8c9d04f0da3a30808"
+        "blake2b_256": "08bc380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec",
+        "md5": "b57977efb923aa208e605ad443203299",
+        "sha256": "d06786050fd539df7685bfe0ec227e16fd635ee70a57619cd8f553742401df99"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a2.tar.gz",
+      "filename": "datasette_query_assistant-0.1a3.tar.gz",
       "has_sig": false,
-      "md5_digest": "81118c376cb3d7f284da73e88bf3ab7b",
+      "md5_digest": "b57977efb923aa208e605ad443203299",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 9894,
-      "upload_time": "2024-04-16T20:54:34",
-      "upload_time_iso_8601": "2024-04-16T20:54:34.794880Z",
-      "url": "https://files.pythonhosted.org/packages/d2/68/b34e3cabf3260c7da7d33bce79806ee333310562b9dc1718e7ce8a536325/datasette_query_assistant-0.1a2.tar.gz",
+      "requires_python": ">=3.9",
+      "size": 11307,
+      "upload_time": "2025-05-01T19:19:27",
+      "upload_time_iso_8601": "2025-05-01T19:19:27.059338Z",
+      "url": "https://files.pythonhosted.org/packages/08/bc/380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec/datasette_query_assistant-0.1a3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
