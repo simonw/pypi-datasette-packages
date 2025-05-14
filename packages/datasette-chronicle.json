@@ -1,29 +1,32 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
-    "description": "# datasette-chronicle\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-chronicle.svg)](https://pypi.org/project/datasette-chronicle/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-chronicle?include_prereleases&label=changelog)](https://github.com/datasette/datasette-chronicle/releases)\n[![Tests](https://github.com/datasette/datasette-chronicle/workflows/Test/badge.svg)](https://github.com/datasette/datasette-chronicle/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-chronicle/blob/main/LICENSE)\n\nUse [sqlite-chronicle](https://github.com/simonw/sqlite-chronicle) with tables in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-chronicle\n```\n## Usage\n\nOnce installed, users with the `enable-chronicle` and `disable-chronicle` permissions (granted to the `root` user by default) will have access to new table action menu options for enabling and disabling chronicle tracking for a table.\n\nTables that have had chronicle tracking enabled will now support a new `?_since=X` query string parameter on the table page, which will filter for just rows that have been inserted or updated since the specified chronicle version.\n\nSee the [sqlite-chronicle documentation](https://github.com/simonw/sqlite-chronicle/blob/main/README.md) for more details on what this is and how it works.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-chronicle\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-chronicle\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-chronicle.svg)](https://pypi.org/project/datasette-chronicle/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-chronicle?include_prereleases&label=changelog)](https://github.com/datasette/datasette-chronicle/releases)\n[![Tests](https://github.com/datasette/datasette-chronicle/workflows/Test/badge.svg)](https://github.com/datasette/datasette-chronicle/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-chronicle/blob/main/LICENSE)\n\nUse [sqlite-chronicle](https://github.com/simonw/sqlite-chronicle) with tables in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-chronicle\n```\n## Usage\n\nOnce installed, users with the `enable-chronicle` and `disable-chronicle` permissions (granted to the `root` user by default) will have access to new table action menu options for enabling and disabling row version tracking for a table.\n\nTables that have had row version tracking enabled will now support a new `?_since=X` query string parameter on the table page, which will filter for just rows that have been inserted or updated since the specified chronicle version.\n\nSee the [sqlite-chronicle documentation](https://github.com/simonw/sqlite-chronicle/blob/main/README.md) for more details on what this is and how it works.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-chronicle\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
-    "home_page": "",
-    "keywords": "",
-    "license": "Apache-2.0",
-    "license_expression": null,
-    "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-chronicle",
     "package_url": "https://pypi.org/project/datasette-chronicle/",
     "platform": null,
@@ -34,22 +37,24 @@
       "Homepage": "https://github.com/datasette/datasette-chronicle",
       "Issues": "https://github.com/datasette/datasette-chronicle/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-chronicle/0.2.1/",
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-chronicle/0.3/",
     "requires_dist": [
       "datasette",
-      "sqlite-chronicle >=0.2.1",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'"
+      "sqlite-chronicle>=0.4",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "sqlite-utils; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.9",
     "summary": "Use sqlite-chronicle with tables in Datasette",
-    "version": "0.2.1",
+    "version": "0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 20968346,
+  "last_serial": 29029536,
   "releases": {
     "0.1": [
       {
@@ -182,48 +187,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "25f38a11e18d8254872ca67fb21ea5fa0b6cd1d00276941c4068ae643d79f537",
+          "md5": "33adcdd120a66a4126d88cc2af200e91",
+          "sha256": "82a2c3209753c5502259d2dc54959e48465f75ed21b877ffc94ad38d61e8fb26"
+        },
+        "downloads": -1,
+        "filename": "datasette_chronicle-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "33adcdd120a66a4126d88cc2af200e91",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 9482,
+        "upload_time": "2025-05-13T18:22:40",
+        "upload_time_iso_8601": "2025-05-13T18:22:40.961927Z",
+        "url": "https://files.pythonhosted.org/packages/25/f3/8a11e18d8254872ca67fb21ea5fa0b6cd1d00276941c4068ae643d79f537/datasette_chronicle-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ff123147db81397233101a33eb05d4e3b9edcf379be3e32fe23d40ac3f7192b4",
+          "md5": "dc466e1435a30cb7ed88b47824375ece",
+          "sha256": "faea74ec494fd6cf5b3db770525954b4b5f09fd1359318ff40e7a1f501ced04e"
+        },
+        "downloads": -1,
+        "filename": "datasette_chronicle-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dc466e1435a30cb7ed88b47824375ece",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 9677,
+        "upload_time": "2025-05-13T18:22:42",
+        "upload_time_iso_8601": "2025-05-13T18:22:42.444084Z",
+        "url": "https://files.pythonhosted.org/packages/ff/12/3147db81397233101a33eb05d4e3b9edcf379be3e32fe23d40ac3f7192b4/datasette_chronicle-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "3eb418bcf551992358173ff3ed341d75943fd40033accf8812b1a33139fb14c4",
-        "md5": "953bf4629521130eeb4337a9194183db",
-        "sha256": "1da9f2819e4726fcd692f5bbd7464c962730b20811675e96fa98687260cda7cb"
+        "blake2b_256": "25f38a11e18d8254872ca67fb21ea5fa0b6cd1d00276941c4068ae643d79f537",
+        "md5": "33adcdd120a66a4126d88cc2af200e91",
+        "sha256": "82a2c3209753c5502259d2dc54959e48465f75ed21b877ffc94ad38d61e8fb26"
       },
       "downloads": -1,
-      "filename": "datasette_chronicle-0.2.1-py3-none-any.whl",
+      "filename": "datasette_chronicle-0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "953bf4629521130eeb4337a9194183db",
+      "md5_digest": "33adcdd120a66a4126d88cc2af200e91",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 9227,
-      "upload_time": "2023-12-08T06:12:57",
-      "upload_time_iso_8601": "2023-12-08T06:12:57.977469Z",
-      "url": "https://files.pythonhosted.org/packages/3e/b4/18bcf551992358173ff3ed341d75943fd40033accf8812b1a33139fb14c4/datasette_chronicle-0.2.1-py3-none-any.whl",
+      "requires_python": ">=3.9",
+      "size": 9482,
+      "upload_time": "2025-05-13T18:22:40",
+      "upload_time_iso_8601": "2025-05-13T18:22:40.961927Z",
+      "url": "https://files.pythonhosted.org/packages/25/f3/8a11e18d8254872ca67fb21ea5fa0b6cd1d00276941c4068ae643d79f537/datasette_chronicle-0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "22b3e74fd0769ee59625de128fbb4f54aa69c09d71f54786919d8812d0dc4c53",
-        "md5": "0c5174ab29ae011eae877b8c3fad293c",
-        "sha256": "3c850e7349400741c1074de384ce8f7f936727a9f1fa226a4b4e4f0fb83de0fa"
+        "blake2b_256": "ff123147db81397233101a33eb05d4e3b9edcf379be3e32fe23d40ac3f7192b4",
+        "md5": "dc466e1435a30cb7ed88b47824375ece",
+        "sha256": "faea74ec494fd6cf5b3db770525954b4b5f09fd1359318ff40e7a1f501ced04e"
       },
       "downloads": -1,
-      "filename": "datasette-chronicle-0.2.1.tar.gz",
+      "filename": "datasette_chronicle-0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "0c5174ab29ae011eae877b8c3fad293c",
+      "md5_digest": "dc466e1435a30cb7ed88b47824375ece",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 8892,
-      "upload_time": "2023-12-08T06:12:59",
-      "upload_time_iso_8601": "2023-12-08T06:12:59.607848Z",
-      "url": "https://files.pythonhosted.org/packages/22/b3/e74fd0769ee59625de128fbb4f54aa69c09d71f54786919d8812d0dc4c53/datasette-chronicle-0.2.1.tar.gz",
+      "requires_python": ">=3.9",
+      "size": 9677,
+      "upload_time": "2025-05-13T18:22:42",
+      "upload_time_iso_8601": "2025-05-13T18:22:42.444084Z",
+      "url": "https://files.pythonhosted.org/packages/ff/12/3147db81397233101a33eb05d4e3b9edcf379be3e32fe23d40ac3f7192b4/datasette_chronicle-0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
