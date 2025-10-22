@@ -47,7 +47,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19525109,
+  "last_serial": 31936930,
   "releases": {
     "0.1": [
       {
@@ -133,6 +133,50 @@
         "upload_time": "2023-08-30T22:50:18",
         "upload_time_iso_8601": "2023-08-30T22:50:18.528747Z",
         "url": "https://files.pythonhosted.org/packages/62/0d/7316e1bc5926788d2126c8dd0fc9b242b2873aa152591d39460548c4673e/datasette-visible-internal-db-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "eaaa6998c9b9706908423b55e81e95b23edc6a25b5e807b073423441802024f7",
+          "md5": "6930cf68a3ae705aacf8492622b99e84",
+          "sha256": "4b1dea0ee46e69cc24c613f8e423ad51df3f6b66d5829f66cd136ec4ba1c8690"
+        },
+        "downloads": -1,
+        "filename": "datasette_visible_internal_db-0.1.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6930cf68a3ae705aacf8492622b99e84",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2604,
+        "upload_time": "2025-10-21T21:49:37",
+        "upload_time_iso_8601": "2025-10-21T21:49:37.804732Z",
+        "url": "https://files.pythonhosted.org/packages/ea/aa/6998c9b9706908423b55e81e95b23edc6a25b5e807b073423441802024f7/datasette_visible_internal_db-0.1.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "4a4beccd0d24608c3742f2be5a53c9b62382832e579fd37f1069e12891ccc81c",
+          "md5": "4b7d52ee5ea4811823d9bb8fb055b398",
+          "sha256": "c6989930c0267c8dffdb50de7cf15cb1396771954aa441238ea4c78a23e31e8a"
+        },
+        "downloads": -1,
+        "filename": "datasette_visible_internal_db-0.1.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4b7d52ee5ea4811823d9bb8fb055b398",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2354,
+        "upload_time": "2025-10-21T21:49:38",
+        "upload_time_iso_8601": "2025-10-21T21:49:38.509988Z",
+        "url": "https://files.pythonhosted.org/packages/4a/4b/eccd0d24608c3742f2be5a53c9b62382832e579fd37f1069e12891ccc81c/datasette_visible_internal_db-0.1.1a1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

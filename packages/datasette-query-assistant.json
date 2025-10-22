@@ -40,9 +40,9 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a3/",
+    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a4/",
     "requires_dist": [
-      "datasette>=1.0a0",
+      "datasette==1.0a19",
       "llm>=0.22",
       "markdown2",
       "llm-openai-plugin; extra == \"test\"",
@@ -54,11 +54,11 @@
     ],
     "requires_python": ">=3.9",
     "summary": "Query databases and tables with AI assistance",
-    "version": "0.1a3",
+    "version": "0.1a4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 28830318,
+  "last_serial": 31935863,
   "releases": {
     "0.1a0": [
       {
@@ -235,48 +235,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9236d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20",
+          "md5": "058e7879509b0c76e53d63903d5259d5",
+          "sha256": "42742ad3e5755f3d374e5e00133cdff00d5a663685dcb8d5eb312c98ee6021c1"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "058e7879509b0c76e53d63903d5259d5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 11415,
+        "upload_time": "2025-10-21T20:46:12",
+        "upload_time_iso_8601": "2025-10-21T20:46:12.872938Z",
+        "url": "https://files.pythonhosted.org/packages/92/36/d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20/datasette_query_assistant-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a8115f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b",
+          "md5": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
+          "sha256": "415e31df990ccdd7accc7908ea0b6fbfd87face415a1235c9917550c4f197029"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11285,
+        "upload_time": "2025-10-21T20:46:14",
+        "upload_time_iso_8601": "2025-10-21T20:46:14.442452Z",
+        "url": "https://files.pythonhosted.org/packages/a8/11/5f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b/datasette_query_assistant-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "ebbc3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6",
-        "md5": "7bb613ba957c723ff78605b6616d78fa",
-        "sha256": "43d444e512de5c8f1655ed4a196f74d9c0f62fd95444306bed0dd895d3d96b7b"
+        "blake2b_256": "9236d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20",
+        "md5": "058e7879509b0c76e53d63903d5259d5",
+        "sha256": "42742ad3e5755f3d374e5e00133cdff00d5a663685dcb8d5eb312c98ee6021c1"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a3-py3-none-any.whl",
+      "filename": "datasette_query_assistant-0.1a4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "7bb613ba957c723ff78605b6616d78fa",
+      "md5_digest": "058e7879509b0c76e53d63903d5259d5",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.9",
-      "size": 11413,
-      "upload_time": "2025-05-01T19:19:25",
-      "upload_time_iso_8601": "2025-05-01T19:19:25.568356Z",
-      "url": "https://files.pythonhosted.org/packages/eb/bc/3bfd6e32bcc33a84c6ea8ba2255a7d01819e7b822cd5314f99e11fd8bba6/datasette_query_assistant-0.1a3-py3-none-any.whl",
+      "size": 11415,
+      "upload_time": "2025-10-21T20:46:12",
+      "upload_time_iso_8601": "2025-10-21T20:46:12.872938Z",
+      "url": "https://files.pythonhosted.org/packages/92/36/d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20/datasette_query_assistant-0.1a4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "08bc380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec",
-        "md5": "b57977efb923aa208e605ad443203299",
-        "sha256": "d06786050fd539df7685bfe0ec227e16fd635ee70a57619cd8f553742401df99"
+        "blake2b_256": "a8115f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b",
+        "md5": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
+        "sha256": "415e31df990ccdd7accc7908ea0b6fbfd87face415a1235c9917550c4f197029"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a3.tar.gz",
+      "filename": "datasette_query_assistant-0.1a4.tar.gz",
       "has_sig": false,
-      "md5_digest": "b57977efb923aa208e605ad443203299",
+      "md5_digest": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.9",
-      "size": 11307,
-      "upload_time": "2025-05-01T19:19:27",
-      "upload_time_iso_8601": "2025-05-01T19:19:27.059338Z",
-      "url": "https://files.pythonhosted.org/packages/08/bc/380f4d4bc097d194ba2dc7fdd0ce04388712a0f8ea84d890001f0ac324ec/datasette_query_assistant-0.1a3.tar.gz",
+      "size": 11285,
+      "upload_time": "2025-10-21T20:46:14",
+      "upload_time_iso_8601": "2025-10-21T20:46:14.442452Z",
+      "url": "https://files.pythonhosted.org/packages/a8/11/5f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b/datasette_query_assistant-0.1a4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

@@ -16,12 +16,16 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "License-File"
+    ],
     "home_page": null,
     "keywords": null,
     "license": "Apache-2.0",
     "license_expression": null,
-    "license_files": null,
+    "license_files": [
+      "LICENSE"
+    ],
     "maintainer": null,
     "maintainer_email": null,
     "name": "datasette-import",
@@ -37,19 +41,19 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-import/0.1a5/",
+    "release_url": "https://pypi.org/project/datasette-import/0.1a6/",
     "requires_dist": [
-      "datasette>=1.0a13",
+      "datasette==1.0a19",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\""
     ],
     "requires_python": ">=3.8",
     "summary": "Tools for importing data into Datasette",
-    "version": "0.1a5",
+    "version": "0.1a6",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24868820,
+  "last_serial": 31935921,
   "releases": {
     "0.1a4": [
       {
@@ -138,48 +142,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a570436d38557c86ef0db486bd80a128ed5e61fa6ef802b5836798a63e0ff999",
+          "md5": "0c9ba074e0fcf7b81dfd4927f84a2e2f",
+          "sha256": "ad8dbe8ad3d67c30bdd2fc76de0cbdb9adb5555b314ec8eb225405f4f6d93c5b"
+        },
+        "downloads": -1,
+        "filename": "datasette_import-0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0c9ba074e0fcf7b81dfd4927f84a2e2f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 18380,
+        "upload_time": "2025-10-21T20:47:38",
+        "upload_time_iso_8601": "2025-10-21T20:47:38.497320Z",
+        "url": "https://files.pythonhosted.org/packages/a5/70/436d38557c86ef0db486bd80a128ed5e61fa6ef802b5836798a63e0ff999/datasette_import-0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cc54f1c52254a9ec10ad3842dbee8e792f62860961d46e3f6ad4fc79d08565f7",
+          "md5": "0e26b689f18c205f607f42b63871e565",
+          "sha256": "0654b2311e6859bd700f6ad1d8fa5413985e9450edbefc671e91216091247dd8"
+        },
+        "downloads": -1,
+        "filename": "datasette_import-0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0e26b689f18c205f607f42b63871e565",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 18696,
+        "upload_time": "2025-10-21T20:47:40",
+        "upload_time_iso_8601": "2025-10-21T20:47:40.932456Z",
+        "url": "https://files.pythonhosted.org/packages/cc/54/f1c52254a9ec10ad3842dbee8e792f62860961d46e3f6ad4fc79d08565f7/datasette_import-0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "dd6301a04dfbf157ddb679ff4843f83e2dfefd3fc89aa8d449223930b2978915",
-        "md5": "b3b661c49042842c54ef2c730e6c7633",
-        "sha256": "245d81048705cbb340ae05c4396649f6cd4a1ed5009a20943c52bb875948fe2f"
+        "blake2b_256": "a570436d38557c86ef0db486bd80a128ed5e61fa6ef802b5836798a63e0ff999",
+        "md5": "0c9ba074e0fcf7b81dfd4927f84a2e2f",
+        "sha256": "ad8dbe8ad3d67c30bdd2fc76de0cbdb9adb5555b314ec8eb225405f4f6d93c5b"
       },
       "downloads": -1,
-      "filename": "datasette_import-0.1a5-py3-none-any.whl",
+      "filename": "datasette_import-0.1a6-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "b3b661c49042842c54ef2c730e6c7633",
+      "md5_digest": "0c9ba074e0fcf7b81dfd4927f84a2e2f",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.8",
-      "size": 18348,
-      "upload_time": "2024-09-04T05:39:22",
-      "upload_time_iso_8601": "2024-09-04T05:39:22.511081Z",
-      "url": "https://files.pythonhosted.org/packages/dd/63/01a04dfbf157ddb679ff4843f83e2dfefd3fc89aa8d449223930b2978915/datasette_import-0.1a5-py3-none-any.whl",
+      "size": 18380,
+      "upload_time": "2025-10-21T20:47:38",
+      "upload_time_iso_8601": "2025-10-21T20:47:38.497320Z",
+      "url": "https://files.pythonhosted.org/packages/a5/70/436d38557c86ef0db486bd80a128ed5e61fa6ef802b5836798a63e0ff999/datasette_import-0.1a6-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "056a75b98652bd54dc55daff7f2ee456d1a8cfc6717e7c707da6dfe27561b205",
-        "md5": "2b4036c4f8d274e8f2e0b605d01d9ea6",
-        "sha256": "0a28eb43f26108a18cf82d904119d3704672610ebf07b5eaa766d73a6d71f7df"
+        "blake2b_256": "cc54f1c52254a9ec10ad3842dbee8e792f62860961d46e3f6ad4fc79d08565f7",
+        "md5": "0e26b689f18c205f607f42b63871e565",
+        "sha256": "0654b2311e6859bd700f6ad1d8fa5413985e9450edbefc671e91216091247dd8"
       },
       "downloads": -1,
-      "filename": "datasette_import-0.1a5.tar.gz",
+      "filename": "datasette_import-0.1a6.tar.gz",
       "has_sig": false,
-      "md5_digest": "2b4036c4f8d274e8f2e0b605d01d9ea6",
+      "md5_digest": "0e26b689f18c205f607f42b63871e565",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.8",
-      "size": 18674,
-      "upload_time": "2024-09-04T05:39:23",
-      "upload_time_iso_8601": "2024-09-04T05:39:23.525285Z",
-      "url": "https://files.pythonhosted.org/packages/05/6a/75b98652bd54dc55daff7f2ee456d1a8cfc6717e7c707da6dfe27561b205/datasette_import-0.1a5.tar.gz",
+      "size": 18696,
+      "upload_time": "2025-10-21T20:47:40",
+      "upload_time_iso_8601": "2025-10-21T20:47:40.932456Z",
+      "url": "https://files.pythonhosted.org/packages/cc/54/f1c52254a9ec10ad3842dbee8e792f62860961d46e3f6ad4fc79d08565f7/datasette_import-0.1a6.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
