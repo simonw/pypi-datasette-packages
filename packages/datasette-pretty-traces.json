@@ -4,8 +4,7 @@
     "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
     "description": "# datasette-pretty-traces\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-pretty-traces.svg)](https://pypi.org/project/datasette-pretty-traces/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-pretty-traces?include_prereleases&label=changelog)](https://github.com/simonw/datasette-pretty-traces/releases)\n[![Tests](https://github.com/simonw/datasette-pretty-traces/workflows/Test/badge.svg)](https://github.com/simonw/datasette-pretty-traces/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-pretty-traces/blob/main/LICENSE)\n\nPrettier formatting for `?_trace=1` traces\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-pretty-traces\n\n## Usage\n\nOnce installed, run Datasette using `--setting trace_debug 1`:\n\n    datasette fixtures.db --setting trace_debug 1\n\nThen navigate to any page and add `?_trace=` to the URL:\n\n    http://localhost:8001/?_trace=1\n\nThe plugin will scroll you down the page to the visualized trace information.\n\n## Demo\n\nYou can try out the demo here:\n\n- [/?_trace=1](https://latest-with-plugins.datasette.io/?_trace=1) tracing the homepage\n- [/github/commits?_trace=1](https://latest-with-plugins.datasette.io/github/commits?_trace=1) tracing a table page\n\n## Screenshot\n\n![Screenshot showing the visualization produced by the plugin](https://user-images.githubusercontent.com/9599/145883732-a53accdd-5feb-4629-94cd-f73407c7943d.png)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-pretty-traces\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
@@ -16,12 +15,16 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-pretty-traces",
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
     "keywords": null,
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
-    "license_files": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
     "maintainer": null,
     "maintainer_email": null,
     "name": "datasette-pretty-traces",
@@ -37,19 +40,19 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-pretty-traces/0.5/",
+    "release_url": "https://pypi.org/project/datasette-pretty-traces/0.6/",
     "requires_dist": [
       "datasette",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\""
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.10",
     "summary": "Prettier formatting for ?_trace=1 traces",
-    "version": "0.5",
+    "version": "0.6",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24676537,
+  "last_serial": 31998262,
   "releases": {
     "0.1": [
       {
@@ -358,48 +361,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "90330c4b6a7a1ca018c85cd15ce0518951b939bb53c1aa2a5759702ac4ab2552",
+          "md5": "262435b5e4e4e9523c1f9451dadd15e1",
+          "sha256": "f023067a0d3b717e29bc88794110a679a8f582559b410d1ffdfdee7123963441"
+        },
+        "downloads": -1,
+        "filename": "datasette_pretty_traces-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "262435b5e4e4e9523c1f9451dadd15e1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8748,
+        "upload_time": "2025-10-24T17:25:32",
+        "upload_time_iso_8601": "2025-10-24T17:25:32.725873Z",
+        "url": "https://files.pythonhosted.org/packages/90/33/0c4b6a7a1ca018c85cd15ce0518951b939bb53c1aa2a5759702ac4ab2552/datasette_pretty_traces-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e9003ffab6a15d694494349188fe45a4756005453f4c3a6f5f50373e20fd4a23",
+          "md5": "59b21096eb0c97796d06abb5b6a627b6",
+          "sha256": "a7d286c081e859f02937021c7393417341e5b0879410858150b429e1a056fe04"
+        },
+        "downloads": -1,
+        "filename": "datasette_pretty_traces-0.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "59b21096eb0c97796d06abb5b6a627b6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8592,
+        "upload_time": "2025-10-24T17:25:33",
+        "upload_time_iso_8601": "2025-10-24T17:25:33.663862Z",
+        "url": "https://files.pythonhosted.org/packages/e9/00/3ffab6a15d694494349188fe45a4756005453f4c3a6f5f50373e20fd4a23/datasette_pretty_traces-0.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "e039849c9ad0b77f286bfeb16508ddc080f6d4bd87d740a499a0c4c5a36c13df",
-        "md5": "47cad22fe7309f3697853c6fdae49d2a",
-        "sha256": "f1783af75ce14618467f9c2516802aa2112c6c10b80a3e1ac1907efc8de5b0cf"
+        "blake2b_256": "90330c4b6a7a1ca018c85cd15ce0518951b939bb53c1aa2a5759702ac4ab2552",
+        "md5": "262435b5e4e4e9523c1f9451dadd15e1",
+        "sha256": "f023067a0d3b717e29bc88794110a679a8f582559b410d1ffdfdee7123963441"
       },
       "downloads": -1,
-      "filename": "datasette_pretty_traces-0.5-py3-none-any.whl",
+      "filename": "datasette_pretty_traces-0.6-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "47cad22fe7309f3697853c6fdae49d2a",
+      "md5_digest": "262435b5e4e4e9523c1f9451dadd15e1",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 8566,
-      "upload_time": "2024-08-21T19:32:21",
-      "upload_time_iso_8601": "2024-08-21T19:32:21.933375Z",
-      "url": "https://files.pythonhosted.org/packages/e0/39/849c9ad0b77f286bfeb16508ddc080f6d4bd87d740a499a0c4c5a36c13df/datasette_pretty_traces-0.5-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 8748,
+      "upload_time": "2025-10-24T17:25:32",
+      "upload_time_iso_8601": "2025-10-24T17:25:32.725873Z",
+      "url": "https://files.pythonhosted.org/packages/90/33/0c4b6a7a1ca018c85cd15ce0518951b939bb53c1aa2a5759702ac4ab2552/datasette_pretty_traces-0.6-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "a2a10c976a00538a34bbbcef816d7e0b5e14690d126a818d9da6107857d9c0ec",
-        "md5": "5291dc6b1d07b528ee5c6100edbad062",
-        "sha256": "202ed64476fbc341d999b850e0cb3bce54768be3180aa1f2e11d8ae91d5450d8"
+        "blake2b_256": "e9003ffab6a15d694494349188fe45a4756005453f4c3a6f5f50373e20fd4a23",
+        "md5": "59b21096eb0c97796d06abb5b6a627b6",
+        "sha256": "a7d286c081e859f02937021c7393417341e5b0879410858150b429e1a056fe04"
       },
       "downloads": -1,
-      "filename": "datasette_pretty_traces-0.5.tar.gz",
+      "filename": "datasette_pretty_traces-0.6.tar.gz",
       "has_sig": false,
-      "md5_digest": "5291dc6b1d07b528ee5c6100edbad062",
+      "md5_digest": "59b21096eb0c97796d06abb5b6a627b6",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 8504,
-      "upload_time": "2024-08-21T19:32:23",
-      "upload_time_iso_8601": "2024-08-21T19:32:23.270263Z",
-      "url": "https://files.pythonhosted.org/packages/a2/a1/0c976a00538a34bbbcef816d7e0b5e14690d126a818d9da6107857d9c0ec/datasette_pretty_traces-0.5.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 8592,
+      "upload_time": "2025-10-24T17:25:33",
+      "upload_time_iso_8601": "2025-10-24T17:25:33.663862Z",
+      "url": "https://files.pythonhosted.org/packages/e9/00/3ffab6a15d694494349188fe45a4756005453f4c3a6f5f50373e20fd4a23/datasette_pretty_traces-0.6.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
