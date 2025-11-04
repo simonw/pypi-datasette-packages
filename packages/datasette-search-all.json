@@ -50,7 +50,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24903447,
+  "last_serial": 32182398,
   "releases": {
     "0.1": [
       {
@@ -471,6 +471,50 @@
         "upload_time": "2024-09-06T03:11:56",
         "upload_time_iso_8601": "2024-09-06T03:11:56.932221Z",
         "url": "https://files.pythonhosted.org/packages/33/3d/2111599e89583f9415b8e1e89f4b57f2dd41833f95ab023ea54157c9e636/datasette_search_all-1.1.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.1.5a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "dfe5a86142d296397b52c62fb57fb0fd72422b2fc4949d3482ef3dccbcfd8728",
+          "md5": "712375998635dcd47cffe6d7b5149119",
+          "sha256": "1ef1e8f9fa62eb935f9b6e4b1f58ccee172e83a9d41b40ba2dff69bb4a2e5c52"
+        },
+        "downloads": -1,
+        "filename": "datasette_search_all-1.1.5a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "712375998635dcd47cffe6d7b5149119",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10757,
+        "upload_time": "2025-11-03T23:45:54",
+        "upload_time_iso_8601": "2025-11-03T23:45:54.366005Z",
+        "url": "https://files.pythonhosted.org/packages/df/e5/a86142d296397b52c62fb57fb0fd72422b2fc4949d3482ef3dccbcfd8728/datasette_search_all-1.1.5a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f83f44395f6fe52fe0e0d3d8bcebcd05985fbcc13d28099eb2e1eb4271f7878a",
+          "md5": "a895f158780535b8abe29a918c549f59",
+          "sha256": "be10a2a2f96e9a58297d48d7cb029ad63561a8fed673911f90a6137ad1ee79ca"
+        },
+        "downloads": -1,
+        "filename": "datasette_search_all-1.1.5a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a895f158780535b8abe29a918c549f59",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 10956,
+        "upload_time": "2025-11-03T23:45:56",
+        "upload_time_iso_8601": "2025-11-03T23:45:56.585866Z",
+        "url": "https://files.pythonhosted.org/packages/f8/3f/44395f6fe52fe0e0d3d8bcebcd05985fbcc13d28099eb2e1eb4271f7878a/datasette_search_all-1.1.5a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

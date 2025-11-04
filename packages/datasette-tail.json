@@ -4,8 +4,7 @@
     "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
     "description": "# datasette-tail\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-tail.svg)](https://pypi.org/project/datasette-tail/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-tail?include_prereleases&label=changelog)](https://github.com/datasette/datasette-tail/releases)\n[![Tests](https://github.com/datasette/datasette-tail/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-tail/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-tail/blob/main/LICENSE)\n\nTools for tailing your database\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-tail\n```\n## Usage\n\nThis plugin provides a simple debugging tool. Visit `/dbname/-/tail` to see a JSON representation of changes to your database. The first time you visit that page it will represent everything in the specified database. Refreshing the page will show any changes since the last time you loaded that page.\n\nUse `/dbname/-/tail.json` to get the raw JSON.\n\nThe plugin obeys the `view-database` permission.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-tail\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
@@ -21,8 +20,8 @@
     ],
     "home_page": null,
     "keywords": null,
-    "license": "Apache-2.0",
-    "license_expression": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": [
       "LICENSE"
     ],
@@ -41,20 +40,20 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-tail/0.1a1/",
+    "release_url": "https://pypi.org/project/datasette-tail/0.1a2/",
     "requires_dist": [
-      "datasette==1.0a19",
+      "datasette>=1.0a20",
       "dictdiffer",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.10",
     "summary": "Tools for tailing your database",
-    "version": "0.1a1",
+    "version": "0.1a2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 31928707,
+  "last_serial": 32183598,
   "releases": {
     "0.1a0": [
       {
@@ -143,48 +142,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ce5944cb94dd6b064225e133d80d2dea60c612eb88ff71e9dfb2eff5e0a8a07a",
+          "md5": "3f544e8521a08af30157f3cc719988dd",
+          "sha256": "f65ed0a689581121dac53dfe37e0f03336c04e1d7cc8054fc070340316f6061a"
+        },
+        "downloads": -1,
+        "filename": "datasette_tail-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3f544e8521a08af30157f3cc719988dd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 7158,
+        "upload_time": "2025-11-04T01:34:53",
+        "upload_time_iso_8601": "2025-11-04T01:34:53.648636Z",
+        "url": "https://files.pythonhosted.org/packages/ce/59/44cb94dd6b064225e133d80d2dea60c612eb88ff71e9dfb2eff5e0a8a07a/datasette_tail-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cfecd0f8698713fa7db53a6bd60941504a0b2b7f4346a2619e720c5564fc4500",
+          "md5": "2f5c6956bc8f0a980c468b44c6a23415",
+          "sha256": "40e674c7e969abba9d6f4c85204ccf167267ea09d1166ec33623a138e7502f26"
+        },
+        "downloads": -1,
+        "filename": "datasette_tail-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2f5c6956bc8f0a980c468b44c6a23415",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 7287,
+        "upload_time": "2025-11-04T01:34:54",
+        "upload_time_iso_8601": "2025-11-04T01:34:54.617739Z",
+        "url": "https://files.pythonhosted.org/packages/cf/ec/d0f8698713fa7db53a6bd60941504a0b2b7f4346a2619e720c5564fc4500/datasette_tail-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "06e8517f7da62f6b209d1f005be3909e3c3c0a944032195229defab8cc42e8d2",
-        "md5": "d3e820116c8d212e8377e704d537df1d",
-        "sha256": "95e62571c8c8c3460edbb5425f63c1f6d099875f09876fa3667af9a705ecefd7"
+        "blake2b_256": "ce5944cb94dd6b064225e133d80d2dea60c612eb88ff71e9dfb2eff5e0a8a07a",
+        "md5": "3f544e8521a08af30157f3cc719988dd",
+        "sha256": "f65ed0a689581121dac53dfe37e0f03336c04e1d7cc8054fc070340316f6061a"
       },
       "downloads": -1,
-      "filename": "datasette_tail-0.1a1-py3-none-any.whl",
+      "filename": "datasette_tail-0.1a2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "d3e820116c8d212e8377e704d537df1d",
+      "md5_digest": "3f544e8521a08af30157f3cc719988dd",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 7159,
-      "upload_time": "2025-10-21T15:13:34",
-      "upload_time_iso_8601": "2025-10-21T15:13:34.403551Z",
-      "url": "https://files.pythonhosted.org/packages/06/e8/517f7da62f6b209d1f005be3909e3c3c0a944032195229defab8cc42e8d2/datasette_tail-0.1a1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 7158,
+      "upload_time": "2025-11-04T01:34:53",
+      "upload_time_iso_8601": "2025-11-04T01:34:53.648636Z",
+      "url": "https://files.pythonhosted.org/packages/ce/59/44cb94dd6b064225e133d80d2dea60c612eb88ff71e9dfb2eff5e0a8a07a/datasette_tail-0.1a2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "03bd72db2235996f8a285a27020c3c8c61ceda4391aa25980f38e730357576d7",
-        "md5": "4cded723384f081a3eb74e07316e81d5",
-        "sha256": "00181b44aab3f5d47daa2b53cd886fe2980540f83f978573e45da2197087d549"
+        "blake2b_256": "cfecd0f8698713fa7db53a6bd60941504a0b2b7f4346a2619e720c5564fc4500",
+        "md5": "2f5c6956bc8f0a980c468b44c6a23415",
+        "sha256": "40e674c7e969abba9d6f4c85204ccf167267ea09d1166ec33623a138e7502f26"
       },
       "downloads": -1,
-      "filename": "datasette_tail-0.1a1.tar.gz",
+      "filename": "datasette_tail-0.1a2.tar.gz",
       "has_sig": false,
-      "md5_digest": "4cded723384f081a3eb74e07316e81d5",
+      "md5_digest": "2f5c6956bc8f0a980c468b44c6a23415",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 7299,
-      "upload_time": "2025-10-21T15:13:36",
-      "upload_time_iso_8601": "2025-10-21T15:13:36.222603Z",
-      "url": "https://files.pythonhosted.org/packages/03/bd/72db2235996f8a285a27020c3c8c61ceda4391aa25980f38e730357576d7/datasette_tail-0.1a1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 7287,
+      "upload_time": "2025-11-04T01:34:54",
+      "upload_time_iso_8601": "2025-11-04T01:34:54.617739Z",
+      "url": "https://files.pythonhosted.org/packages/cf/ec/d0f8698713fa7db53a6bd60941504a0b2b7f4346a2619e720c5564fc4500/datasette_tail-0.1a2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
