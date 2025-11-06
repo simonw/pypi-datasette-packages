@@ -9,11 +9,11 @@
       "Intended Audience :: Developers",
       "Intended Audience :: End Users/Desktop",
       "Intended Audience :: Science/Research",
-      "License :: OSI Approved :: Apache Software License",
       "Programming Language :: Python :: 3.10",
       "Programming Language :: Python :: 3.11",
       "Programming Language :: Python :: 3.12",
       "Programming Language :: Python :: 3.13",
+      "Programming Language :: Python :: 3.14",
       "Programming Language :: Python :: 3.9",
       "Topic :: Database"
     ],
@@ -26,12 +26,27 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "Author",
+      "Classifier",
+      "Description",
+      "Description-Content-Type",
+      "Home-Page",
+      "License",
+      "License-File",
+      "Project-Url",
+      "Provides-Extra",
+      "Requires-Dist",
+      "Requires-Python",
+      "Summary"
+    ],
     "home_page": "https://datasette.io/",
     "keywords": null,
     "license": "Apache License, Version 2.0",
     "license_expression": null,
-    "license_files": null,
+    "license_files": [
+      "LICENSE"
+    ],
     "maintainer": null,
     "maintainer_email": null,
     "name": "datasette",
@@ -52,7 +67,7 @@
       "test",
       "rich"
     ],
-    "release_url": "https://pypi.org/project/datasette/0.65.1/",
+    "release_url": "https://pypi.org/project/datasette/0.65.2/",
     "requires_dist": [
       "asgiref>=3.2.10",
       "click>=7.1.1",
@@ -90,13 +105,13 @@
       "cogapp>=3.3.0; extra == \"test\"",
       "rich; extra == \"rich\""
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.9",
     "summary": "An open source multi-tool for exploring and publishing data",
-    "version": "0.65.1",
+    "version": "0.65.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 32181720,
+  "last_serial": 32225972,
   "releases": {
     "0.10": [
       {
@@ -4841,6 +4856,50 @@
         "yanked_reason": null
       }
     ],
+    "0.65.2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a13affa1259fc018f3bb0e6e8444982909a449478ede805def5593319ff3f732",
+          "md5": "da3e44fa9419c427fc9f691428f1413d",
+          "sha256": "d4f342a5c86d073bbb1880a9df792354cae4f951e427b57586713eff1896507f"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.65.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "da3e44fa9419c427fc9f691428f1413d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 397412,
+        "upload_time": "2025-11-05T18:23:23",
+        "upload_time_iso_8601": "2025-11-05T18:23:23.916182Z",
+        "url": "https://files.pythonhosted.org/packages/a1/3a/ffa1259fc018f3bb0e6e8444982909a449478ede805def5593319ff3f732/datasette-0.65.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "802680b5480921d71891b8ff880fed6d44150b9164903d683efe2eb7405b61d8",
+          "md5": "9c58de08158569aa081f94452986801f",
+          "sha256": "be956fb2633b8380d7f818b5ddab40d5c7346d5e9d4d24e81c43b1fb60267432"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.65.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9c58de08158569aa081f94452986801f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 410536,
+        "upload_time": "2025-11-05T18:23:25",
+        "upload_time_iso_8601": "2025-11-05T18:23:25.926546Z",
+        "url": "https://files.pythonhosted.org/packages/80/26/80b5480921d71891b8ff880fed6d44150b9164903d683efe2eb7405b61d8/datasette-0.65.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.8": [
       {
         "comment_text": "",
@@ -5503,6 +5562,50 @@
         "yanked_reason": null
       }
     ],
+    "1.0a21": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a227bb183fcf75109181d5591838a63635084556af41059fa4de8dcca056f61f",
+          "md5": "b05c2ed9fbd2abf1d3deba86289a57e6",
+          "sha256": "12cd8a13453544d8a00c84e6226654f1294c9514a58e37e8beaeabca6a7079ef"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a21-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b05c2ed9fbd2abf1d3deba86289a57e6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 344183,
+        "upload_time": "2025-11-05T22:00:07",
+        "upload_time_iso_8601": "2025-11-05T22:00:07.208466Z",
+        "url": "https://files.pythonhosted.org/packages/a2/27/bb183fcf75109181d5591838a63635084556af41059fa4de8dcca056f61f/datasette-1.0a21-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "086c99a408c07f903b87a3e91520e19f8a74f7ee11bb57d038a07270ef49e6eb",
+          "md5": "0ab1d9f3eb5dfdecff75d090511e7b5d",
+          "sha256": "550ef1f63fba86363ff7d469843f82f2f9b87a7ffd6e34947a04555bfa8be095"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a21.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0ab1d9f3eb5dfdecff75d090511e7b5d",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 434319,
+        "upload_time": "2025-11-05T22:00:08",
+        "upload_time_iso_8601": "2025-11-05T22:00:08.815827Z",
+        "url": "https://files.pythonhosted.org/packages/08/6c/99a408c07f903b87a3e91520e19f8a74f7ee11bb57d038a07270ef49e6eb/datasette-1.0a21.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "1.0a3": [
       {
         "comment_text": "",
@@ -5814,61 +5917,47 @@
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "08f7fc15b9ddc7a2cafe546f0e2696d71940d7604a128e2f903e98238c3435f7",
-        "md5": "8cc26a4c8a90484d2d7202e6f1f13ffc",
-        "sha256": "ba7adf717ddcc24a2a8ac57890fffd384a2ebb909b342e4f731ba09eba764305"
+        "blake2b_256": "a13affa1259fc018f3bb0e6e8444982909a449478ede805def5593319ff3f732",
+        "md5": "da3e44fa9419c427fc9f691428f1413d",
+        "sha256": "d4f342a5c86d073bbb1880a9df792354cae4f951e427b57586713eff1896507f"
       },
       "downloads": -1,
-      "filename": "datasette-0.65.1-py3-none-any.whl",
+      "filename": "datasette-0.65.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "8cc26a4c8a90484d2d7202e6f1f13ffc",
+      "md5_digest": "da3e44fa9419c427fc9f691428f1413d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 396428,
-      "upload_time": "2024-11-29T01:18:11",
-      "upload_time_iso_8601": "2024-11-29T01:18:11.269978Z",
-      "url": "https://files.pythonhosted.org/packages/08/f7/fc15b9ddc7a2cafe546f0e2696d71940d7604a128e2f903e98238c3435f7/datasette-0.65.1-py3-none-any.whl",
+      "requires_python": ">=3.9",
+      "size": 397412,
+      "upload_time": "2025-11-05T18:23:23",
+      "upload_time_iso_8601": "2025-11-05T18:23:23.916182Z",
+      "url": "https://files.pythonhosted.org/packages/a1/3a/ffa1259fc018f3bb0e6e8444982909a449478ede805def5593319ff3f732/datasette-0.65.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "db94e6408997861e9de3ec61fb8107efe9eaf70f765ad2cd4e20b552dd340899",
-        "md5": "19e2e8b366db27af8f51464491eb461d",
-        "sha256": "d8be37ae6dafbfd8e510d49c0dc0fc6696081614d048a507eed86dd2ae433223"
+        "blake2b_256": "802680b5480921d71891b8ff880fed6d44150b9164903d683efe2eb7405b61d8",
+        "md5": "9c58de08158569aa081f94452986801f",
+        "sha256": "be956fb2633b8380d7f818b5ddab40d5c7346d5e9d4d24e81c43b1fb60267432"
       },
       "downloads": -1,
-      "filename": "datasette-0.65.1.tar.gz",
+      "filename": "datasette-0.65.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "19e2e8b366db27af8f51464491eb461d",
+      "md5_digest": "9c58de08158569aa081f94452986801f",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 409411,
-      "upload_time": "2024-11-29T01:18:13",
-      "upload_time_iso_8601": "2024-11-29T01:18:13.219826Z",
-      "url": "https://files.pythonhosted.org/packages/db/94/e6408997861e9de3ec61fb8107efe9eaf70f765ad2cd4e20b552dd340899/datasette-0.65.1.tar.gz",
+      "requires_python": ">=3.9",
+      "size": 410536,
+      "upload_time": "2025-11-05T18:23:25",
+      "upload_time_iso_8601": "2025-11-05T18:23:25.926546Z",
+      "url": "https://files.pythonhosted.org/packages/80/26/80b5480921d71891b8ff880fed6d44150b9164903d683efe2eb7405b61d8/datasette-0.65.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
   ],
-  "vulnerabilities": [
-    {
-      "aliases": [
-        "CVE-2023-40570",
-        "GHSA-7ch3-7pp7-7cpq"
-      ],
-      "details": "Datasette is an open source multi-tool for exploring and publishing data. This bug affects Datasette instances running a Datasette 1.0 alpha - 1.0a0, 1.0a1, 1.0a2 or 1.0a3 - in an online accessible location but with authentication enabled using a plugin such as datasette-auth-passwords. The `/-/api` API explorer endpoint could reveal the names of both databases and tables - but not their contents - to an unauthenticated user. Datasette 1.0a4 has a fix for this issue. This will block access to the API explorer but will still allow access to the Datasette read or write JSON APIs, as those use different URL patterns within the Datasette `/database` hierarchy. This issue is patched in version 1.0a4.",
-      "fixed_in": [],
-      "id": "PYSEC-2023-154",
-      "link": "https://osv.dev/vulnerability/PYSEC-2023-154",
-      "source": "osv",
-      "summary": null,
-      "withdrawn": null
-    }
-  ]
+  "vulnerabilities": []
 }
