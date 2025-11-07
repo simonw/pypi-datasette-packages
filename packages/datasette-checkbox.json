@@ -4,8 +4,7 @@
     "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
     "description": "# datasette-checkbox\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-checkbox.svg)](https://pypi.org/project/datasette-checkbox/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-checkbox?include_prereleases&label=changelog)](https://github.com/datasette/datasette-checkbox/releases)\n[![Tests](https://github.com/datasette/datasette-checkbox/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-checkbox/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-checkbox/blob/main/LICENSE)\n\nAdd interactive checkboxes to columns in Datasette. Requires Datasette 1.0 alpha or higher.\n\n![Animated demo showing checkboxes in columns for is_done, should_be_deleted and is_happy - checking the checkboxes shows an updated message next to each one which then fades away.](https://raw.githubusercontent.com/datasette/datasette-checkbox/main/datasette-checkbox.gif)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-checkbox\n```\n## Usage\n\nThis plugin adds checkboxes to the table and row pages in Datasette for any column with a name that starts `is_*` or `should_*` or `has_*` and that is of type `integer`.\n\nToggling those checkboxes updates the underlying column to a `1` or a `0`.\n\nThe checkbox interface will only be shown for users who have `update-row` permission for the table.\n\nThe easiest way to try this plugin is using the `--root` Datasette option:\n\n```bash\ndatasette data.db --root\n```\nOr use the [Datasette permission system](https://docs.datasette.io/en/latest/authentication.html#permissions) to grant `update-row` to specific users.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-checkbox\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
@@ -21,8 +20,8 @@
     ],
     "home_page": null,
     "keywords": null,
-    "license": "Apache-2.0",
-    "license_expression": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": [
       "LICENSE"
     ],
@@ -41,19 +40,19 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-checkbox/0.1a3/",
+    "release_url": "https://pypi.org/project/datasette-checkbox/0.1a4/",
     "requires_dist": [
-      "datasette==1.0a19",
+      "datasette>=1.0a19",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.10",
     "summary": "Add interactive checkboxes to columns in Datasette",
-    "version": "0.1a3",
+    "version": "0.1a4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 31935841,
+  "last_serial": 32242109,
   "releases": {
     "0.1a0": [
       {
@@ -230,48 +229,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3cf44e493c60d98090e0e1c5c49c36ef403eb41db348e20dadd17de31ffd8de6",
+          "md5": "d12ea9283d735d6914ffafa24605cc5d",
+          "sha256": "ca30f46e740522f97836f8a162204e7933190d6500a9a5fb0fda08923a67b1fb"
+        },
+        "downloads": -1,
+        "filename": "datasette_checkbox-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d12ea9283d735d6914ffafa24605cc5d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8372,
+        "upload_time": "2025-11-06T16:36:44",
+        "upload_time_iso_8601": "2025-11-06T16:36:44.147527Z",
+        "url": "https://files.pythonhosted.org/packages/3c/f4/4e493c60d98090e0e1c5c49c36ef403eb41db348e20dadd17de31ffd8de6/datasette_checkbox-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "08e34ed24dc09083328f42ada15bf0f663c8ce69c6c52e4647c379918fb90b5c",
+          "md5": "5238db9f9bca936649b2f0a1191666a3",
+          "sha256": "3b7db2b3d47a826be839bfc3aee7cab44669e404a70f47f601df104476272721"
+        },
+        "downloads": -1,
+        "filename": "datasette_checkbox-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5238db9f9bca936649b2f0a1191666a3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8225,
+        "upload_time": "2025-11-06T16:36:45",
+        "upload_time_iso_8601": "2025-11-06T16:36:45.523873Z",
+        "url": "https://files.pythonhosted.org/packages/08/e3/4ed24dc09083328f42ada15bf0f663c8ce69c6c52e4647c379918fb90b5c/datasette_checkbox-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "5cb3b23e80643d5b76c76d8d2f319ef365f1e0fc3899a89e8cbdb5740b182e75",
-        "md5": "2e5a7b4830e76c01209d605656056e6b",
-        "sha256": "57fd9de5f8d984dea2a3fef1b02c4660ecbeaccec2af5a26032abe7351f9c881"
+        "blake2b_256": "3cf44e493c60d98090e0e1c5c49c36ef403eb41db348e20dadd17de31ffd8de6",
+        "md5": "d12ea9283d735d6914ffafa24605cc5d",
+        "sha256": "ca30f46e740522f97836f8a162204e7933190d6500a9a5fb0fda08923a67b1fb"
       },
       "downloads": -1,
-      "filename": "datasette_checkbox-0.1a3-py3-none-any.whl",
+      "filename": "datasette_checkbox-0.1a4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "2e5a7b4830e76c01209d605656056e6b",
+      "md5_digest": "d12ea9283d735d6914ffafa24605cc5d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 8362,
-      "upload_time": "2025-10-21T20:45:41",
-      "upload_time_iso_8601": "2025-10-21T20:45:41.295469Z",
-      "url": "https://files.pythonhosted.org/packages/5c/b3/b23e80643d5b76c76d8d2f319ef365f1e0fc3899a89e8cbdb5740b182e75/datasette_checkbox-0.1a3-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 8372,
+      "upload_time": "2025-11-06T16:36:44",
+      "upload_time_iso_8601": "2025-11-06T16:36:44.147527Z",
+      "url": "https://files.pythonhosted.org/packages/3c/f4/4e493c60d98090e0e1c5c49c36ef403eb41db348e20dadd17de31ffd8de6/datasette_checkbox-0.1a4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "0e8272bbe8f7f97213d6e767a1780dfcfe4ef4ba2f9991de8b9f7b22f658bf65",
-        "md5": "09652cc15ca6befb9ed48a546b33e866",
-        "sha256": "ff76b3766430847c1de1d49acc25f964c0a171359ba7ad2ae20ded114f48b335"
+        "blake2b_256": "08e34ed24dc09083328f42ada15bf0f663c8ce69c6c52e4647c379918fb90b5c",
+        "md5": "5238db9f9bca936649b2f0a1191666a3",
+        "sha256": "3b7db2b3d47a826be839bfc3aee7cab44669e404a70f47f601df104476272721"
       },
       "downloads": -1,
-      "filename": "datasette_checkbox-0.1a3.tar.gz",
+      "filename": "datasette_checkbox-0.1a4.tar.gz",
       "has_sig": false,
-      "md5_digest": "09652cc15ca6befb9ed48a546b33e866",
+      "md5_digest": "5238db9f9bca936649b2f0a1191666a3",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 8023,
-      "upload_time": "2025-10-21T20:45:42",
-      "upload_time_iso_8601": "2025-10-21T20:45:42.552001Z",
-      "url": "https://files.pythonhosted.org/packages/0e/82/72bbe8f7f97213d6e767a1780dfcfe4ef4ba2f9991de8b9f7b22f658bf65/datasette_checkbox-0.1a3.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 8225,
+      "upload_time": "2025-11-06T16:36:45",
+      "upload_time_iso_8601": "2025-11-06T16:36:45.523873Z",
+      "url": "https://files.pythonhosted.org/packages/08/e3/4ed24dc09083328f42ada15bf0f663c8ce69c6c52e4647c379918fb90b5c/datasette_checkbox-0.1a4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
