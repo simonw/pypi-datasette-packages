@@ -40,9 +40,9 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a4/",
+    "release_url": "https://pypi.org/project/datasette-query-assistant/0.1a5/",
     "requires_dist": [
-      "datasette==1.0a19",
+      "datasette>=1.0a21",
       "llm>=0.22",
       "markdown2",
       "llm-openai-plugin; extra == \"test\"",
@@ -52,13 +52,13 @@
       "pytest-recording; extra == \"test\"",
       "sqlite-utils; extra == \"test\""
     ],
-    "requires_python": ">=3.9",
+    "requires_python": ">=3.10",
     "summary": "Query databases and tables with AI assistance",
-    "version": "0.1a4",
+    "version": "0.1a5",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 31935863,
+  "last_serial": 32270845,
   "releases": {
     "0.1a0": [
       {
@@ -279,48 +279,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a5": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3de5dd67c760f1e02061a8dd9e24033c5c8f345644e990bd5d44b8628bf6b535",
+          "md5": "1b20655e6627eaba5912bd7ef305bbfc",
+          "sha256": "354a248c05b774f074140c9abcd838fb1b20d83a9cf8f3861008578bdaa174db"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1b20655e6627eaba5912bd7ef305bbfc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 11438,
+        "upload_time": "2025-11-08T01:33:43",
+        "upload_time_iso_8601": "2025-11-08T01:33:43.454390Z",
+        "url": "https://files.pythonhosted.org/packages/3d/e5/dd67c760f1e02061a8dd9e24033c5c8f345644e990bd5d44b8628bf6b535/datasette_query_assistant-0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "551bd7eb6671f13b272227670ab2ad8fb948cdc2a0f08e561f621da303dba504",
+          "md5": "6c1e7208429def4194cf1fca60116904",
+          "sha256": "0f3c871ab23cbd77c2cc2953a0614db6d31aee57a6921f8c0f3a1e75a4b89b14"
+        },
+        "downloads": -1,
+        "filename": "datasette_query_assistant-0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6c1e7208429def4194cf1fca60116904",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11298,
+        "upload_time": "2025-11-08T01:33:44",
+        "upload_time_iso_8601": "2025-11-08T01:33:44.504466Z",
+        "url": "https://files.pythonhosted.org/packages/55/1b/d7eb6671f13b272227670ab2ad8fb948cdc2a0f08e561f621da303dba504/datasette_query_assistant-0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "9236d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20",
-        "md5": "058e7879509b0c76e53d63903d5259d5",
-        "sha256": "42742ad3e5755f3d374e5e00133cdff00d5a663685dcb8d5eb312c98ee6021c1"
+        "blake2b_256": "3de5dd67c760f1e02061a8dd9e24033c5c8f345644e990bd5d44b8628bf6b535",
+        "md5": "1b20655e6627eaba5912bd7ef305bbfc",
+        "sha256": "354a248c05b774f074140c9abcd838fb1b20d83a9cf8f3861008578bdaa174db"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a4-py3-none-any.whl",
+      "filename": "datasette_query_assistant-0.1a5-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "058e7879509b0c76e53d63903d5259d5",
+      "md5_digest": "1b20655e6627eaba5912bd7ef305bbfc",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.9",
-      "size": 11415,
-      "upload_time": "2025-10-21T20:46:12",
-      "upload_time_iso_8601": "2025-10-21T20:46:12.872938Z",
-      "url": "https://files.pythonhosted.org/packages/92/36/d4d26c18d9f4d3c9781d4d7c3faa457b327debe4dbaa70302c7e1aa1fb20/datasette_query_assistant-0.1a4-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 11438,
+      "upload_time": "2025-11-08T01:33:43",
+      "upload_time_iso_8601": "2025-11-08T01:33:43.454390Z",
+      "url": "https://files.pythonhosted.org/packages/3d/e5/dd67c760f1e02061a8dd9e24033c5c8f345644e990bd5d44b8628bf6b535/datasette_query_assistant-0.1a5-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "a8115f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b",
-        "md5": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
-        "sha256": "415e31df990ccdd7accc7908ea0b6fbfd87face415a1235c9917550c4f197029"
+        "blake2b_256": "551bd7eb6671f13b272227670ab2ad8fb948cdc2a0f08e561f621da303dba504",
+        "md5": "6c1e7208429def4194cf1fca60116904",
+        "sha256": "0f3c871ab23cbd77c2cc2953a0614db6d31aee57a6921f8c0f3a1e75a4b89b14"
       },
       "downloads": -1,
-      "filename": "datasette_query_assistant-0.1a4.tar.gz",
+      "filename": "datasette_query_assistant-0.1a5.tar.gz",
       "has_sig": false,
-      "md5_digest": "9c9cc54a98b78a4f7cd4a2fdbd1a5b87",
+      "md5_digest": "6c1e7208429def4194cf1fca60116904",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.9",
-      "size": 11285,
-      "upload_time": "2025-10-21T20:46:14",
-      "upload_time_iso_8601": "2025-10-21T20:46:14.442452Z",
-      "url": "https://files.pythonhosted.org/packages/a8/11/5f5178e8ede13bd3428014b3df9aa3ecdbc18ea3889514aceb99358c504b/datasette_query_assistant-0.1a4.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 11298,
+      "upload_time": "2025-11-08T01:33:44",
+      "upload_time_iso_8601": "2025-11-08T01:33:44.504466Z",
+      "url": "https://files.pythonhosted.org/packages/55/1b/d7eb6671f13b272227670ab2ad8fb948cdc2a0f08e561f621da303dba504/datasette_query_assistant-0.1a5.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

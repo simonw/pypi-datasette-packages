@@ -4,10 +4,9 @@
     "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
-    "description": "# datasette-events-db\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-events-db.svg)](https://pypi.org/project/datasette-events-db/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-events-db?include_prereleases&label=changelog)](https://github.com/datasette/datasette-events-db/releases)\n[![Tests](https://github.com/datasette/datasette-events-db/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-events-db/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-events-db/blob/main/LICENSE)\n\nLog Datasette events to a database table\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-events-db\n```\nThis plugin depends on [Datasette 1.0a8](https://docs.datasette.io/en/latest/changelog.html#a8-2024-02-07) or higher.\n## Usage\n\nOnce installed, all [Datasette events](https://docs.datasette.io/en/latest/events.html) will be logged to a table called `datasette_events`. This table will be created in the `_internal` database, but can be moved to another database using the following plugin configuration option:\n\n```yaml\nplugins:\n  datasette-events-db:\n    database: my_database\n```\n\nThe table will be created when Datasette starts up, if it does not already exist.\n\n## Table schema\n\n```sql\ncreate table if not exists datasette_events (\n    id integer primary key,\n    event text,\n    created text,\n    actor_id text,\n    database_name text,\n    table_name text,\n    properties text -- JSON other properties\n)\n```\n- `event` is the text name of the event, for example `create-table`\n- `created` is an ISO formatted UTC timestamp\n- `actor_id` will be populated with the ID of the responsible actor, or `null` if not available\n- `database_name` will be the `database` property recorded by the event, if present\n- `table_name` will be the `table` property recorded by the event, if present\n- `properties` will be a JSON object containing any other properties recorded by the event\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-events-db\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-events-db\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-events-db.svg)](https://pypi.org/project/datasette-events-db/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-events-db?include_prereleases&label=changelog)](https://github.com/datasette/datasette-events-db/releases)\n[![Tests](https://github.com/datasette/datasette-events-db/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-events-db/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-events-db/blob/main/LICENSE)\n\nLog Datasette events to a database table\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-events-db\n```\nThis plugin depends on [Datasette 1.0a8](https://docs.datasette.io/en/latest/changelog.html#a8-2024-02-07) or higher.\n## Usage\n\nOnce installed, all [Datasette events](https://docs.datasette.io/en/latest/events.html) will be logged to a table called `datasette_events`. This table will be created in the private internal database, but can be moved to another database using the following plugin configuration option:\n\n```yaml\nplugins:\n  datasette-events-db:\n    database: my_database\n```\n\nThe table will be created when Datasette starts up, if it does not already exist.\n\n## Table schema\n\n```sql\ncreate table if not exists datasette_events (\n    id integer primary key,\n    event text,\n    created text,\n    actor_id text,\n    database_name text,\n    table_name text,\n    properties text -- JSON other properties\n)\n```\n- `event` is the text name of the event, for example `create-table`\n- `created` is an ISO formatted UTC timestamp\n- `actor_id` will be populated with the ID of the responsible actor, or `null` if not available\n- `database_name` will be the `database` property recorded by the event, if present\n- `table_name` will be the `table` property recorded by the event, if present\n- `properties` will be a JSON object containing any other properties recorded by the event\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-events-db\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -21,8 +20,8 @@
     ],
     "home_page": null,
     "keywords": null,
-    "license": "Apache-2.0",
-    "license_expression": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": [
       "LICENSE"
     ],
@@ -41,19 +40,19 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-events-db/0.1a1/",
+    "release_url": "https://pypi.org/project/datasette-events-db/0.1a2/",
     "requires_dist": [
-      "datasette==1.0a19",
+      "datasette>=1.0a21",
       "pytest; extra == \"test\"",
       "pytest-asyncio; extra == \"test\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.10",
     "summary": "Log Datasette events to a database table",
-    "version": "0.1a1",
+    "version": "0.1a2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 31935867,
+  "last_serial": 32270327,
   "releases": {
     "0.1a0": [
       {
@@ -142,48 +141,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "460c57f9b2e2fdc3fae9b0fd34bcb5b8d548312747a7dedf5604ac548bcf2848",
+          "md5": "ca4c0d9a68b9336609dfc5d2a6e3b017",
+          "sha256": "43835c4655a0baed5fecc01cefce3ccd3f8362bea9e2b31adc464ad956c48bba"
+        },
+        "downloads": -1,
+        "filename": "datasette_events_db-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ca4c0d9a68b9336609dfc5d2a6e3b017",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 7507,
+        "upload_time": "2025-11-08T00:32:00",
+        "upload_time_iso_8601": "2025-11-08T00:32:00.264763Z",
+        "url": "https://files.pythonhosted.org/packages/46/0c/57f9b2e2fdc3fae9b0fd34bcb5b8d548312747a7dedf5604ac548bcf2848/datasette_events_db-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "04c0b8cbbb10d82c43a9a738df1eeb78e9cc8137a8d184f784b940465d2f2e1f",
+          "md5": "1711e14b37779a84e9c2cf711d649374",
+          "sha256": "9f5643dc8805e94d011ae82748ba4f5b6b7a0ead080b2b69cb3c94b64fdc6686"
+        },
+        "downloads": -1,
+        "filename": "datasette_events_db-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1711e14b37779a84e9c2cf711d649374",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 7633,
+        "upload_time": "2025-11-08T00:32:01",
+        "upload_time_iso_8601": "2025-11-08T00:32:01.334056Z",
+        "url": "https://files.pythonhosted.org/packages/04/c0/b8cbbb10d82c43a9a738df1eeb78e9cc8137a8d184f784b940465d2f2e1f/datasette_events_db-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "0fcf3098c8dc358e2bf622b35de8ac1f2d5c988c741356a242b9917e16a04120",
-        "md5": "41cafdc262f19fa88c34db65c2796e4a",
-        "sha256": "a81765ee6fb8ac255a7f74862223fa4a650c026c89b3d3a4851546e976fe983f"
+        "blake2b_256": "460c57f9b2e2fdc3fae9b0fd34bcb5b8d548312747a7dedf5604ac548bcf2848",
+        "md5": "ca4c0d9a68b9336609dfc5d2a6e3b017",
+        "sha256": "43835c4655a0baed5fecc01cefce3ccd3f8362bea9e2b31adc464ad956c48bba"
       },
       "downloads": -1,
-      "filename": "datasette_events_db-0.1a1-py3-none-any.whl",
+      "filename": "datasette_events_db-0.1a2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "41cafdc262f19fa88c34db65c2796e4a",
+      "md5_digest": "ca4c0d9a68b9336609dfc5d2a6e3b017",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 7535,
-      "upload_time": "2025-10-21T20:46:17",
-      "upload_time_iso_8601": "2025-10-21T20:46:17.904276Z",
-      "url": "https://files.pythonhosted.org/packages/0f/cf/3098c8dc358e2bf622b35de8ac1f2d5c988c741356a242b9917e16a04120/datasette_events_db-0.1a1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 7507,
+      "upload_time": "2025-11-08T00:32:00",
+      "upload_time_iso_8601": "2025-11-08T00:32:00.264763Z",
+      "url": "https://files.pythonhosted.org/packages/46/0c/57f9b2e2fdc3fae9b0fd34bcb5b8d548312747a7dedf5604ac548bcf2848/datasette_events_db-0.1a2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "b7073f8da60a88eb2e0b31bb49e0388f521b387e1bbed3df1b0eb0e709d0cfa0",
-        "md5": "423b30619859232ca9294462ad7d0ffc",
-        "sha256": "ac8507793dd75745371443c97569bf0de7d1c9e0f787376a4d57baf31ec49424"
+        "blake2b_256": "04c0b8cbbb10d82c43a9a738df1eeb78e9cc8137a8d184f784b940465d2f2e1f",
+        "md5": "1711e14b37779a84e9c2cf711d649374",
+        "sha256": "9f5643dc8805e94d011ae82748ba4f5b6b7a0ead080b2b69cb3c94b64fdc6686"
       },
       "downloads": -1,
-      "filename": "datasette_events_db-0.1a1.tar.gz",
+      "filename": "datasette_events_db-0.1a2.tar.gz",
       "has_sig": false,
-      "md5_digest": "423b30619859232ca9294462ad7d0ffc",
+      "md5_digest": "1711e14b37779a84e9c2cf711d649374",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 7686,
-      "upload_time": "2025-10-21T20:46:19",
-      "upload_time_iso_8601": "2025-10-21T20:46:19.216464Z",
-      "url": "https://files.pythonhosted.org/packages/b7/07/3f8da60a88eb2e0b31bb49e0388f521b387e1bbed3df1b0eb0e709d0cfa0/datasette_events_db-0.1a1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 7633,
+      "upload_time": "2025-11-08T00:32:01",
+      "upload_time_iso_8601": "2025-11-08T00:32:01.334056Z",
+      "url": "https://files.pythonhosted.org/packages/04/c0/b8cbbb10d82c43a9a738df1eeb78e9cc8137a8d184f784b940465d2f2e1f/datasette_events_db-0.1a2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
