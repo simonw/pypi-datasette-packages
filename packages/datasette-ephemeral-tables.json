@@ -1,29 +1,32 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
     "description": "# datasette-ephemeral-tables\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ephemeral-tables.svg)](https://pypi.org/project/datasette-ephemeral-tables/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-ephemeral-tables?include_prereleases&label=changelog)](https://github.com/simonw/datasette-ephemeral-tables/releases)\n[![Tests](https://github.com/simonw/datasette-ephemeral-tables/workflows/Test/badge.svg)](https://github.com/simonw/datasette-ephemeral-tables/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-ephemeral-tables/blob/main/LICENSE)\n\nProvide tables that expire after a time limit\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-ephemeral-tables\n\n## Usage\n\nOnce installed, this plugin will ensure Datasette starts running with a new named in-memory database called `ephemeral`.\n\nAny tables created in this database will be automatically dropped five minutes after creation.\n\n## Configuration\n\nAll plugin settings are optional. The full set of settings in `metadata.yml` looks like this:\n\n```yaml\nplugins:\n    datasette-ephemeral-tables:\n        # The name of the in-memory database created by the plugin:\n        database: ephemeral\n        # After how many seconds should tables be dropped?\n        table_ttl: 300\n        # How often should the plugin check for expired tables (in seconds)?\n        check_interval: 2\n```\nThe figures shown here are the default values.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-ephemeral-tables\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-ephemeral-tables",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
-    "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-ephemeral-tables",
     "package_url": "https://pypi.org/project/datasette-ephemeral-tables/",
     "platform": null,
@@ -34,20 +37,22 @@
       "Homepage": "https://github.com/simonw/datasette-ephemeral-tables",
       "Issues": "https://github.com/simonw/datasette-ephemeral-tables/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-ephemeral-tables/0.2.2/",
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-ephemeral-tables/0.2.3/",
     "requires_dist": [
       "datasette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.10",
     "summary": "Provide tables that expire after a time limit",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 15963416,
+  "last_serial": 32294877,
   "releases": {
     "0.1": [
       {
@@ -224,48 +229,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b1aa58d9959a1f887c74eb3d7c08bd2b93ce62aac81d2f25f1d72d7a2edfba3c",
+          "md5": "abd996b3fbe97440edd89114f90684ee",
+          "sha256": "9afc64a1457d1851760c2c742a86efcfa2ea6a77fc00ddd504baca653157ff31"
+        },
+        "downloads": -1,
+        "filename": "datasette_ephemeral_tables-0.2.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "abd996b3fbe97440edd89114f90684ee",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8337,
+        "upload_time": "2025-11-09T23:55:03",
+        "upload_time_iso_8601": "2025-11-09T23:55:03.688560Z",
+        "url": "https://files.pythonhosted.org/packages/b1/aa/58d9959a1f887c74eb3d7c08bd2b93ce62aac81d2f25f1d72d7a2edfba3c/datasette_ephemeral_tables-0.2.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9e6584b9a202409f48a9c178f6ab51e09445b9057ae1e638699b4273441cb680",
+          "md5": "3f697b038b80bdfa2b0798cbe9dadecb",
+          "sha256": "73d88acb44035dd6b6c488c1e4ae645f179b429a61cedc11959605e1e0028e9f"
+        },
+        "downloads": -1,
+        "filename": "datasette_ephemeral_tables-0.2.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3f697b038b80bdfa2b0798cbe9dadecb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8294,
+        "upload_time": "2025-11-09T23:55:04",
+        "upload_time_iso_8601": "2025-11-09T23:55:04.830193Z",
+        "url": "https://files.pythonhosted.org/packages/9e/65/84b9a202409f48a9c178f6ab51e09445b9057ae1e638699b4273441cb680/datasette_ephemeral_tables-0.2.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "fe98c0db21d229ade67ee74ac8f5697035ff3c1ea6bb93eea7936c3782d1cd10",
-        "md5": "40a889f43ee8945392aff71f862d2475",
-        "sha256": "357127d0377afef06c88ad43eb2b349f474ce53327fb19433cd7f6f2e61a4f53"
+        "blake2b_256": "b1aa58d9959a1f887c74eb3d7c08bd2b93ce62aac81d2f25f1d72d7a2edfba3c",
+        "md5": "abd996b3fbe97440edd89114f90684ee",
+        "sha256": "9afc64a1457d1851760c2c742a86efcfa2ea6a77fc00ddd504baca653157ff31"
       },
       "downloads": -1,
-      "filename": "datasette_ephemeral_tables-0.2.2-py3-none-any.whl",
+      "filename": "datasette_ephemeral_tables-0.2.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "40a889f43ee8945392aff71f862d2475",
+      "md5_digest": "abd996b3fbe97440edd89114f90684ee",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 8272,
-      "upload_time": "2022-12-02T00:37:37",
-      "upload_time_iso_8601": "2022-12-02T00:37:37.084437Z",
-      "url": "https://files.pythonhosted.org/packages/fe/98/c0db21d229ade67ee74ac8f5697035ff3c1ea6bb93eea7936c3782d1cd10/datasette_ephemeral_tables-0.2.2-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 8337,
+      "upload_time": "2025-11-09T23:55:03",
+      "upload_time_iso_8601": "2025-11-09T23:55:03.688560Z",
+      "url": "https://files.pythonhosted.org/packages/b1/aa/58d9959a1f887c74eb3d7c08bd2b93ce62aac81d2f25f1d72d7a2edfba3c/datasette_ephemeral_tables-0.2.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "c2ec4a1f11e2eca8e4a7c75cb0507c78b43ed347593d0ecad39f79bf4379e785",
-        "md5": "77951e8f2db90cbc0738cdd6e62232f8",
-        "sha256": "bc82373b5094e3e1b230699d9e739dffe0fd4fe35ccc525a1cd4637b914360e2"
+        "blake2b_256": "9e6584b9a202409f48a9c178f6ab51e09445b9057ae1e638699b4273441cb680",
+        "md5": "3f697b038b80bdfa2b0798cbe9dadecb",
+        "sha256": "73d88acb44035dd6b6c488c1e4ae645f179b429a61cedc11959605e1e0028e9f"
       },
       "downloads": -1,
-      "filename": "datasette-ephemeral-tables-0.2.2.tar.gz",
+      "filename": "datasette_ephemeral_tables-0.2.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "77951e8f2db90cbc0738cdd6e62232f8",
+      "md5_digest": "3f697b038b80bdfa2b0798cbe9dadecb",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 7681,
-      "upload_time": "2022-12-02T00:37:38",
-      "upload_time_iso_8601": "2022-12-02T00:37:38.194166Z",
-      "url": "https://files.pythonhosted.org/packages/c2/ec/4a1f11e2eca8e4a7c75cb0507c78b43ed347593d0ecad39f79bf4379e785/datasette-ephemeral-tables-0.2.2.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 8294,
+      "upload_time": "2025-11-09T23:55:04",
+      "upload_time_iso_8601": "2025-11-09T23:55:04.830193Z",
+      "url": "https://files.pythonhosted.org/packages/9e/65/84b9a202409f48a9c178f6ab51e09445b9057ae1e638699b4273441cb680/datasette_ephemeral_tables-0.2.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
