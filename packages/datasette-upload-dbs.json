@@ -48,7 +48,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 23038918,
+  "last_serial": 32312521,
   "releases": {
     "0.1": [
       {
@@ -354,6 +354,50 @@
         "upload_time": "2024-05-03T00:13:05",
         "upload_time_iso_8601": "2024-05-03T00:13:05.002328Z",
         "url": "https://files.pythonhosted.org/packages/50/ce/36a5c48ce583978c2e2c8ad5818c78a4372aa3f7f899a9f67d522abf62ad/datasette_upload_dbs-0.3.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ea7073dc2d4f7f42f242994ecdcd4f4e361ac88235102a59584d9771dc0228c5",
+          "md5": "bb3cc29f3aacabd85a5bd3600b4c3151",
+          "sha256": "932d25d8d60741d28eef94b21e28b22ab1672bd679fbaccca46094fae057742a"
+        },
+        "downloads": -1,
+        "filename": "datasette_upload_dbs-0.4a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bb3cc29f3aacabd85a5bd3600b4c3151",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10751,
+        "upload_time": "2025-11-10T21:12:48",
+        "upload_time_iso_8601": "2025-11-10T21:12:48.550770Z",
+        "url": "https://files.pythonhosted.org/packages/ea/70/73dc2d4f7f42f242994ecdcd4f4e361ac88235102a59584d9771dc0228c5/datasette_upload_dbs-0.4a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1830d94a490b087d0486caba2e20967837c95ada4ab2123ae5240fc6d6edca25",
+          "md5": "814f415c40139bcad4c04914a0f39e02",
+          "sha256": "1a060fd9824c5721858dfc6b4d015244b6eb107ab0db634bfc8af412bf8c53fb"
+        },
+        "downloads": -1,
+        "filename": "datasette_upload_dbs-0.4a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "814f415c40139bcad4c04914a0f39e02",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11544,
+        "upload_time": "2025-11-10T21:12:49",
+        "upload_time_iso_8601": "2025-11-10T21:12:49.903684Z",
+        "url": "https://files.pythonhosted.org/packages/18/30/d94a490b087d0486caba2e20967837c95ada4ab2123ae5240fc6d6edca25/datasette_upload_dbs-0.4a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

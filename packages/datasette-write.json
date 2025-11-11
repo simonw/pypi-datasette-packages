@@ -48,7 +48,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24868567,
+  "last_serial": 32315854,
   "releases": {
     "0.1": [
       {
@@ -354,6 +354,50 @@
         "upload_time": "2024-09-04T04:50:16",
         "upload_time_iso_8601": "2024-09-04T04:50:16.933983Z",
         "url": "https://files.pythonhosted.org/packages/a2/29/52216a9a0d16c4f8e188436b7fb66c08af7a553a6379091b306f01ac8303/datasette_write-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "4e69095a9e9f0a4f863e4e9fa12c5c4c84ae53640ca0a787ad9eb99a683bee69",
+          "md5": "8380578741aae5e10f200491f6b3171a",
+          "sha256": "fadc1055ebf2e39530620d056d4dc853e18e07083ccd27e2a557b4f6329ae419"
+        },
+        "downloads": -1,
+        "filename": "datasette_write-0.5a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8380578741aae5e10f200491f6b3171a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 7692,
+        "upload_time": "2025-11-11T01:51:08",
+        "upload_time_iso_8601": "2025-11-11T01:51:08.955306Z",
+        "url": "https://files.pythonhosted.org/packages/4e/69/095a9e9f0a4f863e4e9fa12c5c4c84ae53640ca0a787ad9eb99a683bee69/datasette_write-0.5a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "819f432bc48e9628aeaac187312d771fa51adcb2b424fcd56ddf698a3eefc29d",
+          "md5": "dd91b75d9fa9f2b7f1ecdbefd19d150a",
+          "sha256": "73e9ce503471fa48aa1120addfc3b0d98961054ff6ce406e2bf4eaf3ece1a3c6"
+        },
+        "downloads": -1,
+        "filename": "datasette_write-0.5a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dd91b75d9fa9f2b7f1ecdbefd19d150a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 10060,
+        "upload_time": "2025-11-11T01:51:10",
+        "upload_time_iso_8601": "2025-11-11T01:51:10.262406Z",
+        "url": "https://files.pythonhosted.org/packages/81/9f/432bc48e9628aeaac187312d771fa51adcb2b424fcd56ddf698a3eefc29d/datasette_write-0.5a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

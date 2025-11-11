@@ -45,7 +45,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24861605,
+  "last_serial": 32310888,
   "releases": {
     "0.1.1a0": [
       {
@@ -470,6 +470,50 @@
         "upload_time": "2024-09-03T17:28:32",
         "upload_time_iso_8601": "2024-09-03T17:28:32.645680Z",
         "url": "https://files.pythonhosted.org/packages/d0/80/57d7f3cd144d02c186221288f63ddd12541953d25c075b8d97b0347ccfb6/datasette_configure_fts-1.1.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.2a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7331380cd5ec474da9b6317bcf2b1b44cece039ec63bf3985ee8d9379fe8cbbe",
+          "md5": "55f91a82c419bfb8d54c7807a157e10d",
+          "sha256": "7f5e3db2cc454a6af046b9c5cfa891d464f677686bd9098ce02b06bc16e24673"
+        },
+        "downloads": -1,
+        "filename": "datasette_configure_fts-1.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "55f91a82c419bfb8d54c7807a157e10d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 11090,
+        "upload_time": "2025-11-10T19:39:43",
+        "upload_time_iso_8601": "2025-11-10T19:39:43.085594Z",
+        "url": "https://files.pythonhosted.org/packages/73/31/380cd5ec474da9b6317bcf2b1b44cece039ec63bf3985ee8d9379fe8cbbe/datasette_configure_fts-1.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "915a16f17e3f7922be5131bfa67b7ed3366624a34ffbf2e2188419214e38c75b",
+          "md5": "131f01b9076ac80cb9eeccafb032d2d1",
+          "sha256": "58228816a6b3577504af2e977a7fcc3bff044d8a79d51dc0f02763a4b7314c30"
+        },
+        "downloads": -1,
+        "filename": "datasette_configure_fts-1.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "131f01b9076ac80cb9eeccafb032d2d1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9622,
+        "upload_time": "2025-11-10T19:39:44",
+        "upload_time_iso_8601": "2025-11-10T19:39:44.169588Z",
+        "url": "https://files.pythonhosted.org/packages/91/5a/16f17e3f7922be5131bfa67b7ed3366624a34ffbf2e2188419214e38c75b/datasette_configure_fts-1.2a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

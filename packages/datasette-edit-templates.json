@@ -48,7 +48,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 21455274,
+  "last_serial": 32310787,
   "releases": {
     "0.1": [
       {
@@ -398,6 +398,50 @@
         "upload_time": "2024-01-17T00:40:26",
         "upload_time_iso_8601": "2024-01-17T00:40:26.094444Z",
         "url": "https://files.pythonhosted.org/packages/9e/8b/eb6de2d0dfb711e4374b6af88e2e371714c02ebc6b147a2f939a2f5447dc/datasette-edit-templates-0.4.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a9c0434b457fee8c3aa5d61347608b48cc014cb38ceec1527d3f5a749b333b8a",
+          "md5": "0e0d3384b7669b9f6d3296cf8efbf9c0",
+          "sha256": "3bc9089fb827ba30e20ae5e615efa71d16cdd5fa087142aaca03c12bdfadc372"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_templates-0.5a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0e0d3384b7669b9f6d3296cf8efbf9c0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 82995,
+        "upload_time": "2025-11-10T19:32:54",
+        "upload_time_iso_8601": "2025-11-10T19:32:54.636039Z",
+        "url": "https://files.pythonhosted.org/packages/a9/c0/434b457fee8c3aa5d61347608b48cc014cb38ceec1527d3f5a749b333b8a/datasette_edit_templates-0.5a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1939e804ef98976d7af126ebd7dfcd67aae7349d68bda967810846247c29610d",
+          "md5": "5973d8627c67facf23eec7cb90b8b314",
+          "sha256": "1438ca6cdfee1594d7ca7d2cd5e841b0ca36ed980466f832f22daf76afa6cadb"
+        },
+        "downloads": -1,
+        "filename": "datasette_edit_templates-0.5a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5973d8627c67facf23eec7cb90b8b314",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 84454,
+        "upload_time": "2025-11-10T19:32:56",
+        "upload_time_iso_8601": "2025-11-10T19:32:56.260064Z",
+        "url": "https://files.pythonhosted.org/packages/19/39/e804ef98976d7af126ebd7dfcd67aae7349d68bda967810846247c29610d/datasette_edit_templates-0.5a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

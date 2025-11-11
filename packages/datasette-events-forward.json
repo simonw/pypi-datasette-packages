@@ -40,7 +40,7 @@
     "provides_extra": [
       "test"
     ],
-    "release_url": "https://pypi.org/project/datasette-events-forward/0.1a3/",
+    "release_url": "https://pypi.org/project/datasette-events-forward/0.1a4/",
     "requires_dist": [
       "datasette>=1.0a20",
       "python-ulid",
@@ -53,11 +53,11 @@
     ],
     "requires_python": ">=3.10",
     "summary": "Forward Datasette events to another instance",
-    "version": "0.1a3",
+    "version": "0.1a4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 32184286,
+  "last_serial": 32314541,
   "releases": {
     "0.1a0": [
       {
@@ -234,48 +234,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "78e86358ff3b4b207a3b74c80be798a950f353ebf061083516437014f9e715eb",
+          "md5": "689114052d15466ddb3a56d20f236d86",
+          "sha256": "5a2d0fd8078301d1c371949188a95fd227b770bfef3ef6ece672027aa1ac8829"
+        },
+        "downloads": -1,
+        "filename": "datasette_events_forward-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "689114052d15466ddb3a56d20f236d86",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9177,
+        "upload_time": "2025-11-10T23:47:30",
+        "upload_time_iso_8601": "2025-11-10T23:47:30.590443Z",
+        "url": "https://files.pythonhosted.org/packages/78/e8/6358ff3b4b207a3b74c80be798a950f353ebf061083516437014f9e715eb/datasette_events_forward-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d5b15578ac409f061341384191e6fa36c988e6c4865f92598c0a6d9f8f78b12a",
+          "md5": "fc229207915f619373b8dd871433be4b",
+          "sha256": "2ab1fbd2729b5c51c7f1bf81cfcbf3df30d5319b011919a05dbd2d4cf9010839"
+        },
+        "downloads": -1,
+        "filename": "datasette_events_forward-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fc229207915f619373b8dd871433be4b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9775,
+        "upload_time": "2025-11-10T23:47:31",
+        "upload_time_iso_8601": "2025-11-10T23:47:31.995288Z",
+        "url": "https://files.pythonhosted.org/packages/d5/b1/5578ac409f061341384191e6fa36c988e6c4865f92598c0a6d9f8f78b12a/datasette_events_forward-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "213fe0ed2b5491c743df5a7b4e21feaa0abcd83e7dddb0e07ff9265a81815f08",
-        "md5": "f14d69829cde51ae59fa6791fe24b2fc",
-        "sha256": "78a34238ae94828278b6d30b07117a7e8916e95451cd1e5c8bc38f8b15b71cf5"
+        "blake2b_256": "78e86358ff3b4b207a3b74c80be798a950f353ebf061083516437014f9e715eb",
+        "md5": "689114052d15466ddb3a56d20f236d86",
+        "sha256": "5a2d0fd8078301d1c371949188a95fd227b770bfef3ef6ece672027aa1ac8829"
       },
       "downloads": -1,
-      "filename": "datasette_events_forward-0.1a3-py3-none-any.whl",
+      "filename": "datasette_events_forward-0.1a4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "f14d69829cde51ae59fa6791fe24b2fc",
+      "md5_digest": "689114052d15466ddb3a56d20f236d86",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 9055,
-      "upload_time": "2025-11-04T02:48:43",
-      "upload_time_iso_8601": "2025-11-04T02:48:43.104364Z",
-      "url": "https://files.pythonhosted.org/packages/21/3f/e0ed2b5491c743df5a7b4e21feaa0abcd83e7dddb0e07ff9265a81815f08/datasette_events_forward-0.1a3-py3-none-any.whl",
+      "size": 9177,
+      "upload_time": "2025-11-10T23:47:30",
+      "upload_time_iso_8601": "2025-11-10T23:47:30.590443Z",
+      "url": "https://files.pythonhosted.org/packages/78/e8/6358ff3b4b207a3b74c80be798a950f353ebf061083516437014f9e715eb/datasette_events_forward-0.1a4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "c9a74cc9a87f1f4be527b527eb5604f0f0e0a19738ee94a4aebe50c94a8b0948",
-        "md5": "c9c78c8cf134b18261763c7ce876f201",
-        "sha256": "a13ed590e2cd22f49e1a41f01af643dd570457a1c3743bf87d11c1f9f58e8597"
+        "blake2b_256": "d5b15578ac409f061341384191e6fa36c988e6c4865f92598c0a6d9f8f78b12a",
+        "md5": "fc229207915f619373b8dd871433be4b",
+        "sha256": "2ab1fbd2729b5c51c7f1bf81cfcbf3df30d5319b011919a05dbd2d4cf9010839"
       },
       "downloads": -1,
-      "filename": "datasette_events_forward-0.1a3.tar.gz",
+      "filename": "datasette_events_forward-0.1a4.tar.gz",
       "has_sig": false,
-      "md5_digest": "c9c78c8cf134b18261763c7ce876f201",
+      "md5_digest": "fc229207915f619373b8dd871433be4b",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 9368,
-      "upload_time": "2025-11-04T02:48:44",
-      "upload_time_iso_8601": "2025-11-04T02:48:44.542381Z",
-      "url": "https://files.pythonhosted.org/packages/c9/a7/4cc9a87f1f4be527b527eb5604f0f0e0a19738ee94a4aebe50c94a8b0948/datasette_events_forward-0.1a3.tar.gz",
+      "size": 9775,
+      "upload_time": "2025-11-10T23:47:31",
+      "upload_time_iso_8601": "2025-11-10T23:47:31.995288Z",
+      "url": "https://files.pythonhosted.org/packages/d5/b1/5578ac409f061341384191e6fa36c988e6c4865f92598c0a6d9f8f78b12a/datasette_events_forward-0.1a4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
