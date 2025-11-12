@@ -48,7 +48,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 20319870,
+  "last_serial": 32327215,
   "releases": {
     "0.1": [
       {
@@ -706,6 +706,50 @@
         "upload_time": "2023-10-25T00:10:47",
         "upload_time_iso_8601": "2023-10-25T00:10:47.326974Z",
         "url": "https://files.pythonhosted.org/packages/af/78/9673d5fa9464e8fbcef3d9fde53d0d0025dc69e0a5f889efa7a549d3d8d2/datasette-ripgrep-0.8.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.9a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "024d1eb6470723fd8d312c7c61f158c70b7ba99a57a1990712bc35e3df69a152",
+          "md5": "78a5bbcf48a0b5a92537c2b45bc6b6cb",
+          "sha256": "df24bff78235e7f257e9326413b7aee48aa609467a0b746ef5fc68ce71635986"
+        },
+        "downloads": -1,
+        "filename": "datasette_ripgrep-0.9a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "78a5bbcf48a0b5a92537c2b45bc6b6cb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 11225,
+        "upload_time": "2025-11-11T15:27:39",
+        "upload_time_iso_8601": "2025-11-11T15:27:39.439191Z",
+        "url": "https://files.pythonhosted.org/packages/02/4d/1eb6470723fd8d312c7c61f158c70b7ba99a57a1990712bc35e3df69a152/datasette_ripgrep-0.9a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2619d865611f11bfda2c440f46f41bcb5922555350a653bcffccfd05740b37f4",
+          "md5": "0b87a621e58698cb08c9096fac3a4860",
+          "sha256": "2368f3fc97ebacb4f978125437f387ddcad462af4eff4abfcb6a74b384cb67ec"
+        },
+        "downloads": -1,
+        "filename": "datasette_ripgrep-0.9a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0b87a621e58698cb08c9096fac3a4860",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 12175,
+        "upload_time": "2025-11-11T15:27:40",
+        "upload_time_iso_8601": "2025-11-11T15:27:40.689796Z",
+        "url": "https://files.pythonhosted.org/packages/26/19/d865611f11bfda2c440f46f41bcb5922555350a653bcffccfd05740b37f4/datasette_ripgrep-0.9a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
