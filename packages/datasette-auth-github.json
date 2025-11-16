@@ -1,50 +1,57 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-auth-github\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-auth-github.svg)](https://pypi.org/project/datasette-auth-github/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-auth-github?include_prereleases&label=changelog)](https://github.com/simonw/datasette-auth-github/releases)\n[![Tests](https://github.com/simonw/datasette-auth-github/workflows/Test/badge.svg)](https://github.com/simonw/datasette-auth-github/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-auth-github/blob/main/LICENSE)\n\nDatasette plugin that authenticates users against GitHub.\n\n<!-- toc -->\n\n- [Setup instructions](#setup-instructions)\n- [The authenticated actor](#the-authenticated-actor)\n- [Restricting access to specific users](#restricting-access-to-specific-users)\n- [Restricting access to specific GitHub organizations or teams](#restricting-access-to-specific-github-organizations-or-teams)\n- [What to do if a user is removed from an organization or team](#what-to-do-if-a-user-is-removed-from-an-organization-or-team)\n\n<!-- tocstop -->\n\n## Setup instructions\n\n* Install the plugin: `datasette install datasette-auth-github`\n* Create a GitHub OAuth app: https://github.com/settings/applications/new\n* Set the Authorization callback URL to `http://127.0.0.1:8001/-/github-auth-callback`\n* Create a `metadata.json` file with the following structure:\n\n```json\n{\n    \"title\": \"datasette-auth-github demo\",\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"client_id\": {\"$env\": \"GITHUB_CLIENT_ID\"},\n            \"client_secret\": {\"$env\": \"GITHUB_CLIENT_SECRET\"}\n        }\n    }\n}\n```\n\nNow you can start Datasette like this, passing in the secrets as environment variables:\n\n    $ GITHUB_CLIENT_ID=XXX GITHUB_CLIENT_SECRET=YYY datasette \\\n        fixtures.db -m metadata.json\n\nNote that hard-coding secrets in `metadata.json` is a bad idea as they will be visible to anyone who can navigate to `/-/metadata`. Instead, we use Datasette's mechanism for [adding secret plugin configuration options](https://docs.datasette.io/en/stable/plugins.html#secret-configuration-values).\n\nBy default anonymous users will still be able to interact with Datasette. If you wish all users to have to sign in with a GitHub account first, add this to your ``metadata.json``:\n\n```json\n{\n    \"allow\": {\n        \"id\": \"*\"\n    },\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\"\n        }\n    }\n}\n```\n## The authenticated actor\n\nVisit `/-/actor` when signed in to see the shape of the authenticated actor. It should look something like this:\n\n```json\n{\n    \"actor\": {\n        \"display\": \"simonw\",\n        \"gh_id\": \"9599\",\n        \"gh_name\": \"Simon Willison\",\n        \"gh_login\": \"simonw\",\n        \"gh_email\": \"...\",\n        \"gh_orgs\": [\n            \"dogsheep\",\n            \"datasette-project\"\n        ],\n        \"gh_teams\": [\n            \"dogsheep/test\"\n        ]\n    }\n}\n```\n\nThe `gh_orgs` and `gh_teams` properties will only be present if you used `load_teams` or `load_orgs`, documented below.\n\n## Restricting access to specific users\n\nYou can use Datasette's [permissions mechanism](https://docs.datasette.io/en/stable/authentication.html) to specify which user or users are allowed to access your instance. Here's how to restrict access to just GitHub user `simonw`:\n\n```json\n{\n    \"allow\": {\n        \"gh_login\": \"simonw\"\n    },\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\"\n        }\n    }\n}\n```\n\nThis `\"allow\"` block can be positioned at the database, table or query level instead: see [Configuring permissions in metadata.json](https://docs.datasette.io/en/stable/authentication.html#configuring-permissions-in-metadata-json) for details.\n\nNote that GitHub allows users to change their username, and it is possible for other people to claim old usernames. If you are concerned that your users may change their usernames you can key the allow blocks against GitHub user IDs instead, which do not change:\n\n```json\n{\n    \"allow\": {\n        \"gh_id\": \"9599\"\n    }\n}\n```\n\n## Restricting access to specific GitHub organizations or teams\n\nYou can also restrict access to users who are members of a specific GitHub organization.\n\nYou'll need to configure the plugin to check if the user is a member of that organization when they first sign in. You can do that using the `\"load_orgs\"` plugin configuration option.\n\nThen you can use `\"allow\": {\"gh_orgs\": [...]}` to specify which organizations are allowed access.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\",\n            \"load_orgs\": [\"your-organization\"]\n        }\n    },\n    \"allow\": {\n        \"gh_orgs\": \"your-organization\"\n    }\n}\n```\n\nIf your organization is [arranged into teams](https://help.github.com/en/articles/organizing-members-into-teams) you can restrict access to a specific team like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\",\n            \"load_teams\": [\n                \"your-organization/staff\",\n                \"your-organization/engineering\",\n            ]\n        }\n    },\n    \"allows\": {\n        \"gh_team\": \"your-organization/engineering\"\n    }\n}\n```\n\n## What to do if a user is removed from an organization or team\n\nA user's organization and team memberships are checked once, when they first sign in. Those teams and organizations are then persisted in the user's signed `ds_actor` cookie.\n\nThis means that if a user is removed from an organization or team but still has a Datasette cookie, they will still be able to access that Datasette instance.\n\nYou can remedy this by rotating the `DATASETTE_SECRET` environment variable any time you make changes to your GitHub organization members.\n\nChanging this value will cause all of your existing users to be signed out, by invalidating their cookies. When they sign back in again their new memberships will be recorded in a new cookie.\n\nSee [Configuring the secret](https://docs.datasette.io/en/stable/settings.html?highlight=secret#configuring-the-secret) in the Datasette documentation for more details.\n\n\n",
+    "description": "# datasette-auth-github\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-auth-github.svg)](https://pypi.org/project/datasette-auth-github/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-auth-github?include_prereleases&label=changelog)](https://github.com/simonw/datasette-auth-github/releases)\n[![Tests](https://github.com/simonw/datasette-auth-github/workflows/Test/badge.svg)](https://github.com/simonw/datasette-auth-github/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-auth-github/blob/main/LICENSE)\n\nDatasette plugin that authenticates users against GitHub.\n\n<!-- toc -->\n\n- [Setup instructions](#setup-instructions)\n- [The authenticated actor](#the-authenticated-actor)\n- [Restricting access to specific users](#restricting-access-to-specific-users)\n- [Restricting access to specific GitHub organizations or teams](#restricting-access-to-specific-github-organizations-or-teams)\n- [What to do if a user is removed from an organization or team](#what-to-do-if-a-user-is-removed-from-an-organization-or-team)\n\n<!-- tocstop -->\n\n## Setup instructions\n\n* Install the plugin: `datasette install datasette-auth-github`\n* Create a GitHub OAuth app: https://github.com/settings/applications/new\n* Set the Authorization callback URL to `http://127.0.0.1:8001/-/github-auth-callback`\n* Create a `metadata.json` file with the following structure:\n\n```json\n{\n    \"title\": \"datasette-auth-github demo\",\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"client_id\": {\"$env\": \"GITHUB_CLIENT_ID\"},\n            \"client_secret\": {\"$env\": \"GITHUB_CLIENT_SECRET\"}\n        }\n    }\n}\n```\n\nFor a GitHub Enterprise server, add `\"host\": \"github.example.com\"` to `datasette-auth-github`.\n\nNow you can start Datasette like this, passing in the secrets as environment variables:\n\n    $ GITHUB_CLIENT_ID=XXX GITHUB_CLIENT_SECRET=YYY datasette \\\n        fixtures.db -m metadata.json\n\nNote that hard-coding secrets in `metadata.json` is a bad idea as they will be visible to anyone who can navigate to `/-/metadata`. Instead, we use Datasette's mechanism for [adding secret plugin configuration options](https://docs.datasette.io/en/stable/plugins.html#secret-configuration-values).\n\nBy default anonymous users will still be able to interact with Datasette. If you wish all users to have to sign in with a GitHub account first, add this to your ``metadata.json``:\n\n```json\n{\n    \"allow\": {\n        \"id\": \"*\"\n    },\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\"\n        }\n    }\n}\n```\n## The authenticated actor\n\nVisit `/-/actor` when signed in to see the shape of the authenticated actor. It should look something like this:\n\n```json\n{\n    \"actor\": {\n        \"id\": \"github:9599\",\n        \"display\": \"simonw\",\n        \"gh_id\": \"9599\",\n        \"gh_name\": \"Simon Willison\",\n        \"gh_login\": \"simonw\",\n        \"gh_email\": \"...\",\n        \"gh_orgs\": [\n            \"dogsheep\",\n            \"datasette-project\"\n        ],\n        \"gh_teams\": [\n            \"dogsheep/test\"\n        ]\n    }\n}\n```\n\nThe `gh_orgs` and `gh_teams` properties will only be present if you used `load_teams` or `load_orgs`, documented below.\n\n## Restricting access to specific users\n\nYou can use Datasette's [permissions mechanism](https://docs.datasette.io/en/stable/authentication.html) to specify which user or users are allowed to access your instance. Here's how to restrict access to just GitHub user `simonw`:\n\n```json\n{\n    \"allow\": {\n        \"gh_login\": \"simonw\"\n    },\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\"\n        }\n    }\n}\n```\n\nThis `\"allow\"` block can be positioned at the database, table or query level instead: see [Configuring permissions in metadata.json](https://docs.datasette.io/en/stable/authentication.html#configuring-permissions-in-metadata-json) for details.\n\nNote that GitHub allows users to change their username, and it is possible for other people to claim old usernames. If you are concerned that your users may change their usernames you can key the allow blocks against GitHub user IDs instead, which do not change:\n\n```json\n{\n    \"allow\": {\n        \"id\": \"github:9599\"\n    }\n}\n```\n\n## Restricting access to specific GitHub organizations or teams\n\nYou can also restrict access to users who are members of a specific GitHub organization.\n\nYou'll need to configure the plugin to check if the user is a member of that organization when they first sign in. You can do that using the `\"load_orgs\"` plugin configuration option.\n\nThen you can use `\"allow\": {\"gh_orgs\": [...]}` to specify which organizations are allowed access.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\",\n            \"load_orgs\": [\"your-organization\"]\n        }\n    },\n    \"allow\": {\n        \"gh_orgs\": \"your-organization\"\n    }\n}\n```\n\nIf your organization is [arranged into teams](https://help.github.com/en/articles/organizing-members-into-teams) you can restrict access to a specific team like this:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-github\": {\n            \"...\": \"...\",\n            \"load_teams\": [\n                \"your-organization/staff\",\n                \"your-organization/engineering\",\n            ]\n        }\n    },\n    \"allows\": {\n        \"gh_team\": \"your-organization/engineering\"\n    }\n}\n```\n\n## What to do if a user is removed from an organization or team\n\nA user's organization and team memberships are checked once, when they first sign in. Those teams and organizations are then persisted in the user's signed `ds_actor` cookie.\n\nThis means that if a user is removed from an organization or team but still has a Datasette cookie, they will still be able to access that Datasette instance.\n\nYou can remedy this by rotating the `DATASETTE_SECRET` environment variable any time you make changes to your GitHub organization members.\n\nChanging this value will cause all of your existing users to be signed out, by invalidating their cookies. When they sign back in again their new memberships will be recorded in a new cookie.\n\nSee [Configuring the secret](https://docs.datasette.io/en/stable/settings.html?highlight=secret#configuring-the-secret) in the Datasette documentation for more details.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-auth-github",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
-    "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-auth-github",
     "package_url": "https://pypi.org/project/datasette-auth-github/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-auth-github/",
     "project_urls": {
-      "Homepage": "https://github.com/simonw/datasette-auth-github"
+      "Changelog": "https://github.com/simonw/datasette-auth-github/releases",
+      "Homepage": "https://github.com/simonw/datasette-auth-github",
+      "Issues": "https://github.com/simonw/datasette-auth-github/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-auth-github/0.13.1/",
-    "requires_dist": [
-      "datasette (>=0.51)",
-      "datasette ; extra == 'test'",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'",
-      "pytest-httpx ; extra == 'test'"
+    "provides_extra": [
+      "test"
     ],
-    "requires_python": "",
+    "release_url": "https://pypi.org/project/datasette-auth-github/0.14/",
+    "requires_dist": [
+      "datasette",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "sqlite-utils; extra == \"test\"",
+      "pytest-httpx; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
     "summary": "Datasette plugin and ASGI middleware that authenticates users against GitHub",
-    "version": "0.13.1",
+    "version": "0.14",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9519326,
+  "last_serial": 32420645,
   "releases": {
     "0.1": [
       {
@@ -404,6 +411,50 @@
         "yanked_reason": null
       }
     ],
+    "0.14": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2108de491378be044f3f76f58e279437c3abd01fd9ba12a4a18684ad6fbb5f72",
+          "md5": "c14358eb870e79bf06e955e2821f1ada",
+          "sha256": "c639cc6f6b1c7d3e76a156c4283276f37c5482b66830209632e1dabc70473969"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_github-0.14-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c14358eb870e79bf06e955e2821f1ada",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10855,
+        "upload_time": "2025-11-16T00:16:22",
+        "upload_time_iso_8601": "2025-11-16T00:16:22.155881Z",
+        "url": "https://files.pythonhosted.org/packages/21/08/de491378be044f3f76f58e279437c3abd01fd9ba12a4a18684ad6fbb5f72/datasette_auth_github-0.14-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7ac8054677d30b9bf39e8473d6e33142b414af593b0204cf76a9e5afa315897f",
+          "md5": "a542506dd13cccc59308493a68d99b66",
+          "sha256": "88f5de74db49798092c1bb998974089d9ed0fb4153d19f78396a3323a37bce36"
+        },
+        "downloads": -1,
+        "filename": "datasette_auth_github-0.14.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a542506dd13cccc59308493a68d99b66",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11774,
+        "upload_time": "2025-11-16T00:16:23",
+        "upload_time_iso_8601": "2025-11-16T00:16:23.612928Z",
+        "url": "https://files.pythonhosted.org/packages/7a/c8/054677d30b9bf39e8473d6e33142b414af593b0204cf76a9e5afa315897f/datasette_auth_github-0.14.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.2": [
       {
         "comment_text": "",
@@ -729,44 +780,44 @@
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "4472302dbc9fe771e849c774101037858eca0fe25a90201ab7a5e5780ea3e2cc",
-        "md5": "d5b2f0ac30044b652140fd8d3e1b60cb",
-        "sha256": "961b7cd8e111dc7f2c3935ef294d68df77b75d9f9c2edd18e85cd8af1a419a4e"
+        "blake2b_256": "2108de491378be044f3f76f58e279437c3abd01fd9ba12a4a18684ad6fbb5f72",
+        "md5": "c14358eb870e79bf06e955e2821f1ada",
+        "sha256": "c639cc6f6b1c7d3e76a156c4283276f37c5482b66830209632e1dabc70473969"
       },
       "downloads": -1,
-      "filename": "datasette_auth_github-0.13.1-py3-none-any.whl",
+      "filename": "datasette_auth_github-0.14-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "d5b2f0ac30044b652140fd8d3e1b60cb",
+      "md5_digest": "c14358eb870e79bf06e955e2821f1ada",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 10723,
-      "upload_time": "2021-02-25T06:41:08",
-      "upload_time_iso_8601": "2021-02-25T06:41:08.896482Z",
-      "url": "https://files.pythonhosted.org/packages/44/72/302dbc9fe771e849c774101037858eca0fe25a90201ab7a5e5780ea3e2cc/datasette_auth_github-0.13.1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 10855,
+      "upload_time": "2025-11-16T00:16:22",
+      "upload_time_iso_8601": "2025-11-16T00:16:22.155881Z",
+      "url": "https://files.pythonhosted.org/packages/21/08/de491378be044f3f76f58e279437c3abd01fd9ba12a4a18684ad6fbb5f72/datasette_auth_github-0.14-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "e493ec00470a7d9f7bb0931809222741da85c4e851be068a5046bc877a259167",
-        "md5": "38fc1cf4b9560d67a9604718c07ec9d9",
-        "sha256": "fe04a6e375c9990d48e92eb20f2d97c12718861cc4fead473b28b81d228b158d"
+        "blake2b_256": "7ac8054677d30b9bf39e8473d6e33142b414af593b0204cf76a9e5afa315897f",
+        "md5": "a542506dd13cccc59308493a68d99b66",
+        "sha256": "88f5de74db49798092c1bb998974089d9ed0fb4153d19f78396a3323a37bce36"
       },
       "downloads": -1,
-      "filename": "datasette-auth-github-0.13.1.tar.gz",
+      "filename": "datasette_auth_github-0.14.tar.gz",
       "has_sig": false,
-      "md5_digest": "38fc1cf4b9560d67a9604718c07ec9d9",
+      "md5_digest": "a542506dd13cccc59308493a68d99b66",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 6295,
-      "upload_time": "2021-02-25T06:41:09",
-      "upload_time_iso_8601": "2021-02-25T06:41:09.907311Z",
-      "url": "https://files.pythonhosted.org/packages/e4/93/ec00470a7d9f7bb0931809222741da85c4e851be068a5046bc877a259167/datasette-auth-github-0.13.1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 11774,
+      "upload_time": "2025-11-16T00:16:23",
+      "upload_time_iso_8601": "2025-11-16T00:16:23.612928Z",
+      "url": "https://files.pythonhosted.org/packages/7a/c8/054677d30b9bf39e8473d6e33142b414af593b0204cf76a9e5afa315897f/datasette_auth_github-0.14.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
