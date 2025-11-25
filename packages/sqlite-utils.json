@@ -8,13 +8,11 @@
       "Intended Audience :: Developers",
       "Intended Audience :: End Users/Desktop",
       "Intended Audience :: Science/Research",
-      "License :: OSI Approved :: Apache Software License",
       "Programming Language :: Python :: 3.10",
       "Programming Language :: Python :: 3.11",
       "Programming Language :: Python :: 3.12",
       "Programming Language :: Python :: 3.13",
-      "Programming Language :: Python :: 3.8",
-      "Programming Language :: Python :: 3.9",
+      "Programming Language :: Python :: 3.14",
       "Topic :: Database"
     ],
     "description": "# sqlite-utils\n\n[![PyPI](https://img.shields.io/pypi/v/sqlite-utils.svg)](https://pypi.org/project/sqlite-utils/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/sqlite-utils?include_prereleases&label=changelog)](https://sqlite-utils.datasette.io/en/stable/changelog.html)\n[![Python 3.x](https://img.shields.io/pypi/pyversions/sqlite-utils.svg?logo=python&logoColor=white)](https://pypi.org/project/sqlite-utils/)\n[![Tests](https://github.com/simonw/sqlite-utils/workflows/Test/badge.svg)](https://github.com/simonw/sqlite-utils/actions?query=workflow%3ATest)\n[![Documentation Status](https://readthedocs.org/projects/sqlite-utils/badge/?version=stable)](http://sqlite-utils.datasette.io/en/stable/?badge=stable)\n[![codecov](https://codecov.io/gh/simonw/sqlite-utils/branch/main/graph/badge.svg)](https://codecov.io/gh/simonw/sqlite-utils)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/sqlite-utils/blob/main/LICENSE)\n[![discord](https://img.shields.io/discord/823971286308356157?label=discord)](https://discord.gg/Ass7bCAMDw)\n\nPython CLI utility and library for manipulating SQLite databases.\n\n## Some feature highlights\n\n- [Pipe JSON](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-json-data) (or [CSV or TSV](https://sqlite-utils.datasette.io/en/stable/cli.html#inserting-csv-or-tsv-data)) directly into a new SQLite database file, automatically creating a table with the appropriate schema\n- [Run in-memory SQL queries](https://sqlite-utils.datasette.io/en/stable/cli.html#querying-data-directly-using-an-in-memory-database), including joins, directly against data in CSV, TSV or JSON files and view the results\n- [Configure SQLite full-text search](https://sqlite-utils.datasette.io/en/stable/cli.html#configuring-full-text-search) against your database tables and run search queries against them, ordered by relevance\n- Run [transformations against your tables](https://sqlite-utils.datasette.io/en/stable/cli.html#transforming-tables) to make schema changes that SQLite `ALTER TABLE` does not directly support, such as changing the type of a column\n- [Extract columns](https://sqlite-utils.datasette.io/en/stable/cli.html#extracting-columns-into-a-separate-table) into separate tables to better normalize your existing data\n- [Install plugins](https://sqlite-utils.datasette.io/en/stable/plugins.html) to add custom SQL functions and additional features\n\nRead more on my blog, in this series of posts on [New features in sqlite-utils](https://simonwillison.net/series/sqlite-utils-features/) and other [entries tagged sqliteutils](https://simonwillison.net/tags/sqliteutils/).\n\n## Installation\n\n    pip install sqlite-utils\n\nOr if you use [Homebrew](https://brew.sh/) for macOS:\n\n    brew install sqlite-utils\n\n## Using as a CLI tool\n\nNow you can do things with the CLI utility like this:\n\n    $ sqlite-utils memory dogs.csv \"select * from t\"\n    [{\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n     {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n    [####################################]  100%\n\n    $ sqlite-utils tables dogs.db --counts\n    [{\"table\": \"dogs\", \"count\": 2}]\n\n    $ sqlite-utils dogs.db \"select id, name from dogs\"\n    [{\"id\": 1, \"name\": \"Cleo\"},\n     {\"id\": 2, \"name\": \"Pancakes\"}]\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --csv\n    id,age,name\n    1,4,Cleo\n    2,2,Pancakes\n\n    $ sqlite-utils dogs.db \"select * from dogs\" --table\n      id    age  name\n    ----  -----  --------\n       1      4  Cleo\n       2      2  Pancakes\n\nYou can import JSON data into a new database table like this:\n\n    $ curl https://api.github.com/repos/simonw/sqlite-utils/releases \\\n        | sqlite-utils insert releases.db releases - --pk id\n\nOr for data in a CSV file:\n\n    $ sqlite-utils insert dogs.db dogs dogs.csv --csv\n\n`sqlite-utils memory` lets you import CSV or JSON data into an in-memory database and run SQL queries against it in a single command:\n\n    $ cat dogs.csv | sqlite-utils memory - \"select name, age from stdin\"\n\nSee the [full CLI documentation](https://sqlite-utils.datasette.io/en/stable/cli.html) for comprehensive coverage of many more commands.\n\n## Using as a library\n\nYou can also `import sqlite_utils` and use it as a Python library like this:\n\n```python\nimport sqlite_utils\ndb = sqlite_utils.Database(\"demo_database.db\")\n# This line creates a \"dogs\" table if one does not already exist:\ndb[\"dogs\"].insert_all([\n    {\"id\": 1, \"age\": 4, \"name\": \"Cleo\"},\n    {\"id\": 2, \"age\": 2, \"name\": \"Pancakes\"}\n], pk=\"id\")\n```\n\nCheck out the [full library documentation](https://sqlite-utils.datasette.io/en/stable/python-api.html) for everything else you can do with the Python library.\n\n## Related projects\n\n* [Datasette](https://datasette.io/): A tool for exploring and publishing data\n* [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite): Convert CSV files into a SQLite database\n* [db-to-sqlite](https://github.com/simonw/db-to-sqlite): CLI tool for exporting a MySQL or PostgreSQL database as a SQLite file\n* [dogsheep](https://dogsheep.github.io/): A family of tools for personal analytics, built on top of `sqlite-utils`\n",
@@ -26,12 +24,27 @@
       "last_month": -1,
       "last_week": -1
     },
-    "dynamic": null,
+    "dynamic": [
+      "Author",
+      "Classifier",
+      "Description",
+      "Description-Content-Type",
+      "Home-Page",
+      "License",
+      "License-File",
+      "Project-Url",
+      "Provides-Extra",
+      "Requires-Dist",
+      "Requires-Python",
+      "Summary"
+    ],
     "home_page": "https://github.com/simonw/sqlite-utils",
     "keywords": null,
     "license": "Apache License, Version 2.0",
     "license_expression": null,
-    "license_files": null,
+    "license_files": [
+      "LICENSE"
+    ],
     "maintainer": null,
     "maintainer_email": null,
     "name": "sqlite-utils",
@@ -53,14 +66,15 @@
       "flake8",
       "tui"
     ],
-    "release_url": "https://pypi.org/project/sqlite-utils/3.38/",
+    "release_url": "https://pypi.org/project/sqlite-utils/3.39/",
     "requires_dist": [
       "sqlite-fts4",
-      "click",
+      "click>=8.3.1",
       "click-default-group>=1.2.3",
       "tabulate",
       "python-dateutil",
       "pluggy",
+      "pip",
       "pytest; extra == \"test\"",
       "black>=24.1.1; extra == \"test\"",
       "hypothesis; extra == \"test\"",
@@ -80,13 +94,13 @@
       "flake8; extra == \"flake8\"",
       "trogon; extra == \"tui\""
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.10",
     "summary": "CLI tool and Python library for manipulating SQLite databases",
-    "version": "3.38",
+    "version": "3.39",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 28957478,
+  "last_serial": 32593436,
   "releases": {
     "0.10": [
       {
@@ -3978,6 +3992,50 @@
         "yanked_reason": null
       }
     ],
+    "3.39": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "51337e01d2f6b8c778529dfae9045c4f46b33ba145c3d401fa95b07f599e7403",
+          "md5": "152017ed2498a8a25fb93178a2699e93",
+          "sha256": "349c099c0cd60d4ee9139a24d5c9cb64af3906c3e90832fcbbd74da49333374d"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.39-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "152017ed2498a8a25fb93178a2699e93",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 68451,
+        "upload_time": "2025-11-24T18:45:48",
+        "upload_time_iso_8601": "2025-11-24T18:45:48.366286Z",
+        "url": "https://files.pythonhosted.org/packages/51/33/7e01d2f6b8c778529dfae9045c4f46b33ba145c3d401fa95b07f599e7403/sqlite_utils-3.39-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b3e36b1106349e2576c18409b27bd3b16f193b1cf38220d98ad22aa454c5e075",
+          "md5": "cef9fc8c5c2934341c43329daa362fec",
+          "sha256": "bfa2eac29b3e3eb5c9647283797527febcf4efd4a9bbb31d979a14a11ef9dbcd"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.39.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cef9fc8c5c2934341c43329daa362fec",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 215324,
+        "upload_time": "2025-11-24T18:45:49",
+        "upload_time_iso_8601": "2025-11-24T18:45:49.910634Z",
+        "url": "https://files.pythonhosted.org/packages/b3/e3/6b1106349e2576c18409b27bd3b16f193b1cf38220d98ad22aa454c5e075/sqlite_utils-3.39.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "3.4": [
       {
         "comment_text": "",
@@ -4373,48 +4431,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "4.0a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0a59f7087735f7328998be9ad26bd33b42c9145ddb83458e48e1ef4fe6e7e05b",
+          "md5": "7b607fc5bb9642ad439da1b50b4aa5ec",
+          "sha256": "7f3876d00156b18e5c661e2f519747aee489462896753e8b49c72377a12e5092"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.0a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7b607fc5bb9642ad439da1b50b4aa5ec",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 70793,
+        "upload_time": "2025-11-24T06:36:31",
+        "upload_time_iso_8601": "2025-11-24T06:36:31.289224Z",
+        "url": "https://files.pythonhosted.org/packages/0a/59/f7087735f7328998be9ad26bd33b42c9145ddb83458e48e1ef4fe6e7e05b/sqlite_utils-4.0a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0e5767bf0a3c70049d9523fd739036a2f85e7ea40459f8a2b6d5c03a06c86ce2",
+          "md5": "8428740eb561e09fd7b33d9a22fcad50",
+          "sha256": "b271d910a67861b55541c6e98dbb5c27797dd0964ac3940fe99e71aa5ea55a5d"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.0a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8428740eb561e09fd7b33d9a22fcad50",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 220723,
+        "upload_time": "2025-11-24T06:36:32",
+        "upload_time_iso_8601": "2025-11-24T06:36:32.268047Z",
+        "url": "https://files.pythonhosted.org/packages/0e/57/67bf0a3c70049d9523fd739036a2f85e7ea40459f8a2b6d5c03a06c86ce2/sqlite_utils-4.0a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "4debf8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b",
-        "md5": "9e66860feb66275c42993c894521a333",
-        "sha256": "8a27441015c3b2ef475f555861f7a2592f73bc60d247af9803a11b65fc605bf9"
+        "blake2b_256": "51337e01d2f6b8c778529dfae9045c4f46b33ba145c3d401fa95b07f599e7403",
+        "md5": "152017ed2498a8a25fb93178a2699e93",
+        "sha256": "349c099c0cd60d4ee9139a24d5c9cb64af3906c3e90832fcbbd74da49333374d"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.38-py3-none-any.whl",
+      "filename": "sqlite_utils-3.39-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "9e66860feb66275c42993c894521a333",
+      "md5_digest": "152017ed2498a8a25fb93178a2699e93",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 68183,
-      "upload_time": "2024-11-23T22:49:38",
-      "upload_time_iso_8601": "2024-11-23T22:49:38.289905Z",
-      "url": "https://files.pythonhosted.org/packages/4d/eb/f8e8e827805f810838efff3311cccd2601238c5fa3fc35c1f878709e161b/sqlite_utils-3.38-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 68451,
+      "upload_time": "2025-11-24T18:45:48",
+      "upload_time_iso_8601": "2025-11-24T18:45:48.366286Z",
+      "url": "https://files.pythonhosted.org/packages/51/33/7e01d2f6b8c778529dfae9045c4f46b33ba145c3d401fa95b07f599e7403/sqlite_utils-3.39-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "5143ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564",
-        "md5": "e5513a55b428db81302f59d82e067aae",
-        "sha256": "1ae77b931384052205a15478d429464f6c67a3ac3b4eafd3c674ac900f623aab"
+        "blake2b_256": "b3e36b1106349e2576c18409b27bd3b16f193b1cf38220d98ad22aa454c5e075",
+        "md5": "cef9fc8c5c2934341c43329daa362fec",
+        "sha256": "bfa2eac29b3e3eb5c9647283797527febcf4efd4a9bbb31d979a14a11ef9dbcd"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-3.38.tar.gz",
+      "filename": "sqlite_utils-3.39.tar.gz",
       "has_sig": false,
-      "md5_digest": "e5513a55b428db81302f59d82e067aae",
+      "md5_digest": "cef9fc8c5c2934341c43329daa362fec",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 214449,
-      "upload_time": "2024-11-23T22:49:40",
-      "upload_time_iso_8601": "2024-11-23T22:49:40.308839Z",
-      "url": "https://files.pythonhosted.org/packages/51/43/ce9183a21911e0b73248c8fb83f8b8038515cb80053912c2a009e9765564/sqlite_utils-3.38.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 215324,
+      "upload_time": "2025-11-24T18:45:49",
+      "upload_time_iso_8601": "2025-11-24T18:45:49.910634Z",
+      "url": "https://files.pythonhosted.org/packages/b3/e3/6b1106349e2576c18409b27bd3b16f193b1cf38220d98ad22aa454c5e075/sqlite_utils-3.39.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
