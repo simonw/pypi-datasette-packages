@@ -6,7 +6,7 @@
     "classifiers": [
       "Framework :: Datasette"
     ],
-    "description": "# datasette-extract\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-extract.svg)](https://pypi.org/project/datasette-extract/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-extract?include_prereleases&label=changelog)](https://github.com/datasette/datasette-extract/releases)\n[![Tests](https://github.com/datasette/datasette-extract/workflows/Test/badge.svg)](https://github.com/datasette/datasette-extract/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-extract/blob/main/LICENSE)\n\nImport unstructured data (text and images) into structured tables\n\n## Installation\n\nInstall this plugin in the same environment as [Datasette](https://datasette.io/).\n```bash\ndatasette install datasette-extract\n```\n\n## Configuration\n\nThis plugin uses the [LLM](https://llm.datasette.io/) library and works with any LLM provider that supports:\n- Async models\n- JSON schema-based structured output\n\nThe plugin automatically discovers available models and their required API keys. Only models with configured API keys will be shown to users.\n\n### Setting up API Keys\n\nYou can configure API keys in two ways:\n\n**Option 1: Using environment variables**\n\nSet the appropriate environment variable before starting Datasette:\n\n```bash\n# For OpenAI\nexport DATASETTE_SECRETS_OPENAI_API_KEY=\"sk-...\"\n\n# For Anthropic\nexport DATASETTE_SECRETS_ANTHROPIC_API_KEY=\"sk-ant-...\"\n\n# For Gemini\nexport DATASETTE_SECRETS_GEMINI_API_KEY=\"...\"\n```\n\n**Option 2: Using the datasette-secrets UI**\n\nThe plugin integrates with [datasette-secrets](https://github.com/datasette/datasette-secrets) to let users configure their own API keys through the web interface. Any schema-capable async model will automatically have its required API key registered as a configurable secret.\n\n### Installing Model Providers\n\nFirst install the LLM plugin for your chosen provider:\n\n**OpenAI** (GPT-4o, GPT-4, etc.):\n```bash\nllm install llm-openai-plugin\n```\n\n**Anthropic Claude**:\n```bash\nllm install llm-anthropic\n```\n\n**Google Gemini**:\n```bash\nllm install llm-gemini\n```\n\n**Other providers**: See the [LLM plugins directory](https://llm.datasette.io/en/stable/plugins/directory.html) for more options.\n\n### Starting Datasette\n\nOnce you've installed at least one LLM plugin and configured its API key, start Datasette:\n\n```bash\nDATASETTE_SECRETS_OPENAI_API_KEY=\"sk-...\" datasette data.db --root --create\n# Now click or command-click the URL containing .../-/auth-token?token=...\n```\n- The `--root` flag causes Datasette to output a link that will sign you in as root\n- The `--create` flag will create the `data.db` SQLite database file if it does not exist\n\n### Restricting Available Models\n\nBy default, all schema-capable async models with configured API keys will be available. You can restrict this to specific models using the `models` setting:\n\n```yaml\nplugins:\n  datasette-extract:\n    models:\n      - gpt-4o-mini\n      - claude-3-5-sonnet-latest\n      - gemini-2.0-flash-exp\n```\nIf you only list a single model, users will not see a model selector in the UI.\n\n## Usage\n\nThis plugin provides the following features:\n\n- In the database action cog menu for a database select \"Create table with extracted data\" to create a new table with data extracted from text or an image\n- In the table action cog menu select \"Extract data into this table\" to extract data into an existing table\n\nWhen creating a table you can specify the column names, types and provide an optional hint (like \"YYYY-MM-DD\" for dates) to influence how the data should be extracted.\n\nWhen populating an existing table you can provide hints and select which columns should be populated.\n\nText input can be pasted directly into the textarea.\n\nDrag and drop a PDF or text file onto the textarea to populate it with the contents of that file. PDF files will have their text extracted, but only if the file contains text as opposed to scanned images.\n\nDrag and drop a single image onto the textarea - or select it with the image file input box - to process an image.\n\n## Permissions\n\nUsers must have the `datasette-extract` permission to use this tool.\n\nIn order to create tables they also need the `create-table` permission.\n\nTo insert rows into an existing table they need `insert-row`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-extract\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\nTo run this in development start Datasette with the appropriate API key:\n```bash\nDATASETTE_SECRETS_OPENAI_API_KEY=\"$(llm keys get openai)\" \\\n  datasette . --root --secret 1 \\\n  -s plugins.datasette-extract.models '[\"gpt-4o-mini\"]' \\\n  --internal internal.db --reload\n```\n",
+    "description": "# datasette-extract\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-extract.svg)](https://pypi.org/project/datasette-extract/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-extract?include_prereleases&label=changelog)](https://github.com/datasette/datasette-extract/releases)\n[![Tests](https://github.com/datasette/datasette-extract/workflows/Test/badge.svg)](https://github.com/datasette/datasette-extract/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-extract/blob/main/LICENSE)\n\nImport unstructured data (text and images) into structured tables\n\n## Installation\n\nInstall this plugin in the same environment as [Datasette](https://datasette.io/).\n```bash\ndatasette install datasette-extract\n```\n\n## Configuration\n\nThis plugin uses the [LLM](https://llm.datasette.io/) library and works with any LLM provider that supports:\n- Async models\n- JSON schema-based structured output\n\nThe plugin automatically discovers available models and their required API keys. Only models with configured API keys will be shown to users.\n\n### Setting up API Keys\n\nYou can configure API keys in two ways:\n\n**Option 1: Using environment variables**\n\nSet the appropriate environment variable before starting Datasette:\n\n```bash\n# For OpenAI\nexport DATASETTE_SECRETS_OPENAI_API_KEY=\"sk-...\"\n\n# For Anthropic\nexport DATASETTE_SECRETS_ANTHROPIC_API_KEY=\"sk-ant-...\"\n\n# For Gemini\nexport DATASETTE_SECRETS_GEMINI_API_KEY=\"...\"\n```\n\n**Option 2: Using the datasette-secrets UI**\n\nThe plugin integrates with [datasette-secrets](https://github.com/datasette/datasette-secrets) to let users configure their own API keys through the web interface. Any schema-capable async model will automatically have its required API key registered as a configurable secret.\n\n### Installing Model Providers\n\nFirst install the LLM plugin for your chosen provider:\n\n**OpenAI** (GPT-4o, GPT-4, etc.):\n```bash\nllm install llm-openai-plugin\n```\n\n**Anthropic Claude**:\n```bash\nllm install llm-anthropic\n```\n\n**Google Gemini**:\n```bash\nllm install llm-gemini\n```\n\n**Other providers**: See the [LLM plugins directory](https://llm.datasette.io/en/stable/plugins/directory.html) for more options.\n\n### Starting Datasette\n\nOnce you've installed at least one LLM plugin and configured its API key, start Datasette:\n\n```bash\nDATASETTE_SECRETS_OPENAI_API_KEY=\"sk-...\" datasette data.db --root --create\n# Now click or command-click the URL containing .../-/auth-token?token=...\n```\n- The `--root` flag causes Datasette to output a link that will sign you in as root\n- The `--create` flag will create the `data.db` SQLite database file if it does not exist\n\n### Restricting Available Models\n\nBy default, all schema-capable async models with configured API keys will be available. You can restrict this to specific models using the `models` setting:\n\n```yaml\nplugins:\n  datasette-extract:\n    models:\n      - gpt-4o-mini\n      - claude-3-5-sonnet-latest\n      - gemini-2.0-flash-exp\n```\nIf you only list a single model, users will not see a model selector in the UI.\n\n## Usage\n\nThis plugin provides the following features:\n\n- In the database action cog menu for a database select \"Create table with extracted data\" to create a new table with data extracted from text or an image\n- In the table action cog menu select \"Extract data into this table\" to extract data into an existing table\n\nWhen creating a table you can specify the column names, types and provide an optional hint (like \"YYYY-MM-DD\" for dates) to influence how the data should be extracted.\n\nWhen populating an existing table you can provide hints and select which columns should be populated.\n\nText input can be pasted directly into the textarea.\n\nDrag and drop a PDF or text file onto the textarea to populate it with the contents of that file. PDF files will have their text extracted, but only if the file contains text as opposed to scanned images.\n\nDrag and drop a single image onto the textarea - or select it with the image file input box - to process an image.\n\n## Permissions\n\nUsers must have the `datasette-extract` permission to use this tool.\n\nIn order to create tables they also need the `create-table` permission.\n\nTo insert rows into an existing table they need `insert-row`.\n\n## Development\n\nThe recommended way to develop this plugin uses [uv](https://github.com/astral-sh/uv). To run the tests:\n```bash\ncd datasette-extract\nuv run pytest\n```\nTo run a development server with an OpenAI API key (pulled from the LLM key store):\n```bash\nDATASETTE_SECRETS_OPENAI_API_KEY=\"$(llm keys get openai)\" \\\n  uv run datasette data.db --create --root --secret 1 \\\n  -s plugins.datasette-extract.models '[\"gpt-4o-mini\"]' \\\n  --internal internal.db --reload\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -37,10 +37,8 @@
       "Homepage": "https://github.com/datasette/datasette-extract",
       "Issues": "https://github.com/datasette/datasette-extract/issues"
     },
-    "provides_extra": [
-      "test"
-    ],
-    "release_url": "https://pypi.org/project/datasette-extract/0.2a0/",
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-extract/0.2a1/",
     "requires_dist": [
       "datasette>=1.0a21",
       "datasette-secrets>=0.1a2",
@@ -49,18 +47,15 @@
       "ijson",
       "python-ulid",
       "starlette",
-      "datasette-llm-accountant>=0.1a1",
-      "pytest; extra == \"test\"",
-      "pytest-asyncio; extra == \"test\"",
-      "pytest-recording; extra == \"test\""
+      "datasette-llm-accountant>=0.1a1"
     ],
     "requires_python": ">=3.10",
     "summary": "Import unstructured data (text and images) into structured tables",
-    "version": "0.2a0",
+    "version": "0.2a1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 32637496,
+  "last_serial": 32758938,
   "releases": {
     "0.1a0": [
       {
@@ -633,48 +628,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "480813bb02136f486a723ce89215233fd5d2dfff3a7e60f25e2eefd1a2cb3b9c",
+          "md5": "846f193875db93fcf98e98b7dea32f9c",
+          "sha256": "dca0011e82f07794b20f6d62277de389fd6c607a7242eef9fe536eebe2a59cef"
+        },
+        "downloads": -1,
+        "filename": "datasette_extract-0.2a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "846f193875db93fcf98e98b7dea32f9c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 363098,
+        "upload_time": "2025-12-03T05:14:58",
+        "upload_time_iso_8601": "2025-12-03T05:14:58.946433Z",
+        "url": "https://files.pythonhosted.org/packages/48/08/13bb02136f486a723ce89215233fd5d2dfff3a7e60f25e2eefd1a2cb3b9c/datasette_extract-0.2a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "bbabc3b8ac5dd38cc611c935b149fd04031411d3d9d0ca86afc5d440302ef3d0",
+          "md5": "cd5bf3293aa5696cf968936f9c30d4c2",
+          "sha256": "b79e5640e5bcbc19e40a464889a8d8586c7456089e4dedde55dd45c9fad081af"
+        },
+        "downloads": -1,
+        "filename": "datasette_extract-0.2a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cd5bf3293aa5696cf968936f9c30d4c2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 360672,
+        "upload_time": "2025-12-03T05:15:00",
+        "upload_time_iso_8601": "2025-12-03T05:15:00.831196Z",
+        "url": "https://files.pythonhosted.org/packages/bb/ab/c3b8ac5dd38cc611c935b149fd04031411d3d9d0ca86afc5d440302ef3d0/datasette_extract-0.2a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "ef934954ef7323f288d9df7263e73d0764b367b39fdec9cdd8376c7f7515fb99",
-        "md5": "e8cd69d6318797d00188194c82210b1a",
-        "sha256": "02c3d517b31330f48ee1c29db1519be625c32c494bdfde8b59484b8f78249fa2"
+        "blake2b_256": "480813bb02136f486a723ce89215233fd5d2dfff3a7e60f25e2eefd1a2cb3b9c",
+        "md5": "846f193875db93fcf98e98b7dea32f9c",
+        "sha256": "dca0011e82f07794b20f6d62277de389fd6c607a7242eef9fe536eebe2a59cef"
       },
       "downloads": -1,
-      "filename": "datasette_extract-0.2a0-py3-none-any.whl",
+      "filename": "datasette_extract-0.2a1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "e8cd69d6318797d00188194c82210b1a",
+      "md5_digest": "846f193875db93fcf98e98b7dea32f9c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 365794,
-      "upload_time": "2025-11-26T16:51:44",
-      "upload_time_iso_8601": "2025-11-26T16:51:44.547786Z",
-      "url": "https://files.pythonhosted.org/packages/ef/93/4954ef7323f288d9df7263e73d0764b367b39fdec9cdd8376c7f7515fb99/datasette_extract-0.2a0-py3-none-any.whl",
+      "size": 363098,
+      "upload_time": "2025-12-03T05:14:58",
+      "upload_time_iso_8601": "2025-12-03T05:14:58.946433Z",
+      "url": "https://files.pythonhosted.org/packages/48/08/13bb02136f486a723ce89215233fd5d2dfff3a7e60f25e2eefd1a2cb3b9c/datasette_extract-0.2a1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "81e42df38ae500cd5ee3eff3fae301437f8fedb75898f4489c3ad7473bad8840",
-        "md5": "0a52d34e368794bdafe78aea73c65d65",
-        "sha256": "27635f57dd01a6bcbdde9bdc26cc44119867396818ae44acf92cd519be6f96fb"
+        "blake2b_256": "bbabc3b8ac5dd38cc611c935b149fd04031411d3d9d0ca86afc5d440302ef3d0",
+        "md5": "cd5bf3293aa5696cf968936f9c30d4c2",
+        "sha256": "b79e5640e5bcbc19e40a464889a8d8586c7456089e4dedde55dd45c9fad081af"
       },
       "downloads": -1,
-      "filename": "datasette_extract-0.2a0.tar.gz",
+      "filename": "datasette_extract-0.2a1.tar.gz",
       "has_sig": false,
-      "md5_digest": "0a52d34e368794bdafe78aea73c65d65",
+      "md5_digest": "cd5bf3293aa5696cf968936f9c30d4c2",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 361178,
-      "upload_time": "2025-11-26T16:51:46",
-      "upload_time_iso_8601": "2025-11-26T16:51:46.294132Z",
-      "url": "https://files.pythonhosted.org/packages/81/e4/2df38ae500cd5ee3eff3fae301437f8fedb75898f4489c3ad7473bad8840/datasette_extract-0.2a0.tar.gz",
+      "size": 360672,
+      "upload_time": "2025-12-03T05:15:00",
+      "upload_time_iso_8601": "2025-12-03T05:15:00.831196Z",
+      "url": "https://files.pythonhosted.org/packages/bb/ab/c3b8ac5dd38cc611c935b149fd04031411d3d9d0ca86afc5d440302ef3d0/datasette_extract-0.2a1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
