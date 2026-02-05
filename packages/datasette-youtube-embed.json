@@ -1,7 +1,7 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
       "Framework :: Datasette",
@@ -10,20 +10,20 @@
     "description": "# datasette-youtube-embed\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-youtube-embed.svg)](https://pypi.org/project/datasette-youtube-embed/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-youtube-embed?include_prereleases&label=changelog)](https://github.com/simonw/datasette-youtube-embed/releases)\n[![Tests](https://github.com/simonw/datasette-youtube-embed/workflows/Test/badge.svg)](https://github.com/simonw/datasette-youtube-embed/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-youtube-embed/blob/main/LICENSE)\n\nTurn YouTube URLs into embedded players in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-youtube-embed\n\n## Usage\n\nOnce installed, any columns containing URLs that look like one of these:\n\n- `https://www.youtube.com/watch?v=xyz`\n- `https://www.youtube.com/watch?v=xyz&start=30`\n- `https://www.youtube.com/watch?v=xyz&start=30&end=50`\n\nWill be turned into YouTube embeds like this:\n\n```html\n<lite-youtube videoid=\"xyz\" params=\"start=30\" style=\"min-width: 200px\"></lite-youtube>\n```\nThese will then be rendered using [Lite YouTube Embed](https://github.com/paulirish/lite-youtube-embed), which avoids loading the full YouTube embed until someone interacts with it.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-youtube-embed\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-youtube-embed",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-youtube-embed",
     "package_url": "https://pypi.org/project/datasette-youtube-embed/",
     "platform": null,
@@ -35,19 +35,17 @@
       "Issues": "https://github.com/simonw/datasette-youtube-embed/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-youtube-embed/0.1/",
+    "release_url": "https://pypi.org/project/datasette-youtube-embed/0.2/",
     "requires_dist": [
-      "datasette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "datasette"
     ],
-    "requires_python": ">=3.7",
+    "requires_python": ">=3.10",
     "summary": "Turn YouTube URLs into embedded players in Datasette",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 16594531,
+  "last_serial": 34048853,
   "releases": {
     "0.1": [
       {
@@ -92,48 +90,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "48ace9885958bd83c46f5bec6e7b621fc3d0946d12bced7dd6f52ced5b098c06",
+          "md5": "250545b1b6c2e105586bb30d45bc2f81",
+          "sha256": "a3f0aac8033850bed23b5863b3a6f5129437d616f8d827a9dc17cb0e31b5ad95"
+        },
+        "downloads": -1,
+        "filename": "datasette_youtube_embed-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "250545b1b6c2e105586bb30d45bc2f81",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8831,
+        "upload_time": "2026-02-04T16:47:23",
+        "upload_time_iso_8601": "2026-02-04T16:47:23.229414Z",
+        "url": "https://files.pythonhosted.org/packages/48/ac/e9885958bd83c46f5bec6e7b621fc3d0946d12bced7dd6f52ced5b098c06/datasette_youtube_embed-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7ed464534924611e2a79babd560fae12ea7b0036075604a10da8fd6773cecb8e",
+          "md5": "1d84382a08bc5d37267896de6b3faf8f",
+          "sha256": "2c61a233fba79504998be7d6e1189122f222e36fc929370b2e0221c38c0f4a55"
+        },
+        "downloads": -1,
+        "filename": "datasette_youtube_embed-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1d84382a08bc5d37267896de6b3faf8f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 7102,
+        "upload_time": "2026-02-04T16:47:24",
+        "upload_time_iso_8601": "2026-02-04T16:47:24.252362Z",
+        "url": "https://files.pythonhosted.org/packages/7e/d4/64534924611e2a79babd560fae12ea7b0036075604a10da8fd6773cecb8e/datasette_youtube_embed-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "d3c058b3d4b7bedac73e4e3b7e374026e589710dbb8ad047f6a8888da1c4bea4",
-        "md5": "c2dd42b24cd3a231a256a16d1ed067a3",
-        "sha256": "6a80574693c2c9ac8b21d6ceaa0d22f2b4ba4802807297bfb34b45c29ac81c6e"
+        "blake2b_256": "48ace9885958bd83c46f5bec6e7b621fc3d0946d12bced7dd6f52ced5b098c06",
+        "md5": "250545b1b6c2e105586bb30d45bc2f81",
+        "sha256": "a3f0aac8033850bed23b5863b3a6f5129437d616f8d827a9dc17cb0e31b5ad95"
       },
       "downloads": -1,
-      "filename": "datasette_youtube_embed-0.1-py3-none-any.whl",
+      "filename": "datasette_youtube_embed-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "c2dd42b24cd3a231a256a16d1ed067a3",
+      "md5_digest": "250545b1b6c2e105586bb30d45bc2f81",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.7",
-      "size": 11185,
-      "upload_time": "2023-01-27T20:10:28",
-      "upload_time_iso_8601": "2023-01-27T20:10:28.155292Z",
-      "url": "https://files.pythonhosted.org/packages/d3/c0/58b3d4b7bedac73e4e3b7e374026e589710dbb8ad047f6a8888da1c4bea4/datasette_youtube_embed-0.1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 8831,
+      "upload_time": "2026-02-04T16:47:23",
+      "upload_time_iso_8601": "2026-02-04T16:47:23.229414Z",
+      "url": "https://files.pythonhosted.org/packages/48/ac/e9885958bd83c46f5bec6e7b621fc3d0946d12bced7dd6f52ced5b098c06/datasette_youtube_embed-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "6c9c69309d38e27ac5db3db3665733ec90f81d41ad17482e5b3296225dee774b",
-        "md5": "90eb45ad9a0a4a95484bff65eedfe110",
-        "sha256": "ef525cf1ff032504d476b18d35084f623bb714161affe6d1db0332db427489e7"
+        "blake2b_256": "7ed464534924611e2a79babd560fae12ea7b0036075604a10da8fd6773cecb8e",
+        "md5": "1d84382a08bc5d37267896de6b3faf8f",
+        "sha256": "2c61a233fba79504998be7d6e1189122f222e36fc929370b2e0221c38c0f4a55"
       },
       "downloads": -1,
-      "filename": "datasette-youtube-embed-0.1.tar.gz",
+      "filename": "datasette_youtube_embed-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "90eb45ad9a0a4a95484bff65eedfe110",
+      "md5_digest": "1d84382a08bc5d37267896de6b3faf8f",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.7",
-      "size": 10144,
-      "upload_time": "2023-01-27T20:10:29",
-      "upload_time_iso_8601": "2023-01-27T20:10:29.714118Z",
-      "url": "https://files.pythonhosted.org/packages/6c/9c/69309d38e27ac5db3db3665733ec90f81d41ad17482e5b3296225dee774b/datasette-youtube-embed-0.1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 7102,
+      "upload_time": "2026-02-04T16:47:24",
+      "upload_time_iso_8601": "2026-02-04T16:47:24.252362Z",
+      "url": "https://files.pythonhosted.org/packages/7e/d4/64534924611e2a79babd560fae12ea7b0036075604a10da8fd6773cecb8e/datasette_youtube_embed-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
