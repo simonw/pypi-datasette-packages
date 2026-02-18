@@ -48,6 +48,15 @@
     "yanked_reason": null
   },
   "last_serial": 13053405,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "eyeseast"
+      }
+    ]
+  },
   "releases": {
     "0.1": [
       {

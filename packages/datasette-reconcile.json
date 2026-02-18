@@ -64,6 +64,15 @@
     "yanked_reason": null
   },
   "last_serial": 21710844,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "drkane"
+      }
+    ]
+  },
   "releases": {
     "0.1": [
       {
