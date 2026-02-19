@@ -51,6 +51,15 @@
     "yanked_reason": null
   },
   "last_serial": 32333457,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "alex.garcia"
+      }
+    ]
+  },
   "releases": {
     "0.0.1a10": [
       {

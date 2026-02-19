@@ -48,6 +48,10 @@
     "yanked_reason": null
   },
   "last_serial": 31458705,
+  "ownership": {
+    "organization": "uu-centre-for-digital-humanities",
+    "roles": []
+  },
   "releases": {
     "0.1.0": [
       {
