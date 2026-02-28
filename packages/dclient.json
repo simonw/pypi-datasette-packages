@@ -50,7 +50,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 34654806,
+  "last_serial": 34661154,
   "ownership": {
     "organization": null,
     "roles": [
@@ -409,6 +409,50 @@
         "upload_time": "2026-02-26T23:27:16",
         "upload_time_iso_8601": "2026-02-26T23:27:16.097202Z",
         "url": "https://files.pythonhosted.org/packages/ec/63/9052841fc4a0a1c4568aa85c6aab3388a5c6d8481420e4faa360a3a0acd3/dclient-0.5a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "84129eac1e98c561742835669b04a3932fc410f562542adf07bc93936e595cf3",
+          "md5": "1af4c76fdfb59d8f8decafc903e60118",
+          "sha256": "82ef98673d27e547757b3e42f05660154a98dfde8db38b93aa75752736c76349"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.5a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1af4c76fdfb59d8f8decafc903e60118",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 14960,
+        "upload_time": "2026-02-27T05:57:05",
+        "upload_time_iso_8601": "2026-02-27T05:57:05.651867Z",
+        "url": "https://files.pythonhosted.org/packages/84/12/9eac1e98c561742835669b04a3932fc410f562542adf07bc93936e595cf3/dclient-0.5a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "eec37dcc97c436f47f49258adeb69216316d34118ffee1c0b5780f7015a71817",
+          "md5": "e4b81ede4a4ddc14796dbb1d1aedae2e",
+          "sha256": "8cba4deb8ed0060821b38da9044a1f243c86f388a5479be8c130c5f3f2e90ff8"
+        },
+        "downloads": -1,
+        "filename": "dclient-0.5a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e4b81ede4a4ddc14796dbb1d1aedae2e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 13620,
+        "upload_time": "2026-02-27T05:57:07",
+        "upload_time_iso_8601": "2026-02-27T05:57:07.293650Z",
+        "url": "https://files.pythonhosted.org/packages/ee/c3/7dcc97c436f47f49258adeb69216316d34118ffee1c0b5780f7015a71817/dclient-0.5a2.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
