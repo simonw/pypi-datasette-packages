@@ -47,7 +47,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19654655,
+  "last_serial": 35911094,
   "ownership": {
     "organization": null,
     "roles": [
@@ -1770,6 +1770,50 @@
         "upload_time": "2023-09-07T16:53:01",
         "upload_time_iso_8601": "2023-09-07T16:53:01.981415Z",
         "url": "https://files.pythonhosted.org/packages/92/f8/5002221e77affdad613b8eee40c03204694734cde17b00ab040f8382984d/datasette-graphql-3.0a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "3.0a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c2ca85d3b7e4074c5460de4f1abbca85443e43816cb9ebbb263f4d516cfc421c",
+          "md5": "0d3cc56203a98af6d31da0ef5da93f39",
+          "sha256": "050be1449abcd527b0d0abab0197521d41ff54755f06092507f607fa5898af7a"
+        },
+        "downloads": -1,
+        "filename": "datasette_graphql-3.0a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0d3cc56203a98af6d31da0ef5da93f39",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 283009,
+        "upload_time": "2026-04-08T18:33:53",
+        "upload_time_iso_8601": "2026-04-08T18:33:53.748517Z",
+        "url": "https://files.pythonhosted.org/packages/c2/ca/85d3b7e4074c5460de4f1abbca85443e43816cb9ebbb263f4d516cfc421c/datasette_graphql-3.0a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "03fd30f522403ed3e49417904392bcfad409633a45c0fcc154837ab7845d1623",
+          "md5": "da98ecff61dea5eece480ab211481d2f",
+          "sha256": "24ea00d66b44082c2a59e20f9a75f0144a63eda72f0d23ff5c94226630f6c7c9"
+        },
+        "downloads": -1,
+        "filename": "datasette_graphql-3.0a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "da98ecff61dea5eece480ab211481d2f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 279554,
+        "upload_time": "2026-04-08T18:33:55",
+        "upload_time_iso_8601": "2026-04-08T18:33:55.591860Z",
+        "url": "https://files.pythonhosted.org/packages/03/fd/30f522403ed3e49417904392bcfad409633a45c0fcc154837ab7845d1623/datasette_graphql-3.0a1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }

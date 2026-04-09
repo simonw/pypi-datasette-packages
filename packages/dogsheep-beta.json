@@ -1,29 +1,29 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# dogsheep-beta\n\n[![PyPI](https://img.shields.io/pypi/v/dogsheep-beta.svg)](https://pypi.org/project/dogsheep-beta/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/beta?include_prereleases&label=changelog)](https://github.com/dogsheep/beta/releases)\n[![Tests](https://github.com/dogsheep/beta/workflows/Test/badge.svg)](https://github.com/dogsheep/beta/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/beta/blob/main/LICENSE)\n\nBuild a search index across content from multiple SQLite database tables and run faceted searches against it using Datasette\n\n## Example\n\nA live example of this plugin is running at https://datasette.io/-/beta - configured using [this YAML file](https://github.com/simonw/datasette.io/blob/main/templates/dogsheep-beta.yml).\n\nRead more about how this example works in [Building a search engine for datasette.io](https://simonwillison.net/2020/Dec/19/dogsheep-beta/).\n\n## Installation\n\nInstall this tool like so:\n\n    $ pip install dogsheep-beta\n\n## Usage\n\nRun the indexer using the `dogsheep-beta` command-line tool:\n\n    $ dogsheep-beta index dogsheep.db config.yml\n\nThe `config.yml` file contains details of the databases and document types that should be indexed:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n    users:\n        sql: |-\n            select\n                id as key,\n                name || ' @' || screen_name as title,\n                created_at as timestamp,\n                description as search_1\n            from users\n```\n\nThis will create a `search_index` table in the `dogsheep.db` database populated by data from those SQL queries.\n\nBy default the search index that this tool creates will be configured for Porter stemming. This means that searches for words like `run` will match documents containing `runs` or `running`.\n\nIf you don't want to use Porter stemming, use the `--tokenize none` option:\n\n    $ dogsheep-beta index dogsheep.db config.yml --tokenize none\n\nYou can pass other SQLite tokenize argumenst here, see [the SQLite FTS tokenizers documentation](https://www.sqlite.org/fts5.html#tokenizers).\n\n## Columns\n\nThe columns that can be returned by our query are:\n\n- `key` - a unique (within that type) primary key\n- `title` - the title for the item\n- `timestamp` - an ISO8601 timestamp, e.g. `2020-09-02T21:00:21`\n- `search_1` - a larger chunk of text to be included in the search index\n- `category` - an integer category ID, see below\n- `is_public` - an integer (0 or 1, defaults to 0 if not set) specifying if this is public or not\n\nPublic records are things like your public tweets, blog posts and GitHub commits.\n\n## Categories\n\nIndexed items can be assigned a category. Categories are integers that correspond to records in the `categories` table, which defaults to containing the following:\n\n|   id | name       |\n|------|------------|\n|    1 | created    |\n|    2 | saved      |\n|    3 | received   |\n\n`created` is for items that have been created by the Dogsheep instance owner.\n\n`saved` is for items that they have saved, liked or favourited.\n\n`received` is for items that have been specifically sent to them by other people - incoming emails or direct messages for example.\n\n## Datasette plugin\n\nRun `datasette install dogsheep-beta` (or use `pip install dogsheep-beta` in the same environment as Datasette) to install the Dogsheep Beta Datasette plugin.\n\nOnce installed, a custom search interface will be made available at `/-/beta`. You can use this interface to execute searches.\n\nThe Datasette plugin has some configuration options. You can set these by adding the following to your `metadata.json` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"dogsheep-beta\": {\n            \"database\": \"beta\",\n            \"config_file\": \"dogsheep-beta.yml\",\n            \"template_debug\": true\n        }\n    }\n}\n```\nThe configuration settings for the plugin are:\n- `database` - the database file that contains your search index. If the file is `beta.db` you should set `database` to `beta`.\n- `config_file` - the YAML file containing your Dogsheep Beta configuration.\n- `template_debug` - set this to `true` to enable debugging output if errors occur in your custom templates, see below.\n\n## Custom results display\n\nEach indexed item type can define custom display HTML as part of the `config.yml` file. It can do this using a `display` key containing a fragment of Jinja template, and optionally a `display_sql` key with extra SQL to execute to fetch the data to display.\n\nHere's how to define a custom display template for a tweet:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n        display: |-\n            <p>{{ title }} - tweeted at {{ timestamp }}</p>\n            <blockquote>{{ search_1 }}</blockquote>\n```\nThis example reuses the value that were stored in the `search_index` table when the indexing query was run.\n\nTo load in extra values to display in the template, use a `display_sql` query like this:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n        display_sql: |-\n            select\n                users.screen_name,\n                tweets.full_text,\n                tweets.created_at\n            from\n                tweets join users on tweets.user = users.id\n            where\n                tweets.id = :key\n        display: |-\n            <p>{{ display.screen_name }} - tweeted at {{ display.created_at }}</p>\n            <blockquote>{{ display.full_text }}</blockquote>\n```\nThe `display_sql` query will be executed for every search result, passing the key value from the `search_index` table as the `:key` parameter and the user's search term as the `:q` parameter.\n\nThis performs well because [many small queries are efficient in SQLite](https://www.sqlite.org/np1queryprob.html).\n\nIf an error occurs while rendering one of your templates the search results page will return a 500 error. You can use the `template_debug` configuration setting described above to instead output debugging information for the search results item that experienced the error.\n\n## Displaying maps\n\nThis plugin will eventually include a number of useful shortcuts for rendering interesting content.\n\nThe first available shortcut is for displaying maps. Make your custom content output something like this:\n\n```html\n<div\n    data-map-latitude=\"{{ display.latitude }}\"\n    data-map-longitude=\"{{ display.longitude }}\"\n    style=\"display: none; float: right; width: 250px; height: 200px; background-color: #ccc;\"\n></div>\n```\nJavaScript on the page will look for any elements with `data-map-latitude` and `data-map-longitude` and, if it finds any, will load Leaflet and convert those elements into maps centered on that location. The default zoom level will be 12, or you can set a `data-map-zoom` attribute to customize this.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd dogsheep-beta\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# dogsheep-beta\n\n[![PyPI](https://img.shields.io/pypi/v/dogsheep-beta.svg)](https://pypi.org/project/dogsheep-beta/)\n[![Changelog](https://img.shields.io/github/v/release/dogsheep/beta?include_prereleases&label=changelog)](https://github.com/dogsheep/beta/releases)\n[![Tests](https://github.com/dogsheep/beta/workflows/Test/badge.svg)](https://github.com/dogsheep/beta/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dogsheep/beta/blob/main/LICENSE)\n\nBuild a search index across content from multiple SQLite database tables and run faceted searches against it using Datasette\n\n## Example\n\nA live example of this plugin is running at https://datasette.io/-/beta - configured using [this YAML file](https://github.com/simonw/datasette.io/blob/main/templates/dogsheep-beta.yml).\n\nRead more about how this example works in [Building a search engine for datasette.io](https://simonwillison.net/2020/Dec/19/dogsheep-beta/).\n\n## Installation\n\nInstall this tool like so:\n\n    $ pip install dogsheep-beta\n\n## Usage\n\nRun the indexer using the `dogsheep-beta` command-line tool:\n\n    $ dogsheep-beta index dogsheep.db config.yml\n\nThe `config.yml` file contains details of the databases and document types that should be indexed:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n    users:\n        sql: |-\n            select\n                id as key,\n                name || ' @' || screen_name as title,\n                created_at as timestamp,\n                description as search_1\n            from users\n```\n\nThis will create a `search_index` table in the `dogsheep.db` database populated by data from those SQL queries.\n\nBy default the search index that this tool creates will be configured for Porter stemming. This means that searches for words like `run` will match documents containing `runs` or `running`.\n\nIf you don't want to use Porter stemming, use the `--tokenize none` option:\n\n    $ dogsheep-beta index dogsheep.db config.yml --tokenize none\n\nYou can pass other SQLite tokenize argumenst here, see [the SQLite FTS tokenizers documentation](https://www.sqlite.org/fts5.html#tokenizers).\n\n## Columns\n\nThe columns that can be returned by our query are:\n\n- `key` - a unique (within that type) primary key\n- `title` - the title for the item\n- `timestamp` - an ISO8601 timestamp, e.g. `2020-09-02T21:00:21`\n- `search_1` - a larger chunk of text to be included in the search index\n- `category` - an integer category ID, see below\n- `is_public` - an integer (0 or 1, defaults to 0 if not set) specifying if this is public or not\n\nPublic records are things like your public tweets, blog posts and GitHub commits.\n\n## Categories\n\nIndexed items can be assigned a category. Categories are integers that correspond to records in the `categories` table, which defaults to containing the following:\n\n|   id | name       |\n|------|------------|\n|    1 | created    |\n|    2 | saved      |\n|    3 | received   |\n\n`created` is for items that have been created by the Dogsheep instance owner.\n\n`saved` is for items that they have saved, liked or favourited.\n\n`received` is for items that have been specifically sent to them by other people - incoming emails or direct messages for example.\n\n## Datasette plugin\n\nRun `datasette install dogsheep-beta` (or use `pip install dogsheep-beta` in the same environment as Datasette) to install the Dogsheep Beta Datasette plugin.\n\nOnce installed, a custom search interface will be made available at `/-/beta`. You can use this interface to execute searches.\n\nThe Datasette plugin has some configuration options. You can set these by adding the following to your `metadata.json` configuration file:\n\n```json\n{\n    \"plugins\": {\n        \"dogsheep-beta\": {\n            \"database\": \"beta\",\n            \"config_file\": \"dogsheep-beta.yml\",\n            \"template_debug\": true\n        }\n    }\n}\n```\nThe configuration settings for the plugin are:\n- `database` - the database file that contains your search index. If the file is `beta.db` you should set `database` to `beta`.\n- `config_file` - the YAML file containing your Dogsheep Beta configuration.\n- `template_debug` - set this to `true` to enable debugging output if errors occur in your custom templates, see below.\n\n## Custom results display\n\nEach indexed item type can define custom display HTML as part of the `config.yml` file. It can do this using a `display` key containing a fragment of Jinja template, and optionally a `display_sql` key with extra SQL to execute to fetch the data to display.\n\nHere's how to define a custom display template for a tweet:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n        display: |-\n            <p>{{ title }} - tweeted at {{ timestamp }}</p>\n            <blockquote>{{ search_1 }}</blockquote>\n```\nThis example reuses the value that were stored in the `search_index` table when the indexing query was run.\n\nTo load in extra values to display in the template, use a `display_sql` query like this:\n\n```yaml\ntwitter.db:\n    tweets:\n        sql: |-\n            select\n                tweets.id as key,\n                'Tweet by @' || users.screen_name as title,\n                tweets.created_at as timestamp,\n                tweets.full_text as search_1\n            from tweets join users on tweets.user = users.id\n        display_sql: |-\n            select\n                users.screen_name,\n                tweets.full_text,\n                tweets.created_at\n            from\n                tweets join users on tweets.user = users.id\n            where\n                tweets.id = :key\n        display: |-\n            <p>{{ display.screen_name }} - tweeted at {{ display.created_at }}</p>\n            <blockquote>{{ display.full_text }}</blockquote>\n```\nThe `display_sql` query will be executed for every search result, passing the key value from the `search_index` table as the `:key` parameter and the user's search term as the `:q` parameter.\n\nThis performs well because [many small queries are efficient in SQLite](https://www.sqlite.org/np1queryprob.html).\n\nIf an error occurs while rendering one of your templates the search results page will return a 500 error. You can use the `template_debug` configuration setting described above to instead output debugging information for the search results item that experienced the error.\n\n## Displaying maps\n\nThis plugin will eventually include a number of useful shortcuts for rendering interesting content.\n\nThe first available shortcut is for displaying maps. Make your custom content output something like this:\n\n```html\n<div\n    data-map-latitude=\"{{ display.latitude }}\"\n    data-map-longitude=\"{{ display.longitude }}\"\n    style=\"display: none; float: right; width: 250px; height: 200px; background-color: #ccc;\"\n></div>\n```\nJavaScript on the page will look for any elements with `data-map-latitude` and `data-map-longitude` and, if it finds any, will load Leaflet and convert those elements into maps centered on that location. The default zoom level will be 12, or you can set a `data-map-zoom` attribute to customize this.\n\n## Development\n\nTo run the tests:\n\n    uv run pytest\n\nTo run tests against Datasette pre-1.0:\n\n    uv run --with 'datasette<1.0' pytest\n\nTo run tests against Datasette 1.0 and higher:\n\n    uv run --with 'datasette>=1.0a26' pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/dogsheep/beta",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "dogsheep-beta",
     "package_url": "https://pypi.org/project/dogsheep-beta/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/dogsheep-beta/",
     "project_urls": {
       "CI": "https://github.com/dogsheep/beta/actions",
@@ -32,25 +32,20 @@
       "Issues": "https://github.com/dogsheep/beta/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/dogsheep-beta/0.10.2/",
+    "release_url": "https://pypi.org/project/dogsheep-beta/0.11/",
     "requires_dist": [
-      "datasette (>=0.50.2)",
+      "datasette>=0.50.2",
       "click",
-      "PyYAML",
-      "sqlite-utils (>=3.0)",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "httpx ; extra == 'test'",
-      "beautifulsoup4 ; extra == 'test'",
-      "html5lib ; extra == 'test'"
+      "pyyaml",
+      "sqlite-utils>=3.0"
     ],
-    "requires_python": "",
+    "requires_python": ">=3.10",
     "summary": "Build a search index across content from multiple SQLite database tables and run faceted searches against it using Datasette",
-    "version": "0.10.2",
+    "version": "0.11",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 10635995,
+  "last_serial": 35909933,
   "ownership": {
     "organization": null,
     "roles": [
@@ -233,6 +228,50 @@
         "upload_time": "2021-06-13T14:39:07",
         "upload_time_iso_8601": "2021-06-13T14:39:07.856328Z",
         "url": "https://files.pythonhosted.org/packages/4c/b9/5a8f7f1c57de95c334c837ac649684bb785e6882b5aa2a9ddb74c0c770f5/dogsheep-beta-0.10.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d181dcad025e2defba8c836971e344b8d0076d2d383e3edb463a4bc17cb79252",
+          "md5": "9d1eb1c12ad59431fb0b58220512d9b9",
+          "sha256": "455e77419a73cb73ec2f798907e94c4b52222ebef29b3459293b22be9f6cce84"
+        },
+        "downloads": -1,
+        "filename": "dogsheep_beta-0.11-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9d1eb1c12ad59431fb0b58220512d9b9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 11229,
+        "upload_time": "2026-04-08T17:53:23",
+        "upload_time_iso_8601": "2026-04-08T17:53:23.238517Z",
+        "url": "https://files.pythonhosted.org/packages/d1/81/dcad025e2defba8c836971e344b8d0076d2d383e3edb463a4bc17cb79252/dogsheep_beta-0.11-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "58da8535cc14960f368036232c7d28ff6830ddaf7536a61f8e4ad579e0f5d755",
+          "md5": "7083697018e69cbdc248b27ef790774b",
+          "sha256": "310e7fdb5cde03dce32d7c3e7cdb9fa3223a540bad9416d25aaab9203261601b"
+        },
+        "downloads": -1,
+        "filename": "dogsheep_beta-0.11.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7083697018e69cbdc248b27ef790774b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9602,
+        "upload_time": "2026-04-08T17:53:24",
+        "upload_time_iso_8601": "2026-04-08T17:53:24.621247Z",
+        "url": "https://files.pythonhosted.org/packages/58/da/8535cc14960f368036232c7d28ff6830ddaf7536a61f8e4ad579e0f5d755/dogsheep_beta-0.11.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
@@ -944,44 +983,44 @@
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "2de796379456478dbc6236270f821f79a8ec9959e5dc57cf397ed7d8bfdf33db",
-        "md5": "45e9ed8e752c4cd55292b984fde8986e",
-        "sha256": "79c2ca4895a8fe479c0957dd7764269c00d414f8171750d7e420ce56ab4ce4b3"
+        "blake2b_256": "d181dcad025e2defba8c836971e344b8d0076d2d383e3edb463a4bc17cb79252",
+        "md5": "9d1eb1c12ad59431fb0b58220512d9b9",
+        "sha256": "455e77419a73cb73ec2f798907e94c4b52222ebef29b3459293b22be9f6cce84"
       },
       "downloads": -1,
-      "filename": "dogsheep_beta-0.10.2-py3-none-any.whl",
+      "filename": "dogsheep_beta-0.11-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "45e9ed8e752c4cd55292b984fde8986e",
+      "md5_digest": "9d1eb1c12ad59431fb0b58220512d9b9",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 11073,
-      "upload_time": "2021-06-13T14:39:06",
-      "upload_time_iso_8601": "2021-06-13T14:39:06.600222Z",
-      "url": "https://files.pythonhosted.org/packages/2d/e7/96379456478dbc6236270f821f79a8ec9959e5dc57cf397ed7d8bfdf33db/dogsheep_beta-0.10.2-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 11229,
+      "upload_time": "2026-04-08T17:53:23",
+      "upload_time_iso_8601": "2026-04-08T17:53:23.238517Z",
+      "url": "https://files.pythonhosted.org/packages/d1/81/dcad025e2defba8c836971e344b8d0076d2d383e3edb463a4bc17cb79252/dogsheep_beta-0.11-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "4cb95a8f7f1c57de95c334c837ac649684bb785e6882b5aa2a9ddb74c0c770f5",
-        "md5": "7b4b2d9bd9114ac547a873f5463ecb1b",
-        "sha256": "15aebf3a57c7f6369f2f6032fcae5af5fcf15a81eab42e35d537667c1685f92e"
+        "blake2b_256": "58da8535cc14960f368036232c7d28ff6830ddaf7536a61f8e4ad579e0f5d755",
+        "md5": "7083697018e69cbdc248b27ef790774b",
+        "sha256": "310e7fdb5cde03dce32d7c3e7cdb9fa3223a540bad9416d25aaab9203261601b"
       },
       "downloads": -1,
-      "filename": "dogsheep-beta-0.10.2.tar.gz",
+      "filename": "dogsheep_beta-0.11.tar.gz",
       "has_sig": false,
-      "md5_digest": "7b4b2d9bd9114ac547a873f5463ecb1b",
+      "md5_digest": "7083697018e69cbdc248b27ef790774b",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 13506,
-      "upload_time": "2021-06-13T14:39:07",
-      "upload_time_iso_8601": "2021-06-13T14:39:07.856328Z",
-      "url": "https://files.pythonhosted.org/packages/4c/b9/5a8f7f1c57de95c334c837ac649684bb785e6882b5aa2a9ddb74c0c770f5/dogsheep-beta-0.10.2.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 9602,
+      "upload_time": "2026-04-08T17:53:24",
+      "upload_time_iso_8601": "2026-04-08T17:53:24.621247Z",
+      "url": "https://files.pythonhosted.org/packages/58/da/8535cc14960f368036232c7d28ff6830ddaf7536a61f8e4ad579e0f5d755/dogsheep_beta-0.11.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

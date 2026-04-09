@@ -1,29 +1,29 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-template-sql\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-template-sql.svg)](https://pypi.org/project/datasette-template-sql/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-template-sql?include_prereleases&label=changelog)](https://github.com/simonw/datasette-template-sql/releases)\n[![Tests](https://github.com/simonw/datasette-template-sql/workflows/Test/badge.svg)](https://github.com/simonw/datasette-template-sql/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-template-sql/blob/main/LICENSE)\n\nDatasette plugin for executing SQL queries from templates.\n\n## Examples\n\n[www.niche-museums.com](https://www.niche-museums.com/) uses this plugin to run a custom themed website on top of Datasette. The full source code for the site [is here](https://github.com/simonw/museums) - see also [niche-museums.com, powered by Datasette](https://simonwillison.net/2019/Nov/25/niche-museums/).\n\n[simonw/til](https://github.com/simonw/til) is another simple example, described in [Using a self-rewriting README powered by GitHub Actions to track TILs](https://simonwillison.net/2020/Apr/20/self-rewriting-readme/).\n\n## Installation\n\nRun this command to install the plugin in the same environment as Datasette:\n\n    $ pip install datasette-template-sql\n\n## Usage\n\nThis plugin makes a new function, `sql(sql_query)`, available to your Datasette templates.\n\nYou can use it like this:\n\n```html+jinja\n{% for row in sql(\"select 1 + 1 as two, 2 * 4 as eight\") %}\n    {% for key in row.keys() %}\n        {{ key }}: {{ row[key] }}<br>\n    {% endfor %}\n{% endfor %}\n```\n\nThe plugin will execute SQL against the current database for the page in  `database.html`, `table.html` and `row.html` templates. If a template does not have a current database (`index.html` for example) the query will execute against the first attached database.\n\n### Queries with arguments\n\nYou can construct a SQL query using `?` or `:name` parameter syntax by passing a list or dictionary as a second argument:\n\n```html+jinja\n{% for row in sql(\"select distinct topic from til order by topic\") %}\n    <h2>{{ row.topic }}</h2>\n    <ul>\n        {% for til in sql(\"select * from til where topic = ?\", [row.topic]) %}\n            <li><a href=\"{{ til.url }}\">{{ til.title }}</a> - {{ til.created[:10] }}</li>\n        {% endfor %}\n    </ul>\n{% endfor %}\n```\n\nHere's the same example using the `:topic` style of parameters:\n\n```html+jinja\n{% for row in sql(\"select distinct topic from til order by topic\") %}\n    <h2>{{ row.topic }}</h2>\n    <ul>\n        {% for til in sql(\"select * from til where topic = :topic\", {\"topic\": row.topic}) %}\n            <li><a href=\"{{ til.url }}\">{{ til.title }}</a> - {{ til.created[:10] }}</li>\n        {% endfor %}\n    </ul>\n{% endfor %}\n```\n\n### Querying a different database\n\nYou can pass an optional `database=` argument to specify a named database to use for the query. For example, if you have attached a `news.db` database you could use this:\n\n```html+jinja\n{% for article in sql(\n    \"select headline, date, summary from articles order by date desc limit 5\",\n    database=\"news\"\n) %}\n    <h3>{{ article.headline }}</h2>\n    <p class=\"date\">{{ article.date }}</p>\n    <p>{{ article.summary }}</p>\n{% endfor %}\n```\n\n\n",
+    "description": "# datasette-template-sql\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-template-sql.svg)](https://pypi.org/project/datasette-template-sql/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-template-sql?include_prereleases&label=changelog)](https://github.com/simonw/datasette-template-sql/releases)\n[![Tests](https://github.com/simonw/datasette-template-sql/workflows/Test/badge.svg)](https://github.com/simonw/datasette-template-sql/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-template-sql/blob/main/LICENSE)\n\nDatasette plugin for executing SQL queries from templates.\n\n## Examples\n\n[datasette.io](https://datasette.io/) uses this plugin extensively with [custom page templates](https://docs.datasette.io/en/stable/custom_templates.html#custom-pages), check out [simonw/datasette.io](https://github.com/simonw/datasette.io) to see how it works.\n\n[www.niche-museums.com](https://www.niche-museums.com/) uses this plugin to run a custom themed website on top of Datasette. The full source code for the site [is here](https://github.com/simonw/museums) - see also [niche-museums.com, powered by Datasette](https://simonwillison.net/2019/Nov/25/niche-museums/).\n\n[simonw/til](https://github.com/simonw/til) is another simple example, described in [Using a self-rewriting README powered by GitHub Actions to track TILs](https://simonwillison.net/2020/Apr/20/self-rewriting-readme/).\n\n## Installation\n\nRun this command to install the plugin in the same environment as Datasette:\n\n    $ pip install datasette-template-sql\n\n## Usage\n\nThis plugin makes a new function, `sql(sql_query)`, available to your Datasette templates.\n\nYou can use it like this:\n\n```html+jinja\n{% for row in sql(\"select 1 + 1 as two, 2 * 4 as eight\") %}\n    {% for key in row.keys() %}\n        {{ key }}: {{ row[key] }}<br>\n    {% endfor %}\n{% endfor %}\n```\n\nThe plugin will execute SQL against the current database for the page in  `database.html`, `table.html` and `row.html` templates. If a template does not have a current database (`index.html` for example) the query will execute against the first attached database.\n\n### Queries with arguments\n\nYou can construct a SQL query using `?` or `:name` parameter syntax by passing a list or dictionary as a second argument:\n\n```html+jinja\n{% for row in sql(\"select distinct topic from til order by topic\") %}\n    <h2>{{ row.topic }}</h2>\n    <ul>\n        {% for til in sql(\"select * from til where topic = ?\", [row.topic]) %}\n            <li><a href=\"{{ til.url }}\">{{ til.title }}</a> - {{ til.created[:10] }}</li>\n        {% endfor %}\n    </ul>\n{% endfor %}\n```\n\nHere's the same example using the `:topic` style of parameters:\n\n```html+jinja\n{% for row in sql(\"select distinct topic from til order by topic\") %}\n    <h2>{{ row.topic }}</h2>\n    <ul>\n        {% for til in sql(\"select * from til where topic = :topic\", {\"topic\": row.topic}) %}\n            <li><a href=\"{{ til.url }}\">{{ til.title }}</a> - {{ til.created[:10] }}</li>\n        {% endfor %}\n    </ul>\n{% endfor %}\n```\n\n### Querying a different database\n\nYou can pass an optional `database=` argument to specify a named database to use for the query. For example, if you have attached a `news.db` database you could use this:\n\n```html+jinja\n{% for article in sql(\n    \"select headline, date, summary from articles order by date desc limit 5\",\n    database=\"news\"\n) %}\n    <h3>{{ article.headline }}</h2>\n    <p class=\"date\">{{ article.date }}</p>\n    <p>{{ article.summary }}</p>\n{% endfor %}\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-template-sql",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-template-sql",
     "package_url": "https://pypi.org/project/datasette-template-sql/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-template-sql/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-template-sql/actions",
@@ -32,20 +32,17 @@
       "Issues": "https://github.com/simonw/datasette-template-sql/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-template-sql/1.0.2/",
+    "release_url": "https://pypi.org/project/datasette-template-sql/1.0.3/",
     "requires_dist": [
-      "datasette (>=0.54)",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "sqlite-utils ; extra == 'test'"
+      "datasette>=0.54"
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.10",
     "summary": "Datasette plugin for executing SQL queries from templates",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9261339,
+  "last_serial": 35909353,
   "ownership": {
     "organization": null,
     "roles": [
@@ -168,48 +165,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.0.3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f20f2ee8a980036a7e2c43677182e064fa7dca1f5c2d08ad8dddd21fea00c781",
+          "md5": "53fe6e37a715d6bdffd1ef8960423909",
+          "sha256": "1d3cefb64daec376a0bca9c3baa71f865e61eda380eec26faabeeffd5c180849"
+        },
+        "downloads": -1,
+        "filename": "datasette_template_sql-1.0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "53fe6e37a715d6bdffd1ef8960423909",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 3240,
+        "upload_time": "2026-04-08T17:29:17",
+        "upload_time_iso_8601": "2026-04-08T17:29:17.079470Z",
+        "url": "https://files.pythonhosted.org/packages/f2/0f/2ee8a980036a7e2c43677182e064fa7dca1f5c2d08ad8dddd21fea00c781/datasette_template_sql-1.0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9a1d2100b87eced750f4ce0643d84b90cfd3c77ceae6a7d5902b4d820062e448",
+          "md5": "fe0ca89b39bd2ea2b09eb65749f17f08",
+          "sha256": "c31c96be9cbf10423a55089d3180cf2379debf1c4ac155ba2d95e55be7c02910"
+        },
+        "downloads": -1,
+        "filename": "datasette_template_sql-1.0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fe0ca89b39bd2ea2b09eb65749f17f08",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 2264,
+        "upload_time": "2026-04-08T17:29:18",
+        "upload_time_iso_8601": "2026-04-08T17:29:18.467937Z",
+        "url": "https://files.pythonhosted.org/packages/9a/1d/2100b87eced750f4ce0643d84b90cfd3c77ceae6a7d5902b4d820062e448/datasette_template_sql-1.0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "703a80703eb171f8294dbf77c5777b0fa644370e9c5b53cd8f9e5722cf4cacfb",
-        "md5": "a15725eac86cf1bef43401a52bf9f7e5",
-        "sha256": "194514201e8ce3489040e89a7887d8144bf27fd32580649a904be31de2cd0752"
+        "blake2b_256": "f20f2ee8a980036a7e2c43677182e064fa7dca1f5c2d08ad8dddd21fea00c781",
+        "md5": "53fe6e37a715d6bdffd1ef8960423909",
+        "sha256": "1d3cefb64daec376a0bca9c3baa71f865e61eda380eec26faabeeffd5c180849"
       },
       "downloads": -1,
-      "filename": "datasette_template_sql-1.0.2-py3-none-any.whl",
+      "filename": "datasette_template_sql-1.0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a15725eac86cf1bef43401a52bf9f7e5",
+      "md5_digest": "53fe6e37a715d6bdffd1ef8960423909",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 7360,
-      "upload_time": "2021-01-29T02:30:51",
-      "upload_time_iso_8601": "2021-01-29T02:30:51.873824Z",
-      "url": "https://files.pythonhosted.org/packages/70/3a/80703eb171f8294dbf77c5777b0fa644370e9c5b53cd8f9e5722cf4cacfb/datasette_template_sql-1.0.2-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 3240,
+      "upload_time": "2026-04-08T17:29:17",
+      "upload_time_iso_8601": "2026-04-08T17:29:17.079470Z",
+      "url": "https://files.pythonhosted.org/packages/f2/0f/2ee8a980036a7e2c43677182e064fa7dca1f5c2d08ad8dddd21fea00c781/datasette_template_sql-1.0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "digests": {
-        "blake2b_256": "c9026022d05e4ba267c60b6e775ac80d445f3ea4b0509ce14208ca84166f9c58",
-        "md5": "6a69736e674b5e98205e543a4e13cff5",
-        "sha256": "664c795c319e820be635803198b505dc01621324a8b4627b269e4c174563e8c3"
+        "blake2b_256": "9a1d2100b87eced750f4ce0643d84b90cfd3c77ceae6a7d5902b4d820062e448",
+        "md5": "fe0ca89b39bd2ea2b09eb65749f17f08",
+        "sha256": "c31c96be9cbf10423a55089d3180cf2379debf1c4ac155ba2d95e55be7c02910"
       },
       "downloads": -1,
-      "filename": "datasette-template-sql-1.0.2.tar.gz",
+      "filename": "datasette_template_sql-1.0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "6a69736e674b5e98205e543a4e13cff5",
+      "md5_digest": "fe0ca89b39bd2ea2b09eb65749f17f08",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 3084,
-      "upload_time": "2021-01-29T02:30:52",
-      "upload_time_iso_8601": "2021-01-29T02:30:52.816578Z",
-      "url": "https://files.pythonhosted.org/packages/c9/02/6022d05e4ba267c60b6e775ac80d445f3ea4b0509ce14208ca84166f9c58/datasette-template-sql-1.0.2.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 2264,
+      "upload_time": "2026-04-08T17:29:18",
+      "upload_time_iso_8601": "2026-04-08T17:29:18.467937Z",
+      "url": "https://files.pythonhosted.org/packages/9a/1d/2100b87eced750f4ce0643d84b90cfd3c77ceae6a7d5902b4d820062e448/datasette_template_sql-1.0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
