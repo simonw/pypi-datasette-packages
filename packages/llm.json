@@ -51,11 +51,11 @@
       "Issues": "https://github.com/simonw/llm/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/llm/0.30/",
+    "release_url": "https://pypi.org/project/llm/0.31/",
     "requires_dist": [
       "click",
       "condense-json>=0.1.3",
-      "openai>=1.55.3",
+      "openai>=2.32.0",
       "click-default-group>=1.2.3",
       "sqlite-utils>=3.37",
       "sqlite-migrate>=0.1a2",
@@ -70,11 +70,11 @@
     ],
     "requires_python": ">=3.10",
     "summary": "CLI utility and Python library for interacting with Large Language Models from organizations like OpenAI, Anthropic and Gemini plus local models installed on your own machine.",
-    "version": "0.30",
+    "version": "0.31",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 35672285,
+  "last_serial": 36442358,
   "ownership": {
     "organization": null,
     "roles": [
@@ -2109,6 +2109,50 @@
         "yanked_reason": null
       }
     ],
+    "0.31": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "415d033f0a2ba2fd952323d9b6434f653755ac1ce2e42f23c43579d47b008660",
+          "md5": "ce239dc64e0089d6be63b48ee7ac37a5",
+          "sha256": "10fabf61f60869a3ff90383f020ad8c787503c53f706eef4477a262d856c18ff"
+        },
+        "downloads": -1,
+        "filename": "llm-0.31-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ce239dc64e0089d6be63b48ee7ac37a5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 83919,
+        "upload_time": "2026-04-24T23:37:23",
+        "upload_time_iso_8601": "2026-04-24T23:37:23.294199Z",
+        "url": "https://files.pythonhosted.org/packages/41/5d/033f0a2ba2fd952323d9b6434f653755ac1ce2e42f23c43579d47b008660/llm-0.31-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7df23a81744fdaf3a92fe9020dc298dd2e4c144e2e7fcab863e1a132ea537cab",
+          "md5": "789722876f86327976f906a01b9703e2",
+          "sha256": "c7701408fdc53cbdf1db6a43f35c7dd410c291dda36cc38a14db4b482b274fa4"
+        },
+        "downloads": -1,
+        "filename": "llm-0.31.tar.gz",
+        "has_sig": false,
+        "md5_digest": "789722876f86327976f906a01b9703e2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 86505,
+        "upload_time": "2026-04-24T23:37:24",
+        "upload_time_iso_8601": "2026-04-24T23:37:24.579255Z",
+        "url": "https://files.pythonhosted.org/packages/7d/f2/3a81744fdaf3a92fe9020dc298dd2e4c144e2e7fcab863e1a132ea537cab/llm-0.31.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.4": [
       {
         "comment_text": "",
@@ -2642,42 +2686,42 @@
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "207272f7327c50209592f5acc1957eda3fb4a0d3532b140e4be99f60027cb45f",
-        "md5": "93fa18ed189d089fd7bddad20f4cab79",
-        "sha256": "9edf606dfb6330b2cc03bcc6cd94660d75820619f7d74df9c842691a2f59f0e1"
+        "blake2b_256": "415d033f0a2ba2fd952323d9b6434f653755ac1ce2e42f23c43579d47b008660",
+        "md5": "ce239dc64e0089d6be63b48ee7ac37a5",
+        "sha256": "10fabf61f60869a3ff90383f020ad8c787503c53f706eef4477a262d856c18ff"
       },
       "downloads": -1,
-      "filename": "llm-0.30-py3-none-any.whl",
+      "filename": "llm-0.31-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "93fa18ed189d089fd7bddad20f4cab79",
+      "md5_digest": "ce239dc64e0089d6be63b48ee7ac37a5",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 83325,
-      "upload_time": "2026-03-31T20:37:34",
-      "upload_time_iso_8601": "2026-03-31T20:37:34.844010Z",
-      "url": "https://files.pythonhosted.org/packages/20/72/72f7327c50209592f5acc1957eda3fb4a0d3532b140e4be99f60027cb45f/llm-0.30-py3-none-any.whl",
+      "size": 83919,
+      "upload_time": "2026-04-24T23:37:23",
+      "upload_time_iso_8601": "2026-04-24T23:37:23.294199Z",
+      "url": "https://files.pythonhosted.org/packages/41/5d/033f0a2ba2fd952323d9b6434f653755ac1ce2e42f23c43579d47b008660/llm-0.31-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "5ceb96e051501bc3ca624f402595601942d792f333bef14405eab61fa690861e",
-        "md5": "f04a522c90e0219521b451fb96fc61cd",
-        "sha256": "77801e45bf00908c6e62c747e2ca251af1cf4d90f67ba629307022fad2ef89cc"
+        "blake2b_256": "7df23a81744fdaf3a92fe9020dc298dd2e4c144e2e7fcab863e1a132ea537cab",
+        "md5": "789722876f86327976f906a01b9703e2",
+        "sha256": "c7701408fdc53cbdf1db6a43f35c7dd410c291dda36cc38a14db4b482b274fa4"
       },
       "downloads": -1,
-      "filename": "llm-0.30.tar.gz",
+      "filename": "llm-0.31.tar.gz",
       "has_sig": false,
-      "md5_digest": "f04a522c90e0219521b451fb96fc61cd",
+      "md5_digest": "789722876f86327976f906a01b9703e2",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 85839,
-      "upload_time": "2026-03-31T20:37:36",
-      "upload_time_iso_8601": "2026-03-31T20:37:36.245177Z",
-      "url": "https://files.pythonhosted.org/packages/5c/eb/96e051501bc3ca624f402595601942d792f333bef14405eab61fa690861e/llm-0.30.tar.gz",
+      "size": 86505,
+      "upload_time": "2026-04-24T23:37:24",
+      "upload_time_iso_8601": "2026-04-24T23:37:24.579255Z",
+      "url": "https://files.pythonhosted.org/packages/7d/f2/3a81744fdaf3a92fe9020dc298dd2e4c144e2e7fcab863e1a132ea537cab/llm-0.31.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
