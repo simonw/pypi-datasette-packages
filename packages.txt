@@ -209,7 +209,6 @@ datasette-checkbox
 datasette-acl
 datasette-alerts
 datasette-allow-permissions-debug
-datasette-app
 datasette-app-support
 datasette-debug-actors-from-ids
 datasette-debug-events
@@ -247,13 +246,11 @@ datasette-redirects
 datasette-remote-actors
 datasette-remove-database
 datasette-scan
-datasette-screenshots
 datasette-showboat
 datasette-sqlite-history-json
 datasette-sqlite-trace
 datasette-sqlite-url-lite
 datasette-studio
-datasette-table
 datasette-test-plugin
 datasette-transactions
 datasette-turnstile
@@ -267,7 +264,6 @@ datasette-ports
 datasette-referrer-policy
 datasette-agent
 datasette-agent-charts
-datasette-agent-frontend
 datasette-agent-openai-imagegen
 datasette-agent-sprites
 datasette-ip-rate-limit
