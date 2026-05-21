@@ -1,0 +1,147 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-referrer-policy\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-referrer-policy.svg)](https://pypi.org/project/datasette-referrer-policy/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-referrer-policy?include_prereleases&label=changelog)](https://github.com/datasette/datasette-referrer-policy/releases)\n[![Tests](https://github.com/datasette/datasette-referrer-policy/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-referrer-policy/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-referrer-policy/blob/main/LICENSE)\n\nSet the Referrer-Policy header for a Datasette site\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-referrer-policy\n```\n## Usage\n\nInstalling this plugin causes every page on your Datasette instance to return this header:\n\n    Referrer-Policy: strict-origin-when-cross-origin\n\nYou can configure a different policy using this configuration:\n\n```yaml\nplugins:\n  datasette-referrer-policy:\n    policy: no-referrer\n```\nSee [MDN: Referrer-Policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy) for other values.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-referrer-policy\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-referrer-policy",
+    "package_url": "https://pypi.org/project/datasette-referrer-policy/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-referrer-policy/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-referrer-policy/actions",
+      "Changelog": "https://github.com/datasette/datasette-referrer-policy/releases",
+      "Homepage": "https://github.com/datasette/datasette-referrer-policy",
+      "Issues": "https://github.com/datasette/datasette-referrer-policy/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-referrer-policy/0.1/",
+    "requires_dist": [
+      "datasette"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Set the Referrer-Policy header for a Datasette site",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 36769574,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "01fb921b41e948cac4be1a98b1d8b371cff44f6944ceacc87c4716f346ac1bba",
+          "md5": "ba27d4e68b0e038e3076879d8f116fc5",
+          "sha256": "949dbe682fe3c9f377757afc281d28e5e210721132061ed8c2a9473dd2090bdf"
+        },
+        "downloads": -1,
+        "filename": "datasette_referrer_policy-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ba27d4e68b0e038e3076879d8f116fc5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 7024,
+        "upload_time": "2026-05-05T23:45:19",
+        "upload_time_iso_8601": "2026-05-05T23:45:19.851615Z",
+        "url": "https://files.pythonhosted.org/packages/01/fb/921b41e948cac4be1a98b1d8b371cff44f6944ceacc87c4716f346ac1bba/datasette_referrer_policy-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1e660d32995727cd384ca0881dc0615445435bce1fe6e8ec5b801520fcf4efdc",
+          "md5": "86357e32d3a2f67d7a8170734a3d1ba5",
+          "sha256": "8b016946877f15b2b4d96a3fcee6869ccb81b6812bac33d116093ac023f148d4"
+        },
+        "downloads": -1,
+        "filename": "datasette_referrer_policy-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "86357e32d3a2f67d7a8170734a3d1ba5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 6817,
+        "upload_time": "2026-05-05T23:45:20",
+        "upload_time_iso_8601": "2026-05-05T23:45:20.919767Z",
+        "url": "https://files.pythonhosted.org/packages/1e/66/0d32995727cd384ca0881dc0615445435bce1fe6e8ec5b801520fcf4efdc/datasette_referrer_policy-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "01fb921b41e948cac4be1a98b1d8b371cff44f6944ceacc87c4716f346ac1bba",
+        "md5": "ba27d4e68b0e038e3076879d8f116fc5",
+        "sha256": "949dbe682fe3c9f377757afc281d28e5e210721132061ed8c2a9473dd2090bdf"
+      },
+      "downloads": -1,
+      "filename": "datasette_referrer_policy-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ba27d4e68b0e038e3076879d8f116fc5",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 7024,
+      "upload_time": "2026-05-05T23:45:19",
+      "upload_time_iso_8601": "2026-05-05T23:45:19.851615Z",
+      "url": "https://files.pythonhosted.org/packages/01/fb/921b41e948cac4be1a98b1d8b371cff44f6944ceacc87c4716f346ac1bba/datasette_referrer_policy-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "1e660d32995727cd384ca0881dc0615445435bce1fe6e8ec5b801520fcf4efdc",
+        "md5": "86357e32d3a2f67d7a8170734a3d1ba5",
+        "sha256": "8b016946877f15b2b4d96a3fcee6869ccb81b6812bac33d116093ac023f148d4"
+      },
+      "downloads": -1,
+      "filename": "datasette_referrer_policy-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "86357e32d3a2f67d7a8170734a3d1ba5",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 6817,
+      "upload_time": "2026-05-05T23:45:20",
+      "upload_time_iso_8601": "2026-05-05T23:45:20.919767Z",
+      "url": "https://files.pythonhosted.org/packages/1e/66/0d32995727cd384ca0881dc0615445435bce1fe6e8ec5b801520fcf4efdc/datasette_referrer_policy-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,241 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-files-s3\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-files-s3.svg)](https://pypi.org/project/datasette-files-s3/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-files-s3?include_prereleases&label=changelog)](https://github.com/datasette/datasette-files-s3/releases)\n[![Tests](https://github.com/datasette/datasette-files-s3/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-files-s3/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-files-s3/blob/main/LICENSE)\n\nS3 storage backend for [datasette-files](https://github.com/datasette/datasette-files).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-files-s3\n```\n\n## Usage\n\nConfigure a datasette-files source to use S3 storage by setting `\"storage\": \"s3\"` and providing the required configuration options:\n\n```yaml\nplugins:\n  datasette-files:\n    sources:\n      my-s3-files:\n        storage: s3\n        config:\n          bucket: my-bucket-name\n          region: us-east-1\n          access_key_id: AKIAIOSFODNN7EXAMPLE\n          secret_access_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\n```\n\nOr using Datasette's `-s` flag:\n\n```bash\ndatasette data.db \\\n    -s plugins.datasette-files.sources.my-s3-files.storage s3 \\\n    -s plugins.datasette-files.sources.my-s3-files.config.bucket my-bucket-name \\\n    -s plugins.datasette-files.sources.my-s3-files.config.region us-east-1\n```\n\nYou can also use a credentials broker that returns temporary AWS credentials plus the S3 folder to use:\n\n```yaml\nplugins:\n  datasette-files:\n    sources:\n      my-s3-files:\n        storage: s3\n        config:\n          credentials_url: https://example.com/api/s3-credentials\n          credentials_url_secret: shared-secret\n          region: us-east-1\n```\n\n### Credentials Broker Response\n\nWhen `credentials_url` is configured, the plugin sends a `POST` request with\n`secret=...` as form-encoded data and expects a JSON response shaped like this:\n\n```json\n{\n  \"AccessKeyId\": \"ASIAWXFXAIOZGGVU5O6Y\",\n  \"SecretAccessKey\": \"...\",\n  \"SessionToken\": \"...\",\n  \"Expiration\": \"2026-03-20T11:56:23Z\",\n  \"S3Folder\": \"s3://datasettecloud-dev-files/team-1/\"\n}\n```\n\n### Configuration options\n\n- **bucket** (required unless `credentials_url` is used): The name of the S3 bucket.\n- **region** (optional, default `us-east-1`): The AWS region.\n- **prefix** (optional): A prefix to add to all S3 object keys. This allows you to store files under a specific path within the bucket. A trailing slash will be added automatically if not provided - `\"uploads\"` and `\"uploads/\"` are equivalent.\n- **endpoint_url** (optional): A custom S3 endpoint URL, for use with S3-compatible services.\n- **access_key_id** (optional): AWS access key ID.\n- **secret_access_key** (optional): AWS secret access key.\n- **session_token** (optional): AWS session token, for temporary credentials supplied directly in config.\n- **credentials_url** (optional): URL to `POST` to for temporary credentials. The plugin sends `secret=...` as form-encoded data and expects a JSON response containing `AccessKeyId`, `SecretAccessKey`, `SessionToken`, `Expiration`, and `S3Folder`.\n- **credentials_url_secret** (required with `credentials_url`): Shared secret sent to the credentials endpoint as the form field `secret`.\n\n### Authentication\n\nThe plugin resolves AWS credentials using the following priority:\n\n1. **Credentials broker**: If `credentials_url` is configured, the plugin fetches temporary credentials by `POST`ing `secret=...` to that URL. It stores the returned `AccessKeyId`, `SecretAccessKey`, `SessionToken`, `Expiration`, and `S3Folder`, and automatically fetches a fresh set after the expiration time passes. The returned `S3Folder` also sets the active bucket and prefix for the source.\n2. **Direct configuration**: `access_key_id`, `secret_access_key`, and optional `session_token` in the config block.\n3. **Default AWS credential chain**: If no credentials are provided through the above methods, the plugin falls back to the default AWS credential chain (environment variables, IAM roles, etc.).\n\n### Prefix\n\nThe `prefix` option lets you scope all files to a specific path within the bucket. For example, with `prefix: \"uploads/\"`, a file uploaded as `photo.jpg` will be stored at the S3 key `uploads/photo.jpg`.\n\nIt does not matter whether you include a trailing slash or not - `\"uploads\"` and `\"uploads/\"` will both result in files stored under `uploads/`.\n\nWhen using `credentials_url`, the returned `S3Folder` behaves like a dynamically supplied bucket + prefix. For example, `s3://datasettecloud-dev-files/team-1/` means the plugin will use bucket `datasettecloud-dev-files` and prefix `team-1/`.\n\n## Development\n\nTo set up this plugin locally, first checkout the code.\n```bash\ncd datasette-files-s3\n```\n\nRun tests like this:\n```bash\nuv run pytest\n```\n\nYou can use [SeaweedFS](https://github.com/seaweedfs/seaweedfs) to run a local development server against a local imitation of the S3 API:\n```bash\nbrew install seaweedfs\n./dev-server.sh\n```\nTo run a local development server against a real S3 bucket, create a `dev-s3.sh` script (this file is in `.gitignore`):\n\n```bash\n#!/bin/bash\nset -e\n\nBUCKET=\"your-bucket-name\"\nREGION=\"us-east-1\"\nACCESS_KEY=\"your-access-key-id\"\nSECRET_KEY=\"your-secret-access-key\"\n\nuv run datasette data.db --create --internal internal.db --root --secret 1 --reload \\\n    -s plugins.datasette-files.sources.s3-live.storage s3 \\\n    -s plugins.datasette-files.sources.s3-live.config.bucket \"$BUCKET\" \\\n    -s plugins.datasette-files.sources.s3-live.config.region \"$REGION\" \\\n    -s plugins.datasette-files.sources.s3-live.config.access_key_id \"$ACCESS_KEY\" \\\n    -s plugins.datasette-files.sources.s3-live.config.secret_access_key \"$SECRET_KEY\" \\\n    -s plugins.datasette-files.sources.s3-live.config.prefix \"demo-prefix/\" \\\n    -s permissions.files-browse true \\\n    -s permissions.files-upload true \\\n    -s permissions.files-edit true\n```\n\nThen run it with `bash dev-s3.sh` and follow the login token URL printed to the console.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-files-s3",
+    "package_url": "https://pypi.org/project/datasette-files-s3/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-files-s3/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-files-s3/actions",
+      "Changelog": "https://github.com/datasette/datasette-files-s3/releases",
+      "Homepage": "https://github.com/datasette/datasette-files-s3",
+      "Issues": "https://github.com/datasette/datasette-files-s3/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-files-s3/0.1a2/",
+    "requires_dist": [
+      "datasette-files>=0.1a2",
+      "aioboto3"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "datasette-files S3 backend",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 35483894,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "835da054e367bf42d43080bff753566cfad53f000d042477cbbbb894d52bcf46",
+          "md5": "4c1b2b5cd7c4ce308005a01a03e300d1",
+          "sha256": "6d05edfd69627295f88638b76638b6e8970511f4aefbc56d5039377ba478079b"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4c1b2b5cd7c4ce308005a01a03e300d1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8991,
+        "upload_time": "2026-02-20T00:53:53",
+        "upload_time_iso_8601": "2026-02-20T00:53:53.360026Z",
+        "url": "https://files.pythonhosted.org/packages/83/5d/a054e367bf42d43080bff753566cfad53f000d042477cbbbb894d52bcf46/datasette_files_s3-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a58d971cbc5c3df9e0be3debd420983a40032b681cefbaaa07c544bc3d413bbe",
+          "md5": "d78cf6e1c8846421db8c05ac30982ef2",
+          "sha256": "05e42c69076e49cd00d2e9d4e9a05d8ad99a66fb6aa0677940b75138f6593d75"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d78cf6e1c8846421db8c05ac30982ef2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 10598,
+        "upload_time": "2026-02-20T00:53:54",
+        "upload_time_iso_8601": "2026-02-20T00:53:54.774467Z",
+        "url": "https://files.pythonhosted.org/packages/a5/8d/971cbc5c3df9e0be3debd420983a40032b681cefbaaa07c544bc3d413bbe/datasette_files_s3-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "505592b7eeeb110516e27fba71011d3cc88ded08a9a052ae0d6a545f070c8769",
+          "md5": "622fa60e92cbce20bf32196c953955c6",
+          "sha256": "4ccfe8f18731438636e230efc28662999ebf8ef9dbfa3b9aca31a68172751aee"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "622fa60e92cbce20bf32196c953955c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10653,
+        "upload_time": "2026-03-25T21:58:13",
+        "upload_time_iso_8601": "2026-03-25T21:58:13.927523Z",
+        "url": "https://files.pythonhosted.org/packages/50/55/92b7eeeb110516e27fba71011d3cc88ded08a9a052ae0d6a545f070c8769/datasette_files_s3-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2afb5a1ed62365c3d6387eb8d6eaf0676a9ffa93a1502c751720ce31c2989b1f",
+          "md5": "dd95fecb18377b097e8f55a2e5be0040",
+          "sha256": "a911bebeffa9a003180e17875cf8d672bf6aef1d8157e6b086bcaf1eea51a7e9"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dd95fecb18377b097e8f55a2e5be0040",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 13554,
+        "upload_time": "2026-03-25T21:58:15",
+        "upload_time_iso_8601": "2026-03-25T21:58:15.009036Z",
+        "url": "https://files.pythonhosted.org/packages/2a/fb/5a1ed62365c3d6387eb8d6eaf0676a9ffa93a1502c751720ce31c2989b1f/datasette_files_s3-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d5dab8d20df621d0e5446b52b5303acf04335d939042d744243e8347a97726a6",
+          "md5": "6c23a87ed7835dc900c3db7235a434f2",
+          "sha256": "d4638aea535aa890ca4ce2914e8fd4e4f864800b57edcd3110f64f7f4ff02ac1"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6c23a87ed7835dc900c3db7235a434f2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10777,
+        "upload_time": "2026-03-25T23:12:52",
+        "upload_time_iso_8601": "2026-03-25T23:12:52.318323Z",
+        "url": "https://files.pythonhosted.org/packages/d5/da/b8d20df621d0e5446b52b5303acf04335d939042d744243e8347a97726a6/datasette_files_s3-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d5c7c4d232980208dc9e1652aff461f17d0d6cace72859e1fe3f0c30c7d0d4dd",
+          "md5": "506e2b7684694dd4d62a0435f0e0bb99",
+          "sha256": "433b9f1f70a0fe2bb576323d6a3cb7e10a883d0cb4507a3f3f81a12a22cd7166"
+        },
+        "downloads": -1,
+        "filename": "datasette_files_s3-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "506e2b7684694dd4d62a0435f0e0bb99",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 13808,
+        "upload_time": "2026-03-25T23:12:53",
+        "upload_time_iso_8601": "2026-03-25T23:12:53.612447Z",
+        "url": "https://files.pythonhosted.org/packages/d5/c7/c4d232980208dc9e1652aff461f17d0d6cace72859e1fe3f0c30c7d0d4dd/datasette_files_s3-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "d5dab8d20df621d0e5446b52b5303acf04335d939042d744243e8347a97726a6",
+        "md5": "6c23a87ed7835dc900c3db7235a434f2",
+        "sha256": "d4638aea535aa890ca4ce2914e8fd4e4f864800b57edcd3110f64f7f4ff02ac1"
+      },
+      "downloads": -1,
+      "filename": "datasette_files_s3-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "6c23a87ed7835dc900c3db7235a434f2",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 10777,
+      "upload_time": "2026-03-25T23:12:52",
+      "upload_time_iso_8601": "2026-03-25T23:12:52.318323Z",
+      "url": "https://files.pythonhosted.org/packages/d5/da/b8d20df621d0e5446b52b5303acf04335d939042d744243e8347a97726a6/datasette_files_s3-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "d5c7c4d232980208dc9e1652aff461f17d0d6cace72859e1fe3f0c30c7d0d4dd",
+        "md5": "506e2b7684694dd4d62a0435f0e0bb99",
+        "sha256": "433b9f1f70a0fe2bb576323d6a3cb7e10a883d0cb4507a3f3f81a12a22cd7166"
+      },
+      "downloads": -1,
+      "filename": "datasette_files_s3-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "506e2b7684694dd4d62a0435f0e0bb99",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 13808,
+      "upload_time": "2026-03-25T23:12:53",
+      "upload_time_iso_8601": "2026-03-25T23:12:53.612447Z",
+      "url": "https://files.pythonhosted.org/packages/d5/c7/c4d232980208dc9e1652aff461f17d0d6cace72859e1fe3f0c30c7d0d4dd/datasette_files_s3-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

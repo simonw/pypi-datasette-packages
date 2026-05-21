@@ -1,0 +1,148 @@
+{
+  "info": {
+    "author": "Datasette",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-transactions\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-transactions.svg)](https://pypi.org/project/datasette-transactions/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-transactions?include_prereleases&label=changelog)](https://github.com/datasette/datasette-transactions/releases)\n[![Tests](https://github.com/datasette/datasette-transactions/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-transactions/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-transactions/blob/main/LICENSE)\n\nA Datasette plugin providing an API for executing multiple SQL commands within a single transaction, with support for SQLite authorization callbacks to control table-level read/write access.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-transactions\n```\n\n## Usage\n\n### Begin a Transaction\n\n```http\nPOST /-/transactions/begin/<database>\nContent-Type: application/json\n\n{\n  \"read\": [\"table1\", \"table2\"],\n  \"write\": [\"table1\"],\n  \"timeout_ms\": 5000\n}\n```\n\n**Parameters:**\n- `read`: List of tables the transaction can read from\n- `write`: List of tables the transaction can write to\n- `timeout_ms`: Optional timeout in milliseconds (transaction auto-rolls back after this time)\n\n**Response:**\n```json\n{\n  \"ok\": true,\n  \"transaction_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n}\n```\n\n**Required Permissions:**\n- `execute-sql` on the database\n- `view-table` on each table in the `read` list\n- `insert-row` and `update-row` on each table in the `write` list\n\n### Execute SQL\n\n```http\nPOST /-/transactions/<transaction_id>\nContent-Type: application/json\n\n{\n  \"sql\": \"INSERT INTO table1 (name) VALUES (:name)\",\n  \"params\": {\"name\": \"Alice\"}\n}\n```\n\n**Response:**\n```json\n{\n  \"ok\": true,\n  \"rows\": [],\n  \"columns\": [],\n  \"truncated\": false\n}\n```\n\nFor SELECT queries, `rows` contains the results as a list of objects.\n\n### Create a Savepoint\n\n```http\nPOST /-/transactions/<transaction_id>/savepoint\nContent-Type: application/json\n\n{\n  \"name\": \"before_batch\"\n}\n```\n\n**Response:**\n```json\n{\n  \"ok\": true,\n  \"savepoint\": \"before_batch\"\n}\n```\n\n### Release a Savepoint\n\n```http\nPOST /-/transactions/<transaction_id>/release\nContent-Type: application/json\n\n{\n  \"name\": \"before_batch\"\n}\n```\n\n### Rollback to a Savepoint\n\n```http\nPOST /-/transactions/<transaction_id>/rollback-to\nContent-Type: application/json\n\n{\n  \"name\": \"before_batch\"\n}\n```\n\n### Commit a Transaction\n\n```http\nPOST /-/transactions/commit/<transaction_id>\n```\n\n**Response:**\n```json\n{\n  \"ok\": true\n}\n```\n\n### Rollback a Transaction\n\n```http\nPOST /-/transactions/rollback/<transaction_id>\n```\n\n**Response:**\n```json\n{\n  \"ok\": true\n}\n```\n\n## Error Codes\n\n| Status | Meaning |\n|--------|---------|\n| 400 | Bad request (invalid JSON, missing parameters, SQL error) |\n| 403 | Permission denied (missing required permissions, table access denied) |\n| 404 | Transaction or savepoint not found |\n| 405 | Method not allowed (use POST) |\n| 410 | Transaction expired (timed out) |\n| 429 | Too many concurrent transactions (max 5 per database) |\n\n## Authorization\n\nThe plugin uses SQLite's `set_authorizer()` callback to enforce table-level permissions:\n\n- Reading from tables not in `read` list is blocked\n- Writing to tables not in `write` list is blocked\n- `ATTACH DATABASE` is always blocked\n\n## Concurrency\n\n- Maximum 5 concurrent transactions per database\n- Read-only transactions use `BEGIN DEFERRED` (allows concurrent reads)\n- Write transactions use `BEGIN IMMEDIATE` (exclusive lock)\n\n## Example: Batch Insert with Rollback on Error\n\n```python\nimport httpx\n\n# Begin transaction\nresponse = httpx.post(\n    \"http://localhost:8001/-/transactions/begin/mydb\",\n    json={\"read\": [\"users\"], \"write\": [\"users\"]}\n)\ntx_id = response.json()[\"transaction_id\"]\n\ntry:\n    # Insert multiple rows\n    for user in users:\n        httpx.post(\n            f\"http://localhost:8001/-/transactions/{tx_id}\",\n            json={\n                \"sql\": \"INSERT INTO users (name, email) VALUES (:name, :email)\",\n                \"params\": user\n            }\n        )\n\n    # Commit if all succeeded\n    httpx.post(f\"http://localhost:8001/-/transactions/commit/{tx_id}\")\nexcept Exception:\n    # Rollback on error\n    httpx.post(f\"http://localhost:8001/-/transactions/rollback/{tx_id}\")\n    raise\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code:\n```bash\ncd datasette-transactions\nuv run pytest  # Run tests\n```\n\nThis project follows TDD (Test-Driven Development). See `CLAUDE.md` for development guidelines.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-transactions",
+    "package_url": "https://pypi.org/project/datasette-transactions/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-transactions/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-transactions/actions",
+      "Changelog": "https://github.com/datasette/datasette-transactions/releases",
+      "Homepage": "https://github.com/datasette/datasette-transactions",
+      "Issues": "https://github.com/datasette/datasette-transactions/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-transactions/0.1a0/",
+    "requires_dist": [
+      "datasette>=1.0a22",
+      "httpx>=0.25"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "API for executing multiple queries within a transaction",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 33465835,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "428f17e3c95c5cd808fd237ff41ba428a2647e0aabc8f221bf2e5b14f29c0878",
+          "md5": "be734d395951697e1a27f469e1743af8",
+          "sha256": "87581716bebd87e76c47072ea407f02acc41047eeef1805e6c5f3881bd356650"
+        },
+        "downloads": -1,
+        "filename": "datasette_transactions-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "be734d395951697e1a27f469e1743af8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13838,
+        "upload_time": "2026-01-10T04:09:25",
+        "upload_time_iso_8601": "2026-01-10T04:09:25.188375Z",
+        "url": "https://files.pythonhosted.org/packages/42/8f/17e3c95c5cd808fd237ff41ba428a2647e0aabc8f221bf2e5b14f29c0878/datasette_transactions-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e504114faa37c67a497d76fce140f97cb91928da9dc98f5010cebc22897bd564",
+          "md5": "5dee2b91905e3ee6be1b081baad13a10",
+          "sha256": "b94f948cf16139595ca9fd484846829273c186e80e875d5d8e06e3d1aa1709b9"
+        },
+        "downloads": -1,
+        "filename": "datasette_transactions-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5dee2b91905e3ee6be1b081baad13a10",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 19548,
+        "upload_time": "2026-01-10T04:09:26",
+        "upload_time_iso_8601": "2026-01-10T04:09:26.872610Z",
+        "url": "https://files.pythonhosted.org/packages/e5/04/114faa37c67a497d76fce140f97cb91928da9dc98f5010cebc22897bd564/datasette_transactions-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "428f17e3c95c5cd808fd237ff41ba428a2647e0aabc8f221bf2e5b14f29c0878",
+        "md5": "be734d395951697e1a27f469e1743af8",
+        "sha256": "87581716bebd87e76c47072ea407f02acc41047eeef1805e6c5f3881bd356650"
+      },
+      "downloads": -1,
+      "filename": "datasette_transactions-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "be734d395951697e1a27f469e1743af8",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 13838,
+      "upload_time": "2026-01-10T04:09:25",
+      "upload_time_iso_8601": "2026-01-10T04:09:25.188375Z",
+      "url": "https://files.pythonhosted.org/packages/42/8f/17e3c95c5cd808fd237ff41ba428a2647e0aabc8f221bf2e5b14f29c0878/datasette_transactions-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "e504114faa37c67a497d76fce140f97cb91928da9dc98f5010cebc22897bd564",
+        "md5": "5dee2b91905e3ee6be1b081baad13a10",
+        "sha256": "b94f948cf16139595ca9fd484846829273c186e80e875d5d8e06e3d1aa1709b9"
+      },
+      "downloads": -1,
+      "filename": "datasette_transactions-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5dee2b91905e3ee6be1b081baad13a10",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 19548,
+      "upload_time": "2026-01-10T04:09:26",
+      "upload_time_iso_8601": "2026-01-10T04:09:26.872610Z",
+      "url": "https://files.pythonhosted.org/packages/e5/04/114faa37c67a497d76fce140f97cb91928da9dc98f5010cebc22897bd564/datasette_transactions-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

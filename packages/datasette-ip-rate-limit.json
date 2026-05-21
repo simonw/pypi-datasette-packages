@@ -1,0 +1,147 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-ip-rate-limit\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ip-rate-limit.svg)](https://pypi.org/project/datasette-ip-rate-limit/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-ip-rate-limit?include_prereleases&label=changelog)](https://github.com/datasette/datasette-ip-rate-limit/releases)\n[![Tests](https://github.com/datasette/datasette-ip-rate-limit/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-ip-rate-limit/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-ip-rate-limit/blob/main/LICENSE)\n\nRate limit Datasette requests by client IP address.\n\nThis plugin is designed for Datasette instances that need a lightweight in-process guard against one client sending too many expensive requests.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n```bash\ndatasette install datasette-ip-rate-limit\n```\n\n## Configuration\n\nConfigure the plugin in `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-ip-rate-limit:\n    debug: true\n    rules:\n    - paths:\n      - \"/*\"\n      block_seconds: 20\n```\n\nThis applies rate limiting to every non-debug path and enables\n`/-/ip-rate-limit-debug` so you can inspect the current in-memory state.\n\nFor a more targeted configuration:\n\n```yaml\nplugins:\n  datasette-ip-rate-limit:\n    max_keys: 10000\n    exempt_paths:\n    - \"/static/*\"\n    - \"/-/turnstile*\"\n    rules:\n    - name: expensive-table-pages\n      paths:\n      - \"/global-power-plants/*\"\n      - \"/legislators/*\"\n      query_params_min: 2\n      window_seconds: 60\n      max_requests: 120\n      block_seconds: 600\n```\n\nThis allows each IP address to make 120 matching requests per 60 seconds. If\nan IP exceeds that rate, it receives `429 Too Many Requests` responses for 600\nseconds with a `Retry-After` header.\n\nThe example only applies to matching table pages with at least two query string parameters, so ordinary page views are left alone.\n\nBy default, the client IP address is read from the ASGI connection. If\nDatasette is running behind a trusted proxy, set `header` to the request header\nthat proxy uses for the client IP address.\n\n## Options\n\n- `header`: Optional request header used for the client IP instead of the ASGI\n  connection address.\n- `max_keys`: Maximum number of `(rule, IP)` entries kept in memory. Defaults to `10000`.\n- `exempt_paths`: Path patterns that should never be rate limited.\n- `rules`: List of rate limit rules. The first matching rule is used.\n- `debug`: Set to `true` to enable `/-/ip-rate-limit-debug`, a debug page\n  showing the current in-memory rate limit state as pretty-printed JSON. This\n  includes client IP addresses, so it should only be enabled while debugging.\n\nEach rule supports:\n\n- `name`: Stable rule name used as part of the in-memory key. Defaults to the rule index.\n- `paths`: Path patterns to match. `*` matches any characters.\n- `methods`: Optional list of HTTP methods to match.\n- `query_params_min`: Optional minimum number of query string parameters required before the rule applies.\n- `window_seconds`: Token refill window. Defaults to `60`.\n- `max_requests`: Number of requests allowed per window. Defaults to `60`.\n- `block_seconds`: How long to block an IP after it exceeds the rate. Defaults to `300`.\n\n## Memory Behavior\n\nThe limiter uses a token bucket, not a sliding request log. It stores one small record for each tracked `(rule, IP)` pair: token count, last update time, and optional blocked-until time.\n\nThe `max_keys` setting caps the number of tracked records. If more keys are seen, the least recently used keys are evicted. That bounds RAM usage even if a crawler rotates through many IP addresses.\n\nThis is intentionally fail-open for evicted keys: if a key is evicted and later appears again, it starts with a fresh bucket.\n\n## Development\n\nTo run the tests:\n\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-ip-rate-limit",
+    "package_url": "https://pypi.org/project/datasette-ip-rate-limit/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-ip-rate-limit/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-ip-rate-limit/actions",
+      "Changelog": "https://github.com/datasette/datasette-ip-rate-limit/releases",
+      "Homepage": "https://github.com/datasette/datasette-ip-rate-limit",
+      "Issues": "https://github.com/datasette/datasette-ip-rate-limit/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-ip-rate-limit/0.1a0/",
+    "requires_dist": [
+      "datasette"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Rate limit Datasette requests by client IP address",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37037056,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f6efae73f5018e5a418f49f319c5dba8e69cd4840fd77152fe4876f5f8312147",
+          "md5": "187b1dab8dae1febb03ab9c76a72f0a5",
+          "sha256": "220efc3beb2cb8290daf7f057c91943d0d487a30d58c193a749b0e971b10c3d8"
+        },
+        "downloads": -1,
+        "filename": "datasette_ip_rate_limit-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "187b1dab8dae1febb03ab9c76a72f0a5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10113,
+        "upload_time": "2026-05-14T04:11:23",
+        "upload_time_iso_8601": "2026-05-14T04:11:23.665455Z",
+        "url": "https://files.pythonhosted.org/packages/f6/ef/ae73f5018e5a418f49f319c5dba8e69cd4840fd77152fe4876f5f8312147/datasette_ip_rate_limit-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "09296047f5f3f940711bfd3f1c08e2beae71857204798c4748c96eec736e0e6a",
+          "md5": "5b058ef3e81c6276a2f7dec07d396554",
+          "sha256": "146fa15e6e8ada4a3c009d01d9e95de6717158356abce5954503227b827668f2"
+        },
+        "downloads": -1,
+        "filename": "datasette_ip_rate_limit-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5b058ef3e81c6276a2f7dec07d396554",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11116,
+        "upload_time": "2026-05-14T04:11:24",
+        "upload_time_iso_8601": "2026-05-14T04:11:24.816390Z",
+        "url": "https://files.pythonhosted.org/packages/09/29/6047f5f3f940711bfd3f1c08e2beae71857204798c4748c96eec736e0e6a/datasette_ip_rate_limit-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "f6efae73f5018e5a418f49f319c5dba8e69cd4840fd77152fe4876f5f8312147",
+        "md5": "187b1dab8dae1febb03ab9c76a72f0a5",
+        "sha256": "220efc3beb2cb8290daf7f057c91943d0d487a30d58c193a749b0e971b10c3d8"
+      },
+      "downloads": -1,
+      "filename": "datasette_ip_rate_limit-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "187b1dab8dae1febb03ab9c76a72f0a5",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 10113,
+      "upload_time": "2026-05-14T04:11:23",
+      "upload_time_iso_8601": "2026-05-14T04:11:23.665455Z",
+      "url": "https://files.pythonhosted.org/packages/f6/ef/ae73f5018e5a418f49f319c5dba8e69cd4840fd77152fe4876f5f8312147/datasette_ip_rate_limit-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "09296047f5f3f940711bfd3f1c08e2beae71857204798c4748c96eec736e0e6a",
+        "md5": "5b058ef3e81c6276a2f7dec07d396554",
+        "sha256": "146fa15e6e8ada4a3c009d01d9e95de6717158356abce5954503227b827668f2"
+      },
+      "downloads": -1,
+      "filename": "datasette_ip_rate_limit-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5b058ef3e81c6276a2f7dec07d396554",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 11116,
+      "upload_time": "2026-05-14T04:11:24",
+      "upload_time_iso_8601": "2026-05-14T04:11:24.816390Z",
+      "url": "https://files.pythonhosted.org/packages/09/29/6047f5f3f940711bfd3f1c08e2beae71857204798c4748c96eec736e0e6a/datasette_ip_rate_limit-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

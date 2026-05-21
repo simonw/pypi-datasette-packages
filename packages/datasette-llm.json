@@ -1,0 +1,506 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-llm\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-llm.svg)](https://pypi.org/project/datasette-llm/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-llm?include_prereleases&label=changelog)](https://github.com/datasette/datasette-llm/releases)\n[![Tests](https://github.com/datasette/datasette-llm/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-llm/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-llm/blob/main/LICENSE)\n\nLLM integration for Datasette plugins.\n\nThis plugin provides a standard interface for Datasette plugins to use LLM models via the [llm](https://llm.datasette.io/) library, with:\n\n- **Model management**: Control which models are available, with filtering, defaults, and model options\n- **API key management**: Integration with [datasette-secrets](https://github.com/datasette/datasette-secrets) for secure key storage\n- **Hooks for extensibility**: Track usage, enforce policies, implement accounting\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\ndatasette install datasette-llm\n```\n\nYou'll also need at least one LLM model plugin installed:\n\n```bash\n# For OpenAI models\ndatasette install llm\n\n# For Anthropic models\ndatasette install llm-anthropic\n\n# For testing without API calls\ndatasette install llm-echo\n```\n\n## Configuration\n\nConfigure the plugin in your `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-llm:\n    # Default model when none specified\n    default_model: gpt-5.4-mini\n\n    # Purpose-specific configuration\n    purposes:\n      enrichments:\n        model: gpt-5.4-nano      # Default model for bulk operations\n      sql-assistant:\n        model: gpt-5.4           # Smarter for complex queries\n        models:                  # Only these models for SQL assistance\n        - gpt-5.4\n        - gpt-5.4-mini\n      extract:\n        model: claude-sonnet-4.6\n        blocked_models:          # Block specific models for extraction\n        - gpt-5.4-pro\n      chat:\n        model: claude-sonnet-4.6\n\n    # Model availability (optional)\n    models:                      # Allowlist - only these models available\n    - gpt-5.4\n    - gpt-5.4-mini\n    - gpt-5.4-nano\n    - claude-sonnet-4.6\n\n    # Or use a blocklist instead\n    blocked_models:\n    - gpt-5.4-pro                # Too expensive\n\n    # Only show models with API keys configured (default: true)\n    require_keys: true\n```\n\n### Model references with custom API keys and options\n\nAnywhere a model name string is accepted in configuration (`default_model`, `purposes.<name>.model`, or entries in `purposes.<name>.models`), you can use a dictionary instead.\n\nThe dictionary supports these fields:\n\n- **`model`**: Required model ID, e.g. `\"gpt-5.4-mini\"`.\n- **`key`**: Optional [datasette-secrets](https://github.com/datasette/datasette-secrets) secret name to use as the API key for that model.\n- **`options`**: Optional dictionary of default prompt options for that model. These are passed through to the underlying [llm](https://llm.datasette.io/) model plugin, so supported option names depend on the selected model.\n\n```yaml\nplugins:\n  datasette-llm:\n    # Default model with a custom key and default options\n    default_model:\n      model: gpt-5.4-mini\n      key: CUSTOM_OPENAI_KEY\n      options:\n        temperature: 0.2\n\n    purposes:\n      # Pin a purpose to one model with its own billing key and options\n      query-assistant:\n        model:\n          model: gpt-5.4-mini\n          key: QUERY_ASSISTANT_KEY\n          options:\n            temperature: 0\n\n      # Multiple models, each with their own key and/or options\n      enrichments:\n        model:\n          model: gpt-5.4-nano\n          key: ENRICHMENTS_NANO_KEY\n          options:\n            max_tokens: 1000\n        models:\n          - model: gpt-5.4\n            key: ENRICHMENTS_GPT5_KEY\n          - model: gpt-5.4-mini\n            key: ENRICHMENTS_MINI_KEY\n            options:\n              temperature: 0.1\n          - claude-sonnet-4.6      # Falls through to default key resolution\n```\n\nConfigured `options` become defaults for calls made through `await llm.model()` or `llm.group()`. Per-call options override configured defaults:\n\n```python\nmodel = await llm.model()\n\n# Uses temperature: 0.2 from datasette.yaml\nresponse = await model.prompt(\"Suggest three tags\")\n\n# Overrides the configured temperature for this one prompt\nresponse = await model.prompt(\"Suggest three tags\", temperature=0.7)\n```\n\nFor chained prompts, pass per-call overrides in the `options=` dictionary:\n\n```python\nresponses = model.chain(\n    \"Suggest three tags\",\n    options={\"temperature\": 0.7},\n)\n```\n\nThe `key` field is resolved through datasette-secrets, so you can set it via environment variables:\n\n```bash\nexport DATASETTE_SECRETS_QUERY_ASSISTANT_KEY=sk-...\nexport DATASETTE_SECRETS_ENRICHMENTS_NANO_KEY=sk-...\n```\n\nWhen a model is used for a purpose, key resolution follows this order:\n\n1. Key from the purpose's configuration (a matching dict in `model` or `models`)\n2. Key from the `default_model` config (if it's a dict and matches)\n3. Standard datasette-secrets resolution (`<PROVIDER>_API_KEY`)\n4. llm's key resolution (keys.json, environment variables)\n\nThe `models` (global allowlist) and `blocked_models` fields remain plain string lists — custom keys and options are only supported in `default_model`, `purposes.<name>.model`, and `purposes.<name>.models`.\n\nModel options use the same configuration resolution order as custom keys: the matching purpose-specific model reference is checked first, then the global `default_model` reference if it names the same model.\n\n### Model filtering\n\nThe `models` and `blocked_models` keys control which models are available. Use `models` to define an allowlist (only these models will be available) or `blocked_models` to define a blocklist (all models except these will be available). If both are set, the allowlist is applied first and the blocklist removes from the result. The `default_model` is automatically included in the allowlist, so you don't need to repeat it there.\n\n### Purpose-specific configuration\n\nPlugins register **purposes** to describe what they use LLM models for (e.g. `\"extract\"`, `\"enrichments\"`, `\"sql-assistant\"`). Each purpose can have its own configuration under `purposes.<name>`:\n\n- **`model`**: The default model for this purpose, used when a plugin calls `await llm.model(purpose=\"extract\")` without specifying a model ID.\n- **`models`**: An allowlist of models for this purpose. When set, this **overrides** the global `models` allowlist — so a model can be available for a specific purpose even if it is not in the global list. The purpose's default `model` is automatically included in this allowlist, so you don't need to repeat it. This filtering is applied when a plugin calls `await llm.models(purpose=\"extract\")`.\n- **`blocked_models`**: A blocklist of models for this purpose. These are removed even if the model is globally allowed.\n\nWhen no purpose-specific `models` list is set, the global `models` allowlist applies. The global `blocked_models` always applies regardless of purpose configuration.\n\n## API Key Management\n\ndatasette-llm integrates with [datasette-secrets](https://github.com/datasette/datasette-secrets) for API key management. Keys are automatically registered for all installed model providers.\n\n### Setting up keys\n\n1. **Via environment variables** (recommended for deployment):\n   ```bash\n   export DATASETTE_SECRETS_OPENAI_API_KEY=sk-...\n   export DATASETTE_SECRETS_ANTHROPIC_API_KEY=sk-ant-...\n   ```\n\n2. **Via the web interface**: Navigate to `/-/secrets` (requires `manage-secrets` permission)\n\n3. **Via llm CLI** (fallback): Keys set with `llm keys set openai` are also used\n\n### Key resolution order\n\n1. datasette-secrets (env var `DATASETTE_SECRETS_<PROVIDER>_API_KEY` or encrypted database)\n2. llm's keys.json (`~/.config/io.datasette.llm/keys.json`)\n3. llm's environment variables (e.g., `OPENAI_API_KEY`)\n\n## Usage\n\nAll examples below assume you have created an `LLM` instance:\n\n```python\nfrom datasette_llm import LLM\n\nllm = LLM(datasette)\n```\n\n### `llm.model()`\n\n```python\nasync def model(\n    model_id: Optional[str] = None,\n    purpose: Optional[str] = None,\n    actor: Optional[dict] = None,\n) -> WrappedAsyncModel\n```\n\nGet an async model wrapped with hook support. Returns a `WrappedAsyncModel` that invokes hooks around prompts.\n\nParameters:\n\n- **`model_id`** (`Optional[str]`): The model to use, e.g. `\"gpt-5.4-mini\"` or `\"claude-sonnet-4.6\"`. If not provided, the default model is resolved from configuration — first checking the purpose-specific `model` setting, then the global `default_model`.\n- **`purpose`** (`Optional[str]`): Identifies what this model will be used for, e.g. `\"enrichments\"`, `\"sql-assistant\"`. This selects the purpose-specific default model and is passed through to hooks like `llm_prompt_context` for auditing and accounting.\n- **`actor`** (`Optional[dict]`): The Datasette actor dictionary for the current user. Pass this to enable two things: **per-user model filtering**, where plugins using the `llm_filter_models` or `llm_default_model` hooks can restrict or customize models based on who is making the request; and **audit logging**, where auditing plugins that implement `llm_prompt_context` can record which actor ran which prompts.\n\n```python\nasync def my_plugin_view(datasette, request):\n    llm = LLM(datasette)\n\n    # Get the default model\n    model = await llm.model()\n\n    # Specify a model explicitly\n    model = await llm.model(\"gpt-5.4-mini\")\n\n    # With purpose and actor for auditing and filtering\n    model = await llm.model(\n        purpose=\"sql-assistant\",\n        actor=request.actor,\n    )\n\n    # Execute a prompt\n    response = await model.prompt(\"What is the capital of France?\")\n    text = await response.text()\n```\n\n### `llm.models()`\n\n```python\nasync def models(\n    actor: Optional[dict] = None,\n    purpose: Optional[str] = None,\n) -> List\n```\n\nGet available models, filtered by configuration, API key availability, and hooks. Returns a list of model objects.\n\nParameters:\n\n- **`actor`** (`Optional[dict]`): The Datasette actor dictionary. When provided, the `llm_filter_models` hook can use this to return only models the actor is allowed to use — for example, restricting anonymous users to cheaper models, or looking up per-user model allowlists in a database. Auditing plugins can also use this to log which actors are querying model availability.\n- **`purpose`** (`Optional[str]`): When provided, purpose-specific `models` and `blocked_models` configuration is applied. A purpose-specific `models` allowlist **overrides** the global allowlist, so models can be made available for a specific purpose even if they aren't globally listed.\n\n```python\nllm = LLM(datasette)\n\n# Get all available models (filtered by config and key availability)\nmodels = await llm.models()\nfor model in models:\n    print(model.model_id)\n\n# Filter by actor (for per-user permissions)\nmodels = await llm.models(actor=request.actor)\n\n# Filter by purpose (applies purpose-specific models/blocked_models config)\nmodels = await llm.models(purpose=\"enrichments\")\n\n# Both together — e.g. to populate a model picker for the current user\nmodels = await llm.models(actor=request.actor, purpose=\"sql-assistant\")\n```\n\n### Streaming responses\n\n```python\nmodel = await llm.model(\"gpt-5.4-mini\")\nresponse = await model.prompt(\"Tell me a story\")\n\n# Non-streaming - wait for complete response\ntext = await response.text()\n\n# Streaming - process chunks as they arrive\nasync for chunk in response:\n    print(chunk, end=\"\", flush=True)\n```\n\n### Grouping prompts\n\nUse `group()` for batch operations where multiple prompts are logically related:\n\n```python\nasync def enrich_rows(datasette, rows):\n    llm = LLM(datasette)\n\n    # Model determined by purpose configuration\n    async with llm.group(purpose=\"enrichments\") as model:\n        results = []\n        for row in rows:\n            response = await model.prompt(f\"Summarize: {row['content']}\")\n            text = await response.text()\n            results.append(text)\n\n    # All responses guaranteed complete here\n    return results\n```\n\nBenefits of `group()`:\n- **Transactional semantics**: All responses forced to complete on exit\n- **Shared context**: Hooks can treat grouped prompts together (e.g., shared budget reservation)\n- **Cleanup**: The `llm_group_exit` hook is called for settlement/logging\n\n## Plugin Hooks\n\ndatasette-llm provides hooks for other plugins to extend LLM operations.\n\n### `llm_prompt_context`\n\nWrap prompt execution with custom logic. The same hook is used for direct\n`prompt()` calls and for each response yielded by `chain()`:\n\n```python\nfrom datasette import hookimpl\nfrom contextlib import asynccontextmanager\n\n@hookimpl\ndef llm_prompt_context(datasette, model_id, prompt, purpose, actor):\n    @asynccontextmanager\n    async def wrapper(result):\n        # Before the prompt executes\n        actor_id = actor.get(\"id\") if actor else None\n        print(f\"Starting prompt to {model_id} by {actor_id}\")\n\n        yield\n\n        # After prompt() returns or chain() is initialized\n        async def on_complete(response):\n            usage = await response.usage()\n            print(f\"Used {usage.input} input, {usage.output} output tokens\")\n\n        await result.on_response_done(on_complete)\n\n    return wrapper\n```\n\n`result.response` continues to expose the first response, while\n`result.responses` contains all responses seen so far. The\n`await result.on_response_done(callback)` helper attaches a callback to all\nexisting responses and any future responses produced by a chain.\n\n### `llm_group_exit`\n\nCalled when a `group()` context manager exits:\n\n```python\n@hookimpl\ndef llm_group_exit(datasette, group):\n    # Can return a coroutine for async cleanup\n    async def cleanup():\n        print(f\"Group for {group.purpose} completed\")\n        print(f\"Processed {len(group._responses)} prompts\")\n    return cleanup()\n```\n\n### `register_llm_purposes`\n\nRegister purpose strings that your plugin uses, along with documentation explaining what they mean.\n\n```python\nfrom datasette import hookimpl\nfrom datasette_llm import Purpose\n\n@hookimpl\ndef register_llm_purposes(datasette):\n    return [\n        Purpose(\n            name=\"query-assistant\",\n            description=\"Assists users with writing SQL queries\",\n        ),\n        Purpose(\n            name=\"suggest-table-names\",\n            description=\"Suggests names for tables based on imported CSV files\",\n        ),\n    ]\n```\n\nRegistered purposes can be retrieved by other plugins (e.g., to build an admin UI for model assignment):\n\n```python\nfrom datasette_llm import get_purposes\n\npurposes = get_purposes(datasette)\nfor purpose in purposes:\n    print(f\"{purpose.name}: {purpose.description}\")\n```\n\nIf multiple plugins register the same purpose name, the first registration wins.\n\n### `llm_filter_models`\n\nInfluence the models that are returned from the `await llm.models()` method. Plugins can use this to add custom logic informing which models are available, taking into account both the actor and the purpose of the prompt.\n\n- `models` is a list of available model objects from all of the installed [LLM plugins](https://llm.datasette.io/en/stable/plugins/directory.html).\n- `actor` is an actor dictionary or `None`\n- `purpose` is a purpose string or `None`\n\nThe `actor` and `purpose` are the ones that were passed to the `llm.models(actor=..., purpose=...)` method.\n\n```python\n@hookimpl\nasync def llm_filter_models(datasette, models, actor, purpose):\n    if not actor:\n        # Anonymous users get limited models\n        return [m for m in models if m.model_id == \"gpt-5.4-mini\"]\n\n    # Check database for user's allowed models\n    db = datasette.get_database()\n    result = await db.execute(\n        \"SELECT model_id FROM user_models WHERE user_id = ?\",\n        [actor[\"id\"]]\n    )\n    allowed = {row[\"model_id\"] for row in result.rows}\n    return [m for m in models if m.model_id in allowed]\n```\n\n### `llm_default_model`\n\nThis plugin hook is used when `await llm.model()` is called without any arguments - or with a `purpose` and/or `actor` specified. Plugins can use this to control which default model is used, including for a given purpose.\n\n```python\n@hookimpl\nasync def llm_default_model(datasette, purpose, actor):\n    if actor:\n        # Check user's preferred model\n        db = datasette.get_database()\n        result = await db.execute(\n            \"SELECT preferred_model FROM user_prefs WHERE user_id = ?\",\n            [actor[\"id\"]]\n        )\n        row = result.first()\n        if row:\n            return row[\"preferred_model\"]\n    return None  # Use config defaults\n```\n\n## Related Plugins\n\n- **[datasette-secrets](https://github.com/datasette/datasette-secrets)**: Secure API key storage (required dependency)\n- **[datasette-llm-accountant](https://github.com/datasette/datasette-llm-accountant)**: Budget management and cost tracking\n\n## Development\n\nTo set up this plugin locally:\n\n```bash\ncd datasette-llm\nuv sync\n\n# Confirm the plugin is visible\nuv run datasette plugins\n```\n\nTo run the tests:\n\n```bash\nuv run pytest\n```\n\nThe test suite uses the `llm-echo` model which echoes back prompts without making API calls.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-llm",
+    "package_url": "https://pypi.org/project/datasette-llm/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-llm/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-llm/actions",
+      "Changelog": "https://github.com/datasette/datasette-llm/releases",
+      "Homepage": "https://github.com/datasette/datasette-llm",
+      "Issues": "https://github.com/datasette/datasette-llm/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-llm/0.1a8/",
+    "requires_dist": [
+      "datasette>=1.0a23",
+      "llm>=0.32a1",
+      "datasette-secrets"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "LLM integration for Datasette",
+    "version": "0.1a8",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37213671,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9441b15784ea5563815a2d2a95a91bcacaeddb8de943ef8a97c617042d52973c",
+          "md5": "17deeec0d5fa7336f2a9833abd63576c",
+          "sha256": "57d91c8902e4dc8baedf851cd690e4d5b8ec6f3ae9c29a7ed4634c08eee4c2b1"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "17deeec0d5fa7336f2a9833abd63576c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 14330,
+        "upload_time": "2026-01-22T17:11:05",
+        "upload_time_iso_8601": "2026-01-22T17:11:05.866540Z",
+        "url": "https://files.pythonhosted.org/packages/94/41/b15784ea5563815a2d2a95a91bcacaeddb8de943ef8a97c617042d52973c/datasette_llm-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "63840cea4d4e19235b5ed446d9796ec27f45594db929cd94d82f142d30d8b549",
+          "md5": "c384eadfb013aa80f0a2f7df2df72c02",
+          "sha256": "116e8a1d2f6bbfeae556fcef12e2b0abdfa75739327c912f7ce4515f81e2c6f6"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c384eadfb013aa80f0a2f7df2df72c02",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 18079,
+        "upload_time": "2026-01-22T17:11:06",
+        "upload_time_iso_8601": "2026-01-22T17:11:06.970387Z",
+        "url": "https://files.pythonhosted.org/packages/63/84/0cea4d4e19235b5ed446d9796ec27f45594db929cd94d82f142d30d8b549/datasette_llm-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c782b783e3483f5c3ef31a445e82b4a1e20dfae9eff1f81e95be9562368fc1a9",
+          "md5": "7f64a6ee7548342f7cbc544a1371634b",
+          "sha256": "4c9c87f9e3d93e7f0b1aa0c37be660f0e97c80c210dae6893755874960268b9d"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7f64a6ee7548342f7cbc544a1371634b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 15483,
+        "upload_time": "2026-03-26T00:01:32",
+        "upload_time_iso_8601": "2026-03-26T00:01:32.502259Z",
+        "url": "https://files.pythonhosted.org/packages/c7/82/b783e3483f5c3ef31a445e82b4a1e20dfae9eff1f81e95be9562368fc1a9/datasette_llm-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a2cea71b39806226e94412c7e17ae0e8edad6c5f289862a45f599a6e5a33eeb6",
+          "md5": "1971768d219b5726a22eb5f6728aefd0",
+          "sha256": "abf98a882a364e580c75917e421bb75d671f80ad4c390ea3f7332b46fb1aa4c6"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1971768d219b5726a22eb5f6728aefd0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 19998,
+        "upload_time": "2026-03-26T00:01:34",
+        "upload_time_iso_8601": "2026-03-26T00:01:34.063070Z",
+        "url": "https://files.pythonhosted.org/packages/a2/ce/a71b39806226e94412c7e17ae0e8edad6c5f289862a45f599a6e5a33eeb6/datasette_llm-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "206aace2287772f026ed9e5cd7d47d7ff6a1700a361e433ad10b092756b27243",
+          "md5": "fa56b4edc3d6775592a9bbf34c57d875",
+          "sha256": "7cdb7297bea966e89213c429a0213859c4794bea1e719d96bbb900b48c4c6020"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "fa56b4edc3d6775592a9bbf34c57d875",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 15563,
+        "upload_time": "2026-03-26T15:53:26",
+        "upload_time_iso_8601": "2026-03-26T15:53:26.927502Z",
+        "url": "https://files.pythonhosted.org/packages/20/6a/ace2287772f026ed9e5cd7d47d7ff6a1700a361e433ad10b092756b27243/datasette_llm-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c8ca554b94773f66bfda80ede88e43de668834271953e50db81093c9cc55dab5",
+          "md5": "32bd071c431d4d7082350cc2f176d7a4",
+          "sha256": "bf185ee6f12436063dd6db51973bb09113fc7531fbb52c5c164af8e7cb34eb1e"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "32bd071c431d4d7082350cc2f176d7a4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 20069,
+        "upload_time": "2026-03-26T15:53:28",
+        "upload_time_iso_8601": "2026-03-26T15:53:28.014794Z",
+        "url": "https://files.pythonhosted.org/packages/c8/ca/554b94773f66bfda80ede88e43de668834271953e50db81093c9cc55dab5/datasette_llm-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2d59ced69124c2b3d4be5f0fee94dafe8a8d1c0975231843bc89d83f90ec0816",
+          "md5": "4694024af6739a8c83b1a61585f94d92",
+          "sha256": "2fe939d8ad167eb5baccbc3091411364a15012945640462e171b4e1792db6cdd"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4694024af6739a8c83b1a61585f94d92",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 16662,
+        "upload_time": "2026-03-30T19:49:42",
+        "upload_time_iso_8601": "2026-03-30T19:49:42.499908Z",
+        "url": "https://files.pythonhosted.org/packages/2d/59/ced69124c2b3d4be5f0fee94dafe8a8d1c0975231843bc89d83f90ec0816/datasette_llm-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "08f57238dca23fb9de8cb50e7c435cd67a3a31927107378e80f38853587171e4",
+          "md5": "7284c5a421ae60c627c1c046907d651c",
+          "sha256": "95b372329bf1ddeef901abf45322f519995efbd05b3f7c3ba9394ddf66ea4f05"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7284c5a421ae60c627c1c046907d651c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 22592,
+        "upload_time": "2026-03-30T19:49:43",
+        "upload_time_iso_8601": "2026-03-30T19:49:43.935557Z",
+        "url": "https://files.pythonhosted.org/packages/08/f5/7238dca23fb9de8cb50e7c435cd67a3a31927107378e80f38853587171e4/datasette_llm-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "49ca9bad8c00dfb2728dfa3ff461660ce700c7bbcf53b0c123907174e84fcad0",
+          "md5": "4fdcb7c204c287b536d957565f433af7",
+          "sha256": "e09ab8a0fe29c991dd813393a0381f5be7cabbb84b28dfe593a360a241ee9381"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4fdcb7c204c287b536d957565f433af7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 17881,
+        "upload_time": "2026-03-31T21:18:11",
+        "upload_time_iso_8601": "2026-03-31T21:18:11.049008Z",
+        "url": "https://files.pythonhosted.org/packages/49/ca/9bad8c00dfb2728dfa3ff461660ce700c7bbcf53b0c123907174e84fcad0/datasette_llm-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3100bf6febd56262cef61f0a21834ac0cd121bdfdd50c3b3286abdb9dbe2908a",
+          "md5": "8a79ac414a5e607d4623d5d55ef199d8",
+          "sha256": "393c7ffad1e51b987d588f2835279e47a1837b6b5877e94b559764114a44606e"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8a79ac414a5e607d4623d5d55ef199d8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 25717,
+        "upload_time": "2026-03-31T21:18:12",
+        "upload_time_iso_8601": "2026-03-31T21:18:12.182710Z",
+        "url": "https://files.pythonhosted.org/packages/31/00/bf6febd56262cef61f0a21834ac0cd121bdfdd50c3b3286abdb9dbe2908a/datasette_llm-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a5": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3e01d6a59f44d7ec8236431d2bd1c3d0639013df269d0d65c04a92d3c4407ecd",
+          "md5": "551cdcfa1801094d3cbcce9dc7b9f79f",
+          "sha256": "7fdc0f206f0fd0dd517103060b0d0601a48e10a96c0ce571dbd234cd803cfecd"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "551cdcfa1801094d3cbcce9dc7b9f79f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 18740,
+        "upload_time": "2026-04-01T03:12:02",
+        "upload_time_iso_8601": "2026-04-01T03:12:02.477839Z",
+        "url": "https://files.pythonhosted.org/packages/3e/01/d6a59f44d7ec8236431d2bd1c3d0639013df269d0d65c04a92d3c4407ecd/datasette_llm-0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "8aa6edef57f797ce3c19649c4bf65e3d5cd9b9e7e0389b6365974d32bb39883f",
+          "md5": "af5136148ea004043e46fa630fc4fd29",
+          "sha256": "b2638c2387e03b811fc46a9eb5c477d12269788e28466da7ec8db76f20d00b1b"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "af5136148ea004043e46fa630fc4fd29",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 27146,
+        "upload_time": "2026-04-01T03:12:03",
+        "upload_time_iso_8601": "2026-04-01T03:12:03.731418Z",
+        "url": "https://files.pythonhosted.org/packages/8a/a6/edef57f797ce3c19649c4bf65e3d5cd9b9e7e0389b6365974d32bb39883f/datasette_llm-0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "66ffa2e0f7560c2b4a5412b076386eabdeb4dffa5f8b25f62275366f0331d46b",
+          "md5": "2d4c6c073ac4c2edc8a62ecb4660f17c",
+          "sha256": "fe06413a0cbcf61454d1f456f2a50b3fb781ded3506c483065467ea79f7f2d1e"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2d4c6c073ac4c2edc8a62ecb4660f17c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 19403,
+        "upload_time": "2026-04-01T23:02:25",
+        "upload_time_iso_8601": "2026-04-01T23:02:25.859045Z",
+        "url": "https://files.pythonhosted.org/packages/66/ff/a2e0f7560c2b4a5412b076386eabdeb4dffa5f8b25f62275366f0331d46b/datasette_llm-0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ce3c790f0d2cad456834d0d029ae4c2046221ff601527da1b5f644365ceddc3a",
+          "md5": "dc9db52603e3abac01125db0197f2036",
+          "sha256": "a1edbd556b100ded591226228d4750a3c332b546cc23f412ab7ec1ca11379b29"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dc9db52603e3abac01125db0197f2036",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 28425,
+        "upload_time": "2026-04-01T23:02:27",
+        "upload_time_iso_8601": "2026-04-01T23:02:27.502617Z",
+        "url": "https://files.pythonhosted.org/packages/ce/3c/790f0d2cad456834d0d029ae4c2046221ff601527da1b5f644365ceddc3a/datasette_llm-0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a7": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "8f205580bc4881f3acb3f1bf74c7b1ca6d5db2b63ec6c4d3dfaf8d8fca9c5e93",
+          "md5": "89b27d65e5e4c48e2fc51a70b3c410e9",
+          "sha256": "48889970a6f740250d56dce6f014035e824ac900a0152d144804e9708be4c10a"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "89b27d65e5e4c48e2fc51a70b3c410e9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 20248,
+        "upload_time": "2026-05-05T01:58:00",
+        "upload_time_iso_8601": "2026-05-05T01:58:00.586060Z",
+        "url": "https://files.pythonhosted.org/packages/8f/20/5580bc4881f3acb3f1bf74c7b1ca6d5db2b63ec6c4d3dfaf8d8fca9c5e93/datasette_llm-0.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1ad47d1793cc42327a5a6573e3d121dc844d5bcf54cfad89c74dc8a649d205f4",
+          "md5": "6ba4b14389ac23fd4f382900df2ae3cc",
+          "sha256": "4cf0d324a38ddfcdc3b930dafc2bc86b42134ed8907220527daccfc4bacb5be5"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6ba4b14389ac23fd4f382900df2ae3cc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 30000,
+        "upload_time": "2026-05-05T01:58:01",
+        "upload_time_iso_8601": "2026-05-05T01:58:01.790793Z",
+        "url": "https://files.pythonhosted.org/packages/1a/d4/7d1793cc42327a5a6573e3d121dc844d5bcf54cfad89c74dc8a649d205f4/datasette_llm-0.1a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a8": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e6f6c2d114c55ed47979c7f5366ccb1b1d789ec081bb70e69286792ee713946f",
+          "md5": "3f4cd69cb72c8d48a01e3984fb4f7ff3",
+          "sha256": "f82e34b70af66af8d3ba762031fb7761ac021aed0a0ee31a0578bde169bedcc9"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3f4cd69cb72c8d48a01e3984fb4f7ff3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 20224,
+        "upload_time": "2026-05-19T20:29:27",
+        "upload_time_iso_8601": "2026-05-19T20:29:27.268029Z",
+        "url": "https://files.pythonhosted.org/packages/e6/f6/c2d114c55ed47979c7f5366ccb1b1d789ec081bb70e69286792ee713946f/datasette_llm-0.1a8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c33e4da1e458289dd30c4ad2617ff614b376cd6d1ecbb837da64567e13bf848a",
+          "md5": "cc8f235771a9d1c044e5df68f72fb253",
+          "sha256": "5475c06082df301a14ac15cd3856f26aa8c97b569c66df7f6d9f1a9bc22ad09a"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm-0.1a8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cc8f235771a9d1c044e5df68f72fb253",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 30250,
+        "upload_time": "2026-05-19T20:29:28",
+        "upload_time_iso_8601": "2026-05-19T20:29:28.507823Z",
+        "url": "https://files.pythonhosted.org/packages/c3/3e/4da1e458289dd30c4ad2617ff614b376cd6d1ecbb837da64567e13bf848a/datasette_llm-0.1a8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "e6f6c2d114c55ed47979c7f5366ccb1b1d789ec081bb70e69286792ee713946f",
+        "md5": "3f4cd69cb72c8d48a01e3984fb4f7ff3",
+        "sha256": "f82e34b70af66af8d3ba762031fb7761ac021aed0a0ee31a0578bde169bedcc9"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm-0.1a8-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "3f4cd69cb72c8d48a01e3984fb4f7ff3",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 20224,
+      "upload_time": "2026-05-19T20:29:27",
+      "upload_time_iso_8601": "2026-05-19T20:29:27.268029Z",
+      "url": "https://files.pythonhosted.org/packages/e6/f6/c2d114c55ed47979c7f5366ccb1b1d789ec081bb70e69286792ee713946f/datasette_llm-0.1a8-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "c33e4da1e458289dd30c4ad2617ff614b376cd6d1ecbb837da64567e13bf848a",
+        "md5": "cc8f235771a9d1c044e5df68f72fb253",
+        "sha256": "5475c06082df301a14ac15cd3856f26aa8c97b569c66df7f6d9f1a9bc22ad09a"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm-0.1a8.tar.gz",
+      "has_sig": false,
+      "md5_digest": "cc8f235771a9d1c044e5df68f72fb253",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 30250,
+      "upload_time": "2026-05-19T20:29:28",
+      "upload_time_iso_8601": "2026-05-19T20:29:28.507823Z",
+      "url": "https://files.pythonhosted.org/packages/c3/3e/4da1e458289dd30c4ad2617ff614b376cd6d1ecbb837da64567e13bf848a/datasette_llm-0.1a8.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,158 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-profiles-actors-from-ids\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-profiles-actors-from-ids.svg)](https://pypi.org/project/datasette-profiles-actors-from-ids/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-profiles-actors-from-ids?include_prereleases&label=changelog)](https://github.com/datasette/datasette-profiles-actors-from-ids/releases)\n[![Tests](https://github.com/datasette/datasette-profiles-actors-from-ids/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-profiles-actors-from-ids/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-profiles-actors-from-ids/blob/main/LICENSE)\n\nUse [datasette-profiles](https://github.com/datasette/datasette-profiles) to handle [actors_from_ids](https://docs.datasette.io/en/latest/plugin_hooks.html#actors-from-ids-datasette-actor-ids)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-profiles-actors-from-ids\n```\n## Usage\n\nOnce installed, calls to the [datasette.actors_from_ids()](https://docs.datasette.io/en/latest/internals.html#datasette-actors-from-ids) method will incorporate details from user profiles stored by the [datasette-profiles](https://github.com/datasette/datasette-profiles) plugin.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-profiles-actors-from-ids\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-profiles-actors-from-ids",
+    "package_url": "https://pypi.org/project/datasette-profiles-actors-from-ids/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-profiles-actors-from-ids/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-profiles-actors-from-ids/actions",
+      "Changelog": "https://github.com/datasette/datasette-profiles-actors-from-ids/releases",
+      "Homepage": "https://github.com/datasette/datasette-profiles-actors-from-ids",
+      "Issues": "https://github.com/datasette/datasette-profiles-actors-from-ids/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-profiles-actors-from-ids/0.1a0/",
+    "requires_dist": [
+      "datasette",
+      "datasette-profiles>=0.1a3",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.9",
+    "summary": "Use datasette-profiles to return actors_from_ids",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 28206532,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2bbf6afd5f58db2439a1389c47da9ad7688213da4823e13d0358b4c4188c6ef1",
+          "md5": "8ab0bcccbeba5f3c4464439e8178c031",
+          "sha256": "dbe707cbbd3cfe16476137ea09285bc66e4166d9cec177a4274e1bc225ed7fd8"
+        },
+        "downloads": -1,
+        "filename": "datasette_profiles_actors_from_ids-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8ab0bcccbeba5f3c4464439e8178c031",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 7093,
+        "upload_time": "2025-03-27T16:55:01",
+        "upload_time_iso_8601": "2025-03-27T16:55:01.313025Z",
+        "url": "https://files.pythonhosted.org/packages/2b/bf/6afd5f58db2439a1389c47da9ad7688213da4823e13d0358b4c4188c6ef1/datasette_profiles_actors_from_ids-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1d61db70dd85c69a1cb2d7c187b1acab30e8e8f2d570b79b9fa67cb6beb74ba2",
+          "md5": "77d9124bee9ccb8dda736c7920aea787",
+          "sha256": "d31bdf5e45bf74f6e93ac8eae699d4ebe4fa69be120cf1c2953a29fe31626e1d"
+        },
+        "downloads": -1,
+        "filename": "datasette_profiles_actors_from_ids-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "77d9124bee9ccb8dda736c7920aea787",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 6924,
+        "upload_time": "2025-03-27T16:55:02",
+        "upload_time_iso_8601": "2025-03-27T16:55:02.444402Z",
+        "url": "https://files.pythonhosted.org/packages/1d/61/db70dd85c69a1cb2d7c187b1acab30e8e8f2d570b79b9fa67cb6beb74ba2/datasette_profiles_actors_from_ids-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "2bbf6afd5f58db2439a1389c47da9ad7688213da4823e13d0358b4c4188c6ef1",
+        "md5": "8ab0bcccbeba5f3c4464439e8178c031",
+        "sha256": "dbe707cbbd3cfe16476137ea09285bc66e4166d9cec177a4274e1bc225ed7fd8"
+      },
+      "downloads": -1,
+      "filename": "datasette_profiles_actors_from_ids-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8ab0bcccbeba5f3c4464439e8178c031",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.9",
+      "size": 7093,
+      "upload_time": "2025-03-27T16:55:01",
+      "upload_time_iso_8601": "2025-03-27T16:55:01.313025Z",
+      "url": "https://files.pythonhosted.org/packages/2b/bf/6afd5f58db2439a1389c47da9ad7688213da4823e13d0358b4c4188c6ef1/datasette_profiles_actors_from_ids-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "1d61db70dd85c69a1cb2d7c187b1acab30e8e8f2d570b79b9fa67cb6beb74ba2",
+        "md5": "77d9124bee9ccb8dda736c7920aea787",
+        "sha256": "d31bdf5e45bf74f6e93ac8eae699d4ebe4fa69be120cf1c2953a29fe31626e1d"
+      },
+      "downloads": -1,
+      "filename": "datasette_profiles_actors_from_ids-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "77d9124bee9ccb8dda736c7920aea787",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.9",
+      "size": 6924,
+      "upload_time": "2025-03-27T16:55:02",
+      "upload_time_iso_8601": "2025-03-27T16:55:02.444402Z",
+      "url": "https://files.pythonhosted.org/packages/1d/61/db70dd85c69a1cb2d7c187b1acab30e8e8f2d570b79b9fa67cb6beb74ba2/datasette_profiles_actors_from_ids-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,147 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-table-diagram\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-table-diagram.svg)](https://pypi.org/project/datasette-table-diagram/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-table-diagram?include_prereleases&label=changelog)](https://github.com/datasette/datasette-table-diagram/releases)\n[![Tests](https://github.com/datasette/datasette-table-diagram/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-table-diagram/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-table-diagram/blob/main/LICENSE)\n\nShow Entity Relationship diagrams of tables in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-table-diagram\n```\n## Usage\n\nDatabases gain a new database action menu item called \"Table diagram\", which links to a page that displays Mermaid Entity Relationship diagrams of the tables in that database.\n\nThese diagrams can be panned and zoomed, or users can click a table name to zoom to that table and its relationships.\n\nUsers will only see tables that they have permission to view.\n\n![Screenshot of a diagram of the fixtures.db table - tables are joined by curved lines, there is a + / - / reset button and a list of tables.](https://raw.githubusercontent.com/datasette/datasette-table-diagram/refs/heads/main/screenshot.png)\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-table-diagram\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-table-diagram",
+    "package_url": "https://pypi.org/project/datasette-table-diagram/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-table-diagram/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-table-diagram/actions",
+      "Changelog": "https://github.com/datasette/datasette-table-diagram/releases",
+      "Homepage": "https://github.com/datasette/datasette-table-diagram",
+      "Issues": "https://github.com/datasette/datasette-table-diagram/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-table-diagram/0.1a0/",
+    "requires_dist": [
+      "datasette>=1.0a25"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Show Entity Relationship diagrams of tables in Datasette",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 34904417,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "349f8fe6f80aee0c907fee39f56bb0a3b5c065671dbaeb0bafd4cbd19c927e54",
+          "md5": "1c0d0e5383b46f1326674b8951e2b072",
+          "sha256": "0530da78e594971220ab0228a73d6e477cdcda987a2906da727c10ac7a29a4ec"
+        },
+        "downloads": -1,
+        "filename": "datasette_table_diagram-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1c0d0e5383b46f1326674b8951e2b072",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10819,
+        "upload_time": "2026-03-07T03:59:42",
+        "upload_time_iso_8601": "2026-03-07T03:59:42.933865Z",
+        "url": "https://files.pythonhosted.org/packages/34/9f/8fe6f80aee0c907fee39f56bb0a3b5c065671dbaeb0bafd4cbd19c927e54/datasette_table_diagram-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7cc9d003dee45bf493c87143f9c61afc6e2668c7f965f905bbf54c9b468faeac",
+          "md5": "031578d8283537415ac3de179898a5fc",
+          "sha256": "8c80fe62cd30833571422082bc16c2d871432c65f27234a72605bd8d73824390"
+        },
+        "downloads": -1,
+        "filename": "datasette_table_diagram-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "031578d8283537415ac3de179898a5fc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11764,
+        "upload_time": "2026-03-07T03:59:44",
+        "upload_time_iso_8601": "2026-03-07T03:59:44.232317Z",
+        "url": "https://files.pythonhosted.org/packages/7c/c9/d003dee45bf493c87143f9c61afc6e2668c7f965f905bbf54c9b468faeac/datasette_table_diagram-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "349f8fe6f80aee0c907fee39f56bb0a3b5c065671dbaeb0bafd4cbd19c927e54",
+        "md5": "1c0d0e5383b46f1326674b8951e2b072",
+        "sha256": "0530da78e594971220ab0228a73d6e477cdcda987a2906da727c10ac7a29a4ec"
+      },
+      "downloads": -1,
+      "filename": "datasette_table_diagram-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "1c0d0e5383b46f1326674b8951e2b072",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 10819,
+      "upload_time": "2026-03-07T03:59:42",
+      "upload_time_iso_8601": "2026-03-07T03:59:42.933865Z",
+      "url": "https://files.pythonhosted.org/packages/34/9f/8fe6f80aee0c907fee39f56bb0a3b5c065671dbaeb0bafd4cbd19c927e54/datasette_table_diagram-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "7cc9d003dee45bf493c87143f9c61afc6e2668c7f965f905bbf54c9b468faeac",
+        "md5": "031578d8283537415ac3de179898a5fc",
+        "sha256": "8c80fe62cd30833571422082bc16c2d871432c65f27234a72605bd8d73824390"
+      },
+      "downloads": -1,
+      "filename": "datasette_table_diagram-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "031578d8283537415ac3de179898a5fc",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 11764,
+      "upload_time": "2026-03-07T03:59:44",
+      "upload_time_iso_8601": "2026-03-07T03:59:44.232317Z",
+      "url": "https://files.pythonhosted.org/packages/7c/c9/d003dee45bf493c87143f9c61afc6e2668c7f965f905bbf54c9b468faeac/datasette_table_diagram-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

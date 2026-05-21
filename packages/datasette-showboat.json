@@ -1,0 +1,240 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-showboat\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-showboat.svg)](https://pypi.org/project/datasette-showboat/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-showboat?include_prereleases&label=changelog)](https://github.com/simonw/datasette-showboat/releases)\n[![Tests](https://github.com/simonw/datasette-showboat/actions/workflows/test.yml/badge.svg)](https://github.com/simonw/datasette-showboat/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-showboat/blob/main/LICENSE)\n\nDatasette plugin that provides a remote viewer for [Showboat](https://github.com/simonw/showboat) documents. It receives streaming document chunks over HTTP and displays them in a live-updating web interface.\n\nSee [this blog post](https://simonwillison.net/2026/Feb/17/chartroom-and-datasette-showboat/#datasette-showboat) for background on this project.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-showboat\n```\n\n## Usage\n\nOnce installed, the plugin adds a `/-/showboat` page to your Datasette instance listing all received documents, and a `/-/showboat/receive` endpoint for ingesting chunks.\n\n### Sending documents\n\nSet the `SHOWBOAT_REMOTE_URL` environment variable to point at your Datasette instance:\n\n```bash\nexport SHOWBOAT_REMOTE_URL=\"https://your-datasette-instance/-/showboat/receive\"\n```\n\nThe `/-/showboat` page will display the correct URL for your instance including the hostname.\n\n### Permissions\n\nViewing showboat documents requires the `showboat` permission. By default this is **denied** to anonymous users — only the root user (when Datasette is started with `--root`) has access automatically.\n\nTo grant access to specific users, add to your `datasette.yaml`:\n\n```yaml\npermissions:\n  showboat:\n    id: your-username\n```\n\nOr to allow all authenticated users:\n\n```yaml\npermissions:\n  showboat:\n    id: \"*\"\n```\n\nThe receive endpoint (`/-/showboat/receive`) does not require the `showboat` permission — it uses token authentication instead (see below).\n\n### Token authentication\n\nTo protect the receive endpoint, configure a secret token in your `datasette.yaml` (or `metadata.yaml`):\n\n```yaml\nplugins:\n  datasette-showboat:\n    token: your-secret-token\n```\n\nWhen a token is configured, all requests to `/-/showboat/receive` must include it as a query parameter:\n\n```bash\nexport SHOWBOAT_REMOTE_URL=\"https://your-datasette-instance/-/showboat/receive?token=your-secret-token\"\n```\n\nWithout a configured token, the receive endpoint accepts all POST requests.\n\n### Custom database\n\nBy default chunks are stored in Datasette's internal database. To use a named database instead:\n\n```yaml\nplugins:\n  datasette-showboat:\n    database: my_database\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-showboat\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-showboat",
+    "package_url": "https://pypi.org/project/datasette-showboat/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-showboat/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-showboat/actions",
+      "Changelog": "https://github.com/simonw/datasette-showboat/releases",
+      "Homepage": "https://github.com/simonw/datasette-showboat",
+      "Issues": "https://github.com/simonw/datasette-showboat/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-showboat/0.1a2/",
+    "requires_dist": [
+      "datasette>=1.0a24"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Datasette plugin for SHOWBOAT_REMOTE_URL",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 35553446,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "89c055df4e0be289203ea0834654485fd656a22a97286a9f35a0b98bd1502f9e",
+          "md5": "3773cedbb9b8f32a08537f3033f664ed",
+          "sha256": "c416f06c23b25fddf8c8f44f7ca62c8ce1d5c1dd6aac37412a38745257a5b8ad"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3773cedbb9b8f32a08537f3033f664ed",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 33508,
+        "upload_time": "2026-02-16T19:43:55",
+        "upload_time_iso_8601": "2026-02-16T19:43:55.483144Z",
+        "url": "https://files.pythonhosted.org/packages/89/c0/55df4e0be289203ea0834654485fd656a22a97286a9f35a0b98bd1502f9e/datasette_showboat-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6d0a551b3e710b7a3bf41897e020b1b603cef60c51187de290dc11ce51d48f3b",
+          "md5": "16521d485d89277686fecbdbe679683e",
+          "sha256": "8af16fff8cbf08c04453699f2c4a598924a6a8d373a1114602009e83d48e789f"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "16521d485d89277686fecbdbe679683e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 35972,
+        "upload_time": "2026-02-16T19:43:56",
+        "upload_time_iso_8601": "2026-02-16T19:43:56.474666Z",
+        "url": "https://files.pythonhosted.org/packages/6d/0a/551b3e710b7a3bf41897e020b1b603cef60c51187de290dc11ce51d48f3b/datasette_showboat-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1a0a65c367f93be2c6e5b35e193be4a4d7b7f96ee5b035539f9f6d884c7111a2",
+          "md5": "5b2240de82315c18c35d38585abc12d0",
+          "sha256": "df54be28d0718e001fe26467b557ed53da22918aca2f08f53e7dcdeffec24cc7"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5b2240de82315c18c35d38585abc12d0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 33680,
+        "upload_time": "2026-02-18T12:53:55",
+        "upload_time_iso_8601": "2026-02-18T12:53:55.011988Z",
+        "url": "https://files.pythonhosted.org/packages/1a/0a/65c367f93be2c6e5b35e193be4a4d7b7f96ee5b035539f9f6d884c7111a2/datasette_showboat-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "5a8d53c9a390b84bb1e33a508aee88b1c528459d9b5b602a34b2db09ec25b3ff",
+          "md5": "0a1a79a8c9b14f8e855e25f8410ddaeb",
+          "sha256": "7e5f70d2df5d94988527cc711fa283b63adb2ab3ee1a3c5087f1b77f17805e99"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0a1a79a8c9b14f8e855e25f8410ddaeb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 36574,
+        "upload_time": "2026-02-18T12:53:56",
+        "upload_time_iso_8601": "2026-02-18T12:53:56.557459Z",
+        "url": "https://files.pythonhosted.org/packages/5a/8d/53c9a390b84bb1e33a508aee88b1c528459d9b5b602a34b2db09ec25b3ff/datasette_showboat-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "90a051f2c8cc539780e0dd90339ae319db85096b3d6f35147f2e8fc8f2b093a8",
+          "md5": "e7dcec6570e6ad818ff9b06ed455cb05",
+          "sha256": "c42b0f90a38f990e73bb1022d6d39f3e66cb11290163c3711a500166f52c4904"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e7dcec6570e6ad818ff9b06ed455cb05",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 34163,
+        "upload_time": "2026-03-27T23:43:41",
+        "upload_time_iso_8601": "2026-03-27T23:43:41.895366Z",
+        "url": "https://files.pythonhosted.org/packages/90/a0/51f2c8cc539780e0dd90339ae319db85096b3d6f35147f2e8fc8f2b093a8/datasette_showboat-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "eb9b5f7392f0502f920e4740aaf96babb218d44a1e778f99e77978b483b61c77",
+          "md5": "dfd8aee065a783e43f9509619b76df4f",
+          "sha256": "0d8d29b3c2b03392b2511a02b07a19b09bcf228007d3378a7c606cbe55762151"
+        },
+        "downloads": -1,
+        "filename": "datasette_showboat-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dfd8aee065a783e43f9509619b76df4f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 37721,
+        "upload_time": "2026-03-27T23:43:43",
+        "upload_time_iso_8601": "2026-03-27T23:43:43.523079Z",
+        "url": "https://files.pythonhosted.org/packages/eb/9b/5f7392f0502f920e4740aaf96babb218d44a1e778f99e77978b483b61c77/datasette_showboat-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "90a051f2c8cc539780e0dd90339ae319db85096b3d6f35147f2e8fc8f2b093a8",
+        "md5": "e7dcec6570e6ad818ff9b06ed455cb05",
+        "sha256": "c42b0f90a38f990e73bb1022d6d39f3e66cb11290163c3711a500166f52c4904"
+      },
+      "downloads": -1,
+      "filename": "datasette_showboat-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "e7dcec6570e6ad818ff9b06ed455cb05",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 34163,
+      "upload_time": "2026-03-27T23:43:41",
+      "upload_time_iso_8601": "2026-03-27T23:43:41.895366Z",
+      "url": "https://files.pythonhosted.org/packages/90/a0/51f2c8cc539780e0dd90339ae319db85096b3d6f35147f2e8fc8f2b093a8/datasette_showboat-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "eb9b5f7392f0502f920e4740aaf96babb218d44a1e778f99e77978b483b61c77",
+        "md5": "dfd8aee065a783e43f9509619b76df4f",
+        "sha256": "0d8d29b3c2b03392b2511a02b07a19b09bcf228007d3378a7c606cbe55762151"
+      },
+      "downloads": -1,
+      "filename": "datasette_showboat-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "dfd8aee065a783e43f9509619b76df4f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 37721,
+      "upload_time": "2026-03-27T23:43:43",
+      "upload_time_iso_8601": "2026-03-27T23:43:43.523079Z",
+      "url": "https://files.pythonhosted.org/packages/eb/9b/5f7392f0502f920e4740aaf96babb218d44a1e778f99e77978b483b61c77/datasette_showboat-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

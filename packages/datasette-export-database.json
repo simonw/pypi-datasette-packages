@@ -1,0 +1,371 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-export-database\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-export-database.svg)](https://pypi.org/project/datasette-export-database/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-export-database?include_prereleases&label=changelog)](https://github.com/datasette/datasette-export-database/releases)\n[![Tests](https://github.com/datasette/datasette-export-database/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-export-database/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-export-database/blob/main/LICENSE)\n\nExport a copy of a SQLite database on demand\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-export-database\n```\n## Usage\n\nUsers with the `export-database` permission will be able to download a fresh snapshot of any on-disk (not in-memory) database using a new option in the database action menu.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-export-database\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-export-database",
+    "package_url": "https://pypi.org/project/datasette-export-database/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-export-database/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-export-database/actions",
+      "Changelog": "https://github.com/datasette/datasette-export-database/releases",
+      "Homepage": "https://github.com/datasette/datasette-export-database",
+      "Issues": "https://github.com/datasette/datasette-export-database/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-export-database/0.2.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Export a copy of a SQLite database on demand",
+    "version": "0.2.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 36161059,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cea4070921ee71e6c03908650b08cdd7af98cc61cf7770afa341f9d4ddf8b753",
+          "md5": "3bd9d5090639c2c9b0d91d9f323d9e3d",
+          "sha256": "18a77f679c86bf7995349b62455ab01a1bd1cee1ba533d0d5e4a1c49490d3b8f"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3bd9d5090639c2c9b0d91d9f323d9e3d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7997,
+        "upload_time": "2024-03-15T05:05:10",
+        "upload_time_iso_8601": "2024-03-15T05:05:10.809508Z",
+        "url": "https://files.pythonhosted.org/packages/ce/a4/070921ee71e6c03908650b08cdd7af98cc61cf7770afa341f9d4ddf8b753/datasette_export_database-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f762360d63ed7254dbabfb0db4398288fcb6c0737f8dc08a36ee17f039d0d3e3",
+          "md5": "d0164636c7c64bdeafef593256f63c57",
+          "sha256": "d406ab91e844353e4f15e77d8e869931036fac702b2684ea3d3508da1084dd87"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-database-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d0164636c7c64bdeafef593256f63c57",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 8125,
+        "upload_time": "2024-03-15T05:05:12",
+        "upload_time_iso_8601": "2024-03-15T05:05:12.380990Z",
+        "url": "https://files.pythonhosted.org/packages/f7/62/360d63ed7254dbabfb0db4398288fcb6c0737f8dc08a36ee17f039d0d3e3/datasette-export-database-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "edbbd49e5ef253b64dc313ac6f6ee05916aed3d118ef7b72279e12c2a463b7d7",
+          "md5": "313b81283734401faa46e21c4e5feca1",
+          "sha256": "ff37b63c7c2f517fe8a9947ba9483c05e931823950de58928bedafcef090618c"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "313b81283734401faa46e21c4e5feca1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8058,
+        "upload_time": "2024-03-15T05:12:44",
+        "upload_time_iso_8601": "2024-03-15T05:12:44.108376Z",
+        "url": "https://files.pythonhosted.org/packages/ed/bb/d49e5ef253b64dc313ac6f6ee05916aed3d118ef7b72279e12c2a463b7d7/datasette_export_database-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b8ac6ce09637ca0f8cb396f5db59894a614246945a1843a6374903cebbd6c690",
+          "md5": "f0f289886dd4bbb9f69ed315c8c58002",
+          "sha256": "4805eb82c55a9d0378c04ec096e2f74d6a418a6546023b223af02d0ea9da5b82"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-database-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f0f289886dd4bbb9f69ed315c8c58002",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 8157,
+        "upload_time": "2024-03-15T05:12:45",
+        "upload_time_iso_8601": "2024-03-15T05:12:45.592326Z",
+        "url": "https://files.pythonhosted.org/packages/b8/ac/6ce09637ca0f8cb396f5db59894a614246945a1843a6374903cebbd6c690/datasette-export-database-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cecdb6e75c919c1aa58332709d666294308b355c8355622861ee73ce57ac1c5d",
+          "md5": "29c3a521efc25975be72e4869347955c",
+          "sha256": "6e74b09e91498ae4448916395e7881c2a7ca54230aa3e93482fb1d500ad9d4cc"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "29c3a521efc25975be72e4869347955c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8150,
+        "upload_time": "2024-03-15T05:32:54",
+        "upload_time_iso_8601": "2024-03-15T05:32:54.674797Z",
+        "url": "https://files.pythonhosted.org/packages/ce/cd/b6e75c919c1aa58332709d666294308b355c8355622861ee73ce57ac1c5d/datasette_export_database-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2c223b3ed4cd49d68bb7ac1e716f0cbc926e29f2769de3106075d0200dcfb63f",
+          "md5": "117f30b00d92c206c785fc1e3873aefe",
+          "sha256": "03b915460e458ecb2d8471d9ca42eda1b53fb16b06bd34ff710612529f6fc0f6"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-database-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "117f30b00d92c206c785fc1e3873aefe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 8428,
+        "upload_time": "2024-03-15T05:32:56",
+        "upload_time_iso_8601": "2024-03-15T05:32:56.109445Z",
+        "url": "https://files.pythonhosted.org/packages/2c/22/3b3ed4cd49d68bb7ac1e716f0cbc926e29f2769de3106075d0200dcfb63f/datasette-export-database-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a173309d21482048bfb963097a5ec5333eca1c18b7ba35b42222e058bedeff78",
+          "md5": "799444446f6c748a5ec4943161980344",
+          "sha256": "3c08093626727a457dd3dfad7a597bbb5df201ee123e5e8c67585e0a616d39ab"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "799444446f6c748a5ec4943161980344",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8432,
+        "upload_time": "2024-03-16T00:50:48",
+        "upload_time_iso_8601": "2024-03-16T00:50:48.625840Z",
+        "url": "https://files.pythonhosted.org/packages/a1/73/309d21482048bfb963097a5ec5333eca1c18b7ba35b42222e058bedeff78/datasette_export_database-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "696a832569c014ce85a4f5db574cf4db94f84ebb02ef3aedaa4873ee036e3678",
+          "md5": "9ac8f68f5b38b3d79d644432eb2496e0",
+          "sha256": "270c19f59722fe550e662580b1b8800fe5aca324ec69a4fe6eeb3781ba810319"
+        },
+        "downloads": -1,
+        "filename": "datasette-export-database-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9ac8f68f5b38b3d79d644432eb2496e0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 9114,
+        "upload_time": "2024-03-16T00:50:50",
+        "upload_time_iso_8601": "2024-03-16T00:50:50.045291Z",
+        "url": "https://files.pythonhosted.org/packages/69/6a/832569c014ce85a4f5db574cf4db94f84ebb02ef3aedaa4873ee036e3678/datasette-export-database-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7bc23fbd466633c85d2b33d80998a4d4414d9b9a0cbbb39ca54b0291d62de147",
+          "md5": "610999dc0b0be401e54403503c71d337",
+          "sha256": "60cdf0e60d963da00505209672059a800916798a2284429f4c72a389ed450b9f"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.3a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "610999dc0b0be401e54403503c71d337",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8369,
+        "upload_time": "2025-11-11T00:23:00",
+        "upload_time_iso_8601": "2025-11-11T00:23:00.925742Z",
+        "url": "https://files.pythonhosted.org/packages/7b/c2/3fbd466633c85d2b33d80998a4d4414d9b9a0cbbb39ca54b0291d62de147/datasette_export_database-0.3a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "949e9b00150319457679c0dffed323eef7a7b9af3ae057a0808d5f676cce9ae6",
+          "md5": "911290c95bc353c78e9db221d83dfdcf",
+          "sha256": "9ffc2e2820107b6dbb73206ab6f816f95104a35e3d0d622a3e940695c6f20ea0"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.3a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "911290c95bc353c78e9db221d83dfdcf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9067,
+        "upload_time": "2025-11-11T00:23:02",
+        "upload_time_iso_8601": "2025-11-11T00:23:02.191956Z",
+        "url": "https://files.pythonhosted.org/packages/94/9e/9b00150319457679c0dffed323eef7a7b9af3ae057a0808d5f676cce9ae6/datasette_export_database-0.3a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0e0c8534ebe8434dbef4a5d8d902c08656234f08188bbe34e4b43b4b69660f39",
+          "md5": "d28fa59d7d536b09c5931ceaac951cb5",
+          "sha256": "d37f0223d6ea8708de32deb8abc5cb455b9b32110d1571b6691e682f24b7a258"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.3a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d28fa59d7d536b09c5931ceaac951cb5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8361,
+        "upload_time": "2026-04-15T23:53:23",
+        "upload_time_iso_8601": "2026-04-15T23:53:23.636991Z",
+        "url": "https://files.pythonhosted.org/packages/0e/0c/8534ebe8434dbef4a5d8d902c08656234f08188bbe34e4b43b4b69660f39/datasette_export_database-0.3a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9dd224ce450490a7acfeecbfbac91b7963c1a99fa4d2524c2050c11a73bf77d8",
+          "md5": "472cadbcda7826a0e09ae4f6bdb04640",
+          "sha256": "d3191ac20d0b0739591ac514a5024434adc06b46821017b23d1ec9b7814b2c8f"
+        },
+        "downloads": -1,
+        "filename": "datasette_export_database-0.3a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "472cadbcda7826a0e09ae4f6bdb04640",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9203,
+        "upload_time": "2026-04-15T23:53:24",
+        "upload_time_iso_8601": "2026-04-15T23:53:24.949784Z",
+        "url": "https://files.pythonhosted.org/packages/9d/d2/24ce450490a7acfeecbfbac91b7963c1a99fa4d2524c2050c11a73bf77d8/datasette_export_database-0.3a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "a173309d21482048bfb963097a5ec5333eca1c18b7ba35b42222e058bedeff78",
+        "md5": "799444446f6c748a5ec4943161980344",
+        "sha256": "3c08093626727a457dd3dfad7a597bbb5df201ee123e5e8c67585e0a616d39ab"
+      },
+      "downloads": -1,
+      "filename": "datasette_export_database-0.2.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "799444446f6c748a5ec4943161980344",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 8432,
+      "upload_time": "2024-03-16T00:50:48",
+      "upload_time_iso_8601": "2024-03-16T00:50:48.625840Z",
+      "url": "https://files.pythonhosted.org/packages/a1/73/309d21482048bfb963097a5ec5333eca1c18b7ba35b42222e058bedeff78/datasette_export_database-0.2.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "696a832569c014ce85a4f5db574cf4db94f84ebb02ef3aedaa4873ee036e3678",
+        "md5": "9ac8f68f5b38b3d79d644432eb2496e0",
+        "sha256": "270c19f59722fe550e662580b1b8800fe5aca324ec69a4fe6eeb3781ba810319"
+      },
+      "downloads": -1,
+      "filename": "datasette-export-database-0.2.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "9ac8f68f5b38b3d79d644432eb2496e0",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 9114,
+      "upload_time": "2024-03-16T00:50:50",
+      "upload_time_iso_8601": "2024-03-16T00:50:50.045291Z",
+      "url": "https://files.pythonhosted.org/packages/69/6a/832569c014ce85a4f5db574cf4db94f84ebb02ef3aedaa4873ee036e3678/datasette-export-database-0.2.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

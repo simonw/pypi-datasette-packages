@@ -1,0 +1,244 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-debug-events\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-debug-events.svg)](https://pypi.org/project/datasette-debug-events/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-debug-events?include_prereleases&label=changelog)](https://github.com/datasette/datasette-debug-events/releases)\n[![Tests](https://github.com/datasette/datasette-debug-events/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-debug-events/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-debug-events/blob/main/LICENSE)\n\nPrint Datasette events to standard error\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-debug-events\n```\n## Usage\n\nOnce installed, any events fired by the [Datasette events mechanism](https://docs.datasette.io/en/latest/events.html) (introduced [in Datasette 1.0a8](https://simonwillison.net/2024/Feb/7/datasette-1a8/#datasette-events)) will be sent to standard error and should display in your terminal.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-debug-events\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-debug-events",
+    "package_url": "https://pypi.org/project/datasette-debug-events/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-debug-events/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-debug-events/actions",
+      "Changelog": "https://github.com/datasette/datasette-debug-events/releases",
+      "Homepage": "https://github.com/datasette/datasette-debug-events",
+      "Issues": "https://github.com/datasette/datasette-debug-events/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-debug-events/0.1a2/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Print Datasette events to standard error",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 32270037,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ef764a849e55ad6ea25bb0696b73ee2ce55bc844c306d589e777d6bca4507feb",
+          "md5": "0582c9056cd093f6ba97957ef336c8e6",
+          "sha256": "b1624d9adcb4c9e1f90298a41ee760380ae8e4a3bd6c0d3813ca896abe26667d"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0582c9056cd093f6ba97957ef336c8e6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 6710,
+        "upload_time": "2024-09-03T20:01:16",
+        "upload_time_iso_8601": "2024-09-03T20:01:16.643187Z",
+        "url": "https://files.pythonhosted.org/packages/ef/76/4a849e55ad6ea25bb0696b73ee2ce55bc844c306d589e777d6bca4507feb/datasette_debug_events-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cd262278b2d285a3bead7e78a85e8e9555b996ef7f72e4bd39060730a335097b",
+          "md5": "2ec82a88a3a219842ff00d06a5d9ff9b",
+          "sha256": "df838627adfcf9d1109949ac63682fa8ec587377423cd03956c8e64287f36243"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2ec82a88a3a219842ff00d06a5d9ff9b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 6400,
+        "upload_time": "2024-09-03T20:01:18",
+        "upload_time_iso_8601": "2024-09-03T20:01:18.084965Z",
+        "url": "https://files.pythonhosted.org/packages/cd/26/2278b2d285a3bead7e78a85e8e9555b996ef7f72e4bd39060730a335097b/datasette_debug_events-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "bd3e6e6988078d51917fe15c9620d48217185a9d5774adb49d9dfdb911d1fbab",
+          "md5": "b4abc0c2509dd1d370724270deac10f3",
+          "sha256": "e208cee585d96d85a5ff7fe65d7df73edb25c4970d5e29db298d6015dd26f440"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b4abc0c2509dd1d370724270deac10f3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 6750,
+        "upload_time": "2025-10-21T00:55:34",
+        "upload_time_iso_8601": "2025-10-21T00:55:34.214473Z",
+        "url": "https://files.pythonhosted.org/packages/bd/3e/6e6988078d51917fe15c9620d48217185a9d5774adb49d9dfdb911d1fbab/datasette_debug_events-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e6c8e3871fd4b4c44e2c3035b6e98a0ad5453b28d93f4af3564ac4c2006559f6",
+          "md5": "ac5953d03cc74f7a7fdcfdf1cdd87a35",
+          "sha256": "2618588e0c9b31d1392a7bf7ccbb2908a2a7d781c4ae6b4318f8fc5243ccff05"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ac5953d03cc74f7a7fdcfdf1cdd87a35",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 6400,
+        "upload_time": "2025-10-21T00:55:35",
+        "upload_time_iso_8601": "2025-10-21T00:55:35.505023Z",
+        "url": "https://files.pythonhosted.org/packages/e6/c8/e3871fd4b4c44e2c3035b6e98a0ad5453b28d93f4af3564ac4c2006559f6/datasette_debug_events-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6240d9f38c6899f3ac4374e96c2e8ade202e343f50b618ba0a124d6dbc7d702a",
+          "md5": "44e235a75386ee10d4a44d188828569f",
+          "sha256": "dca89d08a494270f7a6d2f7dd4d6a590ef4d107db9da71c217ab4440413ebed9"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "44e235a75386ee10d4a44d188828569f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 6725,
+        "upload_time": "2025-11-08T00:01:57",
+        "upload_time_iso_8601": "2025-11-08T00:01:57.312683Z",
+        "url": "https://files.pythonhosted.org/packages/62/40/d9f38c6899f3ac4374e96c2e8ade202e343f50b618ba0a124d6dbc7d702a/datasette_debug_events-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ff6dc7d158ce6f6e91020936e5bdeb92c240c318f06c466dd4d675021cf6be62",
+          "md5": "0c93d8a469e8cc93a32fc4288ac5e39c",
+          "sha256": "b276e4c342db59d9e234607ad707835ba0e3a195f2f17e5fde7ecf055cb8456b"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_events-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0c93d8a469e8cc93a32fc4288ac5e39c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 6382,
+        "upload_time": "2025-11-08T00:01:59",
+        "upload_time_iso_8601": "2025-11-08T00:01:59.571878Z",
+        "url": "https://files.pythonhosted.org/packages/ff/6d/c7d158ce6f6e91020936e5bdeb92c240c318f06c466dd4d675021cf6be62/datasette_debug_events-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "6240d9f38c6899f3ac4374e96c2e8ade202e343f50b618ba0a124d6dbc7d702a",
+        "md5": "44e235a75386ee10d4a44d188828569f",
+        "sha256": "dca89d08a494270f7a6d2f7dd4d6a590ef4d107db9da71c217ab4440413ebed9"
+      },
+      "downloads": -1,
+      "filename": "datasette_debug_events-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "44e235a75386ee10d4a44d188828569f",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 6725,
+      "upload_time": "2025-11-08T00:01:57",
+      "upload_time_iso_8601": "2025-11-08T00:01:57.312683Z",
+      "url": "https://files.pythonhosted.org/packages/62/40/d9f38c6899f3ac4374e96c2e8ade202e343f50b618ba0a124d6dbc7d702a/datasette_debug_events-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ff6dc7d158ce6f6e91020936e5bdeb92c240c318f06c466dd4d675021cf6be62",
+        "md5": "0c93d8a469e8cc93a32fc4288ac5e39c",
+        "sha256": "b276e4c342db59d9e234607ad707835ba0e3a195f2f17e5fde7ecf055cb8456b"
+      },
+      "downloads": -1,
+      "filename": "datasette_debug_events-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "0c93d8a469e8cc93a32fc4288ac5e39c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 6382,
+      "upload_time": "2025-11-08T00:01:59",
+      "upload_time_iso_8601": "2025-11-08T00:01:59.571878Z",
+      "url": "https://files.pythonhosted.org/packages/ff/6d/c7d158ce6f6e91020936e5bdeb92c240c318f06c466dd4d675021cf6be62/datasette_debug_events-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

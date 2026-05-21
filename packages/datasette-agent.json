@@ -1,0 +1,282 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-agent\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-agent.svg)](https://pypi.org/project/datasette-agent/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-agent?include_prereleases&label=changelog)](https://github.com/datasette/datasette-agent/releases)\n[![Tests](https://github.com/datasette/datasette-agent/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-agent/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-agent/blob/main/LICENSE)\n\nAn LLM-powered agent assistant for Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-agent\n```\n## Usage\n\nVisit `/-/agent` to start a conversation with the chat assistant.\n\nThe agent uses [datasette-llm](https://github.com/datasette/datasette-llm) to call language models. Configure a default model for it before visiting `/-/agent`, for example in `datasette.yml`:\n\n```yaml\nplugins:\n  datasette-llm:\n    default_model: gpt-5.4-mini\n```\n\nThe \"Explore with AI agent\" entries that appear in the database and table action menus launch a background agent that explores the selected database or table and writes a report. Reports live under `/-/agent/explore/`.\n\nVisit `/-/agent/background` to launch background agents directly. Each one is given a goal and runs toward it without further input. The listing includes a Stop button for cancelling agents that are still running.\n\n### Permissions\n\nThis plugin registers three independent permissions:\n\n- `datasette-agent` — required to use the chat assistant under `/-/agent`.\n- `datasette-agent-explore` — required to see the \"Explore with AI agent\" entries in the database/table action menus and to use the explorer routes under `/-/agent/explore/`.\n- `datasette-agent-background` — required to use the `spawn_background_agent` and `check_background_agent` tools from chat, and to access the `/-/agent/background` page and `/-/agent/api/background/*` endpoints. The background-agent endpoints require both `datasette-agent` and `datasette-agent-background`.\n\nThe three permissions are independent: an actor may hold any subset. The `--root` user holds all of them.\n\n## Registering additional tools from plugins\n\nOther Datasette plugins can register additional tools for the agent using the `register_agent_tools` plugin hook.\n\n### Defining a tool\n\nCreate a Datasette plugin that implements the `register_agent_tools` hook, returning a list of `AgentTool` instances:\n\n```python\nfrom datasette import hookimpl\nfrom datasette_agent.tools import AgentTool\n\n\n@hookimpl\ndef register_agent_tools(datasette):\n    return [\n        AgentTool(\n            name=\"my_tool\",\n            description=\"Description of what this tool does, used by the LLM to decide when to call it.\",\n            input_schema={\n                \"type\": \"object\",\n                \"properties\": {\n                    \"query\": {\n                        \"type\": \"string\",\n                        \"description\": \"The query to run\",\n                    },\n                    \"style\": {\n                        \"type\": \"string\",\n                        \"enum\": [\"brief\", \"detailed\"],\n                        \"description\": \"Output style\",\n                    },\n                },\n                \"required\": [\"query\"],\n            },\n            fn=my_tool_handler,\n            # Optional: name a Datasette permission action that gates this tool.\n            # required_permission=\"myplugin-write\",\n        ),\n    ]\n```\n\n### Gating a tool with a permission\n\n`AgentTool` accepts an optional `required_permission: str | None` field. When set, the agent harness calls `datasette.allowed(action=required_permission, actor=actor)` for the current actor before sending the tool list to the LLM. If the actor lacks the permission, the tool is filtered out of the list — the model never sees it and cannot call it. There is no runtime \"permission denied\" branch your `fn` needs to handle.\n\nYour plugin is responsible for registering the action via Datasette's `register_actions` plugin hook:\n\n```python\nfrom datasette import hookimpl\nfrom datasette.permissions import Action\nfrom datasette_agent.tools import AgentTool\n\n\n@hookimpl\ndef register_actions():\n    return [\n        Action(\n            name=\"myplugin-write\",\n            description=\"Allow my plugin's write tools\",\n        ),\n    ]\n\n\n@hookimpl\ndef register_agent_tools(datasette):\n    return [\n        AgentTool(\n            name=\"my_write_tool\",\n            description=\"Writes things\",\n            input_schema={\"type\": \"object\", \"properties\": {}},\n            fn=my_write_handler,\n            required_permission=\"myplugin-write\",\n        ),\n    ]\n```\n\nFor a working example see this plugin's own `spawn_background_agent` and `check_background_agent` tools, which use `required_permission=\"datasette-agent-background\"`.\n\n### Tool handler function\n\nEach tool's `fn` must be an async function that accepts `datasette` and `actor` as keyword arguments, plus any parameters defined in `input_schema`. It must return a JSON string:\n\n```python\nimport json\n\n\nasync def my_tool_handler(datasette, actor, query, style=None):\n    # Do work here...\n    return json.dumps({\n        \"result\": \"Tool output that the LLM will see\",\n    })\n```\n\nTo render rich HTML inline in the chat UI, include an `_html` key in the returned JSON. Any top-level key whose name starts with `_` is removed before the tool result is sent to the LLM, so the HTML is shown to the user but not passed back to the model:\n\n```python\nreturn json.dumps({\n    \"_html\": '<div class=\"my-widget\">Rich content here</div>',\n    \"summary\": \"Widget rendered successfully\",\n})\n```\n\n## Rendering custom HTML from tools\n\nTool plugins can render rich HTML inline in the chat UI by returning a JSON object with an `_html` key. The HTML is rendered directly in the conversation. The remaining keys are returned to the LLM as the tool result, with any key whose name starts with `_` removed first.\n\nExample tool implementation:\n\n```python\nimport json\n\nasync def _render_widget(datasette, actor, database, sql):\n    html = (\n        '<script src=\"/-/static-plugins/my-plugin/widget.js\" type=\"module\"></script>\\n'\n        '<my-widget>\\n'\n        f'<script type=\"application/json\">{json.dumps({\"database\": database, \"sql\": sql})}</script>\\n'\n        '</my-widget>'\n    )\n    return json.dumps({\n        \"_html\": html,\n        \"database\": database,\n        \"sql\": sql,\n        \"summary\": \"Widget rendered successfully\",\n    })\n```\n\nThe `_html` value is inserted into the chat as raw HTML, so it can include custom elements, scripts, and styles. The other keys (`database`, `sql`, and `summary` in this example) are what the LLM receives as the tool result.\n\nIf your plugin runs SQL and displays the results in HTML, add a link below the rendered output using Datasette Agent's built-in SQL link styling:\n\n```html\n<p class=\"agent-sql-edit-link\"><a href=\"/data/-/query?sql=select+1\">View SQL query</a></p>\n```\n\n### Example plugins\n\n- [datasette-agent-charts](https://github.com/datasette/datasette-agent-charts) - renders charts from SQL query results using Observable Plot\n- [datasette-agent-openai-imagegen](https://github.com/datasette/datasette-agent-openai-imagegen) - generates images using OpenAI's image generation API\n\n## CLI commands\n\n### Interactive chat\n\nStart an interactive chat session with the agent from the command line:\n\n```bash\ndatasette agent chat mydata.db\n```\n\nYou can pass multiple database files, use `:memory:` for an in-memory database, specify a model, or send a single prompt:\n\n```bash\ndatasette agent chat mydata.db -m gpt-5.4-mini\ndatasette agent chat mydata.db -m gpt-5.4-mini -p \"List all tables\"\n```\n\nOptions:\n\n- `-p`, `--prompt` — Send a single prompt and exit (non-interactive mode)\n- `-m`, `--model` — LLM model to use\n\n### Listing available tools\n\nTo see all registered agent tools, grouped by plugin:\n\n```bash\ndatasette agent tools\n```\n\nOutput:\n\n```\nagent:\n  list_databases_and_tables\n    List all available databases and their tables\n  describe_table\n    Get column names, types, and foreign keys for a table\n  sql_query\n    Execute a read-only SQL query against a database\n```\n\nAdd `--json` for machine-readable output:\n\n```bash\ndatasette agent tools --json\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Run the tests like this:\n```bash\ncd datasette-agent\nuv run pytest\n```\nTo run the development server with a persistent internal database and GPT-5.5 as the model:\n```bash\nuv run datasette --internal internal.db \\\n  --root --secret 1 \\\n  -s plugins.datasette-llm.default_model gpt-5.5\n```\nAdd extra database files to that command to enable the agent to query them.\n\n## Credits\n\nThis plugin vendors [streaming-markdown](https://github.com/thetarnav/streaming-markdown) by Damian Tarnawski, MIT licensed.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-agent",
+    "package_url": "https://pypi.org/project/datasette-agent/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-agent/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-agent/actions",
+      "Changelog": "https://github.com/datasette/datasette-agent/releases",
+      "Homepage": "https://github.com/datasette/datasette-agent",
+      "Issues": "https://github.com/datasette/datasette-agent/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-agent/0.1a3/",
+    "requires_dist": [
+      "datasette>=1.0a28",
+      "datasette-llm>=0.1a7",
+      "llm>=0.32a2",
+      "python-ulid"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "An LLM-powered agent assistant for Datasette",
+    "version": "0.1a3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37279298,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c2dfa93cd5eb4eb571076547209bca2e81ea4ff45a3a21ce5e081369fce2aa7c",
+          "md5": "8535cc41647988c2c58ac1fdd5e0862e",
+          "sha256": "3c3b101d136ecb835ba968f1bf652f24bc32a962efb5a8b777e7cb5632716f24"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8535cc41647988c2c58ac1fdd5e0862e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 56867,
+        "upload_time": "2026-05-12T21:30:48",
+        "upload_time_iso_8601": "2026-05-12T21:30:48.406455Z",
+        "url": "https://files.pythonhosted.org/packages/c2/df/a93cd5eb4eb571076547209bca2e81ea4ff45a3a21ce5e081369fce2aa7c/datasette_agent-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "fd26981d4f918c00f45ba34b428f03ef2ee33ca80971b1eaa1038ef2b718c022",
+          "md5": "64add00c88950fbe4ea674fda7c58fbe",
+          "sha256": "3a71cd8cea492504097962e2c21b100ba348355df71f60e166cd64247e2acf05"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "64add00c88950fbe4ea674fda7c58fbe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 65364,
+        "upload_time": "2026-05-12T21:30:49",
+        "upload_time_iso_8601": "2026-05-12T21:30:49.869283Z",
+        "url": "https://files.pythonhosted.org/packages/fd/26/981d4f918c00f45ba34b428f03ef2ee33ca80971b1eaa1038ef2b718c022/datasette_agent-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "99fc1b1b1886e10d04a1bbb50bb91302f16ca22cff273899f8324d9380f743cd",
+          "md5": "9a30bb0b453f6792e448fd037353c4bb",
+          "sha256": "4fed4fe3177144f2f22ac894e1115804b53c569bd85ecdcc794443a7194865fd"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9a30bb0b453f6792e448fd037353c4bb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 56883,
+        "upload_time": "2026-05-14T22:13:21",
+        "upload_time_iso_8601": "2026-05-14T22:13:21.694845Z",
+        "url": "https://files.pythonhosted.org/packages/99/fc/1b1b1886e10d04a1bbb50bb91302f16ca22cff273899f8324d9380f743cd/datasette_agent-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "36510bf31a95b7ee2a9f3911e633ea8f94c1d141f83ac8021886f2d470b1401e",
+          "md5": "9bbca72d5a67aade1dcf8a4e436fdc69",
+          "sha256": "ade68b64de08346ff281a7d09824e9fccd1f4072823434c21db631ca173f3c17"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9bbca72d5a67aade1dcf8a4e436fdc69",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 66309,
+        "upload_time": "2026-05-14T22:13:23",
+        "upload_time_iso_8601": "2026-05-14T22:13:23.400786Z",
+        "url": "https://files.pythonhosted.org/packages/36/51/0bf31a95b7ee2a9f3911e633ea8f94c1d141f83ac8021886f2d470b1401e/datasette_agent-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "8d56b381cd43deb19c0267191212b2c2c2f1977528c261ac53cfc2eddb15966d",
+          "md5": "0d23d53e9bbbde3b6c78ad8256a4b1ad",
+          "sha256": "a1d4ebd57bba98956029edac97b59bc177df8a30573565af364f734de6949ec1"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0d23d53e9bbbde3b6c78ad8256a4b1ad",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 57678,
+        "upload_time": "2026-05-15T00:04:14",
+        "upload_time_iso_8601": "2026-05-15T00:04:14.661220Z",
+        "url": "https://files.pythonhosted.org/packages/8d/56/b381cd43deb19c0267191212b2c2c2f1977528c261ac53cfc2eddb15966d/datasette_agent-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "4ed1ac64fcce82c678c73b5d6c812525e52de9df9dee9bd4885860cd27d561a2",
+          "md5": "b6b972887976ed81cb7d8ce5302a6dfe",
+          "sha256": "e2babb0a3d4d24015f70d60778c6876ac04d9aca1f3b5765ea9f4f49f4194741"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b6b972887976ed81cb7d8ce5302a6dfe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 68063,
+        "upload_time": "2026-05-15T00:04:16",
+        "upload_time_iso_8601": "2026-05-15T00:04:16.256004Z",
+        "url": "https://files.pythonhosted.org/packages/4e/d1/ac64fcce82c678c73b5d6c812525e52de9df9dee9bd4885860cd27d561a2/datasette_agent-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "20d39226fc7f25e2bedef2ce640c0956d985c33628a2b9f8cc5172094a53f39a",
+          "md5": "ac524bffcff429fd570366da46e4fdf7",
+          "sha256": "06cd3471cd54ff896e884437bcf624fb69cd28b4550d2acc60b16256bc2327d2"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ac524bffcff429fd570366da46e4fdf7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 59259,
+        "upload_time": "2026-05-21T15:05:52",
+        "upload_time_iso_8601": "2026-05-21T15:05:52.882866Z",
+        "url": "https://files.pythonhosted.org/packages/20/d3/9226fc7f25e2bedef2ce640c0956d985c33628a2b9f8cc5172094a53f39a/datasette_agent-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b5867a9365b4694d2e642ea705b27b9f913f8a6b9a7a9722e66a3bb195bcfb18",
+          "md5": "3273df72838ddd4468befeca6fa22e16",
+          "sha256": "ff8b5ca85d0c1d30ea404ce5329fe4479ae6a811a0268d349866d21024d35d85"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3273df72838ddd4468befeca6fa22e16",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 71641,
+        "upload_time": "2026-05-21T15:05:54",
+        "upload_time_iso_8601": "2026-05-21T15:05:54.514192Z",
+        "url": "https://files.pythonhosted.org/packages/b5/86/7a9365b4694d2e642ea705b27b9f913f8a6b9a7a9722e66a3bb195bcfb18/datasette_agent-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "20d39226fc7f25e2bedef2ce640c0956d985c33628a2b9f8cc5172094a53f39a",
+        "md5": "ac524bffcff429fd570366da46e4fdf7",
+        "sha256": "06cd3471cd54ff896e884437bcf624fb69cd28b4550d2acc60b16256bc2327d2"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent-0.1a3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ac524bffcff429fd570366da46e4fdf7",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 59259,
+      "upload_time": "2026-05-21T15:05:52",
+      "upload_time_iso_8601": "2026-05-21T15:05:52.882866Z",
+      "url": "https://files.pythonhosted.org/packages/20/d3/9226fc7f25e2bedef2ce640c0956d985c33628a2b9f8cc5172094a53f39a/datasette_agent-0.1a3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "b5867a9365b4694d2e642ea705b27b9f913f8a6b9a7a9722e66a3bb195bcfb18",
+        "md5": "3273df72838ddd4468befeca6fa22e16",
+        "sha256": "ff8b5ca85d0c1d30ea404ce5329fe4479ae6a811a0268d349866d21024d35d85"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent-0.1a3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "3273df72838ddd4468befeca6fa22e16",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 71641,
+      "upload_time": "2026-05-21T15:05:54",
+      "upload_time_iso_8601": "2026-05-21T15:05:54.514192Z",
+      "url": "https://files.pythonhosted.org/packages/b5/86/7a9365b4694d2e642ea705b27b9f913f8a6b9a7a9722e66a3bb195bcfb18/datasette_agent-0.1a3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

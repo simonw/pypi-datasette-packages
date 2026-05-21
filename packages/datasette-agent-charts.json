@@ -1,0 +1,237 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-agent-charts\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-agent-charts.svg)](https://pypi.org/project/datasette-agent-charts/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-agent-charts?include_prereleases&label=changelog)](https://github.com/datasette/datasette-agent-charts/releases)\n[![Tests](https://github.com/datasette/datasette-agent-charts/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-agent-charts/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-agent-charts/blob/main/LICENSE)\n\nObservable Plot charts for [Datasette agent](https://github.com/datasette/datasette-agent).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-agent-charts\n```\n## Usage\n\nThis plugin adds a `render_chart` tool to [Datasette Agent](https://github.com/datasette/datasette-agent) that can generate charts from SQL query results using [Observable Plot](https://observablehq.com/plot/).\n\nTry prompts like this one, adapted to your available tables:\n\n> `Draw a bar chart of downloads over time`\n\n## Tool definition\n\nThe `render_chart` tool accepts the following parameters:\n\n- **database** — the database to query\n- **sql** — SQL query whose results become chart data\n- **chart_type** — one of `barX`, `barY`, `line`, `dot`, `areaY`, `waffleY`\n- **x** — column name for the x axis\n- **y** — column name for the y axis\n- **color** — (optional) column name for color encoding\n- **title** — (optional) chart title\n- **x_label** — (optional) x axis label\n- **y_label** — (optional) y axis label\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-agent-charts\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-agent-charts",
+    "package_url": "https://pypi.org/project/datasette-agent-charts/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-agent-charts/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-agent-charts/actions",
+      "Changelog": "https://github.com/datasette/datasette-agent-charts/releases",
+      "Homepage": "https://github.com/datasette/datasette-agent-charts",
+      "Issues": "https://github.com/datasette/datasette-agent-charts/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-agent-charts/0.1a2/",
+    "requires_dist": [
+      "datasette>=1.0a28",
+      "llm>=0.32a2",
+      "datasette-agent>=0.1a3"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Observable Plot charts for Datasette Agent",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37279646,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2879aab6a27556b3d8525f899a8648e9b56be6bc448b8f8f3927c48ace420921",
+          "md5": "b8b6d0137f3aca99a03b8605cf065310",
+          "sha256": "9be06b80478d91d89f6a6ccad54b1f75e9330179fa0ffe4a8dac43815e901da5"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b8b6d0137f3aca99a03b8605cf065310",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9767,
+        "upload_time": "2026-05-12T21:42:10",
+        "upload_time_iso_8601": "2026-05-12T21:42:10.304765Z",
+        "url": "https://files.pythonhosted.org/packages/28/79/aab6a27556b3d8525f899a8648e9b56be6bc448b8f8f3927c48ace420921/datasette_agent_charts-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "da9dfe6d9987342001be477ed774e28a100cec4b4c71a8fde06aea19ed253ab6",
+          "md5": "dc572812157e3eee1c317e9f82d1be6c",
+          "sha256": "2adf453f5d6e9403f300d6b3e49b82b7d983d574e913812dc8786c5b6564bb17"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dc572812157e3eee1c317e9f82d1be6c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 10510,
+        "upload_time": "2026-05-12T21:42:11",
+        "upload_time_iso_8601": "2026-05-12T21:42:11.672825Z",
+        "url": "https://files.pythonhosted.org/packages/da/9d/fe6d9987342001be477ed774e28a100cec4b4c71a8fde06aea19ed253ab6/datasette_agent_charts-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7ea1905a343d93dfba96a4a7b848246be453bcdb8185df1b2889cab312183ea5",
+          "md5": "8f531c45a2ae0ccaeb8a9ff0f2d5bf9c",
+          "sha256": "8bae9d8324aa0370f6dbb66b755e7b001c80281e5e37a23782d1be1acbf87805"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8f531c45a2ae0ccaeb8a9ff0f2d5bf9c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10217,
+        "upload_time": "2026-05-20T14:53:23",
+        "upload_time_iso_8601": "2026-05-20T14:53:23.683760Z",
+        "url": "https://files.pythonhosted.org/packages/7e/a1/905a343d93dfba96a4a7b848246be453bcdb8185df1b2889cab312183ea5/datasette_agent_charts-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "96029f331995682cfccb41864a41df69d6f43ffbd983a45e838f5ce346f5b275",
+          "md5": "e6d5a7d4fc95600eea06e2c626590b33",
+          "sha256": "d1ac85a7f719278d5a24da23255e617d0fabbde4cd39ef031755c1b4e900ae67"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e6d5a7d4fc95600eea06e2c626590b33",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11392,
+        "upload_time": "2026-05-20T14:53:24",
+        "upload_time_iso_8601": "2026-05-20T14:53:24.974460Z",
+        "url": "https://files.pythonhosted.org/packages/96/02/9f331995682cfccb41864a41df69d6f43ffbd983a45e838f5ce346f5b275/datasette_agent_charts-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6a34ab162a42cbca03ff9365a720b8f9f67e2ed9316712c38390b25f0baf6494",
+          "md5": "17cd979c39da8fc0d570d27158c585ff",
+          "sha256": "3c15a55a5695bab7aea77a58a2cf0251905e443d11d2ff8d4d1427c3c94f034d"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "17cd979c39da8fc0d570d27158c585ff",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10368,
+        "upload_time": "2026-05-21T15:16:53",
+        "upload_time_iso_8601": "2026-05-21T15:16:53.529510Z",
+        "url": "https://files.pythonhosted.org/packages/6a/34/ab162a42cbca03ff9365a720b8f9f67e2ed9316712c38390b25f0baf6494/datasette_agent_charts-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cd6835aaf4bf570e57569b712e6bc2e7370c3f4e54a773c46fa767982c59d68b",
+          "md5": "5cca8b3fa0faad74d4b88cebe9af6431",
+          "sha256": "ed130eafddab2d6ff54cbfa20e2088e44b4ce4c77c7562b30d99980dff63065a"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_charts-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5cca8b3fa0faad74d4b88cebe9af6431",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11561,
+        "upload_time": "2026-05-21T15:16:54",
+        "upload_time_iso_8601": "2026-05-21T15:16:54.950656Z",
+        "url": "https://files.pythonhosted.org/packages/cd/68/35aaf4bf570e57569b712e6bc2e7370c3f4e54a773c46fa767982c59d68b/datasette_agent_charts-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "6a34ab162a42cbca03ff9365a720b8f9f67e2ed9316712c38390b25f0baf6494",
+        "md5": "17cd979c39da8fc0d570d27158c585ff",
+        "sha256": "3c15a55a5695bab7aea77a58a2cf0251905e443d11d2ff8d4d1427c3c94f034d"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent_charts-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "17cd979c39da8fc0d570d27158c585ff",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 10368,
+      "upload_time": "2026-05-21T15:16:53",
+      "upload_time_iso_8601": "2026-05-21T15:16:53.529510Z",
+      "url": "https://files.pythonhosted.org/packages/6a/34/ab162a42cbca03ff9365a720b8f9f67e2ed9316712c38390b25f0baf6494/datasette_agent_charts-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "cd6835aaf4bf570e57569b712e6bc2e7370c3f4e54a773c46fa767982c59d68b",
+        "md5": "5cca8b3fa0faad74d4b88cebe9af6431",
+        "sha256": "ed130eafddab2d6ff54cbfa20e2088e44b4ce4c77c7562b30d99980dff63065a"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent_charts-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5cca8b3fa0faad74d4b88cebe9af6431",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 11561,
+      "upload_time": "2026-05-21T15:16:54",
+      "upload_time_iso_8601": "2026-05-21T15:16:54.950656Z",
+      "url": "https://files.pythonhosted.org/packages/cd/68/35aaf4bf570e57569b712e6bc2e7370c3f4e54a773c46fa767982c59d68b/datasette_agent_charts-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

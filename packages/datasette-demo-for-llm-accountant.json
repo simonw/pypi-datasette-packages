@@ -1,0 +1,153 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-demo-for-llm-accountant\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-demo-for-llm-accountant.svg)](https://pypi.org/project/datasette-demo-for-llm-accountant/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-demo-for-llm-accountant?include_prereleases&label=changelog)](https://github.com/datasette/datasette-demo-for-llm-accountant/releases)\n[![Tests](https://github.com/datasette/datasette-demo-for-llm-accountant/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-demo-for-llm-accountant/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-demo-for-llm-accountant/blob/main/LICENSE)\n\nDemo app for LLM accountant\n\nThis is a demonstration plugin showing how to use [datasette-llm-accountant](https://github.com/datasette/datasette-llm-accountant) to track and log LLM API costs.\n\n## Features\n\n- **Interactive LLM Form**: Submit prompts to any available LLM model via a web interface\n- **Cost Tracking**: All LLM API calls are tracked with nanocent precision\n- **Transaction Log**: View a running total of all LLM requests and their costs\n- **In-Memory Accountant**: Demonstrates implementing a custom `Accountant` subclass\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-demo-for-llm-accountant\n```\n\n## Usage\n\nOnce installed, navigate to `/-/llm-accountant` in your Datasette instance.\n\nYou'll see:\n1. A form to select an LLM model and enter a prompt\n2. The response from the LLM\n3. A transaction log showing all requests and their costs\n\nEach request reserves $0.50 by default, and the actual cost is calculated based on token usage and settled in the transaction log.\n\n### Running Locally\n\n```bash\ndatasette\n```\n\nThen visit http://127.0.0.1:8001/-/llm-accountant\n\n**Note**: You'll need LLM API keys configured for this to work. See the [llm documentation](https://llm.datasette.io/) for details on configuring API keys.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-demo-for-llm-accountant\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-demo-for-llm-accountant",
+    "package_url": "https://pypi.org/project/datasette-demo-for-llm-accountant/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-demo-for-llm-accountant/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-demo-for-llm-accountant/actions",
+      "Changelog": "https://github.com/datasette/datasette-demo-for-llm-accountant/releases",
+      "Homepage": "https://github.com/datasette/datasette-demo-for-llm-accountant",
+      "Issues": "https://github.com/datasette/datasette-demo-for-llm-accountant/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-demo-for-llm-accountant/0.1a0/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "llm",
+      "datasette-llm-accountant>=0.1a0",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Demo app for LLM accountant",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 32460133,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "36189d4ed2fe49e9f02633d94d1e5643eabc617f8234c5a9423c14d8e56a94e6",
+          "md5": "da904423b0d0ed291dc0db3e84f4c160",
+          "sha256": "b48f31a82fc58a62cacbf2ec19cced1ccdb081466c5cd81a9968cf6be2e486b8"
+        },
+        "downloads": -1,
+        "filename": "datasette_demo_for_llm_accountant-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "da904423b0d0ed291dc0db3e84f4c160",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9465,
+        "upload_time": "2025-11-18T01:28:06",
+        "upload_time_iso_8601": "2025-11-18T01:28:06.930325Z",
+        "url": "https://files.pythonhosted.org/packages/36/18/9d4ed2fe49e9f02633d94d1e5643eabc617f8234c5a9423c14d8e56a94e6/datasette_demo_for_llm_accountant-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "eb50ace62fce19144e1ee958f92062f2985edf73503dd8ef16a431a84871c533",
+          "md5": "d23e30a10c2fbc99ced1b57828a7ad55",
+          "sha256": "71ac827b6149daecaaf8f99a6dc73ef9b5a800e8f69e6aa927400d5dd14d658d"
+        },
+        "downloads": -1,
+        "filename": "datasette_demo_for_llm_accountant-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d23e30a10c2fbc99ced1b57828a7ad55",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9106,
+        "upload_time": "2025-11-18T01:28:08",
+        "upload_time_iso_8601": "2025-11-18T01:28:08.447796Z",
+        "url": "https://files.pythonhosted.org/packages/eb/50/ace62fce19144e1ee958f92062f2985edf73503dd8ef16a431a84871c533/datasette_demo_for_llm_accountant-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "36189d4ed2fe49e9f02633d94d1e5643eabc617f8234c5a9423c14d8e56a94e6",
+        "md5": "da904423b0d0ed291dc0db3e84f4c160",
+        "sha256": "b48f31a82fc58a62cacbf2ec19cced1ccdb081466c5cd81a9968cf6be2e486b8"
+      },
+      "downloads": -1,
+      "filename": "datasette_demo_for_llm_accountant-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "da904423b0d0ed291dc0db3e84f4c160",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 9465,
+      "upload_time": "2025-11-18T01:28:06",
+      "upload_time_iso_8601": "2025-11-18T01:28:06.930325Z",
+      "url": "https://files.pythonhosted.org/packages/36/18/9d4ed2fe49e9f02633d94d1e5643eabc617f8234c5a9423c14d8e56a94e6/datasette_demo_for_llm_accountant-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "eb50ace62fce19144e1ee958f92062f2985edf73503dd8ef16a431a84871c533",
+        "md5": "d23e30a10c2fbc99ced1b57828a7ad55",
+        "sha256": "71ac827b6149daecaaf8f99a6dc73ef9b5a800e8f69e6aa927400d5dd14d658d"
+      },
+      "downloads": -1,
+      "filename": "datasette_demo_for_llm_accountant-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d23e30a10c2fbc99ced1b57828a7ad55",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 9106,
+      "upload_time": "2025-11-18T01:28:08",
+      "upload_time_iso_8601": "2025-11-18T01:28:08.447796Z",
+      "url": "https://files.pythonhosted.org/packages/eb/50/ace62fce19144e1ee958f92062f2985edf73503dd8ef16a431a84871c533/datasette_demo_for_llm_accountant-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

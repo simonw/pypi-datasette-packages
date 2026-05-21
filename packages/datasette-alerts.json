@@ -1,0 +1,419 @@
+{
+  "info": {
+    "author": "Alex Garcia",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-alerts\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-alerts.svg)](https://pypi.org/project/datasette-alerts/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-alerts?include_prereleases&label=changelog)](https://github.com/datasette/datasette-alerts/releases)\n[![Tests](https://github.com/datasette/datasette-alerts/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-alerts/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-alerts/blob/main/LICENSE)\n\nAlerts and notifications for Datasette. Supports row-based alerts (new rows in a table) and custom alert types defined by plugins.\n\n## How It Works\n\ndatasette-alerts uses [datasette-cron](https://github.com/datasette/datasette-cron) for scheduling. When an alert is created, a cron task is registered that periodically checks for new data and sends notifications through configured destinations.\n\n**Built-in alert types:**\n- **Cursor alerts** — poll a table for rows newer than a timestamp cursor\n- **Trigger alerts** — SQLite INSERT trigger queues new rows for processing\n\n**Custom alert types** — plugins can register their own alert logic via the `datasette_alerts_register_alert_types` hook.\n\n## Notifier Plugins\n\n| Plugin | Description |\n| ------ | ----------- |\n| [`datasette-alerts-slack`](https://github.com/datasette/datasette-alerts-slack) | Send Slack messages |\n| [`datasette-alerts-discord`](https://github.com/datasette/datasette-alerts-discord) | Send Discord messages |\n| [`datasette-alerts-ntfy`](https://github.com/datasette/datasette-alerts-ntfy) | Send ntfy.sh notifications |\n| [`datasette-alerts-desktop`](https://github.com/datasette/datasette-alerts-desktop) | Local desktop notifications |\n\n## Writing a Notifier Plugin\n\nNotifier plugins implement the `datasette_alerts_register_notifiers` hook and return subclasses of `Notifier`.\n\n```python\nfrom datasette import hookimpl\nfrom datasette_alerts import Notifier, Message\nfrom wtforms import Form, StringField\n\n\n@hookimpl\ndef datasette_alerts_register_notifiers(datasette):\n    return [MyNotifier()]\n\n\nclass MyNotifier(Notifier):\n    slug = \"my-notifier\"\n    name = \"My Notifier\"\n    description = \"Send alerts somewhere\"\n\n    async def get_config_form(self):\n        class ConfigForm(Form):\n            webhook_url = StringField(\"Webhook URL\")\n        return ConfigForm\n\n    async def send(self, config: dict, message: Message):\n        url = config[\"webhook_url\"]\n        # deliver message.text (and optionally message.subject)\n```\n\n### Notifier API\n\n#### `Notifier` (abstract base class)\n\n| Property / Method | Description |\n| ----------------- | ----------- |\n| `slug` | Unique identifier (required) |\n| `name` | Display name (required) |\n| `description` | Short description |\n| `icon` | SVG string for the UI |\n| `get_config_form()` | Return a WTForms `Form` class for destination config |\n| `get_config_element()` | Return a `ConfigElement` for web component config UI |\n| `send(config, message)` | Deliver a `Message` to the destination described by `config` |\n\n#### `Message`\n\n```python\nMessage(text: str, *, subject: str | None = None)\n```\n\n## Writing a Custom Alert Type\n\nCustom alert types let plugins define their own checking logic. datasette-alerts handles the scheduling, notification delivery, and logging.\n\n### Minimal Example\n\n```python\nfrom datasette import hookimpl\nfrom datasette_alerts import AlertType, Message\n\n\nclass MyAlertType(AlertType):\n    slug = \"my-check\"\n    name = \"My Custom Check\"\n    description = \"Checks something and alerts when it finds results\"\n\n    async def check(self, datasette, alert_config, database_name, last_check_at):\n        db = datasette.get_database(database_name)\n        # Your custom logic here — query tables, check conditions, etc.\n        result = await db.execute(\"SELECT * FROM my_queue WHERE status = 'pending'\")\n        \n        messages = []\n        ids = []\n        for row in result.rows:\n            ids.append(row[0])\n            messages.append(Message(f\"New item: {row[1]}\"))\n        \n        # Mark as processed\n        if ids:\n            placeholders = \",\".join(\"?\" for _ in ids)\n            await db.execute_write(\n                f\"UPDATE my_queue SET status = 'done' WHERE id IN ({placeholders})\",\n                ids,\n            )\n        \n        return messages\n\n\n@hookimpl\ndef datasette_alerts_register_alert_types(datasette):\n    return [MyAlertType()]\n```\n\n### AlertType API\n\n#### `AlertType` (abstract base class)\n\n| Property / Method | Description |\n| ----------------- | ----------- |\n| `slug` | Unique identifier (required) |\n| `name` | Display name (required) |\n| `description` | Short description |\n| `icon` | SVG string for the UI |\n| `check(datasette, alert_config, database_name, last_check_at)` | Run check logic, return `list[Message]` |\n| `get_config_element()` | Optional web component for alert configuration UI |\n| `get_config_form()` | Optional WTForms form for configuration |\n\n#### `check()` Method\n\n```python\nasync def check(\n    self,\n    datasette,           # Datasette instance\n    alert_config: dict,  # from the alert's custom_config column\n    database_name: str,  # which database this alert is scoped to\n    last_check_at: str | None,  # ISO timestamp of last check, or None on first run\n) -> list[Message]:\n```\n\nReturn a list of `Message` objects to send. Empty list means nothing to report. The handler calls `check()` on the schedule defined by the alert's frequency, sends any returned messages through the alert's subscriptions, and updates `last_check_at`.\n\n### How Custom Alerts Get Scheduled\n\nWhen a custom alert is created (via the API or a plugin's own routes):\n\n1. A row is inserted into `datasette_alerts_alerts` with `alert_type=\"custom:{slug}\"`\n2. A cron task is registered with `datasette-cron` at the alert's frequency\n3. Each tick, the `custom_alert_handler` looks up the `AlertType` by slug via the plugin hook\n4. Calls `check()` with the alert's config and database\n5. Sends any returned messages to all subscriptions\n6. Updates `last_check_at` and logs the check\n\n### Creating Custom Alerts Programmatically\n\n```python\nfrom datasette_alerts.internal_db import InternalDB, NewAlertRouteParameters, NewSubscription\n\ninternal_db = InternalDB(datasette.get_internal_database())\n\nparams = NewAlertRouteParameters(\n    database_name=\"mydb\",\n    alert_type=\"custom:my-check\",\n    frequency=\"+1 second\",\n    custom_config={\"key\": \"value\"},\n    subscriptions=[\n        NewSubscription(destination_id=\"dest-id\", meta={\"aggregate\": True})\n    ],\n)\nalert_id = await internal_db.new_alert(params)\n\n# Register the cron task\nfrom datasette_alerts import _register_cron_task_for_alert\nfrom types import SimpleNamespace\n\nawait _register_cron_task_for_alert(datasette, SimpleNamespace(\n    id=alert_id,\n    alert_type=\"custom:my-check\",\n    frequency=\"+1 second\",\n))\n```\n\n## Public API\n\n### `send_to_destination()`\n\nSend a message through a configured destination without creating an alert:\n\n```python\nfrom datasette_alerts import send_to_destination, Message\n\nawait send_to_destination(datasette, destination_id, Message(\"Hello!\"))\n```\n\nRaises `DestinationNotFound` or `NotifierNotFound` on errors.\n\n### `trigger_alert_check()`\n\nTrigger an immediate check for an alert, outside its normal schedule:\n\n```python\nfrom datasette_alerts import trigger_alert_check\n\nawait trigger_alert_check(datasette, alert_id)\n```\n\n### API Endpoint: List Alert Types\n\n```\nGET /-/{database}/datasette-alerts/api/alert-types\n```\n\nReturns registered custom alert types with their slug, name, description, and config element info.\n\n## Data Models\n\nQuery results from `InternalDB` return typed dataclasses:\n\n```python\nfrom datasette_alerts.models import AlertRecord, AlertForCheck, AlertDetail\n```\n\n### `AlertRecord`\n\nReturned by `get_all_alerts()`. Fields: `id`, `database_name`, `table_name`, `id_columns`, `timestamp_column`, `frequency`, `alert_type`, `custom_config`, `last_check_at`.\n\n### `AlertForCheck`\n\nReturned by `get_alert_for_check()`. Same as `AlertRecord` plus `cursor`.\n\n### `AlertDetail`\n\nReturned by `get_alert_detail()`. Full alert info including nested `subscriptions: list[SubscriptionDetail]` and `logs: list[AlertLogEntry]`, plus `custom_config`, `last_check_at`, `next_deadline`, `alert_created_at`.\n\n### `AlertCleanupInfo`\n\nReturned by `delete_alert()`. Fields: `alert_type`, `database_name`, `table_name`.\n\n## Config: WTForms vs Web Components\n\nThere are two ways to provide a destination (or alert type) configuration UI:\n\n#### WTForms (simple)\n\nOverride `get_config_form()` and return a WTForms `Form` class.\n\n#### `ConfigElement` (rich UI)\n\nReturn a `ConfigElement` that declares a custom HTML element:\n\n```python\nfrom datasette_alerts import ConfigElement\n\ndef get_config_element(self):\n    return ConfigElement(\n        tag=\"my-config-form\",\n        scripts=[\"/-/my-plugin/config.js\"],\n    )\n```\n\nWeb component contract:\n- **Inputs**: `config` property, `datasette-base-url` attribute, `database-name` attribute\n- **Output**: `config-change` CustomEvent with `detail: { config: {...}, valid: boolean }`\n\n## Sidebar Integration\n\nIf [`datasette-sidebar`](https://github.com/datasette/datasette-sidebar) is installed, datasette-alerts automatically registers itself as a sidebar app.\n\n## Development\n\n```bash\njust dev           # start dev server\njust test          # run tests (uv run pytest)\njust format        # format code (backend + frontend)\njust check         # lint + type check (backend + frontend)\njust frontend      # build frontend\njust frontend-dev  # start Vite dev server\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-alerts",
+    "package_url": "https://pypi.org/project/datasette-alerts/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-alerts/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-alerts/actions",
+      "Changelog": "https://github.com/datasette/datasette-alerts/releases",
+      "Homepage": "https://github.com/datasette/datasette-alerts",
+      "Issues": "https://github.com/datasette/datasette-alerts/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-alerts/0.0.1a10/",
+    "requires_dist": [
+      "datasette>=1.0a28",
+      "datasette-cron>=0.0.1a2",
+      "datasette-plugin-router>=0.0.1a2",
+      "datasette-vite>=0.0.1a4",
+      "pydantic>=2",
+      "python-ulid>=3",
+      "sqlite-migrate>=0.1b0",
+      "sqlite-utils>=3.38",
+      "wtforms>=3.2.1"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Setup alerts on specfic new records.",
+    "version": "0.0.1a10",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37018036,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "11453c1994fe20d222accb10c16f6d3a26134c93d1a143719cc94f6be5292f97",
+          "md5": "3e8b0b066f310671ddb98d52130bb113",
+          "sha256": "18c9bec656e5e012597ff805ec654323280061addc6c038c7dbcb9e7b9793ca7"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3e8b0b066f310671ddb98d52130bb113",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 11812,
+        "upload_time": "2025-06-02T16:09:53",
+        "upload_time_iso_8601": "2025-06-02T16:09:53.055381Z",
+        "url": "https://files.pythonhosted.org/packages/11/45/3c1994fe20d222accb10c16f6d3a26134c93d1a143719cc94f6be5292f97/datasette_alerts-0.0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "925ba6d33ac720f940b5496b842c95d64f2b45cf62fafefc255b622f74aa6dc0",
+          "md5": "4be3d2ed4ae771e24464a7b02313445e",
+          "sha256": "a22ad5c7434e18c8f86e680019729bd293f1935acc082a70823bfb250b3fd397"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4be3d2ed4ae771e24464a7b02313445e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11592,
+        "upload_time": "2025-06-02T16:09:55",
+        "upload_time_iso_8601": "2025-06-02T16:09:55.144731Z",
+        "url": "https://files.pythonhosted.org/packages/92/5b/a6d33ac720f940b5496b842c95d64f2b45cf62fafefc255b622f74aa6dc0/datasette_alerts-0.0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a10": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2f505bc5d55edbb7fb46f394394e13e849ebff223a3edde7b601b8b92bf8c01d",
+          "md5": "4bd7d52827369c098948ce9fcdebf011",
+          "sha256": "6a60540646c263afd57499af0d5900fed286f2238da3df2a464404393feb3b37"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a10-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4bd7d52827369c098948ce9fcdebf011",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 161454,
+        "upload_time": "2026-05-13T15:21:54",
+        "upload_time_iso_8601": "2026-05-13T15:21:54.465318Z",
+        "url": "https://files.pythonhosted.org/packages/2f/50/5bc5d55edbb7fb46f394394e13e849ebff223a3edde7b601b8b92bf8c01d/datasette_alerts-0.0.1a10-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2ba168617bf36175f627eadf48f44f19395b7fbec496fcdf0708f45631ad2698",
+          "md5": "4551bfc6e552837c52ac8e4298bb5d1f",
+          "sha256": "b5122358ee8c00ca72fd4db1f6817563e438278f92fd02c353c4f116f97870b4"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a10.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4551bfc6e552837c52ac8e4298bb5d1f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 150029,
+        "upload_time": "2026-05-13T15:21:55",
+        "upload_time_iso_8601": "2026-05-13T15:21:55.979823Z",
+        "url": "https://files.pythonhosted.org/packages/2b/a1/68617bf36175f627eadf48f44f19395b7fbec496fcdf0708f45631ad2698/datasette_alerts-0.0.1a10.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "80728af4b456b884652e7caf12c4ff0cd1dd790147da335a11c215935a27523c",
+          "md5": "3d44381b8bb043c459ea02bfe0c5ea48",
+          "sha256": "0f47ba5dd42be25e04dff9333b8e2af1153d6eb388f18d55533fade3f570be0a"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3d44381b8bb043c459ea02bfe0c5ea48",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 19153,
+        "upload_time": "2025-08-19T22:34:05",
+        "upload_time_iso_8601": "2025-08-19T22:34:05.106257Z",
+        "url": "https://files.pythonhosted.org/packages/80/72/8af4b456b884652e7caf12c4ff0cd1dd790147da335a11c215935a27523c/datasette_alerts-0.0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7046ce20d49db37cb1fe15f9df49d1519b61224ca3683ff290d35da25939f550",
+          "md5": "ea4c66c23cb463c49936d2050575c8b6",
+          "sha256": "a7cef2e9f077f0a7ed5018cdfd4de97ec9d57bea26ff6a4f6b3699a3860aaccb"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ea4c66c23cb463c49936d2050575c8b6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 16716,
+        "upload_time": "2025-08-19T22:34:06",
+        "upload_time_iso_8601": "2025-08-19T22:34:06.175071Z",
+        "url": "https://files.pythonhosted.org/packages/70/46/ce20d49db37cb1fe15f9df49d1519b61224ca3683ff290d35da25939f550/datasette_alerts-0.0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a5": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cde4f488d1a19fb26ed8be39cc74dc320ee022269325b9297ddd3a176b79de36",
+          "md5": "ec28b00bf4adc8c3e388e2258482d795",
+          "sha256": "9675fe27da0ff1b2287edadc9cddd9930d97a0a13fb1944abb5a801dfc619c87"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ec28b00bf4adc8c3e388e2258482d795",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 19575,
+        "upload_time": "2025-10-21T00:53:29",
+        "upload_time_iso_8601": "2025-10-21T00:53:29.522441Z",
+        "url": "https://files.pythonhosted.org/packages/cd/e4/f488d1a19fb26ed8be39cc74dc320ee022269325b9297ddd3a176b79de36/datasette_alerts-0.0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "e6c8b885561db077ee62d83c00aa2a1055ac7cf6b22fcbaa568692bc289dca7b",
+          "md5": "de8da413cbcb4b218fed099497d88502",
+          "sha256": "8945fc4854585f50b1c944c70edf31720a14fb0c30ac708f246ba5f2dafce239"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "de8da413cbcb4b218fed099497d88502",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 17121,
+        "upload_time": "2025-10-21T00:53:30",
+        "upload_time_iso_8601": "2025-10-21T00:53:30.815902Z",
+        "url": "https://files.pythonhosted.org/packages/e6/c8/b885561db077ee62d83c00aa2a1055ac7cf6b22fcbaa568692bc289dca7b/datasette_alerts-0.0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3ec069e535586e8cf1949b1b442bb57da92a50ab8b03e115e6c411246af79a83",
+          "md5": "57d49e33025741a4d818e8838596e6fa",
+          "sha256": "99064a17758736364bf61e6c704ed6601a3dcd7052a41e82c4ef091661865f98"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "57d49e33025741a4d818e8838596e6fa",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 22080,
+        "upload_time": "2025-11-08T01:20:09",
+        "upload_time_iso_8601": "2025-11-08T01:20:09.178371Z",
+        "url": "https://files.pythonhosted.org/packages/3e/c0/69e535586e8cf1949b1b442bb57da92a50ab8b03e115e6c411246af79a83/datasette_alerts-0.0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "910a9a00297afccb32ae54523fd8716bf2d85c92eb4323a892c141804e240b58",
+          "md5": "e24cc5aa8066573d805806b263a37c26",
+          "sha256": "54fb38423f0be97665444316897c508e1a5376e089468dbe6bd335cbaf33508e"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e24cc5aa8066573d805806b263a37c26",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 19424,
+        "upload_time": "2025-11-08T01:20:10",
+        "upload_time_iso_8601": "2025-11-08T01:20:10.557035Z",
+        "url": "https://files.pythonhosted.org/packages/91/0a/9a00297afccb32ae54523fd8716bf2d85c92eb4323a892c141804e240b58/datasette_alerts-0.0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a7": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a73070b6be521db991d0ac1f3e6dcdd8776dac1070b9b2f0f881d1ad9bae1a28",
+          "md5": "e9ff218b0870d7f3031e7d371c62e061",
+          "sha256": "bece8d164618f00034018ee493819a4b618897dcb24eec15f126b10f094ef741"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e9ff218b0870d7f3031e7d371c62e061",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 128393,
+        "upload_time": "2026-02-24T23:19:29",
+        "upload_time_iso_8601": "2026-02-24T23:19:29.539030Z",
+        "url": "https://files.pythonhosted.org/packages/a7/30/70b6be521db991d0ac1f3e6dcdd8776dac1070b9b2f0f881d1ad9bae1a28/datasette_alerts-0.0.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a033e57e0c58e6117da857f46b9382c2d1c26f9b7b94060afcc06416a17cd147",
+          "md5": "d745608421a17aa5e22a59930268f1d8",
+          "sha256": "4196c95e49c3ece188d3f16de4d14a9cf7695d2d94415c74c39eef7d1ee35796"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d745608421a17aa5e22a59930268f1d8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 119397,
+        "upload_time": "2026-02-24T23:19:31",
+        "upload_time_iso_8601": "2026-02-24T23:19:31.085950Z",
+        "url": "https://files.pythonhosted.org/packages/a0/33/e57e0c58e6117da857f46b9382c2d1c26f9b7b94060afcc06416a17cd147/datasette_alerts-0.0.1a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.0.1a8": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "42a7efd24e6cb3ad35859923eb81390d3946f4dedd8cf14afde5a546308b6fc2",
+          "md5": "3329f6ca58b7f98421de860d933eb838",
+          "sha256": "3c7a5b1d2773e8564117c7e732867c49802431675ae19c3f7f571bca360faadc"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3329f6ca58b7f98421de860d933eb838",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 161480,
+        "upload_time": "2026-04-09T00:18:34",
+        "upload_time_iso_8601": "2026-04-09T00:18:34.043985Z",
+        "url": "https://files.pythonhosted.org/packages/42/a7/efd24e6cb3ad35859923eb81390d3946f4dedd8cf14afde5a546308b6fc2/datasette_alerts-0.0.1a8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7d6eb602020c0b76d6bef54ff969be903377a1bf7344a10f63628f326809c361",
+          "md5": "23f3ccabdf46686b9202cc8105c28d77",
+          "sha256": "4e5770308c36710004b797e383247b9accba607f543547e506008927e28c20b1"
+        },
+        "downloads": -1,
+        "filename": "datasette_alerts-0.0.1a8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "23f3ccabdf46686b9202cc8105c28d77",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 150081,
+        "upload_time": "2026-04-09T00:18:35",
+        "upload_time_iso_8601": "2026-04-09T00:18:35.678501Z",
+        "url": "https://files.pythonhosted.org/packages/7d/6e/b602020c0b76d6bef54ff969be903377a1bf7344a10f63628f326809c361/datasette_alerts-0.0.1a8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "2f505bc5d55edbb7fb46f394394e13e849ebff223a3edde7b601b8b92bf8c01d",
+        "md5": "4bd7d52827369c098948ce9fcdebf011",
+        "sha256": "6a60540646c263afd57499af0d5900fed286f2238da3df2a464404393feb3b37"
+      },
+      "downloads": -1,
+      "filename": "datasette_alerts-0.0.1a10-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "4bd7d52827369c098948ce9fcdebf011",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 161454,
+      "upload_time": "2026-05-13T15:21:54",
+      "upload_time_iso_8601": "2026-05-13T15:21:54.465318Z",
+      "url": "https://files.pythonhosted.org/packages/2f/50/5bc5d55edbb7fb46f394394e13e849ebff223a3edde7b601b8b92bf8c01d/datasette_alerts-0.0.1a10-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "2ba168617bf36175f627eadf48f44f19395b7fbec496fcdf0708f45631ad2698",
+        "md5": "4551bfc6e552837c52ac8e4298bb5d1f",
+        "sha256": "b5122358ee8c00ca72fd4db1f6817563e438278f92fd02c353c4f116f97870b4"
+      },
+      "downloads": -1,
+      "filename": "datasette_alerts-0.0.1a10.tar.gz",
+      "has_sig": false,
+      "md5_digest": "4551bfc6e552837c52ac8e4298bb5d1f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 150029,
+      "upload_time": "2026-05-13T15:21:55",
+      "upload_time_iso_8601": "2026-05-13T15:21:55.979823Z",
+      "url": "https://files.pythonhosted.org/packages/2b/a1/68617bf36175f627eadf48f44f19395b7fbec496fcdf0708f45631ad2698/datasette_alerts-0.0.1a10.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

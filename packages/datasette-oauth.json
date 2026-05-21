@@ -1,0 +1,147 @@
+{
+  "info": {
+    "author": "Datasette",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-oauth\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-oauth.svg)](https://pypi.org/project/datasette-oauth/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-oauth?include_prereleases&label=changelog)](https://github.com/datasette/datasette-oauth/releases)\n[![Tests](https://github.com/datasette/datasette-oauth/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-oauth/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-oauth/blob/main/LICENSE)\n\nDatasette as an OAuth provider. Allows third-party applications to request access to a Datasette instance on behalf of signed-in users, using the OAuth 2.0 Authorization Code flow.\n\nAccess tokens are standard Datasette restricted API tokens (`dstok_...`), so all existing permission checks work automatically.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n```bash\ndatasette install datasette-oauth\n```\n\n## Permissions\n\nThis plugin registers two permissions that must be granted before users can access the corresponding features. Both default to deny, so installing the plugin does not change any behavior until permissions are explicitly granted.\n\n### `oauth-manage-clients`\n\nControls access to the client management UI and API — registering, listing, editing, and deleting OAuth clients. Grant it in `datasette.yaml`:\n\n```yaml\npermissions:\n  oauth-manage-clients:\n    id: \"*\"\n```\n\n### `oauth-device-tokens`\n\nControls whether a user can authorize device token requests at `/-/oauth/device/verify`. Grant it in `datasette.yaml`:\n\n```yaml\npermissions:\n  oauth-device-tokens:\n    id: \"*\"\n```\n\nThe root user is **denied** this permission by default, even when `--root` is enabled. To allow root to authorize device tokens, set `allow_root_device_tokens` in the plugin configuration:\n\n```yaml\nplugins:\n  datasette-oauth:\n    allow_root_device_tokens: true\n```\n\n## Plugin configuration\n\nThe device authorization flow is disabled by default. To enable it, set `enable_device_flow` in your `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-oauth:\n    enable_device_flow: true\n```\n\nWhen disabled (the default), all device flow endpoints return a 403 error. This prevents unauthenticated writes to the internal database.\n\n## How it works (authorization code flow)\n\nBefore the OAuth flow can begin, a user with the `oauth-manage-clients` permission must register a client application via the `/-/oauth/clients` management UI or the `POST /-/oauth/clients.json` API. This produces a `client_id` and `client_secret` that the third-party app will use.\n\nOnce the client is registered:\n\n1. The third-party app redirects the user to `GET /-/oauth/authorize` with `client_id`, `redirect_uri`, `scope`, `state`, and `response_type=code`\n2. Datasette shows the user a consent screen with the app name and requested permissions\n3. The user approves (or denies) the request\n4. Datasette redirects back to the app's `redirect_uri` with an authorization code\n5. The app exchanges the code for an access token via `POST /-/oauth/token`\n6. Datasette returns a `dstok_...` API token restricted to the approved permissions\n\n## Authorization code endpoints\n\n### Authorization: `GET /-/oauth/authorize`\n\nRedirect the user here to request authorization. Parameters:\n\n| Parameter | Required | Description |\n|---|---|---|\n| `client_id` | Yes | The registered client ID |\n| `redirect_uri` | Yes | Must exactly match the registered redirect URI |\n| `scope` | Yes | JSON array of scope arrays (see below) |\n| `state` | Yes | Opaque value passed back to prevent CSRF |\n| `response_type` | Yes | Must be `code` |\n\nThe user sees a consent screen showing the app name and requested permissions, each with a checkbox. They can uncheck permissions they don't want to grant.\n\n### Process consent: `POST /-/oauth/authorize`\n\nWhen the user clicks \"Authorize\", they are redirected back to the `redirect_uri` with:\n\n```\nhttps://myapp.example.com/callback?code=abc123...&state=your-state\n```\n\nIf the user clicks \"Deny\":\n\n```\nhttps://myapp.example.com/callback?error=access_denied&state=your-state\n```\n\n### Exchange code for token: `POST /-/oauth/token`\n\n```bash\ncurl -X POST 'https://datasette.example.com/-/oauth/token' \\\n  -d 'grant_type=authorization_code' \\\n  -d 'code=abc123...' \\\n  -d 'client_id=a1b2c3...' \\\n  -d 'client_secret=d4e5f6...' \\\n  -d 'redirect_uri=https://myapp.example.com/callback'\n```\n\nResponse:\n\n```json\n{\n  \"access_token\": \"dstok_...\",\n  \"token_type\": \"bearer\"\n}\n```\n\nAuthorization codes expire after 10 minutes and are single-use.\n\n## Scope format\n\nScopes are JSON arrays describing permissions at different levels:\n\n| Scope | Meaning |\n|---|---|\n| `[\"view-instance\"]` | Global permission |\n| `[\"view-database\", \"mydb\"]` | Permission on a specific database |\n| `[\"view-table\", \"mydb\", \"users\"]` | Permission on a specific table |\n\nMultiple scopes are passed as a JSON array of arrays:\n\n```json\n[\n  [\"view-instance\"],\n  [\"view-database\", \"mydb\"],\n  [\"view-table\", \"mydb\", \"users\"],\n  [\"insert-row\", \"mydb\", \"logs\"]\n]\n```\n\nThis maps directly to Datasette's existing token restriction system (`restrict_all`, `restrict_database`, `restrict_resource`).\n\n## Using the access token\n\nThe access token is a standard Datasette API token. Use it with the `Authorization` header:\n\n```bash\ncurl -H 'Authorization: Bearer dstok_...' \\\n  'https://datasette.example.com/mydb/users.json'\n```\n\nThe token is restricted to only the permissions the user approved on the consent screen.\n\n## Client management\n\n### Client management UI: `/-/oauth/clients`\n\nUsers with the `oauth-manage-clients` permission can visit `/-/oauth/clients` in their browser to register, edit, and delete OAuth client applications. The client secret is displayed once at registration time.\n\nThe same operations are available via the JSON API below.\n\n### Register a client: `POST /-/oauth/clients.json`\n\nRequires authentication and the `oauth-manage-clients` permission. Creates a new OAuth client application.\n\n```bash\ncurl -X POST 'https://datasette.example.com/-/oauth/clients.json' \\\n  -H 'Cookie: ds_actor=...' \\\n  -d 'client_name=My App&redirect_uri=https://myapp.example.com/callback'\n```\n\nResponse:\n\n```json\n{\n  \"client_id\": \"a1b2c3...\",\n  \"client_secret\": \"d4e5f6...\",\n  \"client_name\": \"My App\",\n  \"redirect_uri\": \"https://myapp.example.com/callback\"\n}\n```\n\nThe `client_secret` is shown **once** at registration time. It is stored as a SHA-256 hash.\n\n### List your clients: `GET /-/oauth/clients.json`\n\nRequires authentication and the `oauth-manage-clients` permission. Returns clients registered by the current user.\n\n```json\n[\n  {\n    \"client_id\": \"a1b2c3...\",\n    \"client_name\": \"My App\",\n    \"redirect_uri\": \"https://myapp.example.com/callback\",\n    \"created_by\": \"user-id\",\n    \"created_at\": \"2025-01-15T10:30:00Z\"\n  }\n]\n```\n\n## Device authorization flow\n\nThe device authorization flow allows CLI tools and headless applications to obtain access tokens without a browser redirect. This implements [RFC 8628](https://datatracker.ietf.org/doc/html/rfc8628).\n\n> [!CAUTION]\n> **Enable with caution.** The device flow relies on a user correctly verifying that they initiated the request. An attacker could generate a device code and trick a user into approving it — for example by sending them a link with the code pre-filled, or by social-engineering them into entering the code. If your Datasette instance has users who may not understand the implications of approving a device authorization request, consider warning them or restricting the `oauth-device-tokens` permission to trusted users only.\n\nThis flow must be explicitly enabled with the `enable_device_flow` plugin setting.\n\n1. The CLI app requests a device code via `POST /-/oauth/device`\n2. Datasette returns a `device_code`, a short `user_code` (e.g. `ABCD-EFGH`), and a `verification_uri`\n3. The CLI app displays the user code and verification URL to the user\n4. The user visits the URL in a browser, enters the code, and approves the request\n5. Meanwhile, the CLI app polls `POST /-/oauth/token` with the device code\n6. Once approved, the token endpoint returns an access token\n\n### Step 1: Request a device code\n\n```bash\ncurl -X POST 'https://datasette.example.com/-/oauth/device' \\\n  -d 'scope=[[\"view-instance\"],[\"view-database\",\"mydb\"]]'\n```\n\nResponse:\n\n```json\n{\n  \"device_code\": \"a1b2c3d4...\",\n  \"user_code\": \"ABCD-EFGH\",\n  \"verification_uri\": \"https://datasette.example.com/-/oauth/device/verify\",\n  \"expires_in\": 900,\n  \"interval\": 5\n}\n```\n\nThe `scope` parameter is optional. If omitted, the token will be unrestricted.\n\n### Step 2: Direct the user to verify\n\nDisplay the `user_code` and `verification_uri` to the user. They visit the URL in a browser, enter the code, review the requested permissions, choose a token time limit, and click \"Authorize device\" or \"Deny\".\n\nThe user must be signed in and have the `oauth-device-tokens` permission.\n\n### Step 3: Poll for the token\n\nWhile the user verifies, poll the token endpoint:\n\n```bash\ncurl -X POST 'https://datasette.example.com/-/oauth/token' \\\n  -d 'grant_type=urn:ietf:params:oauth:grant-type:device_code' \\\n  -d 'device_code=a1b2c3d4...'\n```\n\nPoll every `interval` seconds (5 by default). Possible responses:\n\n| Response | Meaning |\n|---|---|\n| `{\"error\": \"authorization_pending\"}` | User hasn't completed verification yet — keep polling |\n| `{\"error\": \"access_denied\"}` | User denied the request |\n| `{\"error\": \"expired_token\"}` | Device code expired (15 minutes) |\n\nOn success:\n\n```json\n{\n  \"access_token\": \"dstok_...\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 3600\n}\n```\n\nDevice flow tokens have an expiry time chosen by the user during verification. Options range from 15 minutes to 30 days, with a default of 1 hour. The `expires_in` field indicates the token lifetime in seconds.\n\nTokens issued through the standard authorization code flow do not expire.\n\n## Security\n\n- **Client secrets** are 64 random hex characters, shown once at registration and stored as SHA-256 hashes\n- **Authorization codes** expire after 10 minutes and are single-use\n- **Redirect URIs** must exactly match the registered URI\n- Only actors with an `id` can authorize (same check as `/-/create-token`)\n- Token-authenticated requests cannot be used to authorize new clients\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n\n```bash\ncd datasette-oauth\n# Confirm the plugin is visible\nuv run datasette plugins\n```\n\nTo run the tests:\n\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-oauth",
+    "package_url": "https://pypi.org/project/datasette-oauth/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-oauth/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-oauth/actions",
+      "Changelog": "https://github.com/datasette/datasette-oauth/releases",
+      "Homepage": "https://github.com/datasette/datasette-oauth",
+      "Issues": "https://github.com/datasette/datasette-oauth/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-oauth/0.1a0/",
+    "requires_dist": [
+      "datasette>=1.0a25"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Datasette as an OAuth provider",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 34653851,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "63da8e1afef38dbe491cc708c616efd9c5efd8c25d438bb478790d5cbc6fd39c",
+          "md5": "06eab604f69eb56d429704acf958e89c",
+          "sha256": "49257110ea053d3a327b502f3365f131890443865a7047851cf674e298cbb7a8"
+        },
+        "downloads": -1,
+        "filename": "datasette_oauth-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "06eab604f69eb56d429704acf958e89c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 20943,
+        "upload_time": "2026-02-26T22:37:56",
+        "upload_time_iso_8601": "2026-02-26T22:37:56.571046Z",
+        "url": "https://files.pythonhosted.org/packages/63/da/8e1afef38dbe491cc708c616efd9c5efd8c25d438bb478790d5cbc6fd39c/datasette_oauth-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a5be7a8fc5a85569c354ac43aaf4cb6d0defba28e8538a18c21a7708e6794873",
+          "md5": "f0dda4e40d7fe753e666d0e342d95b65",
+          "sha256": "6a83f6fe80e843d60a863aa7f82d6c451549ea7368aa35af19e33a3ff70713df"
+        },
+        "downloads": -1,
+        "filename": "datasette_oauth-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f0dda4e40d7fe753e666d0e342d95b65",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 28077,
+        "upload_time": "2026-02-26T22:37:57",
+        "upload_time_iso_8601": "2026-02-26T22:37:57.945003Z",
+        "url": "https://files.pythonhosted.org/packages/a5/be/7a8fc5a85569c354ac43aaf4cb6d0defba28e8538a18c21a7708e6794873/datasette_oauth-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "63da8e1afef38dbe491cc708c616efd9c5efd8c25d438bb478790d5cbc6fd39c",
+        "md5": "06eab604f69eb56d429704acf958e89c",
+        "sha256": "49257110ea053d3a327b502f3365f131890443865a7047851cf674e298cbb7a8"
+      },
+      "downloads": -1,
+      "filename": "datasette_oauth-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "06eab604f69eb56d429704acf958e89c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 20943,
+      "upload_time": "2026-02-26T22:37:56",
+      "upload_time_iso_8601": "2026-02-26T22:37:56.571046Z",
+      "url": "https://files.pythonhosted.org/packages/63/da/8e1afef38dbe491cc708c616efd9c5efd8c25d438bb478790d5cbc6fd39c/datasette_oauth-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "a5be7a8fc5a85569c354ac43aaf4cb6d0defba28e8538a18c21a7708e6794873",
+        "md5": "f0dda4e40d7fe753e666d0e342d95b65",
+        "sha256": "6a83f6fe80e843d60a863aa7f82d6c451549ea7368aa35af19e33a3ff70713df"
+      },
+      "downloads": -1,
+      "filename": "datasette_oauth-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "f0dda4e40d7fe753e666d0e342d95b65",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 28077,
+      "upload_time": "2026-02-26T22:37:57",
+      "upload_time_iso_8601": "2026-02-26T22:37:57.945003Z",
+      "url": "https://files.pythonhosted.org/packages/a5/be/7a8fc5a85569c354ac43aaf4cb6d0defba28e8538a18c21a7708e6794873/datasette_oauth-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,151 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-no-truncate\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-no-truncate.svg)](https://pypi.org/project/datasette-no-truncate/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-no-truncate?include_prereleases&label=changelog)](https://github.com/simonw/datasette-no-truncate/releases)\n[![Tests](https://github.com/simonw/datasette-no-truncate/workflows/Test/badge.svg)](https://github.com/simonw/datasette-no-truncate/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-no-truncate/blob/main/LICENSE)\n\nTiny Datasette plugin to disable text truncation in table displays\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    datasette install datasette-no-truncate\n\n## Usage\n\nOnce installed, text values should no longer be truncated when a table is displayed.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-no-truncate\n    python3 -m venv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-no-truncate",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-no-truncate",
+    "package_url": "https://pypi.org/project/datasette-no-truncate/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-no-truncate/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-no-truncate/actions",
+      "Changelog": "https://github.com/simonw/datasette-no-truncate/releases",
+      "Homepage": "https://github.com/simonw/datasette-no-truncate",
+      "Issues": "https://github.com/simonw/datasette-no-truncate/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-no-truncate/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.7",
+    "summary": "Tiny Datasette plugin to disable text truncation in table displays",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 17435037,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9e23c24fe87955e0624abfcc4d08b36b6d644bb2b1b537943a76c0aeb92a2903",
+          "md5": "f4d652dbab4bf87227a49be0163bb483",
+          "sha256": "59e289374612ca92424815bcd70c7078d1a390a2ffcc311340f7e75c7c7006df"
+        },
+        "downloads": -1,
+        "filename": "datasette_no_truncate-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f4d652dbab4bf87227a49be0163bb483",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.7",
+        "size": 6500,
+        "upload_time": "2023-03-24T19:09:47",
+        "upload_time_iso_8601": "2023-03-24T19:09:47.451461Z",
+        "url": "https://files.pythonhosted.org/packages/9e/23/c24fe87955e0624abfcc4d08b36b6d644bb2b1b537943a76c0aeb92a2903/datasette_no_truncate-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ea10dad05437674332da05708e8d7c1ff92e4acffced89ea55ce6897fa6be598",
+          "md5": "85e32c446bb190ba085b0d571ae7efc9",
+          "sha256": "28e5f2b82b4ab98a84d44e016d860b130b2be32ab18b19cc2b79ecd2fce0ad70"
+        },
+        "downloads": -1,
+        "filename": "datasette-no-truncate-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "85e32c446bb190ba085b0d571ae7efc9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.7",
+        "size": 6305,
+        "upload_time": "2023-03-24T19:09:49",
+        "upload_time_iso_8601": "2023-03-24T19:09:49.207555Z",
+        "url": "https://files.pythonhosted.org/packages/ea/10/dad05437674332da05708e8d7c1ff92e4acffced89ea55ce6897fa6be598/datasette-no-truncate-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "9e23c24fe87955e0624abfcc4d08b36b6d644bb2b1b537943a76c0aeb92a2903",
+        "md5": "f4d652dbab4bf87227a49be0163bb483",
+        "sha256": "59e289374612ca92424815bcd70c7078d1a390a2ffcc311340f7e75c7c7006df"
+      },
+      "downloads": -1,
+      "filename": "datasette_no_truncate-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f4d652dbab4bf87227a49be0163bb483",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.7",
+      "size": 6500,
+      "upload_time": "2023-03-24T19:09:47",
+      "upload_time_iso_8601": "2023-03-24T19:09:47.451461Z",
+      "url": "https://files.pythonhosted.org/packages/9e/23/c24fe87955e0624abfcc4d08b36b6d644bb2b1b537943a76c0aeb92a2903/datasette_no_truncate-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "ea10dad05437674332da05708e8d7c1ff92e4acffced89ea55ce6897fa6be598",
+        "md5": "85e32c446bb190ba085b0d571ae7efc9",
+        "sha256": "28e5f2b82b4ab98a84d44e016d860b130b2be32ab18b19cc2b79ecd2fce0ad70"
+      },
+      "downloads": -1,
+      "filename": "datasette-no-truncate-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "85e32c446bb190ba085b0d571ae7efc9",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.7",
+      "size": 6305,
+      "upload_time": "2023-03-24T19:09:49",
+      "upload_time_iso_8601": "2023-03-24T19:09:49.207555Z",
+      "url": "https://files.pythonhosted.org/packages/ea/10/dad05437674332da05708e8d7c1ff92e4acffced89ea55ce6897fa6be598/datasette-no-truncate-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,151 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-insert-unsafe\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-insert-unsafe.svg)](https://pypi.org/project/datasette-insert-unsafe/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-insert-unsafe?include_prereleases&label=changelog)](https://github.com/simonw/datasette-insert-unsafe/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-insert-unsafe/blob/master/LICENSE)\n\nUnsafe permissions for datasette-insert - allows all actions without authentication\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-insert-unsafe\n\n## Usage\n\nOnce installed, all actions performed using [datasette-insert](https://github.com/simonw/datasette-insert) will be allowed without authentication.\n\nThis is **not safe** if you are running Datasette with `datasette-insert` on the public internet. You should only use this plugin if you are running Datasette on your own local machine, or on a private network.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-insert-unsafe\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-insert-unsafe",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-insert-unsafe",
+    "package_url": "https://pypi.org/project/datasette-insert-unsafe/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-insert-unsafe/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-insert-unsafe/actions",
+      "Changelog": "https://github.com/simonw/datasette-insert-unsafe/releases",
+      "Homepage": "https://github.com/simonw/datasette-insert-unsafe",
+      "Issues": "https://github.com/simonw/datasette-insert-unsafe/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-insert-unsafe/0.1/",
+    "requires_dist": [
+      "datasette",
+      "datasette-insert (>=0.6)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Unsafe permissions for datasette-insert - allows all actions without authentication",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7858141,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7e3b7a0dfc26911e661c29ea766044e45b916c8333f2ccd9f6d42418aeee0263",
+          "md5": "498904c9ccb449a06229eeb1003067de",
+          "sha256": "6faacd357236bc545729915eda48abfe252e8f3680f189a9f7393d84275cd016"
+        },
+        "downloads": -1,
+        "filename": "datasette_insert_unsafe-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "498904c9ccb449a06229eeb1003067de",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2444,
+        "upload_time": "2020-07-31T21:48:17",
+        "upload_time_iso_8601": "2020-07-31T21:48:17.810107Z",
+        "url": "https://files.pythonhosted.org/packages/7e/3b/7a0dfc26911e661c29ea766044e45b916c8333f2ccd9f6d42418aeee0263/datasette_insert_unsafe-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "720f907e6bb013e31d53ac87c4c8092deac57f94d4a354075c47a5000d3d895e",
+          "md5": "3a3b2b4ac07e6dd1704893f17266a100",
+          "sha256": "409a3a1b3c0edd105453fb6e4f2f670ec835115bd514c67f01d51eff821e0215"
+        },
+        "downloads": -1,
+        "filename": "datasette-insert-unsafe-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3a3b2b4ac07e6dd1704893f17266a100",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2206,
+        "upload_time": "2020-07-31T21:48:20",
+        "upload_time_iso_8601": "2020-07-31T21:48:20.075106Z",
+        "url": "https://files.pythonhosted.org/packages/72/0f/907e6bb013e31d53ac87c4c8092deac57f94d4a354075c47a5000d3d895e/datasette-insert-unsafe-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "7e3b7a0dfc26911e661c29ea766044e45b916c8333f2ccd9f6d42418aeee0263",
+        "md5": "498904c9ccb449a06229eeb1003067de",
+        "sha256": "6faacd357236bc545729915eda48abfe252e8f3680f189a9f7393d84275cd016"
+      },
+      "downloads": -1,
+      "filename": "datasette_insert_unsafe-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "498904c9ccb449a06229eeb1003067de",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2444,
+      "upload_time": "2020-07-31T21:48:17",
+      "upload_time_iso_8601": "2020-07-31T21:48:17.810107Z",
+      "url": "https://files.pythonhosted.org/packages/7e/3b/7a0dfc26911e661c29ea766044e45b916c8333f2ccd9f6d42418aeee0263/datasette_insert_unsafe-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "720f907e6bb013e31d53ac87c4c8092deac57f94d4a354075c47a5000d3d895e",
+        "md5": "3a3b2b4ac07e6dd1704893f17266a100",
+        "sha256": "409a3a1b3c0edd105453fb6e4f2f670ec835115bd514c67f01d51eff821e0215"
+      },
+      "downloads": -1,
+      "filename": "datasette-insert-unsafe-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "3a3b2b4ac07e6dd1704893f17266a100",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2206,
+      "upload_time": "2020-07-31T21:48:20",
+      "upload_time_iso_8601": "2020-07-31T21:48:20.075106Z",
+      "url": "https://files.pythonhosted.org/packages/72/0f/907e6bb013e31d53ac87c4c8092deac57f94d4a354075c47a5000d3d895e/datasette-insert-unsafe-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

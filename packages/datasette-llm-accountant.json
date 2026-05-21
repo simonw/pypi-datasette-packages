@@ -1,0 +1,326 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-llm-accountant\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-llm-accountant.svg)](https://pypi.org/project/datasette-llm-accountant/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-llm-accountant?include_prereleases&label=changelog)](https://github.com/datasette/datasette-llm-accountant/releases)\n[![Tests](https://github.com/datasette/datasette-llm-accountant/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-llm-accountant/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-llm-accountant/blob/main/LICENSE)\n\nBudget management and cost tracking for LLM usage in Datasette.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\ndatasette install datasette-llm-accountant\n```\n\nThis plugin works alongside [datasette-llm](https://github.com/datasette/datasette-llm) to provide automatic cost tracking and budget enforcement for LLM prompts.\n\n## Overview\n\nThis plugin provides:\n\n- **Automatic cost calculation** based on token usage and model pricing\n- **Reserve/settle pattern** for budget enforcement\n- **Accountant plugin system** for custom spending trackers\n- **Custom pricing providers** with access to the full response object\n- **Hook integration** with datasette-llm for transparent accounting\n\nWhen installed, all prompts made through `datasette-llm` are automatically wrapped with accounting logic. Accountants can enforce spending limits, log usage, and track costs.\n\n## How It Works\n\n1. When a prompt is made via `datasette-llm`, this plugin's hooks intercept the call\n2. A reservation is made with all registered accountants for the estimated cost\n3. The prompt executes\n4. The actual cost is calculated via `PricingProvider.calculate_cost_from_response()`\n5. Accountants are settled with the real cost (refunding any unused reservation)\n\n## Configuration\n\nConfigure reservation amounts in `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-llm-accountant:\n    # Default reservation for single prompts\n    auto_reservation_usd: 0.10\n\n    # Default reservation for grouped prompts\n    default_reservation_usd: 0.50\n\n    # Purpose-specific reservations\n    purposes:\n      enrichments:\n        reservation_usd: 5.00\n      query-assistant:\n        reservation_usd: 0.25\n```\n\n## Nanocents\n\nAll monetary amounts use the `Nanocents` type — an `int` subclass that makes units explicit and prevents accidentally passing raw dollar amounts where nanocents are expected.\n\n- 1 nanocent = 1/1,000,000,000 of a cent\n- 1 USD = 100 cents = 100,000,000,000 nanocents\n- This allows tracking costs down to fractions of a cent without floating-point errors\n\n```python\nfrom datasette_llm_accountant import Nanocents\n\n# Create from USD or cents\ncost = Nanocents.from_usd(1.50)   # 150,000,000,000\ncost = Nanocents.from_cents(50)   # 50,000,000,000\n\n# Convert back\ncost.to_usd()    # 1.5\ncost.to_cents()  # 150.0\n\n# Works like a regular int for arithmetic\ntotal = cost + Nanocents.from_usd(0.50)\n```\n\n## Creating an Accountant Plugin\n\nAccountants track and enforce LLM spending. Create a plugin that implements the `register_llm_accountants` hook:\n\n```python\nfrom datasette import hookimpl\nfrom datasette_llm_accountant import Accountant, Tx, Nanocents, InsufficientBalanceError\n\nclass MyAccountant(Accountant):\n    \"\"\"Custom accountant that tracks spending.\"\"\"\n\n    def __init__(self, datasette):\n        self.datasette = datasette\n\n    async def reserve(\n        self,\n        nanocents: Nanocents,\n        model_id: str = None,\n        purpose: str = None,\n        actor_id: str = None,\n    ) -> Tx:\n        \"\"\"Reserve the specified amount. Raise InsufficientBalanceError to block.\"\"\"\n        if not await self.has_sufficient_balance(nanocents):\n            raise InsufficientBalanceError(\"Insufficient balance\")\n        tx_id = await self.create_reservation(nanocents, model_id, purpose)\n        return Tx(tx_id)\n\n    async def settle(\n        self,\n        tx: Tx,\n        nanocents: Nanocents,\n        model_id: str = None,\n        purpose: str = None,\n        actor_id: str = None,\n    ):\n        \"\"\"Settle a transaction for the actual amount spent.\"\"\"\n        await self.record_settlement(tx, nanocents, model_id, purpose)\n\n    async def rollback(self, tx: Tx):\n        \"\"\"Optional: Release a reservation without charging.\"\"\"\n        await self.settle(tx, Nanocents(0))\n\n@hookimpl\ndef register_llm_accountants(datasette):\n    return [MyAccountant(datasette)]\n```\n\nSee [datasette-llm-allowance](https://github.com/datasette/datasette-llm-allowance) for a complete implementation that uses Datasette's internal database to track a spending allowance.\n\n## Multiple Accountants\n\nMultiple accountants can be registered. When a reservation is made:\n\n1. All accountants are called in sequence to reserve the amount\n2. If any accountant fails (e.g., `InsufficientBalanceError`), previous reservations are rolled back\n3. When the prompt completes, all accountants are settled with the actual cost\n\nThis enables layered accounting (per-user limits, per-project budgets, global caps, etc.).\n\n## Custom Pricing Providers\n\nThe default pricing provider fetches model prices from [llm-prices.com](https://www.llm-prices.com/). You can register a custom provider to control how costs are calculated:\n\n```python\nfrom datasette import hookimpl\nfrom datasette_llm_accountant import PricingProvider, Nanocents\n\nclass MyPricingProvider(PricingProvider):\n    async def calculate_cost_from_response(self, model_id, usage, response):\n        \"\"\"\n        Calculate cost from a completed response.\n\n        Args:\n            model_id: The model identifier\n            usage: An llm.Usage object with input/output token counts\n            response: The llm.AsyncResponse object — use this to access\n                      provider-specific metadata (e.g., generation IDs\n                      for exact cost lookups from the provider's API)\n        Returns:\n            Cost as a Nanocents value\n        \"\"\"\n        input_tokens = usage.input or 0\n        output_tokens = usage.output or 0\n        cost_usd = input_tokens * 0.01 / 1_000_000 + output_tokens * 0.03 / 1_000_000\n        return Nanocents.from_usd(cost_usd)\n\n    async def supported_models(self):\n        \"\"\"Return the set of model IDs this provider can price,\n        or None to indicate all models are supported.\n\n        Used to filter the model list — models not in this set\n        won't be available when accountants are registered.\n        \"\"\"\n        return self.known_models\n\n@hookimpl\ndef register_llm_accountant_pricing(datasette):\n    return MyPricingProvider()\n```\n\n## API Reference\n\n### Accountant Base Class\n\n```python\nclass Accountant(ABC):\n    @abstractmethod\n    async def reserve(\n        self,\n        nanocents: Nanocents,\n        model_id: str = None,\n        purpose: str = None,\n        actor_id: str = None,\n    ) -> Tx:\n        \"\"\"Reserve an amount, return transaction ID.\"\"\"\n\n    @abstractmethod\n    async def settle(\n        self,\n        tx: Tx,\n        nanocents: Nanocents,\n        model_id: str = None,\n        purpose: str = None,\n        actor_id: str = None,\n    ):\n        \"\"\"Settle a transaction for the actual amount.\"\"\"\n\n    async def rollback(self, tx: Tx):\n        \"\"\"Release a reservation (default: settle for 0).\"\"\"\n        await self.settle(tx, Nanocents(0))\n```\n\n### PricingProvider Base Class\n\n```python\nclass PricingProvider(ABC):\n    @abstractmethod\n    async def calculate_cost_from_response(\n        self, model_id: str, usage: Usage, response: AsyncResponse\n    ) -> Nanocents:\n        \"\"\"Calculate cost from a completed response.\"\"\"\n\n    async def supported_models(self) -> Optional[set[str]]:\n        \"\"\"Return set of supported model IDs, or None for all. Default: None.\"\"\"\n        return None\n```\n\n### Exceptions\n\n- `InsufficientBalanceError` - Raised when an accountant cannot reserve the requested amount\n- `ReservationExceededError` - Raised when actual cost exceeds the reserved amount\n- `ModelPricingNotFoundError` - Raised when pricing data is not available for a model\n\n## Development\n\n```bash\ncd datasette-llm-accountant\npip install -e '.[dev]'\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-llm-accountant",
+    "package_url": "https://pypi.org/project/datasette-llm-accountant/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-llm-accountant/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-llm-accountant/actions",
+      "Changelog": "https://github.com/datasette/datasette-llm-accountant/releases",
+      "Homepage": "https://github.com/datasette/datasette-llm-accountant",
+      "Issues": "https://github.com/datasette/datasette-llm-accountant/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-llm-accountant/0.1a4/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "datasette-llm>=0.1a8",
+      "llm>=0.32a1",
+      "httpx"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Accounting for LLM token usage",
+    "version": "0.1a4",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37214072,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "beecb33668453a754881a3bc2c4d078f426c916287f9f78d5bf746339d3111ec",
+          "md5": "b8897d28789235e6871e4fefe637996c",
+          "sha256": "efe4fc18040ec2a2d72ce30a99282649c486656aaacdae35bd14a12d9daf60cb"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b8897d28789235e6871e4fefe637996c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13278,
+        "upload_time": "2025-11-18T01:23:59",
+        "upload_time_iso_8601": "2025-11-18T01:23:59.350480Z",
+        "url": "https://files.pythonhosted.org/packages/be/ec/b33668453a754881a3bc2c4d078f426c916287f9f78d5bf746339d3111ec/datasette_llm_accountant-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d0f83126e6636b25924dec2b73616e77d732075e1774f17c5bdafd9858caca07",
+          "md5": "cbb13523e06619cf1379b32c7a834fb1",
+          "sha256": "afe1895a9721beca7557c7b34c6ae8ca49f25b10b83b34c3f1c80756c7be5b18"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cbb13523e06619cf1379b32c7a834fb1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 16024,
+        "upload_time": "2025-11-18T01:24:00",
+        "upload_time_iso_8601": "2025-11-18T01:24:00.528817Z",
+        "url": "https://files.pythonhosted.org/packages/d0/f8/3126e6636b25924dec2b73616e77d732075e1774f17c5bdafd9858caca07/datasette_llm_accountant-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ef573bafc4e59b0379afad4792e1d36d27de116751ef50282a2373e5086812c3",
+          "md5": "2546e037cb4e1d801c82610f99209614",
+          "sha256": "454d1d3a768ac218ccb6b722272c4173a92aa75b83adb2e5638c1dab1989b30b"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2546e037cb4e1d801c82610f99209614",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13283,
+        "upload_time": "2025-11-25T22:53:56",
+        "upload_time_iso_8601": "2025-11-25T22:53:56.795705Z",
+        "url": "https://files.pythonhosted.org/packages/ef/57/3bafc4e59b0379afad4792e1d36d27de116751ef50282a2373e5086812c3/datasette_llm_accountant-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f55424cf13e0965511fac4d0ce3ec3e4ca8fbd477b23afffe5f87057f4cd7411",
+          "md5": "7a1d38fa1339c37bf83d9eb430b28b93",
+          "sha256": "123f03ef7d9dfb036ce5eaf512540d8b42ab87d912d6c26648c4b1e172e97256"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7a1d38fa1339c37bf83d9eb430b28b93",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 16097,
+        "upload_time": "2025-11-25T22:53:57",
+        "upload_time_iso_8601": "2025-11-25T22:53:57.855919Z",
+        "url": "https://files.pythonhosted.org/packages/f5/54/24cf13e0965511fac4d0ce3ec3e4ca8fbd477b23afffe5f87057f4cd7411/datasette_llm_accountant-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f873c713d72157d8ecd87276fbfb2645611ba84342ec21402f2d73ae2c8317d8",
+          "md5": "51799ae1e791d34661448e9c046a78f6",
+          "sha256": "1d7675b49e60c5455134867a81991b4458ed886df87b9f317a78c7664822985b"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "51799ae1e791d34661448e9c046a78f6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 14962,
+        "upload_time": "2026-03-19T22:54:36",
+        "upload_time_iso_8601": "2026-03-19T22:54:36.414416Z",
+        "url": "https://files.pythonhosted.org/packages/f8/73/c713d72157d8ecd87276fbfb2645611ba84342ec21402f2d73ae2c8317d8/datasette_llm_accountant-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "8a4305b872e1e03b4f441a49b7338350218baeadca1b6ff212615174de256ecf",
+          "md5": "c8635e0edead98da11a7734be1bb02a0",
+          "sha256": "109e0526a8d2e1fa8c08343b55e772e7e069d7c4e3de179e7eb915e43ceb1d11"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c8635e0edead98da11a7734be1bb02a0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 18121,
+        "upload_time": "2026-03-19T22:54:38",
+        "upload_time_iso_8601": "2026-03-19T22:54:38.966741Z",
+        "url": "https://files.pythonhosted.org/packages/8a/43/05b872e1e03b4f441a49b7338350218baeadca1b6ff212615174de256ecf/datasette_llm_accountant-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9f66e58b94f1c9ee5e627e714f8882b8be80b576a73671316d16bd8db55aadd0",
+          "md5": "57871eb5b81831512c758a32385d431e",
+          "sha256": "409e26a29ab3dc6212c7466dbb271b07ba95ebfa15a94d010ffee7375e55b857"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "57871eb5b81831512c758a32385d431e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 15422,
+        "upload_time": "2026-04-02T20:26:37",
+        "upload_time_iso_8601": "2026-04-02T20:26:37.465435Z",
+        "url": "https://files.pythonhosted.org/packages/9f/66/e58b94f1c9ee5e627e714f8882b8be80b576a73671316d16bd8db55aadd0/datasette_llm_accountant-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "2e4fd93620a12b24223cb6f11f55a5e9a23113cdc96b3eeff7e355d787c9a2f5",
+          "md5": "d88b48a5c19075828dd6ac9c57f44364",
+          "sha256": "5b5d52dbb9c70264cbd5ae93b24a624c309b64ecbcd97fb8ddd4ecc5d076fb92"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d88b48a5c19075828dd6ac9c57f44364",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 18690,
+        "upload_time": "2026-04-02T20:26:38",
+        "upload_time_iso_8601": "2026-04-02T20:26:38.639481Z",
+        "url": "https://files.pythonhosted.org/packages/2e/4f/d93620a12b24223cb6f11f55a5e9a23113cdc96b3eeff7e355d787c9a2f5/datasette_llm_accountant-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "822cf67adce449bd8e87b14fbb486c2fee4d8a0cf1fbb41200281535ba09b474",
+          "md5": "ac37272c684850f01b50fad3654c1ba6",
+          "sha256": "f22ff371cf2ef3c3e8253b20d73c5011001b94376e0de8f7206c156125e8afc9"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ac37272c684850f01b50fad3654c1ba6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 15660,
+        "upload_time": "2026-05-19T20:46:35",
+        "upload_time_iso_8601": "2026-05-19T20:46:35.838532Z",
+        "url": "https://files.pythonhosted.org/packages/82/2c/f67adce449bd8e87b14fbb486c2fee4d8a0cf1fbb41200281535ba09b474/datasette_llm_accountant-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "74bb0b91136b559d270c0d70a3e92b5a8cc471dd0eba698b121ca1d5a3a9020a",
+          "md5": "d33a4480417852576d86b29d2b4c1668",
+          "sha256": "5b4120fd040677c9c6e17c8ab9cdd617584570840d30895725b01318bd96a6b7"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_accountant-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d33a4480417852576d86b29d2b4c1668",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 19207,
+        "upload_time": "2026-05-19T20:46:37",
+        "upload_time_iso_8601": "2026-05-19T20:46:37.397102Z",
+        "url": "https://files.pythonhosted.org/packages/74/bb/0b91136b559d270c0d70a3e92b5a8cc471dd0eba698b121ca1d5a3a9020a/datasette_llm_accountant-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "822cf67adce449bd8e87b14fbb486c2fee4d8a0cf1fbb41200281535ba09b474",
+        "md5": "ac37272c684850f01b50fad3654c1ba6",
+        "sha256": "f22ff371cf2ef3c3e8253b20d73c5011001b94376e0de8f7206c156125e8afc9"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm_accountant-0.1a4-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "ac37272c684850f01b50fad3654c1ba6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 15660,
+      "upload_time": "2026-05-19T20:46:35",
+      "upload_time_iso_8601": "2026-05-19T20:46:35.838532Z",
+      "url": "https://files.pythonhosted.org/packages/82/2c/f67adce449bd8e87b14fbb486c2fee4d8a0cf1fbb41200281535ba09b474/datasette_llm_accountant-0.1a4-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "74bb0b91136b559d270c0d70a3e92b5a8cc471dd0eba698b121ca1d5a3a9020a",
+        "md5": "d33a4480417852576d86b29d2b4c1668",
+        "sha256": "5b4120fd040677c9c6e17c8ab9cdd617584570840d30895725b01318bd96a6b7"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm_accountant-0.1a4.tar.gz",
+      "has_sig": false,
+      "md5_digest": "d33a4480417852576d86b29d2b4c1668",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 19207,
+      "upload_time": "2026-05-19T20:46:37",
+      "upload_time_iso_8601": "2026-05-19T20:46:37.397102Z",
+      "url": "https://files.pythonhosted.org/packages/74/bb/0b91136b559d270c0d70a3e92b5a8cc471dd0eba698b121ca1d5a3a9020a/datasette_llm_accountant-0.1a4.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

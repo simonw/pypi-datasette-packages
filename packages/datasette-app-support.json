@@ -1,0 +1,1032 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-app-support\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-app-support.svg)](https://pypi.org/project/datasette-app-support/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-app-support?include_prereleases&label=changelog)](https://github.com/simonw/datasette-app-support/releases)\n[![Tests](https://github.com/simonw/datasette-app-support/workflows/Test/badge.svg)](https://github.com/simonw/datasette-app-support/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-app-support/blob/main/LICENSE)\n\nPart of https://github.com/simonw/datasette-app\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-app-support\n\nUsing this outside of the context of `Datasette.app` probably won't work.\n\n## API endpoints\n\nThis plugin exposes APIs that are called by the Electron wrapper.\n\nAll plugins are protected by authentication: they need to be called with a `Authorization: Bearer xxx` token here the `xxx` matches the value of the `DATASETTE_API_TOKEN` environment variable.\n\n### /-/auth-app-user\n\n```\nPOST /-/auth-app-user\n{\"redirect\": \"/-/metadata\"}\n```\nIf a valid `Authorization` header is passed, sets a signed cookie identifying the user as `{\"id\": \"admin\"}` and redirects them to the specified page.\n\n### /-/open-database-file\n\n```\nPOST /-/open-database-file\n{\"path\": \"/path/to/file.db\"}\n```\nAttaches a new database file to the running Datasette instance - used by the \"Open Database...\" menu option.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/file\"}` if it works, 400 with an `\"error\"` JSON string message if it fails.\n\n### /-/new-empty-database-file\n\n```\nPOST /-/new-empty-database-file\n{\"path\": \"/path/to/file.db\"}\n```\nCreates a brand new empty SQLite database file at the specified path and attaches it to the Datasette instance. Used by the \"Create Empty Database...\" menu option.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/file\"}` if it works, 400 with an `\"error\"` JSON string message if it fails.\n\n### /-/open-csv-file\n\n```\nPOST /-/open-csv-file\n{\"path\": \"/path/to/file.csv\"}\n```\nImports a CSV or TSV file into the default `/temporary` in-memory database. Used by the \"Open CSV...\" menu option.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/temporary/table\"}` if it works, 400 or 500 with an `\"error\"` JSON string message if it fails.\n\n### /-/import-csv-file\n\n```\nPOST /-/import-csv-file\n{\"path\": \"/path/to/file.csv\", \"database\": \"database_name\"}\n```\nPermanently imports a CSV or TSV file into the specified database. Used by the \"Import CSV...\" menu option.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/database_name/table\"}` if it works, 400 or 500 with an `\"error\"` JSON string message if it fails.\n\n### /-/open-csv-from-url\n\n```\nPOST /-/open-csv-from-url\n{\"url\": \"https://example.com/file.csv\", \"table_name\": \"My_suggested_table_name\"}\n```\nImports a CSV file into the default `/temporary` in-memory database. Used by the \"Open CSV from URL...\" menu option. `table_name` is optional - if omitted the name to use will be derived from the URL.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/temporary/table\"}` if it works, 400 or 500 with an `\"error\"` JSON string message if it fails.\n\n### /-/dump-temporary-to-file\n\n```\nPOST /-/dump-temporary-to-file\n{\"path\": \"/path/to/backup.db\"}\n```\nDumps the contents of the `temporary` in-memory database to the specified file. This is intended to be used to take a temporary backup when the Datasette server is restarted after a plugin has been installed, see [datasette-app/issues/42](https://github.com/simonw/datasette-app/issues/42).\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/path/to/backup.db\"}` if it works, 400 or 500 with an `\"error\"` JSON string message if it fails.\n\n### /-/restore-temporary-to-file\n\n```\nPOST /-/restore-temporary-from-file\n{\"path\": \"/path/to/backup.db\"}\n```\nRestores the `temporary` in-memory database to the contents of the specified file.\n\nReturns HTTP 200 status with `{\"ok\": True, \"path\": \"/path/to/backup.db\"}` if it works, 400 or 500 with an `\"error\"` JSON string message if it fails.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-app-support\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-app-support",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-app-support",
+    "package_url": "https://pypi.org/project/datasette-app-support/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-app-support/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-app-support/actions",
+      "Changelog": "https://github.com/simonw/datasette-app-support/releases",
+      "Homepage": "https://github.com/simonw/datasette-app-support",
+      "Issues": "https://github.com/simonw/datasette-app-support/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-app-support/0.11.8/",
+    "requires_dist": [
+      "datasette (>=0.59)",
+      "sqlite-utils",
+      "packaging",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "black ; extra == 'test'",
+      "pytest-httpx ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Part of https://github.com/simonw/datasette-app",
+    "version": "0.11.8",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 16897859,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e9a2bc251296cf5a33a73bd2660ab61c0d5fb6927772f4c56f5e85fca950b2fb",
+          "md5": "aa656022d9afbab41620174783769042",
+          "sha256": "e78d9eb1e6017049ae2f1ff713c3c925c76c96dbcc584ac6ca4790be647af623"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "aa656022d9afbab41620174783769042",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3048,
+        "upload_time": "2021-08-31T22:25:39",
+        "upload_time_iso_8601": "2021-08-31T22:25:39.982782Z",
+        "url": "https://files.pythonhosted.org/packages/e9/a2/bc251296cf5a33a73bd2660ab61c0d5fb6927772f4c56f5e85fca950b2fb/datasette_app_support-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "166e5a64923c0584d90878c3de585e8e63ae5ff4b4a77c5521d75c5b4f1e55bb",
+          "md5": "fe27b1b735f531638455d570dac2d4d3",
+          "sha256": "1a24f2e8b1730d019f3f5ae345063839802744aab30cf4cb7472b2ea3fcd3d6e"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fe27b1b735f531638455d570dac2d4d3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2831,
+        "upload_time": "2021-08-31T22:25:41",
+        "upload_time_iso_8601": "2021-08-31T22:25:41.064799Z",
+        "url": "https://files.pythonhosted.org/packages/16/6e/5a64923c0584d90878c3de585e8e63ae5ff4b4a77c5521d75c5b4f1e55bb/datasette-app-support-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "125b4203560ecd1c73fdf86f9e746e9cb95228e00f241d041616aa1bde84dbf8",
+          "md5": "0fd22f418c7f374933a0886422662596",
+          "sha256": "411f28f94cfbbf3f2efb344acb001da6b3f49934de084ea04cb20c932eff0464"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0fd22f418c7f374933a0886422662596",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3407,
+        "upload_time": "2021-08-31T22:36:15",
+        "upload_time_iso_8601": "2021-08-31T22:36:15.893479Z",
+        "url": "https://files.pythonhosted.org/packages/12/5b/4203560ecd1c73fdf86f9e746e9cb95228e00f241d041616aa1bde84dbf8/datasette_app_support-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8d57b691318b2b0b2b714fac855126785edde35fc4d2c24ebde0564a41fdd133",
+          "md5": "bda8cac2ddb7d5313e41f6d8dc6cb075",
+          "sha256": "ae1e0d68b4cf499189325983e1b65bd536653ab9ddac3b6da10c96e3cc956c30"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "bda8cac2ddb7d5313e41f6d8dc6cb075",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3004,
+        "upload_time": "2021-08-31T22:36:16",
+        "upload_time_iso_8601": "2021-08-31T22:36:16.690407Z",
+        "url": "https://files.pythonhosted.org/packages/8d/57/b691318b2b0b2b714fac855126785edde35fc4d2c24ebde0564a41fdd133/datasette-app-support-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "82579340d36a920abb6fb71f17f3093eba6bc4c92d9c7c9c7f8296c626a5fc88",
+          "md5": "d98ad89d9a93d686f85a98beefadaf36",
+          "sha256": "a69c464e1fdb9161a630c97646ad1896e2a8f0bd9859c1667bc7bb307356a78b"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d98ad89d9a93d686f85a98beefadaf36",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3408,
+        "upload_time": "2021-08-31T22:41:21",
+        "upload_time_iso_8601": "2021-08-31T22:41:21.894986Z",
+        "url": "https://files.pythonhosted.org/packages/82/57/9340d36a920abb6fb71f17f3093eba6bc4c92d9c7c9c7f8296c626a5fc88/datasette_app_support-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6af2cbecc432e537c9887926b9870102cbbb9194e797de5b877519c6305b6a88",
+          "md5": "a0baff8ebe7284693a3409f6a6eaf777",
+          "sha256": "d801494bbab74eefbdbdcbfa3c6413ba9380ec823190c247c814a46271271ea1"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a0baff8ebe7284693a3409f6a6eaf777",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3015,
+        "upload_time": "2021-08-31T22:41:22",
+        "upload_time_iso_8601": "2021-08-31T22:41:22.906785Z",
+        "url": "https://files.pythonhosted.org/packages/6a/f2/cbecc432e537c9887926b9870102cbbb9194e797de5b877519c6305b6a88/datasette-app-support-0.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.10": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "03491119c57bc3502827280ca05a495015b9739e37ca8f58d2b3780c1ef077a0",
+          "md5": "d84756a526b000e29063e6800b7bc002",
+          "sha256": "039bf79515328a0c8de73529173975de3b9ed5d137967cfd91dfa182afd619a5"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.10-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d84756a526b000e29063e6800b7bc002",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 9968,
+        "upload_time": "2021-09-12T20:22:30",
+        "upload_time_iso_8601": "2021-09-12T20:22:30.866611Z",
+        "url": "https://files.pythonhosted.org/packages/03/49/1119c57bc3502827280ca05a495015b9739e37ca8f58d2b3780c1ef077a0/datasette_app_support-0.10-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e059928f41a41263f0faab93937fdefb3d668c99914f486000c4bf8fa7e42e71",
+          "md5": "4a0b3873b0e33e0ca50445223da6fb63",
+          "sha256": "026ac55bb4622c6e45e5b8f2c73b15d169d4fba3147a6500d22430e46dd7c691"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.10.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4a0b3873b0e33e0ca50445223da6fb63",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 9964,
+        "upload_time": "2021-09-12T20:22:32",
+        "upload_time_iso_8601": "2021-09-12T20:22:32.294783Z",
+        "url": "https://files.pythonhosted.org/packages/e0/59/928f41a41263f0faab93937fdefb3d668c99914f486000c4bf8fa7e42e71/datasette-app-support-0.10.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c31918c34fd428068667871b31bc9fb96c71dc0609fb161007efbee41a981d5f",
+          "md5": "6eaada08639d57394ab6a9e4a827b91f",
+          "sha256": "c94dde70842a7697c73d2f7116a2f375804bffc2e10b1f2f4ffa5e79333db209"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6eaada08639d57394ab6a9e4a827b91f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 11867,
+        "upload_time": "2021-09-12T22:00:16",
+        "upload_time_iso_8601": "2021-09-12T22:00:16.504777Z",
+        "url": "https://files.pythonhosted.org/packages/c3/19/18c34fd428068667871b31bc9fb96c71dc0609fb161007efbee41a981d5f/datasette_app_support-0.11-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e4296c1cf9b8cd3409756c35d6a15aeafcc5e04236a3b5ea4594b8d818d5e24b",
+          "md5": "6e9d34b5c39e9dad413435be789289a9",
+          "sha256": "fc634510b62763167e75375070bcb02f2aec6bca867fbc861523d5906e9ff39b"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6e9d34b5c39e9dad413435be789289a9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11231,
+        "upload_time": "2021-09-12T22:00:17",
+        "upload_time_iso_8601": "2021-09-12T22:00:17.661911Z",
+        "url": "https://files.pythonhosted.org/packages/e4/29/6c1cf9b8cd3409756c35d6a15aeafcc5e04236a3b5ea4594b8d818d5e24b/datasette-app-support-0.11.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e6e7be13b867b5f160ab7bc9be46e405643959850f1c248d755fc835c0516060",
+          "md5": "58357de9956e24d77008e9e192f929c3",
+          "sha256": "fc075917c27cfd75d80bdb5b342b40ff71f24e46acac34840a2aafca761fd31f"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "58357de9956e24d77008e9e192f929c3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12035,
+        "upload_time": "2021-09-12T23:41:39",
+        "upload_time_iso_8601": "2021-09-12T23:41:39.136534Z",
+        "url": "https://files.pythonhosted.org/packages/e6/e7/be13b867b5f160ab7bc9be46e405643959850f1c248d755fc835c0516060/datasette_app_support-0.11.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4644a14b5f42ef2994b7c00daf85df3275968ff773a633556fafc7828b6b4c89",
+          "md5": "dbe046621ecae7c1501de58ceeeb6646",
+          "sha256": "f7c7997844c931ede0d70fc91356e1e61005af760bd1150ad315c379ce5ead0c"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dbe046621ecae7c1501de58ceeeb6646",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11370,
+        "upload_time": "2021-09-12T23:41:40",
+        "upload_time_iso_8601": "2021-09-12T23:41:40.234221Z",
+        "url": "https://files.pythonhosted.org/packages/46/44/a14b5f42ef2994b7c00daf85df3275968ff773a633556fafc7828b6b4c89/datasette-app-support-0.11.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d7421d6185d58c4afb5b9f55958dc2801ef3f1c3c0036ad775d2361341531f1b",
+          "md5": "a85af77db76e591f952f36d67eabe830",
+          "sha256": "29e3d2d009178e857880ac3637345a51002ce93c165d7613d18c89538c157d06"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a85af77db76e591f952f36d67eabe830",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12162,
+        "upload_time": "2021-09-12T23:52:59",
+        "upload_time_iso_8601": "2021-09-12T23:52:59.521488Z",
+        "url": "https://files.pythonhosted.org/packages/d7/42/1d6185d58c4afb5b9f55958dc2801ef3f1c3c0036ad775d2361341531f1b/datasette_app_support-0.11.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a1b8994d034e907646b00b40d2860fe2580170e7417f01fa1a88161a85585571",
+          "md5": "28b5a10b8428d0a9577041c362bd5443",
+          "sha256": "2be82fa489b23a32c779799e066b6cfca639e080f2e1bb3152ab4f92d7c5bff2"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "28b5a10b8428d0a9577041c362bd5443",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11443,
+        "upload_time": "2021-09-12T23:53:00",
+        "upload_time_iso_8601": "2021-09-12T23:53:00.417113Z",
+        "url": "https://files.pythonhosted.org/packages/a1/b8/994d034e907646b00b40d2860fe2580170e7417f01fa1a88161a85585571/datasette-app-support-0.11.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3e24ca0649bd63be3e20fa9b01e044aa868d673c91f0fa58d400d910e6ed5cee",
+          "md5": "5443f01a4323e8f967794bab29f239f1",
+          "sha256": "066fc8865d7cb9e01e51cb4cd1ebab0c9a488bfecac3be7e64ae0adb1654f2a3"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5443f01a4323e8f967794bab29f239f1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12177,
+        "upload_time": "2021-09-13T00:41:00",
+        "upload_time_iso_8601": "2021-09-13T00:41:00.673069Z",
+        "url": "https://files.pythonhosted.org/packages/3e/24/ca0649bd63be3e20fa9b01e044aa868d673c91f0fa58d400d910e6ed5cee/datasette_app_support-0.11.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a1bb5bc864495504643664f73deb84e0abb3595b58966b5f0491ec58d452c309",
+          "md5": "cfa778ef05f54dd4a11357ba692a9dad",
+          "sha256": "b79819eaa1525e9f7de61a4ea5695414d0f24b63122e5a8928772f202a93df31"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "cfa778ef05f54dd4a11357ba692a9dad",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11472,
+        "upload_time": "2021-09-13T00:41:01",
+        "upload_time_iso_8601": "2021-09-13T00:41:01.870826Z",
+        "url": "https://files.pythonhosted.org/packages/a1/bb/5bc864495504643664f73deb84e0abb3595b58966b5f0491ec58d452c309/datasette-app-support-0.11.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8e3edb9bed31af60174e68414c08a286584fe4384d7e9a92fcbf5a9de000a24e",
+          "md5": "64285dc08bbbb034006f354797f60ea3",
+          "sha256": "9066d82c6bab278dd4df3c9a2a8bc67349e733ef499b67641fdd36157fc5fa38"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "64285dc08bbbb034006f354797f60ea3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12539,
+        "upload_time": "2021-09-13T19:01:41",
+        "upload_time_iso_8601": "2021-09-13T19:01:41.734780Z",
+        "url": "https://files.pythonhosted.org/packages/8e/3e/db9bed31af60174e68414c08a286584fe4384d7e9a92fcbf5a9de000a24e/datasette_app_support-0.11.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1150b8ee65e6b359dcac314258d2473fa5135fcc20729ebf424402702a942425",
+          "md5": "e153a84237502e22463bbf46fa81e5ba",
+          "sha256": "902f58a0b46b46e39ba4653eb069a4b68988b96bfc3c5a9df461f2e2f7b31411"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e153a84237502e22463bbf46fa81e5ba",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11795,
+        "upload_time": "2021-09-13T19:01:43",
+        "upload_time_iso_8601": "2021-09-13T19:01:43.937003Z",
+        "url": "https://files.pythonhosted.org/packages/11/50/b8ee65e6b359dcac314258d2473fa5135fcc20729ebf424402702a942425/datasette-app-support-0.11.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1022ac67272d93c585a3cc5c252c0d98a544cfa3814f946f0a7c64aeb5542277",
+          "md5": "c781da1b1cab0233f7c50d87449618c6",
+          "sha256": "49553f1f0febcc86b5f3da63a61d8d32efac3418abed58656e223518f7fde7e6"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c781da1b1cab0233f7c50d87449618c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12533,
+        "upload_time": "2021-09-13T20:15:16",
+        "upload_time_iso_8601": "2021-09-13T20:15:16.982105Z",
+        "url": "https://files.pythonhosted.org/packages/10/22/ac67272d93c585a3cc5c252c0d98a544cfa3814f946f0a7c64aeb5542277/datasette_app_support-0.11.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "358979d50d08550ba5d53ecfd2d77a33847e0b58e5a0710393e43c2f745f35b2",
+          "md5": "034890dd66839403760d0a7fed77d90e",
+          "sha256": "305777e94fefedca98e794cb4beb2d9272ad4ce6a1c47dab6a59acdcdc7af8f3"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "034890dd66839403760d0a7fed77d90e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11803,
+        "upload_time": "2021-09-13T20:15:18",
+        "upload_time_iso_8601": "2021-09-13T20:15:18.778787Z",
+        "url": "https://files.pythonhosted.org/packages/35/89/79d50d08550ba5d53ecfd2d77a33847e0b58e5a0710393e43c2f745f35b2/datasette-app-support-0.11.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2d4bbe053b1f898899519eba8a672387752f6496f75b66ff4ebb5864f003ae73",
+          "md5": "d3d4a1eb68e42176c9cdf1db85e90457",
+          "sha256": "d1757d459c20941130aad46813e222f2a847c055eef3689f06126bf81a14c43b"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d3d4a1eb68e42176c9cdf1db85e90457",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12532,
+        "upload_time": "2022-07-12T19:31:55",
+        "upload_time_iso_8601": "2022-07-12T19:31:55.957917Z",
+        "url": "https://files.pythonhosted.org/packages/2d/4b/be053b1f898899519eba8a672387752f6496f75b66ff4ebb5864f003ae73/datasette_app_support-0.11.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b3a9bc24b22870998e3f0a4d43175b6142adf88d61500a93f08a4d479d8b47e0",
+          "md5": "1db97710050879505e1858b80f1fd9e5",
+          "sha256": "43d52cc51c406e6dc997752b5d74d6c88c2e3c9a5275399bd8158ee55c23d768"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1db97710050879505e1858b80f1fd9e5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11559,
+        "upload_time": "2022-07-12T19:31:56",
+        "upload_time_iso_8601": "2022-07-12T19:31:56.981555Z",
+        "url": "https://files.pythonhosted.org/packages/b3/a9/bc24b22870998e3f0a4d43175b6142adf88d61500a93f08a4d479d8b47e0/datasette-app-support-0.11.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c1053bbfb0b970da40da21f44e76cd5992347fdc8a451f1bce60a236a6ecc407",
+          "md5": "d064e9d0fc2c255d7180a747275b1588",
+          "sha256": "c0ab8c45d965b8efb8bc2f6c2815254b726f83a8739f11ba238aa0649c9c83e6"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d064e9d0fc2c255d7180a747275b1588",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12554,
+        "upload_time": "2023-02-17T02:13:12",
+        "upload_time_iso_8601": "2023-02-17T02:13:12.018996Z",
+        "url": "https://files.pythonhosted.org/packages/c1/05/3bbfb0b970da40da21f44e76cd5992347fdc8a451f1bce60a236a6ecc407/datasette_app_support-0.11.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "344a19e29ee65f4ac5b45e21f0f65ba18fb66e67b0e5b9b73ce21a75ccca7c92",
+          "md5": "b0164f91866f7ca76541deec7690aa98",
+          "sha256": "23a8d27bc6996f66092aa416b0fa02b9c49c3ee81ee223b722b6f98ff3c1ac4d"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b0164f91866f7ca76541deec7690aa98",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11558,
+        "upload_time": "2023-02-17T02:13:13",
+        "upload_time_iso_8601": "2023-02-17T02:13:13.577847Z",
+        "url": "https://files.pythonhosted.org/packages/34/4a/19e29ee65f4ac5b45e21f0f65ba18fb66e67b0e5b9b73ce21a75ccca7c92/datasette-app-support-0.11.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0c8cc6ef62182d743bd6ab0cbaf7cbd10bb236ef29dfd2d9037d92e68133a9d1",
+          "md5": "bc6a19e879a89f7971c424ccb260ad3e",
+          "sha256": "7ea20605c37bafe1f79b6c9d6a86faeed3b1db022c4ffefc425e4a48ac708282"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.11.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bc6a19e879a89f7971c424ccb260ad3e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 12591,
+        "upload_time": "2023-02-17T02:43:41",
+        "upload_time_iso_8601": "2023-02-17T02:43:41.407704Z",
+        "url": "https://files.pythonhosted.org/packages/0c/8c/c6ef62182d743bd6ab0cbaf7cbd10bb236ef29dfd2d9037d92e68133a9d1/datasette_app_support-0.11.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "945fe59dc0c028091828031176a1be3b1ed8863525b785ac20a933dbbd5d73cd",
+          "md5": "51d1988d34f574affbf99b9a9a381085",
+          "sha256": "4b069f162bfea353d10b631d32ab180aeff33ebf0f0f43855905efd01a2b9276"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.11.8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "51d1988d34f574affbf99b9a9a381085",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 11599,
+        "upload_time": "2023-02-17T02:43:42",
+        "upload_time_iso_8601": "2023-02-17T02:43:42.826117Z",
+        "url": "https://files.pythonhosted.org/packages/94/5f/e59dc0c028091828031176a1be3b1ed8863525b785ac20a933dbbd5d73cd/datasette-app-support-0.11.8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "26e943406f96fb90c9f85b441e3981674502d0b87f50acda2f0f680fcb26b284",
+          "md5": "3619eb4249b9c9e8c3ccba541cdd9956",
+          "sha256": "a829d2ba9ed4f1b576138d5ab852efd7a992d6697dd4c48610e8466f819bf9e4"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3619eb4249b9c9e8c3ccba541cdd9956",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4124,
+        "upload_time": "2021-09-02T18:39:05",
+        "upload_time_iso_8601": "2021-09-02T18:39:05.635325Z",
+        "url": "https://files.pythonhosted.org/packages/26/e9/43406f96fb90c9f85b441e3981674502d0b87f50acda2f0f680fcb26b284/datasette_app_support-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "04615c12e7568ecc119511ac3524702012d7f4a11002ddc93486e069ae3d4fe7",
+          "md5": "ba8951dd65a0b386ee9b7013beaf43e7",
+          "sha256": "5db7ec87ee0af48977cae8df881934c9909f8312454dbc8dc91f9cef6e75f4f2"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ba8951dd65a0b386ee9b7013beaf43e7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3822,
+        "upload_time": "2021-09-02T18:39:07",
+        "upload_time_iso_8601": "2021-09-02T18:39:07.528357Z",
+        "url": "https://files.pythonhosted.org/packages/04/61/5c12e7568ecc119511ac3524702012d7f4a11002ddc93486e069ae3d4fe7/datasette-app-support-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5c738e2eb3804ee3ed3185beb019a362533a2e510a51f8d53227557535dc819a",
+          "md5": "878ee5effb6d9ca39faaaf07b50300ed",
+          "sha256": "06d086c3bc42bfd61a38859805c3f5d82a7c50e1ae6986162ed2b42f7113e9aa"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "878ee5effb6d9ca39faaaf07b50300ed",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4359,
+        "upload_time": "2021-09-03T23:38:33",
+        "upload_time_iso_8601": "2021-09-03T23:38:33.690883Z",
+        "url": "https://files.pythonhosted.org/packages/5c/73/8e2eb3804ee3ed3185beb019a362533a2e510a51f8d53227557535dc819a/datasette_app_support-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d80ffe58e5160b4e6b5c7d001a10af20fe80e6cd1758b45306580f3cea9097c9",
+          "md5": "8e9bf76a3a6e14db12a80d942aa3f9e0",
+          "sha256": "d151b005cfc22355c34b9e28ea85b9aa7bd1ddd7ad0b5b6d29a42fbeeccd98f7"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8e9bf76a3a6e14db12a80d942aa3f9e0",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4024,
+        "upload_time": "2021-09-03T23:38:35",
+        "upload_time_iso_8601": "2021-09-03T23:38:35.446781Z",
+        "url": "https://files.pythonhosted.org/packages/d8/0f/fe58e5160b4e6b5c7d001a10af20fe80e6cd1758b45306580f3cea9097c9/datasette-app-support-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b00b1753fa3a32260e70c10d26407757267a380f191a5a67bc8bc16e2c411507",
+          "md5": "719dc90c6f68a74928ceb04279cff425",
+          "sha256": "9c2f04892b62766824d3ac154b2776282d12e4eef61e3edfe88503a14ff7943d"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "719dc90c6f68a74928ceb04279cff425",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 4651,
+        "upload_time": "2021-09-04T01:50:40",
+        "upload_time_iso_8601": "2021-09-04T01:50:40.596900Z",
+        "url": "https://files.pythonhosted.org/packages/b0/0b/1753fa3a32260e70c10d26407757267a380f191a5a67bc8bc16e2c411507/datasette_app_support-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "ea4a56f8377fb741e2c1e098839df249fe78792891c8400a17351159988c1636",
+          "md5": "6428f35aaa5a02fad74041432ea80db1",
+          "sha256": "2f43c24517747a93aa7dec0fabbf998c4eee66ddc94b6e2ef630e35507f1e86b"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6428f35aaa5a02fad74041432ea80db1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4318,
+        "upload_time": "2021-09-04T01:50:41",
+        "upload_time_iso_8601": "2021-09-04T01:50:41.527112Z",
+        "url": "https://files.pythonhosted.org/packages/ea/4a/56f8377fb741e2c1e098839df249fe78792891c8400a17351159988c1636/datasette-app-support-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.5": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cd7f0dea64078e89c406d2a6d330c4cec5c610130fdbc69453912dc7050dd656",
+          "md5": "c153cb2f1a2a06869b48707856cadae5",
+          "sha256": "d9f4390ec4f0e81414c6d2f70ca9e353c05a39df4f7cf453194ec396e2c02c43"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c153cb2f1a2a06869b48707856cadae5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5361,
+        "upload_time": "2021-09-07T20:27:59",
+        "upload_time_iso_8601": "2021-09-07T20:27:59.948106Z",
+        "url": "https://files.pythonhosted.org/packages/cd/7f/0dea64078e89c406d2a6d330c4cec5c610130fdbc69453912dc7050dd656/datasette_app_support-0.5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f59f53328540c4b8a26e242dacedbce3b2001a500c7e9ce156b0f940e4726a8b",
+          "md5": "647f256ba760029cbe1e5e61c812e08e",
+          "sha256": "1dccedde85d8a733ea45cb0fed79e2d88ba501b87928b5e76ecc00858d64d14e"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "647f256ba760029cbe1e5e61c812e08e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4894,
+        "upload_time": "2021-09-07T20:28:01",
+        "upload_time_iso_8601": "2021-09-07T20:28:01.126833Z",
+        "url": "https://files.pythonhosted.org/packages/f5/9f/53328540c4b8a26e242dacedbce3b2001a500c7e9ce156b0f940e4726a8b/datasette-app-support-0.5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.6": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "de3cf4113e09ffb58c1746f9124dcd564927042a7be5b656e6bc7b3f2556e0c6",
+          "md5": "083395bb8305f3b5d0557e8a11dc07e2",
+          "sha256": "568337118607e63e9386dc5989ae53e8be7f596858da5f0b2a2f7753c9b20fb9"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "083395bb8305f3b5d0557e8a11dc07e2",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5452,
+        "upload_time": "2021-09-07T21:58:29",
+        "upload_time_iso_8601": "2021-09-07T21:58:29.023269Z",
+        "url": "https://files.pythonhosted.org/packages/de/3c/f4113e09ffb58c1746f9124dcd564927042a7be5b656e6bc7b3f2556e0c6/datasette_app_support-0.6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fce31aedb129b143a590327f0ca7c02832df6e373ca0b3eafc333c32646493d7",
+          "md5": "1e801b705364d7a41fe472ac6ee54bb3",
+          "sha256": "d18fa105fd19f871942d190be86909cfb79672c43dc08ebd6ac02a34e12129ae"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1e801b705364d7a41fe472ac6ee54bb3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4987,
+        "upload_time": "2021-09-07T21:58:30",
+        "upload_time_iso_8601": "2021-09-07T21:58:30.210500Z",
+        "url": "https://files.pythonhosted.org/packages/fc/e3/1aedb129b143a590327f0ca7c02832df6e373ca0b3eafc333c32646493d7/datasette-app-support-0.6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.7": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "33a77483f180d9cdcef9fd1bac0ae7652bc29d08068090bad7f03ba41c79963d",
+          "md5": "d846ce8edf27b9cc657f2c51ebe2e140",
+          "sha256": "ccdcbf4c53b8852deeb4f60e71500378d2a4f3655db979b24406f0faebb0b423"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d846ce8edf27b9cc657f2c51ebe2e140",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5870,
+        "upload_time": "2021-09-10T17:09:16",
+        "upload_time_iso_8601": "2021-09-10T17:09:16.989130Z",
+        "url": "https://files.pythonhosted.org/packages/33/a7/7483f180d9cdcef9fd1bac0ae7652bc29d08068090bad7f03ba41c79963d/datasette_app_support-0.7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "63d8ca26338cfbad3bf40d8151fdcd280d2892f1d9faeeecc9fe2c8e53ea1a69",
+          "md5": "e12a33d8c103db584cfb126bd72d0144",
+          "sha256": "9880e5ed762d50d9d1b5a59eeb01501f0628703e569a12351470931fe8ad50aa"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e12a33d8c103db584cfb126bd72d0144",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 5859,
+        "upload_time": "2021-09-10T17:09:17",
+        "upload_time_iso_8601": "2021-09-10T17:09:17.940175Z",
+        "url": "https://files.pythonhosted.org/packages/63/d8/ca26338cfbad3bf40d8151fdcd280d2892f1d9faeeecc9fe2c8e53ea1a69/datasette-app-support-0.7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.8": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "0835204940e59bdf2aeb898d79ca8a2afb300f993862330e96ea16754bf460c9",
+          "md5": "6a799d0b981ac442706e4c0d61ba17e1",
+          "sha256": "05c20f5fbd229230ec4b26cd1ab7adc600537eeb2ad70cd6a515fea792ad2f25"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.8-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6a799d0b981ac442706e4c0d61ba17e1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8263,
+        "upload_time": "2021-09-11T00:18:24",
+        "upload_time_iso_8601": "2021-09-11T00:18:24.533088Z",
+        "url": "https://files.pythonhosted.org/packages/08/35/204940e59bdf2aeb898d79ca8a2afb300f993862330e96ea16754bf460c9/datasette_app_support-0.8-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "1366d9ed741c4499a2f736d1b908978888a6b0aacb82cd01360ad7c964b16c05",
+          "md5": "fd078e9d9c21aa2c4a70d16ebaeab35a",
+          "sha256": "619793ffd0a10ee09f8ab2a35243505d1571ae88bad46e908748a90b30d7943a"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.8.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fd078e9d9c21aa2c4a70d16ebaeab35a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 8529,
+        "upload_time": "2021-09-11T00:18:25",
+        "upload_time_iso_8601": "2021-09-11T00:18:25.428843Z",
+        "url": "https://files.pythonhosted.org/packages/13/66/d9ed741c4499a2f736d1b908978888a6b0aacb82cd01360ad7c964b16c05/datasette-app-support-0.8.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.9": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "fc4e7642c963148e10d2a7ff5eeb36059f3b79571f80a8121115babe11c3d0cd",
+          "md5": "23f90928b88640ab7788a84eac351e6a",
+          "sha256": "9391c6de0880d7c5d51d32f1ee21a30f62857f94e25bdbd7fcd5d4e243482730"
+        },
+        "downloads": -1,
+        "filename": "datasette_app_support-0.9-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "23f90928b88640ab7788a84eac351e6a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 8786,
+        "upload_time": "2021-09-11T23:08:48",
+        "upload_time_iso_8601": "2021-09-11T23:08:48.709649Z",
+        "url": "https://files.pythonhosted.org/packages/fc/4e/7642c963148e10d2a7ff5eeb36059f3b79571f80a8121115babe11c3d0cd/datasette_app_support-0.9-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "652a98ca617078592de69b3a3cca81ef50adf5fc5fd69a8d5f95a9bee516522c",
+          "md5": "77c6a7668cfb1ab5014c6a3a455be699",
+          "sha256": "c1aefe7c5ee6b6e6381f5bd2d7be4942b5f6c3ebe19f98fe44a5dd9ed2ab8b21"
+        },
+        "downloads": -1,
+        "filename": "datasette-app-support-0.9.tar.gz",
+        "has_sig": false,
+        "md5_digest": "77c6a7668cfb1ab5014c6a3a455be699",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 8989,
+        "upload_time": "2021-09-11T23:08:49",
+        "upload_time_iso_8601": "2021-09-11T23:08:49.840358Z",
+        "url": "https://files.pythonhosted.org/packages/65/2a/98ca617078592de69b3a3cca81ef50adf5fc5fd69a8d5f95a9bee516522c/datasette-app-support-0.9.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "0c8cc6ef62182d743bd6ab0cbaf7cbd10bb236ef29dfd2d9037d92e68133a9d1",
+        "md5": "bc6a19e879a89f7971c424ccb260ad3e",
+        "sha256": "7ea20605c37bafe1f79b6c9d6a86faeed3b1db022c4ffefc425e4a48ac708282"
+      },
+      "downloads": -1,
+      "filename": "datasette_app_support-0.11.8-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "bc6a19e879a89f7971c424ccb260ad3e",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 12591,
+      "upload_time": "2023-02-17T02:43:41",
+      "upload_time_iso_8601": "2023-02-17T02:43:41.407704Z",
+      "url": "https://files.pythonhosted.org/packages/0c/8c/c6ef62182d743bd6ab0cbaf7cbd10bb236ef29dfd2d9037d92e68133a9d1/datasette_app_support-0.11.8-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "945fe59dc0c028091828031176a1be3b1ed8863525b785ac20a933dbbd5d73cd",
+        "md5": "51d1988d34f574affbf99b9a9a381085",
+        "sha256": "4b069f162bfea353d10b631d32ab180aeff33ebf0f0f43855905efd01a2b9276"
+      },
+      "downloads": -1,
+      "filename": "datasette-app-support-0.11.8.tar.gz",
+      "has_sig": false,
+      "md5_digest": "51d1988d34f574affbf99b9a9a381085",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 11599,
+      "upload_time": "2023-02-17T02:43:42",
+      "upload_time_iso_8601": "2023-02-17T02:43:42.826117Z",
+      "url": "https://files.pythonhosted.org/packages/94/5f/e59dc0c028091828031176a1be3b1ed8863525b785ac20a933dbbd5d73cd/datasette-app-support-0.11.8.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

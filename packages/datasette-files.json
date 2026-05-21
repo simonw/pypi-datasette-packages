@@ -1,0 +1,288 @@
+{
+  "info": {
+    "author": "Datasette",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-files\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-files.svg)](https://pypi.org/project/datasette-files/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-files?include_prereleases&label=changelog)](https://github.com/datasette/datasette-files/releases)\n[![Tests](https://github.com/datasette/datasette-files/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-files/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-files/blob/main/LICENSE)\n\nFile management for Datasette. Upload, serve, search and manage files through a pluggable storage backend system. Ships with built-in filesystem storage and a plugin hook for adding custom backends (S3, Google Cloud Storage, etc.).\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-files\n```\n\n## Usage\n\ndatasette-files manages files through **sources** — named connections to storage backends. Each source has a slug, a storage type, and backend-specific configuration.\n\nThe default `filesystem` source stores files in a directory on disk. You can install additional plugins to add support for extra sources such as [datasette-files-s3](https://github.com/datasette/datasette-files-s3).\n\n### Configuring sources\n\nDefine sources in your `datasette.yaml` under the `datasette-files` plugin config:\n\n```yaml\nplugins:\n  datasette-files:\n    sources:\n      my-files:\n        storage: filesystem\n        config:\n          root: /data/uploads\n```\n\nThis creates a source called `my-files` backed by a local directory at `/data/uploads`. The directory will be created if it doesn't exist.\n\nYou can configure multiple sources:\n\n```yaml\nplugins:\n  datasette-files:\n    sources:\n      photos:\n        storage: filesystem\n        config:\n          root: /data/photos\n      documents:\n        storage: filesystem\n        config:\n          root: /data/documents\n```\n\n### Permissions\n\nAll access is **denied by default**. You must explicitly grant permissions in the `permissions:` block of your `datasette.yaml`.\n\nThere are four permission actions:\n\n| Action | Description | Scoped to |\n|--------|-------------|-----------|\n| `files-browse` | Browse, search, view, and download files | Source |\n| `files-upload` | Upload files to a source | Source |\n| `files-edit` | Edit file metadata (e.g. search text) | File |\n| `files-delete` | Delete files from a source | File |\n\n`files-browse` and `files-upload` are scoped to a source — granting them allows the action on all files in that source. `files-edit` and `files-delete` are scoped to individual files, but a source-level grant cascades to all files within it.\n\nCSV/TSV import also requires Datasette's built-in `create-table` and `insert-row` permissions on the target database. See [Built-in CSV import action](#built-in-csv-import-action) for details.\n\n**Grant access to everyone (all sources):**\n\n```yaml\npermissions:\n  files-browse: true\n  files-upload: true\n```\n\n**Grant access to a specific user:**\n\n```yaml\npermissions:\n  files-browse:\n    id: alice\n  files-upload:\n    id: alice\n```\n\n**Per-source permissions:**\n\n```yaml\npermissions:\n  files-browse:\n    public-files:\n      allow: true\n    private-files:\n      allow:\n        id: alice\n  files-upload:\n    public-files:\n      allow:\n        id: alice\n```\n\n#### Owner permissions\n\nBy default, anyone with `files-edit` or `files-delete` permission on a source can edit or delete any file in that source. You can restrict edit and delete so that users can only act on files they uploaded themselves:\n\n```yaml\nplugins:\n  datasette-files:\n    owners_can_edit: true\n    owners_can_delete: true\n    sources:\n      my-files:\n        storage: filesystem\n        config:\n          root: /data/uploads\n```\n\nWith these settings, the uploader of each file gains edit or delete permission on their own files — without needing a source-level `files-edit` or `files-delete` grant. Actors who *do* have a source-level grant (e.g. admins) can still act on any file in that source.\n\nFiles uploaded without an authenticated actor have no owner, so they can only be managed by actors with source-level grants.\n\n### Uploading files\n\nVisit `/-/files/upload/{source_slug}` for a dedicated drag-and-drop upload page. It supports multiple files, per-file progress bars, and SVG file-type previews.\n\nThe same upload component is shown on `/-/files/source/{source_slug}` when you have `files-upload` permission for that source.\n\n#### Upload API\n\nThe upload UI and the file picker dialog both use a three-step flow: **prepare**, **upload**, **complete**. For the built-in `filesystem` backend, step 2 uploads the file bytes to Datasette.\n\n**Step 1: Prepare**\n\n```bash\ncurl -X POST \"http://localhost:8001/-/files/upload/my-files/-/prepare\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"filename\": \"photo.jpg\", \"content_type\": \"image/jpeg\", \"size\": 48210}'\n```\n\nReturns upload instructions:\n\n```json\n{\n  \"ok\": true,\n  \"upload_token\": \"tok_01j5...\",\n  \"upload_url\": \"/-/files/upload/my-files/-/upload\",\n  \"upload_method\": \"POST\",\n  \"upload_headers\": {},\n  \"upload_fields\": {\"upload_token\": \"tok_01j5...\"}\n}\n```\n\n**Step 2: Upload** — send the file to the `upload_url` from step 1:\n\n```bash\ncurl -X POST \"http://localhost:8001/-/files/upload/my-files/-/upload\" \\\n  -F \"upload_token=tok_01j5...\" \\\n  -F \"file=@photo.jpg\"\n```\n\n**Step 3: Complete** — finalize the upload and register the file:\n\n```bash\ncurl -X POST \"http://localhost:8001/-/files/upload/my-files/-/complete\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"upload_token\": \"tok_01j5...\"}'\n```\n\nReturns the registered file:\n\n```json\n{\n  \"ok\": true,\n  \"file\": {\n    \"id\": \"df-01j5a3b4c5d6e7f8g9h0jkmnpq\",\n    \"filename\": \"photo.jpg\",\n    \"content_type\": \"image/jpeg\",\n    \"content_hash\": \"sha256:...\",\n    \"size\": 48210,\n    \"width\": null,\n    \"height\": null,\n    \"source_slug\": \"my-files\",\n    \"uploaded_by\": null,\n    \"created_at\": \"2026-03-13 23:23:24\",\n    \"url\": \"/-/files/df-01j5a3b4c5d6e7f8g9h0jkmnpq\",\n    \"download_url\": \"/-/files/df-01j5a3b4c5d6e7f8g9h0jkmnpq/download\",\n    \"thumbnail_url\": \"/-/files/df-01j5a3b4c5d6e7f8g9h0jkmnpq/thumbnail\"\n  }\n}\n```\n\nFile IDs use the format `df-{ULID}` — the `df-` prefix makes them recognizable when stored in database columns.\n\n### Deleting files\n\n```bash\ncurl -X POST \"http://localhost:8001/-/files/df-01j5.../-/delete\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{}'\n```\n\nRequires `files-delete` permission on the file (or a source-level `files-delete` grant).\n\nDeletion also depends on the storage backend supporting `can_delete`.\n\n### Updating file metadata\n\n```bash\ncurl -X POST \"http://localhost:8001/-/files/df-01j5.../-/update\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"update\": {\"search_text\": \"Annual report 2025\"}}'\n```\n\nRequires `files-edit` permission on the file (or a source-level `files-edit` grant). Only `search_text` can be updated through this endpoint for now, and the response returns the updated file record.\n\n### Viewing files\n\nEach file has an HTML info page at `/-/files/{file_id}` showing its metadata, a preview (for images), and a download link.\n\nDownload the file content directly at `/-/files/{file_id}/download`.\n\nGet file metadata as JSON at `/-/files/{file_id}.json`.\n\n### Searching files\n\nVisit `/-/files/search` to search across all files you have permission to browse. The search page supports full-text search over filenames, content types, and custom search text.\n\nThe search endpoint is also available as JSON at `/-/files/search.json?q=query&source=source-slug`.\n\nEach file has an editable `search_text` field (requires `files-edit` permission) that is included in the full-text search index. This can be used to add descriptions, tags, or transcriptions to make files more discoverable.\n\n### Batch metadata\n\nFetch metadata for multiple files in a single request:\n\n```\nGET /-/files/batch.json?id=df-abc123&id=df-def456\n```\n\nThis returns metadata for all requested files that the current user has permission to browse. This endpoint is used internally by the `render_cell` web component to efficiently load file information for table views.\n\n### Listing sources\n\nView all configured sources and their capabilities:\n\n```\nGET /-/files/sources.json\n```\n\nThis returns each source's `slug`, `storage_type`, and capability flags such as `can_upload`, `can_delete`, `can_list`, `can_generate_signed_urls`, and `requires_proxy_download`.\n\n### Table cell integration\n\n`datasette-files` uses Datasette's [column_types system](https://docs.datasette.io/en/latest/configuration.html#column-types) to decide which columns should be treated as files.\n\nColumns assigned the `file` column type will render `df-...` file IDs as rich file references in Datasette's table and row views. The plugin registers a `file` column type and uses that assignment to replace matching values with a `<datasette-file>` web component that displays the filename, content type, and a thumbnail. Built-in Pillow thumbnails are used for common raster image formats, plugins can register thumbnail generators for any file type, and files with no generated thumbnail fall back to an SVG file-type icon.\n\nThe `file` column type is intended for `TEXT` columns. You can assign it in `datasette.yaml` like this:\n\n```yaml\ndatabases:\n  mydb:\n    tables:\n      mytable:\n        column_types:\n          attachment: file\n```\n\nYou can also assign it at runtime using Datasette 1.0a26+'s column type UI: open the table page, use the `Column actions` menu for that column, then choose the `file` type. This requires the `set-column-type` permission.\n\nOnce a column is assigned the `file` type, store a `df-...` ID returned from the upload endpoint in that column and it will render as a file link automatically. If the column is not assigned the `file` type, Datasette will show the raw `df-...` text instead.\n\n## Endpoint reference\n\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/-/files` | Files index page (HTML) |\n| `GET` | `/-/files/source/{source_slug}` | Source file listing page, with upload UI if allowed (HTML) |\n| `GET` | `/-/files/search` | Search files (HTML) |\n| `GET` | `/-/files/search.json?q=&source=` | Search files (JSON) |\n| `GET` | `/-/files/sources.json` | List configured sources |\n| `GET` | `/-/files/batch.json?id=df-...&id=df-...` | Bulk file metadata |\n| `GET` | `/-/files/upload/{source_slug}` | Dedicated upload page (HTML) |\n| `POST` | `/-/files/upload/{source_slug}/-/prepare` | Prepare upload (get instructions) |\n| `POST` | `/-/files/upload/{source_slug}/-/upload` | Upload file content |\n| `POST` | `/-/files/upload/{source_slug}/-/complete` | Complete upload (register file) |\n| `POST` | `/-/files/{file_id}/-/delete` | Delete a file |\n| `POST` | `/-/files/{file_id}/-/update` | Update file metadata |\n| `GET` | `/-/files/{file_id}` | File info page (HTML) |\n| `GET` | `/-/files/{file_id}.json` | File metadata (JSON) |\n| `GET` | `/-/files/{file_id}/thumbnail` | Generated thumbnail or SVG file-type icon |\n| `GET` | `/-/files/{file_id}/download` | Download file content |\n| `GET` | `/-/files/import/{file_id}` | CSV import preview page |\n| `POST` | `/-/files/import/{file_id}` | Start CSV import job |\n| `GET` | `/-/files/import/{file_id}/{import_id}` | Import progress page (HTML) |\n| `GET` | `/-/files/import/{file_id}/{import_id}.json` | Import progress (JSON) |\n\n## Python API\n\nOther Datasette plugins can use the `get_file()` function to access files managed by datasette-files.\n\n### `get_file(datasette, file_id)`\n\nLook up a file by its ID and return a `File` object, or `None` if the file was not found.\n\n```python\nfrom datasette_files import get_file\n\nfile = await get_file(datasette, \"df-01j5a3b4c5d6e7f8g9h0jkmnpq\")\nif file is None:\n    # File not found\n    ...\n```\n\nThe `File` object has the following attributes:\n\n| Attribute | Type | Description |\n|-----------|------|-------------|\n| `id` | `str` | The file ID |\n| `filename` | `str` | Original filename |\n| `content_type` | `str` | MIME type |\n| `size` | `int` | File size in bytes |\n| `source_slug` | `str` | The source this file belongs to |\n| `uploaded_by` | `str` or `None` | Actor ID of the uploader |\n| `created_at` | `datetime` | UTC timezone-aware datetime of upload |\n| `metadata` | `dict` | Arbitrary metadata dict |\n\n### `file.read(max_bytes=None)`\n\nRead file content as bytes. Pass `max_bytes` to limit how much is read — useful to avoid loading very large files into memory.\n\n```python\n# Read the entire file\ncontent = await file.read()\n\n# Read at most 1MB\ncontent = await file.read(max_bytes=1_000_000)\n```\n\n### `file.open()`\n\nOpen the file for streaming reads. Returns an async context manager that yields an async iterator of bytes chunks. Use this for large files where you want to avoid loading the entire content into memory.\n\n```python\nasync with file.open() as stream:\n    async for chunk in stream:\n        process(chunk)\n```\n\n### Example: using `get_file()` from another plugin\n\n```python\nfrom datasette_files import get_file\n\nasync def my_view(datasette, request):\n    file = await get_file(datasette, request.args[\"file_id\"])\n    if file is None:\n        raise NotFound(\"File not found\")\n\n    if file.content_type.startswith(\"image/\"):\n        image_bytes = await file.read(max_bytes=20_000_000)\n        # Process image...\n    elif file.size and file.size > 10_000_000:\n        # Stream large files\n        async with file.open() as stream:\n            async for chunk in stream:\n                ...\n    else:\n        content = await file.read()\n        text = content.decode(\"utf-8\")\n```\n\nNote: `get_file()` does not perform any permission checks — the calling plugin is responsible for its own authorization.\n\n## Plugin hook: `file_actions`\n\nThe `file_actions` hook lets plugins add custom action links to the file info page. These appear in a \"File actions\" dropdown menu below the filename heading.\n\n### Hook signature\n\n```python\ndef file_actions(datasette, actor, file, preview_bytes):\n    ...\n```\n\n| Parameter | Description |\n|-----------|-------------|\n| `datasette` | The Datasette instance |\n| `actor` | The current actor dict (or `None`) |\n| `file` | A dict with the file's metadata: `id`, `filename`, `content_type`, `size`, `content_hash`, `source_id`, etc. |\n| `preview_bytes` | The first 2048 bytes of the file content (useful for sniffing file type) |\n\nReturn a list of dicts, each with:\n\n| Key | Required | Description |\n|-----|----------|-------------|\n| `href` | Yes | URL the action links to |\n| `label` | Yes | Display text for the action |\n| `description` | No | Short description shown below the label |\n\nReturn an empty list (or `None`) if your plugin has no actions for this file.\n\nThe hook can be a regular function or an `async` function.\n\n### Example: add a \"Convert to PDF\" action for text files\n\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef file_actions(datasette, actor, file, preview_bytes):\n    if file[\"content_type\"] and file[\"content_type\"].startswith(\"text/\"):\n        return [\n            {\n                \"href\": f\"/-/convert-pdf/{file['id']}\",\n                \"label\": \"Convert to PDF\",\n                \"description\": \"Convert this text file to PDF format\",\n            }\n        ]\n    return []\n```\n\n### Built-in CSV import action\n\ndatasette-files ships with a built-in `file_actions` implementation that adds an \"Import as table\" action for CSV files. When a file has a `text/csv` content type or a `.csv` filename extension, the dropdown will include a link to `/-/files/import/{file_id}` which provides:\n\n1. A preview page showing detected columns and sample rows\n2. A POST endpoint that imports the CSV into a new database table with automatic type detection (integers, floats, and text)\n3. A progress page showing import status\n\nImporting requires `files-browse` permission on the file's source **plus** Datasette's `create-table` and `insert-row` permissions on the target database. The import will be rejected if the target table already exists.\n\n## Plugin hook: `register_files_storage_types`\n\ndatasette-files uses a plugin hook to allow other Datasette plugins to provide custom storage backends. This is how you would build plugins like `datasette-files-s3` or `datasette-files-gcs`.\n\n### How it works\n\nYour plugin returns a list of `Storage` subclasses (not instances). datasette-files handles instantiation, configuration, and lifecycle management.\n\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef register_files_storage_types(datasette):\n    from my_plugin.storage import S3Storage\n    return [S3Storage]\n```\n\nWhen a source in `datasette.yaml` references your storage type, datasette-files will:\n\n1. Instantiate your class (calling `S3Storage()`)\n2. Call `await storage.configure(config, get_secret)` with the source's config dict\n3. Use your storage instance for all file operations on that source\n\n## Plugin hook: `register_thumbnail_generators`\n\ndatasette-files uses a second plugin hook to allow plugins to provide thumbnail generators for files. The built-in Pillow generator handles common raster image formats, and other plugins can add generators for PDFs, videos, office documents, or any other file type.\n\n### How it works\n\nYour plugin returns a list of thumbnail generator instances.\n\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef register_thumbnail_generators(datasette):\n    from my_plugin.thumbnails import PdfThumbnailGenerator\n    return [PdfThumbnailGenerator()]\n```\n\nWhen `/-/files/{file_id}/thumbnail` is requested, datasette-files will:\n\n1. Check the internal thumbnail cache table for an existing thumbnail\n2. Ask each registered generator if it can handle the file's `content_type` and `filename`\n3. Read the source file once and try matching generators in order\n4. Cache the first successful thumbnail result in the internal database\n5. Fall back to an SVG file-type icon if no generator returns a thumbnail\n\nThe same generation path is also attempted eagerly after uploads complete, so generators can populate the cache before the first thumbnail request.\n\n### The `ThumbnailGenerator` base class\n\nImport the base class and result dataclass from `datasette_files.base`:\n\n```python\nfrom datasette_files.base import ThumbnailGenerator, ThumbnailResult\n```\n\nImplement these methods:\n\n```python\nclass ThumbnailGenerator(ABC):\n    name: str\n\n    async def can_generate(self, content_type: str, filename: str) -> bool:\n        ...\n\n    async def generate(\n        self,\n        file_bytes: bytes,\n        content_type: str,\n        filename: str,\n        max_width: int = 200,\n        max_height: int = 200,\n    ) -> Optional[ThumbnailResult]:\n        ...\n```\n\n`generate()` returns a `ThumbnailResult` dataclass or `None`:\n\n```python\n@dataclass\nclass ThumbnailResult:\n    thumb_bytes: bytes\n    content_type: str\n    width: int\n    height: int\n```\n\n- `name`: Short identifier stored alongside generated thumbnails in the cache table\n- `can_generate(content_type, filename)`: Return `True` if this generator can handle the file\n- `generate(file_bytes, content_type, filename, max_width, max_height)`: Return a `ThumbnailResult` or `None`\n\n### Example: PDF thumbnail generator\n\n```python\nfrom datasette import hookimpl\nfrom datasette_files.base import ThumbnailGenerator, ThumbnailResult\n\n\nclass PdfThumbnailGenerator(ThumbnailGenerator):\n    name = \"pdf-preview\"\n\n    async def can_generate(self, content_type, filename):\n        return content_type == \"application/pdf\" or filename.lower().endswith(\".pdf\")\n\n    async def generate(\n        self, file_bytes, content_type, filename, max_width=200, max_height=200\n    ):\n        # Render the first page and return PNG or JPEG bytes\n        return ThumbnailResult(\n            thumb_bytes=thumbnail_bytes,\n            content_type=\"image/png\",\n            width=width,\n            height=height,\n        )\n\n\n@hookimpl\ndef register_thumbnail_generators(datasette):\n    return [PdfThumbnailGenerator()]\n```\n\n### The `Storage` base class\n\nImport the base class and supporting dataclasses from `datasette_files.base`:\n\n```python\nfrom datasette_files.base import Storage, StorageCapabilities, FileMetadata\n```\n\n#### `StorageCapabilities`\n\nA dataclass declaring what your storage backend supports:\n\n```python\n@dataclass\nclass StorageCapabilities:\n    can_upload: bool = False\n    can_delete: bool = False\n    can_list: bool = False\n    can_generate_signed_urls: bool = False\n    requires_proxy_download: bool = False\n    max_file_size: Optional[int] = None\n```\n\n- `can_upload`: The backend can receive file uploads via `receive_upload()`\n- `can_delete`: The backend can delete files via `delete_file()`\n- `can_list`: The backend can list files via `list_files()`\n- `can_generate_signed_urls`: The backend can produce expiring download URLs via `download_url()` — if `True`, file downloads will use a 302 redirect to the signed URL instead of proxying content through Datasette\n- `requires_proxy_download`: File content must be proxied through Datasette (e.g. filesystem storage) rather than redirecting to an external URL\n- `max_file_size`: Optional maximum file size in bytes (defaults to 100 MB)\n\n#### `FileMetadata`\n\nReturned by several storage methods to describe a file:\n\n```python\n@dataclass\nclass FileMetadata:\n    path: str                              # Path within the storage backend\n    filename: str                          # Human-readable filename\n    content_type: Optional[str] = None     # MIME type\n    content_hash: Optional[str] = None     # e.g. \"sha256:abcdef...\"\n    size: Optional[int] = None             # Size in bytes\n    width: Optional[int] = None            # Image width in pixels\n    height: Optional[int] = None           # Image height in pixels\n    created_at: Optional[str] = None\n    metadata: dict = field(default_factory=dict)\n```\n\n#### Required methods\n\nEvery `Storage` subclass must implement these:\n\n**`storage_type`** (property) — A unique string identifier for this storage type, used in source configuration. This is how datasette-files matches a source's `storage: s3` to your class.\n\n```python\n@property\ndef storage_type(self) -> str:\n    return \"s3\"\n```\n\n**`capabilities`** (property) — Return a `StorageCapabilities` instance declaring what this backend supports.\n\n```python\n@property\ndef capabilities(self) -> StorageCapabilities:\n    return StorageCapabilities(\n        can_upload=True,\n        can_delete=True,\n        can_generate_signed_urls=True,\n    )\n```\n\n**`configure(config, get_secret)`** — Called once at startup with the source's `config` dict from `datasette.yaml` and a `get_secret` callable for retrieving secrets from `datasette-secrets`.\n\n```python\nasync def configure(self, config: dict, get_secret) -> None:\n    self.bucket = config[\"bucket\"]\n    self.prefix = config.get(\"prefix\", \"\")\n    self.region = config.get(\"region\", \"us-east-1\")\n```\n\n**`get_file_metadata(path)`** — Return a `FileMetadata` for the given path, or `None` if the file doesn't exist.\n\n```python\nasync def get_file_metadata(self, path: str) -> Optional[FileMetadata]:\n    # Check if the file exists in your backend and return its metadata\n    ...\n```\n\n**`read_file(path)`** — Return the full content of a file as bytes. Raise `FileNotFoundError` if missing.\n\n```python\nasync def read_file(self, path: str) -> bytes:\n    # Read and return the file content\n    ...\n```\n\n#### Optional methods\n\nOverride these based on the capabilities you declared:\n\n**`receive_upload(path, stream, content_type)`** — Store file content streamed as chunks. `stream` is an `AsyncIterator[bytes]` — consume it incrementally to avoid buffering the entire file in memory. Return a `FileMetadata` with at least the `content_hash` and `size` populated. Required if `can_upload` is `True`.\n\n```python\nasync def receive_upload(self, path: str, stream: AsyncIterator[bytes], content_type: str) -> FileMetadata:\n    # Consume stream chunks, store the file, and return metadata\n    sha256 = hashlib.sha256()\n    size = 0\n    async for chunk in stream:\n        # write chunk to storage\n        sha256.update(chunk)\n        size += len(chunk)\n    ...\n```\n\n**`delete_file(path)`** — Delete a file. Required if `can_delete` is `True`.\n\n**`list_files(prefix, cursor, limit)`** — List files, returning `(files, next_cursor)`. Required if `can_list` is `True`.\n\n**`download_url(path, expires_in)`** — Return a signed/expiring download URL. Required if `can_generate_signed_urls` is `True`.\n\n**`read_bytes(path, num_bytes)`** — Return up to `num_bytes` from the start of a file. The default implementation reads the full file with `read_file()` and slices it. Storage backends should override this to avoid downloading entire files — for example, S3 backends can use an HTTP `Range` header to fetch only the requested bytes. Used by the file info page to provide `preview_bytes` to `file_actions` hooks.\n\n**`stream_file(path)`** — Yield file content in chunks as an async iterator. This method is used by the file download endpoint to stream files to clients without loading the entire file into memory. The default implementation reads the entire file with `read_file()` and yields it as a single chunk — storage backends should override this to yield smaller chunks for efficient memory usage with large files.\n\n### Full example: S3 storage plugin\n\nHere's a complete example of what a `datasette-files-s3` plugin would look like:\n\n```python\n# datasette_files_s3/__init__.py\nfrom datasette import hookimpl\nfrom datasette_files.base import Storage, StorageCapabilities, FileMetadata\nimport boto3\nimport hashlib\nfrom typing import Optional\n\n\nclass S3Storage(Storage):\n    storage_type = \"s3\"\n    capabilities = StorageCapabilities(\n        can_upload=True,\n        can_delete=True,\n        can_list=True,\n        can_generate_signed_urls=True,\n        requires_proxy_download=False,\n    )\n\n    async def configure(self, config: dict, get_secret) -> None:\n        self.bucket = config[\"bucket\"]\n        self.prefix = config.get(\"prefix\", \"\")\n        self.region = config.get(\"region\", \"us-east-1\")\n        self.client = boto3.client(\"s3\", region_name=self.region)\n\n    def _key(self, path: str) -> str:\n        return f\"{self.prefix}{path}\" if self.prefix else path\n\n    async def get_file_metadata(self, path: str) -> Optional[FileMetadata]:\n        try:\n            resp = self.client.head_object(\n                Bucket=self.bucket, Key=self._key(path)\n            )\n            return FileMetadata(\n                path=path,\n                filename=path.split(\"/\")[-1],\n                content_type=resp.get(\"ContentType\"),\n                size=resp.get(\"ContentLength\"),\n            )\n        except self.client.exceptions.ClientError:\n            return None\n\n    async def read_file(self, path: str) -> bytes:\n        resp = self.client.get_object(\n            Bucket=self.bucket, Key=self._key(path)\n        )\n        return resp[\"Body\"].read()\n\n    async def read_bytes(self, path: str, num_bytes: int = 2048) -> bytes:\n        resp = self.client.get_object(\n            Bucket=self.bucket,\n            Key=self._key(path),\n            Range=f\"bytes=0-{num_bytes - 1}\",\n        )\n        return resp[\"Body\"].read()\n\n    async def stream_file(self, path: str):\n        resp = self.client.get_object(\n            Bucket=self.bucket, Key=self._key(path)\n        )\n        for chunk in resp[\"Body\"].iter_chunks(chunk_size=65536):\n            yield chunk\n\n    async def receive_upload(\n        self, path: str, stream, content_type: str\n    ) -> FileMetadata:\n        # Collect chunks, computing hash incrementally\n        chunks = []\n        sha256 = hashlib.sha256()\n        size = 0\n        async for chunk in stream:\n            chunks.append(chunk)\n            sha256.update(chunk)\n            size += len(chunk)\n        content = b\"\".join(chunks)\n        self.client.put_object(\n            Bucket=self.bucket,\n            Key=self._key(path),\n            Body=content,\n            ContentType=content_type,\n        )\n        return FileMetadata(\n            path=path,\n            filename=path.split(\"/\")[-1],\n            content_type=content_type,\n            content_hash=\"sha256:\" + sha256.hexdigest(),\n            size=size,\n        )\n\n    async def download_url(self, path: str, expires_in: int = 300) -> str:\n        return self.client.generate_presigned_url(\n            \"get_object\",\n            Params={\"Bucket\": self.bucket, \"Key\": self._key(path)},\n            ExpiresIn=expires_in,\n        )\n\n    async def delete_file(self, path: str) -> None:\n        self.client.delete_object(\n            Bucket=self.bucket, Key=self._key(path)\n        )\n\n    async def list_files(\n        self, prefix: str = \"\", cursor: Optional[str] = None, limit: int = 100\n    ) -> tuple[list[FileMetadata], Optional[str]]:\n        kwargs = {\n            \"Bucket\": self.bucket,\n            \"Prefix\": self._key(prefix),\n            \"MaxKeys\": limit,\n        }\n        if cursor:\n            kwargs[\"ContinuationToken\"] = cursor\n        resp = self.client.list_objects_v2(**kwargs)\n        files = [\n            FileMetadata(\n                path=obj[\"Key\"].removeprefix(self.prefix),\n                filename=obj[\"Key\"].split(\"/\")[-1],\n                size=obj[\"Size\"],\n            )\n            for obj in resp.get(\"Contents\", [])\n        ]\n        next_cursor = resp.get(\"NextContinuationToken\")\n        return files, next_cursor\n\n\n@hookimpl\ndef register_files_storage_types(datasette):\n    return [S3Storage]\n```\n\nThe plugin's `pyproject.toml` would register itself as a Datasette plugin:\n\n```toml\n[project.entry-points.datasette]\nfiles_s3 = \"datasette_files_s3\"\n```\n\nThen configure it in `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-files:\n    sources:\n      product-images:\n        storage: s3\n        config:\n          bucket: my-photos-bucket\n          prefix: \"uploads/\"\n          region: us-west-2\n```\n\n### Built-in filesystem storage reference\n\nThe built-in `FilesystemStorage` stores files on the local filesystem. It supports upload, delete, and listing but does not support signed URLs — file downloads are proxied through Datasette.\n\n**Configuration options:**\n\n| Key | Required | Description |\n|-----|----------|-------------|\n| `root` | Yes | Absolute path to the directory where files are stored |\n| `max_file_size` | No | Maximum upload size in bytes (defaults to 100 MB) |\n\n**Capabilities:**\n\n| Capability | Value |\n|-----------|-------|\n| `can_upload` | `True` |\n| `can_delete` | `True` |\n| `can_list` | `True` |\n| `can_generate_signed_urls` | `False` |\n| `requires_proxy_download` | `True` |\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Run the tests with `uv`:\n```bash\ncd datasette-files\nuv run pytest\n```\n\nRecommendation to run a test server:\n```bash\n./dev-server.sh\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-files",
+    "package_url": "https://pypi.org/project/datasette-files/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-files/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-files/actions",
+      "Changelog": "https://github.com/datasette/datasette-files/releases",
+      "Homepage": "https://github.com/datasette/datasette-files",
+      "Issues": "https://github.com/datasette/datasette-files/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-files/0.1a3/",
+    "requires_dist": [
+      "datasette>=1.0a26",
+      "python-ulid",
+      "sqlite-utils",
+      "typing_extensions",
+      "Pillow"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "File management for Datasette",
+    "version": "0.1a3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 35640267,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a59151d045be455137b23dc2229783034a3d23f879376e2bd78fd7883379e1f9",
+          "md5": "88a040babe33b6478b75ffbac28e0f7b",
+          "sha256": "8a70c32349de753daac703a372829de406211f64fde076eb8ea10f5594f65899"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "88a040babe33b6478b75ffbac28e0f7b",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 26619,
+        "upload_time": "2026-02-19T22:26:07",
+        "upload_time_iso_8601": "2026-02-19T22:26:07.186425Z",
+        "url": "https://files.pythonhosted.org/packages/a5/91/51d045be455137b23dc2229783034a3d23f879376e2bd78fd7883379e1f9/datasette_files-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9e6fb3d4dee6482a0013e4600e4201fcc60b692d36f1f437a13a8d8509057875",
+          "md5": "9774678fdf99427dc991ff9e3de065b3",
+          "sha256": "6e772aab9458a64b7224295b8015a5c80d798f19e846dd6767490a1755c775cd"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9774678fdf99427dc991ff9e3de065b3",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 33617,
+        "upload_time": "2026-02-19T22:26:08",
+        "upload_time_iso_8601": "2026-02-19T22:26:08.845005Z",
+        "url": "https://files.pythonhosted.org/packages/9e/6f/b3d4dee6482a0013e4600e4201fcc60b692d36f1f437a13a8d8509057875/datasette_files-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "57d8f8ef18b2d54f1720574b80bcd56ce5691f886b097723cd1faa734e9d5f88",
+          "md5": "c20a1022156dcd22892d142ac909ecba",
+          "sha256": "ce058f5a4fac720ed343cec4ea9362b0f66cf374cd772cc1a9a865d68e98a347"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c20a1022156dcd22892d142ac909ecba",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 32645,
+        "upload_time": "2026-02-20T00:37:40",
+        "upload_time_iso_8601": "2026-02-20T00:37:40.382508Z",
+        "url": "https://files.pythonhosted.org/packages/57/d8/f8ef18b2d54f1720574b80bcd56ce5691f886b097723cd1faa734e9d5f88/datasette_files-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "362559dd70e0788263bad29f09127034d3a6dc442d7a9fac9dae384f291a0728",
+          "md5": "29a131c997f4ff6aed3c7ffbd764e81a",
+          "sha256": "c99de4974a86889297418c937368b9cd633d659f592dfd76830d8b17312b7bb3"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "29a131c997f4ff6aed3c7ffbd764e81a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 38941,
+        "upload_time": "2026-02-20T00:37:41",
+        "upload_time_iso_8601": "2026-02-20T00:37:41.746285Z",
+        "url": "https://files.pythonhosted.org/packages/36/25/59dd70e0788263bad29f09127034d3a6dc442d7a9fac9dae384f291a0728/datasette_files-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "52ab6257d852587fd515601c42112682643a339c195ad6ebbf4d1733217dca37",
+          "md5": "9326ebd0059f61981407c7c7555394c7",
+          "sha256": "b9f2bc3f7e54c72f451a29e2c40318f8ab2695c1c8ca0db2563d9f42a9cdac29"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9326ebd0059f61981407c7c7555394c7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 56489,
+        "upload_time": "2026-03-23T23:07:33",
+        "upload_time_iso_8601": "2026-03-23T23:07:33.287145Z",
+        "url": "https://files.pythonhosted.org/packages/52/ab/6257d852587fd515601c42112682643a339c195ad6ebbf4d1733217dca37/datasette_files-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a08dd2c3dd06800b2abb06c47f2c70f0972095d71a57000adf2d59dac098a7ed",
+          "md5": "ceb785e20a2d3bcf0f8f4238ee2926fd",
+          "sha256": "cb4d3cdc264e7341684bc39de68b4969fc36476d44a929ff6f180920a6e86e94"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ceb785e20a2d3bcf0f8f4238ee2926fd",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 70792,
+        "upload_time": "2026-03-23T23:07:34",
+        "upload_time_iso_8601": "2026-03-23T23:07:34.769487Z",
+        "url": "https://files.pythonhosted.org/packages/a0/8d/d2c3dd06800b2abb06c47f2c70f0972095d71a57000adf2d59dac098a7ed/datasette_files-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "1dd6bbcca3bc66db794b3280061d0c1d239254050b7380119796897f1a2a079a",
+          "md5": "36247ef3d963a35c6d80a4d9541566d9",
+          "sha256": "3373429bc0830d31db4d6ee9799f9a13a7c99fc4032cd214e7e9845f977d6207"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "36247ef3d963a35c6d80a4d9541566d9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 59030,
+        "upload_time": "2026-03-30T23:59:44",
+        "upload_time_iso_8601": "2026-03-30T23:59:44.031951Z",
+        "url": "https://files.pythonhosted.org/packages/1d/d6/bbcca3bc66db794b3280061d0c1d239254050b7380119796897f1a2a079a/datasette_files-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cf16bfb1c3be646b03711ccbc0c09fc8bbe819b127a2f47dcdd5e83ce7035028",
+          "md5": "418e79cea72a78dc7d1878b5716324e8",
+          "sha256": "6d7aca073e017f29e82dd794519ce5001f6e0a7022e1d29bed0479a9b18b2500"
+        },
+        "downloads": -1,
+        "filename": "datasette_files-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "418e79cea72a78dc7d1878b5716324e8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 83883,
+        "upload_time": "2026-03-30T23:59:45",
+        "upload_time_iso_8601": "2026-03-30T23:59:45.324504Z",
+        "url": "https://files.pythonhosted.org/packages/cf/16/bfb1c3be646b03711ccbc0c09fc8bbe819b127a2f47dcdd5e83ce7035028/datasette_files-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "1dd6bbcca3bc66db794b3280061d0c1d239254050b7380119796897f1a2a079a",
+        "md5": "36247ef3d963a35c6d80a4d9541566d9",
+        "sha256": "3373429bc0830d31db4d6ee9799f9a13a7c99fc4032cd214e7e9845f977d6207"
+      },
+      "downloads": -1,
+      "filename": "datasette_files-0.1a3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "36247ef3d963a35c6d80a4d9541566d9",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 59030,
+      "upload_time": "2026-03-30T23:59:44",
+      "upload_time_iso_8601": "2026-03-30T23:59:44.031951Z",
+      "url": "https://files.pythonhosted.org/packages/1d/d6/bbcca3bc66db794b3280061d0c1d239254050b7380119796897f1a2a079a/datasette_files-0.1a3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "cf16bfb1c3be646b03711ccbc0c09fc8bbe819b127a2f47dcdd5e83ce7035028",
+        "md5": "418e79cea72a78dc7d1878b5716324e8",
+        "sha256": "6d7aca073e017f29e82dd794519ce5001f6e0a7022e1d29bed0479a9b18b2500"
+      },
+      "downloads": -1,
+      "filename": "datasette_files-0.1a3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "418e79cea72a78dc7d1878b5716324e8",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 83883,
+      "upload_time": "2026-03-30T23:59:45",
+      "upload_time_iso_8601": "2026-03-30T23:59:45.324504Z",
+      "url": "https://files.pythonhosted.org/packages/cf/16/bfb1c3be646b03711ccbc0c09fc8bbe819b127a2f47dcdd5e83ce7035028/datasette_files-0.1a3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,421 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-queries\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-queries.svg)](https://pypi.org/project/datasette-queries/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-queries?include_prereleases&label=changelog)](https://github.com/datasette/datasette-queries/releases)\n[![Tests](https://github.com/datasette/datasette-queries/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-queries/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-queries/blob/main/LICENSE)\n\nSave SQL queries in Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-queries\n```\n## Usage\n\nUsers with the `datasette-queries` permission will see a new UI element on the results of a SQL query inviting them to save that query.\n\nSaved queries (treated as [canned queries](https://docs.datasette.io/en/stable/sql_queries.html#canned-queries)) are then shown as a list on the database page.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-queries\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-queries",
+    "package_url": "https://pypi.org/project/datasette-queries/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-queries/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-queries/actions",
+      "Changelog": "https://github.com/datasette/datasette-queries/releases",
+      "Homepage": "https://github.com/datasette/datasette-queries",
+      "Issues": "https://github.com/datasette/datasette-queries/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-queries/0.1.2/",
+    "requires_dist": [
+      "datasette>=1.0a16",
+      "sqlite-migrate",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.9",
+    "summary": "Save SQL queries in Datasette",
+    "version": "0.1.2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 32316069,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "7d0ddcddf8ddeec2511df387cb3fbde6841a80a0cc4c9fc8e662ef942395c583",
+          "md5": "efae1de0afd0ccc7b9c77cecaf6c1c46",
+          "sha256": "58156800187aa53442c5aaca2b52b99c60869c20908f2a746c9529214f386d07"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "efae1de0afd0ccc7b9c77cecaf6c1c46",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 10220,
+        "upload_time": "2025-07-22T02:00:22",
+        "upload_time_iso_8601": "2025-07-22T02:00:22.162903Z",
+        "url": "https://files.pythonhosted.org/packages/7d/0d/dcddf8ddeec2511df387cb3fbde6841a80a0cc4c9fc8e662ef942395c583/datasette_queries-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0acddf794edc58c6b06ff2668c7e97b9f52a3f713638321f82aac3dc7d7f07c3",
+          "md5": "92e5b8e9a4d8b7e8e4a517636df9f7f4",
+          "sha256": "3d6a358e310bffa3730c379a8145bada2f136de52b52904e07bf6ea677d5c39b"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "92e5b8e9a4d8b7e8e4a517636df9f7f4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 10920,
+        "upload_time": "2025-07-22T02:00:23",
+        "upload_time_iso_8601": "2025-07-22T02:00:23.690614Z",
+        "url": "https://files.pythonhosted.org/packages/0a/cd/df794edc58c6b06ff2668c7e97b9f52a3f713638321f82aac3dc7d7f07c3/datasette_queries-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "36455b5fcef67d77f9da5929d17d9a9143e54ba0ac07f2c07cc6cbc973606a9f",
+          "md5": "093f1c857eebce3725cb4641cc23cc37",
+          "sha256": "77e5fc6682ff15a17c59519d4c189443a4b16950a003be647ce69f27715c22a7"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "093f1c857eebce3725cb4641cc23cc37",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 10227,
+        "upload_time": "2025-07-22T16:16:41",
+        "upload_time_iso_8601": "2025-07-22T16:16:41.871772Z",
+        "url": "https://files.pythonhosted.org/packages/36/45/5b5fcef67d77f9da5929d17d9a9143e54ba0ac07f2c07cc6cbc973606a9f/datasette_queries-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "353604e117c9ca9a498a16fba792fd9ee222ec4ef4993b0a281bbb06b7b33c1a",
+          "md5": "34d86cc8493eaa2babf0c535876ce0fe",
+          "sha256": "65acad4f8c0c887863fcf02c4d8d5677e608f22008870b6debeff0e866ba028c"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "34d86cc8493eaa2babf0c535876ce0fe",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 10912,
+        "upload_time": "2025-07-22T16:16:43",
+        "upload_time_iso_8601": "2025-07-22T16:16:43.483526Z",
+        "url": "https://files.pythonhosted.org/packages/35/36/04e117c9ca9a498a16fba792fd9ee222ec4ef4993b0a281bbb06b7b33c1a/datasette_queries-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c1868602e77fb9851ba28c5d655cfe4b22c7da44c4ea620b5017bd48d97b2d0a",
+          "md5": "8a88824d2fb4283afa95836d420b30f1",
+          "sha256": "06ec92ee3bb4b15b35260c06dcb235eb0c68a102a403e50b5905e35a40af73d8"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8a88824d2fb4283afa95836d420b30f1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 10386,
+        "upload_time": "2025-07-22T19:12:15",
+        "upload_time_iso_8601": "2025-07-22T19:12:15.232596Z",
+        "url": "https://files.pythonhosted.org/packages/c1/86/8602e77fb9851ba28c5d655cfe4b22c7da44c4ea620b5017bd48d97b2d0a/datasette_queries-0.1.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d2ef7c46e2df865fc2fa2763c220b9e425088ffa21303451d4d798c16ebcc942",
+          "md5": "b132478ca1f724fdf8be02a283188abc",
+          "sha256": "b71d5e6a78e7a251989369b59a7e0745deafbe1a484388fd80eea71f80411d81"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b132478ca1f724fdf8be02a283188abc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11574,
+        "upload_time": "2025-07-22T19:12:16",
+        "upload_time_iso_8601": "2025-07-22T19:12:16.218198Z",
+        "url": "https://files.pythonhosted.org/packages/d2/ef/7c46e2df865fc2fa2763c220b9e425088ffa21303451d4d798c16ebcc942/datasette_queries-0.1.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.2a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "41440d3c3eec5a49eb961f7ccb7c9e02ca1e173978df6bc78c4b4dfd37994183",
+          "md5": "0077e1e9d027cf3e7eda4f01e8356a5f",
+          "sha256": "a198920e2df91c51b5b635caabc8be068aad61ea593383a1eaa39a4f6c8be873"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.2a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0077e1e9d027cf3e7eda4f01e8356a5f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 10412,
+        "upload_time": "2025-10-21T00:58:16",
+        "upload_time_iso_8601": "2025-10-21T00:58:16.185822Z",
+        "url": "https://files.pythonhosted.org/packages/41/44/0d3c3eec5a49eb961f7ccb7c9e02ca1e173978df6bc78c4b4dfd37994183/datasette_queries-0.1.2a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "304ccd9249591fb6f99cb10a4654f7c49c5d0cb6306804e511ef1df94026cba0",
+          "md5": "4a11aea780bd57d3213cdb43aa81fda1",
+          "sha256": "f895069bbd2e47cb5617235a39b782ae7d9087875db0f6b133db70c7fed36b6d"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.2a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4a11aea780bd57d3213cdb43aa81fda1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11547,
+        "upload_time": "2025-10-21T00:58:17",
+        "upload_time_iso_8601": "2025-10-21T00:58:17.359495Z",
+        "url": "https://files.pythonhosted.org/packages/30/4c/cd9249591fb6f99cb10a4654f7c49c5d0cb6306804e511ef1df94026cba0/datasette_queries-0.1.2a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.3a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "65dde698bace5f7a2b46e97740ea24ae54a768b72ed3b2fe51934799497b4386",
+          "md5": "23f202c828c3d409d567bf7eb41ea932",
+          "sha256": "9532146108d86104534a3d8c3909e8aa15a3f2c9a6369f47a4c41e69dfee7103"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.3a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "23f202c828c3d409d567bf7eb41ea932",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10467,
+        "upload_time": "2025-11-11T02:08:07",
+        "upload_time_iso_8601": "2025-11-11T02:08:07.090238Z",
+        "url": "https://files.pythonhosted.org/packages/65/dd/e698bace5f7a2b46e97740ea24ae54a768b72ed3b2fe51934799497b4386/datasette_queries-0.1.3a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a2fadc73224e465ff77baced7323ade3b6af499d124c3cef4f7d886f2dc8bd67",
+          "md5": "f729c4b43ba8f464ccb2e027fc7084f2",
+          "sha256": "51d927b190875b06b4a00bd669128eada84646b2990735971e28a12eee6d8bf8"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1.3a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f729c4b43ba8f464ccb2e027fc7084f2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11591,
+        "upload_time": "2025-11-11T02:08:08",
+        "upload_time_iso_8601": "2025-11-11T02:08:08.369414Z",
+        "url": "https://files.pythonhosted.org/packages/a2/fa/dc73224e465ff77baced7323ade3b6af499d124c3cef4f7d886f2dc8bd67/datasette_queries-0.1.3a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2d76bff9e600a1037f5914af3bac20592d61322fd31ed6e98fd09a47f269fd7f",
+          "md5": "3f7a93c1ad5dcea11bcf907a2e02c8ea",
+          "sha256": "baec329ae70272d21608585967a030bff79b52ef36503702dc8188b5235e4374"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "3f7a93c1ad5dcea11bcf907a2e02c8ea",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 10659,
+        "upload_time": "2024-12-03T23:55:24",
+        "upload_time_iso_8601": "2024-12-03T23:55:24.227224Z",
+        "url": "https://files.pythonhosted.org/packages/2d/76/bff9e600a1037f5914af3bac20592d61322fd31ed6e98fd09a47f269fd7f/datasette_queries-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f6955aeba79298c33c35627b3064f7d1e7af6a9f51a6d6f567225de50ea2900e",
+          "md5": "1fd1172a2b4058146bcfe2520bc64188",
+          "sha256": "0f874820e77aeaa9015d0eea6f5ba32bd475e0ec6670cee69232419763b0e61d"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1fd1172a2b4058146bcfe2520bc64188",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 10535,
+        "upload_time": "2024-12-03T23:55:26",
+        "upload_time_iso_8601": "2024-12-03T23:55:26.482253Z",
+        "url": "https://files.pythonhosted.org/packages/f6/95/5aeba79298c33c35627b3064f7d1e7af6a9f51a6d6f567225de50ea2900e/datasette_queries-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0000b29e28f122a77806d2575f971435a1c735295624577abdaabbbebd52468b",
+          "md5": "ae527fc22ae63584419a07e2ded0af31",
+          "sha256": "eeb8d9952ecbc66ce99f2482bed6a3a98cb9cbcba3da23166335293c01a46fc6"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ae527fc22ae63584419a07e2ded0af31",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 11245,
+        "upload_time": "2025-05-01T15:12:53",
+        "upload_time_iso_8601": "2025-05-01T15:12:53.048555Z",
+        "url": "https://files.pythonhosted.org/packages/00/00/b29e28f122a77806d2575f971435a1c735295624577abdaabbbebd52468b/datasette_queries-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "86ece85ca0c8d9bbdaed2ff8a83e66a96ab1ca2eb9c74f6a10e37c0e3ddacafa",
+          "md5": "5a5063898fa216c6d155bfda6a7b7bff",
+          "sha256": "9ef0ba797b7d78e0fcefeb468481c959b89655131572adb3eb11ceb454ad96d1"
+        },
+        "downloads": -1,
+        "filename": "datasette_queries-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5a5063898fa216c6d155bfda6a7b7bff",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 11198,
+        "upload_time": "2025-05-01T15:12:54",
+        "upload_time_iso_8601": "2025-05-01T15:12:54.201946Z",
+        "url": "https://files.pythonhosted.org/packages/86/ec/e85ca0c8d9bbdaed2ff8a83e66a96ab1ca2eb9c74f6a10e37c0e3ddacafa/datasette_queries-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "c1868602e77fb9851ba28c5d655cfe4b22c7da44c4ea620b5017bd48d97b2d0a",
+        "md5": "8a88824d2fb4283afa95836d420b30f1",
+        "sha256": "06ec92ee3bb4b15b35260c06dcb235eb0c68a102a403e50b5905e35a40af73d8"
+      },
+      "downloads": -1,
+      "filename": "datasette_queries-0.1.2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8a88824d2fb4283afa95836d420b30f1",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.9",
+      "size": 10386,
+      "upload_time": "2025-07-22T19:12:15",
+      "upload_time_iso_8601": "2025-07-22T19:12:15.232596Z",
+      "url": "https://files.pythonhosted.org/packages/c1/86/8602e77fb9851ba28c5d655cfe4b22c7da44c4ea620b5017bd48d97b2d0a/datasette_queries-0.1.2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "d2ef7c46e2df865fc2fa2763c220b9e425088ffa21303451d4d798c16ebcc942",
+        "md5": "b132478ca1f724fdf8be02a283188abc",
+        "sha256": "b71d5e6a78e7a251989369b59a7e0745deafbe1a484388fd80eea71f80411d81"
+      },
+      "downloads": -1,
+      "filename": "datasette_queries-0.1.2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b132478ca1f724fdf8be02a283188abc",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.9",
+      "size": 11574,
+      "upload_time": "2025-07-22T19:12:16",
+      "upload_time_iso_8601": "2025-07-22T19:12:16.218198Z",
+      "url": "https://files.pythonhosted.org/packages/d2/ef/7c46e2df865fc2fa2763c220b9e425088ffa21303451d4d798c16ebcc942/datasette_queries-0.1.2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,154 @@
+{
+  "info": {
+    "author": "Alex Garcia",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-jsonschema-forms\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-jsonschema-forms.svg)](https://pypi.org/project/datasette-jsonschema-forms/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-jsonschema-forms?include_prereleases&label=changelog)](https://github.com/datasette/datasette-jsonschema-forms/releases)\n[![Tests](https://github.com/datasette/datasette-jsonschema-forms/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-jsonschema-forms/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-jsonschema-forms/blob/main/LICENSE)\n\n\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-jsonschema-forms\n```\n## Usage\n\nUsage instructions go here.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-jsonschema-forms\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-jsonschema-forms",
+    "package_url": "https://pypi.org/project/datasette-jsonschema-forms/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-jsonschema-forms/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-jsonschema-forms/actions",
+      "Changelog": "https://github.com/datasette/datasette-jsonschema-forms/releases",
+      "Homepage": "https://github.com/datasette/datasette-jsonschema-forms",
+      "Issues": "https://github.com/datasette/datasette-jsonschema-forms/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-jsonschema-forms/0.0.3/",
+    "requires_dist": [
+      "datasette>=1.0a19",
+      "sqlite-migrate>=0.1b0",
+      "sqlite-utils>=3.38",
+      "pydantic>=2",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.9",
+    "summary": null,
+    "version": "0.0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 31549752,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.0.3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "d5766c14bea29bf47ebf253ae8fcbcf579347dae63708c7c5fc391cf757f6f32",
+          "md5": "24d4f18025f1dcae4ab833651101dca0",
+          "sha256": "d59b6623795849be71ec44a086f96fb409267ddea8de670443253e37a65a3eec"
+        },
+        "downloads": -1,
+        "filename": "datasette_jsonschema_forms-0.0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "24d4f18025f1dcae4ab833651101dca0",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 135470,
+        "upload_time": "2025-09-30T22:19:49",
+        "upload_time_iso_8601": "2025-09-30T22:19:49.240587Z",
+        "url": "https://files.pythonhosted.org/packages/d5/76/6c14bea29bf47ebf253ae8fcbcf579347dae63708c7c5fc391cf757f6f32/datasette_jsonschema_forms-0.0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ae973c9f0c4d884e5df5115ea123d48ed504b9ffa5e42951aaca6a21d03bab78",
+          "md5": "4234c812cee44300b517a204ef949b51",
+          "sha256": "a70823a209d000e9ebb04d3cd5982ebbbe69ba7f831a3301c446d259090120a4"
+        },
+        "downloads": -1,
+        "filename": "datasette_jsonschema_forms-0.0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4234c812cee44300b517a204ef949b51",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 131793,
+        "upload_time": "2025-09-30T22:19:50",
+        "upload_time_iso_8601": "2025-09-30T22:19:50.708856Z",
+        "url": "https://files.pythonhosted.org/packages/ae/97/3c9f0c4d884e5df5115ea123d48ed504b9ffa5e42951aaca6a21d03bab78/datasette_jsonschema_forms-0.0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "d5766c14bea29bf47ebf253ae8fcbcf579347dae63708c7c5fc391cf757f6f32",
+        "md5": "24d4f18025f1dcae4ab833651101dca0",
+        "sha256": "d59b6623795849be71ec44a086f96fb409267ddea8de670443253e37a65a3eec"
+      },
+      "downloads": -1,
+      "filename": "datasette_jsonschema_forms-0.0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "24d4f18025f1dcae4ab833651101dca0",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.9",
+      "size": 135470,
+      "upload_time": "2025-09-30T22:19:49",
+      "upload_time_iso_8601": "2025-09-30T22:19:49.240587Z",
+      "url": "https://files.pythonhosted.org/packages/d5/76/6c14bea29bf47ebf253ae8fcbcf579347dae63708c7c5fc391cf757f6f32/datasette_jsonschema_forms-0.0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ae973c9f0c4d884e5df5115ea123d48ed504b9ffa5e42951aaca6a21d03bab78",
+        "md5": "4234c812cee44300b517a204ef949b51",
+        "sha256": "a70823a209d000e9ebb04d3cd5982ebbbe69ba7f831a3301c446d259090120a4"
+      },
+      "downloads": -1,
+      "filename": "datasette_jsonschema_forms-0.0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "4234c812cee44300b517a204ef949b51",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.9",
+      "size": 131793,
+      "upload_time": "2025-09-30T22:19:50",
+      "upload_time_iso_8601": "2025-09-30T22:19:50.708856Z",
+      "url": "https://files.pythonhosted.org/packages/ae/97/3c9f0c4d884e5df5115ea123d48ed504b9ffa5e42951aaca6a21d03bab78/datasette_jsonschema_forms-0.0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,192 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "<img src=\"https://datasette.io/static/datasette-logo.svg\" alt=\"Datasette\">\n\n# datasette-hello-world\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-hello-world.svg)](https://pypi.org/project/datasette-hello-world/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-hello-world?include_prereleases&label=changelog)](https://github.com/simonw/datasette-hello-world/releases)\n[![Tests](https://github.com/simonw/datasette-hello-world/workflows/Test/badge.svg)](https://github.com/simonw/datasette-hello-world/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-hello-world/blob/main/LICENSE)\n\nThe hello world of Datasette plugins\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-hello-world\n\n## Usage\n\nRun this to see \"Hello world\":\n\n    datasette hello-world\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-hello-world\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-hello-world",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-hello-world",
+    "package_url": "https://pypi.org/project/datasette-hello-world/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-hello-world/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-hello-world/actions",
+      "Changelog": "https://github.com/simonw/datasette-hello-world/releases",
+      "Homepage": "https://github.com/simonw/datasette-hello-world",
+      "Issues": "https://github.com/simonw/datasette-hello-world/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-hello-world/0.1.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "The hello world of Datasette plugins",
+    "version": "0.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 12016505,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d3c0036b99f7efd13eb7b0ad9173ecd6d7325a0220ce56b6727ff8b0b93a5baf",
+          "md5": "bc3489469a3894c1a247d45479fed0b5",
+          "sha256": "5d1e54c7b6258ccce8520c8d0cff96e8f55e6d7a0c389683f3b551eccec940e2"
+        },
+        "downloads": -1,
+        "filename": "datasette_hello_world-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "bc3489469a3894c1a247d45479fed0b5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2329,
+        "upload_time": "2021-10-21T00:13:36",
+        "upload_time_iso_8601": "2021-10-21T00:13:36.721564Z",
+        "url": "https://files.pythonhosted.org/packages/d3/c0/036b99f7efd13eb7b0ad9173ecd6d7325a0220ce56b6727ff8b0b93a5baf/datasette_hello_world-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "72f6e354d5fb317f441b2564a4b466aa4ecaa78d47a1b96f4f5b7b91f2d1e199",
+          "md5": "eda2cface1ceae1e5705a4748c68b874",
+          "sha256": "6f7d965590f4d4212c39c2d8a4f6d318e421bde153c25c251a9917ccd05e99de"
+        },
+        "downloads": -1,
+        "filename": "datasette-hello-world-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "eda2cface1ceae1e5705a4748c68b874",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2026,
+        "upload_time": "2021-10-21T00:13:38",
+        "upload_time_iso_8601": "2021-10-21T00:13:38.092370Z",
+        "url": "https://files.pythonhosted.org/packages/72/f6/e354d5fb317f441b2564a4b466aa4ecaa78d47a1b96f4f5b7b91f2d1e199/datasette-hello-world-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "201fbababe164d972609bef24dad1346e36f8ff4cb0805a2c3ba255fbef5b186",
+          "md5": "98250211624bfd5b49aacec4003355c6",
+          "sha256": "fecbc446753df71ad5fe47b90cadb7c9be3776b4026b5a0b7688885df12d0a3a"
+        },
+        "downloads": -1,
+        "filename": "datasette_hello_world-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "98250211624bfd5b49aacec4003355c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2385,
+        "upload_time": "2021-11-14T04:59:46",
+        "upload_time_iso_8601": "2021-11-14T04:59:46.890242Z",
+        "url": "https://files.pythonhosted.org/packages/20/1f/bababe164d972609bef24dad1346e36f8ff4cb0805a2c3ba255fbef5b186/datasette_hello_world-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "87d84e22da215ca800e46e0494e2b4866cdb7452b6c0beffa7d9b200a9031813",
+          "md5": "7e1c6e05aa3e546c8b501591cba5ec5f",
+          "sha256": "d68e90e67c13a7bd73c1c093c73ed83f83fbd942f64eac89bdefe4de5e1cc3c9"
+        },
+        "downloads": -1,
+        "filename": "datasette-hello-world-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7e1c6e05aa3e546c8b501591cba5ec5f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2090,
+        "upload_time": "2021-11-14T04:59:47",
+        "upload_time_iso_8601": "2021-11-14T04:59:47.951831Z",
+        "url": "https://files.pythonhosted.org/packages/87/d8/4e22da215ca800e46e0494e2b4866cdb7452b6c0beffa7d9b200a9031813/datasette-hello-world-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "201fbababe164d972609bef24dad1346e36f8ff4cb0805a2c3ba255fbef5b186",
+        "md5": "98250211624bfd5b49aacec4003355c6",
+        "sha256": "fecbc446753df71ad5fe47b90cadb7c9be3776b4026b5a0b7688885df12d0a3a"
+      },
+      "downloads": -1,
+      "filename": "datasette_hello_world-0.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "98250211624bfd5b49aacec4003355c6",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2385,
+      "upload_time": "2021-11-14T04:59:46",
+      "upload_time_iso_8601": "2021-11-14T04:59:46.890242Z",
+      "url": "https://files.pythonhosted.org/packages/20/1f/bababe164d972609bef24dad1346e36f8ff4cb0805a2c3ba255fbef5b186/datasette_hello_world-0.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "87d84e22da215ca800e46e0494e2b4866cdb7452b6c0beffa7d9b200a9031813",
+        "md5": "7e1c6e05aa3e546c8b501591cba5ec5f",
+        "sha256": "d68e90e67c13a7bd73c1c093c73ed83f83fbd942f64eac89bdefe4de5e1cc3c9"
+      },
+      "downloads": -1,
+      "filename": "datasette-hello-world-0.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "7e1c6e05aa3e546c8b501591cba5ec5f",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2090,
+      "upload_time": "2021-11-14T04:59:47",
+      "upload_time_iso_8601": "2021-11-14T04:59:47.951831Z",
+      "url": "https://files.pythonhosted.org/packages/87/d8/4e22da215ca800e46e0494e2b4866cdb7452b6c0beffa7d9b200a9031813/datasette-hello-world-0.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,149 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-plugin-template-demo\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-plugin-template-demo.svg)](https://pypi.org/project/datasette-plugin-template-demo/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-plugin-template-demo?label=changelog)](https://github.com/simonw/datasette-plugin-template-demo/releases)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-plugin-template-demo/blob/master/LICENSE)\n\nDemonstrating https://github.com/simonw/datasette-plugin\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-plugin-template-demo\n\n## Usage\n\nUsage instructions go here.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-plugin-template-demo\n    python -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-plugin-template-demo",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-plugin-template-demo",
+    "package_url": "https://pypi.org/project/datasette-plugin-template-demo/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-plugin-template-demo/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-plugin-template-demo/actions",
+      "Changelog": "https://github.com/simonw/datasette-plugin-template-demo/releases",
+      "Homepage": "https://github.com/simonw/datasette-plugin-template-demo",
+      "Issues": "https://gitlab.com/simonw/datasette-plugin-template-demo/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-plugin-template-demo/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Demonstrating https://github.com/simonw/datasette-plugin",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 7519554,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "49aa4db0141e559d0fb3398c74f0bc1250e5da66072618aae966f868f72d87a2",
+          "md5": "b7774a1a676353eb2f369c361e98f135",
+          "sha256": "5eb1e9da114f40c8ae7a2f926326c9254f1626b014288cdbf528237da45f8317"
+        },
+        "downloads": -1,
+        "filename": "datasette_plugin_template_demo-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b7774a1a676353eb2f369c361e98f135",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2309,
+        "upload_time": "2020-06-19T23:42:27",
+        "upload_time_iso_8601": "2020-06-19T23:42:27.145878Z",
+        "url": "https://files.pythonhosted.org/packages/49/aa/4db0141e559d0fb3398c74f0bc1250e5da66072618aae966f868f72d87a2/datasette_plugin_template_demo-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "32d55ab5203e29ae8e3e29477e4181c1e41b55d283387accbbe4da3a7364d495",
+          "md5": "143ee78b403dabb9499d7c06e31e8c1c",
+          "sha256": "51c4078ba4e1405b61bab7488694008714609eff4c11cfb99bef876c7fdfc180"
+        },
+        "downloads": -1,
+        "filename": "datasette-plugin-template-demo-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "143ee78b403dabb9499d7c06e31e8c1c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2006,
+        "upload_time": "2020-06-19T23:42:29",
+        "upload_time_iso_8601": "2020-06-19T23:42:29.091904Z",
+        "url": "https://files.pythonhosted.org/packages/32/d5/5ab5203e29ae8e3e29477e4181c1e41b55d283387accbbe4da3a7364d495/datasette-plugin-template-demo-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "49aa4db0141e559d0fb3398c74f0bc1250e5da66072618aae966f868f72d87a2",
+        "md5": "b7774a1a676353eb2f369c361e98f135",
+        "sha256": "5eb1e9da114f40c8ae7a2f926326c9254f1626b014288cdbf528237da45f8317"
+      },
+      "downloads": -1,
+      "filename": "datasette_plugin_template_demo-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "b7774a1a676353eb2f369c361e98f135",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2309,
+      "upload_time": "2020-06-19T23:42:27",
+      "upload_time_iso_8601": "2020-06-19T23:42:27.145878Z",
+      "url": "https://files.pythonhosted.org/packages/49/aa/4db0141e559d0fb3398c74f0bc1250e5da66072618aae966f868f72d87a2/datasette_plugin_template_demo-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "32d55ab5203e29ae8e3e29477e4181c1e41b55d283387accbbe4da3a7364d495",
+        "md5": "143ee78b403dabb9499d7c06e31e8c1c",
+        "sha256": "51c4078ba4e1405b61bab7488694008714609eff4c11cfb99bef876c7fdfc180"
+      },
+      "downloads": -1,
+      "filename": "datasette-plugin-template-demo-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "143ee78b403dabb9499d7c06e31e8c1c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2006,
+      "upload_time": "2020-06-19T23:42:29",
+      "upload_time_iso_8601": "2020-06-19T23:42:29.091904Z",
+      "url": "https://files.pythonhosted.org/packages/32/d5/5ab5203e29ae8e3e29477e4181c1e41b55d283387accbbe4da3a7364d495/datasette-plugin-template-demo-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

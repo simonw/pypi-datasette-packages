@@ -1,0 +1,197 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-scan\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-scan.svg)](https://pypi.org/project/datasette-scan/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-scan?include_prereleases&label=changelog)](https://github.com/simonw/datasette-scan/releases)\n[![Tests](https://github.com/simonw/datasette-scan/actions/workflows/test.yml/badge.svg)](https://github.com/simonw/datasette-scan/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-scan/blob/main/LICENSE)\n\nDatasette plugin that scans directories for SQLite database files and serves them.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-scan\n```\n\n## Usage\n\nScan the current directory for SQLite files and serve them:\n\n```bash\ndatasette scan\n```\n\nScan a specific directory:\n\n```bash\ndatasette scan /path/to/directory\n```\n\nScan multiple directories and include explicit database files:\n\n```bash\ndatasette scan /data/projects /data/archives extra.db\n```\n\nSpecify a port (or any other `datasette serve` option):\n\n```bash\ndatasette scan -p 8001\n```\n\nAll options accepted by `datasette serve` are also accepted by `datasette scan` -- these are introspected at runtime, so new options added to future versions of Datasette will be picked up automatically.\n\n### How it works\n\n- Positional arguments that are **directories** are scanned recursively for SQLite files using the [sqlite-scanner](https://pypi.org/project/sqlite-scanner/) binary, which identifies SQLite files by their magic bytes rather than file extension.\n- Positional arguments that are **files** are passed through directly as database files.\n- If no positional arguments are given, the current directory (`.`) is scanned.\n- Discovered files are then served as if you had run `datasette serve file1.db file2.db ...`.\n\n### Continuous scanning\n\nUse `--scan-interval` to periodically re-scan directories for new SQLite files while the server is running. New databases will be added automatically.\n\n```bash\ndatasette scan /data --scan-interval 5\n```\n\nThis re-scans every 5 seconds. Any new SQLite files that appear in the scanned directories will be added to the running Datasette instance without a restart.\n\n### Corrupted and locked files\n\nSince `datasette scan` discovers files automatically, it takes precautions against problematic databases:\n\n- **Corrupted files are skipped.** Each discovered file is validated by running `SELECT * FROM sqlite_master` before it is served. Files that fail this check are skipped with a warning to stderr.\n- **Locked files are handled safely.** Databases locked by another process are opened in read-only mode instead of causing the server to fail. (The `--nolock` option from `datasette serve` is always enabled and not exposed as a separate flag.)\n\nThese protections apply to files discovered by scanning directories. Explicit file arguments are passed through to `datasette serve` without validation.\n\n### Examples\n\nScan the current directory and open in a browser:\n\n```bash\ndatasette scan -o\n```\n\nScan with CORS enabled on a custom port:\n\n```bash\ndatasette scan /data --cors -p 9000\n```\n\nUse `--get` to test without starting a server:\n\n```bash\ndatasette scan /data --get /.json\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-scan\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-scan",
+    "package_url": "https://pypi.org/project/datasette-scan/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-scan/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-scan/actions",
+      "Changelog": "https://github.com/simonw/datasette-scan/releases",
+      "Homepage": "https://github.com/simonw/datasette-scan",
+      "Issues": "https://github.com/simonw/datasette-scan/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-scan/0.1.1/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-scanner>=0.1.1"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Datasette plugin for scanning for SQLite files",
+    "version": "0.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 34034973,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f86b1f7b918c25fc6aeb8017f25a999c0f8fe059560a89dca21bc7d520fdf3bc",
+          "md5": "95a5609ab0be651780156579bd152aae",
+          "sha256": "5a464557b479b3167f9d2013867d412aba3f3111f81afc03deb05ed023455bd4"
+        },
+        "downloads": -1,
+        "filename": "datasette_scan-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "95a5609ab0be651780156579bd152aae",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9176,
+        "upload_time": "2026-02-04T04:53:35",
+        "upload_time_iso_8601": "2026-02-04T04:53:35.717560Z",
+        "url": "https://files.pythonhosted.org/packages/f8/6b/1f7b918c25fc6aeb8017f25a999c0f8fe059560a89dca21bc7d520fdf3bc/datasette_scan-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0eaac4d952158262b3c5619d95fedf4e4c370a2ff5725c250c494a2bdd92ab2e",
+          "md5": "ae535ba83af6300dc5197485578ca0fb",
+          "sha256": "29dc2b2cf138fc4d1c375102bc9bb04e1c7efbbd3a7d632fb9234b780823ddd2"
+        },
+        "downloads": -1,
+        "filename": "datasette_scan-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ae535ba83af6300dc5197485578ca0fb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11182,
+        "upload_time": "2026-02-04T04:53:37",
+        "upload_time_iso_8601": "2026-02-04T04:53:37.077943Z",
+        "url": "https://files.pythonhosted.org/packages/0e/aa/c4d952158262b3c5619d95fedf4e4c370a2ff5725c250c494a2bdd92ab2e/datasette_scan-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "28510771b08bf17f273556ccde856952ef0003bbcb305257343d9bb2e3bf07d5",
+          "md5": "c4be1fbae2e2c6229524d032187aca23",
+          "sha256": "344256515fded26d01fa403f306b3824c90aaac62314eefad4c1bc466e698bde"
+        },
+        "downloads": -1,
+        "filename": "datasette_scan-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c4be1fbae2e2c6229524d032187aca23",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9231,
+        "upload_time": "2026-02-04T05:27:36",
+        "upload_time_iso_8601": "2026-02-04T05:27:36.446890Z",
+        "url": "https://files.pythonhosted.org/packages/28/51/0771b08bf17f273556ccde856952ef0003bbcb305257343d9bb2e3bf07d5/datasette_scan-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ce70564aafe9fb96b64bb8a9865dd9f9aac6d94df8c8a196c1124c1a368bbee0",
+          "md5": "34116d47e961cdfb7ea1a727f26673c4",
+          "sha256": "d1bb466856e2dfc791923d18960515bbf67e60afc1415255a64701a8254f6ee8"
+        },
+        "downloads": -1,
+        "filename": "datasette_scan-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "34116d47e961cdfb7ea1a727f26673c4",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11212,
+        "upload_time": "2026-02-04T05:27:37",
+        "upload_time_iso_8601": "2026-02-04T05:27:37.494010Z",
+        "url": "https://files.pythonhosted.org/packages/ce/70/564aafe9fb96b64bb8a9865dd9f9aac6d94df8c8a196c1124c1a368bbee0/datasette_scan-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "28510771b08bf17f273556ccde856952ef0003bbcb305257343d9bb2e3bf07d5",
+        "md5": "c4be1fbae2e2c6229524d032187aca23",
+        "sha256": "344256515fded26d01fa403f306b3824c90aaac62314eefad4c1bc466e698bde"
+      },
+      "downloads": -1,
+      "filename": "datasette_scan-0.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "c4be1fbae2e2c6229524d032187aca23",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 9231,
+      "upload_time": "2026-02-04T05:27:36",
+      "upload_time_iso_8601": "2026-02-04T05:27:36.446890Z",
+      "url": "https://files.pythonhosted.org/packages/28/51/0771b08bf17f273556ccde856952ef0003bbcb305257343d9bb2e3bf07d5/datasette_scan-0.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ce70564aafe9fb96b64bb8a9865dd9f9aac6d94df8c8a196c1124c1a368bbee0",
+        "md5": "34116d47e961cdfb7ea1a727f26673c4",
+        "sha256": "d1bb466856e2dfc791923d18960515bbf67e60afc1415255a64701a8254f6ee8"
+      },
+      "downloads": -1,
+      "filename": "datasette_scan-0.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "34116d47e961cdfb7ea1a727f26673c4",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 11212,
+      "upload_time": "2026-02-04T05:27:37",
+      "upload_time_iso_8601": "2026-02-04T05:27:37.494010Z",
+      "url": "https://files.pythonhosted.org/packages/ce/70/564aafe9fb96b64bb8a9865dd9f9aac6d94df8c8a196c1124c1a368bbee0/datasette_scan-0.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

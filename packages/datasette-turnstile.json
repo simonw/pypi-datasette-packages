@@ -1,0 +1,285 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-turnstile\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-turnstile.svg)](https://pypi.org/project/datasette-turnstile/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-turnstile?include_prereleases&label=changelog)](https://github.com/simonw/datasette-turnstile/releases)\n[![Tests](https://github.com/simonw/datasette-turnstile/actions/workflows/test.yml/badge.svg)](https://github.com/simonw/datasette-turnstile/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-turnstile/blob/main/LICENSE)\n\nProtect Datasette paths with Cloudflare Turnstile challenges.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-turnstile\n```\n\n## Configuration\n\nConfigure the plugin in your `datasette.yaml`:\n\n```yaml\nplugins:\n  datasette-turnstile:\n    site_key: \"0x4AAAAAAxxxxxxxxxxxxxxx\"\n    secret_key:\n      $env: TURNSTILE_SECRET_KEY\n    protected_paths:\n      - \"/admin/*\"\n      - \"/-/import-*\"\n    exclude_patterns:\n      - \"*.json\"\n    cookie_max_age: 86400\n```\n\n### Configuration options\n\n- **`site_key`** (required): Your Turnstile site key from the Cloudflare dashboard\n- **`secret_key`** (required): Your Turnstile secret key (supports `$env` syntax)\n- **`protected_paths`** (required): List of URL patterns to protect\n- **`exclude_patterns`** (optional): Patterns to exclude from protection (e.g., `*.json`)\n- **`cookie_max_age`** (optional): Cookie lifetime in seconds (default: 86400 = 24 hours)\n- **`cookie_name`** (optional): Name of the verification cookie (default: `ds_turnstile`)\n\n### URL Pattern Matching\n\nPatterns use simple wildcard matching where `*` matches any characters:\n\n- `/admin/*` - Protects all paths under `/admin/`\n- `/-/import-*` - Protects `/-/import-csv`, `/-/import-json`, etc.\n- `/data?*&*&*` - Protects `/data` with 2+ query string parameters\n\nUse `?` in patterns to match against the full URL including query string. Without `?`, patterns only match the path.\n\n## How It Works\n\n1. When a user visits a protected path, they're redirected to `/-/turnstile`\n2. The challenge page displays a Cloudflare Turnstile widget\n3. Upon completing the challenge, the token is verified server-side\n4. On success, a signed cookie is set and the user is redirected to their original destination\n5. The cookie remains valid for 24 hours (configurable)\n\n### API Requests\n\nFor requests with `Accept: application/json` header, the plugin returns a 403 JSON response instead of redirecting:\n\n```json\n{\"error\": \"turnstile_required\"}\n```\n\nUse `exclude_patterns: [\"*.json\"]` to exclude JSON endpoints from protection entirely.\n\n## Development\n\nTo set up this plugin locally, first checkout the code:\n```bash\ncd datasette-turnstile\n```\n\nTo run the tests:\n```bash\nuv run pytest\n```\n\nCreate a config file using [Turnstile test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/):\n```bash\ncat > datasette.yaml << 'EOF'\nplugins:\n  datasette-turnstile:\n    site_key: \"1x00000000000000000000AA\"\n    secret_key:\n      $env: TURNSTILE_SECRET_KEY\n    protected_paths:\n      - \"/demo/example*\nEOF\n```\nCreate an example database:\n```bash\nsqlite3 demo.db \"CREATE TABLE example (id INTEGER PRIMARY KEY, name TEXT);\"\n```\n\nPut the secret in an environment variable and run Datasette with the plugin:\n```bash\nTURNSTILE_SECRET_KEY='1x0000000000000000000000000000000AA' uv run datasette -c datasette.yaml demo.db\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-turnstile",
+    "package_url": "https://pypi.org/project/datasette-turnstile/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-turnstile/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-turnstile/actions",
+      "Changelog": "https://github.com/simonw/datasette-turnstile/releases",
+      "Homepage": "https://github.com/simonw/datasette-turnstile",
+      "Issues": "https://github.com/simonw/datasette-turnstile/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-turnstile/0.1a3/",
+    "requires_dist": [
+      "datasette>=1.0a20",
+      "httpx"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Integrate CAPTCHAs powered by Cloudflare Turnstile",
+    "version": "0.1a3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 35911937,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cf59200e61ff07031450b65634f094e981bd4c7920386f721eec42c2508fc2ca",
+          "md5": "95d7c6f17c535448275b31553018a64f",
+          "sha256": "ca422492490e0c918c6c16674a5a1b2a2057042b56dfd41be63bf8c32b23bdf1"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "95d7c6f17c535448275b31553018a64f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13371,
+        "upload_time": "2025-12-30T19:23:56",
+        "upload_time_iso_8601": "2025-12-30T19:23:56.844161Z",
+        "url": "https://files.pythonhosted.org/packages/cf/59/200e61ff07031450b65634f094e981bd4c7920386f721eec42c2508fc2ca/datasette_turnstile-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "25a7d44fde2e937ca4a220f353bcabf86d4c9020cb215f0c73b671c4ec81bce6",
+          "md5": "46b769d7e32de59387721dfc9e30087f",
+          "sha256": "d117c524c67ea696896239c8bb9206d9a81dbeb7c5ab018cadb491ac3e197616"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "46b769d7e32de59387721dfc9e30087f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 15816,
+        "upload_time": "2025-12-30T19:23:57",
+        "upload_time_iso_8601": "2025-12-30T19:23:57.979511Z",
+        "url": "https://files.pythonhosted.org/packages/25/a7/d44fde2e937ca4a220f353bcabf86d4c9020cb215f0c73b671c4ec81bce6/datasette_turnstile-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "dba303f3ad28d8e6ca09db4c72fb63b5304f678ece0c901e6d211447157c6b17",
+          "md5": "4f6a6c06341ac127c764d3fec746d7dd",
+          "sha256": "5fb0bc4c67d77c67ce6d78e26e0905678d3966ad937e75b2eb5a3231ec530073"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4f6a6c06341ac127c764d3fec746d7dd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13368,
+        "upload_time": "2026-04-08T15:51:29",
+        "upload_time_iso_8601": "2026-04-08T15:51:29.304514Z",
+        "url": "https://files.pythonhosted.org/packages/db/a3/03f3ad28d8e6ca09db4c72fb63b5304f678ece0c901e6d211447157c6b17/datasette_turnstile-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "4bf39574e1688764c3c624492372357052897fa111e2f1ac647232dc034cdf77",
+          "md5": "dbe95057f2907b1fc505d1e49b57b0e6",
+          "sha256": "6664543e306f909488eacc2dc9c317a2fb3637751a1d8b573b37e50aa4041fb0"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dbe95057f2907b1fc505d1e49b57b0e6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 15832,
+        "upload_time": "2026-04-08T15:51:30",
+        "upload_time_iso_8601": "2026-04-08T15:51:30.584570Z",
+        "url": "https://files.pythonhosted.org/packages/4b/f3/9574e1688764c3c624492372357052897fa111e2f1ac647232dc034cdf77/datasette_turnstile-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ddc80813b3acfe6d5a57379ff2584b6a9d98887ee24f8f7eced279a8c61874e6",
+          "md5": "0caedd28f8749e6cd51f469f0a95d674",
+          "sha256": "a4f4b69adc61b42dde7ad86fc3a3f1f76c804bf35f2bc132952ad01dee71f0c0"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0caedd28f8749e6cd51f469f0a95d674",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13358,
+        "upload_time": "2026-04-08T16:01:34",
+        "upload_time_iso_8601": "2026-04-08T16:01:34.123141Z",
+        "url": "https://files.pythonhosted.org/packages/dd/c8/0813b3acfe6d5a57379ff2584b6a9d98887ee24f8f7eced279a8c61874e6/datasette_turnstile-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c7b62a35f304eafb5eee7d52902eb02b2c9530100fab3c96756cd07931bad6a7",
+          "md5": "a71d52217cd0c4aad9013ddca5b8cd50",
+          "sha256": "dc4e09ca6706f1ad28d5e1e4cf363305ca7f70d1f6a347f9a2afa15aefce435a"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a71d52217cd0c4aad9013ddca5b8cd50",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 15818,
+        "upload_time": "2026-04-08T16:01:35",
+        "upload_time_iso_8601": "2026-04-08T16:01:35.480003Z",
+        "url": "https://files.pythonhosted.org/packages/c7/b6/2a35f304eafb5eee7d52902eb02b2c9530100fab3c96756cd07931bad6a7/datasette_turnstile-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ce711f4abe145eaf5e5cd70f3a74c3344c6f80e3ab6c08d7ef7c8ef8439f9da1",
+          "md5": "851518085810f40c614e7be081e3bb78",
+          "sha256": "ce5a5c7835a52e8ff4be1e29c89b605e35957ac6afe65c4f6968d6f6b93f3fec"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "851518085810f40c614e7be081e3bb78",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 13395,
+        "upload_time": "2026-04-08T19:01:34",
+        "upload_time_iso_8601": "2026-04-08T19:01:34.702022Z",
+        "url": "https://files.pythonhosted.org/packages/ce/71/1f4abe145eaf5e5cd70f3a74c3344c6f80e3ab6c08d7ef7c8ef8439f9da1/datasette_turnstile-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "80fd6e7d6138b00541225b2c6323e94f19d823c023b5491d98ef86bd58530863",
+          "md5": "b1febd941311562082bbc04fece0ea2b",
+          "sha256": "f36532fd591bbfca139e93bc65df41b64ba0e635ecd8f9a95802ada9e51a05b9"
+        },
+        "downloads": -1,
+        "filename": "datasette_turnstile-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b1febd941311562082bbc04fece0ea2b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 16136,
+        "upload_time": "2026-04-08T19:01:36",
+        "upload_time_iso_8601": "2026-04-08T19:01:36.020669Z",
+        "url": "https://files.pythonhosted.org/packages/80/fd/6e7d6138b00541225b2c6323e94f19d823c023b5491d98ef86bd58530863/datasette_turnstile-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ce711f4abe145eaf5e5cd70f3a74c3344c6f80e3ab6c08d7ef7c8ef8439f9da1",
+        "md5": "851518085810f40c614e7be081e3bb78",
+        "sha256": "ce5a5c7835a52e8ff4be1e29c89b605e35957ac6afe65c4f6968d6f6b93f3fec"
+      },
+      "downloads": -1,
+      "filename": "datasette_turnstile-0.1a3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "851518085810f40c614e7be081e3bb78",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 13395,
+      "upload_time": "2026-04-08T19:01:34",
+      "upload_time_iso_8601": "2026-04-08T19:01:34.702022Z",
+      "url": "https://files.pythonhosted.org/packages/ce/71/1f4abe145eaf5e5cd70f3a74c3344c6f80e3ab6c08d7ef7c8ef8439f9da1/datasette_turnstile-0.1a3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "80fd6e7d6138b00541225b2c6323e94f19d823c023b5491d98ef86bd58530863",
+        "md5": "b1febd941311562082bbc04fece0ea2b",
+        "sha256": "f36532fd591bbfca139e93bc65df41b64ba0e635ecd8f9a95802ada9e51a05b9"
+      },
+      "downloads": -1,
+      "filename": "datasette_turnstile-0.1a3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b1febd941311562082bbc04fece0ea2b",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 16136,
+      "upload_time": "2026-04-08T19:01:36",
+      "upload_time_iso_8601": "2026-04-08T19:01:36.020669Z",
+      "url": "https://files.pythonhosted.org/packages/80/fd/6e7d6138b00541225b2c6323e94f19d823c023b5491d98ef86bd58530863/datasette_turnstile-0.1a3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

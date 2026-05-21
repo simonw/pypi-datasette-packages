@@ -1,0 +1,151 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-agent-sprites\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-agent-sprites.svg)](https://pypi.org/project/datasette-agent-sprites/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-agent-sprites?include_prereleases&label=changelog)](https://github.com/datasette/datasette-agent-sprites/releases)\n[![Tests](https://github.com/datasette/datasette-agent-sprites/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-agent-sprites/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-agent-sprites/blob/main/LICENSE)\n\nDatasette Agent tools for working with [Fly Sprites](https://sprites.dev) - persistent, hardware-isolated Linux environments with a REST API.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-agent-sprites\n```\n\n## Configuration\n\nThis plugin uses [datasette-secrets](https://github.com/datasette/datasette-secrets) to manage the Sprites API key. You can get a token from <https://sprites.dev/account>.\n\nThere are two ways to configure it:\n\n**Using an environment variable:**\n\n```bash\nexport DATASETTE_SECRETS_SPRITES_API_KEY=\"your-token-here\"\n```\nOr if you have `datasette-secrets` configured with an encrytion key:\n\n**Using the datasette-secrets UI:** Navigate to `/-/secrets` in your Datasette instance and set the `SPRITES_API_KEY` secret.\n\n## Tools\n\nThis plugin provides the following tools to the Datasette Agent:\n\n| Tool | Description |\n|------|-------------|\n| **list_sprites** | List all available Sprites. Optionally filter by name prefix. |\n| **create_sprite** | Create a new Sprite with a given name. It starts cold and warms on first use. |\n| **get_sprite** | Get details and status of a specific Sprite. |\n| **exec_on_sprite** | Execute a shell command on a Sprite via `bash -lc`. Returns stdout, stderr, and exit code. |\n| **delete_sprite** | Permanently delete a Sprite and all its data. |\n| **read_sprite_file** | Read a file from a Sprite's filesystem. Images are displayed inline; text files are returned directly. |\n| **write_sprite_file** | Write text content to a file on a Sprite. Creates parent directories automatically. |\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-agent-sprites\n# Confirm the plugin is visible\nuv run datasette plugins\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-agent-sprites",
+    "package_url": "https://pypi.org/project/datasette-agent-sprites/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-agent-sprites/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-agent-sprites/actions",
+      "Changelog": "https://github.com/datasette/datasette-agent-sprites/releases",
+      "Homepage": "https://github.com/datasette/datasette-agent-sprites",
+      "Issues": "https://github.com/datasette/datasette-agent-sprites/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-agent-sprites/0.1a0/",
+    "requires_dist": [
+      "datasette>=1.0a28",
+      "datasette-agent>=0.1a3",
+      "llm>=0.32a2",
+      "datasette-secrets>=0.3a0",
+      "sprites-py"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Datasette Agent tools for working with Fly Sprites",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 37285307,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b5b6fab084b539acde04092eca468ecfb0c781526e7a6461e8801f2cfae4ea6c",
+          "md5": "d0c365ff27dc328b5128818db1928f89",
+          "sha256": "e1b26838ddd3804c4d8274005d747b36cf1f1d1fc465e58fd195b972c8af0ebc"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_sprites-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d0c365ff27dc328b5128818db1928f89",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 10250,
+        "upload_time": "2026-05-21T18:22:00",
+        "upload_time_iso_8601": "2026-05-21T18:22:00.966038Z",
+        "url": "https://files.pythonhosted.org/packages/b5/b6/fab084b539acde04092eca468ecfb0c781526e7a6461e8801f2cfae4ea6c/datasette_agent_sprites-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "4e6e9dbaa9ffad28b26f5937eee31b04c172c87d9db29259f91c7db5c81597cd",
+          "md5": "3e6b064f6b0413365714865616bf5aa9",
+          "sha256": "0b4945c34a09afa4d0f3bdc367096973ace1f5f46ecc675d494615658a4a9255"
+        },
+        "downloads": -1,
+        "filename": "datasette_agent_sprites-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3e6b064f6b0413365714865616bf5aa9",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 11585,
+        "upload_time": "2026-05-21T18:22:02",
+        "upload_time_iso_8601": "2026-05-21T18:22:02.242982Z",
+        "url": "https://files.pythonhosted.org/packages/4e/6e/9dbaa9ffad28b26f5937eee31b04c172c87d9db29259f91c7db5c81597cd/datasette_agent_sprites-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "b5b6fab084b539acde04092eca468ecfb0c781526e7a6461e8801f2cfae4ea6c",
+        "md5": "d0c365ff27dc328b5128818db1928f89",
+        "sha256": "e1b26838ddd3804c4d8274005d747b36cf1f1d1fc465e58fd195b972c8af0ebc"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent_sprites-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d0c365ff27dc328b5128818db1928f89",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 10250,
+      "upload_time": "2026-05-21T18:22:00",
+      "upload_time_iso_8601": "2026-05-21T18:22:00.966038Z",
+      "url": "https://files.pythonhosted.org/packages/b5/b6/fab084b539acde04092eca468ecfb0c781526e7a6461e8801f2cfae4ea6c/datasette_agent_sprites-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "4e6e9dbaa9ffad28b26f5937eee31b04c172c87d9db29259f91c7db5c81597cd",
+        "md5": "3e6b064f6b0413365714865616bf5aa9",
+        "sha256": "0b4945c34a09afa4d0f3bdc367096973ace1f5f46ecc675d494615658a4a9255"
+      },
+      "downloads": -1,
+      "filename": "datasette_agent_sprites-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "3e6b064f6b0413365714865616bf5aa9",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 11585,
+      "upload_time": "2026-05-21T18:22:02",
+      "upload_time_iso_8601": "2026-05-21T18:22:02.242982Z",
+      "url": "https://files.pythonhosted.org/packages/4e/6e/9dbaa9ffad28b26f5937eee31b04c172c87d9db29259f91c7db5c81597cd/datasette_agent_sprites-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

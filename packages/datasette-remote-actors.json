@@ -1,0 +1,463 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-remote-actors\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-remote-actors.svg)](https://pypi.org/project/datasette-remote-actors/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-remote-actors?include_prereleases&label=changelog)](https://github.com/datasette/datasette-remote-actors/releases)\n[![Test](https://github.com/datasette/datasette-remote-actors/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-remote-actors/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-remote-actors/blob/main/LICENSE)\n\nA Datasette plugin for fetching details of actors (users or API clients) from a remote, centralized JSON endpoint.\n\nSee [Datasette issue #2180](https://github.com/simonw/datasette/issues/2180) for background on this plugin.\n\n## Installation\n\n```bash\ndatasette install datasette-remote-actors\n```\n\n## API Endpoint Requirements\n\nConfigure this plugin with a URL pointing to an API endpoint that provides actor information.\n\nThis endpoint **must**:\n\n1. Accept a GET request.\n2. Accept a query string parameter `ids` containing a comma-separated list of actor IDs (e.g., `?ids=1,a2,b3`).\n3. Return a JSON response with a `200 OK` status code upon success.\n4. The JSON response body **must** be a dictionary where the keys are the **string representations** of the actor IDs requested, and the values are dictionaries containing the details for each actor.\n\n**Example Request:**\n\n`GET /path/to/your/endpoint?ids=1,2`\n\n**Example Successful JSON Response:**\n\n```json\n{\n  \"1\": {\n    \"id\": \"1\",\n    \"name\": \"Cleopatra\",\n    \"email\": \"cleo@example.com\"\n  },\n  \"2\": {\n    \"id\": 2,\n    \"name\": \"Julius Caesar\",\n    \"username\": \"jcaesar\"\n  }\n}\n```\n\n**Important Notes:**\n\n* The **keys** in the returned JSON object (`\"1\"`, `\"2\"` in the example) **must be strings**, even if the original IDs are integers.\n* Each actor dictionary value **must** contain an `id` field, which can be a string or an integer matching the requested ID. Other fields (like `name`, `username`, `email`) are flexible and defined by your endpoint.\n* **Small Actor Sets:** If you have a small, fixed number of actors, your endpoint can optionally ignore the `?ids=` parameter and always return the *entire* dictionary of all known actors. The plugin will cache these and use the cached data for subsequent lookups (if `ttl` is configured).\n* **Error Handling:** If the remote endpoint returns a non-200 status code, times out, or returns invalid JSON, this plugin will log an error (if Datasette logging is configured) and will not return actor data for the requested IDs for that request.\n\n## Configuration\n\nYou configure the plugin using Datasette's `metadata.json` or `metadata.yaml` file.\n\n**Minimal Configuration:**\n\n```yaml\nplugins:\n  datasette-remote-actors:\n    url: https://example.com/actors.json\n```\n\n**Full Configuration Example:**\n\n```yaml\nplugins:\n  datasette-remote-actors:\n    # (Required) URL to the remote actor endpoint\n    url: https://example.com/actors.json\n\n    # (Optional) Cache Time-To-Live in seconds.\n    # If set, actor details will be cached in memory.\n    # Uses cachetools.TTLCache with a default maxsize of 1000.\n    # Omit for no caching.\n    ttl: 60\n\n    # (Optional) Bearer token for authentication.\n    # If set, adds an \"Authorization: Bearer <token>\" header to the request.\n    token: your-secret-api-token\n\n    # (Optional) Enable integration with datasette-profiles.\n    # Requires datasette-profiles plugin to be installed.\n    # See section below for details.\n    datasette-profiles: true\n```\n\n**Configuration Options:**\n\n* `url` (string, **required**): The URL to the endpoint that can resolve actor IDs into JSON actor dictionaries.\n* `ttl` (integer, optional): The number of seconds to cache the result for a specific actor ID. Uses an in-memory `TTLCache` (default `maxsize=1000`). Omit this or set to `0` for no caching.\n* `token` (string, optional): An authentication token. If provided, it will be sent in the `Authorization: Bearer <token>` HTTP header when calling the `url`.\n* `datasette-profiles` (boolean, optional): Set to `true` to enable integration with the [datasette-profiles](https://github.com/datasette/datasette-profiles) plugin. Defaults to `false`.\n\n## Integration with datasette-profiles\n\nIf you want to allow users to override or supplement the actor details fetched from the remote endpoint with their own profile information stored within Datasette, you can use the [datasette-profiles](https://github.com/datasette/datasette-profiles) plugin.\n\n1.  Install the companion plugin:\n    ```bash\n    datasette install datasette-profiles\n    ```\n2.  Enable the integration in the `datasette-remote-actors` configuration:\n    ```yaml\n    plugins:\n      datasette-remote-actors:\n        url: https://example.com/actors.json\n        datasette-profiles: true\n        # other options...\n    ```\n\nWhen enabled:\n\n* The plugin will first fetch actor details from the configured `url`.\n* It will then query the `profiles` table (created by `datasette-profiles`) in Datasette's internal database for matching actor IDs.\n* If a profile exists for an actor ID, the data from the `profiles` table will be merged into the actor dictionary fetched from the remote URL. Any non-null values in the `profiles` table (except the `id` column itself) will overwrite corresponding keys from the remote data.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n```bash\ncd datasette-remote-actors\npython3 -m venv venv\nsource venv/bin/activate\n```\n\nNow install the dependencies and test dependencies:\n\n```bash\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-remote-actors",
+    "package_url": "https://pypi.org/project/datasette-remote-actors/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-remote-actors/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-remote-actors/actions",
+      "Changelog": "https://github.com/datasette/datasette-remote-actors/releases",
+      "Homepage": "https://github.com/datasette/datasette-remote-actors",
+      "Issues": "https://github.com/datasette/datasette-remote-actors/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-remote-actors/0.1a7/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "cachetools",
+      "httpx",
+      "pytest; extra == \"test\"",
+      "pytest-httpx; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "datasette-profiles>=0.1a3; extra == \"test\""
+    ],
+    "requires_python": null,
+    "summary": "Datasette plugin for fetching details of actors from a remote endpoint",
+    "version": "0.1a7",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 32270206,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e730d2fd2becdf7e491edcf13b7604207db2ec2bf6850fab89cae2f57d59130c",
+          "md5": "b26ca1dcc9a7885488b699f80c4548dc",
+          "sha256": "3205efab857604e06a3bd57b72bfaa4e449f469065cf137a3ba994b82c46e9d8"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b26ca1dcc9a7885488b699f80c4548dc",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7517,
+        "upload_time": "2023-09-08T03:34:31",
+        "upload_time_iso_8601": "2023-09-08T03:34:31.626825Z",
+        "url": "https://files.pythonhosted.org/packages/e7/30/d2fd2becdf7e491edcf13b7604207db2ec2bf6850fab89cae2f57d59130c/datasette_remote_actors-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "4ab198db9b629a9fd96307cf4583251260a5bdcf778a7a48d74ba96e322c0143",
+          "md5": "68d7d0050c2b67f3899faba4727e7cb1",
+          "sha256": "9f36150e3b108749a80bca4f014012a7253643f8568121bfdb01501086d5a153"
+        },
+        "downloads": -1,
+        "filename": "datasette-remote-actors-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "68d7d0050c2b67f3899faba4727e7cb1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7417,
+        "upload_time": "2023-09-08T03:34:32",
+        "upload_time_iso_8601": "2023-09-08T03:34:32.810119Z",
+        "url": "https://files.pythonhosted.org/packages/4a/b1/98db9b629a9fd96307cf4583251260a5bdcf778a7a48d74ba96e322c0143/datasette-remote-actors-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "28c559829e3c221e00b129776c33c0bde8428c68a4d236b0555344de30aefe47",
+          "md5": "5f78f6d944a2062fd31dbc1327064554",
+          "sha256": "f8421d6b8c128b31a598c67af653bf44babdfa9b1ee5880df9d7b62c72b9af87"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5f78f6d944a2062fd31dbc1327064554",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7556,
+        "upload_time": "2023-09-08T04:57:22",
+        "upload_time_iso_8601": "2023-09-08T04:57:22.160389Z",
+        "url": "https://files.pythonhosted.org/packages/28/c5/59829e3c221e00b129776c33c0bde8428c68a4d236b0555344de30aefe47/datasette_remote_actors-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6e52507f1bd8f49f005c0837e77138eee2c78edc6f27d74747dffc3a727fa690",
+          "md5": "5d374a86518698a58cc764c74ec022c1",
+          "sha256": "924edcb1afbc1f5ea946df4d7d6de43101af25968e0e44ebf11c7f4e0139c7cc"
+        },
+        "downloads": -1,
+        "filename": "datasette-remote-actors-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5d374a86518698a58cc764c74ec022c1",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7465,
+        "upload_time": "2023-09-08T04:57:23",
+        "upload_time_iso_8601": "2023-09-08T04:57:23.947603Z",
+        "url": "https://files.pythonhosted.org/packages/6e/52/507f1bd8f49f005c0837e77138eee2c78edc6f27d74747dffc3a727fa690/datasette-remote-actors-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e64a60673b3ca11d2096e652468285c5b3a4f00f3f81309f4b6e1ab8d84bc639",
+          "md5": "4956f41a6a39c78c4b9ca1f0d75a02f8",
+          "sha256": "58c2bc7da42b3c3c2d4ebac6cd14243fa3a2fe3ed97a10c331bff095577975e4"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4956f41a6a39c78c4b9ca1f0d75a02f8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7571,
+        "upload_time": "2023-09-28T05:07:55",
+        "upload_time_iso_8601": "2023-09-28T05:07:55.458158Z",
+        "url": "https://files.pythonhosted.org/packages/e6/4a/60673b3ca11d2096e652468285c5b3a4f00f3f81309f4b6e1ab8d84bc639/datasette_remote_actors-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "e46dad00cf4871bd3d3cf1cbcf20bca6159c990b028d775a1740590b45830c4f",
+          "md5": "d62322cc7730c1f586e72243e278b857",
+          "sha256": "516aa9969be7288c4ba03595966bf01896c39911cc20f99b7de815177211ab54"
+        },
+        "downloads": -1,
+        "filename": "datasette-remote-actors-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d62322cc7730c1f586e72243e278b857",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 7494,
+        "upload_time": "2023-09-28T05:07:57",
+        "upload_time_iso_8601": "2023-09-28T05:07:57.000433Z",
+        "url": "https://files.pythonhosted.org/packages/e4/6d/ad00cf4871bd3d3cf1cbcf20bca6159c990b028d775a1740590b45830c4f/datasette-remote-actors-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b1ca4b56e2f2f9408e4edb6dd9497fe1c8222c0e2a6449f11fab9085b2bcdc66",
+          "md5": "28d8dc25d4a40a339d1792c8fceb93af",
+          "sha256": "519f66ffed47361a5995e2083f97bcd71548f8e4cbdef0b5f818fffc79d978a1"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "28d8dc25d4a40a339d1792c8fceb93af",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8013,
+        "upload_time": "2025-03-27T17:43:17",
+        "upload_time_iso_8601": "2025-03-27T17:43:17.992777Z",
+        "url": "https://files.pythonhosted.org/packages/b1/ca/4b56e2f2f9408e4edb6dd9497fe1c8222c0e2a6449f11fab9085b2bcdc66/datasette_remote_actors-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "01cfb6fddcd30944bd87aea1c40d96a90bb7263e4501b67206b142ec7263914a",
+          "md5": "e0f09114936d50f7f3109d08ddd27c22",
+          "sha256": "b90ce7ef7bc123c8cc69d45e2c992ba905164e059e05adeb0857154143cd0542"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e0f09114936d50f7f3109d08ddd27c22",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8045,
+        "upload_time": "2025-03-27T17:43:19",
+        "upload_time_iso_8601": "2025-03-27T17:43:19.166737Z",
+        "url": "https://files.pythonhosted.org/packages/01/cf/b6fddcd30944bd87aea1c40d96a90bb7263e4501b67206b142ec7263914a/datasette_remote_actors-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b8d3fc3b9a412775b1196a1c416f05ef6e30cc64d4d4515e1936217054995acb",
+          "md5": "e59b33537a7b7a4f1ecc5972567435cf",
+          "sha256": "d7b49fedf4746fd11ef54956ba4496cfc670c49696de957a69192862b138b45f"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e59b33537a7b7a4f1ecc5972567435cf",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 8013,
+        "upload_time": "2025-03-28T06:33:46",
+        "upload_time_iso_8601": "2025-03-28T06:33:46.035411Z",
+        "url": "https://files.pythonhosted.org/packages/b8/d3/fc3b9a412775b1196a1c416f05ef6e30cc64d4d4515e1936217054995acb/datasette_remote_actors-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "15758e6262fe15d2d98f13f6e45874c5abfcd45243701197733fe96c78cb0cd2",
+          "md5": "d7ba50d89dfb2ceac0fd207ae9557d0f",
+          "sha256": "1a9e7c25f64cb5635178a855199c4011c7621af46f984160c97b375d69947723"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d7ba50d89dfb2ceac0fd207ae9557d0f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 8079,
+        "upload_time": "2025-03-28T06:33:47",
+        "upload_time_iso_8601": "2025-03-28T06:33:47.488208Z",
+        "url": "https://files.pythonhosted.org/packages/15/75/8e6262fe15d2d98f13f6e45874c5abfcd45243701197733fe96c78cb0cd2/datasette_remote_actors-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a5": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "64c4b8265006c1898d7ec7f79d7c3a25c9c6e21641d12f8dbb6ec50f9f7204d0",
+          "md5": "b46b69a3b1a5189a227d1338837b85f8",
+          "sha256": "0f4b8c64c37e70901044df7f534529be6dbe4efe30000695665f42f1848bcce1"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "b46b69a3b1a5189a227d1338837b85f8",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9088,
+        "upload_time": "2025-04-25T22:25:25",
+        "upload_time_iso_8601": "2025-04-25T22:25:25.855612Z",
+        "url": "https://files.pythonhosted.org/packages/64/c4/b8265006c1898d7ec7f79d7c3a25c9c6e21641d12f8dbb6ec50f9f7204d0/datasette_remote_actors-0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "af8e60c0b3e758588cf6763c82c07fc1bd53a26fddf2863c3132eb2c22bbc8ff",
+          "md5": "f46111f1f2a7f67c5096f14174e17a84",
+          "sha256": "0dafabefe5c8a3e05c37d364c64336224c7521dfb411d28ed3221e5c70b0698e"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f46111f1f2a7f67c5096f14174e17a84",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9157,
+        "upload_time": "2025-04-25T22:25:26",
+        "upload_time_iso_8601": "2025-04-25T22:25:26.941493Z",
+        "url": "https://files.pythonhosted.org/packages/af/8e/60c0b3e758588cf6763c82c07fc1bd53a26fddf2863c3132eb2c22bbc8ff/datasette_remote_actors-0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b284388b2314d25f9df4ce74fbb54bb7f5cf5c42ed2bb3d3c319ebdec3467d4e",
+          "md5": "5c3638ee4aa08bde5820fb0cf1a2e9a7",
+          "sha256": "cd16fa6cc6c6fb2443546dc4c3e5833d69cd122ffc62867f61fa211d83b56cfe"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5c3638ee4aa08bde5820fb0cf1a2e9a7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9092,
+        "upload_time": "2025-10-21T20:46:26",
+        "upload_time_iso_8601": "2025-10-21T20:46:26.837729Z",
+        "url": "https://files.pythonhosted.org/packages/b2/84/388b2314d25f9df4ce74fbb54bb7f5cf5c42ed2bb3d3c319ebdec3467d4e/datasette_remote_actors-0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "bed34d503129666f29713b63df498be14adbe1f0608ca675f32da2f571eeee2d",
+          "md5": "a77216141f59c46903e531c797468ace",
+          "sha256": "5326b00126133c10e81bca242de44d46ee375837cf9e2992e660babc568cba00"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a77216141f59c46903e531c797468ace",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9178,
+        "upload_time": "2025-10-21T20:46:28",
+        "upload_time_iso_8601": "2025-10-21T20:46:28.521312Z",
+        "url": "https://files.pythonhosted.org/packages/be/d3/4d503129666f29713b63df498be14adbe1f0608ca675f32da2f571eeee2d/datasette_remote_actors-0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a7": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "3b033d5de00cd7053de2c59f5220be68dccf5260d89c690cc80d0c45533a8815",
+          "md5": "2905c9b2999a035683722896bc919913",
+          "sha256": "d489dfc75ba7c9bba83f84878c03992a5ee1c6dd00c1ec4dff520a7974da9f4b"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2905c9b2999a035683722896bc919913",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 9065,
+        "upload_time": "2025-11-08T00:18:38",
+        "upload_time_iso_8601": "2025-11-08T00:18:38.642688Z",
+        "url": "https://files.pythonhosted.org/packages/3b/03/3d5de00cd7053de2c59f5220be68dccf5260d89c690cc80d0c45533a8815/datasette_remote_actors-0.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a1a77dbe3f5122187365dddc1965b44968407a5eb87be7b9fdf887e7bd438342",
+          "md5": "defa6df801198957ae482bb8813c317c",
+          "sha256": "fb3d1958b22078a9e5cb89620b9c52b7b034706c2ca41ec74a713b77951782bc"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_actors-0.1a7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "defa6df801198957ae482bb8813c317c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 9143,
+        "upload_time": "2025-11-08T00:18:40",
+        "upload_time_iso_8601": "2025-11-08T00:18:40.000017Z",
+        "url": "https://files.pythonhosted.org/packages/a1/a7/7dbe3f5122187365dddc1965b44968407a5eb87be7b9fdf887e7bd438342/datasette_remote_actors-0.1a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "3b033d5de00cd7053de2c59f5220be68dccf5260d89c690cc80d0c45533a8815",
+        "md5": "2905c9b2999a035683722896bc919913",
+        "sha256": "d489dfc75ba7c9bba83f84878c03992a5ee1c6dd00c1ec4dff520a7974da9f4b"
+      },
+      "downloads": -1,
+      "filename": "datasette_remote_actors-0.1a7-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "2905c9b2999a035683722896bc919913",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 9065,
+      "upload_time": "2025-11-08T00:18:38",
+      "upload_time_iso_8601": "2025-11-08T00:18:38.642688Z",
+      "url": "https://files.pythonhosted.org/packages/3b/03/3d5de00cd7053de2c59f5220be68dccf5260d89c690cc80d0c45533a8815/datasette_remote_actors-0.1a7-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "a1a77dbe3f5122187365dddc1965b44968407a5eb87be7b9fdf887e7bd438342",
+        "md5": "defa6df801198957ae482bb8813c317c",
+        "sha256": "fb3d1958b22078a9e5cb89620b9c52b7b034706c2ca41ec74a713b77951782bc"
+      },
+      "downloads": -1,
+      "filename": "datasette_remote_actors-0.1a7.tar.gz",
+      "has_sig": false,
+      "md5_digest": "defa6df801198957ae482bb8813c317c",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 9143,
+      "upload_time": "2025-11-08T00:18:40",
+      "upload_time_iso_8601": "2025-11-08T00:18:40.000017Z",
+      "url": "https://files.pythonhosted.org/packages/a1/a7/7dbe3f5122187365dddc1965b44968407a5eb87be7b9fdf887e7bd438342/datasette_remote_actors-0.1a7.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

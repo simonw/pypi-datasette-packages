@@ -1,0 +1,151 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-os-info\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-os-info.svg)](https://pypi.org/project/datasette-os-info/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-os-info?include_prereleases&label=changelog)](https://github.com/datasette/datasette-os-info/releases)\n[![Tests](https://github.com/datasette/datasette-os-info/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-os-info/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-os-info/blob/main/LICENSE)\n\nProvide information about the current OS at `/-/os`\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-os-info\n```\n## Usage\n\nThis plugin adds a `/-/os` page to your Datasette instance that returns detailed information about the operating system, formatted as pretty-printed JSON.\n\n**⚠️ Security Warning**: This endpoint exposes system information including hostnames, usernames, filesystem paths, and environment variables. Review the output before deploying on a public instance.\n\nVisit `/-/os` on your Datasette instance to see comprehensive OS information including:\n\n- **Platform details**: System type, release, version, machine architecture, processor\n- **Python information**: Version, implementation, executable path\n- **Container detection**: Docker, Kubernetes, LXC detection\n- **Linux-specific information** (when running on Linux):\n  - Distribution details from `/etc/os-release` (name, version, codename)\n  - Debian/Alpine/RedHat version information\n  - Kernel information\n  - CPU model and count\n  - Memory statistics\n  - Docker base image detection\n- **macOS-specific information** (when running on macOS):\n  - macOS version details\n- **Windows-specific information** (when running on Windows):\n  - Windows version and edition\n- **Environment variables**: Useful variables like SHELL, TERM, USER, HOME, PATH, LANG, VIRTUAL_ENV\n\nExample:\n```bash\ndatasette install datasette-os-info\ndatasette\n# Then visit http://localhost:8001/-/os\n```\n\nYou can also view the output from the command line:\n```bash\ndatasette --get /-/os\n```\n\nThe JSON output is automatically pretty-printed for easy reading.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-os-info\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-os-info",
+    "package_url": "https://pypi.org/project/datasette-os-info/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-os-info/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-os-info/actions",
+      "Changelog": "https://github.com/datasette/datasette-os-info/releases",
+      "Homepage": "https://github.com/datasette/datasette-os-info",
+      "Issues": "https://github.com/datasette/datasette-os-info/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-os-info/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Provide information about the current OS at /-/os",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 31693912,
+  "ownership": {
+    "organization": "datasette",
+    "roles": []
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "fe3abd39375b7ba4f77dba3cc2a9b50ed0ce91c83181e14474bfac8de7ef9a29",
+          "md5": "8ec19900353874e79eda6881a941cd71",
+          "sha256": "889431cd59e483fa6aef2607f30e3e9262480043b5811315689203dfeb75a24d"
+        },
+        "downloads": -1,
+        "filename": "datasette_os_info-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8ec19900353874e79eda6881a941cd71",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8893,
+        "upload_time": "2025-10-08T22:51:41",
+        "upload_time_iso_8601": "2025-10-08T22:51:41.556451Z",
+        "url": "https://files.pythonhosted.org/packages/fe/3a/bd39375b7ba4f77dba3cc2a9b50ed0ce91c83181e14474bfac8de7ef9a29/datasette_os_info-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ad7537b393706137c0b558d3ba70984760f73abbfec11d401deadda0f320d56c",
+          "md5": "ce83f786f5520883f78f8bb302e978c2",
+          "sha256": "42e4a784e8c2141cb2f0221ea4a0bf58fe9ce08c764624827231409ec1940b09"
+        },
+        "downloads": -1,
+        "filename": "datasette_os_info-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ce83f786f5520883f78f8bb302e978c2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8686,
+        "upload_time": "2025-10-08T22:51:42",
+        "upload_time_iso_8601": "2025-10-08T22:51:42.512285Z",
+        "url": "https://files.pythonhosted.org/packages/ad/75/37b393706137c0b558d3ba70984760f73abbfec11d401deadda0f320d56c/datasette_os_info-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "fe3abd39375b7ba4f77dba3cc2a9b50ed0ce91c83181e14474bfac8de7ef9a29",
+        "md5": "8ec19900353874e79eda6881a941cd71",
+        "sha256": "889431cd59e483fa6aef2607f30e3e9262480043b5811315689203dfeb75a24d"
+      },
+      "downloads": -1,
+      "filename": "datasette_os_info-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8ec19900353874e79eda6881a941cd71",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 8893,
+      "upload_time": "2025-10-08T22:51:41",
+      "upload_time_iso_8601": "2025-10-08T22:51:41.556451Z",
+      "url": "https://files.pythonhosted.org/packages/fe/3a/bd39375b7ba4f77dba3cc2a9b50ed0ce91c83181e14474bfac8de7ef9a29/datasette_os_info-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ad7537b393706137c0b558d3ba70984760f73abbfec11d401deadda0f320d56c",
+        "md5": "ce83f786f5520883f78f8bb302e978c2",
+        "sha256": "42e4a784e8c2141cb2f0221ea4a0bf58fe9ce08c764624827231409ec1940b09"
+      },
+      "downloads": -1,
+      "filename": "datasette_os_info-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ce83f786f5520883f78f8bb302e978c2",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 8686,
+      "upload_time": "2025-10-08T22:51:42",
+      "upload_time_iso_8601": "2025-10-08T22:51:42.512285Z",
+      "url": "https://files.pythonhosted.org/packages/ad/75/37b393706137c0b558d3ba70984760f73abbfec11d401deadda0f320d56c/datasette_os_info-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

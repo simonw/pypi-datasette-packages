@@ -1,0 +1,240 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-remove-database\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-remove-database.svg)](https://pypi.org/project/datasette-remove-database/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-remove-database?include_prereleases&label=changelog)](https://github.com/datasette/datasette-remove-database/releases)\n[![Tests](https://github.com/datasette/datasette-remove-database/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-remove-database/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-remove-database/blob/main/LICENSE)\n\nRemove a database from Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-remove-database\n```\n## Usage\n\nUsers with the `remove-database` permission will see a new menu item on the database page that allows them to remove the database.\n\nBy default databases that are removed from Datasette will still be available on disk.\n\nTo also delete the file from disk, add this configuration:\n```yaml\nplugins:\n  datasette-remove-database:\n    delete: true\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-remove-database\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-remove-database",
+    "package_url": "https://pypi.org/project/datasette-remove-database/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-remove-database/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-remove-database/actions",
+      "Changelog": "https://github.com/datasette/datasette-remove-database/releases",
+      "Homepage": "https://github.com/datasette/datasette-remove-database",
+      "Issues": "https://github.com/datasette/datasette-remove-database/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-remove-database/0.1a2/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Remove a database from Datasette",
+    "version": "0.1a2",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 32270145,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "663d0c82e4f56e563ba051abc6bfd3e07fd72d15eac51eea4ec6bc2cfe56fc65",
+          "md5": "e9c4425ff612779a2ef5d990efd1a7b5",
+          "sha256": "a686048526c1ac2d1037a041a81793cf2722684156c6150739abfceccdaf0e98"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e9c4425ff612779a2ef5d990efd1a7b5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 3313,
+        "upload_time": "2025-02-12T18:34:59",
+        "upload_time_iso_8601": "2025-02-12T18:34:59.602379Z",
+        "url": "https://files.pythonhosted.org/packages/66/3d/0c82e4f56e563ba051abc6bfd3e07fd72d15eac51eea4ec6bc2cfe56fc65/datasette_remove_database-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "c55d2dcea28586463cca1d405bf864a27b31c2e9dbe3a3902970735e8e9633f0",
+          "md5": "e075f06ead843cf584843daebf5687ec",
+          "sha256": "e88985d9347f48d67c557f905ac9141632b0d210963d6cd13bda86fb38c5e420"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e075f06ead843cf584843daebf5687ec",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 4077,
+        "upload_time": "2025-02-12T18:35:01",
+        "upload_time_iso_8601": "2025-02-12T18:35:01.914079Z",
+        "url": "https://files.pythonhosted.org/packages/c5/5d/2dcea28586463cca1d405bf864a27b31c2e9dbe3a3902970735e8e9633f0/datasette_remove_database-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "32d0e2dc23f19a59c230c56ee703f9f5cb6a4a8c4a7c7eef6496e81e0c38a028",
+          "md5": "067879b2a3f2d67f68c2ab1b571346e5",
+          "sha256": "2285f62565626c0389045067af445e3cafab63170a33641b1b5f44c7ec3fc3af"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "067879b2a3f2d67f68c2ab1b571346e5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 3311,
+        "upload_time": "2025-10-21T00:59:08",
+        "upload_time_iso_8601": "2025-10-21T00:59:08.543052Z",
+        "url": "https://files.pythonhosted.org/packages/32/d0/e2dc23f19a59c230c56ee703f9f5cb6a4a8c4a7c7eef6496e81e0c38a028/datasette_remove_database-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "fe3a3ddd7536cb33050c0e6c273037adbfbc6bc9ada2ea6b9e47daae39c3d55a",
+          "md5": "62bda987f3664ad58c8197c02d5a91d8",
+          "sha256": "693b0d15cfced060b658f40ff630dc62c0d5aecc29eb0d3e98a026c6a4c78772"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "62bda987f3664ad58c8197c02d5a91d8",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 4087,
+        "upload_time": "2025-10-21T00:59:09",
+        "upload_time_iso_8601": "2025-10-21T00:59:09.549346Z",
+        "url": "https://files.pythonhosted.org/packages/fe/3a/3ddd7536cb33050c0e6c273037adbfbc6bc9ada2ea6b9e47daae39c3d55a/datasette_remove_database-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "70fe9726680293e411dc9fb1031bb5f65e095ff5f041ff77d19fad523b3c47a6",
+          "md5": "8490f84993f71a3771fea4cf2bc0d93a",
+          "sha256": "9f4a0fec533c8c5557d9349f0b65b4a06f39c0041da46597321928007fc44c83"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8490f84993f71a3771fea4cf2bc0d93a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 3307,
+        "upload_time": "2025-11-08T00:14:02",
+        "upload_time_iso_8601": "2025-11-08T00:14:02.139739Z",
+        "url": "https://files.pythonhosted.org/packages/70/fe/9726680293e411dc9fb1031bb5f65e095ff5f041ff77d19fad523b3c47a6/datasette_remove_database-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "46fdddd8b1f64614a09456349ec5a30ef690b95ceff6bab13347196a7f7acba3",
+          "md5": "27cb2cdf0e7c70c0ad448698103ba5a7",
+          "sha256": "926d1cce985253d5eee147081abbfa9ed0541e9c82140ef1ca40e3f370cfa0dd"
+        },
+        "downloads": -1,
+        "filename": "datasette_remove_database-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "27cb2cdf0e7c70c0ad448698103ba5a7",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 4038,
+        "upload_time": "2025-11-08T00:14:03",
+        "upload_time_iso_8601": "2025-11-08T00:14:03.411381Z",
+        "url": "https://files.pythonhosted.org/packages/46/fd/ddd8b1f64614a09456349ec5a30ef690b95ceff6bab13347196a7f7acba3/datasette_remove_database-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "70fe9726680293e411dc9fb1031bb5f65e095ff5f041ff77d19fad523b3c47a6",
+        "md5": "8490f84993f71a3771fea4cf2bc0d93a",
+        "sha256": "9f4a0fec533c8c5557d9349f0b65b4a06f39c0041da46597321928007fc44c83"
+      },
+      "downloads": -1,
+      "filename": "datasette_remove_database-0.1a2-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "8490f84993f71a3771fea4cf2bc0d93a",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 3307,
+      "upload_time": "2025-11-08T00:14:02",
+      "upload_time_iso_8601": "2025-11-08T00:14:02.139739Z",
+      "url": "https://files.pythonhosted.org/packages/70/fe/9726680293e411dc9fb1031bb5f65e095ff5f041ff77d19fad523b3c47a6/datasette_remove_database-0.1a2-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "46fdddd8b1f64614a09456349ec5a30ef690b95ceff6bab13347196a7f7acba3",
+        "md5": "27cb2cdf0e7c70c0ad448698103ba5a7",
+        "sha256": "926d1cce985253d5eee147081abbfa9ed0541e9c82140ef1ca40e3f370cfa0dd"
+      },
+      "downloads": -1,
+      "filename": "datasette_remove_database-0.1a2.tar.gz",
+      "has_sig": false,
+      "md5_digest": "27cb2cdf0e7c70c0ad448698103ba5a7",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 4038,
+      "upload_time": "2025-11-08T00:14:03",
+      "upload_time_iso_8601": "2025-11-08T00:14:03.411381Z",
+      "url": "https://files.pythonhosted.org/packages/46/fd/ddd8b1f64614a09456349ec5a30ef690b95ceff6bab13347196a7f7acba3/datasette_remove_database-0.1a2.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

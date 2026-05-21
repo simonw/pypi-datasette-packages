@@ -1,0 +1,192 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-unsafe-expose-env\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-unsafe-expose-env.svg)](https://pypi.org/project/datasette-unsafe-expose-env/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-unsafe-expose-env?include_prereleases&label=changelog)](https://github.com/simonw/datasette-unsafe-expose-env/releases)\n[![Tests](https://github.com/simonw/datasette-unsafe-expose-env/workflows/Test/badge.svg)](https://github.com/simonw/datasette-unsafe-expose-env/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-unsafe-expose-env/blob/main/LICENSE)\n\nDatasette plugin to expose some environment variables at `/-/env` - for debugging\n\n> :warning: **This plugin is no longer maintained**. [datasette-expose-env](https://datasette.io/plugins/datasette-expose-env) is recommended as a safe replacement that only exposes environment variables that you have explicitly configured.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-unsafe-expose-env\n\n## Usage\n\nOnce installed, the plugin will show a list of environment variables at `/-/env`\n\nIt will redact the following variables by default:\n\n- `DATABASE_URL`\n- `GPG_KEY`\n- `DATASETTE_SECRET`\n\nYou can configure an alternative set of redacted secrets in your `metadata.yml` configuration:\n\n```yaml\nplugins:\n  datasette-unsafe-expose-env:\n    redact:\n    - DATASETTE_SECRET\n    - GPG_KEY\n    - MY_OTHER_SECRET\n```\n\nOnce again though: only use this plugin if you need it for debugging purposes and are absolutely certain it won't expose any valuable information. If in doubt, do not use this at all.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-unsafe-expose-env\n    python3 -mvenv venv\n    source venv/bin/activate\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-unsafe-expose-env",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-unsafe-expose-env",
+    "package_url": "https://pypi.org/project/datasette-unsafe-expose-env/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-unsafe-expose-env/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-unsafe-expose-env/actions",
+      "Changelog": "https://github.com/simonw/datasette-unsafe-expose-env/releases",
+      "Homepage": "https://github.com/simonw/datasette-unsafe-expose-env",
+      "Issues": "https://github.com/simonw/datasette-unsafe-expose-env/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-unsafe-expose-env/0.1.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Datasette plugin to expose some environment variables at /-/env for debugging",
+    "version": "0.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 14324326,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "5ea29c8b30b6c0947de8e8c8c98d0fbc82a062d0a938c823b24f96672604c0e3",
+          "md5": "9b7bc204284760d970eeac41f771ebce",
+          "sha256": "ed073f04b242fda8eced77bb20384591c0b579ebc419180f4e23f03bf28e608e"
+        },
+        "downloads": -1,
+        "filename": "datasette_unsafe_expose_env-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9b7bc204284760d970eeac41f771ebce",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2961,
+        "upload_time": "2022-05-25T14:49:38",
+        "upload_time_iso_8601": "2022-05-25T14:49:38.721934Z",
+        "url": "https://files.pythonhosted.org/packages/5e/a2/9c8b30b6c0947de8e8c8c98d0fbc82a062d0a938c823b24f96672604c0e3/datasette_unsafe_expose_env-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "70a44126f33a8553b1c291c1c2846ea7cdc86cf898e69ff35ccfbaac4640d06d",
+          "md5": "79d3224fefad6c5271db36b326c38101",
+          "sha256": "275dbdc52f77727d272b2a386ac673ce0d4c868bc3892c1eac67f4c665edc05e"
+        },
+        "downloads": -1,
+        "filename": "datasette-unsafe-expose-env-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "79d3224fefad6c5271db36b326c38101",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2582,
+        "upload_time": "2022-05-25T14:49:40",
+        "upload_time_iso_8601": "2022-05-25T14:49:40.347529Z",
+        "url": "https://files.pythonhosted.org/packages/70/a4/4126f33a8553b1c291c1c2846ea7cdc86cf898e69ff35ccfbaac4640d06d/datasette-unsafe-expose-env-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "b19ebc54e379b8aaf5e1b6732e83fe0e1c1377610e4efd4fce433ce8f71725ec",
+          "md5": "d1b349879dc00a7e5e66916e303702f7",
+          "sha256": "853a9c44414f731e012fbdd0da3a3616e7c7f620c9f866e18940725a71b70b65"
+        },
+        "downloads": -1,
+        "filename": "datasette_unsafe_expose_env-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d1b349879dc00a7e5e66916e303702f7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3006,
+        "upload_time": "2022-07-03T21:44:00",
+        "upload_time_iso_8601": "2022-07-03T21:44:00.089352Z",
+        "url": "https://files.pythonhosted.org/packages/b1/9e/bc54e379b8aaf5e1b6732e83fe0e1c1377610e4efd4fce433ce8f71725ec/datasette_unsafe_expose_env-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "23fccc5342b6ab32be4c1b2d005535b465437d8f22c7ae07ce0eb671a585c8e4",
+          "md5": "1a4b0701b0f0a74e241ef257c5c0ea98",
+          "sha256": "32a90e47c65b1536887e631ea07ebbccba363ddd21bbc841ecd284039c65c488"
+        },
+        "downloads": -1,
+        "filename": "datasette-unsafe-expose-env-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1a4b0701b0f0a74e241ef257c5c0ea98",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2601,
+        "upload_time": "2022-07-03T21:44:01",
+        "upload_time_iso_8601": "2022-07-03T21:44:01.372641Z",
+        "url": "https://files.pythonhosted.org/packages/23/fc/cc5342b6ab32be4c1b2d005535b465437d8f22c7ae07ce0eb671a585c8e4/datasette-unsafe-expose-env-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "b19ebc54e379b8aaf5e1b6732e83fe0e1c1377610e4efd4fce433ce8f71725ec",
+        "md5": "d1b349879dc00a7e5e66916e303702f7",
+        "sha256": "853a9c44414f731e012fbdd0da3a3616e7c7f620c9f866e18940725a71b70b65"
+      },
+      "downloads": -1,
+      "filename": "datasette_unsafe_expose_env-0.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d1b349879dc00a7e5e66916e303702f7",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 3006,
+      "upload_time": "2022-07-03T21:44:00",
+      "upload_time_iso_8601": "2022-07-03T21:44:00.089352Z",
+      "url": "https://files.pythonhosted.org/packages/b1/9e/bc54e379b8aaf5e1b6732e83fe0e1c1377610e4efd4fce433ce8f71725ec/datasette_unsafe_expose_env-0.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "23fccc5342b6ab32be4c1b2d005535b465437d8f22c7ae07ce0eb671a585c8e4",
+        "md5": "1a4b0701b0f0a74e241ef257c5c0ea98",
+        "sha256": "32a90e47c65b1536887e631ea07ebbccba363ddd21bbc841ecd284039c65c488"
+      },
+      "downloads": -1,
+      "filename": "datasette-unsafe-expose-env-0.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "1a4b0701b0f0a74e241ef257c5c0ea98",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2601,
+      "upload_time": "2022-07-03T21:44:01",
+      "upload_time_iso_8601": "2022-07-03T21:44:01.372641Z",
+      "url": "https://files.pythonhosted.org/packages/23/fc/cc5342b6ab32be4c1b2d005535b465437d8f22c7ae07ce0eb671a585c8e4/datasette-unsafe-expose-env-0.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

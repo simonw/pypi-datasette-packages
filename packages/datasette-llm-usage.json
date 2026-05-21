@@ -1,0 +1,282 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-llm-usage\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-llm-usage.svg)](https://pypi.org/project/datasette-llm-usage/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-llm-usage?include_prereleases&label=changelog)](https://github.com/datasette/datasette-llm-usage/releases)\n[![Tests](https://github.com/datasette/datasette-llm-usage/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-llm-usage/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-llm-usage/blob/main/LICENSE)\n\nTrack usage of LLM tokens in a SQLite table\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-llm-usage\n```\n## Usage\n\nThis plugin tracks LLM token usage in Datasette via the [datasette-llm](https://github.com/datasette/datasette-llm) `llm_prompt_context` hook. It creates two tables:\n\n- `llm_usage`: Tracks token usage per request (model, purpose, actor, input/output tokens)\n- `llm_usage_prompt_log`: Optionally logs full prompts and responses\n\n### Configuration\n\nBy default the tables are created in the internal database passed to Datasette using `--internal internal.db`. You can change that by setting the following in your Datasette plugin configuration:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-llm-usage\": {\n            \"database\": \"your_database_name\"\n        }\n    }\n}\n```\n\nTo enable full prompt and response logging, set `log_prompts` to `true`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-llm-usage\": {\n            \"log_prompts\": true\n        }\n    }\n}\n```\n\n### Prompt testing tool\n\nThe plugin also provides a simple demo page at `/-/llm-usage-simple-prompt` which can be used to execute prompts for testing.\n\nThat page requires the user to have the `llm-usage-simple-prompt` permission.\n\n## Development\n\nClone this repo and run the tests:\n\n```bash\ncd datasette-llm-usage\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-llm-usage",
+    "package_url": "https://pypi.org/project/datasette-llm-usage/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-llm-usage/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-llm-usage/actions",
+      "Changelog": "https://github.com/datasette/datasette-llm-usage/releases",
+      "Homepage": "https://github.com/datasette/datasette-llm-usage",
+      "Issues": "https://github.com/datasette/datasette-llm-usage/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-llm-usage/0.2a0/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "datasette-llm>=0.1a5",
+      "sqlite-migrate"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Track usage of LLM tokens in a SQLite table",
+    "version": "0.2a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 35680020,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "78fdaeaeb77915a93c0ff6035eaf177ac87368374af527e4ea66446bd668a440",
+          "md5": "c573834253a1dc08a3a8593ff9f027ba",
+          "sha256": "1df205c636eeb063daaf74c4794b7f23529194554fad2167a5276238f5ff28b0"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "c573834253a1dc08a3a8593ff9f027ba",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 9409,
+        "upload_time": "2024-12-02T20:40:37",
+        "upload_time_iso_8601": "2024-12-02T20:40:37.960158Z",
+        "url": "https://files.pythonhosted.org/packages/78/fd/aeaeb77915a93c0ff6035eaf177ac87368374af527e4ea66446bd668a440/datasette_llm_usage-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "47a4bdaaa6e0c81b15881c7a2c0881a3135464dee2f673ee1c704ad438325dd7",
+          "md5": "10f9348fd5210aea0d4e3c636405fb12",
+          "sha256": "6afc779c99b135a1ad6a74b1dc9dcf1cf4f16298a042bb69639e46e1219b5509"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "10f9348fd5210aea0d4e3c636405fb12",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 9304,
+        "upload_time": "2024-12-02T20:40:39",
+        "upload_time_iso_8601": "2024-12-02T20:40:39.867402Z",
+        "url": "https://files.pythonhosted.org/packages/47/a4/bdaaa6e0c81b15881c7a2c0881a3135464dee2f673ee1c704ad438325dd7/datasette_llm_usage-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "5d4e159521f53ecf20cb460ab9676102222cce667ffd80c963b69092f729e353",
+          "md5": "e99c4dfa93a214744ad4e96f6f9eab27",
+          "sha256": "b9480b6f2d5ce732e514bc3b87934abfc07bb024e6485ad00f3ce9361cfc4780"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e99c4dfa93a214744ad4e96f6f9eab27",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 9444,
+        "upload_time": "2025-10-21T00:56:58",
+        "upload_time_iso_8601": "2025-10-21T00:56:58.197243Z",
+        "url": "https://files.pythonhosted.org/packages/5d/4e/159521f53ecf20cb460ab9676102222cce667ffd80c963b69092f729e353/datasette_llm_usage-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "37bd1d119a029e0ba743bf23b228a5cf2680b81a2b2b9f6179107f248e27e1c2",
+          "md5": "3e4669044b7b1ffc4ab70d01aded7a2f",
+          "sha256": "df0d9c4d6ef31010fd605d839d9721f099a347a0c0e43ac669fa9cf023d4ba47"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3e4669044b7b1ffc4ab70d01aded7a2f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 9366,
+        "upload_time": "2025-10-21T00:56:59",
+        "upload_time_iso_8601": "2025-10-21T00:56:59.227702Z",
+        "url": "https://files.pythonhosted.org/packages/37/bd/1d119a029e0ba743bf23b228a5cf2680b81a2b2b9f6179107f248e27e1c2/datasette_llm_usage-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "bd97194e42e204703779b96695fa5ea31448a2d0a33096e02f4dd29242ea8818",
+          "md5": "46a431effbfdefd359b38623e076b5f9",
+          "sha256": "b3cfbdad266468d417ea60885a36cab4b4039f9376f3722fceeb3f64f19e55fc"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "46a431effbfdefd359b38623e076b5f9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9423,
+        "upload_time": "2025-11-08T01:42:05",
+        "upload_time_iso_8601": "2025-11-08T01:42:05.768086Z",
+        "url": "https://files.pythonhosted.org/packages/bd/97/194e42e204703779b96695fa5ea31448a2d0a33096e02f4dd29242ea8818/datasette_llm_usage-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "6a7fee2669cbd7eeeae13cd4d22f94b935e05466bc091aa26b0844da6db6e595",
+          "md5": "97eb158878df90135ae486260ed84907",
+          "sha256": "8a327ea67de4aee4cb2c81005db72231e8b213827c684a4fd2595843cbb2072b"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "97eb158878df90135ae486260ed84907",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9324,
+        "upload_time": "2025-11-08T01:42:06",
+        "upload_time_iso_8601": "2025-11-08T01:42:06.816572Z",
+        "url": "https://files.pythonhosted.org/packages/6a/7f/ee2669cbd7eeeae13cd4d22f94b935e05466bc091aa26b0844da6db6e595/datasette_llm_usage-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "11e20143a8dd362edba1cc74a264d24a96d20e76a5634e357ae51d49787b3a2b",
+          "md5": "528efb579faffe0c389020b9f8968c06",
+          "sha256": "2846f4e95c9fcf31d764536ef18e026d927ef3bb322488c1fd74aeb42e5cf8ad"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "528efb579faffe0c389020b9f8968c06",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 5357,
+        "upload_time": "2026-04-01T03:25:01",
+        "upload_time_iso_8601": "2026-04-01T03:25:01.149293Z",
+        "url": "https://files.pythonhosted.org/packages/11/e2/0143a8dd362edba1cc74a264d24a96d20e76a5634e357ae51d49787b3a2b/datasette_llm_usage-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "dec6ca3ac2e610f0f6454bec00c184eb2441d36318bf632a78ae55a020daba64",
+          "md5": "19388645d2baf42d02a4fac7b26c6897",
+          "sha256": "cce0156565c391d6c3fe7c358c7428b3bac70e7eefdf2e0430b688ba0e3f6df0"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_usage-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "19388645d2baf42d02a4fac7b26c6897",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 3774,
+        "upload_time": "2026-04-01T03:25:02",
+        "upload_time_iso_8601": "2026-04-01T03:25:02.234677Z",
+        "url": "https://files.pythonhosted.org/packages/de/c6/ca3ac2e610f0f6454bec00c184eb2441d36318bf632a78ae55a020daba64/datasette_llm_usage-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "11e20143a8dd362edba1cc74a264d24a96d20e76a5634e357ae51d49787b3a2b",
+        "md5": "528efb579faffe0c389020b9f8968c06",
+        "sha256": "2846f4e95c9fcf31d764536ef18e026d927ef3bb322488c1fd74aeb42e5cf8ad"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm_usage-0.2a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "528efb579faffe0c389020b9f8968c06",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 5357,
+      "upload_time": "2026-04-01T03:25:01",
+      "upload_time_iso_8601": "2026-04-01T03:25:01.149293Z",
+      "url": "https://files.pythonhosted.org/packages/11/e2/0143a8dd362edba1cc74a264d24a96d20e76a5634e357ae51d49787b3a2b/datasette_llm_usage-0.2a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "dec6ca3ac2e610f0f6454bec00c184eb2441d36318bf632a78ae55a020daba64",
+        "md5": "19388645d2baf42d02a4fac7b26c6897",
+        "sha256": "cce0156565c391d6c3fe7c358c7428b3bac70e7eefdf2e0430b688ba0e3f6df0"
+      },
+      "downloads": -1,
+      "filename": "datasette_llm_usage-0.2a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "19388645d2baf42d02a4fac7b26c6897",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 3774,
+      "upload_time": "2026-04-01T03:25:02",
+      "upload_time_iso_8601": "2026-04-01T03:25:02.234677Z",
+      "url": "https://files.pythonhosted.org/packages/de/c6/ca3ac2e610f0f6454bec00c184eb2441d36318bf632a78ae55a020daba64/datasette_llm_usage-0.2a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

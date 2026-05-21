@@ -1,0 +1,151 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-sqlite-trace\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-sqlite-trace.svg)](https://pypi.org/project/datasette-sqlite-trace/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-sqlite-trace?include_prereleases&label=changelog)](https://github.com/datasette/datasette-sqlite-trace/releases)\n[![Tests](https://github.com/datasette/datasette-sqlite-trace/workflows/Test/badge.svg)](https://github.com/datasette/datasette-sqlite-trace/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-sqlite-trace/blob/main/LICENSE)\n\nDatasette plugin that prints all executed SQL to stderr\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-sqlite-trace\n```\n\n## Usage\n\nOnce installed, this plugin will log every SQL query executed by Datasette to standard error.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-sqlite-trace",
+    "package_url": "https://pypi.org/project/datasette-sqlite-trace/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-sqlite-trace/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-sqlite-trace/actions",
+      "Changelog": "https://github.com/datasette/datasette-sqlite-trace/releases",
+      "Homepage": "https://github.com/datasette/datasette-sqlite-trace",
+      "Issues": "https://github.com/datasette/datasette-sqlite-trace/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-sqlite-trace/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Datasette plugin that prints all executed SQL to stderr",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 19690295,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "837e0c6a20a86fd405a3704bbf108f2feb8383ef30d6a4c37bf7d2872d4baa2a",
+          "md5": "f0ee27adc1eb6ac3677cba9e25b13dd7",
+          "sha256": "83294dbdf3df77c315a8a6cdb1ce44f7fcf73fd8de4c3197ce964dd9f5087094"
+        },
+        "downloads": -1,
+        "filename": "datasette_sqlite_trace-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f0ee27adc1eb6ac3677cba9e25b13dd7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2206,
+        "upload_time": "2023-09-10T22:04:54",
+        "upload_time_iso_8601": "2023-09-10T22:04:54.779116Z",
+        "url": "https://files.pythonhosted.org/packages/83/7e/0c6a20a86fd405a3704bbf108f2feb8383ef30d6a4c37bf7d2872d4baa2a/datasette_sqlite_trace-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "752e6d6186d2ac9f06524c149c0ac1c15f418fea8353eaa99ffdb21bbe5d5c2e",
+          "md5": "26b0ac716994ea744cc69f924ef2becb",
+          "sha256": "82d8c2402e0a66582d50d8bbc03559af9892a55f3bc6433218507931813534dc"
+        },
+        "downloads": -1,
+        "filename": "datasette-sqlite-trace-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "26b0ac716994ea744cc69f924ef2becb",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2030,
+        "upload_time": "2023-09-10T22:04:56",
+        "upload_time_iso_8601": "2023-09-10T22:04:56.305793Z",
+        "url": "https://files.pythonhosted.org/packages/75/2e/6d6186d2ac9f06524c149c0ac1c15f418fea8353eaa99ffdb21bbe5d5c2e/datasette-sqlite-trace-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "837e0c6a20a86fd405a3704bbf108f2feb8383ef30d6a4c37bf7d2872d4baa2a",
+        "md5": "f0ee27adc1eb6ac3677cba9e25b13dd7",
+        "sha256": "83294dbdf3df77c315a8a6cdb1ce44f7fcf73fd8de4c3197ce964dd9f5087094"
+      },
+      "downloads": -1,
+      "filename": "datasette_sqlite_trace-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f0ee27adc1eb6ac3677cba9e25b13dd7",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2206,
+      "upload_time": "2023-09-10T22:04:54",
+      "upload_time_iso_8601": "2023-09-10T22:04:54.779116Z",
+      "url": "https://files.pythonhosted.org/packages/83/7e/0c6a20a86fd405a3704bbf108f2feb8383ef30d6a4c37bf7d2872d4baa2a/datasette_sqlite_trace-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "752e6d6186d2ac9f06524c149c0ac1c15f418fea8353eaa99ffdb21bbe5d5c2e",
+        "md5": "26b0ac716994ea744cc69f924ef2becb",
+        "sha256": "82d8c2402e0a66582d50d8bbc03559af9892a55f3bc6433218507931813534dc"
+      },
+      "downloads": -1,
+      "filename": "datasette-sqlite-trace-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "26b0ac716994ea744cc69f924ef2becb",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2030,
+      "upload_time": "2023-09-10T22:04:56",
+      "upload_time_iso_8601": "2023-09-10T22:04:56.305793Z",
+      "url": "https://files.pythonhosted.org/packages/75/2e/6d6186d2ac9f06524c149c0ac1c15f418fea8353eaa99ffdb21bbe5d5c2e/datasette-sqlite-trace-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

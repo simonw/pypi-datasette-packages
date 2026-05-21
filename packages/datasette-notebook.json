@@ -1,0 +1,283 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-notebook\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-notebook.svg)](https://pypi.org/project/datasette-notebook/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-notebook?include_prereleases&label=changelog)](https://github.com/simonw/datasette-notebook/releases)\n[![Tests](https://github.com/simonw/datasette-notebook/workflows/Test/badge.svg)](https://github.com/simonw/datasette-notebook/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-notebook/blob/main/LICENSE)\n\nA markdown wiki and dashboarding system for Datasette\n\nThis is an **experimental alpha** and everything about it is likely to change.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-notebook\n\n## Usage\n\nStart Datasette with a SQLite file called `notebook.db`:\n\n    datasette notebook.db --create\n\nHere the `--create` option will create that file if it does not yet exist.\n\nVisit `/n` to create an index page. Visit `/n/name` to create a page with that name.\n\nYou can link to other pages using `[[WikiLink]]` syntax. This will create a link to `/n/WikiLink` - spaces will be converted to underscores, and you can link to nested pages such as `[[nested/page]]`.\n\n## Configuration\n\nYou can use a file other than `notebook.db` by configuring it using `metadata.yml`. To use a database file called `otherfile.db` you would use this:\n\n```yaml\nplugins:\n  datasette-notebook:\n    database: otherfile\n```\nThen start Datasette like so:\n\n    datasette otherfile.db\n\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-notebook\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-notebook",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-notebook",
+    "package_url": "https://pypi.org/project/datasette-notebook/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-notebook/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-notebook/actions",
+      "Changelog": "https://github.com/simonw/datasette-notebook/releases",
+      "Homepage": "https://github.com/simonw/datasette-notebook",
+      "Issues": "https://github.com/simonw/datasette-notebook/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-notebook/0.2a0/",
+    "requires_dist": [
+      "datasette",
+      "sqlite-utils",
+      "markdown",
+      "bleach",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "A markdown wiki and dashboarding system for Datasette",
+    "version": "0.2a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 11907014,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "479b29adcafa963cd203dcc65f281f14e77a323eab893beafce5ef78f63b0c0f",
+          "md5": "5cd1558bde4080ba1faa7496f8b5a06d",
+          "sha256": "f2d13b1a8a9b6407e6336eee0df0356de0859285387427a04041ba56d00f33a2"
+        },
+        "downloads": -1,
+        "filename": "datasette_notebook-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5cd1558bde4080ba1faa7496f8b5a06d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 3994,
+        "upload_time": "2021-09-22T23:35:55",
+        "upload_time_iso_8601": "2021-09-22T23:35:55.482894Z",
+        "url": "https://files.pythonhosted.org/packages/47/9b/29adcafa963cd203dcc65f281f14e77a323eab893beafce5ef78f63b0c0f/datasette_notebook-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6404609e434279d78ee88641d0b851c7723895092b638500bb09198a0f4e0da0",
+          "md5": "c6b3356dc5d6acafeaa2eb1dded33aa2",
+          "sha256": "a4f6017019d525ca63b31c3a19f7542d44846440ad5d8710ccb8ac94385b52d3"
+        },
+        "downloads": -1,
+        "filename": "datasette-notebook-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "c6b3356dc5d6acafeaa2eb1dded33aa2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 3562,
+        "upload_time": "2021-09-22T23:35:56",
+        "upload_time_iso_8601": "2021-09-22T23:35:56.504532Z",
+        "url": "https://files.pythonhosted.org/packages/64/04/609e434279d78ee88641d0b851c7723895092b638500bb09198a0f4e0da0/datasette-notebook-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "72c8085b249f3f6798e1fc234863ef5e8b2a8a19befdc36ea1b25a3d3c120408",
+          "md5": "dcae2596037f6512e249d66fb8bd334a",
+          "sha256": "1650eeac3bb11adbf840faab05580aa434de659e009dd6a483204908e9558f7f"
+        },
+        "downloads": -1,
+        "filename": "datasette_notebook-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "dcae2596037f6512e249d66fb8bd334a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5192,
+        "upload_time": "2021-09-23T00:00:46",
+        "upload_time_iso_8601": "2021-09-23T00:00:46.581460Z",
+        "url": "https://files.pythonhosted.org/packages/72/c8/085b249f3f6798e1fc234863ef5e8b2a8a19befdc36ea1b25a3d3c120408/datasette_notebook-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "13cfbc9f7b18afd9c304e62e3dc7b627823195cb52b67f7e8227e6376df7bd3a",
+          "md5": "011489ef92d28f0f538b1157d451784a",
+          "sha256": "e31fb382f6bb314ced55cdb4d01eb7eb612dbfb5a0f0b72a9b076c7c5d875a29"
+        },
+        "downloads": -1,
+        "filename": "datasette-notebook-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "011489ef92d28f0f538b1157d451784a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4211,
+        "upload_time": "2021-09-23T00:00:47",
+        "upload_time_iso_8601": "2021-09-23T00:00:47.777457Z",
+        "url": "https://files.pythonhosted.org/packages/13/cf/bc9f7b18afd9c304e62e3dc7b627823195cb52b67f7e8227e6376df7bd3a/datasette-notebook-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "61b5270820b9ca717db366e42bb9a9dfa803dcf62ddcff2f2f2f66cc65d3a46e",
+          "md5": "554c23efeaa5a8723a61283adccbc510",
+          "sha256": "56e9106e4aeb00e0bbe0dd59541454d0f7a3bfbe85cb7e1912a0b40db5972c3c"
+        },
+        "downloads": -1,
+        "filename": "datasette_notebook-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "554c23efeaa5a8723a61283adccbc510",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5224,
+        "upload_time": "2021-11-02T17:48:28",
+        "upload_time_iso_8601": "2021-11-02T17:48:28.299975Z",
+        "url": "https://files.pythonhosted.org/packages/61/b5/270820b9ca717db366e42bb9a9dfa803dcf62ddcff2f2f2f66cc65d3a46e/datasette_notebook-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a0632c86c93941ebc6b19911e96ac399545bf25420ff77a8144194bd41b1771a",
+          "md5": "f76ba043a0eade5622e6057bb1f16fab",
+          "sha256": "b2163145a9b4e618f2bd0c13443958be8856e601d21447adf808b6fcfa6cd2fe"
+        },
+        "downloads": -1,
+        "filename": "datasette-notebook-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f76ba043a0eade5622e6057bb1f16fab",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4215,
+        "upload_time": "2021-11-02T17:48:29",
+        "upload_time_iso_8601": "2021-11-02T17:48:29.093494Z",
+        "url": "https://files.pythonhosted.org/packages/a0/63/2c86c93941ebc6b19911e96ac399545bf25420ff77a8144194bd41b1771a/datasette-notebook-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d360fd17a01cb2b8fc9a6f283f87617be212d995f2fed068ee7cde1b448124e0",
+          "md5": "d679881fce5f29a6a7172834fb1ba412",
+          "sha256": "5495ba201b31baadea1a099611616fa68243b0c8597a79382da7d66a5984fd4f"
+        },
+        "downloads": -1,
+        "filename": "datasette_notebook-0.2a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "d679881fce5f29a6a7172834fb1ba412",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 5750,
+        "upload_time": "2021-11-02T19:22:34",
+        "upload_time_iso_8601": "2021-11-02T19:22:34.740788Z",
+        "url": "https://files.pythonhosted.org/packages/d3/60/fd17a01cb2b8fc9a6f283f87617be212d995f2fed068ee7cde1b448124e0/datasette_notebook-0.2a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c2aea734db6a7fffc9fd60a35c75d5239de1995e24ca33b880cb7a1d27c0cd56",
+          "md5": "e8fb4fc4fd7bcbf2e170514682a1b908",
+          "sha256": "e3746d5fa52672b1f777ad5d4a053eb22324924cc368a87690b5b7c0e600bfd4"
+        },
+        "downloads": -1,
+        "filename": "datasette-notebook-0.2a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e8fb4fc4fd7bcbf2e170514682a1b908",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 4697,
+        "upload_time": "2021-11-02T19:22:36",
+        "upload_time_iso_8601": "2021-11-02T19:22:36.026460Z",
+        "url": "https://files.pythonhosted.org/packages/c2/ae/a734db6a7fffc9fd60a35c75d5239de1995e24ca33b880cb7a1d27c0cd56/datasette-notebook-0.2a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "d360fd17a01cb2b8fc9a6f283f87617be212d995f2fed068ee7cde1b448124e0",
+        "md5": "d679881fce5f29a6a7172834fb1ba412",
+        "sha256": "5495ba201b31baadea1a099611616fa68243b0c8597a79382da7d66a5984fd4f"
+      },
+      "downloads": -1,
+      "filename": "datasette_notebook-0.2a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "d679881fce5f29a6a7172834fb1ba412",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 5750,
+      "upload_time": "2021-11-02T19:22:34",
+      "upload_time_iso_8601": "2021-11-02T19:22:34.740788Z",
+      "url": "https://files.pythonhosted.org/packages/d3/60/fd17a01cb2b8fc9a6f283f87617be212d995f2fed068ee7cde1b448124e0/datasette_notebook-0.2a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "c2aea734db6a7fffc9fd60a35c75d5239de1995e24ca33b880cb7a1d27c0cd56",
+        "md5": "e8fb4fc4fd7bcbf2e170514682a1b908",
+        "sha256": "e3746d5fa52672b1f777ad5d4a053eb22324924cc368a87690b5b7c0e600bfd4"
+      },
+      "downloads": -1,
+      "filename": "datasette-notebook-0.2a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "e8fb4fc4fd7bcbf2e170514682a1b908",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 4697,
+      "upload_time": "2021-11-02T19:22:36",
+      "upload_time_iso_8601": "2021-11-02T19:22:36.026460Z",
+      "url": "https://files.pythonhosted.org/packages/c2/ae/a734db6a7fffc9fd60a35c75d5239de1995e24ca33b880cb7a1d27c0cd56/datasette-notebook-0.2a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

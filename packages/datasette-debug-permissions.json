@@ -1,0 +1,150 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-debug-permissions\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-debug-permissions.svg)](https://pypi.org/project/datasette-debug-permissions/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-debug-permissions?include_prereleases&label=changelog)](https://github.com/datasette/datasette-debug-permissions/releases)\n[![Tests](https://github.com/datasette/datasette-debug-permissions/workflows/Test/badge.svg)](https://github.com/datasette/datasette-debug-permissions/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-debug-permissions/blob/main/LICENSE)\n\nA Datasette plugin that outputs debug information about permission checks.\n\n## Installation\n\n```bash\ndatasette install datasette-debug-permissions\n```\n\n## Usage\n\nThis plugin adds debugging output to standard error as Datasette is running showing any times the `permission_allowed()` plugin hook is called.\n\nSee [Authentication and permissions](https://docs.datasette.io/en/stable/authentication.html) in the Datasette documentation for more on why this is useful.\n\n## Example output\n\n```\nINFO:     Uvicorn running on http://127.0.0.1:8833 (Press CTRL+C to quit)\npermission_allowed: action=view-instance, resource=<None>, actor=<None>\npermission_allowed: action=view-database, resource=_internal, actor=<None>\npermission_allowed: action=view-database, resource=mydatabase, actor=<None>\npermission_allowed: action=view-database, resource=mydatabase, actor=<None>\npermission_allowed: action=view-table, resource=('mydatabase', 'mytable'), actor=<None>\npermission_allowed: action=view-table, resource=('mydatabase', 'mytable'), actor=<None>\npermission_allowed: action=view-instance, resource=<None>, actor=<None>\npermission_allowed: action=view-instance, resource=<None>, actor=<None>\npermission_allowed: action=debug-menu, resource=<None>, actor=<None>\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-debug-permissions\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```\npip install -e '.[test]'\n```\nTo install the JavaScript build dependencies, run this:\n```bash\nnpm install\n```\nYou can use the [Just](https://github.com/casey/just) command runner to build the TypeScript to minified JavaScript like this:\n```bash\njust js\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "",
+    "keywords": "",
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-debug-permissions",
+    "package_url": "https://pypi.org/project/datasette-debug-permissions/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-debug-permissions/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-debug-permissions/actions",
+      "Changelog": "https://github.com/datasette/datasette-debug-permissions/releases",
+      "Homepage": "https://github.com/datasette/datasette-debug-permissions",
+      "Issues": "https://github.com/datasette/datasette-debug-permissions/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-debug-permissions/0.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "A Datasette plugin that outputs debug information about permission checks",
+    "version": "0.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 19427268,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7b2fa06eb3979dad4deb77b3906cc96e13bc0209bce09b699e1e167781bc67a7",
+          "md5": "83c607a41795e721b05fe3d1f1767383",
+          "sha256": "82a16068ae5ea76648ebe843f78d975e15ff2eb00dbf484dbc751228b96e146d"
+        },
+        "downloads": -1,
+        "filename": "datasette_debug_permissions-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "83c607a41795e721b05fe3d1f1767383",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 7088,
+        "upload_time": "2023-08-23T22:30:50",
+        "upload_time_iso_8601": "2023-08-23T22:30:50.900463Z",
+        "url": "https://files.pythonhosted.org/packages/7b/2f/a06eb3979dad4deb77b3906cc96e13bc0209bce09b699e1e167781bc67a7/datasette_debug_permissions-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "86b78ff2acc8e6dd7c8887efe480f282c1c058f6262f1ee5179d7823d65654ff",
+          "md5": "4ec6fcdcf7e0f699d30d8ad2731747d2",
+          "sha256": "169737e1725ebbba498a04d5d582e9708a57857cf3c385c768be23f3b47f8b80"
+        },
+        "downloads": -1,
+        "filename": "datasette-debug-permissions-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "4ec6fcdcf7e0f699d30d8ad2731747d2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 6714,
+        "upload_time": "2023-08-23T22:30:54",
+        "upload_time_iso_8601": "2023-08-23T22:30:54.354885Z",
+        "url": "https://files.pythonhosted.org/packages/86/b7/8ff2acc8e6dd7c8887efe480f282c1c058f6262f1ee5179d7823d65654ff/datasette-debug-permissions-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "7b2fa06eb3979dad4deb77b3906cc96e13bc0209bce09b699e1e167781bc67a7",
+        "md5": "83c607a41795e721b05fe3d1f1767383",
+        "sha256": "82a16068ae5ea76648ebe843f78d975e15ff2eb00dbf484dbc751228b96e146d"
+      },
+      "downloads": -1,
+      "filename": "datasette_debug_permissions-0.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "83c607a41795e721b05fe3d1f1767383",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 7088,
+      "upload_time": "2023-08-23T22:30:50",
+      "upload_time_iso_8601": "2023-08-23T22:30:50.900463Z",
+      "url": "https://files.pythonhosted.org/packages/7b/2f/a06eb3979dad4deb77b3906cc96e13bc0209bce09b699e1e167781bc67a7/datasette_debug_permissions-0.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "86b78ff2acc8e6dd7c8887efe480f282c1c058f6262f1ee5179d7823d65654ff",
+        "md5": "4ec6fcdcf7e0f699d30d8ad2731747d2",
+        "sha256": "169737e1725ebbba498a04d5d582e9708a57857cf3c385c768be23f3b47f8b80"
+      },
+      "downloads": -1,
+      "filename": "datasette-debug-permissions-0.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "4ec6fcdcf7e0f699d30d8ad2731747d2",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 6714,
+      "upload_time": "2023-08-23T22:30:54",
+      "upload_time_iso_8601": "2023-08-23T22:30:54.354885Z",
+      "url": "https://files.pythonhosted.org/packages/86/b7/8ff2acc8e6dd7c8887efe480f282c1c058f6262f1ee5179d7823d65654ff/datasette-debug-permissions-0.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,195 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-dns\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-dns.svg)](https://pypi.org/project/datasette-dns/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-dns?include_prereleases&label=changelog)](https://github.com/simonw/datasette-dns/releases)\n[![Tests](https://github.com/simonw/datasette-dns/workflows/Test/badge.svg)](https://github.com/simonw/datasette-dns/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-dns/blob/main/LICENSE)\n\nCustom SQL function for making DNS lookups\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-dns\n\n## Usage\n\nSo far the only supported SQL function is:\n\n    select dns_txt(\"oreilly.com\");\n\nTry this out in [the live demo](https://datasette-dns-demo.vercel.app/empty?sql=select+dns_txt%28%22oreilly.com%22%29%3B).\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-dns\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-dns",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-dns",
+    "package_url": "https://pypi.org/project/datasette-dns/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-dns/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-dns/actions",
+      "Changelog": "https://github.com/simonw/datasette-dns/releases",
+      "Homepage": "https://github.com/simonw/datasette-dns",
+      "Issues": "https://github.com/simonw/datasette-dns/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-dns/0.1a1/",
+    "requires_dist": [
+      "datasette",
+      "dnspython",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "pytest-mock ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Custom SQL function for making DNS lookups",
+    "version": "0.1a1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 8155735,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "95a96bd59d82115ceb5bdf44a3e2ee9574ebae63f4643264696e33318fa6bd8b",
+          "md5": "853f4a57dbc3c22623f7e060b0c60977",
+          "sha256": "a6b59101662d61835b87ec34dec2a5f373099d8b85a06eaba5e95c745674ce1e"
+        },
+        "downloads": -1,
+        "filename": "datasette_dns-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "853f4a57dbc3c22623f7e060b0c60977",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2297,
+        "upload_time": "2020-09-10T04:47:04",
+        "upload_time_iso_8601": "2020-09-10T04:47:04.089545Z",
+        "url": "https://files.pythonhosted.org/packages/95/a9/6bd59d82115ceb5bdf44a3e2ee9574ebae63f4643264696e33318fa6bd8b/datasette_dns-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "f7d94fbbd98c7fcc8c0e35a97d3dd4c0d61259c9447e32e16010ecff8a1a20b4",
+          "md5": "88a20a9082abde3134be422646d27e28",
+          "sha256": "6e806c87ea4e612b6f2ddd42f729eceb5e7b888f713812b40d1fef25114af66f"
+        },
+        "downloads": -1,
+        "filename": "datasette-dns-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "88a20a9082abde3134be422646d27e28",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2183,
+        "upload_time": "2020-09-10T04:47:06",
+        "upload_time_iso_8601": "2020-09-10T04:47:06.085865Z",
+        "url": "https://files.pythonhosted.org/packages/f7/d9/4fbbd98c7fcc8c0e35a97d3dd4c0d61259c9447e32e16010ecff8a1a20b4/datasette-dns-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "d9f449e165bf6cca7f7bcfd10b4d648ebde68111d3853947b9b4021b42a3cf33",
+          "md5": "e1352c8820e776c428d49b781fa2b6de",
+          "sha256": "0bacadadecdf1648edc790ede519044d95ad603336bfe72e29fb59353514f9ba"
+        },
+        "downloads": -1,
+        "filename": "datasette_dns-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e1352c8820e776c428d49b781fa2b6de",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2436,
+        "upload_time": "2020-09-10T16:00:37",
+        "upload_time_iso_8601": "2020-09-10T16:00:37.054543Z",
+        "url": "https://files.pythonhosted.org/packages/d9/f4/49e165bf6cca7f7bcfd10b4d648ebde68111d3853947b9b4021b42a3cf33/datasette_dns-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "56bd1bc94c36d6c1d3bdaae5e9fc579683e95b816f29e1a891da33d1bf60748e",
+          "md5": "45c84f25dca8abf9c53a54d6ba422344",
+          "sha256": "833d828ad0710d1157bebafb2b00768a86e16349052ca7fc865832e72954c9f0"
+        },
+        "downloads": -1,
+        "filename": "datasette-dns-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "45c84f25dca8abf9c53a54d6ba422344",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2338,
+        "upload_time": "2020-09-10T16:00:37",
+        "upload_time_iso_8601": "2020-09-10T16:00:37.963306Z",
+        "url": "https://files.pythonhosted.org/packages/56/bd/1bc94c36d6c1d3bdaae5e9fc579683e95b816f29e1a891da33d1bf60748e/datasette-dns-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "d9f449e165bf6cca7f7bcfd10b4d648ebde68111d3853947b9b4021b42a3cf33",
+        "md5": "e1352c8820e776c428d49b781fa2b6de",
+        "sha256": "0bacadadecdf1648edc790ede519044d95ad603336bfe72e29fb59353514f9ba"
+      },
+      "downloads": -1,
+      "filename": "datasette_dns-0.1a1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "e1352c8820e776c428d49b781fa2b6de",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2436,
+      "upload_time": "2020-09-10T16:00:37",
+      "upload_time_iso_8601": "2020-09-10T16:00:37.054543Z",
+      "url": "https://files.pythonhosted.org/packages/d9/f4/49e165bf6cca7f7bcfd10b4d648ebde68111d3853947b9b4021b42a3cf33/datasette_dns-0.1a1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "56bd1bc94c36d6c1d3bdaae5e9fc579683e95b816f29e1a891da33d1bf60748e",
+        "md5": "45c84f25dca8abf9c53a54d6ba422344",
+        "sha256": "833d828ad0710d1157bebafb2b00768a86e16349052ca7fc865832e72954c9f0"
+      },
+      "downloads": -1,
+      "filename": "datasette-dns-0.1a1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "45c84f25dca8abf9c53a54d6ba422344",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2338,
+      "upload_time": "2020-09-10T16:00:37",
+      "upload_time_iso_8601": "2020-09-10T16:00:37.963306Z",
+      "url": "https://files.pythonhosted.org/packages/56/bd/1bc94c36d6c1d3bdaae5e9fc579683e95b816f29e1a891da33d1bf60748e/datasette-dns-0.1a1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

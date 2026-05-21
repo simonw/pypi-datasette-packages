@@ -1,0 +1,238 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-json-preview\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-json-preview.svg)](https://pypi.org/project/datasette-json-preview/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-json-preview?include_prereleases&label=changelog)](https://github.com/simonw/datasette-json-preview/releases)\n[![Tests](https://github.com/simonw/datasette-json-preview/workflows/Test/badge.svg)](https://github.com/simonw/datasette-json-preview/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-json-preview/blob/main/LICENSE)\n\nPreview of new JSON default format for Datasette, see [issue #782](https://github.com/simonw/datasette/issues/782)\n\nThis plugin will continue to change while the new output format is explored.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-json-preview\n\n## Usage\n\nUse the `.json-preview` extension to preview the new JSON API design.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-json-preview\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/simonw/datasette-json-preview",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-json-preview",
+    "package_url": "https://pypi.org/project/datasette-json-preview/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-json-preview/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-json-preview/actions",
+      "Changelog": "https://github.com/simonw/datasette-json-preview/releases",
+      "Homepage": "https://github.com/simonw/datasette-json-preview",
+      "Issues": "https://github.com/simonw/datasette-json-preview/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-json-preview/0.3/",
+    "requires_dist": [
+      "datasette (>=0.55)",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "httpx ; extra == 'test'",
+      "sqlite-utils ; extra == 'test'"
+    ],
+    "requires_python": "",
+    "summary": "Preview of new JSON default format for Datasette, see issue #782",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9477211,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "aa788b560a945b647651dba9da298512a551f1fd6a269101a26959c155ab31cb",
+          "md5": "553a720cfa0b68ddde74d60c66aee095",
+          "sha256": "0f2fa5c2a276482ec5384954aed0911ebcadc534938554b555d6b6136627be7e"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_preview-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "553a720cfa0b68ddde74d60c66aee095",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2568,
+        "upload_time": "2020-10-11T18:18:03",
+        "upload_time_iso_8601": "2020-10-11T18:18:03.473294Z",
+        "url": "https://files.pythonhosted.org/packages/aa/78/8b560a945b647651dba9da298512a551f1fd6a269101a26959c155ab31cb/datasette_json_preview-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "8886515fca386d5a2c6f5a1abe236654a85c3a1a604dc2694f683475756535b8",
+          "md5": "edf4fd471aa5c94b645696a600426669",
+          "sha256": "d5506ca8ce7ba12602ec0c1ea50ffe91e3f86abf8968e2147665c64fe72ce63e"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-preview-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "edf4fd471aa5c94b645696a600426669",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2334,
+        "upload_time": "2020-10-11T18:18:05",
+        "upload_time_iso_8601": "2020-10-11T18:18:05.682740Z",
+        "url": "https://files.pythonhosted.org/packages/88/86/515fca386d5a2c6f5a1abe236654a85c3a1a604dc2694f683475756535b8/datasette-json-preview-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "7dc632d5fe8171ae979ef516b043cf6b044af12367c56b5f7900b4ab8276a4a0",
+          "md5": "9c91de657451003de23683bb0a3ea9c6",
+          "sha256": "4c00f7b700a747cd724682ab0e282c665adcfdbc369d83211d6961cccf4fce68"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_preview-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9c91de657451003de23683bb0a3ea9c6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2617,
+        "upload_time": "2020-10-20T04:54:32",
+        "upload_time_iso_8601": "2020-10-20T04:54:32.480583Z",
+        "url": "https://files.pythonhosted.org/packages/7d/c6/32d5fe8171ae979ef516b043cf6b044af12367c56b5f7900b4ab8276a4a0/datasette_json_preview-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2df59b6c40b5996461c80f23ca4ae6f82376c49b8547bc0994e8d05d9124011d",
+          "md5": "9bda203edda300302af0d53c74081c71",
+          "sha256": "de77b28cc40d39a2400d889e739241e2469c902fd7983799da2d04ca23176eb4"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-preview-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9bda203edda300302af0d53c74081c71",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2383,
+        "upload_time": "2020-10-20T04:54:33",
+        "upload_time_iso_8601": "2020-10-20T04:54:33.315392Z",
+        "url": "https://files.pythonhosted.org/packages/2d/f5/9b6c40b5996461c80f23ca4ae6f82376c49b8547bc0994e8d05d9124011d/datasette-json-preview-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3523a7fee81e5514c4605d5909b7e9697ec73d8153b050ddd3954f8c3a163de9",
+          "md5": "f4f450d717cb4dc920298952ea57b6e7",
+          "sha256": "4a2cbec673ddcbec8bc37fe4bb9defd8b98b159dcdbf0e215304d5e377bc523d"
+        },
+        "downloads": -1,
+        "filename": "datasette_json_preview-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f4f450d717cb4dc920298952ea57b6e7",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": null,
+        "size": 2730,
+        "upload_time": "2021-02-20T19:46:10",
+        "upload_time_iso_8601": "2021-02-20T19:46:10.918863Z",
+        "url": "https://files.pythonhosted.org/packages/35/23/a7fee81e5514c4605d5909b7e9697ec73d8153b050ddd3954f8c3a163de9/datasette_json_preview-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "955bea598bc6bb872bc13edf219099a61566ef0243eb7b18c0ecef49c5ebb35d",
+          "md5": "41f4f19fa8f75fcb1b49cd50fdaa2e68",
+          "sha256": "8404ddb9423e3616870cf5aee068e0b5cecb92b38aa864fa241bcd936951caaf"
+        },
+        "downloads": -1,
+        "filename": "datasette-json-preview-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "41f4f19fa8f75fcb1b49cd50fdaa2e68",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": null,
+        "size": 2489,
+        "upload_time": "2021-02-20T19:46:11",
+        "upload_time_iso_8601": "2021-02-20T19:46:11.669376Z",
+        "url": "https://files.pythonhosted.org/packages/95/5b/ea598bc6bb872bc13edf219099a61566ef0243eb7b18c0ecef49c5ebb35d/datasette-json-preview-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "3523a7fee81e5514c4605d5909b7e9697ec73d8153b050ddd3954f8c3a163de9",
+        "md5": "f4f450d717cb4dc920298952ea57b6e7",
+        "sha256": "4a2cbec673ddcbec8bc37fe4bb9defd8b98b159dcdbf0e215304d5e377bc523d"
+      },
+      "downloads": -1,
+      "filename": "datasette_json_preview-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f4f450d717cb4dc920298952ea57b6e7",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": null,
+      "size": 2730,
+      "upload_time": "2021-02-20T19:46:10",
+      "upload_time_iso_8601": "2021-02-20T19:46:10.918863Z",
+      "url": "https://files.pythonhosted.org/packages/35/23/a7fee81e5514c4605d5909b7e9697ec73d8153b050ddd3954f8c3a163de9/datasette_json_preview-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "955bea598bc6bb872bc13edf219099a61566ef0243eb7b18c0ecef49c5ebb35d",
+        "md5": "41f4f19fa8f75fcb1b49cd50fdaa2e68",
+        "sha256": "8404ddb9423e3616870cf5aee068e0b5cecb92b38aa864fa241bcd936951caaf"
+      },
+      "downloads": -1,
+      "filename": "datasette-json-preview-0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "41f4f19fa8f75fcb1b49cd50fdaa2e68",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": null,
+      "size": 2489,
+      "upload_time": "2021-02-20T19:46:11",
+      "upload_time_iso_8601": "2021-02-20T19:46:11.669376Z",
+      "url": "https://files.pythonhosted.org/packages/95/5b/ea598bc6bb872bc13edf219099a61566ef0243eb7b18c0ecef49c5ebb35d/datasette-json-preview-0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

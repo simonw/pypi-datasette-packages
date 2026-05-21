@@ -1,0 +1,378 @@
+{
+  "info": {
+    "author": "Alex Garcia",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-pins\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-pins.svg)](https://pypi.org/project/datasette-pins/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-pins?include_prereleases&label=changelog)](https://github.com/datasette/datasette-pins/releases)\n[![Tests](https://github.com/datasette/datasette-pins/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-pins/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-pins/blob/main/LICENSE)\n\nPin databases, tables, queries, and more to the Datasette homepage!\n\n<img src=\"https://datasette-cloud-assets.s3.amazonaws.com/blog/2024/datasette-pins/hero.png\"/>\n\n## Installation\n\n`datasette-pins` requires a recent 1.0 alpha version of Datasette to work.\n\n```bash\npip install datasette>=1.0a13\n```\nAfterwards, install this plugin in the same environment as Datasette.\n\n```bash\ndatasette install datasette-pins\n```\n\n## Configuration\n\n`datasette-pins` stores pins in the [internal database](https://docs.datasette.io/en/latest/internals.html#datasette-s-internal-database). This database runs in-memory by default, which means your pins will be lost if you restart the server. To avoid that, start Datasette with the `--internal` option to specify where that database should be stored on disk:\n\n```bash\ndatasette mydatabase.db --internal internal.db\n```\n`datasette-pins` has two permissions `datasette-pins-write` and\n`datasette-pins-read`. Actors with the `datasette-pins-write` permissions can\npin and reorder items, while actors with `datasette-pins-read` permissions can\nonly view pinned items.\n\nHere's an example\n[`datasette.yaml` file](https://docs.datasette.io/en/latest/configuration.html#datasette-yaml-reference)\nwhere all actors can view pins, but only the `root` actor can pin items:\n\n```yaml\npermissions:\n  datasette-pins-read:\n    id: \"*\"\n    unauthenticated: true\n  datasette-pins-write:\n    id: \"root\"\n```\n\n## Usage\n\nOnce logged in, the `root` use will see new pin/unpin option under the database,\ntable, and query actions menu:\n\n<img src=\"https://datasette-cloud-assets.s3.amazonaws.com/blog/2024/datasette-pins/table-example.png\"/>\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new\nvirtual environment:\n\n```bash\ncd datasette-pins\npython3 -m venv venv\nsource venv/bin/activate\n```\n\nNow install the dependencies and test dependencies:\n\n```bash\npip install -e '.[test]'\n```\n\nTo run the tests:\n\n```bash\npytest\n```\n\n### Building JavaScript from TypeScript\n\nThis plugin includes TypeScript/TSX source files in `datasette_pins/frontend/` that need to be compiled to JavaScript. If you modify any `.ts` or `.tsx` files, you'll need to rebuild the JavaScript.\n\nFirst install the Node.js dependencies:\n\n```bash\nnpm install\n```\n\nThen build the JavaScript using [just](https://github.com/casey/just):\n\n```bash\njust js\n```\n\nThis uses esbuild to compile and minify the TypeScript files into `datasette_pins/static/`.\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-pins",
+    "package_url": "https://pypi.org/project/datasette-pins/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-pins/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-pins/actions",
+      "Changelog": "https://github.com/datasette/datasette-pins/releases",
+      "Homepage": "https://github.com/datasette/datasette-pins",
+      "Issues": "https://github.com/datasette/datasette-pins/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-pins/0.1a7/",
+    "requires_dist": [
+      "datasette>=1.0a21",
+      "sqlite-migrate>=0.1b0",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "ruff; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Pin databases, tables, and other items to the Datasette homepage",
+    "version": "0.1a7",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 34076400,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a2": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "6cdce6e49d0cc410b18302aade09421e66a4220342535b4b539c8e8812897932",
+          "md5": "59317cbefb3a9a7d08fc53a9403953a6",
+          "sha256": "3e9d9cfdf8a490b39b103e43be81bff214117166191b4d91d40c0f3148193440"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "59317cbefb3a9a7d08fc53a9403953a6",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 41184,
+        "upload_time": "2024-05-08T17:27:58",
+        "upload_time_iso_8601": "2024-05-08T17:27:58.816238Z",
+        "url": "https://files.pythonhosted.org/packages/6c/dc/e6e49d0cc410b18302aade09421e66a4220342535b4b539c8e8812897932/datasette_pins-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2944efbf22af4226d61c3f26aec75a12bf2e49629cdbc81967659b5cee59b103",
+          "md5": "6fdcf2eb01dc29751580f6d2147396de",
+          "sha256": "70ae001192b478af2170af628afaf388d59b231f71776783b3838a49df74ba72"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6fdcf2eb01dc29751580f6d2147396de",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 37654,
+        "upload_time": "2024-05-08T17:28:02",
+        "upload_time_iso_8601": "2024-05-08T17:28:02.612979Z",
+        "url": "https://files.pythonhosted.org/packages/29/44/efbf22af4226d61c3f26aec75a12bf2e49629cdbc81967659b5cee59b103/datasette_pins-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a3": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "649c5e5f57e7b1f9eee6b626940c601542f242d6440212e444c24dff85ffffef",
+          "md5": "7ca09a375fe9010bdf967981331178d9",
+          "sha256": "c19084522a6bd9bc23bc019682195ef21f692fc721f6b3ef8de0fcf975c72b87"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7ca09a375fe9010bdf967981331178d9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 41453,
+        "upload_time": "2024-08-07T23:31:05",
+        "upload_time_iso_8601": "2024-08-07T23:31:05.785536Z",
+        "url": "https://files.pythonhosted.org/packages/64/9c/5e5f57e7b1f9eee6b626940c601542f242d6440212e444c24dff85ffffef/datasette_pins-0.1a3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "9a625d854d8c912c9b30ddd0ce28143340ab116e7cbae56a6161e74c8ceb9964",
+          "md5": "758d7860a1320dbdfb4fc63157783316",
+          "sha256": "c06491eab7d552eb717f0071e8f2c69433b6c9ad1e1349320ad3c12ad7e0c1b7"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "758d7860a1320dbdfb4fc63157783316",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 38073,
+        "upload_time": "2024-08-07T23:31:06",
+        "upload_time_iso_8601": "2024-08-07T23:31:06.963664Z",
+        "url": "https://files.pythonhosted.org/packages/9a/62/5d854d8c912c9b30ddd0ce28143340ab116e7cbae56a6161e74c8ceb9964/datasette_pins-0.1a3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a4": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "59ffcafdda87f0f821ebb21852855665c7da26d2b5b76df889ed2381517e4d98",
+          "md5": "653e77dbeaa932951f45140929207f44",
+          "sha256": "035ffa9cd18cfa4cc246fc960f50ae86ea093c33803dfecd49ff4078c3df3e90"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "653e77dbeaa932951f45140929207f44",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 41452,
+        "upload_time": "2024-09-01T22:16:53",
+        "upload_time_iso_8601": "2024-09-01T22:16:53.756269Z",
+        "url": "https://files.pythonhosted.org/packages/59/ff/cafdda87f0f821ebb21852855665c7da26d2b5b76df889ed2381517e4d98/datasette_pins-0.1a4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "34ff07d0ee2c17e4870caec6ecfd68ac240adf8b6509c3c1a9fbea04df8af940",
+          "md5": "8ecec072519f86ef96258d7ea97a9eae",
+          "sha256": "09c80170c10b0d0990fcd58cfb0fc9e5fcdea74d18f1ea00695afec5b03ee0b7"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "8ecec072519f86ef96258d7ea97a9eae",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 38068,
+        "upload_time": "2024-09-01T22:16:55",
+        "upload_time_iso_8601": "2024-09-01T22:16:55.241833Z",
+        "url": "https://files.pythonhosted.org/packages/34/ff/07d0ee2c17e4870caec6ecfd68ac240adf8b6509c3c1a9fbea04df8af940/datasette_pins-0.1a4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a5": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "fefb3a6564a4f6016168b6f6fbb1e3fb1e124fd51a16895d13a6e08e0478acd1",
+          "md5": "463581c6a43b5b3e56a393f254b4b502",
+          "sha256": "5f2aa1039bbbcc08d8e76fe47059da37280228e0cbc1d753d8574ed6716e389b"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a5-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "463581c6a43b5b3e56a393f254b4b502",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 41491,
+        "upload_time": "2025-10-21T20:45:40",
+        "upload_time_iso_8601": "2025-10-21T20:45:40.288596Z",
+        "url": "https://files.pythonhosted.org/packages/fe/fb/3a6564a4f6016168b6f6fbb1e3fb1e124fd51a16895d13a6e08e0478acd1/datasette_pins-0.1a5-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "026ca1e5038af16c1e2facfbc9d0cee13a20440fe25098890ec0c164d6ca4172",
+          "md5": "6e8a3345003179f78d316856cb1f5df5",
+          "sha256": "9e006ba3b91041b06c4acdba1852db9a35c05928a308592e4c85b0bfbbe846bc"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a5.tar.gz",
+        "has_sig": false,
+        "md5_digest": "6e8a3345003179f78d316856cb1f5df5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 38110,
+        "upload_time": "2025-10-21T20:45:41",
+        "upload_time_iso_8601": "2025-10-21T20:45:41.657248Z",
+        "url": "https://files.pythonhosted.org/packages/02/6c/a1e5038af16c1e2facfbc9d0cee13a20440fe25098890ec0c164d6ca4172/datasette_pins-0.1a5.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a6": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "30215ba323b1d6823f27bcabb2877eaa7a2bddaa43b1b5bf1d82f1b0136a294a",
+          "md5": "7c7b24065f65f93626693e16c2922f45",
+          "sha256": "c2c7c73b2371392f5f555142a9b57e80371534667acfc2330022b116201a18cf"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a6-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7c7b24065f65f93626693e16c2922f45",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 33132,
+        "upload_time": "2025-11-11T22:32:56",
+        "upload_time_iso_8601": "2025-11-11T22:32:56.952577Z",
+        "url": "https://files.pythonhosted.org/packages/30/21/5ba323b1d6823f27bcabb2877eaa7a2bddaa43b1b5bf1d82f1b0136a294a/datasette_pins-0.1a6-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "cb00e4595b930f911f1e4aeaeac98eb116fa345810bb882969ad96f745a6e53f",
+          "md5": "3fcb47577477f5bdef8b05e865dac161",
+          "sha256": "ac58bfbe2b02c9df7dd743970c943a0235a4824b8fd3403f8ecb0b4f68311cc6"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a6.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3fcb47577477f5bdef8b05e865dac161",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 33864,
+        "upload_time": "2025-11-11T22:32:58",
+        "upload_time_iso_8601": "2025-11-11T22:32:58.201099Z",
+        "url": "https://files.pythonhosted.org/packages/cb/00/e4595b930f911f1e4aeaeac98eb116fa345810bb882969ad96f745a6e53f/datasette_pins-0.1a6.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1a7": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "0ce3a5292cd04d28488a29bcdeeff905020afe5421e04a896d2ad9b76b65e7ff",
+          "md5": "cc19f72cc8a655d6d3a18020dc51a8db",
+          "sha256": "edd5f62aa23bafc1b617e6a4e5c281eafd2509fa1d303ff0fa84ca6c96c9ecde"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a7-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "cc19f72cc8a655d6d3a18020dc51a8db",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 33124,
+        "upload_time": "2026-02-05T16:35:23",
+        "upload_time_iso_8601": "2026-02-05T16:35:23.746546Z",
+        "url": "https://files.pythonhosted.org/packages/0c/e3/a5292cd04d28488a29bcdeeff905020afe5421e04a896d2ad9b76b65e7ff/datasette_pins-0.1a7-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "ab3466d00c2a458c166ebe0a3b89f54907652e62ad9ebb1e0dd31a90d9e8d1f1",
+          "md5": "5d942a30d5f360b96af10ef0f88cc21a",
+          "sha256": "ccff76448c2adf8754f670fc77bdfb5de3903805afcbc9d5f26545b1097c8f5e"
+        },
+        "downloads": -1,
+        "filename": "datasette_pins-0.1a7.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5d942a30d5f360b96af10ef0f88cc21a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 34005,
+        "upload_time": "2026-02-05T16:35:25",
+        "upload_time_iso_8601": "2026-02-05T16:35:25.217505Z",
+        "url": "https://files.pythonhosted.org/packages/ab/34/66d00c2a458c166ebe0a3b89f54907652e62ad9ebb1e0dd31a90d9e8d1f1/datasette_pins-0.1a7.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "0ce3a5292cd04d28488a29bcdeeff905020afe5421e04a896d2ad9b76b65e7ff",
+        "md5": "cc19f72cc8a655d6d3a18020dc51a8db",
+        "sha256": "edd5f62aa23bafc1b617e6a4e5c281eafd2509fa1d303ff0fa84ca6c96c9ecde"
+      },
+      "downloads": -1,
+      "filename": "datasette_pins-0.1a7-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "cc19f72cc8a655d6d3a18020dc51a8db",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 33124,
+      "upload_time": "2026-02-05T16:35:23",
+      "upload_time_iso_8601": "2026-02-05T16:35:23.746546Z",
+      "url": "https://files.pythonhosted.org/packages/0c/e3/a5292cd04d28488a29bcdeeff905020afe5421e04a896d2ad9b76b65e7ff/datasette_pins-0.1a7-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "ab3466d00c2a458c166ebe0a3b89f54907652e62ad9ebb1e0dd31a90d9e8d1f1",
+        "md5": "5d942a30d5f360b96af10ef0f88cc21a",
+        "sha256": "ccff76448c2adf8754f670fc77bdfb5de3903805afcbc9d5f26545b1097c8f5e"
+      },
+      "downloads": -1,
+      "filename": "datasette_pins-0.1a7.tar.gz",
+      "has_sig": false,
+      "md5_digest": "5d942a30d5f360b96af10ef0f88cc21a",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 34005,
+      "upload_time": "2026-02-05T16:35:25",
+      "upload_time_iso_8601": "2026-02-05T16:35:25.217505Z",
+      "url": "https://files.pythonhosted.org/packages/ab/34/66d00c2a458c166ebe0a3b89f54907652e62ad9ebb1e0dd31a90d9e8d1f1/datasette_pins-0.1a7.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

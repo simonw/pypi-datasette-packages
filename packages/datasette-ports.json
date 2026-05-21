@@ -1,0 +1,241 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette"
+    ],
+    "description": "# datasette-ports\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ports.svg)](https://pypi.org/project/datasette-ports/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-ports?include_prereleases&label=changelog)](https://github.com/datasette/datasette-ports/releases)\n[![Tests](https://github.com/datasette/datasette-ports/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-ports/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-ports/blob/main/LICENSE)\n\nFind all currently running Datasette instances on your machine and list their ports, databases, versions and plugins.\n\n## Installation\n\nInstall this as a plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-ports\n```\n\nOr run it directly using `uvx`:\n```bash\nuvx datasette-ports\n```\nOr install it as a standalone tool:\n```bash\nuv tool install datasette-ports\ndatasette-ports\n```\n## Usage\n\nIf installed as a Datasette plugin:\n\n```bash\ndatasette ports\n```\n\nOr as a standalone command:\n\n```bash\ndatasette-ports\n```\nThis uses `lsof` to find all Python processes listening on TCP ports, then probes each one to check if it is a Datasette instance. For each instance found it displays the URL, Datasette version, attached databases and installed plugins.\n\nExample output:\n```\nhttp://127.0.0.1:8007/ - v1.0a26\n  Directory: /Users/simon/dev/blog\n  Databases:\n    simonwillisonblog: /Users/simon/dev/blog/simonwillisonblog.db\n  Plugins:\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8001/ - v1.0a26\n  Directory: /Users/simon/dev/creatures\n  Databases:\n    creatures: /tmp/creatures.db\n  Plugins:\n    datasette-extract\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8900/ - v0.65.2\n  Databases:\n    logs: /Users/simon/Library/Application Support/io.datasette.llm/logs.db\nhttp://0.0.0.0:8014/ - v1.0a26\n  Directory: /Users/simon/dev/datasette\n  Databases:\n    content: /Users/simon/dev/datasette/content.db\n    trees: /Users/simon/dev/datasette/trees.db\n    _internal\n  Plugins:\n    datasette-llm\n    datasette-visible-internal-db\n```\n\nDatabase paths come from each instance's `/-/databases.json` endpoint. Where the process working directory can be determined (via `/proc/<pid>/cwd` on Linux or `lsof` on macOS), relative paths are resolved to absolute ones. On platforms where the working directory cannot be determined the `Directory:` line is omitted and paths are shown as reported by Datasette.\n\n### JSON output\n\nUse `--json` to get machine-readable output:\n\n```bash\ndatasette ports --json\n# or\ndatasette-ports --json\n```\n```json\n[\n  {\n    \"url\": \"http://127.0.0.1:8007/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8007,\n    \"pid\": 42373,\n    \"cwd\": \"/Users/simon/dev/blog\",\n    \"version\": \"1.0a26\",\n    \"databases\": [\n      {\"name\": \"simonwillisonblog\", \"path\": \"/Users/simon/dev/blog/simonwillisonblog.db\"}\n    ],\n    \"plugins\": [\n      \"datasette-llm\",\n      \"datasette-secrets\"\n    ]\n  },\n  {\n    \"url\": \"http://127.0.0.1:8900/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8900,\n    \"pid\": 12345,\n    \"cwd\": null,\n    \"version\": \"0.65.2\",\n    \"databases\": [\n      {\"name\": \"logs\", \"path\": \"/Users/simon/Library/Application Support/io.datasette.llm/logs.db\"}\n    ],\n    \"plugins\": []\n  }\n]\n```\n\n## Development\n\nTo set up this project locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-ports\nuv run datasette-ports --help\n# Or:\nuv run datasette ports --help\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": [
+      "License-File"
+    ],
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-ports",
+    "package_url": "https://pypi.org/project/datasette-ports/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-ports/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-ports/actions",
+      "Changelog": "https://github.com/datasette/datasette-ports/releases",
+      "Homepage": "https://github.com/datasette/datasette-ports",
+      "Issues": "https://github.com/datasette/datasette-ports/issues"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-ports/0.3/",
+    "requires_dist": [
+      "click",
+      "httpx"
+    ],
+    "requires_python": ">=3.10",
+    "summary": "Find all currently running Datasette instances and list their ports",
+    "version": "0.3",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 36131561,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "5a709510c6ffacc5bda5e36297769a937236870854c86ff48760de86f713a2a6",
+          "md5": "6f9ff8adf586f5581a33079e0157daaf",
+          "sha256": "e29d19ec38bdde98131ff6253dcef29a1cfb3f21542f277242822c1285300787"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6f9ff8adf586f5581a33079e0157daaf",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8092,
+        "upload_time": "2026-04-06T00:24:44",
+        "upload_time_iso_8601": "2026-04-06T00:24:44.326338Z",
+        "url": "https://files.pythonhosted.org/packages/5a/70/9510c6ffacc5bda5e36297769a937236870854c86ff48760de86f713a2a6/datasette_ports-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "082d2be3e5c1510c00248e14859cfa01da0fe2d45a2d6bf33409d9e1776b99b4",
+          "md5": "9f5462c87c44b735633429ba1e21fbaf",
+          "sha256": "1ea4d51c40568662c6c79955047eb904732802a2b144f6d37088816b03108d1f"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "9f5462c87c44b735633429ba1e21fbaf",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8674,
+        "upload_time": "2026-04-06T00:24:45",
+        "upload_time_iso_8601": "2026-04-06T00:24:45.481645Z",
+        "url": "https://files.pythonhosted.org/packages/08/2d/2be3e5c1510c00248e14859cfa01da0fe2d45a2d6bf33409d9e1776b99b4/datasette_ports-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.2": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "9bf7c177a3fcab9eb7b1e0a959effe7ed21b6850fa543c226f24d80a8b89b838",
+          "md5": "86c8a6f98c873836ffcee0d9c4612cb9",
+          "sha256": "c80fac0b34a08261a1f2676c10839109cbe9713db8d752af41b968911c31aef9"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "86c8a6f98c873836ffcee0d9c4612cb9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8267,
+        "upload_time": "2026-04-06T03:26:35",
+        "upload_time_iso_8601": "2026-04-06T03:26:35.521559Z",
+        "url": "https://files.pythonhosted.org/packages/9b/f7/c177a3fcab9eb7b1e0a959effe7ed21b6850fa543c226f24d80a8b89b838/datasette_ports-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "b322f393112ea24a44296e360c8ff533900673b04d890138f1e9b0fcf1593b4e",
+          "md5": "e1f3ccaa44305a3c31fecee2baa85341",
+          "sha256": "bc33b8997aed3c90e1f3007f2f290138b9a14ae861b77560afbcfb178fe25e6c"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e1f3ccaa44305a3c31fecee2baa85341",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 8890,
+        "upload_time": "2026-04-06T03:26:36",
+        "upload_time_iso_8601": "2026-04-06T03:26:36.839562Z",
+        "url": "https://files.pythonhosted.org/packages/b3/22/f393112ea24a44296e360c8ff533900673b04d890138f1e9b0fcf1593b4e/datasette_ports-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.3": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "8125f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5",
+          "md5": "6a224e48bbedfa81d2016db855bec9d1",
+          "sha256": "25fd64d8e27b7c921b6b9b4e8ac861cfaf8a914214de73cd4f414fb86ae9cc7e"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "6a224e48bbedfa81d2016db855bec9d1",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9079,
+        "upload_time": "2026-04-15T02:51:40",
+        "upload_time_iso_8601": "2026-04-15T02:51:40.678700Z",
+        "url": "https://files.pythonhosted.org/packages/81/25/f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5/datasette_ports-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "5d47946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5",
+          "md5": "2d7cf67b55300911c956adcb65097825",
+          "sha256": "05a59fa1a8c4fb0ec6f86d0b4845980bff64baaa3f4835bd3adbe75a94c0a05e"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2d7cf67b55300911c956adcb65097825",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 9880,
+        "upload_time": "2026-04-15T02:51:41",
+        "upload_time_iso_8601": "2026-04-15T02:51:41.705196Z",
+        "url": "https://files.pythonhosted.org/packages/5d/47/946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5/datasette_ports-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "8125f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5",
+        "md5": "6a224e48bbedfa81d2016db855bec9d1",
+        "sha256": "25fd64d8e27b7c921b6b9b4e8ac861cfaf8a914214de73cd4f414fb86ae9cc7e"
+      },
+      "downloads": -1,
+      "filename": "datasette_ports-0.3-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "6a224e48bbedfa81d2016db855bec9d1",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 9079,
+      "upload_time": "2026-04-15T02:51:40",
+      "upload_time_iso_8601": "2026-04-15T02:51:40.678700Z",
+      "url": "https://files.pythonhosted.org/packages/81/25/f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5/datasette_ports-0.3-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "digests": {
+        "blake2b_256": "5d47946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5",
+        "md5": "2d7cf67b55300911c956adcb65097825",
+        "sha256": "05a59fa1a8c4fb0ec6f86d0b4845980bff64baaa3f4835bd3adbe75a94c0a05e"
+      },
+      "downloads": -1,
+      "filename": "datasette_ports-0.3.tar.gz",
+      "has_sig": false,
+      "md5_digest": "2d7cf67b55300911c956adcb65097825",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.10",
+      "size": 9880,
+      "upload_time": "2026-04-15T02:51:41",
+      "upload_time_iso_8601": "2026-04-15T02:51:41.705196Z",
+      "url": "https://files.pythonhosted.org/packages/5d/47/946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5/datasette_ports-0.3.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

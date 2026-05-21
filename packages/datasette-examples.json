@@ -1,0 +1,154 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "Framework :: Datasette",
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "description": "# datasette-examples\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-examples.svg)](https://pypi.org/project/datasette-examples/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-examples?include_prereleases&label=changelog)](https://github.com/datasette/datasette-examples/releases)\n[![Tests](https://github.com/datasette/datasette-examples/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-examples/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-examples/blob/main/LICENSE)\n\nLoad example SQL scripts into Datasette on startup\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n```bash\npip install datasette-examples\n```\n\n## Usage\n\nThis plugin is configured using `metadata.yaml` (or `metadata.json` or `datasette.yml` in Datasette 1.0). \n\n### Loading example SQL\n\nAdd a block like this that specifies the example SQL scripts you would like to load:\n\n```yaml\nplugins:\n  datasette-examples:\n    startup:\n      examples:\n      - url: https://example.com/path/to/example1.sql\n        if_not_table: table_name_1\n      - url: https://example.com/path/to/example2.sql\n        if_not_table: table_name_2\n```\n\nWhen Datasette starts running, it will:\n\n1. Check if the specified table (`if_not_table`) exists in the `examples.db` database\n2. If the table doesn't exist, it will download the SQL file from the provided URL\n3. Execute the SQL against `examples.db`\n\nThe `if_not_table` should be set to a table that is created by the script, to prevent the script from executing more than once.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-examples\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": "Apache-2.0",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "datasette-examples",
+    "package_url": "https://pypi.org/project/datasette-examples/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/datasette-examples/",
+    "project_urls": {
+      "CI": "https://github.com/datasette/datasette-examples/actions",
+      "Changelog": "https://github.com/datasette/datasette-examples/releases",
+      "Homepage": "https://github.com/datasette/datasette-examples",
+      "Issues": "https://github.com/datasette/datasette-examples/issues"
+    },
+    "provides_extra": [
+      "test"
+    ],
+    "release_url": "https://pypi.org/project/datasette-examples/0.1a0/",
+    "requires_dist": [
+      "datasette",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\"",
+      "pytest-httpx; extra == \"test\""
+    ],
+    "requires_python": ">=3.8",
+    "summary": "Load example SQL scripts into Datasette on startup",
+    "version": "0.1a0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 25379910,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "simonw"
+      }
+    ]
+  },
+  "releases": {
+    "0.1a0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a047090e7d4a2dc89407ea47b7ff79b3c073c0c76464a7dfc168ef8f0919564f",
+          "md5": "f7f37161178a44290ae79d5d1cce7b38",
+          "sha256": "39f0a364a7aceec29c44daf4d06908ae45ab66d857676bfcfa013ac2e0625abb"
+        },
+        "downloads": -1,
+        "filename": "datasette_examples-0.1a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "f7f37161178a44290ae79d5d1cce7b38",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 7206,
+        "upload_time": "2024-10-08T17:56:06",
+        "upload_time_iso_8601": "2024-10-08T17:56:06.860918Z",
+        "url": "https://files.pythonhosted.org/packages/a0/47/090e7d4a2dc89407ea47b7ff79b3c073c0c76464a7dfc168ef8f0919564f/datasette_examples-0.1a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "2b02682a2134b351a0991561e620325a69b969679db32c0eb8365eaf8c306702",
+          "md5": "ee73ec736ab4c27469fdb62f61857b81",
+          "sha256": "74f3528672675f36be8e016e21d1055912d52f3b9540365d2bd613a79cb06954"
+        },
+        "downloads": -1,
+        "filename": "datasette_examples-0.1a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "ee73ec736ab4c27469fdb62f61857b81",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.8",
+        "size": 7398,
+        "upload_time": "2024-10-08T17:56:07",
+        "upload_time_iso_8601": "2024-10-08T17:56:07.749733Z",
+        "url": "https://files.pythonhosted.org/packages/2b/02/682a2134b351a0991561e620325a69b969679db32c0eb8365eaf8c306702/datasette_examples-0.1a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "a047090e7d4a2dc89407ea47b7ff79b3c073c0c76464a7dfc168ef8f0919564f",
+        "md5": "f7f37161178a44290ae79d5d1cce7b38",
+        "sha256": "39f0a364a7aceec29c44daf4d06908ae45ab66d857676bfcfa013ac2e0625abb"
+      },
+      "downloads": -1,
+      "filename": "datasette_examples-0.1a0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "f7f37161178a44290ae79d5d1cce7b38",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.8",
+      "size": 7206,
+      "upload_time": "2024-10-08T17:56:06",
+      "upload_time_iso_8601": "2024-10-08T17:56:06.860918Z",
+      "url": "https://files.pythonhosted.org/packages/a0/47/090e7d4a2dc89407ea47b7ff79b3c073c0c76464a7dfc168ef8f0919564f/datasette_examples-0.1a0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "2b02682a2134b351a0991561e620325a69b969679db32c0eb8365eaf8c306702",
+        "md5": "ee73ec736ab4c27469fdb62f61857b81",
+        "sha256": "74f3528672675f36be8e016e21d1055912d52f3b9540365d2bd613a79cb06954"
+      },
+      "downloads": -1,
+      "filename": "datasette_examples-0.1a0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "ee73ec736ab4c27469fdb62f61857b81",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.8",
+      "size": 7398,
+      "upload_time": "2024-10-08T17:56:07",
+      "upload_time_iso_8601": "2024-10-08T17:56:07.749733Z",
+      "url": "https://files.pythonhosted.org/packages/2b/02/682a2134b351a0991561e620325a69b969679db32c0eb8365eaf8c306702/datasette_examples-0.1a0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
