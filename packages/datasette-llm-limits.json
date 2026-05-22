@@ -6,7 +6,7 @@
     "classifiers": [
       "Framework :: Datasette"
     ],
-    "description": "# datasette-llm-limits\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-llm-limits.svg)](https://pypi.org/project/datasette-llm-limits/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-llm-limits?include_prereleases&label=changelog)](https://github.com/datasette/datasette-llm-limits/releases)\n[![Tests](https://github.com/datasette/datasette-llm-limits/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-llm-limits/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-llm-limits/blob/main/LICENSE)\n\nA Datasette plugin for enforcing **windowed spending caps** on LLM usage.\n\n`datasette-llm-limits` plugs into [`datasette-llm-accountant`](https://github.com/datasette/datasette-llm-accountant)\nas an `Accountant` implementation, so every prompt issued through `datasette-llm`\nis checked against your configured caps before it is allowed to run.\n\nIt is designed for the case of **time-windowed caps that reset automatically** —\n\"no single user may spend more than $1.00 per day\", or \"the whole instance is\ncapped at $50 per calendar month\".\n\nFor a top-up-style refillable balance, see the sibling project\n`datasette-llm-allowance`.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\ndatasette install datasette-llm-limits\n```\n\nThis will also install `datasette-llm-accountant`, which is required.\n\n## Configuration\n\nAll configuration lives in `datasette.yaml` under\n`plugins.datasette-llm-limits.limits`. Each entry is a named limit; on every\nreservation the plugin checks **every matching limit** and rejects the call if\nany one would be exceeded.\n\n```yaml\nplugins:\n  datasette-llm-limits:\n    limits:\n      # Per-user, rolling 24 hours\n      per-user-daily:\n        scope: actor\n        window: rolling-24h\n        amount_usd: 1.00\n\n      # Per-user, calendar month (resets at UTC midnight on day 1)\n      per-user-monthly:\n        scope: actor\n        window: calendar-month\n        amount_usd: 20.00\n\n      # Per-actor cap that only applies to one purpose\n      enrichments-per-user-daily:\n        scope: actor\n        window: rolling-24h\n        amount_usd: 5.00\n        purpose: enrichments\n\n      # Instance-wide cap, any actor, any purpose\n      instance-monthly:\n        scope: instance\n        window: calendar-month\n        amount_usd: 250.00\n\n      # Per-model cap (e.g. limit expensive models per actor)\n      gpt5-pro-per-user-weekly:\n        scope: actor\n        window: rolling-7d\n        amount_usd: 10.00\n        model_id: gpt-5-pro\n```\n\n### Field reference\n\n| Field        | Type     | Required | Description |\n|--------------|----------|----------|-------------|\n| `scope`      | string   | yes      | One of `actor` or `instance`. `actor` partitions usage by `actor_id`; `instance` aggregates across every caller. |\n| `window`     | string   | yes      | One of `rolling-24h`, `rolling-7d`, `rolling-30d`, `calendar-day`, `calendar-week`, `calendar-month`. Rolling windows look back N seconds from now. Calendar windows reset at UTC midnight on the appropriate boundary. |\n| `amount_usd` | number   | yes      | Cap in US dollars. Stored internally in nanocents. |\n| `purpose`    | string   | no       | If set, the limit only applies when the prompt's `purpose` matches. Omit to apply regardless of purpose. |\n| `model_id`   | string   | no       | If set, the limit only applies when the prompt's `model_id` matches. Omit to apply regardless of model. |\n\nA limit \"matches\" a reservation when:\n\n- `purpose` is unset OR equals the prompt's purpose, AND\n- `model_id` is unset OR equals the prompt's model id, AND\n- `scope` is `instance`, OR (`scope` is `actor` AND the reservation has a\n  non-empty `actor_id`).\n\nReservations made by unauthenticated callers (no `actor_id`) skip any\n`scope: actor` limits but still count toward `scope: instance` limits.\n\n### Validation\n\nConfiguration is validated at startup. Unknown fields, unknown `scope` or\n`window` values, missing required fields, or non-positive `amount_usd` raise\n`ValueError` before Datasette starts.\n\n## How rejections look\n\nWhen a reservation would exceed any matching limit, the call is rejected with an\n`InsufficientBalanceError` whose message follows this format:\n\n```\nLimit \"per-user-daily\" exceeded: $0.95 used of $1.00 in rolling-24h.\n```\n\nFor calendar windows the message also tells the caller when the window resets:\n\n```\nLimit \"per-user-monthly\" exceeded: $19.80 used of $20.00 in calendar-month.\nTry again after 2026-04-01T00:00:00Z.\n```\n\n`datasette-llm` will surface this message to the end user.\n\n## The `/-/llm-limits` inspection view\n\nThe plugin registers a read-only view at `/-/llm-limits` that lists every\nconfigured limit alongside its current usage, remaining headroom, and the time\nof the next reset (for calendar windows), plus the 50 most recent transactions.\n\nThe view supports both HTML (default) and JSON:\n\n```bash\ncurl -H \"Accept: application/json\" http://localhost:8001/-/llm-limits\n# or:\ncurl http://localhost:8001/-/llm-limits?_format=json\n```\n\n### Permissions\n\nThe view is gated by a plugin-defined permission, `datasette-llm-limits-view`,\nwhich defaults to **deny**. Grant it in `datasette.yaml`:\n\n```yaml\npermissions:\n  datasette-llm-limits-view:\n    id: \"*\"          # any signed-in actor\n    # or: id: [\"github:9599\"] for specific actor ids\n```\n\nAnyone without this permission gets a 403.\n\n## Storage\n\nThe plugin keeps its state in Datasette's internal database (the path passed\nvia `--internal`). On startup it creates an `llm_limits_tx` table that records\nevery reservation and settlement. Rows for rolled-back transactions remain in\nthe audit trail with `settled_nanocents = 0`.\n\n```sql\nCREATE TABLE llm_limits_tx (\n    id TEXT PRIMARY KEY,                -- ULID for monotonic ordering\n    created_at TEXT NOT NULL,           -- ISO-8601 UTC\n    settled_at TEXT,                    -- ISO-8601 UTC; NULL while reserved\n    actor_id TEXT,                      -- NULL for unauthenticated\n    purpose TEXT,                       -- NULL when not provided\n    model_id TEXT,                      -- NULL when not provided\n    reserved_nanocents INTEGER NOT NULL,\n    settled_nanocents INTEGER,          -- NULL while reserved\n    matched_limits TEXT NOT NULL        -- JSON array of limit names\n);\n```\n\nIf you have `view-database` on `_internal`, you can query `llm_limits_tx`\ndirectly to build your own reports.\n\n## How it fits with `datasette-llm-accountant`\n\n`datasette-llm-limits` does not perform pricing or wrap LLM calls itself — that\nis the job of `datasette-llm-accountant`. The accountant calls into this\nplugin's `reserve` / `settle` / `rollback` methods, and this plugin enforces\nthe configured caps.\n\nYou may stack multiple accountants: for example, `datasette-llm-allowance` for\na refillable balance plus `datasette-llm-limits` for a daily cap. A prompt only\ngoes through if **every** registered accountant approves it.\n\n## Development\n\nTo set up this plugin locally, check out the code, then:\n\n```bash\ncd datasette-llm-limits\n# Confirm the plugin is visible\nuv run datasette plugins\n```\n\nTo run the tests:\n\n```bash\nuv run pytest\n```\n\nTo format and lint:\n\n```bash\nuv run --with black black --target-version py311 .\nuv run --with ruff ruff check .\n```\n",
+    "description": "# datasette-llm-limits\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-llm-limits.svg)](https://pypi.org/project/datasette-llm-limits/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-llm-limits?include_prereleases&label=changelog)](https://github.com/datasette/datasette-llm-limits/releases)\n[![Tests](https://github.com/datasette/datasette-llm-limits/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-llm-limits/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-llm-limits/blob/main/LICENSE)\n\nA Datasette plugin for enforcing **windowed spending caps** on LLM usage.\n\n`datasette-llm-limits` plugs into [`datasette-llm-accountant`](https://github.com/datasette/datasette-llm-accountant)\nas an `Accountant` implementation, so every prompt issued through `datasette-llm`\nis checked against your configured caps before it is allowed to run.\n\nIt is designed for the case of **time-windowed caps that reset automatically** —\n\"no single user may spend more than $1.00 per day\", or \"the whole instance is\ncapped at $50 per calendar month\".\n\nFor a top-up-style refillable balance, see the sibling project\n`datasette-llm-allowance`.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette:\n\n```bash\ndatasette install datasette-llm-limits\n```\n\nThis will also install `datasette-llm-accountant`, which is required.\n\n## Configuration\n\nAll configuration lives in `datasette.yaml` under\n`plugins.datasette-llm-limits.limits`. Each entry is a named limit; on every\nreservation the plugin checks **every matching limit** and rejects the call if\nany one would be exceeded.\n\n```yaml\nplugins:\n  datasette-llm-limits:\n    limits:\n      # Per-user, rolling 24 hours\n      per-user-daily:\n        scope: actor\n        window: rolling-24h\n        amount_usd: 1.00\n\n      # Per-user, calendar month (resets at UTC midnight on day 1)\n      per-user-monthly:\n        scope: actor\n        window: calendar-month\n        amount_usd: 20.00\n\n      # Per-actor cap that only applies to one purpose\n      enrichments-per-user-daily:\n        scope: actor\n        window: rolling-24h\n        amount_usd: 5.00\n        purpose: enrichments\n\n      # Instance-wide cap, any actor, any purpose\n      instance-monthly:\n        scope: instance\n        window: calendar-month\n        amount_usd: 250.00\n\n      # Per-model cap (e.g. limit expensive models per actor)\n      gpt5-pro-per-user-weekly:\n        scope: actor\n        window: rolling-7d\n        amount_usd: 10.00\n        model_id: gpt-5-pro\n```\n\n### Field reference\n\n| Field        | Type     | Required | Description |\n|--------------|----------|----------|-------------|\n| `scope`      | string   | yes      | One of `actor` or `instance`. `actor` partitions usage by `actor_id`; `instance` aggregates across every caller. |\n| `window`     | string   | yes      | One of `rolling-24h`, `rolling-7d`, `rolling-30d`, `calendar-day`, `calendar-week`, `calendar-month`. Rolling windows look back N seconds from now. Calendar windows reset at UTC midnight on the appropriate boundary. |\n| `amount_usd` | number   | yes      | Cap in US dollars. Stored internally in nanocents. |\n| `purpose`    | string   | no       | If set, the limit only applies when the prompt's `purpose` matches. Omit to apply regardless of purpose. |\n| `model_id`   | string   | no       | If set, the limit only applies when the prompt's `model_id` matches. Omit to apply regardless of model. |\n\nA limit \"matches\" a reservation when:\n\n- `purpose` is unset OR equals the prompt's purpose, AND\n- `model_id` is unset OR equals the prompt's model id, AND\n- `scope` is `instance`, OR (`scope` is `actor` AND the reservation has a\n  non-empty `actor_id`).\n\nReservations made by unauthenticated callers (no `actor_id`) skip any\n`scope: actor` limits but still count toward `scope: instance` limits.\n\n### Validation\n\nConfiguration is validated at startup. Unknown fields, unknown `scope` or\n`window` values, missing required fields, or non-positive `amount_usd` raise\n`ValueError` before Datasette starts.\n\n## How rejections look\n\nWhen a reservation would exceed any matching limit, the call is rejected with an\n`InsufficientBalanceError` whose message follows this format:\n\n```\nLimit \"per-user-daily\" exceeded: $0.95 used of $1.00 in rolling-24h.\n```\n\nFor calendar windows the message also tells the caller when the window resets:\n\n```\nLimit \"per-user-monthly\" exceeded: $19.80 used of $20.00 in calendar-month.\nTry again after 2026-04-01T00:00:00Z.\n```\n\n`datasette-llm` will surface this message to the end user.\n\n## The `/-/llm-limits` inspection view\n\nThe plugin registers a read-only view at `/-/llm-limits` that lists every\nconfigured limit. Instance-scoped limits include their current usage, remaining\nheadroom, and the time of the next reset (for calendar windows). Actor-scoped\nlimits show their cap as a per-actor cap, with usage broken out in a separate\nactor usage table. The view also shows the 50 most recent transactions.\n\nThe view supports both HTML (default) and JSON:\n\n```bash\ncurl -H \"Accept: application/json\" http://localhost:8001/-/llm-limits\n# or:\ncurl http://localhost:8001/-/llm-limits?_format=json\n```\n\n### Permissions\n\nThe view is gated by a plugin-defined permission, `datasette-llm-limits-view`,\nwhich defaults to **deny**. Grant it in `datasette.yaml`:\n\n```yaml\npermissions:\n  datasette-llm-limits-view:\n    id: \"*\"          # any signed-in actor\n    # or: id: [\"github:9599\"] for specific actor ids\n```\n\nAnyone without this permission gets a 403.\n\n## Storage\n\nThe plugin keeps its state in Datasette's internal database (the path passed\nvia `--internal`). On startup it creates an `llm_limits_tx` table that records\nevery reservation and settlement. Rows for rolled-back transactions remain in\nthe audit trail with `settled_nanocents = 0`.\n\n```sql\nCREATE TABLE llm_limits_tx (\n    id TEXT PRIMARY KEY,                -- ULID for monotonic ordering\n    created_at TEXT NOT NULL,           -- ISO-8601 UTC\n    settled_at TEXT,                    -- ISO-8601 UTC; NULL while reserved\n    actor_id TEXT,                      -- NULL for unauthenticated\n    purpose TEXT,                       -- NULL when not provided\n    model_id TEXT,                      -- NULL when not provided\n    reserved_nanocents INTEGER NOT NULL,\n    settled_nanocents INTEGER,          -- NULL while reserved\n    matched_limits TEXT NOT NULL        -- JSON array of limit names\n);\n```\n\nIf you have `view-database` on `_internal`, you can query `llm_limits_tx`\ndirectly to build your own reports.\n\n## How it fits with `datasette-llm-accountant`\n\n`datasette-llm-limits` does not perform pricing or wrap LLM calls itself — that\nis the job of `datasette-llm-accountant`. The accountant calls into this\nplugin's `reserve` / `settle` / `rollback` methods, and this plugin enforces\nthe configured caps.\n\nYou may stack multiple accountants: for example, `datasette-llm-allowance` for\na refillable balance plus `datasette-llm-limits` for a daily cap. A prompt only\ngoes through if **every** registered accountant approves it.\n\n## Development\n\nTo set up this plugin locally, check out the code, then:\n\n```bash\ncd datasette-llm-limits\n# Confirm the plugin is visible\nuv run datasette plugins\n```\n\nTo run the tests:\n\n```bash\nuv run pytest\n```\n\nTo format and lint:\n\n```bash\nuv run --with black black --target-version py311 .\nuv run --with ruff ruff check .\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -38,18 +38,18 @@
       "Issues": "https://github.com/datasette/datasette-llm-limits/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-llm-limits/0.1a0/",
+    "release_url": "https://pypi.org/project/datasette-llm-limits/0.1a1/",
     "requires_dist": [
       "datasette>=1.0a28",
       "datasette-llm-accountant"
     ],
     "requires_python": ">=3.10",
     "summary": "Plugin for configuring periodic limits on LLM usage in Datasette",
-    "version": "0.1a0",
+    "version": "0.1a1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 37065479,
+  "last_serial": 37290235,
   "ownership": {
     "organization": "datasette",
     "roles": []
@@ -98,48 +98,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "a1d26ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02",
+          "md5": "79e210fd0f5e7eb32f021f48d1c58970",
+          "sha256": "69e2b0dde58ee49e07f7078fe13c8bf7880f8b9ae44241f6b0c83a227e4e9b9f"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_limits-0.1a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "79e210fd0f5e7eb32f021f48d1c58970",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 16386,
+        "upload_time": "2026-05-21T21:06:34",
+        "upload_time_iso_8601": "2026-05-21T21:06:34.025330Z",
+        "url": "https://files.pythonhosted.org/packages/a1/d2/6ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02/datasette_llm_limits-0.1a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "abdffee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8",
+          "md5": "7625f9cec51fcc303de5432b936e48aa",
+          "sha256": "4b10f8a83d68e83e342ec3b1878a1af4c100471c679e4d4fc4b8b284e4393a05"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_limits-0.1a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "7625f9cec51fcc303de5432b936e48aa",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 21719,
+        "upload_time": "2026-05-21T21:06:35",
+        "upload_time_iso_8601": "2026-05-21T21:06:35.607575Z",
+        "url": "https://files.pythonhosted.org/packages/ab/df/fee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8/datasette_llm_limits-0.1a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "61f13dceed0c92a8859f3d80cb103f3b6c53c88ab22d2bfc30a72b94b41b2449",
-        "md5": "2cf0c0f28bcd2f961464ae91cfe93746",
-        "sha256": "4f36f49ceb85ac2ef7300f267b299f54191ef69b39974e6a0c994136a4bc18b8"
+        "blake2b_256": "a1d26ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02",
+        "md5": "79e210fd0f5e7eb32f021f48d1c58970",
+        "sha256": "69e2b0dde58ee49e07f7078fe13c8bf7880f8b9ae44241f6b0c83a227e4e9b9f"
       },
       "downloads": -1,
-      "filename": "datasette_llm_limits-0.1a0-py3-none-any.whl",
+      "filename": "datasette_llm_limits-0.1a1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "2cf0c0f28bcd2f961464ae91cfe93746",
+      "md5_digest": "79e210fd0f5e7eb32f021f48d1c58970",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 15532,
-      "upload_time": "2026-05-15T00:43:12",
-      "upload_time_iso_8601": "2026-05-15T00:43:12.000273Z",
-      "url": "https://files.pythonhosted.org/packages/61/f1/3dceed0c92a8859f3d80cb103f3b6c53c88ab22d2bfc30a72b94b41b2449/datasette_llm_limits-0.1a0-py3-none-any.whl",
+      "size": 16386,
+      "upload_time": "2026-05-21T21:06:34",
+      "upload_time_iso_8601": "2026-05-21T21:06:34.025330Z",
+      "url": "https://files.pythonhosted.org/packages/a1/d2/6ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02/datasette_llm_limits-0.1a1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "fc90344a52026f9fde58003abaa0823d92ee93f4493a1038605241e84d5f889c",
-        "md5": "1bfd39d60e3bda6ae94d8b709a743316",
-        "sha256": "1400a9599b5393f288e6ee21d9578050dcc4a92737ed7b6bb680326c1f10391e"
+        "blake2b_256": "abdffee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8",
+        "md5": "7625f9cec51fcc303de5432b936e48aa",
+        "sha256": "4b10f8a83d68e83e342ec3b1878a1af4c100471c679e4d4fc4b8b284e4393a05"
       },
       "downloads": -1,
-      "filename": "datasette_llm_limits-0.1a0.tar.gz",
+      "filename": "datasette_llm_limits-0.1a1.tar.gz",
       "has_sig": false,
-      "md5_digest": "1bfd39d60e3bda6ae94d8b709a743316",
+      "md5_digest": "7625f9cec51fcc303de5432b936e48aa",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 20593,
-      "upload_time": "2026-05-15T00:43:13",
-      "upload_time_iso_8601": "2026-05-15T00:43:13.302316Z",
-      "url": "https://files.pythonhosted.org/packages/fc/90/344a52026f9fde58003abaa0823d92ee93f4493a1038605241e84d5f889c/datasette_llm_limits-0.1a0.tar.gz",
+      "size": 21719,
+      "upload_time": "2026-05-21T21:06:35",
+      "upload_time_iso_8601": "2026-05-21T21:06:35.607575Z",
+      "url": "https://files.pythonhosted.org/packages/ab/df/fee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8/datasette_llm_limits-0.1a1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
