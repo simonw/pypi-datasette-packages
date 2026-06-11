@@ -6,7 +6,7 @@
     "classifiers": [
       "Framework :: Datasette"
     ],
-    "description": "# datasette-acl\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-acl.svg)](https://pypi.org/project/datasette-acl/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-acl?include_prereleases&label=changelog)](https://github.com/datasette/datasette-acl/releases)\n[![Tests](https://github.com/datasette/datasette-acl/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-acl/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-acl/blob/main/LICENSE)\n\nAdvanced permission management for Datasette. **Highly experimental**.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette. This plugin requires Datasette 1.0a15 or higher.\n```bash\ndatasette install datasette-acl\n```\n## Usage\n\nThis plugin is under active development. It currently only supports configuring [permissions](https://docs.datasette.io/en/latest/authentication.html#permissions) for individual tables, controlling the following:\n\n- `insert-row`\n- `delete-row`\n- `update-row`\n- `alter-table`\n- `drop-table`\n\nPermissions are saved in the internal database. This means you should run Datasette with the `--internal path/to/internal.db` option, otherwise your permissions will be reset every time you restart Datasette.\n\n### Managing permissions for a table\n\nThe interface for configuring table permissions lives at `/database-name/table-name/-/acl`. It can be accessed from the table actions menu on the table page.\n\nPermission can be granted for each of the above table actions. They can be assigned to both groups and individual users, who can be added using their `actor[\"id\"]`.\n\nAn audit log tracks which permissions were added and removed, displayed at the bottom of the table permissions page.\n\n### Controlling who can edit permissions\n\nUsers with the new `datasette-acl` permission will have the ability to access a UI for setting permissions for users and groups on a table.\n\nTo configure the root user to have this permission, add the following to your Datasette configuration:\n\n```yaml\npermissions:\n  datasette-acl:\n    id: root\n```\nAlternatively you can start Datasette running like this:\n```bash\ndatasette mydata.db --root --internal internal.db \\\n  -s permissions.datasette-acl.id root\n```\n\n### User groups\n\nUsers can be assigned to groups, and those groups can then be used to quickly assign permissions to all of those users at once.\n\nTo manage your groups, visit `/-/acl/groups` or use the \"Manage user groups\" item in the Datasette application menu.\n\nAdd users to a group by typing in their actor ID. Remove them using the remove user button.\n\nThe page for each group includes an audit log showing changes made to that group's list of members.\n\nWhen you delete a group its members will all be removed and it will be marked as deleted. Creating a group with the same name will reuse that group's record and display its existing audit log, but will not re-add the members that were removed.\n\n### Dynamic groups\n\nYou may wish to define permission rules against groups of actors based on their actor attributes, without needing to manually add those actors to a group. This can be achieved by defining a dynamic group in the `datasette-acl` configuration.\n\nDynamic groups are defined in terms of [allow blocks](https://docs.datasette.io/en/stable/authentication.html#defining-permissions-with-allow-blocks). The following configuration defines two dynamic groups - one called `admin` that contains all users with `\"is_admin\": true` in their attributes, and another called `sales` that explicitly includes users with `\"sales\"` as one of the values in their `departments` array.\n\n```yaml\nplugins:\n  datasette-acl:\n    dynamic-groups:\n      admin:\n        is_admin: true\n      sales:\n        departments: [\"sales\"]\n```\n\nAny time an actor has their permissions checked they will be dynamically added to or removed from these groups based on the current value of their actor attributes.\n\nDynamic groups are displayed in the list of groups, but their members cannot be manually added or removed.\n\n### Table creator permissions\n\nIf you allow regular users to create tables in Datasette, you may want them to maintain a level of \"ownership\" over those tables, such that other users are unable to modify those tables without the creator's permission.\n\nThe `table-creator-permissions` plugin setting can be used to automatically configure permissions for the actor who created a table.\n\nEnable that like this:\n```yaml\nplugins:\n  datasette-acl:\n    table-creator-permissions:\n    - alter-table\n    - drop-table\n    - insert-row\n    - update-row\n    - delete-row\n```\n### Configuring autocomplete against actor IDs\n\nBy default, users of this plugin can assign permissions to any actor ID by entering that ID, whether or not that ID corresponds to a user that exists elsewhere in the current Datasette configuration.\n\nIf you are running this plugin in an environment with a fixed, known list of actor IDs you can implement a plugin using the `datasette_acl_valid_actors(datasette)` plugin hook which returns an iterable sequence of string actor IDs or `{\"id\": \"actor-id\", \"display\": \"Actor Name\"}` dictionaries\n\nThese will then be used for both validation and autocomplete, ensuring users do not attach actor IDs that are not in that list.\n\nExample plugin implementation:\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef datasette_acl_valid_actors(datasette):\n    return [\"paulo\", \"rohan\", \"simon\"]\n```\nThis function can also return an async inner function, for making async calls. This example uses the `[{\"id\": \"actor-id\", \"display\": \"Actor Name\"}]` format:\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef datasette_acl_valid_actors(datasette):\n    async def inner():\n        db = datasette.get_internal_database()\n        return (await db.execute(\"select id, username as display from users\")).dicts()\n    return inner\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-acl\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n\n### Tips for local development\n\nHere's how to run the plugin with all of its features enabled.\n\nFirst, grab a test database:\n```bash\nwget https://latest.datasette.io/fixtures.db\n```\nInstall the [datasette-unsafe-actor-debug](https://github.com/datasette/datasette-unsafe-actor-debug) plugin, so you can use the `http://127.0.0.1:8001/-/unsafe-actor` page to quickly imitate any actor for testing purposes:\n```bash\ndatasette install datasette-unsafe-actor-debug\n```\nAnd [datasette-visible-internal-db](https://github.com/datasette/datasette-visible-internal-db) to make it easy to see what's going on in the internal database:\n```bash\ndatasette install datasette-visible-internal-db\n```\nThen start Datasette like this:\n```bash\ndatasette fixtures.db --internal internal.db \\\n  -s permissions.datasette-acl.id root \\\n  -s plugins.datasette-unsafe-actor-debug.enabled 1 \\\n  -s plugins.datasette-acl.table-creator-permissions '[\"insert-row\", \"update-row\"]' \\\n  -s plugins.datasette-acl.dynamic-groups.staff.is_staff true \\\n  --root \\\n  --secret 1 \\\n  --reload\n```\nThis configures Datasette to provide a URL for you to sign in as root, which will give you access to the permission editing tool.\n\nIt ensures that any user who creates a table (which you can test using the `/-/api` API explorer tool) will be granted initial `insert-row` and `update-row` permissions.\n\nIt sets up a dynamic group such that any actor with `{\"is_staff\": true}` in their JSON will be treated as a member of that group.\n\n`--reload` means Datasette will reload on any code changes to the plugin, and `--secret 1` ensures your Datasette authentication cookies will continue to work across server restarts.\n",
+    "description": "# datasette-acl\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-acl.svg)](https://pypi.org/project/datasette-acl/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-acl?include_prereleases&label=changelog)](https://github.com/datasette/datasette-acl/releases)\n[![Tests](https://github.com/datasette/datasette-acl/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-acl/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-acl/blob/main/LICENSE)\n\nAdvanced permission management for Datasette. **Highly experimental**.\n\n## Installation\n\nInstall this plugin in the same environment as Datasette. This plugin requires Datasette 1.0a15 or higher.\n```bash\ndatasette install datasette-acl\n```\n## Usage\n\nThis plugin is under active development. It currently only supports configuring [permissions](https://docs.datasette.io/en/latest/authentication.html#permissions) for individual tables, controlling the following:\n\n- `insert-row`\n- `delete-row`\n- `update-row`\n- `alter-table`\n- `drop-table`\n\nPermissions are saved in the internal database. This means you should run Datasette with the `--internal path/to/internal.db` option, otherwise your permissions will be reset every time you restart Datasette.\n\nA JSON HTTP API for reading and managing per-resource grants programmatically is documented in [docs/json-api.md](docs/json-api.md).\n\n### Managing permissions for a table\n\nThe interface for configuring table permissions lives at `/database-name/table-name/-/acl`. It can be accessed from the table actions menu on the table page.\n\nPermission can be granted for each of the above table actions. They can be assigned to both groups and individual users, who can be added using their `actor[\"id\"]`.\n\nAn audit log tracks which permissions were added and removed, displayed at the bottom of the table permissions page.\n\n### Custom resource types\n\n`datasette-acl` is not limited to tables. It can store and resolve grants for *any* resource type defined by a plugin - documents, lists, workbooks, comment spaces, kanban boards and so on.\n\nThere is no dedicated hook for this. A plugin makes its resource type manageable by `datasette-acl` simply by registering actions whose `resource_class` is a [Resource](https://docs.datasette.io/en/latest/internals.html) subclass:\n\n```python\nfrom datasette import hookimpl\nfrom datasette.permissions import Action, Resource\n\n\nclass PaperDoc(Resource):\n    name = \"paper-doc\"\n\n\n@hookimpl\ndef register_actions(datasette):\n    return [\n        Action(name=\"paper-view\", description=\"View a doc\", resource_class=PaperDoc),\n        Action(name=\"paper-edit\", description=\"Edit a doc\", resource_class=PaperDoc),\n    ]\n```\n\n`datasette-acl` discovers resource types from the actions registered across all plugins (`datasette.actions`). Both the action set offered on the table permissions page and the resource types managed by the generic admin page are derived dynamically from this - nothing is hardcoded.\n\nA generic admin page for any resource type lives at:\n\n```\n/-/acl/resource/<resource-type>/<parent>/<child>\n```\n\nFor example `/-/acl/resource/paper-doc/workspace-1/doc-42`. The `<child>` segment is optional for parent-only resource types (`/-/acl/resource/<resource-type>/<parent>`). The page presents the same group/user grant interface and audit log as the table page, with checkboxes for exactly the actions registered for that resource type. Access to this admin page is gated on the `datasette-acl` permission described below.\n\nGrants made here flow through Datasette's permission system: once granted, `await datasette.allowed(actor=..., action=\"paper-edit\", resource=PaperDoc(\"workspace-1\", \"doc-42\"))` returns `True`.\n\n### Controlling who can edit permissions\n\nUsers with the new `datasette-acl` permission will have the ability to access a UI for setting permissions for users and groups on a table.\n\nTo configure the root user to have this permission, add the following to your Datasette configuration:\n\n```yaml\npermissions:\n  datasette-acl:\n    id: root\n```\nAlternatively you can start Datasette running like this:\n```bash\ndatasette mydata.db --root --internal internal.db \\\n  -s permissions.datasette-acl.id root\n```\n\n### User groups\n\nUsers can be assigned to groups, and those groups can then be used to quickly assign permissions to all of those users at once.\n\nTo manage your groups, visit `/-/acl/groups` or use the \"Manage user groups\" item in the Datasette application menu.\n\nAdd users to a group by typing in their actor ID. Remove them using the remove user button.\n\nThe page for each group includes an audit log showing changes made to that group's list of members.\n\nWhen you delete a group its members will all be removed and it will be marked as deleted. Creating a group with the same name will reuse that group's record and display its existing audit log, but will not re-add the members that were removed.\n\n### Dynamic groups\n\nYou may wish to define permission rules against groups of actors based on their actor attributes, without needing to manually add those actors to a group. This can be achieved by defining a dynamic group in the `datasette-acl` configuration.\n\nDynamic groups are defined in terms of [allow blocks](https://docs.datasette.io/en/stable/authentication.html#defining-permissions-with-allow-blocks). The following configuration defines two dynamic groups - one called `admin` that contains all users with `\"is_admin\": true` in their attributes, and another called `sales` that explicitly includes users with `\"sales\"` as one of the values in their `departments` array.\n\n```yaml\nplugins:\n  datasette-acl:\n    dynamic-groups:\n      admin:\n        is_admin: true\n      sales:\n        departments: [\"sales\"]\n```\n\nAny time an actor has their permissions checked they will be dynamically added to or removed from these groups based on the current value of their actor attributes.\n\nDynamic groups are displayed in the list of groups, but their members cannot be manually added or removed.\n\n### Table creator permissions\n\nIf you allow regular users to create tables in Datasette, you may want them to maintain a level of \"ownership\" over those tables, such that other users are unable to modify those tables without the creator's permission.\n\nThe `table-creator-permissions` plugin setting can be used to automatically configure permissions for the actor who created a table.\n\nEnable that like this:\n```yaml\nplugins:\n  datasette-acl:\n    table-creator-permissions:\n    - alter-table\n    - drop-table\n    - insert-row\n    - update-row\n    - delete-row\n```\n### Configuring autocomplete against actor IDs\n\nBy default, users of this plugin can assign permissions to any actor ID by entering that ID, whether or not that ID corresponds to a user that exists elsewhere in the current Datasette configuration.\n\nIf you are running this plugin in an environment with a fixed, known list of actor IDs you can implement a plugin using the `datasette_acl_valid_actors(datasette)` plugin hook which returns an iterable sequence of string actor IDs or `{\"id\": \"actor-id\", \"display\": \"Actor Name\"}` dictionaries\n\nThese will then be used for both validation and autocomplete, ensuring users do not attach actor IDs that are not in that list.\n\nExample plugin implementation:\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef datasette_acl_valid_actors(datasette):\n    return [\"paulo\", \"rohan\", \"simon\"]\n```\nThis function can also return an async inner function, for making async calls. This example uses the `[{\"id\": \"actor-id\", \"display\": \"Actor Name\"}]` format:\n```python\nfrom datasette import hookimpl\n\n@hookimpl\ndef datasette_acl_valid_actors(datasette):\n    async def inner():\n        db = datasette.get_internal_database()\n        return (await db.execute(\"select id, username as display from users\")).dicts()\n    return inner\n```\n\n### Python API for managing grants\n\n`datasette_acl.grants` provides async helpers so other plugins can read and modify grants without writing raw SQL against the ACL tables. Each call resolves the `(resource_type, parent, child)` resource, writes the `acl` rows, and appends audit entries attributed to `by_actor`.\n\nProvide exactly one principal (`actor_id=` or `group_id=`), and for `grant()` exactly one of `role=` or `actions=`.\n\n```python\nfrom datasette_acl.grants import grant, revoke, update_role, list_grants\n```\n\n`grant(...)` — give a principal access, by raw actions or by a role (idempotent). Returns the actions now held. Role names come from the `datasette_acl_roles` hook:\n\n```python\nawait grant(datasette, \"table\", \"mydb\", \"mytable\", actor_id=\"alice\", actions=[\"insert-row\"])\nawait grant(datasette, \"table\", \"mydb\", \"mytable\", group_id=3, actions=[\"insert-row\"], by_actor=\"root\")\n```\n\n`update_role(...)` — atomically swap a principal's actions to exactly those of a registered `role`. Returns the new actions:\n\n```python\nawait update_role(datasette, \"doc\", \"doc1\", actor_id=\"alice\", role=\"Viewer\")\n```\n\n`revoke(...)` — remove all of a principal's grants on a resource. Returns the actions that were removed:\n\n```python\nawait revoke(datasette, \"table\", \"mydb\", \"mytable\", actor_id=\"alice\")\n```\n\n`list_grants(...)` — list current grants on a resource as dicts (`{\"principal\", \"actor_id\", \"group_id\", \"group_name\", \"actions\"}`):\n\n```python\ngrants = await list_grants(datasette, \"table\", \"mydb\", \"mytable\")\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-acl\npython -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npython -m pytest\n```\n\n### Tips for local development\n\nHere's how to run the plugin with all of its features enabled.\n\nFirst, grab a test database:\n```bash\nwget https://latest.datasette.io/fixtures.db\n```\nInstall the [datasette-unsafe-actor-debug](https://github.com/datasette/datasette-unsafe-actor-debug) plugin, so you can use the `http://127.0.0.1:8001/-/unsafe-actor` page to quickly imitate any actor for testing purposes:\n```bash\ndatasette install datasette-unsafe-actor-debug\n```\nAnd [datasette-visible-internal-db](https://github.com/datasette/datasette-visible-internal-db) to make it easy to see what's going on in the internal database:\n```bash\ndatasette install datasette-visible-internal-db\n```\nThen start Datasette like this:\n```bash\ndatasette fixtures.db --internal internal.db \\\n  -s permissions.datasette-acl.id root \\\n  -s plugins.datasette-unsafe-actor-debug.enabled 1 \\\n  -s plugins.datasette-acl.table-creator-permissions '[\"insert-row\", \"update-row\"]' \\\n  -s plugins.datasette-acl.dynamic-groups.staff.is_staff true \\\n  --root \\\n  --secret 1 \\\n  --reload\n```\nThis configures Datasette to provide a URL for you to sign in as root, which will give you access to the permission editing tool.\n\nIt ensures that any user who creates a table (which you can test using the `/-/api` API explorer tool) will be granted initial `insert-row` and `update-row` permissions.\n\nIt sets up a dynamic group such that any actor with `{\"is_staff\": true}` in their JSON will be treated as a member of that group.\n\n`--reload` means Datasette will reload on any code changes to the plugin, and `--secret 1` ensures your Datasette authentication cookies will continue to work across server restarts.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -37,22 +37,19 @@
       "Homepage": "https://github.com/datasette/datasette-acl",
       "Issues": "https://github.com/datasette/datasette-acl/issues"
     },
-    "provides_extra": [
-      "test"
-    ],
-    "release_url": "https://pypi.org/project/datasette-acl/0.5a0/",
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/datasette-acl/0.5a1/",
     "requires_dist": [
       "datasette>=1.0a20",
-      "pytest; extra == \"test\"",
-      "pytest-asyncio; extra == \"test\""
+      "sqlite-migrate==0.1b0"
     ],
     "requires_python": ">=3.10",
     "summary": "Advanced permission management for Datasette",
-    "version": "0.5a0",
+    "version": "0.5a1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 32196638,
+  "last_serial": 37901576,
   "ownership": {
     "organization": null,
     "roles": [
@@ -502,48 +499,92 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.5a1": [
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "80350ffbf2bf7dd66da8f010fec4b3fae7919a40cbd0c02d65da44c79a697f85",
+          "md5": "84c3f0c4db4495775b2d65798d9a920e",
+          "sha256": "30c3b2406c3ad58b29fc3958d44c316ad8bd0346c42e4e243b934617a71bfdd4"
+        },
+        "downloads": -1,
+        "filename": "datasette_acl-0.5a1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "84c3f0c4db4495775b2d65798d9a920e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 66424,
+        "upload_time": "2026-06-10T16:44:08",
+        "upload_time_iso_8601": "2026-06-10T16:44:08.247410Z",
+        "url": "https://files.pythonhosted.org/packages/80/35/0ffbf2bf7dd66da8f010fec4b3fae7919a40cbd0c02d65da44c79a697f85/datasette_acl-0.5a1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "digests": {
+          "blake2b_256": "f0ddd9fcf90447e9edadd45350ad8572bbe4fa417ed7ac923aa9bf83b553c1da",
+          "md5": "1e5188591a2a6bff756248749697b243",
+          "sha256": "c72056f4da622612e8c0e1c4d70abbba972ff1417dfe7b87bdc18ea0f4ea7363"
+        },
+        "downloads": -1,
+        "filename": "datasette_acl-0.5a1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1e5188591a2a6bff756248749697b243",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 79144,
+        "upload_time": "2026-06-10T16:44:09",
+        "upload_time_iso_8601": "2026-06-10T16:44:09.588074Z",
+        "url": "https://files.pythonhosted.org/packages/f0/dd/d9fcf90447e9edadd45350ad8572bbe4fa417ed7ac923aa9bf83b553c1da/datasette_acl-0.5a1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "8b1e921805c8dc9d4e993189cecd60b61ca9cbf1ceb5d64015ea85e769730dad",
-        "md5": "fe6dc7186a1b2d2c394069561594c2c1",
-        "sha256": "f99ca12a05c262bf6dab1cb35e1d232d050644a6e06596845829f2edcf44c82e"
+        "blake2b_256": "80350ffbf2bf7dd66da8f010fec4b3fae7919a40cbd0c02d65da44c79a697f85",
+        "md5": "84c3f0c4db4495775b2d65798d9a920e",
+        "sha256": "30c3b2406c3ad58b29fc3958d44c316ad8bd0346c42e4e243b934617a71bfdd4"
       },
       "downloads": -1,
-      "filename": "datasette_acl-0.5a0-py3-none-any.whl",
+      "filename": "datasette_acl-0.5a1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "fe6dc7186a1b2d2c394069561594c2c1",
+      "md5_digest": "84c3f0c4db4495775b2d65798d9a920e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 43971,
-      "upload_time": "2025-11-04T16:09:04",
-      "upload_time_iso_8601": "2025-11-04T16:09:04.140913Z",
-      "url": "https://files.pythonhosted.org/packages/8b/1e/921805c8dc9d4e993189cecd60b61ca9cbf1ceb5d64015ea85e769730dad/datasette_acl-0.5a0-py3-none-any.whl",
+      "size": 66424,
+      "upload_time": "2026-06-10T16:44:08",
+      "upload_time_iso_8601": "2026-06-10T16:44:08.247410Z",
+      "url": "https://files.pythonhosted.org/packages/80/35/0ffbf2bf7dd66da8f010fec4b3fae7919a40cbd0c02d65da44c79a697f85/datasette_acl-0.5a1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
       "comment_text": null,
       "digests": {
-        "blake2b_256": "ee0a58211327170d9ac011a6ea9b818619317eabe38c76ec059cc87855045eda",
-        "md5": "0cffa2db55efc09a82964605834f3615",
-        "sha256": "adf6f9154aa2b191ddb2fc97fa8044db365893455f84598cae5fc7e791536853"
+        "blake2b_256": "f0ddd9fcf90447e9edadd45350ad8572bbe4fa417ed7ac923aa9bf83b553c1da",
+        "md5": "1e5188591a2a6bff756248749697b243",
+        "sha256": "c72056f4da622612e8c0e1c4d70abbba972ff1417dfe7b87bdc18ea0f4ea7363"
       },
       "downloads": -1,
-      "filename": "datasette_acl-0.5a0.tar.gz",
+      "filename": "datasette_acl-0.5a1.tar.gz",
       "has_sig": false,
-      "md5_digest": "0cffa2db55efc09a82964605834f3615",
+      "md5_digest": "1e5188591a2a6bff756248749697b243",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 47053,
-      "upload_time": "2025-11-04T16:09:05",
-      "upload_time_iso_8601": "2025-11-04T16:09:05.288298Z",
-      "url": "https://files.pythonhosted.org/packages/ee/0a/58211327170d9ac011a6ea9b818619317eabe38c76ec059cc87855045eda/datasette_acl-0.5a0.tar.gz",
+      "size": 79144,
+      "upload_time": "2026-06-10T16:44:09",
+      "upload_time_iso_8601": "2026-06-10T16:44:09.588074Z",
+      "url": "https://files.pythonhosted.org/packages/f0/dd/d9fcf90447e9edadd45350ad8572bbe4fa417ed7ac923aa9bf83b553c1da/datasette_acl-0.5a1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
