@@ -64,7 +64,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 38925486,
+  "last_serial": 39378680,
   "ownership": {
     "organization": null,
     "roles": [
@@ -4419,6 +4419,54 @@
         "upload_time": "2025-11-24T18:45:49",
         "upload_time_iso_8601": "2025-11-24T18:45:49.910634Z",
         "url": "https://files.pythonhosted.org/packages/b3/e3/6b1106349e2576c18409b27bd3b16f193b1cf38220d98ad22aa454c5e075/sqlite_utils-3.39.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "3.39.1": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "1fbb6c4f02e55e449c624444809714b55f7c75f20a6c1175a5b930f5250d9adc"
+        },
+        "digests": {
+          "blake2b_256": "12c5e5316c4de7fb4a74bdd1add3711ffe97946f4535ff84c145aa7cef2fa986",
+          "md5": "ef56e1127d34787708f80e764f899cf4",
+          "sha256": "33a9ebc4d9084394e1c513cb6fd95f18b83aa18bf0d3ba9dac4557a57e6ca5cf"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.39.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ef56e1127d34787708f80e764f899cf4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 68489,
+        "upload_time": "2026-07-26T04:41:18",
+        "upload_time_iso_8601": "2026-07-26T04:41:18.265877Z",
+        "url": "https://files.pythonhosted.org/packages/12/c5/e5316c4de7fb4a74bdd1add3711ffe97946f4535ff84c145aa7cef2fa986/sqlite_utils-3.39.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "350b8e1768d0bb5ccfff7702fc6b46453a3505e27ef584ed96ac087dd6ba556d",
+          "md5": "f8bc782c08f5bbe4b085944670ad8295",
+          "sha256": "b2f9da6b374e6aeb7ae070e99762cf6c4ab393016f376a8419104dd76fed69ac"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-3.39.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f8bc782c08f5bbe4b085944670ad8295",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 215518,
+        "upload_time": "2026-07-26T04:41:19",
+        "upload_time_iso_8601": "2026-07-26T04:41:19.639773Z",
+        "url": "https://files.pythonhosted.org/packages/35/0b/8e1768d0bb5ccfff7702fc6b46453a3505e27ef584ed96ac087dd6ba556d/sqlite_utils-3.39.1.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
