@@ -38,18 +38,18 @@
       "Issues": "https://github.com/datasette/datasette-llm-limits/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-llm-limits/0.1a1/",
+    "release_url": "https://pypi.org/project/datasette-llm-limits/0.1a2/",
     "requires_dist": [
       "datasette>=1.0a28",
       "datasette-llm-accountant"
     ],
     "requires_python": ">=3.10",
     "summary": "Plugin for configuring periodic limits on LLM usage in Datasette",
-    "version": "0.1a1",
+    "version": "0.1a2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 37290235,
+  "last_serial": 39541593,
   "ownership": {
     "organization": "datasette",
     "roles": []
@@ -150,30 +150,78 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.1a2": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "bbe1dfdcae01ffb9ef24d0a01024aba54d6ba5a368c3e15a90cda90d2717fc21"
+        },
+        "digests": {
+          "blake2b_256": "1c74ccdeb8ec61d0c05c9991e41c5547fb2d82437d478269cfc8b1e88c57a5e9",
+          "md5": "13198ea6a5e3d6beb7840da15a7d2dc3",
+          "sha256": "31464ad56e77acd9408965b098144d4d28b9cef22c8735d3595771a18bb65733"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_limits-0.1a2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "13198ea6a5e3d6beb7840da15a7d2dc3",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 16490,
+        "upload_time": "2026-07-30T23:55:25",
+        "upload_time_iso_8601": "2026-07-30T23:55:25.958023Z",
+        "url": "https://files.pythonhosted.org/packages/1c/74/ccdeb8ec61d0c05c9991e41c5547fb2d82437d478269cfc8b1e88c57a5e9/datasette_llm_limits-0.1a2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "dba6686de4e106c33805cb292c1f29a0583de757a3a823be23ede771d9c6c64f",
+          "md5": "530d8185052cb75f6778c74cdaf89c65",
+          "sha256": "eb08f70c87b252c356278b2738dc518d1e38aa1fb48ff990a36e3bfcf27c84fd"
+        },
+        "downloads": -1,
+        "filename": "datasette_llm_limits-0.1a2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "530d8185052cb75f6778c74cdaf89c65",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 21957,
+        "upload_time": "2026-07-30T23:55:27",
+        "upload_time_iso_8601": "2026-07-30T23:55:27.225739Z",
+        "url": "https://files.pythonhosted.org/packages/db/a6/686de4e106c33805cb292c1f29a0583de757a3a823be23ede771d9c6c64f/datasette_llm_limits-0.1a2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "311ca0a873c2a9cec603165304c4965fba222c07f9dd5e39aa44db186c86c4eb"
+        "sha256": "bbe1dfdcae01ffb9ef24d0a01024aba54d6ba5a368c3e15a90cda90d2717fc21"
       },
       "digests": {
-        "blake2b_256": "a1d26ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02",
-        "md5": "79e210fd0f5e7eb32f021f48d1c58970",
-        "sha256": "69e2b0dde58ee49e07f7078fe13c8bf7880f8b9ae44241f6b0c83a227e4e9b9f"
+        "blake2b_256": "1c74ccdeb8ec61d0c05c9991e41c5547fb2d82437d478269cfc8b1e88c57a5e9",
+        "md5": "13198ea6a5e3d6beb7840da15a7d2dc3",
+        "sha256": "31464ad56e77acd9408965b098144d4d28b9cef22c8735d3595771a18bb65733"
       },
       "downloads": -1,
-      "filename": "datasette_llm_limits-0.1a1-py3-none-any.whl",
+      "filename": "datasette_llm_limits-0.1a2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "79e210fd0f5e7eb32f021f48d1c58970",
+      "md5_digest": "13198ea6a5e3d6beb7840da15a7d2dc3",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 16386,
-      "upload_time": "2026-05-21T21:06:34",
-      "upload_time_iso_8601": "2026-05-21T21:06:34.025330Z",
-      "url": "https://files.pythonhosted.org/packages/a1/d2/6ee8aecf0f2bfe5d124767b6c6b9918676724fd0c520e829e32b0d34dd02/datasette_llm_limits-0.1a1-py3-none-any.whl",
+      "size": 16490,
+      "upload_time": "2026-07-30T23:55:25",
+      "upload_time_iso_8601": "2026-07-30T23:55:25.958023Z",
+      "url": "https://files.pythonhosted.org/packages/1c/74/ccdeb8ec61d0c05c9991e41c5547fb2d82437d478269cfc8b1e88c57a5e9/datasette_llm_limits-0.1a2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -181,21 +229,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "abdffee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8",
-        "md5": "7625f9cec51fcc303de5432b936e48aa",
-        "sha256": "4b10f8a83d68e83e342ec3b1878a1af4c100471c679e4d4fc4b8b284e4393a05"
+        "blake2b_256": "dba6686de4e106c33805cb292c1f29a0583de757a3a823be23ede771d9c6c64f",
+        "md5": "530d8185052cb75f6778c74cdaf89c65",
+        "sha256": "eb08f70c87b252c356278b2738dc518d1e38aa1fb48ff990a36e3bfcf27c84fd"
       },
       "downloads": -1,
-      "filename": "datasette_llm_limits-0.1a1.tar.gz",
+      "filename": "datasette_llm_limits-0.1a2.tar.gz",
       "has_sig": false,
-      "md5_digest": "7625f9cec51fcc303de5432b936e48aa",
+      "md5_digest": "530d8185052cb75f6778c74cdaf89c65",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 21719,
-      "upload_time": "2026-05-21T21:06:35",
-      "upload_time_iso_8601": "2026-05-21T21:06:35.607575Z",
-      "url": "https://files.pythonhosted.org/packages/ab/df/fee71e40dfc7201e534746dc982126c8e3ec962c5bcdf7098813402d2bd8/datasette_llm_limits-0.1a1.tar.gz",
+      "size": 21957,
+      "upload_time": "2026-07-30T23:55:27",
+      "upload_time_iso_8601": "2026-07-30T23:55:27.225739Z",
+      "url": "https://files.pythonhosted.org/packages/db/a6/686de4e106c33805cb292c1f29a0583de757a3a823be23ede771d9c6c64f/datasette_llm_limits-0.1a2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
