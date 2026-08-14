@@ -48,7 +48,7 @@
       "Issues": "https://github.com/simonw/sqlite-utils/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/sqlite-utils/4.1.1/",
+    "release_url": "https://pypi.org/project/sqlite-utils/4.2.1/",
     "requires_dist": [
       "click>=8.3.1",
       "click-default-group>=1.2.3",
@@ -60,11 +60,11 @@
     ],
     "requires_python": ">=3.10",
     "summary": "CLI tool and Python library for manipulating SQLite databases",
-    "version": "4.1.1",
+    "version": "4.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 39378680,
+  "last_serial": 40005168,
   "ownership": {
     "organization": null,
     "roles": [
@@ -5286,30 +5286,126 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "4.2": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "8dc6ee3a0c16655234089fcecc3f454dd663c7eb80e5e1bd7a1e7f2aee923b99"
+        },
+        "digests": {
+          "blake2b_256": "f8d70acae9fc18f480fe20699c6d1d0ad5423cc11b466949e7084c6ec1653359",
+          "md5": "e4bb6128ee142a5ff334cfc9cbd1b12f",
+          "sha256": "bdeed4d1e36256d49b470808cec052532254b755c03f61c7926d4ebb7d6ec4e0"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e4bb6128ee142a5ff334cfc9cbd1b12f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 99472,
+        "upload_time": "2026-08-13T20:15:14",
+        "upload_time_iso_8601": "2026-08-13T20:15:14.157747Z",
+        "url": "https://files.pythonhosted.org/packages/f8/d7/0acae9fc18f480fe20699c6d1d0ad5423cc11b466949e7084c6ec1653359/sqlite_utils-4.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "062b3e194ee37654a8e64e451a18e7dbef86c9ea8618968e8c8e5207dcc2b97d",
+          "md5": "d28525d53739db384152b7729a4cec7e",
+          "sha256": "3de17bfcbc00e214b7355f6f99c63bf44c8e546b6665ff59cfaa91468700fcc5"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d28525d53739db384152b7729a4cec7e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 311676,
+        "upload_time": "2026-08-13T20:15:15",
+        "upload_time_iso_8601": "2026-08-13T20:15:15.279822Z",
+        "url": "https://files.pythonhosted.org/packages/06/2b/3e194ee37654a8e64e451a18e7dbef86c9ea8618968e8c8e5207dcc2b97d/sqlite_utils-4.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "4.2.1": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "828c988561dafa97a7ef8bdef45e636114fc984257128092ebd7ef81195c6ec4"
+        },
+        "digests": {
+          "blake2b_256": "ebd0a20b9ea8686ea14f171582f3ce9f9b40b8fbb858fea744896191c09f2c2f",
+          "md5": "1476e4da25dd48584735e0b6dc776661",
+          "sha256": "7fbaee670713b25eceba05779b844f0895efaf680d9a226fa5ba7dfe165721c5"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1476e4da25dd48584735e0b6dc776661",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 99482,
+        "upload_time": "2026-08-13T23:59:16",
+        "upload_time_iso_8601": "2026-08-13T23:59:16.796538Z",
+        "url": "https://files.pythonhosted.org/packages/eb/d0/a20b9ea8686ea14f171582f3ce9f9b40b8fbb858fea744896191c09f2c2f/sqlite_utils-4.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "7e6b4a7b3d20c92e6c7acedc96ef620df8e1ea8f94a26a41ab788c1c08055815",
+          "md5": "dde68b4e2c6a5a935e3485a2e695bc20",
+          "sha256": "76114b6a5414714e6c70e5fa5c4781b301b590f6951b5da39c8cc60c21382ba1"
+        },
+        "downloads": -1,
+        "filename": "sqlite_utils-4.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dde68b4e2c6a5a935e3485a2e695bc20",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 311722,
+        "upload_time": "2026-08-13T23:59:17",
+        "upload_time_iso_8601": "2026-08-13T23:59:17.848630Z",
+        "url": "https://files.pythonhosted.org/packages/7e/6b/4a7b3d20c92e6c7acedc96ef620df8e1ea8f94a26a41ab788c1c08055815/sqlite_utils-4.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "2e85e2ef768b1946ec5280399367018829d4fba551c9aeb6ea7e742c73e1fbae"
+        "sha256": "828c988561dafa97a7ef8bdef45e636114fc984257128092ebd7ef81195c6ec4"
       },
       "digests": {
-        "blake2b_256": "2b3a273fb49a326d0fc11d043574e0ea2ff2fb20e32a0e8f74147bad39ea9877",
-        "md5": "ed5b35c0c722c8ce76f5b6be8ea6b902",
-        "sha256": "b52fd3d58b2778aacb35a074323aac49a924a323f98ee74027e590b08d1e6f32"
+        "blake2b_256": "ebd0a20b9ea8686ea14f171582f3ce9f9b40b8fbb858fea744896191c09f2c2f",
+        "md5": "1476e4da25dd48584735e0b6dc776661",
+        "sha256": "7fbaee670713b25eceba05779b844f0895efaf680d9a226fa5ba7dfe165721c5"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-4.1.1-py3-none-any.whl",
+      "filename": "sqlite_utils-4.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "ed5b35c0c722c8ce76f5b6be8ea6b902",
+      "md5_digest": "1476e4da25dd48584735e0b6dc776661",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 89319,
-      "upload_time": "2026-07-12T21:01:40",
-      "upload_time_iso_8601": "2026-07-12T21:01:40.571672Z",
-      "url": "https://files.pythonhosted.org/packages/2b/3a/273fb49a326d0fc11d043574e0ea2ff2fb20e32a0e8f74147bad39ea9877/sqlite_utils-4.1.1-py3-none-any.whl",
+      "size": 99482,
+      "upload_time": "2026-08-13T23:59:16",
+      "upload_time_iso_8601": "2026-08-13T23:59:16.796538Z",
+      "url": "https://files.pythonhosted.org/packages/eb/d0/a20b9ea8686ea14f171582f3ce9f9b40b8fbb858fea744896191c09f2c2f/sqlite_utils-4.2.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -5317,21 +5413,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "83c1fa8563039ec30b5cc6a532271e8cf90da37e4c649a3ad80b49fb6a39023e",
-        "md5": "1fb62961466ed44695d3386c030a4ab1",
-        "sha256": "cf97e620b3940cd541cae9117cc24af961a6da426189fdb662f20f1950ba1f49"
+        "blake2b_256": "7e6b4a7b3d20c92e6c7acedc96ef620df8e1ea8f94a26a41ab788c1c08055815",
+        "md5": "dde68b4e2c6a5a935e3485a2e695bc20",
+        "sha256": "76114b6a5414714e6c70e5fa5c4781b301b590f6951b5da39c8cc60c21382ba1"
       },
       "downloads": -1,
-      "filename": "sqlite_utils-4.1.1.tar.gz",
+      "filename": "sqlite_utils-4.2.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "1fb62961466ed44695d3386c030a4ab1",
+      "md5_digest": "dde68b4e2c6a5a935e3485a2e695bc20",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 289827,
-      "upload_time": "2026-07-12T21:01:41",
-      "upload_time_iso_8601": "2026-07-12T21:01:41.627342Z",
-      "url": "https://files.pythonhosted.org/packages/83/c1/fa8563039ec30b5cc6a532271e8cf90da37e4c649a3ad80b49fb6a39023e/sqlite_utils-4.1.1.tar.gz",
+      "size": 311722,
+      "upload_time": "2026-08-13T23:59:17",
+      "upload_time_iso_8601": "2026-08-13T23:59:17.848630Z",
+      "url": "https://files.pythonhosted.org/packages/7e/6b/4a7b3d20c92e6c7acedc96ef620df8e1ea8f94a26a41ab788c1c08055815/sqlite_utils-4.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
