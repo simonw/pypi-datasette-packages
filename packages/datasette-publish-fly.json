@@ -1,26 +1,26 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
     "description": "# datasette-publish-fly\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-publish-fly.svg)](https://pypi.org/project/datasette-publish-fly/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-publish-fly?include_prereleases&label=changelog)](https://github.com/simonw/datasette-publish-fly/releases)\n[![Tests](https://github.com/simonw/datasette-publish-fly/workflows/Test/badge.svg)](https://github.com/simonw/datasette-publish-fly/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-publish-fly/blob/main/LICENSE)\n\n[Datasette](https://datasette.io/) plugin for deploying Datasette instances to [Fly.io](https://fly.io/).\n\nProject background: [Using SQLite and Datasette with Fly Volumes](https://simonwillison.net/2022/Feb/15/fly-volumes/)\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-publish-fly\n\n## Deploying read-only data\n\nFirst, install the `flyctl` command-line tool by [following their instructions](https://fly.io/docs/getting-started/installing-flyctl/).\n\nRun `flyctl auth signup` to create an account there, or `flyctl auth login` if you already have one.\n\nYou can now use `datasette publish fly` to publish one or more SQLite database files:\n\n    datasette publish fly my-database.db --app=\"my-data-app\"\n\nThe argument you pass to `--app` will be used for the URL of your application: `my-data-app.fly.dev`.\n\nTo update an application, run the publish command passing the same application name to the `--app` option.\n\nFly have [a free tier](https://fly.io/docs/about/pricing/#free-allowances), beyond which they will charge you monthly for each application you have live.  Details of their pricing can be [found on their site](https://fly.io/docs/pricing/).\n\nYour application will be deployed at `https://your-app-name.fly.io/` - be aware that it may take several minutes to start working the first time you deploy it.\n\n## Using Fly volumes for writable databases\n\nFly [Volumes](https://fly.io/docs/reference/volumes/) provide persistant disk storage for Fly applications. Volumes can be 1GB or more in size and the Fly free tier includes 3GB of volume space.\n\nDatasette plugins such as [datasette-uploads-csvs](https://datasette.io/plugins/datasette-upload-csvs) and [datasette-tiddlywiki](https://datasette.io/plugins/datasette-tiddlywiki) can be deployed to Fly and store their mutable data in a volume.\n\n> :warning: **You should only run a single instance of your application** if your database accepts writes. Fly has excellent support for running multiple instances in different geographical regions, but `datasette-publish-fly` with volumes is not yet compatible with that model. You should probably [use Fly PostgreSQL instead](https://fly.io/blog/globally-distributed-postgres/).\n\nHere's how to deploy `datasette-tiddlywiki` with authentication provided by `datasette-auth-passwords`.\n\nFirst, you'll need to create a root password hash to use to sign into the instance.\n\nYou can do that by installing the plugin and running the `datasette hash-password` command, or by using [this hosted tool](https://datasette-auth-passwords-demo.datasette.io/-/password-tool).\n\nThe hash should look like `pbkdf2_sha256$...` - you'll need this for the next step.\n\nIn this example we're also deploying a read-only database called `content.db`.\n\nPick a name for your new application, then run the following:\n\n    datasette publish fly \\\n    content.db \\\n    --app your-application-name \\\n    --create-volume 1 \\\n    --create-db tiddlywiki \\\n    --install datasette-auth-passwords \\\n    --install datasette-tiddlywiki \\\n    --plugin-secret datasette-auth-passwords root_password_hash 'pbkdf2_sha256$...'\n\nThis will create the new application, deploy the `content.db` read-only database, create a 1GB volume for that application, create a new database in that volume called `tiddlywiki.db`, then install the two plugins and configure the password you specified.\n\n### Updating applications that use a volume\n\nOnce you have deployed an application using a volume, you can update that application without needing the `--create-volume` or `--create-db` options. To add the [datasette-graphq](https://datasette.io/plugins/datasette-graphql) plugin to your deployed application you would run the following:\n\n    datasette publish fly \\\n    content.db \\\n    --app your-application-name \\\n    --install datasette-auth-passwords \\\n    --install datasette-tiddlywiki \\\n    --install datasette-graphql \\\n    --plugin-secret datasette-auth-passwords root_password_hash 'pbkdf2_sha256$...' \\\n\nSince the application name is the same you don't need the `--create-volume` or `--create-db` options - these are persisted automatically between deploys.\n\nYou do need to specify the full list of plugins that you want to have installed, and any plugin secrets.\n\nYou also need to include any read-only database files that are part of the instance - `content.db` in this example - otherwise the new deployment will not include them.\n\n### Advanced volume usage\n\n`datasette publish fly` will add a volume called `datasette` to your Fly application. You can customize the name using the `--volume name custom_name` option.\n\nFly can be used to scale applications to run multiple instances in multiple regions around the world. This works well with read-only Datasette but is not currently recommended using Datasette with volumes, since each Fly replica would need its own volume and data stored in one instance would not be visible in others.\n\nIf you want to use multiple instances with volumes you will need to switch to using the `flyctl` command directly. The `--generate-dir` option, described below, can help with this.\n\n## Generating without deploying\n\nUse the `--generate-dir` option to generate a directory that can be deployed to Fly rather than deploying directly:\n\n    datasette publish fly my-database.db \\\n      --app=\"my-generated-app\" \\\n      --generate-dir /tmp/deploy-this\n\nYou can then manually deploy your generated application using the following:\n\n    cd /tmp/deploy-this\n    flyctl apps create my-generated-app\n    flyctl deploy\n\n## datasette publish fly --help\n\n<!-- [[[cog\nimport cog\nfrom datasette import cli\nfrom click.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(cli.cli, [\"publish\", \"fly\", \"--help\"])\nhelp = result.output.replace(\"Usage: cli\", \"Usage: datasette\")\ncog.out(\n    \"```\\n{}```\".format(help)\n)\n]]] -->\n```\nUsage: datasette publish fly [OPTIONS] [FILES]...\n\n  Deploy an application to Fly that runs Datasette against the provided database\n  files.\n\n  Usage example:\n\n      datasette publish fly my-database.db --app=\"my-data-app\"\n\n  Full documentation: https://datasette.io/plugins/datasette-publish-fly\n\nOptions:\n  -m, --metadata FILENAME         Path to JSON/YAML file containing metadata to\n                                  publish\n  --extra-options TEXT            Extra options to pass to datasette serve\n  --branch TEXT                   Install datasette from a GitHub branch e.g.\n                                  main\n  --template-dir DIRECTORY        Path to directory containing custom templates\n  --plugins-dir DIRECTORY         Path to directory containing custom plugins\n  --static MOUNT:DIRECTORY        Serve static files from this directory at\n                                  /MOUNT/...\n  --install TEXT                  Additional packages (e.g. plugins) to install\n  --plugin-secret <TEXT TEXT TEXT>...\n                                  Secrets to pass to plugins, e.g. --plugin-\n                                  secret datasette-auth-github client_id xxx\n  --version-note TEXT             Additional note to show on /-/versions\n  --secret TEXT                   Secret used for signing secure values, such as\n                                  signed cookies\n  --title TEXT                    Title for metadata\n  --license TEXT                  License label for metadata\n  --license_url TEXT              License URL for metadata\n  --source TEXT                   Source label for metadata\n  --source_url TEXT               Source URL for metadata\n  --about TEXT                    About label for metadata\n  --about_url TEXT                About URL for metadata\n  --spatialite                    Enable SpatialLite extension\n  --region TEXT                   Fly region to deploy to, e.g sjc - see\n                                  https://fly.io/docs/reference/regions/\n  --create-volume INTEGER RANGE   Create and attach volume of this size in GB\n                                  [x>=1]\n  --create-db TEXT                Names of read-write database files to create\n  --volume-name TEXT              Volume name to use\n  -a, --app TEXT                  Name of Fly app to deploy  [required]\n  -o, --org TEXT                  Name of Fly org to deploy to\n  --generate-dir DIRECTORY        Output generated application files and stop\n                                  without deploying\n  --show-files                    Output the generated Dockerfile, metadata.json\n                                  and fly.toml\n  --setting SETTING...            Setting, see\n                                  docs.datasette.io/en/stable/settings.html\n  --crossdb                       Enable cross-database SQL queries\n  --help                          Show this message and exit.\n```\n<!-- [[[end]]] -->\n\n## Development\n\nTo contribute to this tool, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-publish-fly\n    python -m venv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n### Integration tests\n\nThe tests in `tests/test_integration.py` make actual calls to Fly to deploy a test application.\n\nThese tests are skipped by default. If you have `flyctl` installed and configured, you can run the integration tests like this:\n\n    pytest --integration -s\n\nThe `-s` option here ensures that output from the deploys will be visible to you - otherwise it can look like the tests have hung.\n\nThe tests will create applications on Fly that start with the prefix `publish-fly-temp-` and then delete them at the end of the run.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-publish-fly",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-publish-fly",
     "package_url": "https://pypi.org/project/datasette-publish-fly/",
     "platform": null,
@@ -31,21 +31,23 @@
       "Homepage": "https://github.com/simonw/datasette-publish-fly",
       "Issues": "https://github.com/simonw/datasette-publish-fly/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-publish-fly/1.3.1/",
-    "requires_dist": [
-      "datasette >=0.60.2",
-      "pytest ; extra == 'test'",
-      "pytest-mock ; extra == 'test'",
-      "cogapp ; extra == 'test'"
+    "provides_extra": [
+      "test"
     ],
-    "requires_python": "",
+    "release_url": "https://pypi.org/project/datasette-publish-fly/1.4/",
+    "requires_dist": [
+      "datasette>=0.60.2",
+      "pytest; extra == \"test\"",
+      "pytest-mock; extra == \"test\"",
+      "cogapp; extra == \"test\""
+    ],
+    "requires_python": ">=3.10",
     "summary": "Datasette plugin for publishing data using Fly",
-    "version": "1.3.1",
+    "version": "1.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 19393984,
+  "last_serial": 40954025,
   "ownership": {
     "organization": null,
     "roles": [
@@ -469,52 +471,100 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "1.4": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "da99378ef965f120f67cb41015a94b8d784621e2590ee68669ab798d203d766f"
+        },
+        "digests": {
+          "blake2b_256": "701c629ea3bab2886d63a2b5f76cfcfc02165bbb80dacd97bc93638ce7d0591a",
+          "md5": "af07a70e9197575b9248b7d037861a7e",
+          "sha256": "6c10a0a7046e0dd53651c2a011cf5a7e51c648456c51147a76fff3009dece00c"
+        },
+        "downloads": -1,
+        "filename": "datasette_publish_fly-1.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "af07a70e9197575b9248b7d037861a7e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 9368,
+        "upload_time": "2026-09-11T02:59:49",
+        "upload_time_iso_8601": "2026-09-11T02:59:49.928885Z",
+        "url": "https://files.pythonhosted.org/packages/70/1c/629ea3bab2886d63a2b5f76cfcfc02165bbb80dacd97bc93638ce7d0591a/datasette_publish_fly-1.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "a293af93c520bcdda876b30f8ec28f422a49c18b39eaaea48c0ae16d880d44ba",
+          "md5": "3fad95fc7b754d600071d3ae00d728bc",
+          "sha256": "4919ae7db23b5955a8570b3e05d7a386151a9e32c88077b3ee8f971955d457a3"
+        },
+        "downloads": -1,
+        "filename": "datasette_publish_fly-1.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "3fad95fc7b754d600071d3ae00d728bc",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 12937,
+        "upload_time": "2026-09-11T02:59:50",
+        "upload_time_iso_8601": "2026-09-11T02:59:50.998817Z",
+        "url": "https://files.pythonhosted.org/packages/a2/93/af93c520bcdda876b30f8ec28f422a49c18b39eaaea48c0ae16d880d44ba/datasette_publish_fly-1.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": {
-        "sha256": "011cc153903bbcc68596b0d06d5b3c7ffe92ffece2b0743574f6a3acc898574b"
+        "sha256": "da99378ef965f120f67cb41015a94b8d784621e2590ee68669ab798d203d766f"
       },
       "digests": {
-        "blake2b_256": "7daaad7e536df1f7266d73f49c3d286e295addc1a21911bfa75a0ee7f915e9ad",
-        "md5": "153b738fe7201a6d20230060feafe128",
-        "sha256": "a40bd4ade6c4feab0645e273bb7a9e158bb30a42e05e37eb5236726e35806b59"
+        "blake2b_256": "701c629ea3bab2886d63a2b5f76cfcfc02165bbb80dacd97bc93638ce7d0591a",
+        "md5": "af07a70e9197575b9248b7d037861a7e",
+        "sha256": "6c10a0a7046e0dd53651c2a011cf5a7e51c648456c51147a76fff3009dece00c"
       },
       "downloads": -1,
-      "filename": "datasette_publish_fly-1.3.1-py3-none-any.whl",
+      "filename": "datasette_publish_fly-1.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "153b738fe7201a6d20230060feafe128",
+      "md5_digest": "af07a70e9197575b9248b7d037861a7e",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 13494,
-      "upload_time": "2023-08-21T19:00:16",
-      "upload_time_iso_8601": "2023-08-21T19:00:16.355989Z",
-      "url": "https://files.pythonhosted.org/packages/7d/aa/ad7e536df1f7266d73f49c3d286e295addc1a21911bfa75a0ee7f915e9ad/datasette_publish_fly-1.3.1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 9368,
+      "upload_time": "2026-09-11T02:59:49",
+      "upload_time_iso_8601": "2026-09-11T02:59:49.928885Z",
+      "url": "https://files.pythonhosted.org/packages/70/1c/629ea3bab2886d63a2b5f76cfcfc02165bbb80dacd97bc93638ce7d0591a/datasette_publish_fly-1.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "2e6945cd1660b86a66fc818d469f49e7cae247064ded3ab04bd9785992347356",
-        "md5": "81a9fee5de0a80f72dffb9386ae1a172",
-        "sha256": "4d780018cdf489814fb6f5a95d4b96fae22c9dc2ee48b8a3747e4c5142ebbbff"
+        "blake2b_256": "a293af93c520bcdda876b30f8ec28f422a49c18b39eaaea48c0ae16d880d44ba",
+        "md5": "3fad95fc7b754d600071d3ae00d728bc",
+        "sha256": "4919ae7db23b5955a8570b3e05d7a386151a9e32c88077b3ee8f971955d457a3"
       },
       "downloads": -1,
-      "filename": "datasette-publish-fly-1.3.1.tar.gz",
+      "filename": "datasette_publish_fly-1.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "81a9fee5de0a80f72dffb9386ae1a172",
+      "md5_digest": "3fad95fc7b754d600071d3ae00d728bc",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": null,
-      "size": 19588,
-      "upload_time": "2023-08-21T19:00:17",
-      "upload_time_iso_8601": "2023-08-21T19:00:17.782063Z",
-      "url": "https://files.pythonhosted.org/packages/2e/69/45cd1660b86a66fc818d469f49e7cae247064ded3ab04bd9785992347356/datasette-publish-fly-1.3.1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 12937,
+      "upload_time": "2026-09-11T02:59:50",
+      "upload_time_iso_8601": "2026-09-11T02:59:50.998817Z",
+      "url": "https://files.pythonhosted.org/packages/a2/93/af93c520bcdda876b30f8ec28f422a49c18b39eaaea48c0ae16d880d44ba/datasette_publish_fly-1.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

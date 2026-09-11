@@ -67,7 +67,7 @@
       "test",
       "rich"
     ],
-    "release_url": "https://pypi.org/project/datasette/0.65.3/",
+    "release_url": "https://pypi.org/project/datasette/0.65.4/",
     "requires_dist": [
       "asgiref>=3.2.10",
       "click>=7.1.1",
@@ -107,11 +107,11 @@
     ],
     "requires_python": ">=3.9",
     "summary": "An open source multi-tool for exploring and publishing data",
-    "version": "0.65.3",
+    "version": "0.65.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 39768358,
+  "last_serial": 40950727,
   "ownership": {
     "organization": null,
     "roles": [
@@ -5442,6 +5442,54 @@
         "yanked_reason": null
       }
     ],
+    "0.65.4": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "dc6a7b8ba8d1c385300074a34e160d531233541da9d6f51fd5b94d6aa57e4e70"
+        },
+        "digests": {
+          "blake2b_256": "c5d4f2860ef7295d8368246550bf8785275cb2f42cdb753fc5c83979b420b6c8",
+          "md5": "34db3ecb4bcd1d5aa8086d082d60b56d",
+          "sha256": "3be08d603338f2e2cc4e608f8aafa7a0880c25d6958cab4469379c61c2297e82"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.65.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "34db3ecb4bcd1d5aa8086d082d60b56d",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 399473,
+        "upload_time": "2026-09-11T00:10:24",
+        "upload_time_iso_8601": "2026-09-11T00:10:24.343934Z",
+        "url": "https://files.pythonhosted.org/packages/c5/d4/f2860ef7295d8368246550bf8785275cb2f42cdb753fc5c83979b420b6c8/datasette-0.65.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "0831128dd63469844ee00fba7097ed778696460bb48db8943a8749f4be73258c",
+          "md5": "e477545238d9d8063f67f9043c133614",
+          "sha256": "6b08f8aeb8f307262372b1cbb6e8e50cc350273f250af64393156b10c5bc0528"
+        },
+        "downloads": -1,
+        "filename": "datasette-0.65.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "e477545238d9d8063f67f9043c133614",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 415689,
+        "upload_time": "2026-09-11T00:10:26",
+        "upload_time_iso_8601": "2026-09-11T00:10:26.328061Z",
+        "url": "https://files.pythonhosted.org/packages/08/31/128dd63469844ee00fba7097ed778696460bb48db8943a8749f4be73258c/datasette-0.65.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.8": [
       {
         "comment_text": "",
@@ -7078,6 +7126,54 @@
         "yanked_reason": null
       }
     ],
+    "1.0a39": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "2dad091cbbf8f76c3541f4d60d70ebfe34ccbbfc65cd9044829941e83c968897"
+        },
+        "digests": {
+          "blake2b_256": "ada5971da8a2ba1360fde37db53c58a84d2da8527d32c4cd43aaeae4f834366b",
+          "md5": "ed7a2ca687dd15a5c0f0c2ff10d94013",
+          "sha256": "850768dd9667983298ada7fa4d7fbfd1923c25e5dc756d7ac91cb66c0192933c"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a39-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ed7a2ca687dd15a5c0f0c2ff10d94013",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 549811,
+        "upload_time": "2026-09-11T00:32:45",
+        "upload_time_iso_8601": "2026-09-11T00:32:45.698635Z",
+        "url": "https://files.pythonhosted.org/packages/ad/a5/971da8a2ba1360fde37db53c58a84d2da8527d32c4cd43aaeae4f834366b/datasette-1.0a39-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "13f2726d2d7331243cbbd2ee3587db3e0b6c682f705bfe52a695aaca3047afdf",
+          "md5": "d5bbc33e9d44ec3f11fdf94a605d30ef",
+          "sha256": "e6e55f30f20c99c98ef4de053de990c07ec44e74ddfb57bf7a4405c2d7ddc2e7"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a39.tar.gz",
+        "has_sig": false,
+        "md5_digest": "d5bbc33e9d44ec3f11fdf94a605d30ef",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 743353,
+        "upload_time": "2026-09-11T00:32:47",
+        "upload_time_iso_8601": "2026-09-11T00:32:47.319447Z",
+        "url": "https://files.pythonhosted.org/packages/13/f2/726d2d7331243cbbd2ee3587db3e0b6c682f705bfe52a695aaca3047afdf/datasette-1.0a39.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "1.0a4": [
       {
         "comment_text": "",
@@ -7371,24 +7467,24 @@
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "86692afbc483343d896f5e22fe066cd9e2701e761acc762b70730d8b53a1b176"
+        "sha256": "dc6a7b8ba8d1c385300074a34e160d531233541da9d6f51fd5b94d6aa57e4e70"
       },
       "digests": {
-        "blake2b_256": "9d2e0ae56e4a2645f54d5d6edd7ba44b28f19a8997b4f8ddc69eaea9b15859c6",
-        "md5": "f58d6d29a2c9977ed3f33544d693f98e",
-        "sha256": "30ea57f672f8c8ee40fc212fd63d1bdc6bb94e5afd733732b19f0c84371483da"
+        "blake2b_256": "c5d4f2860ef7295d8368246550bf8785275cb2f42cdb753fc5c83979b420b6c8",
+        "md5": "34db3ecb4bcd1d5aa8086d082d60b56d",
+        "sha256": "3be08d603338f2e2cc4e608f8aafa7a0880c25d6958cab4469379c61c2297e82"
       },
       "downloads": -1,
-      "filename": "datasette-0.65.3-py3-none-any.whl",
+      "filename": "datasette-0.65.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "f58d6d29a2c9977ed3f33544d693f98e",
+      "md5_digest": "34db3ecb4bcd1d5aa8086d082d60b56d",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.9",
-      "size": 397583,
-      "upload_time": "2026-08-06T18:28:10",
-      "upload_time_iso_8601": "2026-08-06T18:28:10.325260Z",
-      "url": "https://files.pythonhosted.org/packages/9d/2e/0ae56e4a2645f54d5d6edd7ba44b28f19a8997b4f8ddc69eaea9b15859c6/datasette-0.65.3-py3-none-any.whl",
+      "size": 399473,
+      "upload_time": "2026-09-11T00:10:24",
+      "upload_time_iso_8601": "2026-09-11T00:10:24.343934Z",
+      "url": "https://files.pythonhosted.org/packages/c5/d4/f2860ef7295d8368246550bf8785275cb2f42cdb753fc5c83979b420b6c8/datasette-0.65.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -7396,21 +7492,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "6b02d9cbfc8750f490450c0b493fd3790c633dc44587f8b049163913748b1031",
-        "md5": "d722fb986c1bf328f5fe980363d50985",
-        "sha256": "ad283ea3c7f80423cb8ea5741fb9072878b40aedae3e3b63ab9856d92191582d"
+        "blake2b_256": "0831128dd63469844ee00fba7097ed778696460bb48db8943a8749f4be73258c",
+        "md5": "e477545238d9d8063f67f9043c133614",
+        "sha256": "6b08f8aeb8f307262372b1cbb6e8e50cc350273f250af64393156b10c5bc0528"
       },
       "downloads": -1,
-      "filename": "datasette-0.65.3.tar.gz",
+      "filename": "datasette-0.65.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "d722fb986c1bf328f5fe980363d50985",
+      "md5_digest": "e477545238d9d8063f67f9043c133614",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.9",
-      "size": 411477,
-      "upload_time": "2026-08-06T18:28:12",
-      "upload_time_iso_8601": "2026-08-06T18:28:12.162756Z",
-      "url": "https://files.pythonhosted.org/packages/6b/02/d9cbfc8750f490450c0b493fd3790c633dc44587f8b049163913748b1031/datasette-0.65.3.tar.gz",
+      "size": 415689,
+      "upload_time": "2026-09-11T00:10:26",
+      "upload_time_iso_8601": "2026-09-11T00:10:26.328061Z",
+      "url": "https://files.pythonhosted.org/packages/08/31/128dd63469844ee00fba7097ed778696460bb48db8943a8749f4be73258c/datasette-0.65.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
