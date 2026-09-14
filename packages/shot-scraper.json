@@ -32,21 +32,21 @@
       "Issues": "https://github.com/simonw/shot-scraper/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/shot-scraper/1.11/",
+    "release_url": "https://pypi.org/project/shot-scraper/1.12/",
     "requires_dist": [
       "click",
       "pyyaml",
       "pydantic",
-      "playwright>=1.61.0",
+      "playwright>=1.62.0",
       "click-default-group"
     ],
     "requires_python": ">=3.10",
     "summary": "A CLI utility for taking screenshots of websites, recording video demos and scraping sites using JavaScript",
-    "version": "1.11",
+    "version": "1.12",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 38928322,
+  "last_serial": 41039488,
   "ownership": {
     "organization": null,
     "roles": [
@@ -1401,6 +1401,54 @@
         "yanked_reason": null
       }
     ],
+    "1.12": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "1323374c76fa75d2a18eea2917afb6e4cbeb68955768d1b51e98e7d3a2e1d1ad"
+        },
+        "digests": {
+          "blake2b_256": "cf0ac240582ce12257c5957f37bc34554273cb41c1a4a043a0d4746460f2f16b",
+          "md5": "5196f0aa228f204a079b9b27d86d56cf",
+          "sha256": "823ad46a5a5db2cc284c8d292735dc492c24adabf0595e00e6fe4b3c847e7a40"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-1.12-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5196f0aa228f204a079b9b27d86d56cf",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 23459,
+        "upload_time": "2026-09-14T00:00:40",
+        "upload_time_iso_8601": "2026-09-14T00:00:40.969069Z",
+        "url": "https://files.pythonhosted.org/packages/cf/0a/c240582ce12257c5957f37bc34554273cb41c1a4a043a0d4746460f2f16b/shot_scraper-1.12-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "9b3c34a1ace0396f0e48a3122cbba241cd3bb5bf9dfe5717a73b01a03ead0843",
+          "md5": "0d2679f02f541c214adef50445f3535c",
+          "sha256": "2baed3e5510d759de5eac0a1ef554d0d321d03a561ccbfd3af8c7b29edfe244b"
+        },
+        "downloads": -1,
+        "filename": "shot_scraper-1.12.tar.gz",
+        "has_sig": false,
+        "md5_digest": "0d2679f02f541c214adef50445f3535c",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 21763,
+        "upload_time": "2026-09-14T00:00:42",
+        "upload_time_iso_8601": "2026-09-14T00:00:42.063397Z",
+        "url": "https://files.pythonhosted.org/packages/9b/3c/34a1ace0396f0e48a3122cbba241cd3bb5bf9dfe5717a73b01a03ead0843/shot_scraper-1.12.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "1.2": [
       {
         "comment_text": "",
@@ -1838,24 +1886,24 @@
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "77bca86b7848a05701918a9e9322b8e3535889455bc37817de3f66c3dd6a3ef8"
+        "sha256": "1323374c76fa75d2a18eea2917afb6e4cbeb68955768d1b51e98e7d3a2e1d1ad"
       },
       "digests": {
-        "blake2b_256": "0599cfc0829d3aea64c103c9e28a946f9101606e0d4c140db1c946ae95e98375",
-        "md5": "6d44259a9ebc1594c9c16cbc6bee0381",
-        "sha256": "a3e1f5a4fb3c4e771e4fac7dc4e4efb3dac98437fa2417ed27780fce966e42ea"
+        "blake2b_256": "cf0ac240582ce12257c5957f37bc34554273cb41c1a4a043a0d4746460f2f16b",
+        "md5": "5196f0aa228f204a079b9b27d86d56cf",
+        "sha256": "823ad46a5a5db2cc284c8d292735dc492c24adabf0595e00e6fe4b3c847e7a40"
       },
       "downloads": -1,
-      "filename": "shot_scraper-1.11-py3-none-any.whl",
+      "filename": "shot_scraper-1.12-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "6d44259a9ebc1594c9c16cbc6bee0381",
+      "md5_digest": "5196f0aa228f204a079b9b27d86d56cf",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.10",
-      "size": 22955,
-      "upload_time": "2026-07-12T23:49:35",
-      "upload_time_iso_8601": "2026-07-12T23:49:35.678851Z",
-      "url": "https://files.pythonhosted.org/packages/05/99/cfc0829d3aea64c103c9e28a946f9101606e0d4c140db1c946ae95e98375/shot_scraper-1.11-py3-none-any.whl",
+      "size": 23459,
+      "upload_time": "2026-09-14T00:00:40",
+      "upload_time_iso_8601": "2026-09-14T00:00:40.969069Z",
+      "url": "https://files.pythonhosted.org/packages/cf/0a/c240582ce12257c5957f37bc34554273cb41c1a4a043a0d4746460f2f16b/shot_scraper-1.12-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -1863,21 +1911,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "bc53806124d559fc3f85e4387a2ddb088776a5c9ee2a6884717c42d22696b7cf",
-        "md5": "1a681457c76cd51b1f2057ebc8f9a9e5",
-        "sha256": "af3efcad697f3b001f624ccdb2499417e4169bee5bf01672840a55175eef6d92"
+        "blake2b_256": "9b3c34a1ace0396f0e48a3122cbba241cd3bb5bf9dfe5717a73b01a03ead0843",
+        "md5": "0d2679f02f541c214adef50445f3535c",
+        "sha256": "2baed3e5510d759de5eac0a1ef554d0d321d03a561ccbfd3af8c7b29edfe244b"
       },
       "downloads": -1,
-      "filename": "shot_scraper-1.11.tar.gz",
+      "filename": "shot_scraper-1.12.tar.gz",
       "has_sig": false,
-      "md5_digest": "1a681457c76cd51b1f2057ebc8f9a9e5",
+      "md5_digest": "0d2679f02f541c214adef50445f3535c",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.10",
-      "size": 21281,
-      "upload_time": "2026-07-12T23:49:36",
-      "upload_time_iso_8601": "2026-07-12T23:49:36.897262Z",
-      "url": "https://files.pythonhosted.org/packages/bc/53/806124d559fc3f85e4387a2ddb088776a5c9ee2a6884717c42d22696b7cf/shot_scraper-1.11.tar.gz",
+      "size": 21763,
+      "upload_time": "2026-09-14T00:00:42",
+      "upload_time_iso_8601": "2026-09-14T00:00:42.063397Z",
+      "url": "https://files.pythonhosted.org/packages/9b/3c/34a1ace0396f0e48a3122cbba241cd3bb5bf9dfe5717a73b01a03ead0843/shot_scraper-1.12.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
