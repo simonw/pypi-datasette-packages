@@ -1,29 +1,30 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [
-      "Framework :: Datasette",
-      "License :: OSI Approved :: Apache Software License"
+      "Framework :: Datasette"
     ],
-    "description": "# datasette-explain\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-explain.svg)](https://pypi.org/project/datasette-explain/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-explain?include_prereleases&label=changelog)](https://github.com/simonw/datasette-explain/releases)\n[![Tests](https://github.com/simonw/datasette-explain/workflows/Test/badge.svg)](https://github.com/simonw/datasette-explain/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-explain/blob/main/LICENSE)\n\nExplain SQL queries executed using Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-explain\n```\n## Usage\n\nThe plugin adds JavaScript to the query editor page which will constantly update the page with information gained from running EXPLAIN QUERY PLAN queries against the entered SQL.\n\nThis may result in an error message, or it may show the query plan along with any tables used by the query.\n\n## Demo\n\nYou can see this plugin in action on [datasette.simonwillison.net](https://datasette.simonwillison.net/simonwillisonblog?sql=select%0D%0A++blog_tag.tag%2C%0D%0A++blog_blogmark.link_title%2C%0D%0A++blog_blogmark.link_url%0D%0Afrom%0D%0A++blog_blogmark_tags%0D%0A++join+blog_tag+on+tag_id+%3D+blog_tag.id%0D%0A++join+blog_blogmark+on+blog_blogmark_tags.blogmark_id+%3D+blog_blogmark.id%0D%0Aorder+by+blog_blogmark.id+desc).\n\n<img src=\"https://raw.githubusercontent.com/simonw/datasette-explain/main/datasette-explain-screenshot.jpg\" alt=\"Demo of this plugin - a SQL query shows the explain plan as well as the three tables that were used in the query (their names and columns)\" width=\"832\">\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n```bash\ncd datasette-explain\npython3 -m venv venv\nsource venv/bin/activate\n```\nNow install the dependencies and test dependencies:\n```bash\npip install -e '.[test]'\n```\nTo run the tests:\n```bash\npytest\n```\n",
+    "description": "# datasette-explain\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-explain.svg)](https://pypi.org/project/datasette-explain/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-explain?include_prereleases&label=changelog)](https://github.com/simonw/datasette-explain/releases)\n[![Tests](https://github.com/simonw/datasette-explain/workflows/Test/badge.svg)](https://github.com/simonw/datasette-explain/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-explain/blob/main/LICENSE)\n\nExplain SQL queries executed using Datasette\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-explain\n```\n## Usage\n\nThe plugin adds JavaScript to the query editor page which will constantly update the page with information gained from running EXPLAIN QUERY PLAN queries against the entered SQL.\n\nThis may result in an error message, or it may show the query plan along with any tables used by the query.\n\n## Demo\n\nYou can see this plugin in action on [datasette.simonwillison.net](https://datasette.simonwillison.net/simonwillisonblog?sql=select%0D%0A++blog_tag.tag%2C%0D%0A++blog_blogmark.link_title%2C%0D%0A++blog_blogmark.link_url%0D%0Afrom%0D%0A++blog_blogmark_tags%0D%0A++join+blog_tag+on+tag_id+%3D+blog_tag.id%0D%0A++join+blog_blogmark+on+blog_blogmark_tags.blogmark_id+%3D+blog_blogmark.id%0D%0Aorder+by+blog_blogmark.id+desc).\n\n<img src=\"https://raw.githubusercontent.com/simonw/datasette-explain/main/datasette-explain-screenshot.jpg\" alt=\"Demo of this plugin - a SQL query shows the explain plan as well as the three tables that were used in the query (their names and columns)\" width=\"832\">\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then run the tests using [uv](https://docs.astral.sh/uv/):\n```bash\ncd datasette-explain\nuv run pytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "",
-    "keywords": "",
-    "license": "Apache-2.0",
-    "license_expression": null,
-    "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-explain",
     "package_url": "https://pypi.org/project/datasette-explain/",
     "platform": null,
@@ -35,19 +36,17 @@
       "Issues": "https://github.com/simonw/datasette-explain/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-explain/0.2.1/",
+    "release_url": "https://pypi.org/project/datasette-explain/0.2.2/",
     "requires_dist": [
-      "datasette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "datasette"
     ],
-    "requires_python": ">=3.8",
+    "requires_python": ">=3.10",
     "summary": "Explain SQL queries executed using Datasette",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 22079553,
+  "last_serial": 41249284,
   "ownership": {
     "organization": null,
     "roles": [
@@ -297,52 +296,100 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.2": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "d67d312f39399907061628a21485ac538747c69354060e0cb2308df6a155f1cd"
+        },
+        "digests": {
+          "blake2b_256": "5b00d581cde580b8ef825d408c1f8a99f9e76d90207d67f5e8ef37775e850304",
+          "md5": "7d8c54a81fa306882ff0e92009de8ecf",
+          "sha256": "524da2ed998bda531573a762f2d0d425325f89313e6b7c9ba31e18e5dfd4680e"
+        },
+        "downloads": -1,
+        "filename": "datasette_explain-0.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7d8c54a81fa306882ff0e92009de8ecf",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 8740,
+        "upload_time": "2026-09-20T00:22:53",
+        "upload_time_iso_8601": "2026-09-20T00:22:53.484651Z",
+        "url": "https://files.pythonhosted.org/packages/5b/00/d581cde580b8ef825d408c1f8a99f9e76d90207d67f5e8ef37775e850304/datasette_explain-0.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "7a30d442b2dbad756be7ad3c25e847e52a755c0876305ff2081ecf92b56ed338",
+          "md5": "dcccd1594142be20af7bb90bd7f20440",
+          "sha256": "cb0adeafa75b03dde1200ffa74646dc528bfa244bddbc4815b6df88366b253ff"
+        },
+        "downloads": -1,
+        "filename": "datasette_explain-0.2.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "dcccd1594142be20af7bb90bd7f20440",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 7518,
+        "upload_time": "2026-09-20T00:22:54",
+        "upload_time_iso_8601": "2026-09-20T00:22:54.645475Z",
+        "url": "https://files.pythonhosted.org/packages/7a/30/d442b2dbad756be7ad3c25e847e52a755c0876305ff2081ecf92b56ed338/datasette_explain-0.2.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": {
-        "sha256": "a8d6e8d63e35fe0f7df7f3ac6a1ab6309e9200c7333dab9a36316caee47f96df"
+        "sha256": "d67d312f39399907061628a21485ac538747c69354060e0cb2308df6a155f1cd"
       },
       "digests": {
-        "blake2b_256": "6e4d7e8559d02ffcf7c83421a8044917a129c8a7c85de71be009a4b74d85d971",
-        "md5": "c84eb58e6ca1f92fb54c4fc87d4dea96",
-        "sha256": "65e7ef571df083206e8e33237dd7e6433715c2da2e457c6a25989cdabc86446e"
+        "blake2b_256": "5b00d581cde580b8ef825d408c1f8a99f9e76d90207d67f5e8ef37775e850304",
+        "md5": "7d8c54a81fa306882ff0e92009de8ecf",
+        "sha256": "524da2ed998bda531573a762f2d0d425325f89313e6b7c9ba31e18e5dfd4680e"
       },
       "downloads": -1,
-      "filename": "datasette_explain-0.2.1-py3-none-any.whl",
+      "filename": "datasette_explain-0.2.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "c84eb58e6ca1f92fb54c4fc87d4dea96",
+      "md5_digest": "7d8c54a81fa306882ff0e92009de8ecf",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.8",
-      "size": 8629,
-      "upload_time": "2024-02-28T16:57:26",
-      "upload_time_iso_8601": "2024-02-28T16:57:26.875819Z",
-      "url": "https://files.pythonhosted.org/packages/6e/4d/7e8559d02ffcf7c83421a8044917a129c8a7c85de71be009a4b74d85d971/datasette_explain-0.2.1-py3-none-any.whl",
+      "requires_python": ">=3.10",
+      "size": 8740,
+      "upload_time": "2026-09-20T00:22:53",
+      "upload_time_iso_8601": "2026-09-20T00:22:53.484651Z",
+      "url": "https://files.pythonhosted.org/packages/5b/00/d581cde580b8ef825d408c1f8a99f9e76d90207d67f5e8ef37775e850304/datasette_explain-0.2.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "75eae02f3c59f3bdf7db049216748d651db51290ce298494482a7d035976de39",
-        "md5": "1a5d33b104bcba5c6bcf11d3aa220c83",
-        "sha256": "fcb0dfd852b08f535335de35d9f4ec90db28ce2e1052e63e0dc658a668bf602d"
+        "blake2b_256": "7a30d442b2dbad756be7ad3c25e847e52a755c0876305ff2081ecf92b56ed338",
+        "md5": "dcccd1594142be20af7bb90bd7f20440",
+        "sha256": "cb0adeafa75b03dde1200ffa74646dc528bfa244bddbc4815b6df88366b253ff"
       },
       "downloads": -1,
-      "filename": "datasette-explain-0.2.1.tar.gz",
+      "filename": "datasette_explain-0.2.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "1a5d33b104bcba5c6bcf11d3aa220c83",
+      "md5_digest": "dcccd1594142be20af7bb90bd7f20440",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.8",
-      "size": 8687,
-      "upload_time": "2024-02-28T16:57:28",
-      "upload_time_iso_8601": "2024-02-28T16:57:28.311153Z",
-      "url": "https://files.pythonhosted.org/packages/75/ea/e02f3c59f3bdf7db049216748d651db51290ce298494482a7d035976de39/datasette-explain-0.2.1.tar.gz",
+      "requires_python": ">=3.10",
+      "size": 7518,
+      "upload_time": "2026-09-20T00:22:54",
+      "upload_time_iso_8601": "2026-09-20T00:22:54.645475Z",
+      "url": "https://files.pythonhosted.org/packages/7a/30/d442b2dbad756be7ad3c25e847e52a755c0876305ff2081ecf92b56ed338/datasette_explain-0.2.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
