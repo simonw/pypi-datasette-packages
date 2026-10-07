@@ -47,7 +47,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 35910312,
+  "last_serial": 41891059,
   "ownership": {
     "organization": null,
     "roles": [
@@ -102,6 +102,54 @@
         "upload_time": "2026-04-08T18:03:45",
         "upload_time_iso_8601": "2026-04-08T18:03:45.836571Z",
         "url": "https://files.pythonhosted.org/packages/be/0d/eb81ccaf67d5ee61c6227b3eacb78a061e6657d39254a2caf55495b1b3bf/datasette_atom-0.10a0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.11a0": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "82778d2bb875ec2bfd1c7adf0d132ef1b789501c4feb51cfd9d557d486764828"
+        },
+        "digests": {
+          "blake2b_256": "4440c336261d7e4fe983acf6883197436c8ab45454939f62b64cec61deb48e51",
+          "md5": "ac59ff8147b3320822b0fcfbe468b6bb",
+          "sha256": "dcdf81621a9567105fe4cb66b5a37d630aa1ad50aacfb11e07a1390e76594f6c"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.11a0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "ac59ff8147b3320822b0fcfbe468b6bb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 4895,
+        "upload_time": "2026-10-06T17:36:51",
+        "upload_time_iso_8601": "2026-10-06T17:36:51.173392Z",
+        "url": "https://files.pythonhosted.org/packages/44/40/c336261d7e4fe983acf6883197436c8ab45454939f62b64cec61deb48e51/datasette_atom-0.11a0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "2119216c10076533163c665333dd7f0b7b7468a18bc7498c445c95617a182ba6",
+          "md5": "a093f291db6364a9250d4e1e03bdbaa2",
+          "sha256": "8f8769d34e519dffbe6e0b2c3ea3f79fd6796b1747cc71e479aeaa797d6120f1"
+        },
+        "downloads": -1,
+        "filename": "datasette_atom-0.11a0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a093f291db6364a9250d4e1e03bdbaa2",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.10",
+        "size": 3985,
+        "upload_time": "2026-10-06T17:36:51",
+        "upload_time_iso_8601": "2026-10-06T17:36:51.974827Z",
+        "url": "https://files.pythonhosted.org/packages/21/19/216c10076533163c665333dd7f0b7b7468a18bc7498c445c95617a182ba6/datasette_atom-0.11a0.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
