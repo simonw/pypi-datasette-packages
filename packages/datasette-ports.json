@@ -6,7 +6,7 @@
     "classifiers": [
       "Framework :: Datasette"
     ],
-    "description": "# datasette-ports\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ports.svg)](https://pypi.org/project/datasette-ports/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-ports?include_prereleases&label=changelog)](https://github.com/datasette/datasette-ports/releases)\n[![Tests](https://github.com/datasette/datasette-ports/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-ports/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-ports/blob/main/LICENSE)\n\nFind all currently running Datasette instances on your machine and list their ports, databases, versions and plugins.\n\n## Installation\n\nInstall this as a plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-ports\n```\n\nOr run it directly using `uvx`:\n```bash\nuvx datasette-ports\n```\nOr install it as a standalone tool:\n```bash\nuv tool install datasette-ports\ndatasette-ports\n```\n## Usage\n\nIf installed as a Datasette plugin:\n\n```bash\ndatasette ports\n```\n\nOr as a standalone command:\n\n```bash\ndatasette-ports\n```\nThis uses `lsof` to find all Python processes listening on TCP ports, then probes each one to check if it is a Datasette instance. For each instance found it displays the URL, Datasette version, attached databases and installed plugins.\n\nExample output:\n```\nhttp://127.0.0.1:8007/ - v1.0a26\n  Directory: /Users/simon/dev/blog\n  Databases:\n    simonwillisonblog: /Users/simon/dev/blog/simonwillisonblog.db\n  Plugins:\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8001/ - v1.0a26\n  Directory: /Users/simon/dev/creatures\n  Databases:\n    creatures: /tmp/creatures.db\n  Plugins:\n    datasette-extract\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8900/ - v0.65.2\n  Databases:\n    logs: /Users/simon/Library/Application Support/io.datasette.llm/logs.db\nhttp://0.0.0.0:8014/ - v1.0a26\n  Directory: /Users/simon/dev/datasette\n  Databases:\n    content: /Users/simon/dev/datasette/content.db\n    trees: /Users/simon/dev/datasette/trees.db\n    _internal\n  Plugins:\n    datasette-llm\n    datasette-visible-internal-db\n```\n\nDatabase paths come from each instance's `/-/databases.json` endpoint. Where the process working directory can be determined (via `/proc/<pid>/cwd` on Linux or `lsof` on macOS), relative paths are resolved to absolute ones. On platforms where the working directory cannot be determined the `Directory:` line is omitted and paths are shown as reported by Datasette.\n\n### JSON output\n\nUse `--json` to get machine-readable output:\n\n```bash\ndatasette ports --json\n# or\ndatasette-ports --json\n```\n```json\n[\n  {\n    \"url\": \"http://127.0.0.1:8007/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8007,\n    \"pid\": 42373,\n    \"cwd\": \"/Users/simon/dev/blog\",\n    \"version\": \"1.0a26\",\n    \"databases\": [\n      {\"name\": \"simonwillisonblog\", \"path\": \"/Users/simon/dev/blog/simonwillisonblog.db\"}\n    ],\n    \"plugins\": [\n      \"datasette-llm\",\n      \"datasette-secrets\"\n    ]\n  },\n  {\n    \"url\": \"http://127.0.0.1:8900/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8900,\n    \"pid\": 12345,\n    \"cwd\": null,\n    \"version\": \"0.65.2\",\n    \"databases\": [\n      {\"name\": \"logs\", \"path\": \"/Users/simon/Library/Application Support/io.datasette.llm/logs.db\"}\n    ],\n    \"plugins\": []\n  }\n]\n```\n\n## Development\n\nTo set up this project locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-ports\nuv run datasette-ports --help\n# Or:\nuv run datasette ports --help\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
+    "description": "# datasette-ports\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-ports.svg)](https://pypi.org/project/datasette-ports/)\n[![Changelog](https://img.shields.io/github/v/release/datasette/datasette-ports?include_prereleases&label=changelog)](https://github.com/datasette/datasette-ports/releases)\n[![Tests](https://github.com/datasette/datasette-ports/actions/workflows/test.yml/badge.svg)](https://github.com/datasette/datasette-ports/actions/workflows/test.yml)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/datasette/datasette-ports/blob/main/LICENSE)\n\nFind all currently running Datasette instances on your machine and list their ports, databases, versions and plugins.\n\n## Installation\n\nInstall this as a plugin in the same environment as Datasette.\n```bash\ndatasette install datasette-ports\n```\n\nOr run it directly using `uvx`:\n```bash\nuvx datasette-ports\n```\nOr install it as a standalone tool:\n```bash\nuv tool install datasette-ports\ndatasette-ports\n```\n## Usage\n\nIf installed as a Datasette plugin:\n\n```bash\ndatasette ports\n```\n\nOr as a standalone command:\n\n```bash\ndatasette-ports\n```\nThis uses `lsof` to find all Python processes listening on TCP ports, then probes each one to check if it is a Datasette instance. For each instance found it displays the URL, Datasette version, process ID, attached databases and installed plugins.\n\nExample output:\n```\nhttp://127.0.0.1:8007/ - v1.0a26 - PID: 42373\n  Directory: /Users/simon/dev/blog\n  Databases:\n    simonwillisonblog: /Users/simon/dev/blog/simonwillisonblog.db\n  Plugins:\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8001/ - v1.0a26 - PID: 42374\n  Directory: /Users/simon/dev/creatures\n  Databases:\n    creatures: /tmp/creatures.db\n  Plugins:\n    datasette-extract\n    datasette-llm\n    datasette-secrets\nhttp://127.0.0.1:8900/ - v0.65.2 - PID: 12345\n  Databases:\n    logs: /Users/simon/Library/Application Support/io.datasette.llm/logs.db\nhttp://0.0.0.0:8014/ - v1.0a26 - PID: 42375\n  Directory: /Users/simon/dev/datasette\n  Databases:\n    content: /Users/simon/dev/datasette/content.db\n    trees: /Users/simon/dev/datasette/trees.db\n    _internal\n  Plugins:\n    datasette-llm\n    datasette-visible-internal-db\n```\n\nDatabase paths come from each instance's `/-/databases.json` endpoint. Where the process working directory can be determined (via `/proc/<pid>/cwd` on Linux or `lsof` on macOS), relative paths are resolved to absolute ones. On platforms where the working directory cannot be determined the `Directory:` line is omitted and paths are shown as reported by Datasette.\n\n### JSON output\n\nUse `--json` to get machine-readable output:\n\n```bash\ndatasette ports --json\n# or\ndatasette-ports --json\n```\n```json\n[\n  {\n    \"url\": \"http://127.0.0.1:8007/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8007,\n    \"pid\": 42373,\n    \"cwd\": \"/Users/simon/dev/blog\",\n    \"version\": \"1.0a26\",\n    \"databases\": [\n      {\"name\": \"simonwillisonblog\", \"path\": \"/Users/simon/dev/blog/simonwillisonblog.db\"}\n    ],\n    \"plugins\": [\n      \"datasette-llm\",\n      \"datasette-secrets\"\n    ]\n  },\n  {\n    \"url\": \"http://127.0.0.1:8900/\",\n    \"host\": \"127.0.0.1\",\n    \"port\": 8900,\n    \"pid\": 12345,\n    \"cwd\": null,\n    \"version\": \"0.65.2\",\n    \"databases\": [\n      {\"name\": \"logs\", \"path\": \"/Users/simon/Library/Application Support/io.datasette.llm/logs.db\"}\n    ],\n    \"plugins\": []\n  }\n]\n```\n\n## Development\n\nTo set up this project locally, first checkout the code. You can confirm it is available like this:\n```bash\ncd datasette-ports\nuv run datasette-ports --help\n# Or:\nuv run datasette ports --help\n```\nTo run the tests:\n```bash\nuv run pytest\n```\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
     "download_url": null,
@@ -38,18 +38,18 @@
       "Issues": "https://github.com/datasette/datasette-ports/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-ports/0.3/",
+    "release_url": "https://pypi.org/project/datasette-ports/0.4/",
     "requires_dist": [
       "click",
       "httpx"
     ],
-    "requires_python": ">=3.10",
+    "requires_python": ">=3.11",
     "summary": "Find all currently running Datasette instances and list their ports",
-    "version": "0.3",
+    "version": "0.4",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 36131561,
+  "last_serial": 42116088,
   "ownership": {
     "organization": null,
     "roles": [
@@ -203,30 +203,78 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.4": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "3eabfe29d60e691efc6c18791f6851def22c734a852087b7f2b7ae4659a0c3f3"
+        },
+        "digests": {
+          "blake2b_256": "13e00376b6a5593bdc55b3011feb11164cfc78e7f72bf2c6d18399448d9d4bb9",
+          "md5": "4631ab3b4345989bf8a6685030f52794",
+          "sha256": "226f96f8a95eae4441a011cc3e9d8ca78a0be97878d56543839170461f7f2f89"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.4-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4631ab3b4345989bf8a6685030f52794",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 9155,
+        "upload_time": "2026-10-12T04:58:03",
+        "upload_time_iso_8601": "2026-10-12T04:58:03.507790Z",
+        "url": "https://files.pythonhosted.org/packages/13/e0/0376b6a5593bdc55b3011feb11164cfc78e7f72bf2c6d18399448d9d4bb9/datasette_ports-0.4-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "01401a18b21d4b88bd38deaec99b3d54da55795427cc859a0334ecd33a55a0a1",
+          "md5": "128522c595f8a83313b409040fd5945a",
+          "sha256": "c63fd96b8cab8def4dde76934a3ecfc217398e787e206616a8764dd41b03ffe9"
+        },
+        "downloads": -1,
+        "filename": "datasette_ports-0.4.tar.gz",
+        "has_sig": false,
+        "md5_digest": "128522c595f8a83313b409040fd5945a",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 10492,
+        "upload_time": "2026-10-12T04:58:04",
+        "upload_time_iso_8601": "2026-10-12T04:58:04.946211Z",
+        "url": "https://files.pythonhosted.org/packages/01/40/1a18b21d4b88bd38deaec99b3d54da55795427cc859a0334ecd33a55a0a1/datasette_ports-0.4.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "aee9cc7a2641311cebd02f75fe779d3cc2067859f12ceb253761507abc33121f"
+        "sha256": "3eabfe29d60e691efc6c18791f6851def22c734a852087b7f2b7ae4659a0c3f3"
       },
       "digests": {
-        "blake2b_256": "8125f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5",
-        "md5": "6a224e48bbedfa81d2016db855bec9d1",
-        "sha256": "25fd64d8e27b7c921b6b9b4e8ac861cfaf8a914214de73cd4f414fb86ae9cc7e"
+        "blake2b_256": "13e00376b6a5593bdc55b3011feb11164cfc78e7f72bf2c6d18399448d9d4bb9",
+        "md5": "4631ab3b4345989bf8a6685030f52794",
+        "sha256": "226f96f8a95eae4441a011cc3e9d8ca78a0be97878d56543839170461f7f2f89"
       },
       "downloads": -1,
-      "filename": "datasette_ports-0.3-py3-none-any.whl",
+      "filename": "datasette_ports-0.4-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "6a224e48bbedfa81d2016db855bec9d1",
+      "md5_digest": "4631ab3b4345989bf8a6685030f52794",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.10",
-      "size": 9079,
-      "upload_time": "2026-04-15T02:51:40",
-      "upload_time_iso_8601": "2026-04-15T02:51:40.678700Z",
-      "url": "https://files.pythonhosted.org/packages/81/25/f4e68639834aac7f8f7e2587e4bac5ed3fc9fa4dde35bc5d42074eaabbb5/datasette_ports-0.3-py3-none-any.whl",
+      "requires_python": ">=3.11",
+      "size": 9155,
+      "upload_time": "2026-10-12T04:58:03",
+      "upload_time_iso_8601": "2026-10-12T04:58:03.507790Z",
+      "url": "https://files.pythonhosted.org/packages/13/e0/0376b6a5593bdc55b3011feb11164cfc78e7f72bf2c6d18399448d9d4bb9/datasette_ports-0.4-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -234,21 +282,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "5d47946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5",
-        "md5": "2d7cf67b55300911c956adcb65097825",
-        "sha256": "05a59fa1a8c4fb0ec6f86d0b4845980bff64baaa3f4835bd3adbe75a94c0a05e"
+        "blake2b_256": "01401a18b21d4b88bd38deaec99b3d54da55795427cc859a0334ecd33a55a0a1",
+        "md5": "128522c595f8a83313b409040fd5945a",
+        "sha256": "c63fd96b8cab8def4dde76934a3ecfc217398e787e206616a8764dd41b03ffe9"
       },
       "downloads": -1,
-      "filename": "datasette_ports-0.3.tar.gz",
+      "filename": "datasette_ports-0.4.tar.gz",
       "has_sig": false,
-      "md5_digest": "2d7cf67b55300911c956adcb65097825",
+      "md5_digest": "128522c595f8a83313b409040fd5945a",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.10",
-      "size": 9880,
-      "upload_time": "2026-04-15T02:51:41",
-      "upload_time_iso_8601": "2026-04-15T02:51:41.705196Z",
-      "url": "https://files.pythonhosted.org/packages/5d/47/946a11d33cb1afbebfc0e921f6b3bf9d531be486d124beefd8bfd97f3db5/datasette_ports-0.3.tar.gz",
+      "requires_python": ">=3.11",
+      "size": 10492,
+      "upload_time": "2026-10-12T04:58:04",
+      "upload_time_iso_8601": "2026-10-12T04:58:04.946211Z",
+      "url": "https://files.pythonhosted.org/packages/01/40/1a18b21d4b88bd38deaec99b3d54da55795427cc859a0334ecd33a55a0a1/datasette_ports-0.4.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
