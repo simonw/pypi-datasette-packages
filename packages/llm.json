@@ -51,7 +51,7 @@
       "Issues": "https://github.com/simonw/llm/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/llm/0.37/",
+    "release_url": "https://pypi.org/project/llm/0.37.1/",
     "requires_dist": [
       "click",
       "httpx2",
@@ -71,11 +71,11 @@
     ],
     "requires_python": ">=3.11",
     "summary": "CLI utility and Python library for interacting with Large Language Models from organizations like OpenAI, Anthropic and Gemini plus local models installed on your own machine.",
-    "version": "0.37",
+    "version": "0.37.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 43114624,
+  "last_serial": 43161769,
   "ownership": {
     "organization": null,
     "roles": [
@@ -3014,6 +3014,54 @@
         "yanked_reason": null
       }
     ],
+    "0.37.1": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "72bbd97711719bcc37acc09c350b5d68a8f9d790983d6a2093607ba2aa0fc4de"
+        },
+        "digests": {
+          "blake2b_256": "f6042f613c012d20855a34c161b01745e9fc225f6b7a3c4c08b3cb34657e12fc",
+          "md5": "1a1943d3390d43c37528eca4c0d48bc4",
+          "sha256": "fc073354dbb5c8e9615d5baae7e66d6d818b76a347149bd21408fcdc8f87a69a"
+        },
+        "downloads": -1,
+        "filename": "llm-0.37.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1a1943d3390d43c37528eca4c0d48bc4",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 151233,
+        "upload_time": "2026-11-03T21:45:01",
+        "upload_time_iso_8601": "2026-11-03T21:45:01.351435Z",
+        "url": "https://files.pythonhosted.org/packages/f6/04/2f613c012d20855a34c161b01745e9fc225f6b7a3c4c08b3cb34657e12fc/llm-0.37.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "fd62922539af45ed35ebd6de6dcd5676891e75a6c1e94e4d76ac0d2460bd6ad7",
+          "md5": "21c33817f355bf8875db4711f6b749d6",
+          "sha256": "5c74c8dbeb404d18717a9724761dd1f70f36c3dc4176d4d33668f9e448369e29"
+        },
+        "downloads": -1,
+        "filename": "llm-0.37.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "21c33817f355bf8875db4711f6b749d6",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 159505,
+        "upload_time": "2026-11-03T21:45:03",
+        "upload_time_iso_8601": "2026-11-03T21:45:03.090839Z",
+        "url": "https://files.pythonhosted.org/packages/fd/62/922539af45ed35ebd6de6dcd5676891e75a6c1e94e4d76ac0d2460bd6ad7/llm-0.37.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.4": [
       {
         "comment_text": "",
@@ -3595,24 +3643,24 @@
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "a240ec3ca4aee82ddb745584d4eab65e1eadec43dabd27fefc460a9c37fb22b1"
+        "sha256": "72bbd97711719bcc37acc09c350b5d68a8f9d790983d6a2093607ba2aa0fc4de"
       },
       "digests": {
-        "blake2b_256": "b9a79aa4d659428f3c9c27df51b0dc67545ab28c2bb341080e0aa659db135cf6",
-        "md5": "9f598f91527c67f5bb56df4f88f7ba53",
-        "sha256": "edcbb41ec42ea90b8199306787a7d5a09d248d963dee6e4fce94bcbaa1fcd703"
+        "blake2b_256": "f6042f613c012d20855a34c161b01745e9fc225f6b7a3c4c08b3cb34657e12fc",
+        "md5": "1a1943d3390d43c37528eca4c0d48bc4",
+        "sha256": "fc073354dbb5c8e9615d5baae7e66d6d818b76a347149bd21408fcdc8f87a69a"
       },
       "downloads": -1,
-      "filename": "llm-0.37-py3-none-any.whl",
+      "filename": "llm-0.37.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "9f598f91527c67f5bb56df4f88f7ba53",
+      "md5_digest": "1a1943d3390d43c37528eca4c0d48bc4",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.11",
-      "size": 150335,
-      "upload_time": "2026-11-02T23:55:14",
-      "upload_time_iso_8601": "2026-11-02T23:55:14.275959Z",
-      "url": "https://files.pythonhosted.org/packages/b9/a7/9aa4d659428f3c9c27df51b0dc67545ab28c2bb341080e0aa659db135cf6/llm-0.37-py3-none-any.whl",
+      "size": 151233,
+      "upload_time": "2026-11-03T21:45:01",
+      "upload_time_iso_8601": "2026-11-03T21:45:01.351435Z",
+      "url": "https://files.pythonhosted.org/packages/f6/04/2f613c012d20855a34c161b01745e9fc225f6b7a3c4c08b3cb34657e12fc/llm-0.37.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -3620,21 +3668,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "23a1dda38dd2a2aef2fd44183423a372fd8bd8fc5480dbefe8aa0264e8214daf",
-        "md5": "af9a3c16117cccb1cbaa77b20167b513",
-        "sha256": "a8178ad1441e8b0955d5789a4874d5eb30b54be7ba51d2fdfb612c78b05d05d7"
+        "blake2b_256": "fd62922539af45ed35ebd6de6dcd5676891e75a6c1e94e4d76ac0d2460bd6ad7",
+        "md5": "21c33817f355bf8875db4711f6b749d6",
+        "sha256": "5c74c8dbeb404d18717a9724761dd1f70f36c3dc4176d4d33668f9e448369e29"
       },
       "downloads": -1,
-      "filename": "llm-0.37.tar.gz",
+      "filename": "llm-0.37.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "af9a3c16117cccb1cbaa77b20167b513",
+      "md5_digest": "21c33817f355bf8875db4711f6b749d6",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.11",
-      "size": 158705,
-      "upload_time": "2026-11-02T23:55:15",
-      "upload_time_iso_8601": "2026-11-02T23:55:15.841288Z",
-      "url": "https://files.pythonhosted.org/packages/23/a1/dda38dd2a2aef2fd44183423a372fd8bd8fc5480dbefe8aa0264e8214daf/llm-0.37.tar.gz",
+      "size": 159505,
+      "upload_time": "2026-11-03T21:45:03",
+      "upload_time_iso_8601": "2026-11-03T21:45:03.090839Z",
+      "url": "https://files.pythonhosted.org/packages/fd/62/922539af45ed35ebd6de6dcd5676891e75a6c1e94e4d76ac0d2460bd6ad7/llm-0.37.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
