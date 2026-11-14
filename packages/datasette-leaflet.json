@@ -1,29 +1,31 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-leaflet\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-leaflet.svg)](https://pypi.org/project/datasette-leaflet/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-leaflet?include_prereleases&label=changelog)](https://github.com/simonw/datasette-leaflet/releases)\n[![Tests](https://github.com/simonw/datasette-leaflet/workflows/Test/badge.svg)](https://github.com/simonw/datasette-leaflet/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-leaflet/blob/main/LICENSE)\n\nDatasette plugin adding the [Leaflet](https://leafletjs.com/) JavaScript library.\n\nA growing number of Datasette plugins depend on the Leaflet JavaScript mapping library. They each have their own way of loading Leaflet, which could result in loading it multiple times (with multiple versions) if more than one plugin is installed.\n\nThis library is intended to solve this problem, by providing a single plugin they can all depend on that loads Leaflet in a reusable way.\n\nPlugins that use this:\n\n- [datasette-leaflet-freedraw](https://datasette.io/plugins/datasette-leaflet-freedraw)\n- [datasette-leaflet-geojson](https://datasette.io/plugins/datasette-leaflet-geojson)\n- [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map)\n\n## Installation\n\nYou can install this plugin like so:\n\n    datasette install datasette-leaflet\n\nUsually this plugin will be a dependency of other plugins, so it should be installed automatically when you install them.\n\n## Usage\n\nThe plugin makes `leaflet.js` and `leaflet.css` available as static files. It provides two custom template variables with the URLs of those two files.\n\n- `{{ datasette_leaflet_url }}` is the URL to the JavaScript\n- `{{ datasette_leaflet_css_url }}` is the URL to the CSS\n\nThese URLs are also made available as global JavaScript constants:\n\n- `datasette.leaflet.JAVASCRIPT_URL`\n- `datasette.leaflet.CSS_URL`\n\nThe JavaScript is packaed as a [JavaScript module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). You can dynamically import the JavaScript from a custom template like this:\n\n```html+jinja\n<script type=\"module\">\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    /* Use leaflet here */\n  });\n</script>\n```\n\nYou can load the CSS like this:\n\n```html+jinja\n<link rel=\"stylesheet\" href=\"{{ datasette_leaflet_css_url }}\">\n```\n\nOr dynamically like this:\n\n```html+jinja\n<script>\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\n</script>\n```\n\nHere's a full example that loads the JavaScript and CSS and renders a map:\n\n```html+jinja\n<script type=\"module\">\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER = \"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\";\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS = {\"maxZoom\": 19, \"detectRetina\": true, \"attribution\": \"&copy; <a href=\\\"https://www.openstreetmap.org/copyright\\\">OpenStreetMap</a> contributors\"};\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    let div = document.createElement('div');\n    div.style.height = '400px';\n    document.querySelector('.content').appendChild(div);\n    let tiles = leaflet.tileLayer(\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER,\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS\n    );\n    let map = leaflet.map(div, {\n        center: leaflet.latLng(0, 0),\n        zoom: 2,\n        layers: [tiles]\n    });\n  });\n</script>\n```\n\n\n",
+    "description": "# datasette-leaflet\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-leaflet.svg)](https://pypi.org/project/datasette-leaflet/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-leaflet?include_prereleases&label=changelog)](https://github.com/simonw/datasette-leaflet/releases)\n[![Tests](https://github.com/simonw/datasette-leaflet/workflows/Test/badge.svg)](https://github.com/simonw/datasette-leaflet/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-leaflet/blob/main/LICENSE)\n\nDatasette plugin adding the [Leaflet](https://leafletjs.com/) JavaScript library.\n\nA growing number of Datasette plugins depend on the Leaflet JavaScript mapping library. They each have their own way of loading Leaflet, which could result in loading it multiple times (with multiple versions) if more than one plugin is installed.\n\nThis library is intended to solve this problem, by providing a single plugin they can all depend on that loads Leaflet in a reusable way.\n\nPlugins that use this:\n\n- [datasette-leaflet-freedraw](https://datasette.io/plugins/datasette-leaflet-freedraw)\n- [datasette-leaflet-geojson](https://datasette.io/plugins/datasette-leaflet-geojson)\n- [datasette-cluster-map](https://datasette.io/plugins/datasette-cluster-map)\n\n## Installation\n\nYou can install this plugin like so:\n\n    datasette install datasette-leaflet\n\nUsually this plugin will be a dependency of other plugins, so it should be installed automatically when you install them.\n\n## Usage\n\nThe plugin makes `leaflet.js` and `leaflet.css` available as static files. It provides two custom template variables with the URLs of those two files.\n\n- `{{ datasette_leaflet_url }}` is the URL to the JavaScript\n- `{{ datasette_leaflet_css_url }}` is the URL to the CSS\n\nThese URLs are also made available as global JavaScript constants:\n\n- `datasette.leaflet.JAVASCRIPT_URL`\n- `datasette.leaflet.CSS_URL`\n\nThe JavaScript is packaged as a [JavaScript module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). You can dynamically import the JavaScript from a custom template like this:\n\n```html+jinja\n<script type=\"module\">\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    /* Use leaflet here */\n  });\n</script>\n```\n\nImporting the module also sets a global `window.L` object with the same contents. Leaflet plugins that expect that global, such as [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster), can be loaded once the import has completed. Anything a plugin adds to `L` is available on that global, not on the imported `leaflet` module.\n\nThe bundled copy of Leaflet differs from the official release in one other way: tile layers send a `Referer` header by default. See [Tile layers and the Referer header](#tile-layers-and-the-referer-header).\n\nYou can load the CSS like this:\n\n```html+jinja\n<link rel=\"stylesheet\" href=\"{{ datasette_leaflet_css_url }}\">\n```\n\nOr dynamically like this:\n\n```html+jinja\n<script>\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\n</script>\n```\n\nHere's a full example that loads the JavaScript and CSS and renders a map:\n\n```html+jinja\n<script type=\"module\">\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER = \"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\";\nwindow.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS = {\"maxZoom\": 19, \"detectRetina\": true, \"attribution\": \"&copy; <a href=\\\"https://www.openstreetmap.org/copyright\\\">OpenStreetMap</a> contributors\"};\nlet link = document.createElement('link');\nlink.rel = 'stylesheet';\nlink.href = '{{ datasette_leaflet_css_url }}';\ndocument.head.appendChild(link);\nimport('{{ datasette_leaflet_url }}')\n  .then((leaflet) => {\n    let div = document.createElement('div');\n    div.style.height = '400px';\n    document.querySelector('.content').appendChild(div);\n    let tiles = leaflet.tileLayer(\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER,\n        window.DATASETTE_CLUSTER_MAP_TILE_LAYER_OPTIONS\n    );\n    let map = leaflet.map(div, {\n        center: leaflet.latLng(0, 0),\n        zoom: 2,\n        layers: [tiles]\n    });\n  });\n</script>\n```\n\n## Tile layers and the Referer header\n\nDatasette serves many of its pages, including table pages, with a `Referrer-Policy: no-referrer` header, so by default a browser will not send a `Referer` header when it loads map tiles for those pages. Some tile servers block requests like that. The OpenStreetMap tile server at `tile.openstreetmap.org` is one of them: its [usage policy](https://operations.osmfoundation.org/policies/tiles/) requires a valid `Referer`, and it returns \"Access blocked\" tiles without one.\n\nTo avoid this, the copy of Leaflet bundled with this plugin changes the default for the [referrerPolicy](https://leafletjs.com/reference.html#tilelayer-referrerpolicy) tile layer option from `false` to `\"strict-origin-when-cross-origin\"`. Tile requests then include a `Referer` header containing just the origin of your Datasette instance, such as `https://example.com/`. The path and query string of the page showing the map are never sent.\n\nThis applies to every `L.tileLayer()` and `L.tileLayer.wms()` created using the bundled Leaflet, including those created by other plugins.\n\n### Changing the policy for a Datasette instance\n\nUse the `tile_referrer_policy` plugin setting. Set it to `false` to go back to sending no `Referer` header for tiles:\n\n```yaml\nplugins:\n  datasette-leaflet:\n    tile_referrer_policy: false\n```\n\nOr set it to any other [referrer policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy#directives), such as `origin`:\n\n```yaml\nplugins:\n  datasette-leaflet:\n    tile_referrer_policy: origin\n```\n\nThis goes in `datasette.yaml` for Datasette 1.0, or in `metadata.yaml` for earlier versions.\n\nThe value in use is available to JavaScript as `datasette.leaflet.TILE_REFERRER_POLICY`. Leaflet reads it once, when the JavaScript is first loaded.\n\n### Changing the policy for a single tile layer\n\nPass the `referrerPolicy` option when you create the layer. This takes precedence over the plugin setting:\n\n```javascript\nlet tiles = leaflet.tileLayer(\"https://tiles.example.com/{z}/{x}/{y}.png\", {\n    referrerPolicy: false\n});\n```\n\nTo change the default for every layer created after that point, use `leaflet.TileLayer.mergeOptions({referrerPolicy: false})`.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-leaflet",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
-    "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
+    "license_files": [
+      "LICENSE"
+    ],
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-leaflet",
     "package_url": "https://pypi.org/project/datasette-leaflet/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-leaflet/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-leaflet/actions",
@@ -31,20 +33,21 @@
       "Homepage": "https://github.com/simonw/datasette-leaflet",
       "Issues": "https://github.com/simonw/datasette-leaflet/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-leaflet/0.2.2/",
+    "provides_extra": [
+      "playwright"
+    ],
+    "release_url": "https://pypi.org/project/datasette-leaflet/0.3/",
     "requires_dist": [
       "datasette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'"
+      "pytest-playwright; extra == \"playwright\""
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.11",
     "summary": "A plugin that bundles Leaflet.js for Datasette",
-    "version": "0.2.2",
+    "version": "0.3",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 9290021,
+  "last_serial": 43627814,
   "ownership": {
     "organization": null,
     "roles": [
@@ -246,52 +249,100 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.3": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "1f9885ad9a4ad1a830dd819739cd144617adddacf0e37a9b22d9a5945ea6391d"
+        },
+        "digests": {
+          "blake2b_256": "f87f22b396ec152755bb8ebbc0db200481ee50438640cd1563359a2910a78285",
+          "md5": "88ba2c4d5dcefbfe25db2e3daef0394c",
+          "sha256": "f09304ccdf59d4d936cfdaa56fd6d3d9f45d3a5691120e9ad9e30067ee590281"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "88ba2c4d5dcefbfe25db2e3daef0394c",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 173039,
+        "upload_time": "2026-11-13T22:31:52",
+        "upload_time_iso_8601": "2026-11-13T22:31:52.182460Z",
+        "url": "https://files.pythonhosted.org/packages/f8/7f/22b396ec152755bb8ebbc0db200481ee50438640cd1563359a2910a78285/datasette_leaflet-0.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "7328338cefc12c9e4d1c95f52073b26998824a78c4682cbfd25b9fb4991d92a6",
+          "md5": "b81bd4c39c070f6828b07f3c37f80593",
+          "sha256": "81fc3112e2c49f77c8b2c1a2a57abc64a6b7127594e8eddcb23f0f4e1b1e5175"
+        },
+        "downloads": -1,
+        "filename": "datasette_leaflet-0.3.tar.gz",
+        "has_sig": false,
+        "md5_digest": "b81bd4c39c070f6828b07f3c37f80593",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 177120,
+        "upload_time": "2026-11-13T22:31:53",
+        "upload_time_iso_8601": "2026-11-13T22:31:53.703106Z",
+        "url": "https://files.pythonhosted.org/packages/73/28/338cefc12c9e4d1c95f52073b26998824a78c4682cbfd25b9fb4991d92a6/datasette_leaflet-0.3.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": {
-        "sha256": "11bf969b0b218347f2b8f9b05319aac0771a6b9599225b0fa2e1927aecb83078"
+        "sha256": "1f9885ad9a4ad1a830dd819739cd144617adddacf0e37a9b22d9a5945ea6391d"
       },
       "digests": {
-        "blake2b_256": "d0df61e8a7d601a2c4992f7e9f38a6b983a9f9b873fbeebe4248090eea4b5d87",
-        "md5": "a94352bb9f9cf2cea7a49bbb99d0e41f",
-        "sha256": "fd88c25666e7680b25b4c6e5546bd02c9f5836bbc0fee61042dbb6b93d4139f0"
+        "blake2b_256": "f87f22b396ec152755bb8ebbc0db200481ee50438640cd1563359a2910a78285",
+        "md5": "88ba2c4d5dcefbfe25db2e3daef0394c",
+        "sha256": "f09304ccdf59d4d936cfdaa56fd6d3d9f45d3a5691120e9ad9e30067ee590281"
       },
       "downloads": -1,
-      "filename": "datasette_leaflet-0.2.2-py3-none-any.whl",
+      "filename": "datasette_leaflet-0.3-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a94352bb9f9cf2cea7a49bbb99d0e41f",
+      "md5_digest": "88ba2c4d5dcefbfe25db2e3daef0394c",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 112532,
-      "upload_time": "2021-02-01T22:21:20",
-      "upload_time_iso_8601": "2021-02-01T22:21:20.787792Z",
-      "url": "https://files.pythonhosted.org/packages/d0/df/61e8a7d601a2c4992f7e9f38a6b983a9f9b873fbeebe4248090eea4b5d87/datasette_leaflet-0.2.2-py3-none-any.whl",
+      "requires_python": ">=3.11",
+      "size": 173039,
+      "upload_time": "2026-11-13T22:31:52",
+      "upload_time_iso_8601": "2026-11-13T22:31:52.182460Z",
+      "url": "https://files.pythonhosted.org/packages/f8/7f/22b396ec152755bb8ebbc0db200481ee50438640cd1563359a2910a78285/datasette_leaflet-0.3-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "886e444b1ded1cd8f71cd86f4461c06ee88be2bb0682b0d54aa942c323f91411",
-        "md5": "e442179a8137242282f7c102a0ed0380",
-        "sha256": "8fd4e634304be392ae6f7de770d4f22b95a37caecd676a35faeb6200da9423bc"
+        "blake2b_256": "7328338cefc12c9e4d1c95f52073b26998824a78c4682cbfd25b9fb4991d92a6",
+        "md5": "b81bd4c39c070f6828b07f3c37f80593",
+        "sha256": "81fc3112e2c49f77c8b2c1a2a57abc64a6b7127594e8eddcb23f0f4e1b1e5175"
       },
       "downloads": -1,
-      "filename": "datasette-leaflet-0.2.2.tar.gz",
+      "filename": "datasette_leaflet-0.3.tar.gz",
       "has_sig": false,
-      "md5_digest": "e442179a8137242282f7c102a0ed0380",
+      "md5_digest": "b81bd4c39c070f6828b07f3c37f80593",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 113285,
-      "upload_time": "2021-02-01T22:21:21",
-      "upload_time_iso_8601": "2021-02-01T22:21:21.930324Z",
-      "url": "https://files.pythonhosted.org/packages/88/6e/444b1ded1cd8f71cd86f4461c06ee88be2bb0682b0d54aa942c323f91411/datasette-leaflet-0.2.2.tar.gz",
+      "requires_python": ">=3.11",
+      "size": 177120,
+      "upload_time": "2026-11-13T22:31:53",
+      "upload_time_iso_8601": "2026-11-13T22:31:53.703106Z",
+      "url": "https://files.pythonhosted.org/packages/73/28/338cefc12c9e4d1c95f52073b26998824a78c4682cbfd25b9fb4991d92a6/datasette_leaflet-0.3.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
