@@ -110,7 +110,7 @@
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 43703658,
+  "last_serial": 44032384,
   "ownership": {
     "organization": null,
     "roles": [
@@ -7505,6 +7505,54 @@
         "upload_time": "2026-11-15T23:24:46",
         "upload_time_iso_8601": "2026-11-15T23:24:46.238946Z",
         "url": "https://files.pythonhosted.org/packages/61/7f/ab8776a654288b53a652524b2ec6ce7ef1abc699751e187418d1dc53bbba/datasette-1.0a43.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "1.0a44": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "b7354b25a2c2d1e0331970e6e7506433f155c5cdf1870cddc8e577f3c3255e72"
+        },
+        "digests": {
+          "blake2b_256": "262202298b871784bbf4361d74383cf28faa3786febda2f5103935875c334149",
+          "md5": "2205d6b0db425088479c06066e572e8f",
+          "sha256": "c7d51d7fee711b45e3bcf5646d782de3325b0a436efae4f203aef2abad8e400f"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a44-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2205d6b0db425088479c06066e572e8f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 708726,
+        "upload_time": "2026-11-23T00:05:00",
+        "upload_time_iso_8601": "2026-11-23T00:05:00.308846Z",
+        "url": "https://files.pythonhosted.org/packages/26/22/02298b871784bbf4361d74383cf28faa3786febda2f5103935875c334149/datasette-1.0a44-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "0e7e81f88a46c89758ca13abdd7bef8d63fc6065aaa052ea2a6fd14a67ec516f",
+          "md5": "683466e7dc5615045a593bec2170a66e",
+          "sha256": "b0524aaeb28466420b12c1da047f67cc016554ea3b424f7dfa8a7b09da2ba46d"
+        },
+        "downloads": -1,
+        "filename": "datasette-1.0a44.tar.gz",
+        "has_sig": false,
+        "md5_digest": "683466e7dc5615045a593bec2170a66e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 1031878,
+        "upload_time": "2026-11-23T00:05:02",
+        "upload_time_iso_8601": "2026-11-23T00:05:02.190902Z",
+        "url": "https://files.pythonhosted.org/packages/0e/7e/81f88a46c89758ca13abdd7bef8d63fc6065aaa052ea2a6fd14a67ec516f/datasette-1.0a44.tar.gz",
         "yanked": false,
         "yanked_reason": null
       }
