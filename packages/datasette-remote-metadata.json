@@ -1,29 +1,29 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-remote-metadata\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-remote-metadata.svg)](https://pypi.org/project/datasette-remote-metadata/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-remote-metadata?include_prereleases&label=changelog)](https://github.com/simonw/datasette-remote-metadata/releases)\n[![Tests](https://github.com/simonw/datasette-remote-metadata/workflows/Test/badge.svg)](https://github.com/simonw/datasette-remote-metadata/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-remote-metadata/blob/main/LICENSE)\n\nPeriodically refresh Datasette metadata from a remote URL\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-remote-metadata\n\n## Usage\n\nAdd the following to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-remote-metadata\": {\n            \"url\": \"https://example.com/remote-metadata.yml\"\n        }\n    }\n}\n```\nThe plugin will fetch the specified metadata  from that URL at startup and combine it with any existing metadata. You can use a URL to either a JSON file or a YAML file.\n\nIt will periodically refresh that metadata - by default every 30 seconds, unless you specify an alternative `\"ttl\"` value in the plugin configuration.\n\n## Configuration\n\nAvailable configuration options are as follows:\n\n- `\"url\"` - the URL to retrieve remote metadata from. Can link to a JSON or a YAML file.\n- `\"ttl\"` - integer value in secords: how frequently should the script check for fresh metadata. Defaults to 30 seconds.\n- `\"headers\"` - a dictionary of additional request headers to send.\n- `\"cachebust\"` - if true, a random `?0.29508` value will be added to the query string of the remote metadata to bust any intermediary caches.\n\nThis example `metadata.json` configuration refreshes every 10 seconds, uses cache busting and sends an `Authorization: Bearer xyz` header with the request:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-remote-metadata\": {\n            \"url\": \"https://example.com/remote-metadata.yml\",\n            \"ttl\": 10,\n            \"cachebust\": true,\n            \"headers\": {\n                \"Authorization\": \"Bearer xyz\"\n            }\n        }\n    }\n}\n```\nThis example if you are using `metadata.yaml` for configuration:\n```yaml\nplugins:\n  datasette-remote-metadata:\n    url: https://example.com/remote-metadata.yml\n    ttl: 10\n    cachebust: true\n    headers:\n      Authorization: Bearer xyz\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-remote-metadata\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and test dependencies:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description": "# datasette-remote-metadata\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-remote-metadata.svg)](https://pypi.org/project/datasette-remote-metadata/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-remote-metadata?include_prereleases&label=changelog)](https://github.com/simonw/datasette-remote-metadata/releases)\n[![Tests](https://github.com/simonw/datasette-remote-metadata/workflows/Test/badge.svg)](https://github.com/simonw/datasette-remote-metadata/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-remote-metadata/blob/main/LICENSE)\n\nPeriodically refresh Datasette metadata from a remote URL\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-remote-metadata\n\n## Usage\n\nAdd the following to your `metadata.json`:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-remote-metadata\": {\n            \"url\": \"https://example.com/remote-metadata.yml\"\n        }\n    }\n}\n```\nThe plugin will fetch the specified metadata  from that URL at startup and combine it with any existing metadata. You can use a URL to either a JSON file or a YAML file.\n\nIt will periodically refresh that metadata - by default every 30 seconds, unless you specify an alternative `\"ttl\"` value in the plugin configuration.\n\n## Configuration\n\nAvailable configuration options are as follows:\n\n- `\"url\"` - the URL to retrieve remote metadata from. Can link to a JSON or a YAML file.\n- `\"ttl\"` - integer value in secords: how frequently should the script check for fresh metadata. Defaults to 30 seconds.\n- `\"headers\"` - a dictionary of additional request headers to send.\n- `\"cachebust\"` - if true, a random `?0.29508` value will be added to the query string of the remote metadata to bust any intermediary caches.\n\nThis example `metadata.json` configuration refreshes every 10 seconds, uses cache busting and sends an `Authorization: Bearer xyz` header with the request:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-remote-metadata\": {\n            \"url\": \"https://example.com/remote-metadata.yml\",\n            \"ttl\": 10,\n            \"cachebust\": true,\n            \"headers\": {\n                \"Authorization\": \"Bearer xyz\"\n            }\n        }\n    }\n}\n```\nThis example if you are using `metadata.yaml` for configuration:\n```yaml\nplugins:\n  datasette-remote-metadata:\n    url: https://example.com/remote-metadata.yml\n    ttl: 10\n    cachebust: true\n    headers:\n      Authorization: Bearer xyz\n```\n\n## Development\n\nTo set up this plugin locally, first checkout the code. You can confirm it is available like this:\n\n    cd datasette-remote-metadata\n    uv run datasette plugins\n\nTo run the tests:\n\n    uv run pytest\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-remote-metadata",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-remote-metadata",
     "package_url": "https://pypi.org/project/datasette-remote-metadata/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-remote-metadata/",
     "project_urls": {
       "CI": "https://github.com/simonw/datasette-remote-metadata/actions",
@@ -32,20 +32,18 @@
       "Issues": "https://github.com/simonw/datasette-remote-metadata/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-remote-metadata/0.1/",
+    "release_url": "https://pypi.org/project/datasette-remote-metadata/0.2/",
     "requires_dist": [
       "datasette",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "pytest-httpx ; extra == 'test'"
+      "httpx2>=2.16.2"
     ],
-    "requires_python": ">=3.6",
+    "requires_python": ">=3.11",
     "summary": "Periodically refresh Datasette metadata from a remote URL",
-    "version": "0.1",
+    "version": "0.2",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 24440583,
+  "last_serial": 44040667,
   "ownership": {
     "organization": null,
     "roles": [
@@ -152,6 +150,54 @@
         "yanked_reason": null
       }
     ],
+    "0.2": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e60254c79252d17d746e2f589d3e62368fb29d589e814ad2719bcd524665d627"
+        },
+        "digests": {
+          "blake2b_256": "cb04621f4ac3ec9f2ef464910bfb8788a330f31cf9750efbcbab7900bd292c8e",
+          "md5": "42f11c49143c30cb12949b463d43344f",
+          "sha256": "83a58910ececa11f61bdb267183cf0bf6670913ca8b7aeab5e6dd390c3a30da6"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_metadata-0.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "42f11c49143c30cb12949b463d43344f",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 4143,
+        "upload_time": "2026-11-23T05:51:28",
+        "upload_time_iso_8601": "2026-11-23T05:51:28.406019Z",
+        "url": "https://files.pythonhosted.org/packages/cb/04/621f4ac3ec9f2ef464910bfb8788a330f31cf9750efbcbab7900bd292c8e/datasette_remote_metadata-0.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "ea98ad6980842fbb5f5af17539378f60c80ebc7fc15bf0e96e47a3ddd9a0820d",
+          "md5": "fc6e975fece00a9263b7cc6352200137",
+          "sha256": "5e8b1ce03817bf601401a32e42ca0b2bea5344e29baefce46b7893e5a38d9ccd"
+        },
+        "downloads": -1,
+        "filename": "datasette_remote_metadata-0.2.tar.gz",
+        "has_sig": false,
+        "md5_digest": "fc6e975fece00a9263b7cc6352200137",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 4526,
+        "upload_time": "2026-11-23T05:51:29",
+        "upload_time_iso_8601": "2026-11-23T05:51:29.629789Z",
+        "url": "https://files.pythonhosted.org/packages/ea/98/ad6980842fbb5f5af17539378f60c80ebc7fc15bf0e96e47a3ddd9a0820d/datasette_remote_metadata-0.2.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.2a0": [
       {
         "comment_text": "",
@@ -203,48 +249,48 @@
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": {
-        "sha256": "33d974df5c45221b9dba643452df0292835b5bf4abad099dc744fac5d3d2a5d4"
+        "sha256": "e60254c79252d17d746e2f589d3e62368fb29d589e814ad2719bcd524665d627"
       },
       "digests": {
-        "blake2b_256": "4bea9a92446ead3ec6baf8921515533a6067f31bc41ff525935eda6e4c81454d",
-        "md5": "0e612bb74441432aae59511b88c86234",
-        "sha256": "e1c41cf3b836ae44105d8f86ad989f672209603b20f76c2dcaca92082a6eff4a"
+        "blake2b_256": "cb04621f4ac3ec9f2ef464910bfb8788a330f31cf9750efbcbab7900bd292c8e",
+        "md5": "42f11c49143c30cb12949b463d43344f",
+        "sha256": "83a58910ececa11f61bdb267183cf0bf6670913ca8b7aeab5e6dd390c3a30da6"
       },
       "downloads": -1,
-      "filename": "datasette_remote_metadata-0.1-py3-none-any.whl",
+      "filename": "datasette_remote_metadata-0.2-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "0e612bb74441432aae59511b88c86234",
+      "md5_digest": "42f11c49143c30cb12949b463d43344f",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": ">=3.6",
-      "size": 3729,
-      "upload_time": "2021-07-29T01:44:08",
-      "upload_time_iso_8601": "2021-07-29T01:44:08.836434Z",
-      "url": "https://files.pythonhosted.org/packages/4b/ea/9a92446ead3ec6baf8921515533a6067f31bc41ff525935eda6e4c81454d/datasette_remote_metadata-0.1-py3-none-any.whl",
+      "requires_python": ">=3.11",
+      "size": 4143,
+      "upload_time": "2026-11-23T05:51:28",
+      "upload_time_iso_8601": "2026-11-23T05:51:28.406019Z",
+      "url": "https://files.pythonhosted.org/packages/cb/04/621f4ac3ec9f2ef464910bfb8788a330f31cf9750efbcbab7900bd292c8e/datasette_remote_metadata-0.2-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "eb9c4f9fb6d35732958af98566cdfbdf3b965e820b47e03d3bc88432faf310da",
-        "md5": "4e4107ede97b01fb6828ddc8fa618641",
-        "sha256": "eaa2a2205eb700cfcfbb342813d1a454208e221324b5cee09cb686b03314a046"
+        "blake2b_256": "ea98ad6980842fbb5f5af17539378f60c80ebc7fc15bf0e96e47a3ddd9a0820d",
+        "md5": "fc6e975fece00a9263b7cc6352200137",
+        "sha256": "5e8b1ce03817bf601401a32e42ca0b2bea5344e29baefce46b7893e5a38d9ccd"
       },
       "downloads": -1,
-      "filename": "datasette-remote-metadata-0.1.tar.gz",
+      "filename": "datasette_remote_metadata-0.2.tar.gz",
       "has_sig": false,
-      "md5_digest": "4e4107ede97b01fb6828ddc8fa618641",
+      "md5_digest": "fc6e975fece00a9263b7cc6352200137",
       "packagetype": "sdist",
       "python_version": "source",
-      "requires_python": ">=3.6",
-      "size": 3617,
-      "upload_time": "2021-07-29T01:44:10",
-      "upload_time_iso_8601": "2021-07-29T01:44:10.238239Z",
-      "url": "https://files.pythonhosted.org/packages/eb/9c/4f9fb6d35732958af98566cdfbdf3b965e820b47e03d3bc88432faf310da/datasette-remote-metadata-0.1.tar.gz",
+      "requires_python": ">=3.11",
+      "size": 4526,
+      "upload_time": "2026-11-23T05:51:29",
+      "upload_time_iso_8601": "2026-11-23T05:51:29.629789Z",
+      "url": "https://files.pythonhosted.org/packages/ea/98/ad6980842fbb5f5af17539378f60c80ebc7fc15bf0e96e47a3ddd9a0820d/datasette_remote_metadata-0.2.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

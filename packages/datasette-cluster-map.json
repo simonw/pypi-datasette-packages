@@ -34,18 +34,18 @@
       "Issues": "https://github.com/simonw/datasette-cluster-map/issues"
     },
     "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-cluster-map/0.19/",
+    "release_url": "https://pypi.org/project/datasette-cluster-map/0.19.1/",
     "requires_dist": [
       "datasette>=0.54",
       "datasette-leaflet>=0.3"
     ],
     "requires_python": ">=3.11",
     "summary": "Datasette plugin that shows a map for any data with latitude/longitude columns",
-    "version": "0.19",
+    "version": "0.19.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 43628912,
+  "last_serial": 44039333,
   "ownership": {
     "organization": null,
     "roles": [
@@ -1044,6 +1044,54 @@
         "yanked_reason": null
       }
     ],
+    "0.19.1": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "2ceb88bd11183449942afea8d44c8c76301156826179f2b8629d76f4ca560cd2"
+        },
+        "digests": {
+          "blake2b_256": "994302ff6699c2fc93ed3d0dabab3ebe0dbd698e9337e46c1d364e7cdca34009",
+          "md5": "7fb8b73dc23381d1e2def4144566f976",
+          "sha256": "85f054971e8d755fdba54871094e294fa68882eae6d97e2452f00b90e722fd65"
+        },
+        "downloads": -1,
+        "filename": "datasette_cluster_map-0.19.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "7fb8b73dc23381d1e2def4144566f976",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 31796,
+        "upload_time": "2026-11-23T05:00:57",
+        "upload_time_iso_8601": "2026-11-23T05:00:57.702692Z",
+        "url": "https://files.pythonhosted.org/packages/99/43/02ff6699c2fc93ed3d0dabab3ebe0dbd698e9337e46c1d364e7cdca34009/datasette_cluster_map-0.19.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "6cca8aee1e0e868d9853abd9c732fc249fed42571bff7cac7c9d8e315b7374ea",
+          "md5": "2f398530ba5beed8d8144b6c65dbefff",
+          "sha256": "3b6294037982d41a05b18ee4785063efd7c1af001bd4af61e12b3a1fdc60946e"
+        },
+        "downloads": -1,
+        "filename": "datasette_cluster_map-0.19.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "2f398530ba5beed8d8144b6c65dbefff",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 33403,
+        "upload_time": "2026-11-23T05:00:58",
+        "upload_time_iso_8601": "2026-11-23T05:00:58.787468Z",
+        "url": "https://files.pythonhosted.org/packages/6c/ca/8aee1e0e868d9853abd9c732fc249fed42571bff7cac7c9d8e315b7374ea/datasette_cluster_map-0.19.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
     "0.2": [
       {
         "comment_text": "",
@@ -1277,24 +1325,24 @@
     {
       "comment_text": null,
       "core-metadata": {
-        "sha256": "0078397700904d03c71699cc171e04968ad8185cdf158f8d38d41a15cef0bab8"
+        "sha256": "2ceb88bd11183449942afea8d44c8c76301156826179f2b8629d76f4ca560cd2"
       },
       "digests": {
-        "blake2b_256": "3deb56e17318486f9b45051414ae014f93279695a93ac40752273ac3fb035b20",
-        "md5": "a0ff2dd77d71582dddfc23a3c7412aab",
-        "sha256": "e70ce208322b176f6b28126ff19bb7f551c5834176fa8a4c4390fc3e71a4d379"
+        "blake2b_256": "994302ff6699c2fc93ed3d0dabab3ebe0dbd698e9337e46c1d364e7cdca34009",
+        "md5": "7fb8b73dc23381d1e2def4144566f976",
+        "sha256": "85f054971e8d755fdba54871094e294fa68882eae6d97e2452f00b90e722fd65"
       },
       "downloads": -1,
-      "filename": "datasette_cluster_map-0.19-py3-none-any.whl",
+      "filename": "datasette_cluster_map-0.19.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "a0ff2dd77d71582dddfc23a3c7412aab",
+      "md5_digest": "7fb8b73dc23381d1e2def4144566f976",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
       "requires_python": ">=3.11",
-      "size": 31715,
-      "upload_time": "2026-11-13T23:03:46",
-      "upload_time_iso_8601": "2026-11-13T23:03:46.726964Z",
-      "url": "https://files.pythonhosted.org/packages/3d/eb/56e17318486f9b45051414ae014f93279695a93ac40752273ac3fb035b20/datasette_cluster_map-0.19-py3-none-any.whl",
+      "size": 31796,
+      "upload_time": "2026-11-23T05:00:57",
+      "upload_time_iso_8601": "2026-11-23T05:00:57.702692Z",
+      "url": "https://files.pythonhosted.org/packages/99/43/02ff6699c2fc93ed3d0dabab3ebe0dbd698e9337e46c1d364e7cdca34009/datasette_cluster_map-0.19.1-py3-none-any.whl",
       "yanked": false,
       "yanked_reason": null
     },
@@ -1302,21 +1350,21 @@
       "comment_text": null,
       "core-metadata": false,
       "digests": {
-        "blake2b_256": "2813e6cc65d249a1f0f25342db1bda8899066664d38066c90254f1375ca4e11b",
-        "md5": "0918f313d9b051358dc49de497458b4c",
-        "sha256": "0e54158564d314782c371dc2095189c825933cc357b7ba737f044d80f8e91fdf"
+        "blake2b_256": "6cca8aee1e0e868d9853abd9c732fc249fed42571bff7cac7c9d8e315b7374ea",
+        "md5": "2f398530ba5beed8d8144b6c65dbefff",
+        "sha256": "3b6294037982d41a05b18ee4785063efd7c1af001bd4af61e12b3a1fdc60946e"
       },
       "downloads": -1,
-      "filename": "datasette_cluster_map-0.19.tar.gz",
+      "filename": "datasette_cluster_map-0.19.1.tar.gz",
       "has_sig": false,
-      "md5_digest": "0918f313d9b051358dc49de497458b4c",
+      "md5_digest": "2f398530ba5beed8d8144b6c65dbefff",
       "packagetype": "sdist",
       "python_version": "source",
       "requires_python": ">=3.11",
-      "size": 33353,
-      "upload_time": "2026-11-13T23:03:48",
-      "upload_time_iso_8601": "2026-11-13T23:03:48.092320Z",
-      "url": "https://files.pythonhosted.org/packages/28/13/e6cc65d249a1f0f25342db1bda8899066664d38066c90254f1375ca4e11b/datasette_cluster_map-0.19.tar.gz",
+      "size": 33403,
+      "upload_time": "2026-11-23T05:00:58",
+      "upload_time_iso_8601": "2026-11-23T05:00:58.787468Z",
+      "url": "https://files.pythonhosted.org/packages/6c/ca/8aee1e0e868d9853abd9c732fc249fed42571bff7cac7c9d8e315b7374ea/datasette_cluster_map-0.19.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }

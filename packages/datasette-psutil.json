@@ -1,49 +1,53 @@
 {
   "info": {
     "author": "Simon Willison",
-    "author_email": "",
+    "author_email": null,
     "bugtrack_url": null,
     "classifiers": [],
-    "description": "# datasette-psutil\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-psutil.svg)](https://pypi.org/project/datasette-psutil/)\n[![CircleCI](https://circleci.com/gh/simonw/datasette-psutil.svg?style=svg)](https://circleci.com/gh/simonw/datasette-psutil)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-psutil/blob/master/LICENSE)\n\nDatasette plugin adding a `/-/psutil` debugging endpoint\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-psutil\n\n## Usage\n\nVisit `/-/psutil` on your Datasette instance to see various information provided by [psutil](https://psutil.readthedocs.io/).\n\n## Example\n\nYou can visit a live demo here: https://datasette-psutil-demo-j7hipcg4aq-uw.a.run.app/-/psutil\n\nSample output:\n```\nprocess.open_files()\n  popenfile(path='/tmp/fixtures.db', fd=6)\n\nprocess.connections()\n  pconn(fd=5, family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, laddr=addr(ip='169.254.8.130', port=8080), raddr=addr(ip='169.254.8.129', port=52621), status='ESTABLISHED')\n  pconn(fd=3, family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, laddr=addr(ip='0.0.0.0', port=8080), raddr=(), status='LISTEN')\n\nprocess.memory_info()\n  pmem(rss=56827904, vms=242540544, shared=0, text=0, lib=0, data=0, dirty=0)\n\nprocess.cmdline()\n  '/usr/local/bin/python'\n  '/usr/local/bin/datasette'\n  'serve'\n  '--host'\n  '0.0.0.0'\n  '-i'\n  'fixtures.db'\n  '--cors'\n  '--inspect-file'\n  'inspect-data.json'\n  '--port'\n  '8080'\n\nprocess.parents()\n  psutil.Process(pid=1, name='sh', started='23:19:29')\n\nprocess.threads()\n  pthread(id=2, user_time=7.27, system_time=3.99)\n  pthread(id=4, user_time=0.01, system_time=0.0)\n  pthread(id=5, user_time=0.0, system_time=0.0)\n  pthread(id=6, user_time=0.0, system_time=0.0)\n  pthread(id=7, user_time=0.0, system_time=0.0)\n  pthread(id=8, user_time=0.0, system_time=0.0)\n\npsutil.getloadavg()\n  (0.0, 0.0, 0.0)\n\npsutil.cpu_times(True)\n  scputimes(user=0.0, nice=0.0, system=0.0, idle=0.0, iowait=0.0, irq=0.0, softirq=0.0, steal=0.0, guest=0.0, guest_nice=0.0)\n  scputimes(user=0.0, nice=0.0, system=0.0, idle=0.0, iowait=0.0, irq=0.0, softirq=0.0, steal=0.0, guest=0.0, guest_nice=0.0)\n\npsutil.virtual_memory()\n  svmem(total=2147483648, available=2093080576, percent=2.5, used=31113216, free=2093080576, active=42860544, inactive=11513856, buffers=0, cached=23289856, shared=262144, slab=0)\n\nlist(psutil.process_iter())\n  psutil.Process(pid=1, name='sh', started='23:19:29')\n  psutil.Process(pid=2, name='datasette', started='23:19:29')\n```\n\n\n",
+    "description": "# datasette-psutil\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-psutil.svg)](https://pypi.org/project/datasette-psutil/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-psutil?include_prereleases&label=changelog)](https://github.com/simonw/datasette-psutil/releases)\n[![Tests](https://github.com/simonw/datasette-psutil/workflows/Test/badge.svg)](https://github.com/simonw/datasette-psutil/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-psutil/blob/main/LICENSE)\n\nDatasette plugin adding a `/-/psutil` debugging endpoint\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ pip install datasette-psutil\n\n## Usage\n\nVisit `/-/psutil` on your Datasette instance to see various information provided by [psutil](https://psutil.readthedocs.io/).\n\n## Demo\n\nhttps://latest-with-plugins.datasette.io/-/psutil is a live demo of this plugin, hosted on Google Cloud Run.\n",
     "description_content_type": "text/markdown",
     "docs_url": null,
-    "download_url": "",
+    "download_url": null,
     "downloads": {
       "last_day": -1,
       "last_month": -1,
       "last_week": -1
     },
     "dynamic": null,
-    "home_page": "https://github.com/simonw/datasette-psutil",
-    "keywords": "",
-    "license": "Apache License, Version 2.0",
-    "license_expression": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": "Apache-2.0",
     "license_files": null,
-    "maintainer": "",
-    "maintainer_email": "",
+    "maintainer": null,
+    "maintainer_email": null,
     "name": "datasette-psutil",
     "package_url": "https://pypi.org/project/datasette-psutil/",
-    "platform": "",
+    "platform": null,
     "project_url": "https://pypi.org/project/datasette-psutil/",
     "project_urls": {
-      "Homepage": "https://github.com/simonw/datasette-psutil"
+      "CI": "https://github.com/simonw/datasette-psutil/actions",
+      "Changelog": "https://github.com/simonw/datasette-psutil/releases",
+      "Homepage": "https://github.com/simonw/datasette-psutil",
+      "Issues": "https://github.com/simonw/datasette-psutil/issues"
     },
-    "provides_extra": null,
-    "release_url": "https://pypi.org/project/datasette-psutil/0.2/",
-    "requires_dist": [
-      "datasette (>=0.44)",
-      "psutil",
-      "pytest ; extra == 'test'",
-      "pytest-asyncio ; extra == 'test'",
-      "httpx ; extra == 'test'"
+    "provides_extra": [
+      "test"
     ],
-    "requires_python": "",
+    "release_url": "https://pypi.org/project/datasette-psutil/0.2.1/",
+    "requires_dist": [
+      "datasette>=0.50",
+      "psutil>=6.0",
+      "pytest; extra == \"test\"",
+      "pytest-asyncio; extra == \"test\""
+    ],
+    "requires_python": ">=3.11",
     "summary": "Datasette plugin adding a /-/psutil debugging endpoint",
-    "version": "0.2",
+    "version": "0.2.1",
     "yanked": false,
     "yanked_reason": null
   },
-  "last_serial": 7470444,
+  "last_serial": 44038872,
   "ownership": {
     "organization": null,
     "roles": [
@@ -105,30 +109,100 @@
         "yanked": false,
         "yanked_reason": null
       }
+    ],
+    "0.2.1": [
+      {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "b812872b38b737136a79c5b14ff56e4be4b421dfb296cd35ac163995349f526c"
+        },
+        "digests": {
+          "blake2b_256": "cacf15a4a22f5bb3b154485f42942248881e5d8bfa40e8d8e916e55939e433c4",
+          "md5": "281dcda2af5298c5dcd7f4f409060fe9",
+          "sha256": "1f22eb7c2ec6e195a5463aac2da224eb666afa1b61c76db9de1a3f9eab1b0e1d"
+        },
+        "downloads": -1,
+        "filename": "datasette_psutil-0.2.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "281dcda2af5298c5dcd7f4f409060fe9",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.11",
+        "size": 2500,
+        "upload_time": "2026-11-23T04:45:28",
+        "upload_time_iso_8601": "2026-11-23T04:45:28.705823Z",
+        "url": "https://files.pythonhosted.org/packages/ca/cf/15a4a22f5bb3b154485f42942248881e5d8bfa40e8d8e916e55939e433c4/datasette_psutil-0.2.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": null,
+        "core-metadata": false,
+        "digests": {
+          "blake2b_256": "db3f91fb1c394432ebe963c9e1a3334bd6543f94927f1e602861c8d59677cfcc",
+          "md5": "f520c0bd74985895d4fb081873febf77",
+          "sha256": "0d02fc11bb18bba1fbc7743185ab3d55a00f6a66a33dda7371fc19f749e7b41a"
+        },
+        "downloads": -1,
+        "filename": "datasette_psutil-0.2.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "f520c0bd74985895d4fb081873febf77",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.11",
+        "size": 2214,
+        "upload_time": "2026-11-23T04:45:29",
+        "upload_time_iso_8601": "2026-11-23T04:45:29.797827Z",
+        "url": "https://files.pythonhosted.org/packages/db/3f/91fb1c394432ebe963c9e1a3334bd6543f94927f1e602861c8d59677cfcc/datasette_psutil-0.2.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
     ]
   },
   "urls": [
     {
-      "comment_text": "",
+      "comment_text": null,
       "core-metadata": {
-        "sha256": "8038615b739eb362d8064138cc8f9c2ceab8cd65693f4e39556c4e654e287622"
+        "sha256": "b812872b38b737136a79c5b14ff56e4be4b421dfb296cd35ac163995349f526c"
       },
       "digests": {
-        "blake2b_256": "a85013638bed9fef1be07a18b736ecd24e528f2af7cbc85e4e88bc9f94d033eb",
-        "md5": "88f729f8d8c655ef642f9fa780432068",
-        "sha256": "d3e1cdee93bb5efda5f946ed945f965fb806a635e7a2eec76508775653cfe222"
+        "blake2b_256": "cacf15a4a22f5bb3b154485f42942248881e5d8bfa40e8d8e916e55939e433c4",
+        "md5": "281dcda2af5298c5dcd7f4f409060fe9",
+        "sha256": "1f22eb7c2ec6e195a5463aac2da224eb666afa1b61c76db9de1a3f9eab1b0e1d"
       },
       "downloads": -1,
-      "filename": "datasette_psutil-0.2-py3-none-any.whl",
+      "filename": "datasette_psutil-0.2.1-py3-none-any.whl",
       "has_sig": false,
-      "md5_digest": "88f729f8d8c655ef642f9fa780432068",
+      "md5_digest": "281dcda2af5298c5dcd7f4f409060fe9",
       "packagetype": "bdist_wheel",
       "python_version": "py3",
-      "requires_python": null,
-      "size": 7224,
-      "upload_time": "2020-06-13T23:31:35",
-      "upload_time_iso_8601": "2020-06-13T23:31:35.716683Z",
-      "url": "https://files.pythonhosted.org/packages/a8/50/13638bed9fef1be07a18b736ecd24e528f2af7cbc85e4e88bc9f94d033eb/datasette_psutil-0.2-py3-none-any.whl",
+      "requires_python": ">=3.11",
+      "size": 2500,
+      "upload_time": "2026-11-23T04:45:28",
+      "upload_time_iso_8601": "2026-11-23T04:45:28.705823Z",
+      "url": "https://files.pythonhosted.org/packages/ca/cf/15a4a22f5bb3b154485f42942248881e5d8bfa40e8d8e916e55939e433c4/datasette_psutil-0.2.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": false,
+      "digests": {
+        "blake2b_256": "db3f91fb1c394432ebe963c9e1a3334bd6543f94927f1e602861c8d59677cfcc",
+        "md5": "f520c0bd74985895d4fb081873febf77",
+        "sha256": "0d02fc11bb18bba1fbc7743185ab3d55a00f6a66a33dda7371fc19f749e7b41a"
+      },
+      "downloads": -1,
+      "filename": "datasette_psutil-0.2.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "f520c0bd74985895d4fb081873febf77",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.11",
+      "size": 2214,
+      "upload_time": "2026-11-23T04:45:29",
+      "upload_time_iso_8601": "2026-11-23T04:45:29.797827Z",
+      "url": "https://files.pythonhosted.org/packages/db/3f/91fb1c394432ebe963c9e1a3334bd6543f94927f1e602861c8d59677cfcc/datasette_psutil-0.2.1.tar.gz",
       "yanked": false,
       "yanked_reason": null
     }
